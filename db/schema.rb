@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20171206012810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "applikations", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.text "name", null: false
     t.text "subdomain", null: false
     t.boolean "enabled", default: false, null: false

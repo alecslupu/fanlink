@@ -1,4 +1,4 @@
-class Applikation < ApplicationRecord
+class Product < ApplicationRecord
 
   #has_paper_trail
 

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :applikation do
+  factory :product do
     name "My Application"
     subdomain "myapplication"
     enabled true

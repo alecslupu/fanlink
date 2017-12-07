@@ -1,6 +1,6 @@
-class CreateApplikations < ActiveRecord::Migration[5.1]
+class CreateProducts < ActiveRecord::Migration[5.1]
   def change
-    create_table :applikations do |t|
+    create_table :products do |t|
       t.text :name, null: false
       t.text :subdomain, null: false
       t.boolean :enabled, default: false, null: false
