@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+if Product.count == 0 && !Rails.env.production?
+  Product.create(name: "Test Product", subdomain: "test")
+  Product.create(name: "Test Product2", subdomain: "test2")
+end
+

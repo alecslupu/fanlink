@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 20171207014404) do
     t.boolean "enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "unq_products_name", unique: true
+    t.index ["subdomain"], name: "unq_products_subdomain", unique: true
   end
 
   create_table "versions", force: :cascade do |t|

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :product do
-    name "My Application"
-    subdomain "myapplication"
+    sequence(:name) { |n| "Product #{n}" }
+    sequence(:subdomain) { |n| "product#{n}" }
     enabled true
   end
 end

@@ -15,6 +15,12 @@ RSpec.describe Product, type: :model do
       expect(appl).not_to be_valid
       expect(appl.errors[:name]).not_to be_blank
     end
+    it "should require unique name" do
+      app1 = create(:product, name: "abc")
+      app2 = build(:product, name: "abc")
+      expect(app2).not_to be_valid
+      expect(app2.errors[:name]).not_to be_empty
+    end
   end
 
   describe "#subdomain" do
@@ -46,6 +52,12 @@ RSpec.describe Product, type: :model do
       appl = build(:product, subdomain: "ab_cd")
       expect(appl).not_to be_valid
       expect(appl.errors[:subdomain]).not_to be_blank
+    end
+    it "should require unique subdomain" do
+      app1 = create(:product, subdomain: "abc")
+      app2 = build(:product, subdomain: "abc")
+      expect(app2).not_to be_valid
+      expect(app2.errors[:name]).not_to be_empty
     end
   end
 
