@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
 
-  #has_paper_trail
+  has_paper_trail
 
   validates :name, length: { in: 3..60, message: "must be between 3 and 60 characters" }
 

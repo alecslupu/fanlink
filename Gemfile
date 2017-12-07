@@ -50,3 +50,6 @@ end
 gem 'acts_as_tenant'
 
 gem 'paper_trail'
+
+gem 'oauth2'
+gem 'sorcery'
