@@ -6,4 +6,6 @@ class Product < ApplicationRecord
   validates :subdomain, format: { with: /\A[a-zA-Z0-9][a-zA-Z0-9.-]+[a-zA-Z0-9]\z/ },
             length: { in: 3..63, message: "must be between 3 and 63 characters" },
             uniqueness: true
+
+  has_many :people, dependent: :restrict_with_error
 end
