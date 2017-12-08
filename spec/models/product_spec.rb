@@ -32,41 +32,35 @@ RSpec.describe Product, type: :model do
     end
   end
 
-  describe "#subdomain" do
-    it "should accept a good subdomain format" do
-      appl = create(:product, subdomain: "goodone")
-      expect(appl).to be_valid
+  describe "#internal_name" do
+    it "should accept a good internal name" do
+      appl = build(:product, internal_name: "good_one")
     end
-    it "should not accept a format that is shorter than 3 characters" do
-      appl = build(:product, subdomain: "aa")
+    it "should not accept an internal name that is shorter than 3 characters" do
+      appl = build(:product, internal_name: "aa")
       expect(appl).not_to be_valid
-      expect(appl.errors[:subdomain]).not_to be_blank
+      expect(appl.errors[:internal_name]).not_to be_blank
     end
-    it "should not accept a format that is longer than 63 characters" do
-      appl = build(:product, subdomain: "a" * 64)
+    it "should not accept an internal name that is longer than 30 characters" do
+      appl = build(:product, internal_name: "a" * 31)
       expect(appl).not_to be_valid
-      expect(appl.errors[:subdomain]).not_to be_blank
+      expect(appl.errors[:internal_name]).not_to be_blank
     end
-    it "should not start with nonalphanumeric" do
-      appl = build(:product, subdomain: "-abcd")
+    it "should not contain dash" do
+      appl = build(:product, internal_name: "-abcd")
       expect(appl).not_to be_valid
-      expect(appl.errors[:subdomain]).not_to be_blank
+      expect(appl.errors[:internal_name]).not_to be_blank
     end
-    it "should not end with nonalphanumeric" do
-      appl = build(:product, subdomain: "abcd-")
+    it "should not contain chars other than alphanumeric or underscore" do
+      appl = build(:product, internal_name: "ab?cd")
       expect(appl).not_to be_valid
-      expect(appl.errors[:subdomain]).not_to be_blank
+      expect(appl.errors[:internal_name]).not_to be_blank
     end
-    it "should not contain chars other than alphanumeric or dash" do
-      appl = build(:product, subdomain: "ab_cd")
-      expect(appl).not_to be_valid
-      expect(appl.errors[:subdomain]).not_to be_blank
-    end
-    it "should require unique subdomain" do
-      app1 = create(:product, subdomain: "abc")
-      app2 = build(:product, subdomain: "abc")
+    it "should require unique internal name" do
+      app1 = create(:product, internal_name: "abc")
+      app2 = build(:product, internal_name: "abc")
       expect(app2).not_to be_valid
-      expect(app2.errors[:subdomain]).not_to be_empty
+      expect(app2.errors[:internal_name]).not_to be_empty
     end
   end
 

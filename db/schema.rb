@@ -39,12 +39,12 @@ ActiveRecord::Schema.define(version: 20171207014404) do
 
   create_table "products", force: :cascade do |t|
     t.text "name", null: false
-    t.text "subdomain", null: false
+    t.text "internal_name", null: false
     t.boolean "enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
-    t.index ["subdomain"], name: "unq_products_subdomain", unique: true
   end
 
   create_table "versions", force: :cascade do |t|

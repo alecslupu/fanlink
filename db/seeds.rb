@@ -7,15 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Product.count == 0
-  Product.create(name: "Admin", subdomain: "admin")
+  Product.create(name: "Admin", internal_name: "admin")
   unless Rails.env.production?
-    Product.create(name: "Test Product", subdomain: "test")
-    Product.create(name: "Test Product2", subdomain: "test2")
+    Product.create(name: "Test Product", internal_name: "test")
+    Product.create(name: "Test Product2", internal_name: "test2")
   end
 end
 
 if Person.count == 0
   unless Rails.env.production?
-    Person.create(product_id: Product.find_by(subdomain: "admin").id, email: "admin@example.com", password: "flink_admin")
+    Person.create(product_id: Product.find_by(internal_name: "admin").id, email: "admin@example.com", password: "flink_admin")
   end
 end
