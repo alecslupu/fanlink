@@ -57,7 +57,7 @@ RSpec.describe Product, type: :model do
       app1 = create(:product, subdomain: "abc")
       app2 = build(:product, subdomain: "abc")
       expect(app2).not_to be_valid
-      expect(app2.errors[:name]).not_to be_empty
+      expect(app2.errors[:subdomain]).not_to be_empty
     end
   end
 

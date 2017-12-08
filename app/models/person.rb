@@ -4,4 +4,6 @@ class Person < ApplicationRecord
   acts_as_tenant(:product)
 
   belongs_to :product, required: true
+
+  validates :email, email: true
 end

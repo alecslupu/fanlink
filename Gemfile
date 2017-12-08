@@ -49,6 +49,7 @@ group :development do
 end
 
 gem "acts_as_tenant"
+gem 'email_validator'
 gem "paper_trail"
 gem "oauth2"
 gem "rubocop-rails"
