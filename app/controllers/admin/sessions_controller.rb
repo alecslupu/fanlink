@@ -2,8 +2,6 @@ module Admin
   class SessionsController < Admin::ApplicationController
     set_current_tenant_through_filter
 
-    #set_current_tenant_by_subdomain(:product, :subdomain)
-
     before_action :set_product
     skip_before_action :require_login, except: %i[ destroy ]
 
@@ -28,7 +26,7 @@ module Admin
     private
 
       def set_product
-        product = Product.find_by(subdomain: request.subdomains.first)
+        product = Product.find_by(subdomain: "admin")
         set_current_tenant(product)
       end
   end
