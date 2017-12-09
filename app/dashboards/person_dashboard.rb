@@ -17,6 +17,8 @@ class PersonDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     remember_me_token: Field::String,
     remember_me_token_expires_at: Field::DateTime,
+    password: PasswordField,
+    password_confirmation: PasswordField,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -36,12 +38,8 @@ class PersonDashboard < Administrate::BaseDashboard
     :product,
     :id,
     :email,
-    :crypted_password,
-    :salt,
     :created_at,
     :updated_at,
-    :remember_me_token,
-    :remember_me_token_expires_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -50,16 +48,14 @@ class PersonDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :product,
     :email,
-    :crypted_password,
-    :salt,
-    :remember_me_token,
-    :remember_me_token_expires_at,
+    :password,
+    :password_confirmation,
   ].freeze
 
   # Overwrite this method to customize how people are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(person)
-  #   "Person ##{person.id}"
-  # end
+  def display_resource(person)
+    person.email
+  end
 end

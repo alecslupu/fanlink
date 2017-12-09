@@ -8,10 +8,10 @@ class ProductDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
+    #versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
     id: Field::Number,
     name: Field::Text,
-    subdomain: Field::Text,
+    internal_name: Field::Text,
     enabled: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -23,19 +23,19 @@ class ProductDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :versions,
+    #:versions,
     :id,
     :name,
-    :subdomain,
+    :internal_name,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :versions,
+    #:versions,
     :id,
     :name,
-    :subdomain,
+    :internal_name,
     :enabled,
     :created_at,
     :updated_at,
@@ -45,16 +45,16 @@ class ProductDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :versions,
+    #:versions,
     :name,
-    :subdomain,
+    :internal_name,
     :enabled,
   ].freeze
 
   # Overwrite this method to customize how products are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(product)
-  #   "Product ##{product.id}"
-  # end
+  def display_resource(product)
+    product.name
+  end
 end

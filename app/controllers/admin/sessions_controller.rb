@@ -26,7 +26,7 @@ module Admin
     private
 
       def set_product
-        product = Product.find_by(subdomain: "admin")
+        product = Product.find_by(internal_name: "admin")
         set_current_tenant(product)
       end
   end
