@@ -1,4 +1,4 @@
-require 'json'
+require "json"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -14,7 +14,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # For nginx:
-  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
+  config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 
   # If you have no front-end server that supports something like X-Sendfile,
   # just comment this out and Rails will serve the files
@@ -40,7 +40,7 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   config.assets.digest = true
-  config.assets.js_compressor  = :uglifier
+  config.assets.js_compressor = :uglifier
 
   config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
 

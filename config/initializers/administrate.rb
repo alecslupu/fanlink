@@ -1,1 +1,1 @@
-Administrate::Engine.add_stylesheet('admin/custom')
+Administrate::Engine.add_stylesheet("admin/custom")
