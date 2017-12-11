@@ -10,6 +10,7 @@ class PersonDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
+    name: Field::Text,
     email: Field::Text,
     crypted_password: Field::Text,
     salt: Field::Text,
@@ -27,16 +28,18 @@ class PersonDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :product,
+    :name,
     :email,
+    :product,
     :created_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :product,
     :id,
+    :name,
+    :product,
     :email,
     :created_at,
     :updated_at,
@@ -47,6 +50,7 @@ class PersonDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :product,
+    :name,
     :email,
     :password,
     :password_confirmation,
@@ -56,6 +60,6 @@ class PersonDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(person)
-    person.email
+    person.name
   end
 end

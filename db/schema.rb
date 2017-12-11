@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20171207014404) do
   end
 
   create_table "people", force: :cascade do |t|
+    t.text "name", null: false
     t.integer "product_id", null: false
     t.text "email", null: false
     t.text "crypted_password"

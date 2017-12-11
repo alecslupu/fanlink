@@ -1,6 +1,7 @@
 class SorceryCore < ActiveRecord::Migration[5.1]
   def change
     create_table :people do |t|
+      t.text      :name,            null: false
       t.integer   :product_id,      null: false
       t.text      :email,           null: false
       t.text      :crypted_password

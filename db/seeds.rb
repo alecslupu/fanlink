@@ -16,6 +16,7 @@ end
 
 if Person.count == 0
   unless Rails.env.production?
-    Person.create(product_id: Product.find_by(internal_name: "admin").id, email: "admin@example.com", password: "flink_admin")
+    Person.create(name: "Admin User", product_id: Product.find_by(internal_name: "admin").id, email: "admin@example.com",
+                  password: "flink_admin", password_confirmation: "flink_admin")
   end
 end

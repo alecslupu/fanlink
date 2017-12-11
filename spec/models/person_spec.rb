@@ -7,5 +7,13 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "name" do
+    it "should not let you create a person without a name" do
+      person = build(:person, name: "")
+      expect(person).not_to be_valid
+      expect(person.errors[:name]).not_to be_blank
+    end
+  end
+
 
 end
