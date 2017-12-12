@@ -2,14 +2,15 @@ Rails.application.routes.draw do
 
    JkoApi.routes self do
      version 1 do
-       resources :session, only: %i[ create destroy index ]
+       resources :session, only: %i[ create index ] do
+         collection do
+           delete "" => "session#destroy"
+         end
+       end
      end
+     #version 2
    end
 
-  #delete "session" => "api/v1/session#destroy"
-  #get "session" => "api/v1/session#index"
-  #post "session" => "api/v1/session#create"
-  #
   namespace :admin do
     resources :people
     resources :products
