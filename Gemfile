@@ -54,6 +54,8 @@ end
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate"
 gem "email_validator"
+gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: 'rails_51'
+#gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'
 gem "paper_trail"
 gem "oauth2"
 gem "rubocop-rails"
