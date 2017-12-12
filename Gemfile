@@ -51,6 +51,10 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
 end
 
+group :test do
+  gem "database_cleaner"
+end
+
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate"
 gem "email_validator"
@@ -60,3 +64,4 @@ gem "paper_trail"
 gem "oauth2"
 gem "rubocop-rails"
 gem "sorcery"
+gem "unicode_utils"

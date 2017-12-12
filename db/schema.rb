@@ -25,9 +25,12 @@ ActiveRecord::Schema.define(version: 20171207014404) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.text "name", null: false
-    t.integer "product_id", null: false
+    t.text "username", null: false
+    t.text "username_canonical", null: false
     t.text "email", null: false
+    t.text "name"
+    t.text "picture_id"
+    t.integer "product_id", null: false
     t.text "crypted_password"
     t.text "salt"
     t.datetime "created_at", null: false
@@ -36,6 +39,7 @@ ActiveRecord::Schema.define(version: 20171207014404) do
     t.datetime "remember_me_token_expires_at"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["remember_me_token"], name: "ind_people_remember_me_token"
+    t.index ["username_canonical"], name: "unq_people_username_canonical", unique: true
   end
 
   create_table "products", force: :cascade do |t|
