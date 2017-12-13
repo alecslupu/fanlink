@@ -37,13 +37,12 @@ module FloadUp
     #   The options, see above.
     #
     def load_up_the(klass, options = nil)
-
       options = {
-          :from  => :id,
-          :using => :find_by_id,
-          :into  => "@#{klass.name.underscore}",
-          :alias => { },
-          :except => [],
+          from: :id,
+          using: :find_by_id,
+          into: "@#{klass.name.underscore}",
+          alias: {},
+          except => [],
       }.merge(options.to_h)
 
       id       = options[:from ]
@@ -52,24 +51,25 @@ module FloadUp
       actions  = extract_actions_from(options)
 
       before_action except: options[:except] do
-        if(params.has_key?(id))
+        if params.has_key?(id)
           obj = klass.send(find, params[id])
-          if(!obj)
+          if !obj
             render_not_found
-          elsif(obj)
+          elsif obj
             action     = actions[params[:action]]
-            action     = actions[action] if(actions.has_key?(action)) # Allow aliased aliases.
-            can_access = if(action == true || action == false)
-                           action
-                         elsif(action.respond_to?(:call))
-                           action.call(obj, current_user, current_property)
-                         else
-                           obj.send("allows_#{action}_from?", current_user, current_property)
-                         end
-            if(can_access)
+            action     = actions[action] if actions.has_key?(action) # Allow aliased aliases.
+            can_access =
+                if (action == true || action == false)
+                  action
+                elsif (action.respond_to?(:call))
+                  action.call(obj, current_user, current_property)
+                else
+                  obj.send("allows_#{action}_from?", current_user, current_property)
+                end
+            if can_access
               instance_variable_set(obj_name, obj)
             else
-              errors = obj.errors.present?? obj.errors : { :base => [ _('Access denied') ] }
+              errors = obj.errors.present? ? obj.errors : { base: [ _("Access denied") ] }
               render_unprocessable_entity(errors)
             end
           end
@@ -79,30 +79,28 @@ module FloadUp
 
     private
 
-    def extract_actions_from(options)
-      actions = (options[:alias] || { }).with_indifferent_access
-      actions.default_proc = ->(_, k) { k }
-      actions
-    end
-
+      def extract_actions_from(options)
+        actions = (options[:alias] || {}).with_indifferent_access
+        actions.default_proc = ->(_, k) { k }
+        actions
+      end
   end
 
   private
 
-  def render_not_found
-    if(request.format == 'text/html')
-      render :not_found, :status => :not_found
-    else
-      render :json => { :errors => { :base => [ _('Not found') ] } }, :status => :not_found
+    def render_not_found
+      if request.format == "text/html"
+        render :not_found, status: :not_found
+      else
+        render json: { errors: { base: [ "Not found" ] } }, status: :not_found
+      end
     end
-  end
 
-  def render_unprocessable_entity(errors)
-    if(request.format == 'text/html')
-      render :not_found, :status => :unprocessable_entity
-    else
-      render :json => { :errors => errors }, :status => :unprocessable_entity
+    def render_unprocessable_entity(errors)
+      if request.format == "text/html"
+        render :not_found, status: :unprocessable_entity
+      else
+        render json: { errors: errors }, status: :unprocessable_entity
+      end
     end
-  end
-
 end

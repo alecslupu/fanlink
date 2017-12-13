@@ -4,7 +4,7 @@ RSpec.describe Person, type: :model do
     @username = "Whére.Ïs.Pañçâkèß.HOUSE"
     @password = "logmein"
     @email = "pancakes@example.com"
-    @person = create(:person, email: @email, username: @username, password: @password, password_confirmation: @password)
+    @person = create(:person, email: @email, username: @username, password: @password)
   end
 
   describe "#email" do
@@ -50,10 +50,10 @@ RSpec.describe Person, type: :model do
       expect(person).not_to be_valid
       expect(person.errors[:username]).not_to be_blank
     end
-    it 'should properly mangle the username into a slug' do
+    it "should properly mangle the username into a slug" do
       expect(@person.username_canonical).to eq("whereispancakeßhouse")
     end
-    it 'should ignore accents, case, and punctuation when using for_username' do
+    it "should ignore accents, case, and punctuation when using for_username" do
       examples = [ "Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
                    "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house" ]
       examples.each do |e|

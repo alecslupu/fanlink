@@ -15,11 +15,11 @@ class String
   def scanm(re)
     matches = [ ]
     start   = 0
-    while(m = re.match(self, start))
-      block_given?? yield(m) : matches.push(m)
+    while (m = re.match(self, start))
+      block_given? ? yield(m) : matches.push(m)
       start = m.end(0)
     end
-    block_given?? self : matches
+    block_given? ? self : matches
   end
 
   #
@@ -33,7 +33,7 @@ class String
     # `\p{Mn}` is also known as `\p{Nonspacing_Mark}` but only the short
     # and cryptic form is documented.
     #
-    ActiveSupport::Multibyte::Unicode.normalize(self, :kd).chars.grep(/\p{^Mn}/).join('')
+    ActiveSupport::Multibyte::Unicode.normalize(self, :kd).chars.grep(/\p{^Mn}/).join("")
   end
 
   #
@@ -53,5 +53,4 @@ class String
   def is_integer?
     self.to_i.to_s == self
   end
-
 end

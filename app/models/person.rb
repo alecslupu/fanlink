@@ -1,22 +1,22 @@
 class Person < ApplicationRecord
-
   authenticates_with_sorcery!
 
   acts_as_tenant(:product)
 
-  belongs_to :product
+  #belongs_to :product
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
+  validates_uniqueness_to_tenant [:email, :username]
+
   validates :email, email: true
 
-  validates :username, presence: { message: "is missing." }
+  validates :username, presence: { message: "is required." }
   validates :username, length: { in: 3..26, message: "must be between 3 and 26 characters" }
 
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
-  validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
+
 
   #
   # Return the canonical form of a username.
@@ -51,8 +51,8 @@ class Person < ApplicationRecord
   #
   def self.can_login(email)
     email  = email.to_s
-    query  = email.include?('@') ? { :email => email.strip.downcase } : { :username_canonical => canonicalize(email) }
-    return Person.find_by(query)
+    query  = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: canonicalize(email) }
+    Person.find_by(query)
 
     #
     # This `valid?` stuff is a bit smelly but not too bad.
@@ -80,7 +80,7 @@ class Person < ApplicationRecord
   #   The scoped query.
   #
   def self.named_like(term)
-    where('people.username_canonical ilike ?', "%#{StringUtil.search_ify(term)}%").first
+    where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
   end
 
   #
@@ -96,7 +96,7 @@ class Person < ApplicationRecord
   #
   def self.username_used?(name, person = nil)
     query = where(username_canonical: canonicalize(name))
-    query = query.where.not(id: person.to_id) if(person)
+    query = query.where.not(id: person.to_id) if person
     query.count > 0
   end
 
@@ -113,8 +113,7 @@ class Person < ApplicationRecord
     end
 
     def normalize_email
-      self.email = self.email.strip.downcase if(self.email_changed? && self.email.present?)
+      self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
       true
     end
-
 end

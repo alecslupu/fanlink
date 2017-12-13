@@ -1,4 +1,7 @@
 class ApiController < ApplicationController
+  set_current_tenant_through_filter
+
+  before_action :set_product
 
   #
   # Respond to an API request with an object. If the object is invalid
@@ -20,8 +23,8 @@ class ApiController < ApplicationController
   #   Options. We currently only have a `:using` option that defaults
   #   to the current `params[:action]` value.
   #
-  def return_the(obj, opts = { })
-    opts = { :using => params[:action] }.merge(opts)
+  def return_the(obj, opts = {})
+    opts = { using: params[:action] }.merge(opts)
 
     #
     # If `obj` doesn't know what `valid?` means then we're presumably
@@ -30,22 +33,29 @@ class ApiController < ApplicationController
     # successful DESTROY call. The `valid?` should should take care of
     # everything else.
     #
-    if(obj.nil?)
-      render :json => { :errors => { :base => [ _('Not found') ] } }, :status => :not_found
-    elsif(obj.respond_to?(:valid?) && !obj.valid?)
-      render :json => { :errors => obj.errors }, :status => :unprocessable_entity
-    elsif(!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
-      render :action => opts[:using], :formats => %i[json]
+    if obj.nil?
+      render json: { errors: { base: [ _("Not found") ] } }, status: :not_found
+    elsif (obj.respond_to?(:valid?) && !obj.valid?)
+      render json: { errors: obj.errors.full_messages }, status: :unprocessable_entity
+    elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
+      render action: opts[:using], formats: %i[json]
     else
-      render :json => { :errors => obj.errors }, :status => :unprocessable_entity
+      render json: { errors: obj.errors }, status: :unprocessable_entity
     end
   end
 
   private
 
-  def set_default_request_format
-    request.format = :json
-  end
+    def set_default_request_format
+      request.format = :json
+    end
 
-
+    def set_product
+      product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+      if product.nil?
+        render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
+      else
+        set_current_tenant(product)
+      end
+    end
 end

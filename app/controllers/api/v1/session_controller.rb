@@ -1,7 +1,6 @@
 class Api::V1::SessionController < ApiController
-
-
   skip_before_action :require_login
+  skip_before_action :set_product, only: %i[ index ]
 
   #**
   # @api {get} /session Check a session.
@@ -47,7 +46,7 @@ class Api::V1::SessionController < ApiController
   #     HTTP/1.1 404 Not Found
   #*
   def index
-    if(@person = current_user)
+    if @person = current_user
       return_the @person
     else
       render body: nil, status: :not_found
@@ -103,10 +102,10 @@ class Api::V1::SessionController < ApiController
   def create
     #fix_booleans_in!(:keep)
     @person = login(params[:email], params[:password])
-    if(!@person)
-      return render :json => { :errors => [ "Invalid login." ] , :status => :unprocessable_entity }
-    elsif(@person.errors.present?)
-      return render :json => { :errors => @person.errors.values.flatten }, :status => :unprocessable_entity
+    if !@person
+      return render json: { errors: [ "Invalid login." ] , status: :unprocessable_entity }
+    elsif @person.errors.present?
+      return render json: { errors: @person.errors.values.flatten }, status: :unprocessable_entity
     end
 
     #bake_cookies_for(@person)
@@ -135,5 +134,4 @@ class Api::V1::SessionController < ApiController
   #   cookie[:expires] = 2.years.from_now if(params[:keep])
   #   cookies[:logged] = cookie
   # end
-
 end

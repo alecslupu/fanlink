@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20171207014404) do
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
+    t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
     t.index ["remember_me_token"], name: "ind_people_remember_me_token"
-    t.index ["username_canonical"], name: "unq_people_username_canonical", unique: true
   end
 
   create_table "products", force: :cascade do |t|

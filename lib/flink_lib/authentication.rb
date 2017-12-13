@@ -14,15 +14,15 @@ module FlinkLib
     end
 
     def authenticate_flink
-      return bad_person(:not_logged_in)     if(!logged_in?)
-      return bad_person(:suspended_account) if(current_user.suspended?)
-      return true
+      return bad_person(:not_logged_in)     if !logged_in?
+      return bad_person(:suspended_account) if current_user.suspended?
+      true
     end
 
     def current_user
-      if(!@current_user && session[:user_id])
+      if !@current_user && session[:user_id]
         @current_user = self.class.person_class.find(session[:user_id])
-      elsif(!session[:user_id])
+      elsif !session[:user_id]
         @current_user = nil
       end
       @current_user
@@ -40,11 +40,10 @@ module FlinkLib
 
     private
 
-    def bad_person(reason)
-      render :json => { :not_logged_in => true, :reason => reason }, :status => :forbidden
-      logout_session
-      false
-    end
-
+      def bad_person(reason)
+        render json: { not_logged_in: true, reason: reason }, status: :forbidden
+        logout_session
+        false
+      end
   end
 end

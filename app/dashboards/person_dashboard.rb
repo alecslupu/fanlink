@@ -19,7 +19,6 @@ class PersonDashboard < Administrate::BaseDashboard
     remember_me_token: Field::String,
     remember_me_token_expires_at: Field::DateTime,
     password: PasswordField,
-    password_confirmation: PasswordField,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -52,8 +51,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :product,
     :name,
     :email,
-    :password,
-    :password_confirmation,
+    :password
   ].freeze
 
   # Overwrite this method to customize how people are displayed
