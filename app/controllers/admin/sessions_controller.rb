@@ -6,7 +6,8 @@ module Admin
     skip_before_action :require_login, except: %i[ destroy ]
 
     def create
-      if @person = login(params[:email], params[:password])
+      @person = Person.can_login?(params[:email_or_username])
+      if @person && (@person = login(@person.email, params[:password]))
         redirect_back_or_to(admin_root_path, notice: "Login successful")
       else
         flash.now[:alert] = "Login failed"

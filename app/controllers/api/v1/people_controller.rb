@@ -13,6 +13,8 @@ class Api::V1::PeopleController < ApiController
   #
   #   We will log them in along the way.
   #
+  # @apiParam {String} product
+  #   Internal name of product
   # @apiParam {Object} person
   #   The person's information.
   # @apiParam {String} person.email
@@ -20,15 +22,15 @@ class Api::V1::PeopleController < ApiController
   # @apiParam {String} [person.name]
   #   Name.
   # @apiParam {String} person.username
-  #   Username. This needs to be unique.
+  #   Username. This needs to be unique within product scope.
   # @apiParam {String} person.password
   #   Password.
   # @apiParam {Attachment } [person.picture]
-  #   Profile picture, this should be `image/gif`, `image/png`, or
+  #   NOT YET SUPPORTED Profile picture, this should be `image/gif`, `image/png`, or
   #   `image/jpeg`. You should specify at most one of `picture` and
   #   `picture_id`.
   # @apiParam {ObjectId} [person.picture_id]
-  #   The profile picture as a temporary image. You should specify at
+  #   NOT YET SUPPORTED The profile picture as a temporary image. You should specify at
   #   most one of `picture` and `picture_id`.
   #
   # @apiSuccessExample {json} Success-Response:

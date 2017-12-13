@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'slack-ruby-client'
+require "slack-ruby-client"
 
-token = ENV['SLACK_API_TOKEN']
+token = ENV["SLACK_API_TOKEN"]
 
 if token.blank?
   puts "You need to set the SLACK_API_TOKEN env variable"
@@ -23,11 +23,11 @@ branch = `git rev-parse --abbrev-ref HEAD`
 if system("bin/docapi")
   if system("zip -r API-Docs.zip API-Docs")
     client.files_upload(
-        channels: '#appstech',
-        as_user: true,
-        file: Faraday::UploadIO.new('API-Docs.zip', 'application/zip'),
-        title: "API Docs",
-        initial_comment: "From branch: #{branch}"
+      channels: "#appstech",
+      as_user: true,
+      file: Faraday::UploadIO.new("FanLink-API-Docs.zip", "application/zip"),
+      title: "API Docs",
+      initial_comment: "From branch: #{branch}"
     )
   else
     puts "problem running zip command..make sure you have zip executable"
@@ -39,4 +39,3 @@ else
 end
 
 puts "Done with doc upload."
-

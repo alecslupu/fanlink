@@ -49,7 +49,7 @@ class Person < ApplicationRecord
   #   The email/username.
   # @return [Person]
   #
-  def self.can_login(email)
+  def self.can_login?(email)
     email  = email.to_s
     query  = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: canonicalize(email) }
     Person.find_by(query)

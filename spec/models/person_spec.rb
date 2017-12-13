@@ -19,18 +19,18 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe ".can_login" do
+  describe ".can_login?" do
     it "should return person if correct username supplied" do
-      expect(Person.can_login(@username)).to eq(@person)
+      expect(Person.can_login?(@username)).to eq(@person)
     end
     it "should return person if correct email supplied" do
-      expect(Person.can_login(@email)).to eq(@person)
+      expect(Person.can_login?(@email)).to eq(@person)
     end
     it "should return nil if username supplied and does not exist" do
-      expect(Person.can_login("nonexistentiamsure")).to be_nil
+      expect(Person.can_login?("nonexistentiamsure")).to be_nil
     end
     it "should return nil if email supplied and does not exist" do
-      expect(Person.can_login("nonexistentiamsure@example.com")).to be_nil
+      expect(Person.can_login?("nonexistentiamsure@example.com")).to be_nil
     end
   end
 

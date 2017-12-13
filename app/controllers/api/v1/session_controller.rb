@@ -1,4 +1,5 @@
 class Api::V1::SessionController < ApiController
+  prepend_before_action :logout, only: :create
   skip_before_action :require_login
   skip_before_action :set_product, only: %i[ index ]
 
@@ -15,31 +16,11 @@ class Api::V1::SessionController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "person": {
-  #       "id": "5016cd8b30f1b95cb300004d",
+  #       "id": "5016",
   #       "email": "addr@example.com",
-  #       "apns": "big-long-string",
-  #       "device_id": "big-long-string",
   #       "username": "Pancakes.McGee",
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
-  #       "location": "Toronto, ON, Canada",
-  #       "blurb": "text/html blurb",
-  #       "over_13": true,  // Are they 13+ years of age?
-  #       "over_18": true,  // Are they 18+ years of age?
-  #       "score": 11,      // Total score on this property.
-  #       "talent_id",      // id of talent containing this person (only if exists)
-  #       "n_posts": 6,     // Number of posts that this person has made on this property.
-  #       "n_followers": 0, // Number of people following this person.
-  #       "n_following": 3, // Number of people this person is following.
-  #       "n_invites": 11,  // Number of people they've invited.
-  #       "is_bot": false,
-  #       "is_staff": true,
-  #       "subscription": {            // If there is one for the current app property (collection subs are returned with collections).
-  #         "property_id": 1,
-  #         "property_name": 'MusicTO',
-  #         "starts_on": "2015-06-11", // When their current subscription started, ISO8601 date.
-  #         "ends_on": "2016-06-11"    // When the current subscription ends, ISO8601 date.
-  #       }
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -61,7 +42,9 @@ class Api::V1::SessionController < ApiController
   # @apiDescription
   #   This is used to log someone in.
   #
-  # @apiParam {String} email
+  # @apiParam {String} product
+  #  Internal name of product logging into.
+  # @apiParam {String} email_or_username
   #   The person's email address or username.
   # @apiParam {String} password
   #   The person's password.
@@ -72,36 +55,17 @@ class Api::V1::SessionController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "person": {
-  #       "id": "5016cd8b30f1b95cb300004d",
+  #       "id": "5016",
   #       "email": "addr@example.com",
-  #       "apns": "big-long-string",
-  #       "device_id": "big-long-string",
   #       "username": "Pancakes.McGee",
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
-  #       "location": "Toronto, ON, Canada",
-  #       "blurb": "text/html blurb",
-  #       "over_13": true,  // Are they 13+ years of age?
-  #       "over_18": true,  // Are they 18+ years of age?
-  #       "talent_id",      // id of talent containing this person (only if exists)
-  #       "score": 11,      // Total score on this property.
-  #       "n_posts": 6,     // Number of posts that this person has made on this property.
-  #       "n_followers": 0, // Number of people following this person.
-  #       "n_following": 3, // Number of people this person is following.
-  #       "n_invites": 11,  // Number of people they've invited.
-  #       "is_bot": false,
-  #       "is_staff": true,
-  #       "subscription": {            // If there is one for the current app property (collection subs are returned with collections).
-  #         "property_id": 1,
-  #         "property_name": 'MusicTO',
-  #         "starts_on": "2015-06-11", // When their current subscription started, ISO8601 date.
-  #         "ends_on": "2016-06-11"    // When the current subscription ends, ISO8601 date.
-  #       }
   #     }
   #*
   def create
     #fix_booleans_in!(:keep)
-    @person = login(params[:email], params[:password])
+    @person = Person.can_login?(params[:email_or_username])
+    @person = login(@person.email, params[:password]) if @person
     if !@person
       return render json: { errors: [ "Invalid login." ] , status: :unprocessable_entity }
     elsif @person.errors.present?
