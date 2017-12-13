@@ -48,7 +48,7 @@ class Api::V1::SessionController < ApiController
   #   The person's email address or username.
   # @apiParam {String} password
   #   The person's password.
-  # @apiParam {Boolean} [keep]
+  # @apiParam {Boolean} [keep] NOT YET SUPPORTED
   #   True if you want to keep them signed in, otherwise this will be a
   #   non-persistent session.
   #

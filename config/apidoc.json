@@ -1,7 +1,7 @@
 {
   "name": "Fan Link",
   "title": "Fan Link",
-  "url": "https://fan.link/api/v1",
+  "url": "https://fan.link",
   "template": {
     "withCompare": false
   },
