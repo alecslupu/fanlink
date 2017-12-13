@@ -70,6 +70,10 @@ class Person < ApplicationRecord
     #person
   end
 
+  def self.can_login_as_admin?(email)
+    person = can_login?(email)
+    (person && person.username == "admin") ? person : nil
+  end
 
   #
   # Return a scoped query for people whose names match a string.

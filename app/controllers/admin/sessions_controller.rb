@@ -3,10 +3,10 @@ module Admin
     set_current_tenant_through_filter
 
     before_action :set_product
-    skip_before_action :require_login, except: %i[ destroy ]
+    skip_before_action :require_login, :authenticate_admin
 
     def create
-      @person = Person.can_login?(params[:email_or_username])
+      @person = Person.can_login_as_admin?(params[:email_or_username])
       if @person && (@person = login(@person.email, params[:password]))
         redirect_back_or_to(admin_root_path, notice: "Login successful")
       else
