@@ -46,10 +46,6 @@ class ApiController < ApplicationController
 
   private
 
-    def set_default_request_format
-      request.format = :json
-    end
-
     def set_product
       product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
       if product.nil?

@@ -45,7 +45,9 @@ class Api::V1::SessionController < ApiController
   # @apiParam {String} product
   #  Internal name of product logging into.
   # @apiParam {String} email_or_username
-  #   The person's email address or username.
+  #   The person's email address or username. Required unless using Facebook ID.
+  # @apiParam {String} [facebook_auth_token]
+  #   The person's email address or username. Required unless using facebook_auth_token.
   # @apiParam {String} password
   #   The person's password.
   # @apiParam {Boolean} [keep] NOT YET SUPPORTED
@@ -63,15 +65,20 @@ class Api::V1::SessionController < ApiController
   #     }
   #*
   def create
+    @person = nil
     #fix_booleans_in!(:keep)
-    @person = Person.can_login?(params[:email_or_username])
-    @person = login(@person.email, params[:password]) if @person
-    if !@person
-      return render json: { errors: [ "Invalid login." ] , status: :unprocessable_entity }
-    elsif @person.errors.present?
+    if params["facebook_auth_token"].present?
+      @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
+      return render json: { errors: [ "Unable to find user from token. Likely a problem contacting Facebook."], status: :service_unavailable } if @person.nil?
+      auto_login(@person)
+    else
+      @person = Person.can_login?(params[:email_or_username])
+      @person = login(@person.email, params[:password]) if @person
+      return render json: { errors: [ "Invalid login." ] , status: :unprocessable_entity } if @person.nil?
+    end
+    if @person.errors.present?
       return render json: { errors: @person.errors.values.flatten }, status: :unprocessable_entity
     end
-
     #bake_cookies_for(@person)
     return_the @person
   end
