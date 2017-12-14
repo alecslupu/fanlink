@@ -13,6 +13,15 @@ RSpec.describe Person, type: :model do
       expect(person).not_to be_valid
       expect(person.errors[:email]).not_to be_blank
     end
+    it "should not let you create a person with a nil email if no facebookid" do
+      person = build(:person, email: "")
+      expect(person).not_to be_valid
+      expect(person.errors[:email]).not_to be_blank
+    end
+    it "should let you create a person with a nil email if facebookid present" do
+      person = build(:person, email: nil, facebookid: "12345")
+      expect(person).to be_valid
+    end
     it "should normalize email" do
       person = create(:person, email: " SOMEcapsinHere@example.com ")
       expect(person.email).to eq("somecapsinhere@example.com")

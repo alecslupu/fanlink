@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171207014404) do
+ActiveRecord::Schema.define(version: 20171214004418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20171207014404) do
   create_table "people", force: :cascade do |t|
     t.text "username", null: false
     t.text "username_canonical", null: false
-    t.text "email", null: false
+    t.text "email"
     t.text "name"
     t.text "picture_id"
     t.integer "product_id", null: false
@@ -37,7 +37,9 @@ ActiveRecord::Schema.define(version: 20171207014404) do
     t.datetime "updated_at", null: false
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
+    t.text "facebookid"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
+    t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
     t.index ["remember_me_token"], name: "ind_people_remember_me_token"
   end

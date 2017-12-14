@@ -10,7 +10,7 @@ class Person < ApplicationRecord
 
   validates_uniqueness_to_tenant [:email, :username]
 
-  validates :email, email: true
+  validates :email, email: true, presence: true, if: Proc.new { |p| p.facebookid.blank? }
 
   validates :username, presence: { message: "is required." }
   validates :username, length: { in: 3..26, message: "must be between 3 and 26 characters" }
