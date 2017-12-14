@@ -62,6 +62,7 @@ gem "email_validator"
 gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51"
 #gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'
+gem "koala" #Facebook Graph API
 gem "paper_trail"
 gem "oauth2"
 gem "rubocop-rails"

@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20171214004418) do
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.text "facebookid"
+    t.text "facebook_picture_url"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true

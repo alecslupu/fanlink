@@ -1,4 +1,7 @@
 class Person < ApplicationRecord
+
+  include Person::Facebook
+
   authenticates_with_sorcery!
 
   acts_as_tenant(:product)
@@ -8,15 +11,14 @@ class Person < ApplicationRecord
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
-  validates_uniqueness_to_tenant [:email, :username]
+  validates_uniqueness_to_tenant [:email, :facebookid, :username]
 
   validates :email, email: true, presence: true, if: Proc.new { |p| p.facebookid.blank? }
 
   validates :username, presence: { message: "is required." }
   validates :username, length: { in: 3..26, message: "must be between 3 and 26 characters" }
 
-  validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:crypted_password] }
-
+  validates :password, length: { minimum: 6 }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
   #
   # Return the canonical form of a username.
@@ -85,6 +87,10 @@ class Person < ApplicationRecord
   #
   def self.named_like(term)
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
+  end
+
+  def picture_url
+    facebook_picture_url #TBD attachment support TBD
   end
 
   #

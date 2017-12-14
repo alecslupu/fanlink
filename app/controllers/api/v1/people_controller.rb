@@ -18,7 +18,9 @@ class Api::V1::PeopleController < ApiController
   # @apiParam {Object} person
   #   The person's information.
   # @apiParam {String} person.email
-  #   Email address.
+  #   Email address (required unless using FB auth token).
+  # @apiParam {String} facebook_auth_token
+  #   Auth token from Facebook
   # @apiParam {String} [person.name]
   #   Name.
   # @apiParam {String} person.username
@@ -44,7 +46,15 @@ class Api::V1::PeopleController < ApiController
   #     }
   #*
   def create
-    @person = Person.create(person_params)
+    parms = person_params
+    if parms[:facebook_auth_token].present?
+      @person = Person.create_from_facebook(parms[:facebook_auth_token], parms[:username])
+      if @person.nil?
+        render json: { errors: "There was a problem contacting Facebook" }, status: :service_unavailable and return
+      end
+    else
+      @person = Person.create(person_params)
+    end
     if @person.valid?
       auto_login(@person)
     end
@@ -52,7 +62,7 @@ class Api::V1::PeopleController < ApiController
   end
 
   def person_params
-    person = params.require(:person).permit(:email, :name, :username, :password, :picture, :picture_id)
+    person = params.require(:person).permit(:email, :name, :username, :password, :picture, :picture_id, :facebook_auth_token)
     if picture = person.delete(:picture).presence
       person[:picture] = picture.respond_to?(:read) ? picture.read : picture
     end
