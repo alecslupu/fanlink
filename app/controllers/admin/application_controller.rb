@@ -9,8 +9,8 @@ module Admin
     before_action :require_login, :authenticate_admin
 
     def authenticate_admin
+      not_authenticated unless current_user && current_user.username == "admin"
     end
-
     # Override this value to specify the number of elements to display at a time
     # on index pages. Defaults to 20.
     # def records_per_page

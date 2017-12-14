@@ -1,0 +1,12 @@
+{
+  "name": "Fan Link",
+  "title": "Fan Link",
+  "url": "https://fan.link",
+  "template": {
+    "withCompare": false
+  },
+  "header": {
+    "title": "Introduction",
+    "filename": "app/controllers/api/v1/api-doc-header.md"
+  }
+}

@@ -10,6 +10,8 @@ class PersonDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
+    name: Field::Text,
+    username: Field::Text,
     email: Field::Text,
     crypted_password: Field::Text,
     salt: Field::Text,
@@ -18,7 +20,6 @@ class PersonDashboard < Administrate::BaseDashboard
     remember_me_token: Field::String,
     remember_me_token_expires_at: Field::DateTime,
     password: PasswordField,
-    password_confirmation: PasswordField,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -28,16 +29,20 @@ class PersonDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :product,
+    :username,
     :email,
+    :name,
     :created_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :product,
     :id,
+    :product,
+    :username,
     :email,
+    :name,
     :created_at,
     :updated_at,
   ].freeze
@@ -47,15 +52,16 @@ class PersonDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :product,
+    :username,
     :email,
-    :password,
-    :password_confirmation,
+    :name,
+    :password
   ].freeze
 
   # Overwrite this method to customize how people are displayed
   # across all pages of the admin dashboard.
   #
   def display_resource(person)
-    person.email
+    person.name
   end
 end

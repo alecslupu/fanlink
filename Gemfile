@@ -43,6 +43,7 @@ end
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
+  gem "gettext", ">=3.0.2", require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "listen", ">= 3.0.5", "< 3.2"
@@ -51,10 +52,19 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
 end
 
+group :test do
+  gem "database_cleaner"
+end
+
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate"
 gem "email_validator"
+gem "gettext_i18n_rails"
+gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51"
+#gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'
+gem "koala" #Facebook Graph API
 gem "paper_trail"
 gem "oauth2"
 gem "rubocop-rails"
 gem "sorcery"
+gem "unicode_utils"

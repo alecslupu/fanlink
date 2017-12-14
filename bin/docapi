@@ -1,0 +1,2 @@
+#!/bin/sh
+apidoc -c config/ -i app/controllers/api/v1 -o FanLink-API-Docs/api
