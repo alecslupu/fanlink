@@ -13,6 +13,8 @@ class PersonDashboard < Administrate::BaseDashboard
     name: Field::Text,
     username: Field::Text,
     email: Field::Text,
+    facebookid: Field::Text,
+    facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
     salt: Field::Text,
     created_at: Field::DateTime,
@@ -43,6 +45,8 @@ class PersonDashboard < Administrate::BaseDashboard
     :username,
     :email,
     :name,
+    :facebookid,
+    :facebook_picture_url,
     :created_at,
     :updated_at,
   ].freeze
