@@ -21,7 +21,7 @@ end
 branch = `git rev-parse --abbrev-ref HEAD`
 
 if system("bin/docapi")
-  if system("zip -r API-Docs.zip API-Docs")
+  if system("zip -r FanLink-API-Docs.zip FanLink-API-Docs")
     client.files_upload(
       channels: "#appstech",
       as_user: true,
