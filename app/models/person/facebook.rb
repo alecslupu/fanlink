@@ -1,6 +1,5 @@
 class Person
   module Facebook
-
     def self.included(base)
       base.class_exec do
 

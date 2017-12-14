@@ -1,5 +1,4 @@
 class Person < ApplicationRecord
-
   include Person::Facebook
 
   authenticates_with_sorcery!
@@ -11,7 +10,9 @@ class Person < ApplicationRecord
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
-  validates_uniqueness_to_tenant [:email, :facebookid, :username]
+  validates_uniqueness_to_tenant [:email, :username]
+
+  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true }
 
   validates :email, email: true, presence: true, if: Proc.new { |p| p.facebookid.blank? }
 
