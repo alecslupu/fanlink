@@ -74,7 +74,7 @@ class Api::V1::SessionController < ApiController
     else
       @person = Person.can_login?(params[:email_or_username])
       @person = login(@person.email, params[:password]) if @person
-      return render json: { errors: [ "Invalid login." ] , status: :unprocessable_entity } if @person.nil?
+      return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
     end
     if @person.errors.present?
       return render json: { errors: @person.errors.values.flatten }, status: :unprocessable_entity

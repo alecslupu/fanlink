@@ -1,0 +1,49 @@
+describe "Session (v1)" do
+  before(:all) do
+    @password = "badpassword"
+    @person = create(:person, password: @password)
+  end
+
+  describe "#create" do
+    it "should log in a person with email from a regular account" do
+      post "/session", params: { email_or_username: @person.email, password: @password, product: @person.product.internal_name }
+      expect(response).to be_success
+      expect(json["person"]).to eq(person_private_json(@person))
+    end
+    it "should log in a person with username from a regular account" do
+      post "/session", params: { email_or_username: @person.username, password: @password, product: @person.product.internal_name }
+      expect(response).to be_success
+      expect(json["person"]).to eq(person_private_json(@person))
+    end
+    it "should not log in a person with wrong username from a regular account" do
+      post "/session", params: { email_or_username: "wrongusername", password: @password, product: @person.product.internal_name }
+      expect(response).to be_unprocessable
+    end
+    it "should not log in a person with wrong email from a regular account" do
+      post "/session", params: { email_or_username: "wrongemail@example.com", password: @password, product: @person.product.internal_name }
+      expect(response).to be_unprocessable
+    end
+  end
+
+  describe "#destroy" do
+    it "should log you out" do
+      login_as(@person)
+      delete "/session"
+      expect(response).to be_success
+    end
+  end
+
+  describe "#index" do
+    it "should check a valid session" do
+      login_as(@person)
+      get "/session"
+      expect(json["person"]).to eq(person_private_json(@person))
+    end
+    it "should 404 with no session" do
+      logout
+      get "/session"
+      expect(response).to be_not_found
+    end
+
+  end
+end
