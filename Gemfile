@@ -55,6 +55,7 @@ end
 group :test do
   gem "database_cleaner"
   gem "simplecov", require: false
+  gem "webmock"
 end
 
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/

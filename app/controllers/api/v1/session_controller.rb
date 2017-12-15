@@ -47,9 +47,9 @@ class Api::V1::SessionController < ApiController
   # @apiParam {String} email_or_username
   #   The person's email address or username. Required unless using Facebook ID.
   # @apiParam {String} [facebook_auth_token]
-  #   The person's email address or username. Required unless using facebook_auth_token.
+  #   The facebook auth token. Required unless using username/password.
   # @apiParam {String} password
-  #   The person's password.
+  #   The person's password. Required unless using facebook_auth_token
   # @apiParam {Boolean} [keep] NOT YET SUPPORTED
   #   True if you want to keep them signed in, otherwise this will be a
   #   non-persistent session.
@@ -69,15 +69,12 @@ class Api::V1::SessionController < ApiController
     #fix_booleans_in!(:keep)
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
-      return render json: { errors: [ "Unable to find user from token. Likely a problem contacting Facebook."], status: :service_unavailable } if @person.nil?
+      return render json: { errors: [ "Unable to find user from token. Likely a problem contacting Facebook."] }, status: :service_unavailable if @person.nil?
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
       @person = login(@person.email, params[:password]) if @person
       return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
-    end
-    if @person.errors.present?
-      return render json: { errors: @person.errors.values.flatten }, status: :unprocessable_entity
     end
     #bake_cookies_for(@person)
     return_the @person

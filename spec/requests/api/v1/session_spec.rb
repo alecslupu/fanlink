@@ -23,6 +23,22 @@ describe "Session (v1)" do
       post "/session", params: { email_or_username: "wrongemail@example.com", password: @password, product: @person.product.internal_name }
       expect(response).to be_unprocessable
     end
+    it "should log in a person via FB auth token" do
+      tok = "1234"
+      fbperson = create(:person, email: nil, facebookid: "12345")
+      expect(Person).to receive(:for_facebook_auth_token).with(tok).and_return(fbperson)
+      post "/session", params: { product: fbperson.product.internal_name, facebook_auth_token: tok }
+      expect(response).to be_success
+      expect(json["person"]).to eq(person_private_json(fbperson))
+    end
+    it "should not log in a person via bad FB auth token" do
+      tok = "1234"
+      fbperson = create(:person, email: nil, facebookid: "12345")
+      expect(Person).to receive(:for_facebook_auth_token).with(tok).and_return(nil)
+      post "/session", params: { product: fbperson.product.internal_name, facebook_auth_token: tok }
+      puts response.status
+      expect(response).to have_http_status(:service_unavailable)
+    end
   end
 
   describe "#destroy" do
