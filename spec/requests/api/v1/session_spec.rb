@@ -36,7 +36,6 @@ describe "Session (v1)" do
       fbperson = create(:person, email: nil, facebookid: "12345")
       expect(Person).to receive(:for_facebook_auth_token).with(tok).and_return(nil)
       post "/session", params: { product: fbperson.product.internal_name, facebook_auth_token: tok }
-      puts response.status
       expect(response).to have_http_status(:service_unavailable)
     end
   end

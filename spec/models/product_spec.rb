@@ -2,10 +2,10 @@ RSpec.describe Product, type: :model do
 
   describe "#destroy" do
     it "should not let you destroy a product that has people" do
-      appl = create(:product, name: "My App")
-      create(:person, product: appl)
-      appl.destroy
-      expect(appl).to exist_in_database
+      p = Product.first
+      create(:person, product: Product.first)
+      p.destroy
+      expect(p).to exist_in_database
     end
   end
 

@@ -5,6 +5,7 @@ RSpec.describe Person, type: :model do
     @password = "logmein"
     @email = "pancakes@example.com"
     @person = create(:person, email: @email, username: @username, password: @password)
+    ActsAsTenant.current_tenant = Product.first
   end
 
   describe "#email" do
@@ -67,6 +68,31 @@ RSpec.describe Person, type: :model do
                    "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house" ]
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
+      end
+    end
+  end
+
+  describe "Facebook" do
+    describe ".create_from_facebook" do
+      it "should create and return a new user from valid FB auth token" do
+        username = "somedude#{Time.now.to_i}"
+        koala_result = { "id" => Time.now.to_i.to_s, "name" => "John Smith" }
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
+        p = nil
+        expect {
+          p = Person.create_from_facebook("12345", username)
+        }.to change{ Person.count }.by(1)
+        expect(p).to eq(Person.last)
+      end
+    end
+    describe ".for_facebook_auth_token" do
+      it "should return person with FB id if given proper token" do
+        fbid = "123456"
+        tok = "1234567"
+        person = create(:person, facebookid: fbid)
+        koala_result = { "id" => fbid, "name" => "John Smith" }
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
+        expect(Person.for_facebook_auth_token(tok)).to eq(person)
       end
     end
   end

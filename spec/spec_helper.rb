@@ -132,6 +132,10 @@ RSpec.configure do |config|
   #config.include Sorcery::TestHelpers::Rails::Controller, type: :request
   config.include Sorcery::TestHelpers::Rails::Integration #, type: :request
 
+  config.before(:all) do
+    @prod_name = create(:product).internal_name
+  end
+
   config.before :each, type: :request do
     @json = nil
   end
