@@ -36,7 +36,7 @@ class ApiController < ApplicationController
     if obj.nil?
       render json: { errors: { base: [ _("Not found") ] } }, status: :not_found
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render json: { errors: obj.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: obj.errors.messages.values.flatten }, status: :unprocessable_entity
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       render action: opts[:using], formats: %i[json]
     else

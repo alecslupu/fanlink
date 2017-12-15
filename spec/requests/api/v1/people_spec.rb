@@ -39,7 +39,7 @@ describe "People (v1)" do
                                                                             username: username, password: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Username has already been taken")
+      expect(json["errors"]).to include("A user has already signed up with that username.")
     end
     it "should not sign up new user with email already used" do
       email = "alreadyused@example.com"
@@ -49,7 +49,7 @@ describe "People (v1)" do
                                                                             username: "anything", password: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Email has already been taken")
+      expect(json["errors"]).to include("A user has already signed up with that email address.")
     end
     it "should not sign up new user with email already used" do
       email = "alreadyused@example.com"
@@ -59,14 +59,21 @@ describe "People (v1)" do
                                                                               username: "anything", password: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Email has already been taken")
+      expect(json["errors"]).to include("A user has already signed up with that email address.")
     end
     it "should not sign up new user without an email" do
       expect {
         post "/people", params: { product: @prod_name, person: { username: "anything", password: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Email can't be blank")
+      expect(json["errors"]).to include("Email is required.")
+    end
+    it "should not sign up new user with an invalid email" do
+      expect {
+        post "/people", params: { product: @prod_name, person: { email: "nogood", username: "anything", password: "anything" } }
+      }.to change { Person.count }.by(0)
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Email is invalid.")
     end
     it "should not sign up new user without a username" do
       expect {
@@ -94,7 +101,7 @@ describe "People (v1)" do
         post "/people", params: { product: @prod_name, person: { username: "abc", email: "anything", password: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Email is invalid")
+      expect(json["errors"]).to include("Email is invalid.")
     end
     it "should not sign up new user with FB auth token if account with FB id already exists" do
       tok = "1234"
@@ -106,7 +113,7 @@ describe "People (v1)" do
         post "/people", params: { product: Product.first.internal_name, person: { username: "anything", facebook_auth_token: tok } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Facebookid has already been taken")
+      expect(json["errors"]).to include("A user has already signed up with that Facebook account.")
     end
     it "should not sign up new user with FB auth token if account with email already exists" do
       tok = "1234"
@@ -118,7 +125,7 @@ describe "People (v1)" do
         post "/people", params: { product: Product.first.internal_name, person: { username: "anything", facebook_auth_token: tok } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Email has already been taken")
+      expect(json["errors"]).to include("A user has already signed up with that email address.")
     end
 
   end

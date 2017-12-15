@@ -10,14 +10,15 @@ class Person < ApplicationRecord
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
-  validates_uniqueness_to_tenant [:email, :username]
+  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: "A user has already signed up with that Facebook account." }
+  validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: "A user has already signed up with that email address." }
+  validates :username, uniqueness: { scope: :product_id, message: "A user has already signed up with that username." }
 
-  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true }
+  validates :email, presence: { message: "Email is required." }, if: Proc.new { |p| p.facebookid.blank? }
+  validates :email, email: { message: "Email is invalid.", allow_nil: true }
 
-  validates :email, email: true, presence: true, if: Proc.new { |p| p.facebookid.blank? }
-
-  validates :username, presence: { message: "is required." }
-  validates :username, length: { in: 3..26, message: "must be between 3 and 26 characters" }
+  validates :username, presence: { message: "Username is required." }
+  validates :username, length: { in: 3..26, message: "Username must be between 3 and 26 characters" }
 
   validates :password, length: { minimum: 6 }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
