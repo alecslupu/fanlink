@@ -11,7 +11,7 @@ class RoomDashboard < Administrate::BaseDashboard
     product: Field::BelongsTo,
     id: Field::Number,
     name: Field::Text,
-    created_by_id: Field::Number,
+    created_by: Field::BelongsTo.with_options(class_name: "Person"),
     status: Field::Enum,
     public: Field::Boolean,
     picture_id: Field::Text,
@@ -26,7 +26,7 @@ class RoomDashboard < Administrate::BaseDashboard
     :product,
     :id,
     :name,
-    :created_by_id,
+    :status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -35,7 +35,8 @@ class RoomDashboard < Administrate::BaseDashboard
     :product,
     :id,
     :name,
-    :created_by_id,
+    :status,
+    :created_by,
     :status,
     :public,
     :picture_id,
@@ -47,16 +48,14 @@ class RoomDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :product,
     :name,
-    :created_by_id,
     :status,
-    :public,
     :picture_id,
   ].freeze
 
   # Overwrite this method to customize how rooms are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(room)
-  #   "Room ##{room.id}"
-  # end
+  def display_resource(room)
+    "Room - #{room.name}"
+  end
 end

@@ -1,14 +1,20 @@
 describe "People (v1)" do
 
+  before(:all) do
+    @product = Product.first || create(:product)
+  end
+
+  before(:each) do
+    logout
+  end
+
   describe "#create" do
     it "should sign up new user with email, username and password" do
+      Rails.logger.debug "HHHHHH =============="
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
       password = "secret"
-      product = create(:product)
-      expect {
-        post "/people", params: { product: product.internal_name, person: { username: username, email: email, password: password } }
-      }.to change { Person.count }.by(1)
+      post "/people", params: { product: @product.internal_name, person: { username: username, email: email, password: password } }
       expect(response).to be_success
       p = Person.last
       expect(p.email).to eq(email)
