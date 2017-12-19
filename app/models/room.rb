@@ -36,8 +36,14 @@ class Room < ApplicationRecord
   end
 
   def name_uniqueness
-    if public && Room.where.not(id: self.id).where(public: true).where(name_canonical: self.name_canonical).exists?
-      errors.add(:name, "A public room already exists with that name")
+    if public
+      if Room.where.not(id: self.id).where(public: true).where(name_canonical: self.name_canonical).exists?
+        errors.add(:name, "A public room already exists with that name")
+      end
+    else
+      if Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id).exists?
+        errors.add(:name, "You have already created a room with that name.")
+      end
     end
   end
 

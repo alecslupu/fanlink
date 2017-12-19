@@ -1,5 +1,11 @@
 RSpec.describe Room, type: :model do
 
+  before(:all) do
+    @name = "abc"
+    @room = create(:room, name: @name, public: true)
+    ActsAsTenant.current_tenant = @room.product
+  end
+
   describe "#destroy" do
     it "should not let you destroy a room that has messages" do
       pending("to do")
@@ -23,10 +29,29 @@ RSpec.describe Room, type: :model do
       expect(room.errors[:name]).not_to be_blank
     end
     it "should require unique name amongst publics" do
-      room1 = create(:room, name: "abc", public: true)
-      room2 = build(:room, product: room1.product, name: "abc", public: true)
+      room2 = build(:room, name: @room.name, public: true)
       expect(room2).not_to be_valid
       expect(room2.errors[:name]).not_to be_empty
+    end
+    it "should allow shared name for public and private" do
+      room2 = build(:room, name: @room.name, public: false)
+      expect(room2).to be_valid
+    end
+    it "should allow shared name for private and private when not created by same person" do
+      room1 = create(:room, name: "abc", public: false)
+      room2 = build(:room, product: room1.product, name: "abc", public: false, created_by_id: create(:person).id)
+      expect(room2).to be_valid
+    end
+    it "should not allow shared name for private and private when created by same person" do
+      room1 = create(:room, name: "abc", public: false)
+      room2 = build(:room, product: room1.product, name: "abc", public: false, created_by_id: room1.created_by_id)
+      expect(room2).not_to be_valid
+      expect(room2.errors[:name]).not_to be_blank
+    end
+    it "should allow shared name across products" do
+      ActsAsTenant.current_tenant = create(:product)
+      room2 = build(:room, name: @room.name, public: true)
+      expect(room2).to be_valid
     end
   end
 

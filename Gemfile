@@ -53,7 +53,7 @@ group :development do
 end
 
 group :test do
-  gem "database_cleaner"
+  gem "database_cleaner", require: false
   gem "simplecov", require: false
   gem "webmock"
 end
