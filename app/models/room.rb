@@ -10,7 +10,9 @@ class Room < ApplicationRecord
 
   validate :name_uniqueness
   validates :name, presence: { message: "Room name is required." }
-  validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters" }
+  validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters", allow_blank: true }
+
+  scope :active_publics, -> { where({ status: :active, public: true}) }
 
   #
   # Return the canonical form of a name.

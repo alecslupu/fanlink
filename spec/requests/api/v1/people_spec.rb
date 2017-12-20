@@ -10,7 +10,6 @@ describe "People (v1)" do
 
   describe "#create" do
     it "should sign up new user with email, username and password" do
-      Rails.logger.debug "HHHHHH =============="
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
       password = "secret"
