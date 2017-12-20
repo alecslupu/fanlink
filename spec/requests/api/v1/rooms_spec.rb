@@ -1,4 +1,4 @@
-describe "Room (v1)" do
+describe "Rooms (v1)" do
 
   before(:all) do
     @product = Product.first || create(:product)
@@ -22,17 +22,17 @@ describe "Room (v1)" do
       login_as(@person)
       get "/rooms"
       expect(response).to be_success
-      room_ids = json["rooms"].map{ |r| r["id"] }
-      expect(room_ids).to eq(@public_actives.map{ |pa| pa.id })
-      expect(room_ids & @not_public_actives.map{ |npa| npa.id }).to be_empty
+      room_ids = json["rooms"].map { |r| r["id"] }
+      expect(room_ids.sort).to eq(@public_actives.map { |pa| pa.id }.sort)
+      expect(room_ids & @not_public_actives.map { |npa| npa.id }).to be_empty
     end
     it "should get a list of active public rooms when private param is false" do
       login_as(@person)
       get "/rooms", params: { private: "false" }
       expect(response).to be_success
-      room_ids = json["rooms"].map{ |r| r["id"] }
-      expect(room_ids).to eq(@public_actives.map{ |pa| pa.id })
-      expect(room_ids & @not_public_actives.map{ |npa| npa.id }).to be_empty
+      room_ids = json["rooms"].map { |r| r["id"] }
+      expect(room_ids.sort).to eq(@public_actives.map { |pa| pa.id }.sort)
+      expect(room_ids & @not_public_actives.map { |npa| npa.id }).to be_empty
     end
   end
 end

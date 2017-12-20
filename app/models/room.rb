@@ -1,5 +1,4 @@
 class Room < ApplicationRecord
-
   enum status: %i[ inactive active deleted ]
 
   acts_as_tenant(:product)
@@ -8,11 +7,14 @@ class Room < ApplicationRecord
 
   before_validation :canonicalize_name, if: :name_changed?
 
+  has_many :room_memberships, dependent: :destroy
+  has_many :members, through: :room_memberships
+
   validate :name_uniqueness
   validates :name, presence: { message: "Room name is required." }
   validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters", allow_blank: true }
 
-  scope :active_publics, -> { where({ status: :active, public: true}) }
+  scope :active_publics, -> { where(status: :active, public: true) }
 
   #
   # Return the canonical form of a name.
@@ -26,7 +28,7 @@ class Room < ApplicationRecord
     StringUtil.search_ify(name)
   end
 
-  private
+private
 
   def canonicalize(name)
     self.class.canonicalize(name)
@@ -43,10 +45,9 @@ class Room < ApplicationRecord
         errors.add(:name, "A public room already exists with that name")
       end
     else
-      if Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id).exists?
-        errors.add(:name, "You have already created a room with that name.")
+      if Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id, name: name).exists?
+        errors.add(:name, "You have already created a room with the name #{name}.")
       end
     end
   end
-
 end

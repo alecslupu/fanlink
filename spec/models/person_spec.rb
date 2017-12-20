@@ -81,7 +81,7 @@ RSpec.describe Person, type: :model do
         p = nil
         expect {
           p = Person.create_from_facebook("12345", username)
-        }.to change{ Person.count }.by(1)
+        }.to change { Person.count }.by(1)
         expect(p).to eq(Person.last)
       end
     end

@@ -7,6 +7,10 @@ class Person < ApplicationRecord
 
   #belongs_to :product
 
+  has_many :room_memberships, dependent: :destroy
+
+  has_many :private_rooms, through: :room_memberships
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 

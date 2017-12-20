@@ -1,6 +1,4 @@
 class Api::V1::RoomsController < ApiController
-
-
   #**
   # @api {get} /rooms Get a list of rooms.
   # @apiName GetRooms
@@ -30,5 +28,4 @@ class Api::V1::RoomsController < ApiController
   def index
     @rooms = Room.active_publics
   end
-
 end
