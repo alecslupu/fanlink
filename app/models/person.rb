@@ -24,7 +24,8 @@ class Person < ApplicationRecord
   validates :username, presence: { message: "Username is required." }
   validates :username, length: { in: 3..26, message: "Username must be between 3 and 26 characters" }
 
-  validates :password, length: { minimum: 6 }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, presence: { message: "Password is required." }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, length: { minimum: 6, allow_blank: true }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
   #
   # Return the canonical form of a username.

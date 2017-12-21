@@ -23,7 +23,6 @@ class Api::V1::RoomMembershipsController < ApiController
     if mem.valid?
       render body: nil, status: :ok
     else
-      puts mem.errors.full_messages
       render json: { errors: mem.errors }, status: :unprocessable_entity
     end
   end
