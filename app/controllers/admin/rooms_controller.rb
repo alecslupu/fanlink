@@ -23,6 +23,24 @@ module Admin
       super
     end
 
+    def index
+      search_term = params[:search].to_s.strip
+      resources = Administrate::Search.new(scoped_resource,
+                                           dashboard_class,
+                                           search_term).run
+      resources = resources.where(public: true).includes(*resource_includes) if resource_includes.any?
+      resources = order.apply(resources)
+      resources = resources.page(params[:page]).per(records_per_page)
+      page = Administrate::Page::Collection.new(dashboard, order: order)
+
+      render locals: {
+          resources: resources,
+          search_term: search_term,
+          page: page,
+          show_search_bar: show_search_bar?
+      }
+    end
+
   private
 
     def resource_params

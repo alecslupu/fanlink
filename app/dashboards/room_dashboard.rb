@@ -10,7 +10,7 @@ class RoomDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
-    name: Field::Text,
+    name: Field::Text.with_options(searchable: true),
     created_by: Field::BelongsTo.with_options(class_name: "Person"),
     status: Field::Enum,
     public: Field::Boolean,

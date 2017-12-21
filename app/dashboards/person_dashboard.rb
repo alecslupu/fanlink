@@ -10,9 +10,9 @@ class PersonDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
-    name: Field::Text,
-    username: Field::Text,
-    email: Field::Text,
+    name: Field::Text.with_options(searchable: true),
+    username: Field::Text.with_options(searchable: true),
+    email: Field::Text.with_options(searchable: true),
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
