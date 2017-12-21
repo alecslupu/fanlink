@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   JkoApi.routes self do
     version 1 do
       resources :people, only: %i[ create ]
+      resources :rooms do
+        resources :room_memberships, only: %i[ create destroy ]
+      end
       resources :session, only: %i[ create index ] do
         collection do
           delete "" => "session#destroy"
@@ -13,6 +16,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :people
     resources :products
+    resources :rooms
 
     get "login" => "sessions#new"
     post "login" => "sessions#create"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214004418) do
+ActiveRecord::Schema.define(version: 20171220004929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,26 @@ ActiveRecord::Schema.define(version: 20171214004418) do
     t.index ["name"], name: "unq_products_name", unique: true
   end
 
+  create_table "room_memberships", force: :cascade do |t|
+    t.integer "room_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "idx_room_memberships_person"
+    t.index ["room_id", "person_id"], name: "unq_room_memberships_room_person", unique: true
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.text "name_canonical", null: false
+    t.integer "created_by_id", null: false
+    t.integer "status", default: 0, null: false
+    t.boolean "public", default: false, null: false
+    t.text "picture_id"
+    t.index ["product_id", "status"], name: "unq_rooms_product_status"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.text "item_type", null: false
     t.integer "item_id", null: false
@@ -67,4 +87,8 @@ ActiveRecord::Schema.define(version: 20171214004418) do
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
+  add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
+  add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
+  add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
 end

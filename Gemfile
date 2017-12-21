@@ -53,11 +53,14 @@ group :development do
 end
 
 group :test do
-  gem "database_cleaner"
+  gem "database_cleaner", require: false
+  gem "simplecov", require: false
+  gem "webmock"
 end
 
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate"
+gem "administrate-field-enum"
 gem "email_validator"
 gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51"
@@ -65,6 +68,7 @@ gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_
 gem "koala" #Facebook Graph API
 gem "paper_trail"
 gem "oauth2"
+gem "rest-firebase"
 gem "rubocop-rails"
 gem "sorcery"
 gem "unicode_utils"

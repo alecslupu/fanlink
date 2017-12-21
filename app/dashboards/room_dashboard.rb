@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class PersonDashboard < Administrate::BaseDashboard
+class RoomDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -11,17 +11,10 @@ class PersonDashboard < Administrate::BaseDashboard
     product: Field::BelongsTo,
     id: Field::Number,
     name: Field::Text.with_options(searchable: true),
-    username: Field::Text.with_options(searchable: true),
-    email: Field::Text.with_options(searchable: true),
-    facebookid: Field::Text,
-    facebook_picture_url: Field::Text,
-    crypted_password: Field::Text,
-    salt: Field::Text,
-    created_at: Field::DateTime,
-    updated_at: Field::DateTime,
-    remember_me_token: Field::String,
-    remember_me_token_expires_at: Field::DateTime,
-    password: PasswordField,
+    created_by: Field::BelongsTo.with_options(class_name: "Person"),
+    status: Field::Enum,
+    public: Field::Boolean,
+    picture_id: Field::Text,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -31,24 +24,22 @@ class PersonDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :product,
-    :username,
-    :email,
+    :id,
     :name,
-    :created_at,
+    :status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :id,
     :product,
-    :username,
-    :email,
+    :id,
     :name,
-    :facebookid,
-    :facebook_picture_url,
-    :created_at,
-    :updated_at,
+    :status,
+    :created_by,
+    :status,
+    :public,
+    :picture_id,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -56,16 +47,15 @@ class PersonDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :product,
-    :username,
-    :email,
     :name,
-    :password
+    :status,
+    :picture_id,
   ].freeze
 
-  # Overwrite this method to customize how people are displayed
+  # Overwrite this method to customize how rooms are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(person)
-    person.name
+  def display_resource(room)
+    "Room - #{room.name}"
   end
 end
