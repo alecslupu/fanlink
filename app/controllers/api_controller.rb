@@ -44,14 +44,19 @@ class ApiController < ApplicationController
     end
   end
 
-  private
+protected
 
-    def set_product
-      product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
-      if product.nil?
-        render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
-      else
-        set_current_tenant(product)
-      end
+  def set_product
+    product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+    if product.nil?
+      render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
+    else
+      set_current_tenant(product)
     end
+  end
+
+  def not_authenticated
+    head :unauthorized
+  end
+
 end

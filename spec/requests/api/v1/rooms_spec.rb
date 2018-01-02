@@ -47,6 +47,12 @@ describe "Rooms (v1)" do
   end
 
   describe "#create" do
+    it "should not create a private room if not logged in" do
+      member = create(:person, product: @product)
+      n = "Some Room"
+      post "/rooms", params: { room: { name: n, member_ids: [ member.id.to_s ] } }
+      expect(response).to be_unauthorized
+    end
     it "should create a private room with a list of members" do
       login_as(@person)
       member = create(:person, product: @product)
