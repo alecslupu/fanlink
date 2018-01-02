@@ -28,7 +28,7 @@ describe "People (v1)" do
       koala_result = { "id" => "12345", "name" => "John Smith", "email" => email }
       allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
       expect {
-        post "/people", params: { product: product.internal_name, person: { username: username, facebook_auth_token: tok } }
+        post "/people", params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
       }.to change { Person.count }.by(1)
       expect(response).to be_success
       p = Person.last
@@ -115,7 +115,7 @@ describe "People (v1)" do
       koala_result = { "id" => fbid, "name" => "John Smith" }
       allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
       expect {
-        post "/people", params: { product: Product.first.internal_name, person: { username: "anything", facebook_auth_token: tok } }
+        post "/people", params: { product: Product.first.internal_name, facebook_auth_token: tok, person: { username: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("A user has already signed up with that Facebook account.")
@@ -127,7 +127,7 @@ describe "People (v1)" do
       koala_result = { "id" => "12345", "name" => "John Smith", "email" => email }
       allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
       expect {
-        post "/people", params: { product: Product.first.internal_name, person: { username: "anything", facebook_auth_token: tok } }
+        post "/people", params: { product: Product.first.internal_name, facebook_auth_token: tok, person: { username: "anything" } }
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("A user has already signed up with that email address.")

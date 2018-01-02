@@ -47,8 +47,8 @@ class Api::V1::PeopleController < ApiController
   #*
   def create
     parms = person_params
-    if parms[:facebook_auth_token].present?
-      @person = Person.create_from_facebook(parms[:facebook_auth_token], parms[:username])
+    if params[:facebook_auth_token].present?
+      @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
       if @person.nil?
         render json: { errors: "There was a problem contacting Facebook" }, status: :service_unavailable && return
       end
@@ -62,7 +62,7 @@ class Api::V1::PeopleController < ApiController
   end
 
   def person_params
-    person = params.require(:person).permit(:email, :name, :username, :password, :picture, :picture_id, :facebook_auth_token)
+    person = params.require(:person).permit(:email, :name, :username, :password, :picture, :picture_id)
     if picture = person.delete(:picture).presence
       person[:picture] = picture.respond_to?(:read) ? picture.read : picture
     end
