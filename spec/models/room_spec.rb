@@ -52,6 +52,21 @@ RSpec.describe Room, type: :model do
       ActsAsTenant.current_tenant = create(:product)
       room2 = build(:room, name: @room.name, public: true)
       expect(room2).to be_valid
+      ActsAsTenant.current_tenant = @room.product
+    end
+    it "should not require name for private room" do
+      room = build(:room, name: nil, public: false)
+      expect(room).to be_valid
+    end
+    it "should require name for public room" do
+      room = build(:room, name: nil, public: true)
+      expect(room).not_to be_valid
+      expect(room.errors[:name]).not_to be_empty
+    end
+    it "should not allow empty string name for public room" do
+      room = build(:room, name: "", public: true)
+      expect(room).not_to be_valid
+      expect(room.errors[:name]).not_to be_empty
     end
   end
 
