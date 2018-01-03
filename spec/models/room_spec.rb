@@ -8,8 +8,9 @@ RSpec.describe Room, type: :model do
 
   describe "#destroy" do
     it "should not let you destroy a room that has messages" do
-      pending("to do")
-      fail
+      create(:message, room: @room)
+      @room.destroy
+      expect(@room).to exist_in_database
     end
   end
 

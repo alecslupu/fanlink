@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     version 1 do
       resources :people, only: %i[ create ]
       resources :rooms do
+        resources :messages
         resources :room_memberships, only: %i[ create destroy ]
       end
       resources :session, only: %i[ create index ] do
