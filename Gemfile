@@ -48,9 +48,6 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "listen", ">= 3.0.5", "< 3.2"
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
 end
 
 group :test do
@@ -63,13 +60,13 @@ gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #t
 gem "administrate"
 gem "administrate-field-enum"
 gem "email_validator"
+gem "firebase", git: "https://github.com/rflorence/firebase-ruby.git", branch: "new-authentication"
 gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51"
 #gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'
 gem "koala" #Facebook Graph API
 gem "paper_trail"
 gem "oauth2"
-gem "rest-firebase"
 gem "rubocop-rails"
 gem "sorcery"
 gem "unicode_utils"
