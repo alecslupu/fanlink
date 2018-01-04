@@ -18,5 +18,12 @@ if Person.count == 0
   unless Rails.env.production?
     Person.create(name: "Admin User", username: "admin", product_id: Product.find_by(internal_name: "admin").id, email: "admin@example.com",
                   password: "flink_admin")
+    Person.create(name: "Some User", username: "some_user", product_id: Product.find_by(internal_name: "test").id, email: "somebody@example.com", password: "password")
+  end
+end
+
+if Room.count == 0
+  unless Rails.env.production?
+    Room.create(name: "Public room", created_by_id: Person.find_by(name: "Admin User").id, public: true, product_id: Product.find_by(internal_name: "test").id)
   end
 end

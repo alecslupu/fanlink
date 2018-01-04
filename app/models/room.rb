@@ -10,6 +10,8 @@ class Room < ApplicationRecord
   has_many :room_memberships, dependent: :destroy
   has_many :members, through: :room_memberships, source: :person
 
+  has_many :messages, dependent: :restrict_with_error
+
   validate :name_uniqueness
   validates :name, presence: { message: "Room name is required." }, if: Proc.new { |r| r.public? }
   validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters", allow_blank: true }
@@ -27,6 +29,10 @@ class Room < ApplicationRecord
   #
   def self.canonicalize(name)
     StringUtil.search_ify(name)
+  end
+
+  def is_member?(person)
+    members.include?(person)
   end
 
   def private?

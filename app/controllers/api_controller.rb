@@ -1,4 +1,6 @@
 class ApiController < ApplicationController
+  include FloadUp
+
   set_current_tenant_through_filter
 
   before_action :set_product
