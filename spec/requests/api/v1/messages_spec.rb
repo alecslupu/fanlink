@@ -53,6 +53,68 @@ describe "Messages (v1)" do
     end
   end
 
+  describe "#index" do
+    let(:room) { create(:room, product: @person.product, public: true) }
+    let(:msg1) { create(:message, room: room, created_at: Date.today - 1.day) }
+    let(:msg2) { create(:message, room: room) }
+    let(:from) { "2018-01-01" }
+    let(:to) { "2018-01-03" }
+    it "should get a list of messages for a date range without limit" do
+      login_as(@person)
+      expect(Message).to receive(:for_date_range).with(Date.parse(from), Date.parse(to), nil).and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to}
+      expect(response).to be_success
+      expect(json["messages"].map{|m| m["id"]}).to eq([msg2.id.to_s, msg1.id.to_s])
+    end
+    it "should get a list of messages for a date range with limit" do
+      login_as(@person)
+      expect(Message).to receive(:for_date_range).with(Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg2.id]))
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1}
+      expect(response).to be_success
+      expect(json["messages"].map{|m| m["id"]}).to eq([msg2.id.to_s])
+    end
+    it "should return unprocessable if invalid from date" do
+      login_as(@person)
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { from_date: "hahahaha", to_date: to, limit: 1}
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("invalid date")
+    end
+    it "should return unprocessable if invalid to date" do
+      login_as(@person)
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: "who me?", limit: 1}
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("invalid date")
+    end
+    it "should return unprocessable if missing from date" do
+      login_as(@person)
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { to_date: to, limit: 1}
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("invalid date")
+    end
+    it "should return unprocessable if missing to date" do
+      login_as(@person)
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { from_date: from, limit: 1}
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("invalid date")
+    end
+    it "should return 404 if room from another product" do
+      login_as(@person)
+      room_other = create(:room, product: create(:product))
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room_other.id}/messages", params: { from_date: from, to_date: to, limit: 1}
+      expect(response).to be_not_found
+    end
+    it "should return unauthorized if not logged in" do
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1}
+      expect(response).to be_unauthorized
+    end
+  end
+
   describe "#show" do
     it "should get a single private message" do
       login_as(@person)

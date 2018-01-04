@@ -2,7 +2,7 @@ module Messaging
 
   def delete_message(message)
     if message.hidden
-      resp = client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
+      client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
     end
   end
 
@@ -25,7 +25,7 @@ private
   end
 
   def post_public_message(msg)
-    resp = client.set("#{room_path(msg.room)}/last_message", msg.as_json)
+    client.set("#{room_path(msg.room)}/last_message", msg.as_json)
   end
 
   def room_path(room)

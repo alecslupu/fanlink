@@ -67,6 +67,48 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
+  # @api {get} /rooms/{room_id}/messages Get messages for a date range.
+  # @apiName GetMessages
+  # @apiGroup Rooms
+  #
+  # @apiDescription
+  #   This gets a list of message for a from date, to date, with an optional
+  #   limit. Messags are returned newest first, and the limit is applied to that ordering.
+  #
+  # @apiParam {String} from_date
+  #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
+  #
+  # @apiParam {String} to_date
+  #   To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "messages": [
+  #       {
+  #         "id": "5016",
+  #         "body": "My body is immaculate",
+  #         "picture_url": "NOT YET IMPLEMENTED",
+  #         "created_at" : "2018-01-01 12:23:32",
+  #         "person": { ...person json ...}
+  #       },....
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
+  #*
+  def index
+    room = Room.find(params[:room_id])
+    if !check_dates
+      render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
+    else
+      l = params[:limit].to_i
+      l = nil if l == 0
+      @messages = Message.for_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date]), l)
+      return_the @messages
+    end
+  end
+
+  #**
   # @api {get} /rooms/{room_id}/messages/id Get a single message.
   # @apiName GetMessage
   # @apiGroup Rooms
@@ -108,6 +150,11 @@ class Api::V1::MessagesController < ApiController
   end
 
   private
+
+  def check_dates
+    params[:from_date].present? && DateUtil.valid_date_string?(params[:from_date]) &&
+      params[:to_date].present? && DateUtil.valid_date_string?(params[:to_date])
+  end
 
   def message_params
     params.require(:message).permit(:body, :picture)
