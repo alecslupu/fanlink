@@ -60,5 +60,4 @@ protected
   def not_authenticated
     head :unauthorized
   end
-
 end

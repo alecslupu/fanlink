@@ -1,5 +1,4 @@
 module Messaging
-
   def delete_message(message)
     if message.hidden
       client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
@@ -31,5 +30,4 @@ private
   def room_path(room)
     "#{room.product.internal_name}/rooms/#{room.id}"
   end
-
 end

@@ -1,7 +1,7 @@
 class Api::V1::MessagesController < ApiController
   include Messaging
 
-  load_up_the Room, {from: :room_id}
+  load_up_the Room, from: :room_id
 
   #**
   # @api {post} /rooms/{room_id}/messages Create a message in a room.
@@ -157,7 +157,7 @@ class Api::V1::MessagesController < ApiController
     end
   end
 
-  private
+private
 
   def check_dates
     params[:from_date].present? && DateUtil.valid_date_string?(params[:from_date]) &&
