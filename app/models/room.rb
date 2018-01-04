@@ -31,6 +31,10 @@ class Room < ApplicationRecord
     StringUtil.search_ify(name)
   end
 
+  def is_member?(person)
+    members.include?(person)
+  end
+
   def private?
     !public
   end

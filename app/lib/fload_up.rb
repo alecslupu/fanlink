@@ -56,22 +56,23 @@ module FloadUp
           if !obj
             render_not_found
           elsif obj
-            action     = actions[params[:action]]
-            action     = actions[action] if actions.has_key?(action) # Allow aliased aliases.
-            can_access =
-                if (action == true || action == false)
-                  action
-                elsif (action.respond_to?(:call))
-                  action.call(obj, current_user, current_property)
-                else
-                  obj.send("allows_#{action}_from?", current_user, current_property)
-                end
-            if can_access
-              instance_variable_set(obj_name, obj)
-            else
-              errors = obj.errors.present? ? obj.errors : { base: [ _("Access denied") ] }
-              render_unprocessable_entity(errors)
-            end
+            instance_variable_set(obj_name, obj)
+            # action     = actions[params[:action]]
+            # action     = actions[action] if actions.has_key?(action) # Allow aliased aliases.
+            # can_access =
+            #     if (action == true || action == false)
+            #       action
+            #     elsif (action.respond_to?(:call))
+            #       action.call(obj, current_user, current_property)
+            #     else
+            #       obj.send("allows_#{action}_from?", current_user, current_property)
+            #     end
+            # if can_access
+            #   instance_variable_set(obj_name, obj)
+            # else
+            #   errors = obj.errors.present? ? obj.errors : { base: [ _("Access denied") ] }
+            #   render_unprocessable_entity(errors)
+            # end
           end
         end
       end

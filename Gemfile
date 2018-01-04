@@ -60,7 +60,7 @@ gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #t
 gem "administrate"
 gem "administrate-field-enum"
 gem "email_validator"
-gem "firebase", git: "https://github.com/rflorence/firebase-ruby.git", branch: "new-authentication"
+gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51"
 #gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'

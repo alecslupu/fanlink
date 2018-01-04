@@ -17,9 +17,8 @@ GIT
       warden-oauth2
 
 GIT
-  remote: https://github.com/rflorence/firebase-ruby.git
-  revision: b1c6e326fd6f07ffb01acda9ca90081f26fdf4b9
-  branch: new-authentication
+  remote: https://github.com/oscardelben/firebase-ruby.git
+  revision: 8153576ed501b3571d4c8d9411afbd5e1bfce719
   specs:
     firebase (0.2.6)
       googleauth

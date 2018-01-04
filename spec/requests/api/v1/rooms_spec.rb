@@ -13,7 +13,6 @@ describe "Rooms (v1)" do
     @private_room2.room_memberships.create(person_id: @person.id)
     @private_room3 = create(:room, public: false, status: :active, product: @product)
     @other_product_room = create(:room, public: true, status: :active, product: create(:product))
-    @public_actives = [@room1, @room2]
     @not_public_actives = [@inactive_room, @deleted_room, @private_room, @other_product_room]
   end
 
@@ -27,15 +26,18 @@ describe "Rooms (v1)" do
       get "/rooms"
       expect(response).to be_success
       room_ids = json["rooms"].map { |r| r["id"] }
-      expect(room_ids.sort).to eq(@public_actives.map { |pa| pa.id }.sort)
-      expect(room_ids & @not_public_actives.map { |npa| npa.id }).to be_empty
+      ActsAsTenant.with_tenant(@person.product) do
+        expect(room_ids.sort).to eq(Room.publics.active.map { |pa| pa.id }.sort)
+      end
     end
     it "should get a list of active public rooms when private param is false" do
       login_as(@person)
       get "/rooms", params: { private: "false" }
       expect(response).to be_success
       room_ids = json["rooms"].map { |r| r["id"] }
-      expect(room_ids.sort).to eq(@public_actives.map { |pa| pa.id }.sort)
+      ActsAsTenant.with_tenant(@person.product) do
+        expect(room_ids.sort).to eq(Room.publics.active.map { |pa| pa.id }.sort)
+      end
     end
     it "should get a list of active private rooms of which user is a member when private param is true" do
       login_as(@person)

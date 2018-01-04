@@ -1,9 +1,10 @@
 class Api::V1::MessagesController < ApiController
+  include Messaging
 
-  load_up_the Room
+  load_up_the Room, {from: :room_id}
 
   #**
-  # @api {post} /rooms/id/messages Create a message in a room.
+  # @api {post} /rooms/{room_id}/messages Create a message in a room.
   # @apiName CreateMessage
   # @apiGroup Rooms
   #
@@ -31,6 +32,7 @@ class Api::V1::MessagesController < ApiController
     room = Room.find(params[:room_id])
     msg = room.messages.create(message_params.merge(person_id: current_user.id))
     if msg.valid?
+      post_message(msg)
       head :ok
     else
       return_the msg
@@ -38,35 +40,72 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {get} /rooms Get a list of rooms.
-  # @apiName GetRooms
+  # @api {delete} /rooms/{room_id}/messages/id Delete (hide) a single message.
+  # @apiName DeleteMessage
   # @apiGroup Rooms
   #
   # @apiDescription
-  #   This gets a list of active rooms (public or private, as specified by the "private" parameter).
-  #
-  # @apiParam {Boolean} [private]
-  #   Which type of room you want. With true you will get just active private rooms of which the current user is
-  #   a member. With false (the default), you will get just all active public rooms.
+  #   This deletes a single message by marking as hidden. Can only be called by the creator.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #     "rooms": [
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
+  #
+  def destroy
+    room = Room.find(params[:room_id])
+    msg = room.messages.find(params[:id])
+    if msg.person == current_user
+      msg.hidden = true
+      msg.save
+      delete_message(msg)
+      head :ok
+    else
+      head :unauthorized
+    end
+  end
+
+  #**
+  # @api {get} /rooms/{room_id}/messages/id Get a single message.
+  # @apiName GetMessage
+  # @apiGroup Rooms
+  #
+  # @apiDescription
+  #   This gets a single message for a message id. Only works for messages in private rooms.
+  #
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "message": [
   #       {
   #         "id": "5016",
-  #         "name": "Motley People Only",
-  #         "owned": "false", # is current user the owner of room?
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
+  #         "body": "Stupid thing to say",
+  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED,
+  #         "person": {...public person json...}
   #       },....
   #     ]
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
-  # def index
-  #   @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates(current_user) : Room.active.publics
-  #   return_the @rooms
-  # end
+  #
+  def show
+    room = Room.find(params[:room_id])
+    if room.public
+      render_not_found
+    else
+      if room.is_member?(current_user)
+        @message = room.messages.find(params[:id])
+        if @message.hidden
+          render_not_found
+        else
+          return_the @message
+        end
+      else
+        head :unauthorized
+      end
+    end
+  end
 
   private
 

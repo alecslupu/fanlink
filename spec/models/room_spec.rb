@@ -14,6 +14,19 @@ RSpec.describe Room, type: :model do
     end
   end
 
+  describe "#is_member" do
+    let(:member) { create(:person) }
+    let(:non_member) { create(:person) }
+    let(:room) { create(:room, public: false) }
+    it "should return true for room member" do
+      room.members << member
+      expect(room.is_member?(member)).to be_truthy
+    end
+    it "should return false for non room member" do
+      expect(room.is_member?(non_member)).to be_falsey
+    end
+  end
+
   describe "#name" do
     it "should accept a good name format" do
       room = build(:room, name: "My Room")
