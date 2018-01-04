@@ -5,7 +5,7 @@ RSpec.describe Person, type: :model do
     @password = "logmein"
     @email = "pancakes@example.com"
     @person = create(:person, email: @email, username: @username, password: @password)
-    ActsAsTenant.current_tenant = Product.first
+    ActsAsTenant.current_tenant = @person.product
   end
 
   describe "#email" do

@@ -21,3 +21,5 @@
 FanLink-API-Docs/
 
 coverage
+
+.env

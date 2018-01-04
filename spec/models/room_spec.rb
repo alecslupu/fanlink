@@ -8,8 +8,22 @@ RSpec.describe Room, type: :model do
 
   describe "#destroy" do
     it "should not let you destroy a room that has messages" do
-      pending("to do")
-      fail
+      create(:message, room: @room)
+      @room.destroy
+      expect(@room).to exist_in_database
+    end
+  end
+
+  describe "#is_member" do
+    let(:member) { create(:person) }
+    let(:non_member) { create(:person) }
+    let(:room) { create(:room, public: false) }
+    it "should return true for room member" do
+      room.members << member
+      expect(room.is_member?(member)).to be_truthy
+    end
+    it "should return false for non room member" do
+      expect(room.is_member?(non_member)).to be_falsey
     end
   end
 
