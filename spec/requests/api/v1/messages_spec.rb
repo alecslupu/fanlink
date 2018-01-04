@@ -24,6 +24,26 @@ describe "Messages (v1)" do
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
     end
+    it "should not create a new message in an inactive room" do
+      @room.inactive!
+      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:post_message)
+      login_as(@person)
+      body = "Do you like my body?"
+      post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Room is not active")
+      @room.active!
+    end
+    it "should not create a new message in a deleted room" do
+      @room.deleted!
+      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:post_message)
+      login_as(@person)
+      body = "Do you like my body?"
+      post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Room is not active")
+      @room.active!
+    end
   end
 
   describe "#destroy" do
@@ -54,21 +74,21 @@ describe "Messages (v1)" do
   end
 
   describe "#index" do
-    let(:room) { create(:room, product: @person.product, public: true) }
+    let(:room) { create(:room, product: @person.product, public: true, status: :active) }
     let(:msg1) { create(:message, room: room, created_at: Date.today - 1.day) }
     let(:msg2) { create(:message, room: room) }
     let(:from) { "2018-01-01" }
     let(:to) { "2018-01-03" }
     it "should get a list of messages for a date range without limit" do
       login_as(@person)
-      expect(Message).to receive(:for_date_range).with(Date.parse(from), Date.parse(to), nil).and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
+      expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), nil).and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
       get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to}
       expect(response).to be_success
       expect(json["messages"].map{|m| m["id"]}).to eq([msg2.id.to_s, msg1.id.to_s])
     end
     it "should get a list of messages for a date range with limit" do
       login_as(@person)
-      expect(Message).to receive(:for_date_range).with(Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg2.id]))
+      expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg2.id]))
       get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1}
       expect(response).to be_success
       expect(json["messages"].map{|m| m["id"]}).to eq([msg2.id.to_s])
@@ -107,6 +127,22 @@ describe "Messages (v1)" do
       expect(Message).to_not receive(:for_date_range)
       get "/rooms/#{room_other.id}/messages", params: { from_date: from, to_date: to, limit: 1}
       expect(response).to be_not_found
+    end
+    it "should return unprocessable if room inactive" do
+      login_as(@person)
+      room.inactive!
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1}
+      expect(response).to be_unprocessable
+      room.active!
+    end
+    it "should return unprocessable if room deleted" do
+      login_as(@person)
+      room.deleted!
+      expect(Message).to_not receive(:for_date_range)
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1}
+      expect(response).to be_unprocessable
+      room.active!
     end
     it "should return unauthorized if not logged in" do
       expect(Message).to_not receive(:for_date_range)

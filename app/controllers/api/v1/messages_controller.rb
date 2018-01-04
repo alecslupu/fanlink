@@ -30,12 +30,16 @@ class Api::V1::MessagesController < ApiController
   #*
   def create
     room = Room.find(params[:room_id])
-    msg = room.messages.create(message_params.merge(person_id: current_user.id))
-    if msg.valid?
-      post_message(msg)
-      head :ok
+    if room.active?
+      msg = room.messages.create(message_params.merge(person_id: current_user.id))
+      if msg.valid?
+        post_message(msg)
+        head :ok
+      else
+        return_the msg
+      end
     else
-      return_the msg
+      room_inactive
     end
   end
 
@@ -98,13 +102,17 @@ class Api::V1::MessagesController < ApiController
   #*
   def index
     room = Room.find(params[:room_id])
-    if !check_dates
-      render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
+    if room.active?
+      if !check_dates
+        render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
+      else
+        l = params[:limit].to_i
+        l = nil if l == 0
+        @messages = Message.visible.for_date_range(room, Date.parse(params[:from_date]), Date.parse(params[:to_date]), l)
+        return_the @messages
+      end
     else
-      l = params[:limit].to_i
-      l = nil if l == 0
-      @messages = Message.for_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date]), l)
-      return_the @messages
+      room_inactive
     end
   end
 
@@ -158,5 +166,9 @@ class Api::V1::MessagesController < ApiController
 
   def message_params
     params.require(:message).permit(:body, :picture)
+  end
+
+  def room_inactive
+    render json: { errors: "Room is not active" }, status: :unprocessable_entity
   end
 end

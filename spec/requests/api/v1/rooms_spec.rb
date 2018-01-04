@@ -55,7 +55,7 @@ describe "Rooms (v1)" do
       post "/rooms", params: { room: { name: n, member_ids: [ member.id.to_s ] } }
       expect(response).to be_unauthorized
     end
-    it "should create a private room with a list of members" do
+    it "should create a private room with a list of members and make it active" do
       login_as(@person)
       member = create(:person, product: @product)
       n = "Some Room"
@@ -63,6 +63,7 @@ describe "Rooms (v1)" do
       expect(response).to be_success
       room = Room.last
       expect(room.name).to eq(n)
+      expect(room.active?).to be_truthy
       members = room.members
       expect(members.count).to eq(2)
       expect(members.sort).to eq([member, @person].sort)
