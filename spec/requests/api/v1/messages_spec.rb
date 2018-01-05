@@ -23,6 +23,7 @@ describe "Messages (v1)" do
       expect(msg.room).to eq(@room)
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
+      expect(json["message"]).to eq(message_json(msg))
     end
     it "should not create a new message in an inactive room" do
       @room.inactive!
