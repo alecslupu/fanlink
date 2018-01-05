@@ -13,4 +13,8 @@ class Message < ApplicationRecord
     super(only: [:id, :body, :picture_id, :created_at],
           include: { person: { only: [:id, :username, :name, :picture_id] } })
   end
+
+  def visible?
+    !hidden
+  end
 end
