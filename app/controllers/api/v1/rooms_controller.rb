@@ -28,6 +28,10 @@ class Api::V1::RoomsController < ApiController
   #         "name": "Motley People Only",
   #         "owned": "true", # is current user the owner of room?
   #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
+  #         "members": [
+  #           { ...person json....},....
+  #         ]
+  #
   #       }
   #
   # @apiErrorExample {json} Error-Response:
