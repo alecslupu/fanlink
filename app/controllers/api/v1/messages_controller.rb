@@ -22,6 +22,7 @@ class Api::V1::MessagesController < ApiController
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
+  #     message: { ..message json..see get message action ....}
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 422
@@ -31,13 +32,11 @@ class Api::V1::MessagesController < ApiController
   def create
     room = Room.find(params[:room_id])
     if room.active?
-      msg = room.messages.create(message_params.merge(person_id: current_user.id))
-      if msg.valid?
-        post_message(msg)
-        head :ok
-      else
-        return_the msg
+      @message = room.messages.create(message_params.merge(person_id: current_user.id))
+      if @message.valid?
+        post_message(@message)
       end
+      return_the @message
     else
       room_inactive
     end
@@ -88,12 +87,7 @@ class Api::V1::MessagesController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "messages": [
-  #       {
-  #         "id": "5016",
-  #         "body": "My body is immaculate",
-  #         "picture_url": "NOT YET IMPLEMENTED",
-  #         "created_at" : "2018-01-01 12:23:32",
-  #         "person": { ...person json ...}
+  #       { ....message json..see get message action ....
   #       },....
   #     ]
   #
@@ -131,6 +125,7 @@ class Api::V1::MessagesController < ApiController
   #       {
   #         "id": "5016",
   #         "body": "Stupid thing to say",
+  #         "created_at": "2018-01-08'T'12:13:42'Z'"
   #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED,
   #         "person": {...public person json...}
   #       },....

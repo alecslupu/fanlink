@@ -32,7 +32,7 @@ module Admin
       end
     end
 
-    private
+  private
 
     def message_params
       params.require(:message).permit(:hidden)
