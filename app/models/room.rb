@@ -10,8 +10,10 @@ class Room < ApplicationRecord
   has_many :room_memberships, dependent: :destroy
   has_many :members, through: :room_memberships, source: :person
 
+  has_many :messages, dependent: :restrict_with_error
+
   validate :name_uniqueness
-  validates :name, presence: { message: "Room name is required." }
+  validates :name, presence: { message: "Room name is required." }, if: Proc.new { |r| r.public? }
   validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters", allow_blank: true }
 
   scope :privates, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false) }
@@ -27,6 +29,10 @@ class Room < ApplicationRecord
   #
   def self.canonicalize(name)
     StringUtil.search_ify(name)
+  end
+
+  def is_member?(person)
+    members.include?(person)
   end
 
   def private?
@@ -50,7 +56,7 @@ private
         errors.add(:name, "A public room already exists with that name")
       end
     else
-      if Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id, name: name).exists?
+      if name.present? && Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id, name: name).exists?
         errors.add(:name, "You have already created a room with the name #{name}.")
       end
     end

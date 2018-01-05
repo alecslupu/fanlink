@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     version 1 do
       resources :people, only: %i[ create ]
       resources :rooms do
+        resources :messages, except: %i[ new edit ]
         resources :room_memberships, only: %i[ create destroy ]
       end
       resources :session, only: %i[ create index ] do
@@ -14,6 +15,10 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :messages do
+      get "hide" => "messages#hide"
+      get "unhide" => "messages#unhide"
+    end
     resources :people
     resources :products
     resources :rooms
