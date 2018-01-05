@@ -33,7 +33,7 @@ RSpec.describe Message, type: :model do
     frozen_time = Time.local(2018, 1, 10, 12, 0, 0)
     Timecop.freeze(frozen_time) do
       let! (:room) { create(:room, created_at: frozen_time - 1.month) }
-      let! (:msg1) { create(:message, room: room, created_at: frozen_time)}
+      let! (:msg1) { create(:message, room: room, created_at: frozen_time) }
       let! (:msg2) { create(:message, room: room, created_at: frozen_time - 1.day) }
       let! (:msg3) { create(:message, room: room, created_at: frozen_time - 2.days) }
       let! (:old_msg) { create(:message, room: room, created_at: frozen_time - 10.days) }
@@ -47,5 +47,4 @@ RSpec.describe Message, type: :model do
       end
     end
   end
-
 end
