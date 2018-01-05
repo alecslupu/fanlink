@@ -6,7 +6,7 @@ class Api::V1::MessagesController < ApiController
   #**
   # @api {post} /rooms/{room_id}/messages Create a message in a room.
   # @apiName CreateMessage
-  # @apiGroup Rooms
+  # @apiGroup Messages
   #
   # @apiDescription
   #   The creates a message in a room and posts it to Firebase as appropriate.
@@ -45,7 +45,7 @@ class Api::V1::MessagesController < ApiController
   #**
   # @api {delete} /rooms/{room_id}/messages/id Delete (hide) a single message.
   # @apiName DeleteMessage
-  # @apiGroup Rooms
+  # @apiGroup Messages
   #
   # @apiDescription
   #   This deletes a single message by marking as hidden. Can only be called by the creator.
@@ -55,7 +55,7 @@ class Api::V1::MessagesController < ApiController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
-  #
+  #*
   def destroy
     room = Room.find(params[:room_id])
     msg = room.messages.find(params[:id])
@@ -72,11 +72,11 @@ class Api::V1::MessagesController < ApiController
   #**
   # @api {get} /rooms/{room_id}/messages Get messages for a date range.
   # @apiName GetMessages
-  # @apiGroup Rooms
+  # @apiGroup Messages
   #
   # @apiDescription
   #   This gets a list of message for a from date, to date, with an optional
-  #   limit. Messags are returned newest first, and the limit is applied to that ordering.
+  #   limit. Messages are returned newest first, and the limit is applied to that ordering.
   #
   # @apiParam {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
@@ -113,7 +113,7 @@ class Api::V1::MessagesController < ApiController
   #**
   # @api {get} /rooms/{room_id}/messages/id Get a single message.
   # @apiName GetMessage
-  # @apiGroup Rooms
+  # @apiGroup Messages
   #
   # @apiDescription
   #   This gets a single message for a message id. Only works for messages in private rooms.

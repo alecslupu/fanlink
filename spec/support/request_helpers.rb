@@ -21,6 +21,9 @@ module RequestHelpers
     super *add_accept_header(args)
   end
 
+  def put(*args)
+    super *add_accept_header(args)
+  end
 
 private
 

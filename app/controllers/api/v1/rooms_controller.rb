@@ -79,6 +79,45 @@ class Api::V1::RoomsController < ApiController
     return_the @rooms
   end
 
+  #**
+  # @api {patch} /rooms/id Update a private room (name).
+  # @apiName UpdateRoom
+  # @apiGroup Rooms
+  #
+  # @apiDescription
+  #   The updates a private room. Only the name can by updated, and only by the owner.
+  #
+  # @apiParam {Object} room
+  #   The room object container for the room parameters.
+  #
+  # @apiParam {String} room.name
+  #   The name of the room. Must be between 3 and 26 characters, inclusive.
+  #
+  # @apiParam {Attachment} [room.picture]
+  #   NOT YET IMPLEMENTED
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "room":
+  #       {
+  #         ...see room json for create room...
+  #       }
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 422
+  #     "errors" :
+  #       { "That name is too short, blah blah blah" }
+  #*
+  def update
+    @room = Room.find(params[:id])
+    if @room.created_by != current_user
+      head :unauthorized
+    else
+      @room.update_attribute(:name, room_params[:name])
+      return_the @room
+    end
+  end
+
 private
 
   def room_params
