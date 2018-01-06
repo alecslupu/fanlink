@@ -10,8 +10,12 @@ class Message < ApplicationRecord
 
 
   def as_json
-    super(only: [:id, :body, :picture_id, :created_at],
+    super(only: [:id, :body, :picture_id], methods: [:created_at_to_s],
           include: { person: { only: [:id, :username, :name, :picture_id] } })
+  end
+
+  def created_at_to_s
+    created_at.to_s
   end
 
   def visible?
