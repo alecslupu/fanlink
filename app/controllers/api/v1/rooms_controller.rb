@@ -1,4 +1,5 @@
 class Api::V1::RoomsController < ApiController
+  include Messaging
   #**
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom
@@ -28,6 +29,10 @@ class Api::V1::RoomsController < ApiController
   #         "name": "Motley People Only",
   #         "owned": "true", # is current user the owner of room?
   #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
+  #         "members": [
+  #           { ...person json....},....
+  #         ]
+  #
   #       }
   #
   # @apiErrorExample {json} Error-Response:
@@ -44,8 +49,39 @@ class Api::V1::RoomsController < ApiController
         @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
       end
       @room.reload
+      new_private_room(@room)
     end
     return_the @room
+  end
+
+  #**
+  # @api {delete} /rooms/id Delete a private room.
+  # @apiName DeleteRoom
+  # @apiGroup Rooms
+  #
+  # @apiDescription
+  #   The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the
+  #   status to deleted.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401, 404
+  #*
+  def destroy
+    @room = Room.find(params[:id])
+    if @room.created_by != current_user
+      head :unauthorized
+    else
+      if @room.messages.empty?
+        @room.destroy
+      else
+        @room.deleted!
+      end
+      delete_room(@room)
+      head :ok
+    end
   end
 
   #**
@@ -77,6 +113,45 @@ class Api::V1::RoomsController < ApiController
   def index
     @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates(current_user) : Room.active.publics
     return_the @rooms
+  end
+
+  #**
+  # @api {patch} /rooms/id Update a private room (name).
+  # @apiName UpdateRoom
+  # @apiGroup Rooms
+  #
+  # @apiDescription
+  #   The updates a private room. Only the name can by updated, and only by the owner.
+  #
+  # @apiParam {Object} room
+  #   The room object container for the room parameters.
+  #
+  # @apiParam {String} room.name
+  #   The name of the room. Must be between 3 and 26 characters, inclusive.
+  #
+  # @apiParam {Attachment} [room.picture]
+  #   NOT YET IMPLEMENTED
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "room":
+  #       {
+  #         ...see room json for create room...
+  #       }
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 422
+  #     "errors" :
+  #       { "That name is too short, blah blah blah" }
+  #*
+  def update
+    @room = Room.find(params[:id])
+    if @room.created_by != current_user
+      head :unauthorized
+    else
+      @room.update_attribute(:name, room_params[:name])
+      return_the @room
+    end
   end
 
 private

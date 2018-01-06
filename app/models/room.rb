@@ -56,7 +56,7 @@ private
         errors.add(:name, "A public room already exists with that name")
       end
     else
-      if name.present? && Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id, name: name).exists?
+      if name.present? && Room.where.not(id: self.id).where(public: false).where(created_by_id: self.created_by_id, name: name, status: :active).exists?
         errors.add(:name, "You have already created a room with the name #{name}.")
       end
     end
