@@ -1,4 +1,5 @@
 class Api::V1::RoomsController < ApiController
+  include Messaging
   #**
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom
@@ -48,8 +49,39 @@ class Api::V1::RoomsController < ApiController
         @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
       end
       @room.reload
+      new_private_room(@room)
     end
     return_the @room
+  end
+
+  #**
+  # @api {delete} /rooms/id Delete a private room.
+  # @apiName DeleteRoom
+  # @apiGroup Rooms
+  #
+  # @apiDescription
+  #   The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the
+  #   status to deleted.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401, 404
+  #*
+  def destroy
+    @room = Room.find(params[:id])
+    if @room.created_by != current_user
+      head :unauthorized
+    else
+      if @room.messages.empty?
+        @room.destroy
+      else
+        @room.deleted!
+      end
+      delete_room(@room)
+      head :ok
+    end
   end
 
   #**

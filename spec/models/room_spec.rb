@@ -57,8 +57,8 @@ RSpec.describe Room, type: :model do
       expect(room2).to be_valid
     end
     it "should not allow shared name for private and private when created by same person" do
-      room1 = create(:room, name: "abc", public: false)
-      room2 = build(:room, product: room1.product, name: "abc", public: false, created_by_id: room1.created_by_id)
+      room1 = create(:room, name: "abc", public: false, status: :active)
+      room2 = build(:room, product: room1.product, name: "abc", public: false, status: :active, created_by_id: room1.created_by_id)
       expect(room2).not_to be_valid
       expect(room2.errors[:name]).not_to be_blank
     end
