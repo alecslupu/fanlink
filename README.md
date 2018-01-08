@@ -106,7 +106,7 @@ Run `rubocop` and fix any issues.
 
 * You will need to have the Heroku CLI installed and be a member of the app. Do
 
-    heroku apps
+    `heroku apps`
     
 and make sure `fanlink-staging` is among your apps
 
@@ -122,14 +122,14 @@ If your deploy involves database changes, after the deploy, do:
         
 ## Other notes
 
-* The admin is based around a gem called <a href="https://github.com/thoughtbot/administrate">administrate</a>. When adding
+* The admin is based around a gem called [administrate](https://github.com/thoughtbot/administrate). When adding
 a new resource subject to admin, after adding the rails model and related files, 
 for the admin you will need a new file in the `app/dashboards` directory. To customize
 any of the layouts, you may need to generate the files for a resource. See the
 Administrate documentation for more info.
 
-* API versioning is provided by <a href="https://github.com/jwoertink/jko_api">this gem</a>. Currently
-we are using a fork due to <a href="https://github.com/jwoertink/jko_api/issues/7">this issue</a>.</li>
+* API versioning is provided by [this gem](https://github.com/jwoertink/jko_api). Currently
+we are using a fork due to [this issue](https://github.com/jwoertink/jko_api/issues/7).
 
 * After running specs, check the file in the <code>coverage</code> directory to
 check code coverage.
@@ -137,8 +137,6 @@ check code coverage.
 * Calls to Firebase are handled through <code>app/lib/messaging</code>. Any specs
 that result in calls to Firebase should stub all <code>Messaging</code> calls. Calls
 to external services should never happen when running specs. The <code>webmock</code>
-gem should enforce this.</li>
-
-    
+gem should enforce this.
 
     
