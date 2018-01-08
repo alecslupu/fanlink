@@ -131,12 +131,12 @@ Administrate documentation for more info.
 * API versioning is provided by [this gem](https://github.com/jwoertink/jko_api). Currently
 we are using a fork due to [this issue](https://github.com/jwoertink/jko_api/issues/7).
 
-* After running specs, check the file in the <code>coverage</code> directory to
+* After running specs, check the file in the `coverage` directory to
 check code coverage.
 
-* Calls to Firebase are handled through <code>app/lib/messaging</code>. Any specs
-that result in calls to Firebase should stub all <code>Messaging</code> calls. Calls
-to external services should never happen when running specs. The <code>webmock</code>
+* Calls to Firebase are handled through `app/lib/messaging`. Any specs
+that result in calls to Firebase should stub all `Messaging` calls. Calls
+to external services should never happen when running specs. The webmock
 gem should enforce this.
 
     
