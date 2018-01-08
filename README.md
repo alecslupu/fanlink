@@ -101,29 +101,44 @@ To run tests:
 ## Code Style
 
 Run `rubocop` and fix any issues.
+  
+## Deployment
+
+* You will need to have the Heroku CLI installed and be a member of the app. Do
+
+    heroku apps
     
+and make sure `fanlink-staging` is among your apps
+
+* A `deploy.rb` script (see Flink project) will be needed in the future. For now, will need to have a remote
+ for `staging` to `https://git.heroku.com/fanlink-staging.git`. To deploy, merge your working branch into
+ the `staging` branch, and do:
+ 
+    `git push staging staging:master`
+    
+If your deploy involves database changes, after the deploy, do:
+
+    `heroku run rails db:migrate -r staging`
+        
 ## Other notes
 
-<ul>
-<li>The admin is based around a gem called <a href="https://github.com/thoughtbot/administrate">administrate</a>. When adding
+* The admin is based around a gem called <a href="https://github.com/thoughtbot/administrate">administrate</a>. When adding
 a new resource subject to admin, after adding the rails model and related files, 
 for the admin you will need a new file in the `app/dashboards` directory. To customize
 any of the layouts, you may need to generate the files for a resource. See the
-Administrate documentation for more info.</li>
+Administrate documentation for more info.
 
-<li>API versioning is provided by <a href="https://github.com/jwoertink/jko_api">this gem</a>. Currently
+* API versioning is provided by <a href="https://github.com/jwoertink/jko_api">this gem</a>. Currently
 we are using a fork due to <a href="https://github.com/jwoertink/jko_api/issues/7">this issue</a>.</li>
 
-<li>After running specs, check the file in the <code>coverage</code> directory to
-check code coverage.</li>
+* After running specs, check the file in the <code>coverage</code> directory to
+check code coverage.
 
-<li>Calls to Firebase are handled through <code>app/lib/messaging</code>. Any specs
+* Calls to Firebase are handled through <code>app/lib/messaging</code>. Any specs
 that result in calls to Firebase should stub all <code>Messaging</code> calls. Calls
 to external services should never happen when running specs. The <code>webmock</code>
 gem should enforce this.</li>
 
-     
-    
     
 
     
