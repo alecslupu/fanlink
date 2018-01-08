@@ -24,7 +24,7 @@ default: &default
 development:
   <<: *default
   database: fanlink_development
-  password: <%= ENV['FLINK_PG_PASSWORD'] %>
+  password:
   host: localhost
 
 staging:
