@@ -139,4 +139,11 @@ that result in calls to Firebase should stub all `Messaging` calls. Calls
 to external services should never happen when running specs. The webmock
 gem should enforce this.
 
+## Technical Todo's
+
+* Administrative and portal permissions (using [pundit](https://github.com/varvet/pundit)?)
+* Implement [paper trail](https://github.com/airblade/paper_trail) gem (already in `Gemfile`).
+* Production Heroku instance
+
+
     
