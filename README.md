@@ -104,15 +104,15 @@ Run `rubocop` and fix any issues.
   
 ## Deployment
 
-* You will need to have the Heroku CLI installed and be a member of the app. Do
+You will need to have the Heroku CLI installed and be a member of the app. Do
 
     `heroku apps`
-    
+
 and make sure `fanlink-staging` is among your apps
 
-* A `deploy.rb` script (see Flink project) will be needed in the future. For now, will need to have a remote
- for `staging` to `https://git.heroku.com/fanlink-staging.git`. To deploy, merge your working branch into
- the `staging` branch, and do:
+A `deploy.rb` script (see Flink project) will be needed in the future. For now, you will need to have a git remote
+for `staging` to `https://git.heroku.com/fanlink-staging.git`. To deploy, merge your working branch into
+the `staging` branch, and do:
  
     `git push staging staging:master`
     
@@ -120,6 +120,15 @@ If your deploy involves database changes, after the deploy, do:
 
     `heroku run rails db:migrate -r staging`
         
+## Multitenancy
+
+This is a multi-tenant app based around the product model. Multi-tenancy is implemented via the [acts_as_tenant]
+(https://github.com/ErwinM/acts_as_tenant) gem. Database schemas were not used mainly due to performance concerns expressed
+by others using them in the past.
+
+Generally for controller methods the tenant is set based around the logged in `current_user`. For non-logged in 
+methods (such as `session#create`), an API param is required.
+
 ## Other notes
 
 * The admin is based around a gem called [administrate](https://github.com/thoughtbot/administrate). When adding
@@ -144,6 +153,6 @@ gem should enforce this.
 * Administrative and portal permissions (using [pundit](https://github.com/varvet/pundit)?)
 * Implement [paper trail](https://github.com/airblade/paper_trail) gem (already in `Gemfile`).
 * Production Heroku instance
-
+* When appropriate use master git branches for gems not currently using them (acts_as_tenant, firebase, jko_api).
 
     
