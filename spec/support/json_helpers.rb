@@ -7,7 +7,7 @@ module JsonHelpers
     {
       "id"        => msg.id.to_s,
       "body"      => msg.body,
-      "created_at" => msg.created_at.to_s,
+      "create_time" => msg.created_at.to_s,
       "picture_url" => msg.picture_id,
       "person" => person_profile_json(msg.person)
     }

@@ -84,6 +84,9 @@ class Api::V1::MessagesController < ApiController
   # @apiParam {String} to_date
   #   To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
+  # @apiParam {Integer} [limit]
+  #   Limit results to count of limit.
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "messages": [
