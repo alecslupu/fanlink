@@ -1,6 +1,8 @@
 class ApiController < ApplicationController
   include FloadUp
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+
   set_current_tenant_through_filter
 
   before_action :set_product
@@ -47,6 +49,14 @@ class ApiController < ApplicationController
   end
 
 protected
+
+  def render_not_found
+    if request.format == "text/html"
+      render :not_found, status: :not_found
+    else
+      render json: { errors: { base: [ "Not found" ] } }, status: :not_found
+    end
+  end
 
   def set_product
     product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
