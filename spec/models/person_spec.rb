@@ -44,6 +44,27 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "#follow" do
+    it "should follow a person" do
+      fwer = create(:person)
+      fwed = create(:person)
+      expect(fwer.following?(fwed)).to be_falsey
+      fwer.follow(fwed)
+      expect(fwer.following?(fwed)).to be_truthy
+    end
+  end
+
+  describe "#follow" do
+    it "should unfollow a person" do
+      fwer = create(:person)
+      fwed = create(:person)
+      fwer.follow(fwed)
+      expect(fwer.following?(fwed)).to be_truthy
+      fwer.unfollow(fwed)
+      expect(fwer.following?(fwed)).to be_falsey
+    end
+  end
+
   describe "#username" do
     it "should not let you create a person with a username less than 3 characters" do
       person = build(:person, username: "ab")

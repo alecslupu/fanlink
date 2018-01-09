@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe RoomMembership, type: :model do
   before(:all) do
     ActsAsTenant.current_tenant = Product.first

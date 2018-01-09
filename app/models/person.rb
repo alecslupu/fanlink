@@ -1,11 +1,12 @@
 class Person < ApplicationRecord
   include Person::Facebook
+  include Person::Followings
 
   authenticates_with_sorcery!
 
   acts_as_tenant(:product)
 
-  #belongs_to :product
+  belongs_to :product
 
   has_many :room_memberships, dependent: :destroy
 
@@ -26,6 +27,7 @@ class Person < ApplicationRecord
 
   validates :password, presence: { message: "Password is required." }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
   validates :password, length: { minimum: 6, allow_blank: true }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+
 
   #
   # Return the canonical form of a username.

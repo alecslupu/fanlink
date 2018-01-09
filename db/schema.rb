@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104192856) do
+ActiveRecord::Schema.define(version: 20180108201542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20180104192856) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "ind_authentications_provider_uid"
+  end
+
+  create_table "followings", force: :cascade do |t|
+    t.integer "follower_id", null: false
+    t.integer "followed_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "idx_followings_followed"
+    t.index ["follower_id", "followed_id"], name: "unq_followings_follower_followed", unique: true
   end
 
   create_table "messages", force: :cascade do |t|
@@ -79,7 +88,7 @@ ActiveRecord::Schema.define(version: 20180104192856) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical"
+    t.text "name_canonical", null: false
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -100,6 +109,8 @@ ActiveRecord::Schema.define(version: 20180104192856) do
   end
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
+  add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
+  add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade

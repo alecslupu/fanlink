@@ -98,6 +98,8 @@ To run tests:
 
     rails spec
 
+First you might need to run `rails db:test:prepare`
+
 ## Code Style
 
 Run `rubocop` and fix any issues.

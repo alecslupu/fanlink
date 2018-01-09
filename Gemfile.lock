@@ -8,11 +8,11 @@ GIT
 
 GIT
   remote: https://github.com/mark100net/jko_api.git
-  revision: eac106bac12b264160deb581b88aeafc2cad9929
+  revision: 9ec978c3be5a5d5c39a2e1ae8ea3d88d9ea34c2e
   branch: rails_51
   specs:
     jko_api (0.2.6)
-      rails (>= 4.2.7)
+      rails (>= 4.2.7, <= 5.1.4)
       responders (= 2.4.0)
       warden-oauth2
 
@@ -194,13 +194,13 @@ GEM
     method_source (0.9.0)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.10.3)
+    minitest (5.11.1)
     momentjs-rails (2.17.1)
       railties (>= 3.1)
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    nio4r (2.1.0)
+    nio4r (2.2.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.3)
