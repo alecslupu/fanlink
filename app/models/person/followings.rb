@@ -7,9 +7,8 @@ class Person
   has_many :followers, through: :passive_followings, source: :follower
 
   module Followings
-
     def follow(followed)
-      following << followed unless following?(followed)
+      active_followings.find_or_create_by(followed_id: followed.id)
     end
 
     def following?(someone)

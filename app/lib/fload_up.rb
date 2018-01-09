@@ -50,7 +50,7 @@ module FloadUp
       obj_name = options[:into ]
       actions  = extract_actions_from(options)
 
-      before_action except: options[:except] do
+      before_action except: options[:except]  do
         if params.has_key?(id)
           obj = klass.send(find, params[id])
           if !obj
@@ -88,14 +88,6 @@ module FloadUp
   end
 
   private
-
-    def render_not_found
-      if request.format == "text/html"
-        render :not_found, status: :not_found
-      else
-        render json: { errors: { base: [ "Not found" ] } }, status: :not_found
-      end
-    end
 
     def render_unprocessable_entity(errors)
       if request.format == "text/html"

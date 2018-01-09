@@ -1,1 +1,1 @@
-json.followed @followed, partial: "api/v1/people/person", as: :person
+json.following @following, partial: "following", as: :following
