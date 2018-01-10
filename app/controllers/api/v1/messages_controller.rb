@@ -34,11 +34,17 @@ class Api::V1::MessagesController < ApiController
     if room.active?
       @message = room.messages.create(message_params.merge(person_id: current_user.id))
       if @message.valid?
-        post_message(@message)
+        if post_message(@message)
+          if room.private?
+            update_message_counts(room)
+          end
+        else
+          messaging_error && return
+        end
       end
       return_the @message
     else
-      room_inactive
+      render json: { errors: "This room is no longer active." }, status: :unprocessable_entity
     end
   end
 
@@ -99,17 +105,18 @@ class Api::V1::MessagesController < ApiController
   #*
   def index
     room = Room.find(params[:room_id])
-    if room.active?
+    if !check_access(room)
+      render_not_found
+    else
       if !check_dates
         render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
       else
         l = params[:limit].to_i
         l = nil if l == 0
         @messages = Message.visible.for_date_range(room, Date.parse(params[:from_date]), Date.parse(params[:to_date]), l)
+        clear_count(room) if room.private?
         return_the @messages
       end
-    else
-      room_inactive
     end
   end
 
@@ -139,7 +146,7 @@ class Api::V1::MessagesController < ApiController
   #
   def show
     room = Room.find(params[:room_id])
-    if room.public
+    if room.public || !check_access(room)
       render_not_found
     else
       if room.is_member?(current_user)
@@ -157,16 +164,39 @@ class Api::V1::MessagesController < ApiController
 
 private
 
+  def check_access(room)
+    room.active? && (room.public || room.members.include?(current_user))
+  end
+
   def check_dates
     params[:from_date].present? && DateUtil.valid_date_string?(params[:from_date]) &&
       params[:to_date].present? && DateUtil.valid_date_string?(params[:to_date])
+  end
+
+  def clear_count(room)
+    if clear_message_counter(room, current_user)
+      membership = room.room_memberships.find_by(person_id: current_user.id)
+      if membership
+        membership.update_attribute(:message_count, 0)
+      end
+    end
   end
 
   def message_params
     params.require(:message).permit(:body, :picture)
   end
 
-  def room_inactive
-    render json: { errors: "Room is not active" }, status: :unprocessable_entity
+  def messaging_error
+    render json: { errors: "There was a problem sending the message. Please try again laster." }, status: :service_unavailable
   end
+
+  def update_message_counts(room)
+    if set_message_counters(room)
+      room.room_memberships.each do |mem|
+        mem.increment!(:message_count)
+      end
+    end
+  end
+
+
 end

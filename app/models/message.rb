@@ -1,4 +1,6 @@
 class Message < ApplicationRecord
+  enum status: %i[ pending posted postfailed ]
+
   belongs_to :person
   belongs_to :room
 

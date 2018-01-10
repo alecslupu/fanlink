@@ -31,6 +31,18 @@ module Messaging
     end
   end
 
+  def clear_message_counter(room, person)
+    client.set("#{user_path(person)}/message_counts/#{room.id}", 0)
+  end
+
+  def set_message_counters(room)
+    payload = {}
+    room.room_memberships.each do |mem|
+      payload[message_counter_path(mem)] = mem.message_count + 1
+    end
+    client.update("", payload).response.status == 200
+  end
+
 private
 
   def add_room_for_member(room, member)
@@ -56,12 +68,16 @@ private
     client.delete(room_path(room))
   end
 
+  def message_counter_path(membership)
+    "#{user_path(membership.person)}/message_counts/#{membership.room.id}"
+  end
+
   def post_private_message(msg)
-    client.set("#{room_path(msg.room)}/last_message_id", msg.id)
+    client.set("#{room_path(msg.room)}/last_message_id", msg.id).response.status == 200
   end
 
   def post_public_message(msg)
-    client.set("#{room_path(msg.room)}/last_message", msg.as_json)
+    client.set("#{room_path(msg.room)}/last_message", msg.as_json).response.status == 200
   end
 
   def room_path(room)

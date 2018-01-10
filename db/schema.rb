@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108201542) do
+ActiveRecord::Schema.define(version: 20180110185145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20180108201542) do
     t.boolean "hidden", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
     t.index ["room_id"], name: "idx_messages_room"
   end
 
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(version: 20180108201542) do
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "message_count", default: 0, null: false
     t.index ["person_id"], name: "idx_room_memberships_person"
     t.index ["room_id", "person_id"], name: "unq_room_memberships_room_person", unique: true
   end
