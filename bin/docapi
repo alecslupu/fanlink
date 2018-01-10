@@ -1,2 +1,12 @@
 #!/bin/sh
-apidoc -c config/ -i app/controllers/api/v1 -o FanLink-API-Docs/api
+if [ -d "../fan-link-web" ]; then
+  apidoc -c config/ -i app/controllers/api/v1 -o ../fan-link-web/apidocs
+  cd ../fan-link-web
+  git add .
+  git commit -m "doc update"
+  git push heroku master
+else
+ echo "You need to have checkout out fan-link-web to a sibling directory of this one."
+fi
+
+
