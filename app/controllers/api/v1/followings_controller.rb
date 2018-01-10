@@ -28,15 +28,15 @@ class Api::V1::FollowingsController < ApiController
   end
 
   #**
-  # @api {delete} /followings Unfollow a person.
+  # @api {delete} /followings/:id Unfollow a person.
   # @apiName DeleteFollowing
   # @apiGroup Following
   #
   # @apiDescription
   #   This is used to unfollow a person.
   #
-  # @apiParam {Integer} followed_id
-  #   Person to unfollow
+  # @apiParam {Integer} id
+  #   id of the underlying following
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
