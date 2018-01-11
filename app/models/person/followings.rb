@@ -15,6 +15,10 @@ class Person
       following.include?(someone)
     end
 
+    def following_for_person(person)
+      active_followings.find_by(followed_id: person.id)
+    end
+
     def unfollow(someone)
       following.delete(someone)
     end

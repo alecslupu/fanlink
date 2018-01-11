@@ -21,19 +21,20 @@ module JsonHelpers
     }
   end
 
-  def person_private_json(person)
-    person_profile_json(person).merge(
+  def person_private_json(person, potential_follower = nil)
+    person_profile_json(person, potential_follower).merge(
       "email" => person.email
-    ).except("following")
+    ).except("following_id")
   end
 
   def person_profile_json(person, potential_follower = nil)
+    following = (potential_follower) ?  potential_follower.following_for_person(person) : nil
     {
       "id"          => person.id.to_s,
       "username"    => person.username,
       "name"        => person.name,
       "picture_url" => person.picture_url,
-      "following"   => (potential_follower && potential_follower.following?(person)) ? true : false
+      "following_id"   => (following) ? following.id : nil
     }
   end
 end
