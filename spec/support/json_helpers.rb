@@ -28,13 +28,13 @@ module JsonHelpers
   end
 
   def person_profile_json(person, potential_follower = nil)
-    following = (potential_follower) ?  potential_follower.following_for_person(person) : nil
+    following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
-      "id"          => person.id.to_s,
-      "username"    => person.username,
-      "name"        => person.name,
-      "picture_url" => person.picture_url,
-      "following_id"   => (following) ? following.id : nil
+      "id"           => person.id.to_s,
+      "username"     => person.username,
+      "name"         => person.name,
+      "picture_url"  => person.picture_url,
+      "following_id" => (following) ? following.id : nil
     }
   end
 end
