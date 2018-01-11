@@ -31,6 +31,8 @@ describe "Messages (v1)" do
       expect_any_instance_of(Api::V1::MessagesController).to receive(:set_message_counters).and_return(true)
       room = create(:room, product: @product, created_by: @person, status: :active)
       room.members << @person
+      other_member = create(:person, product: @person.product)
+      room.members << other_member
       login_as(@person)
       body = "Do you like my body?"
       post "/rooms/#{room.id}/messages", params: { message: { body: body } }
@@ -39,6 +41,8 @@ describe "Messages (v1)" do
       expect(msg.room).to eq(room)
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
+      expect(room.room_memberships.find_by(person_id: other_member.id).message_count).to eq(1) # not updating for message creator
+      expect(room.room_memberships.find_by(person_id: @person.id).message_count).to eq(0) # not updating for message creator
       expect(json["message"]).to eq(message_json(msg))
     end
     it "should not create a new message in an inactive room" do

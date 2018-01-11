@@ -1,15 +1,11 @@
 module Messaging
+  def clear_message_counter(room, person)
+    client.set("#{user_path(person)}/message_counts/#{room.id}", 0)
+  end
+
   def delete_message(message)
     if message.hidden
       client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
-    end
-  end
-
-  def post_message(message)
-    if message.room.public
-      post_public_message(message)
-    else
-      post_private_message(message)
     end
   end
 
@@ -31,14 +27,18 @@ module Messaging
     end
   end
 
-  def clear_message_counter(room, person)
-    client.set("#{user_path(person)}/message_counts/#{room.id}", 0)
+  def post_message(message)
+    if message.room.public
+      post_public_message(message)
+    else
+      post_private_message(message)
+    end
   end
 
-  def set_message_counters(room)
+  def set_message_counters(room, except_user)
     payload = {}
     room.room_memberships.each do |mem|
-      payload[message_counter_path(mem)] = mem.message_count + 1
+      payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
     end
     client.update("", payload).response.status == 200
   end

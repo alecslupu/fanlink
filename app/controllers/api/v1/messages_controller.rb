@@ -191,9 +191,9 @@ private
   end
 
   def update_message_counts(room)
-    if set_message_counters(room)
+    if set_message_counters(room, current_user)
       room.room_memberships.each do |mem|
-        mem.increment!(:message_count)
+        mem.increment!(:message_count) unless mem.person == current_user
       end
     end
   end

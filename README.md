@@ -63,6 +63,10 @@ Now install Rails and all other gem requirements:
 
     bundle install
 
+If you have an issue with postgres missing header files, check
+[this link](https://stackoverflow.com/questions/6040583/cant-find-the-libpq-fe-h-header-when-trying-to-install-pg-gem)
+
+
 ## Environment
 
 Create a file `.env` in the root directory (will be ignored by git). Place these 
