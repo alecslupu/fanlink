@@ -9,7 +9,7 @@ class Api::V1::MessagesController < ApiController
   # @apiGroup Messages
   #
   # @apiDescription
-  #   The creates a message in a room and posts it to Firebase as appropriate.
+  #   This creates a message in a room and posts it to Firebase as appropriate.
   #
   # @apiParam {Object} message
   #   The message object container for the message parameters.
