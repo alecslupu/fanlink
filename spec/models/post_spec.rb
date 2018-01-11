@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Post, type: :model do
   describe "#body" do
     it "should not let you create a disembodied nil post" do

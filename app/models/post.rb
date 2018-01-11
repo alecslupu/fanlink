@@ -13,5 +13,4 @@ private
       errors.add(:starts_at, "Cannot start after end!")
     end
   end
-
 end
