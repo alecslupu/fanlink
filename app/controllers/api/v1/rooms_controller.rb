@@ -30,7 +30,13 @@ class Api::V1::RoomsController < ApiController
   #         "owned": "true", # is current user the owner of room?
   #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
   #         "members": [
-  #           { ...person json....},....
+  #           {
+  #             "id": "1234",
+  #             "username": "george",
+  #             "name": "George Plimpton",
+  #             "picture_url": null, #NOT YET IMPLEMENTED
+  #             "following_id": 13 (or null)
+  #           },....
   #         ]
   #
   #       }
@@ -100,11 +106,8 @@ class Api::V1::RoomsController < ApiController
   #     HTTP/1.1 200 Ok
   #     "rooms": [
   #       {
-  #         "id": "5016",
-  #         "name": "Motley People Only",
-  #         "owned": "false", # is current user the owner of room?
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
-  #       },....
+  #         ....see room json under create above ....
+  #       },...
   #     ]
   #
   # @apiErrorExample {json} Error-Response:
