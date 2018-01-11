@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180110185145) do
+ActiveRecord::Schema.define(version: 20180111013121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,21 @@ ActiveRecord::Schema.define(version: 20180110185145) do
     t.index ["remember_me_token"], name: "ind_people_remember_me_token"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.text "title"
+    t.text "body", null: false
+    t.text "picture_id"
+    t.boolean "global", default: false, null: false
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.integer "repost_interval", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "idx_posts_person"
+  end
+
   create_table "products", force: :cascade do |t|
     t.text "name", null: false
     t.text "internal_name", null: false
@@ -116,6 +131,7 @@ ActiveRecord::Schema.define(version: 20180110185145) do
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict

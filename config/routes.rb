@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get "unhide" => "messages#unhide"
     end
     resources :people
+    resources :posts
     resources :products
     resources :rooms
 
