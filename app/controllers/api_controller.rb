@@ -50,6 +50,10 @@ class ApiController < ApplicationController
 
 protected
 
+  def render_error(error)
+    render json: { errors: error }, status: :unprocessable_entity
+  end
+
   def render_not_found
     if request.format == "text/html"
       render :not_found, status: :not_found

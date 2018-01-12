@@ -1,4 +1,37 @@
 RSpec.describe Post, type: :model do
+  before(:all) do
+    @product = Product.first || create(:product)
+    ActsAsTenant.current_tenant = @product
+    @person = create(:person)
+    @followed1 = create(:person)
+    @followed2 = create(:person)
+    @person.follow(@followed1)
+    @person.follow(@followed2)
+    @start_date = Date.parse("2018/1/1")
+    @end_date = Date.parse("2018/1/3")
+    created_in_range = @start_date + 1.day
+    @followed1_post1 = create(:post, created_at: created_in_range - 1.minute, person: @followed1)
+    @followed1_post2 = create(:post, created_at: created_in_range, person: @followed1)
+    @followed2_post1 = create(:post, created_at: created_in_range + 1.minute, person: @followed2)
+    @before_range = create(:post, created_at: @start_date - 1.day, person: @followed1) #before range
+    create(:post, created_at: @end_date + 1.day) #after range
+  end
+
+  # we don't care about post status here because that should be handled with scope chaining
+  # TODO: we should care about poster status WHEN we implement that
+  describe ".following" do
+    it "should get posts for someone you are following" do
+      expect(Post.following(@person).map { |p| p.id }.sort).to eq([@followed2_post1.id, @followed1_post2.id, @followed1_post1.id, @before_range.id].sort)
+    end
+  end
+
+  # we don't care about post status here because that should be handled with scope chaining
+  # TODO: we should care about poster status WHEN we implement that
+  describe ".in_date_range" do
+    it "should get posts in a date range" do
+      expect(Post.in_date_range(@start_date, @end_date).map { |p| p.id }.sort).to eq([@followed2_post1.id, @followed1_post2.id, @followed1_post1.id].sort)
+    end
+  end
   describe "#body" do
     it "should not let you create a disembodied nil post" do
       post = build(:post, body: nil)
@@ -16,6 +49,9 @@ RSpec.describe Post, type: :model do
       expect(create(:post)).to be_valid
     end
   end
+  describe ".following" do
+  end
+
   describe "#starts_at" do
     it "should not let you create a post that starts after it ends" do
       post = build(:post, starts_at: Time.now + 1.day, ends_at: Time.now + 23.hours)

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     version 1 do
       resources :followings, only: %i[ create destroy index ]
       resources :people, only: %i[ create ]
+      resources :posts, except: %i[ new edit ]
       resources :rooms do
         resources :messages, except: %i[ new edit ]
         resources :room_memberships, only: %i[ create destroy ]

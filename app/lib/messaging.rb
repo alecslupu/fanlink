@@ -9,6 +9,10 @@ module Messaging
     end
   end
 
+  def delete_post(post)
+    client.set("#{user_path(post.person)}/deleted_post_id", post.id).response.status == 200
+  end
+
   def delete_room(room)
     if room.public
       delete_public_room(room)
@@ -33,6 +37,10 @@ module Messaging
     else
       post_private_message(message)
     end
+  end
+
+  def post_post(post)
+    client.set("#{user_path(post.person)}/last_post_id", post.id)
   end
 
   def set_message_counters(room, except_user)

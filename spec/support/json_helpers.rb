@@ -37,4 +37,13 @@ module JsonHelpers
       "following_id" => (following) ? following.id : nil
     }
   end
+  def post_json(post)
+    {
+      "id"          => post.id.to_s,
+      "body"        => post.body,
+      "create_time" => post.created_at.to_s,
+      "picture_url" => post.picture_id,
+      "person" => person_profile_json(post.person)
+    }
+  end
 end

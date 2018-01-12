@@ -139,8 +139,11 @@ methods (such as `session#create`), an API param is required.
 
 * The admin is based around a gem called [administrate](https://github.com/thoughtbot/administrate). When adding
 a new resource subject to admin, after adding the rails model and related files, 
-for the admin you will need a new file in the `app/dashboards` directory. To customize
-any of the layouts, you may need to generate the files for a resource. See the
+for the admin you will need a new file in the `app/dashboards` directory. To generate it:
+
+       rails generate administrate:dashboard <model class name>
+
+To customize any of the layouts, you may need to generate the files for a resource. See the
 Administrate documentation for more info.
 
 * API versioning is provided by [this gem](https://github.com/jwoertink/jko_api). Currently
