@@ -130,7 +130,7 @@ class Api::V1::PostsController < ApiController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #
+  #*
   def show
     @post = Post.visible.find(params[:id])
     return_the @post
