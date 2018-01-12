@@ -40,7 +40,7 @@ module Messaging
   end
 
   def post_post(post)
-    client.set("#{user_path(post.person)}/last_post_id", post.id)
+    client.set("#{user_path(post.person)}/last_post_id", post.id).response.status == 200
   end
 
   def set_message_counters(room, except_user)

@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  enum status: %i[ pending published deleted rejected ]
+  enum status: %i[ errored pending published deleted rejected ]
 
   belongs_to :person
 

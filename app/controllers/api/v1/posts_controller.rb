@@ -30,7 +30,13 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      post_post(@post)
+      if post_post(@post)
+        @post.published!
+      else
+        @post.destroy
+        @post.errored!
+        render_error("Sorry unable to post your post. Please try again later.") and return
+      end
     end
     return_the @post
   end

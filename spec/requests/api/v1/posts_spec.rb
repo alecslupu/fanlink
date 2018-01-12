@@ -15,7 +15,7 @@ describe "Posts (v1)" do
   end
 
   describe "#create" do
-    it "should create a new post" do
+    it "should create a new post and publish it" do
       expect_any_instance_of(Api::V1::PostsController).to receive(:post_post).and_return(true)
       login_as(@person)
       body = "Do you like my body?"
@@ -24,6 +24,7 @@ describe "Posts (v1)" do
       post = Post.last
       expect(post.person).to eq(@person)
       expect(post.body).to eq(body)
+      expect(post.published?).to be_truthy
       expect(json["post"]).to eq(post_json(post))
     end
     it "should not create a new post if not logged in" do
