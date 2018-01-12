@@ -1,6 +1,7 @@
 class Person < ApplicationRecord
   include Person::Facebook
   include Person::Followings
+  include Person::Relationships
 
   authenticates_with_sorcery!
 

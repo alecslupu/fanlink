@@ -1,0 +1,35 @@
+class Relationship < ApplicationRecord
+  STATUS_TRANSITIONS = {
+      requested: %i[ friended denied withdrawn ],
+      friended: %i[ unfriended ],
+      denied: [],
+      withdrawn: [],
+      unfriended: []
+  }
+
+  enum status: %i[ requested friended denied withdrawn unfriended ]
+
+  before_create :check_outstanding
+
+  belongs_to :requested_by, class_name: "Person"
+  belongs_to :requested_to, class_name: "Person"
+
+  validate :check_outstanding
+  validate :valid_status_transition
+
+private
+
+  def check_outstanding
+    if requested? && Relationship.where.not(id: id).where(requested_by_id: [requested_by_id, requested_to_id]).
+                  where(requested_to_id: [requested_to_id, requested_by_id]).
+                  where(status: %i[ requested friended ]).exists?
+      errors.add(:base, "You already have an existing friendship or friend request to or from that person")
+    end
+  end
+
+  def valid_status_transition
+    if status_changed? && !STATUS_TRANSITIONS[status_was.to_sym].include?(status.to_sym)
+      errors.add(:status, "cannot go from #{status_was.titleize} to #{status.titleize}!")
+    end
+  end
+end

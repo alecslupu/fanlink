@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111013121) do
+ActiveRecord::Schema.define(version: 20180112175027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,16 @@ ActiveRecord::Schema.define(version: 20180111013121) do
     t.index ["name"], name: "unq_products_name", unique: true
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer "requested_by_id", null: false
+    t.integer "requested_to_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["requested_by_id"], name: "idx_relationships_requested_by_id"
+    t.index ["requested_to_id"], name: "idx_relationships_requested_to_id"
+  end
+
   create_table "room_memberships", force: :cascade do |t|
     t.integer "room_id", null: false
     t.integer "person_id", null: false
@@ -131,6 +141,8 @@ ActiveRecord::Schema.define(version: 20180111013121) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
+  add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
+  add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict

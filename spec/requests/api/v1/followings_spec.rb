@@ -14,7 +14,7 @@ describe "Followings (v1)" do
       expect(follower.following?(followee)).to be_truthy
       expect(json["following"]).to eq(following_json(Following.last, follower))
     end
-    it "should 404 if trying to follow someone who doesn't exist" do
+    it "should 404 if trying to follow someone who does not exist" do
       follower = create(:person)
       followee_id = Person.last.try(:id).to_i + 1
       login_as(follower)
