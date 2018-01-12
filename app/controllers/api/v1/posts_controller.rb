@@ -35,7 +35,7 @@ class Api::V1::PostsController < ApiController
       else
         @post.destroy
         @post.errored!
-        render_error("Sorry unable to post your post. Please try again later.") and return
+        render_error("Sorry unable to post your post. Please try again later.") && return
       end
     end
     return_the @post
@@ -136,7 +136,7 @@ class Api::V1::PostsController < ApiController
     return_the @post
   end
 
-  private
+private
 
   def check_dates
     params[:from_date].present? && DateUtil.valid_date_string?(params[:from_date]) &&
@@ -146,5 +146,4 @@ class Api::V1::PostsController < ApiController
   def post_params
     params.require(:post).permit(:body)
   end
-
 end

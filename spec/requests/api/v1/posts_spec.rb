@@ -65,11 +65,11 @@ describe "Posts (v1)" do
   describe "#index" do
     created_in_range = Date.parse("2018-01-02").end_of_day
     let!(:post11) { create(:post, person: @followee1, status: :published, created_at: created_in_range - 1.hour) }
-    let!(:post12) { create(:post, person: @followee1, status: :published, created_at: created_in_range - 30.minutes)  }
+    let!(:post12) { create(:post, person: @followee1, status: :published, created_at: created_in_range - 30.minutes) }
     let!(:post21) { create(:post, person: @followee2, status: :published, created_at: created_in_range) }
     let!(:post22) { create(:post, person: @followee2, status: :published, created_at: created_in_range + 30.minutes) }
-    let!(:postnofollow) { create(:post, person: @nonfollowee, status: :published, created_at: created_in_range)}
-    let!(:postrejected) { create(:post, person: @followee1, status: :rejected, created_at: created_in_range)}
+    let!(:postnofollow) { create(:post, person: @nonfollowee, status: :published, created_at: created_in_range) }
+    let!(:postrejected) { create(:post, person: @followee1, status: :rejected, created_at: created_in_range) }
     let!(:postexpired) { create(:post, person: @followee2, status: :published, ends_at: Time.zone.now - 1.hour, created_at: created_in_range) }
     let!(:postpredates) { create(:post, person: @followee1, status: :published, created_at: Date.parse("2017-12-31")) }
     let!(:postpremature) { create(:post, person: @followee2, status: :published, starts_at: Time.now + 1.hour, created_at: created_in_range) }
@@ -105,7 +105,7 @@ describe "Posts (v1)" do
     end
     it "should return unprocessable if missing dates" do
       login_as(@person)
-      get "/posts", params: { }
+      get "/posts", params: {}
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("Missing")
     end
@@ -121,72 +121,6 @@ describe "Posts (v1)" do
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("Missing")
     end
-    # it "should return unprocessable if invalid to date" do
-    #   login_as(@person)
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: "who me?", limit: 1 }
-    #   expect(response).to be_unprocessable
-    #   expect(json["errors"]).to include("invalid date")
-    # end
-    # it "should return unprocessable if missing from date" do
-    #   login_as(@person)
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room.id}/messages", params: { to_date: to, limit: 1 }
-    #   expect(response).to be_unprocessable
-    #   expect(json["errors"]).to include("invalid date")
-    # end
-    # it "should return unprocessable if missing to date" do
-    #   login_as(@person)
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room.id}/messages", params: { from_date: from, limit: 1 }
-    #   expect(response).to be_unprocessable
-    #   expect(json["errors"]).to include("invalid date")
-    # end
-    # it "should return 404 if room from another product" do
-    #   login_as(@person)
-    #   room_other = create(:room, product: create(:product))
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room_other.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
-    #   expect(response).to be_not_found
-    # end
-    # it "should return not found if room inactive" do
-    #   login_as(@person)
-    #   room.inactive!
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
-    #   expect(response).to be_not_found
-    #   room.active!
-    # end
-    # it "should return not found if room deleted" do
-    #   login_as(@person)
-    #   room.deleted!
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
-    #   expect(response).to be_not_found
-    #   room.active!
-    # end
-    # it "should return unauthorized if not logged in" do
-    #   expect(Message).to_not receive(:for_date_range)
-    #   get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
-    #   expect(response).to be_unauthorized
-    # end
-    # describe "#private?" do
-    #   it "should get messages if member of private room" do
-    #     login_as(@person)
-    #     msg = create(:message, room: @private_room, body: "wat wat")
-    #     expect(Message).to receive(:for_date_range).with(@private_room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg.id]))
-    #     expect_any_instance_of(Api::V1::MessagesController).to receive(:clear_message_counter).with(@private_room, @person).and_return(true)
-    #     get "/rooms/#{@private_room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
-    #     expect(response).to be_success
-    #     expect(json["messages"].first).to eq(message_json(msg))
-    #   end
-    #   it "should return not found if not member of private room" do
-    #     p = create(:person)
-    #     login_as(p)
-    #     get "/rooms/#{@private_room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
-    #     expect(response).to be_not_found
-    #   end
-    # end
   end
 
   describe "#show" do
