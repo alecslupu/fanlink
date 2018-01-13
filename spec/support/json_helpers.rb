@@ -46,4 +46,15 @@ module JsonHelpers
       "person" => person_profile_json(post.person)
     }
   end
+
+  def relationship_json(relationship, currnt_user)
+    {
+      "id"            => relationship.id.to_s,
+      "status"        => relationship.status,
+      "create_time"   => relationship.created_at.to_s,
+      "update_time"   => relationship.updated_at.to_s,
+      "requested_by"  => person_profile_json(relationship.requested_by, currnt_user),
+      "requested_to"  => person_profile_json(relationship.requested_to, currnt_user)
+    }
+  end
 end

@@ -1,5 +1,7 @@
 class Api::V1::RelationshipsController < ApiController
-  load_up_the Person, from: :requested_id, into: :@requested, only: %i[ create ]
+  include Messaging
+
+  load_up_the Person, from: :requested_to_id, into: :@requested, only: %i[ create ]
   load_up_the Relationship, except: %i[ create index ]
 
   #**
@@ -12,7 +14,10 @@ class Api::V1::RelationshipsController < ApiController
   #   there is a current unresolved request outstanding. Unresolved means it has
   #   status of requested or friended
   #
-  # @apiParam {Integer} requested_id
+  # @apiParam {Object} relationship
+  #   Relationship object.
+  #
+  # @apiParam {Integer} relationship.requested_to_id
   #   Person for whom the request is intended
   #
   # @apiSuccessExample {json} Success-Response:
@@ -29,7 +34,11 @@ class Api::V1::RelationshipsController < ApiController
   #       { "You already spammed that person, blah blah blah" }
   #*
   def create
-    @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: relationship_params[:requested_to_id])
+    requested_to = Person.find(relationship_params[:requested_to_id])
+    @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
+    if @relationship.valid?
+      post_relationship(@relationship)
+    end
     return_the @relationship
   end
 
@@ -90,7 +99,35 @@ class Api::V1::RelationshipsController < ApiController
     end
   end
 
-private
+  #**
+  # @api {get} /relationships/:id Get a single relationship.
+  # @apiName GetRelationship
+  # @apiGroup Relationships
+  #
+  # @apiDescription
+  #   This gets a single relationship for a relationship id. Only available to a participating user.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "relationship": {
+  #         "id": "5016",
+  #         "status": "requested",
+  #         "created_time": "2018-01-08'T'12:13:42'Z'",
+  #         "update_time": "2018-01-08'T'12:13:42'Z'",
+  #         "requested_by": { ... public person json },
+  #         "requested_to": { ... public person json }
+  #      }
+  #
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found
+  #*
+  def show
+    @relationship = current_user.relationships.visible.find(params[:id])
+    return_the @relationship
+  end
+
+  private
 
   def relationship_params
     params.require(:relationship).permit(:requested_to_id)

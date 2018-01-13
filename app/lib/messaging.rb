@@ -43,6 +43,11 @@ module Messaging
     client.set("#{user_path(post.person)}/last_post_id", post.id).response.status == 200
   end
 
+  def post_relationship(relationship)
+    relationship.requested? &&
+      client.set("#{user_path(relationship.requested_to)}/new_relationship_id",relationship.id).response.status == 200
+  end
+
   def set_message_counters(room, except_user)
     payload = {}
     room.room_memberships.each do |mem|

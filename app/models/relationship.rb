@@ -1,4 +1,6 @@
 class Relationship < ApplicationRecord
+  enum status: %i[ requested friended denied withdrawn unfriended ]
+
   STATUS_TRANSITIONS = {
       requested: %i[ friended denied withdrawn ],
       friended: %i[ unfriended ],
@@ -7,7 +9,7 @@ class Relationship < ApplicationRecord
       unfriended: []
   }
 
-  enum status: %i[ requested friended denied withdrawn unfriended ]
+  VISIBLE_STATUSES = %i[ requested friended ]
 
   before_create :check_outstanding
 
@@ -17,6 +19,7 @@ class Relationship < ApplicationRecord
   validate :check_outstanding
   validate :valid_status_transition
 
+  scope :visible, -> { where(status: VISIBLE_STATUSES) }
 private
 
   def check_outstanding
