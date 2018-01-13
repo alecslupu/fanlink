@@ -75,4 +75,16 @@ describe "Relationships (v1)" do
     end
   end
 
+  describe "#update" do
+    it "should accept a friend request" do
+      person = create(:person)
+      login_as(person)
+      rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: :friended }}
+      expect(response).to be_success
+      expect(rel.reload.friended?).to be_truthy
+      expect(json["relationship"]).to eq(relationship_json(rel, person))
+    end
+  end
+
 end

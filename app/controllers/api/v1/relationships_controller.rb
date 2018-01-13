@@ -127,6 +127,47 @@ class Api::V1::RelationshipsController < ApiController
     return_the @relationship
   end
 
+  #**
+  # @api {patch} /relationships Send a friend request to a person.
+  # @apiName UpdateRelationship
+  # @apiGroup Relationships
+  #
+  # @apiDescription
+  #   This is used to accept, deny or cancel a relationship (friend request).
+  #
+  # @apiParam {Object} relationship
+  #   Relationship object.
+  #
+  # @apiParam {Integer} relationship.status
+  #   New status. Valid values are "friended", "denied" or "withdrawn". However each one is only
+  #   valid in the state and/or from the person that you would expect (e.g. the relationship
+  #   requester cannot update with "friended").
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "relationship": {
+  #       "id" : 123, #id of the relationship
+  #       "status": "friended"
+  #       "create_time": ""2018-01-08'T'12:13:42'Z'""
+  #       "updated_time": ""2018-01-08'T'12:13:42'Z'""
+  #       "requested_by" : { ...public json of the person requesting },
+  #       "requested_to" : { ...public json of the person requested }
+  #     }
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 422
+  #     "errors" :
+  #       { "You can't friend your own request, blah blah blah" }
+  #*
+  def update
+    requested_to = Person.find(relationship_params[:requested_to_id])
+    @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
+    if @relationship.valid?
+      post_relationship(@relationship)
+    end
+    return_the @relationship
+  end
+
   private
 
   def relationship_params

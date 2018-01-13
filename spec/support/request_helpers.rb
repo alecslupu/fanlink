@@ -17,6 +17,10 @@ module RequestHelpers
     super *add_accept_header(args)
   end
 
+  def patch(*args)
+    super *add_accept_header(args)
+  end
+
   def post(*args)
     super *add_accept_header(args)
   end

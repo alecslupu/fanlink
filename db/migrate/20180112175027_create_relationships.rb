@@ -10,5 +10,6 @@ class CreateRelationships < ActiveRecord::Migration[5.1]
     add_index :relationships, [:requested_to_id], name: "idx_relationships_requested_to_id"
     add_foreign_key :relationships, :people, column: :requested_by_id, name: "fk_relationships_requested_by", on_delete: :cascade
     add_foreign_key :relationships, :people, column: :requested_to_id, name: "fk_relationships_requested_to", on_delete: :cascade
+    add_check "relationships", "(requested_by_id != requested_to_id)", name: "chk_relationships_not_with_self"
   end
 end

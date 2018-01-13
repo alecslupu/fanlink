@@ -17,10 +17,17 @@ class Relationship < ApplicationRecord
   belongs_to :requested_to, class_name: "Person"
 
   validate :check_outstanding
+  validate :check_non_self
   validate :valid_status_transition
 
   scope :visible, -> { where(status: VISIBLE_STATUSES) }
 private
+
+  def check_non_self
+    if requested_by_id == requested_to_id
+      errors.add(:base, "You cannot have a relationship with yourself")
+    end
+  end
 
   def check_outstanding
     if requested? && Relationship.where.not(id: id).where(requested_by_id: [requested_by_id, requested_to_id]).

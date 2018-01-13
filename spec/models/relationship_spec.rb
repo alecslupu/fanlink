@@ -5,6 +5,11 @@ RSpec.describe Relationship, type: :model do
   end
 
   describe "#create" do
+    it "should not let you create a relationship with yourself" do
+      person = create(:person)
+      rel = Relationship.create(requested_by: person, requested_to: person)
+      expect(rel).not_to be_valid
+    end
     it "should not let you create a relationship when you have outstanding request to that person" do
       rel = create(:relationship)
       expect(rel.requested?).to be_truthy

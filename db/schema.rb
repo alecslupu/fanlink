@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 20180112175027) do
     t.index ["requested_to_id"], name: "idx_relationships_requested_to_id"
   end
 
+  add_check "relationships", "(requested_by_id <> requested_to_id)", name: "chk_relationships_not_with_self"
+
   create_table "room_memberships", force: :cascade do |t|
     t.integer "room_id", null: false
     t.integer "person_id", null: false
