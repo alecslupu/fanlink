@@ -68,7 +68,7 @@ gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_
 gem "koala" #Facebook Graph API
 gem "paper_trail"
 gem "oauth2"
-gem 'postgresql-check'
+gem "postgresql-check"
 gem "rubocop-rails"
 gem "sorcery"
 gem "unicode_utils"

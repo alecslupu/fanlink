@@ -45,7 +45,7 @@ module Messaging
 
   def post_relationship(relationship)
     relationship.requested? &&
-      client.set("#{user_path(relationship.requested_to)}/new_relationship_id",relationship.id).response.status == 200
+      client.set("#{user_path(relationship.requested_to)}/new_relationship_id", relationship.id).response.status == 200
   end
 
   def set_message_counters(room, except_user)
@@ -54,6 +54,11 @@ module Messaging
       payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
     end
     client.update("", payload).response.status == 200
+  end
+
+  def update_relationship(relationship, person)
+    person.relationships.include?(relationship) &&
+        (client.set("#{user_path(person)}/updated_relationship_id", relationship.id).response.status == 200)
   end
 
 private

@@ -128,7 +128,7 @@ class Api::V1::RelationshipsController < ApiController
   end
 
   #**
-  # @api {patch} /relationships Send a friend request to a person.
+  # @api {patch} /relationships Update a relationship.
   # @apiName UpdateRelationship
   # @apiGroup Relationships
   #
@@ -160,17 +160,41 @@ class Api::V1::RelationshipsController < ApiController
   #       { "You can't friend your own request, blah blah blah" }
   #*
   def update
-    requested_to = Person.find(relationship_params[:requested_to_id])
-    @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
-    if @relationship.valid?
-      post_relationship(@relationship)
+    if check_status
+      if current_user.relationships.visible.include?(@relationship)
+        new_status = relationship_params[:status]
+        if current_user.can_status?(@relationship, new_status)
+          @relationship.status = relationship_params[:status]
+          if @relationship.save && notifiable_statuses.include?(@relationship.status)
+            update_relationship(@relationship, whom_to_notify)
+          end
+          return_the @relationship
+        else
+          render_error("You cannot change to the relationship to that status.")
+        end
+      else
+        render_not_found
+      end
+    else
+      render_error("That status is invalid")
     end
-    return_the @relationship
   end
 
-  private
+private
+
+  def check_status
+    Relationship.statuses.keys.include?(relationship_params[:status])
+  end
+
+  def notifiable_statuses
+    ["friended", "unfriended"]
+  end
 
   def relationship_params
-    params.require(:relationship).permit(:requested_to_id)
+    params.require(:relationship).permit(:requested_to_id, :status)
+  end
+
+  def whom_to_notify
+    (current_user == @relationship.requested_by) ? @relationship.requested_to : @relationship.requested_by
   end
 end

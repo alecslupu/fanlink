@@ -65,13 +65,14 @@ describe "Relationships (v1)" do
       get "/relationships/#{rel.id}"
       expect(response).to be_not_found
     end
-    it "should not get relationship if relationship unfriended" do
+    it "should get relationship if relationship unfriended" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
       rel.update_column(:status, :unfriended)
       get "/relationships/#{rel.id}"
-      expect(response).to be_not_found
+      expect(response).to be_success
+      expect(json["relationship"]).to eq(relationship_json(rel, person))
     end
   end
 
@@ -80,9 +81,41 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      patch "/relationships/#{rel.id}", params: { relationship: { status: :friended }}
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship).
+          with(rel, rel.requested_by).and_return(true)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
       expect(response).to be_success
       expect(rel.reload.friended?).to be_truthy
+      expect(json["relationship"]).to eq(relationship_json(rel, person))
+    end
+    it "should not accept own friend request" do
+      person = create(:person)
+      login_as(person)
+      rel = create(:relationship, requested_to: create(:person, product: person.product), requested_by: person)
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
+      expect(response).to be_unprocessable
+      expect(rel.reload.requested?).to be_truthy
+    end
+    it "should not accept a friend request if status not appropriate status" do
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship)
+      person = create(:person)
+      login_as(person)
+      rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
+      (Relationship.statuses.keys - ["requested", "friended"]).each do |s|
+        rel.update_column(:status, s)
+        patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
+        expect(rel.reload.status).to eq(s)
+      end
+    end
+    it "should deny a friend request" do
+      person = create(:person)
+      login_as(person)
+      rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: :denied } }
+      expect(response).to be_success
+      expect(rel.reload.denied?).to be_truthy
       expect(json["relationship"]).to eq(relationship_json(rel, person))
     end
   end

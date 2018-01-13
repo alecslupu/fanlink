@@ -9,7 +9,7 @@ class Relationship < ApplicationRecord
       unfriended: []
   }
 
-  VISIBLE_STATUSES = %i[ requested friended ]
+  VISIBLE_STATUSES = %i[ requested friended unfriended ]
 
   before_create :check_outstanding
 

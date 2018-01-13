@@ -105,7 +105,7 @@ RSpec.describe Relationship, type: :model do
     end
     it "should not be visible" do
       rel = create(:relationship)
-      %i[ denied withdrawn unfriended ].each do |s|
+      %i[ denied withdrawn ].each do |s|
         rel.update_column(:status, s)
         expect(Relationship.visible).not_to include(rel)
       end
