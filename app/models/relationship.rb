@@ -21,7 +21,12 @@ class Relationship < ApplicationRecord
   validate :valid_status_transition
 
   scope :visible, -> { where(status: VISIBLE_STATUSES) }
-private
+
+  def self.counted_transition?(before)
+    before == :requested
+  end
+
+  private
 
   def check_non_self
     if requested_by_id == requested_to_id

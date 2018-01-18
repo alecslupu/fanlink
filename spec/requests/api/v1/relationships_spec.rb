@@ -10,7 +10,7 @@ describe "Relationships (v1)" do
 
   describe "#create" do
     it "should send a friend request to someone" do
-      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:post_relationship).and_return(true)
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).and_return(true)
       login_as(@requester)
       post "/relationships", params: { relationship: { requested_to_id: @requested.id } }
       expect(response).to be_success
@@ -81,8 +81,8 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship).
-          with(rel, rel.requested_by).and_return(true)
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).
+          with(rel.requested_to).and_return(true)
       patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
       expect(response).to be_success
       expect(rel.reload.friended?).to be_truthy
@@ -92,13 +92,13 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_to: create(:person, product: person.product), requested_by: person)
-      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship)
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
       patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
       expect(response).to be_unprocessable
       expect(rel.reload.requested?).to be_truthy
     end
     it "should not accept a friend request if status not appropriate status" do
-      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship)
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
@@ -112,10 +112,24 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship)
+      person.update_attribute(:friend_request_count, 1)
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person).and_return(true)
       patch "/relationships/#{rel.id}", params: { relationship: { status: :denied } }
       expect(response).to be_success
       expect(rel.reload.denied?).to be_truthy
+      expect(json["relationship"]).to eq(relationship_json(rel, person))
+      expect(person.reload.friend_request_count).to eq(0)
+    end
+    it "should withdraw a friend request" do
+      person = create(:person)
+      req_to = create(:person, product: person.product)
+      login_as(person)
+      rel = create(:relationship, requested_by: person, requested_to: req_to)
+      rel.requested_to.update_attribute(:friend_request_count, 1)
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(req_to).and_return(true)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: :withdrawn } }
+      expect(response).to be_success
+      expect(rel.reload.withdrawn?).to be_truthy
       expect(json["relationship"]).to eq(relationship_json(rel, person))
     end
   end

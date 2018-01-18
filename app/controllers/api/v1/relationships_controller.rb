@@ -37,7 +37,10 @@ class Api::V1::RelationshipsController < ApiController
     requested_to = Person.find(relationship_params[:requested_to_id])
     @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
     if @relationship.valid?
-      post_relationship(@relationship)
+      @relationship.requested_to.friend_request_count += 1
+      if update_relationship_count(@relationship.requested_to)
+        @relationship.requested_to.save
+      end
     end
     return_the @relationship
   end
@@ -162,11 +165,15 @@ class Api::V1::RelationshipsController < ApiController
   def update
     if check_status
       if current_user.relationships.visible.include?(@relationship)
+        old_status = @relationship.status
         new_status = relationship_params[:status]
         if current_user.can_status?(@relationship, new_status)
           @relationship.status = relationship_params[:status]
-          if @relationship.save && notifiable_statuses.include?(@relationship.status)
-            update_relationship(@relationship, whom_to_notify)
+          if @relationship.save && Relationship.counted_transition?(old_status.to_sym)
+            @relationship.requested_to.friend_request_count -= 1
+            if update_relationship_count(@relationship.requested_to)
+              @relationship.requested_to.save!
+            end
           end
           return_the @relationship
         else
@@ -186,15 +193,7 @@ private
     Relationship.statuses.keys.include?(relationship_params[:status])
   end
 
-  def notifiable_statuses
-    ["friended", "unfriended"]
-  end
-
   def relationship_params
     params.require(:relationship).permit(:requested_to_id, :status)
-  end
-
-  def whom_to_notify
-    (current_user == @relationship.requested_by) ? @relationship.requested_to : @relationship.requested_by
   end
 end

@@ -1,3 +1,4 @@
+#TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person)
     client.set("#{user_path(person)}/message_counts/#{room.id}", 0)
@@ -43,11 +44,6 @@ module Messaging
     client.set("#{user_path(post.person)}/last_post_id", post.id).response.status == 200
   end
 
-  def post_relationship(relationship)
-    relationship.requested? &&
-      client.set("#{user_path(relationship.requested_to)}/new_relationship_id", relationship.id).response.status == 200
-  end
-
   def set_message_counters(room, except_user)
     payload = {}
     room.room_memberships.each do |mem|
@@ -56,9 +52,8 @@ module Messaging
     client.update("", payload).response.status == 200
   end
 
-  def update_relationship(relationship, person)
-    person.relationships.include?(relationship) &&
-        (client.set("#{user_path(person)}/updated_relationship_id", relationship.id).response.status == 200)
+  def update_relationship_count(requested_to)
+    client.set("#{user_path(requested_to)}/friend_request_count", requested_to.friend_request_count).response.status == 200
   end
 
 private

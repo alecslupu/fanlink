@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112175027) do
+ActiveRecord::Schema.define(version: 20180118192810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180112175027) do
     t.text "facebookid"
     t.text "facebook_picture_url"
     t.text "picture_type"
+    t.integer "friend_request_count", default: 0, null: false
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 20180112175027) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
+    t.text "title"
     t.text "body", null: false
     t.text "picture_id"
     t.boolean "global", default: false, null: false
@@ -116,7 +118,7 @@ ActiveRecord::Schema.define(version: 20180112175027) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical"
+    t.text "name_canonical", null: false
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
