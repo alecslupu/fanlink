@@ -112,10 +112,9 @@ class Api::V1::RelationshipsController < ApiController
   #*
   def index
     person = (params[:person_id].present?) ? Person.find(params[:person_id]) : current_user
+    @relationships = Relationship.friended.for_person(person)
     if person == current_user
-      @relationships = Relationship.current_and_pending.for_person(person)
-    else
-      @relationships = Relationship.friended.for_person(person)
+      @relationships += Relationship.pending_to_person(person)
     end
     return_the @relationships
   end

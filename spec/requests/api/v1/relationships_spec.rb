@@ -85,6 +85,7 @@ describe "Relationships (v1)" do
     let!(:rel1) { create(:relationship, requested_by: person1, requested_to: person2) }
     let!(:rel2) { create(:relationship, requested_by: person1, requested_to: person3, status: :friended) }
     let!(:rel3) { create(:relationship, requested_by: person2, requested_to: person3, status: :friended) }
+    let!(:rel4) { create(:relationship, requested_by: person2, requested_to: create(:person)) }
     it "should get the current relationships of other user" do
       login_as(person1)
       get "/relationships", params: { person_id: person2.id.to_s }

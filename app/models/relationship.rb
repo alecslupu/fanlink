@@ -20,7 +20,7 @@ class Relationship < ApplicationRecord
   validate :check_non_self
   validate :valid_status_transition
 
-  scope :current_and_pending, -> { where(status: [:requested, :friended]) }
+  scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
   scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
   scope :visible, -> { where(status: VISIBLE_STATUSES) }
 
