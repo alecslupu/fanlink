@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :action_types
     resources :messages do
       get "hide" => "messages#hide"
       get "unhide" => "messages#unhide"

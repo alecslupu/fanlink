@@ -27,3 +27,9 @@ if Room.count == 0
     Room.create(name: "Public room", created_by_id: Person.find_by(name: "Admin User").id, public: true, product_id: Product.find_by(internal_name: "test").id)
   end
 end
+
+if ActionType.count == 0
+  unless Rails.env.production?
+    ActionType.create(name: "Some Cool Act", internal_name: "some_cool_act", product_id: Product.find_by(internal_name: "test").id)
+  end
+end

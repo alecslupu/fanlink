@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118192810) do
+ActiveRecord::Schema.define(version: 20180119190028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_types", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.text "internal_name", null: false
+    t.integer "seconds_lag", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id", "internal_name"], name: "unq_action_types_product_internal_name", unique: true
+    t.index ["product_id"], name: "idx_action_types_product"
+  end
 
   create_table "authentications", force: :cascade do |t|
     t.integer "person_id", null: false
