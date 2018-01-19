@@ -20,8 +20,8 @@ RSpec.describe Post, type: :model do
   # we don't care about post status here because that should be handled with scope chaining
   # TODO: we should care about poster status WHEN we implement that
   describe ".following" do
-    it "should get posts for someone you are following" do
-      expect(Post.following(@person).map { |p| p.id }.sort).to eq([@followed2_post1.id, @followed1_post2.id, @followed1_post1.id, @before_range.id].sort)
+    it "should get posts for someone you are following with your own" do
+      expect(Post.following_and_own(@person).map { |p| p.id }.sort).to eq([@followed2_post1.id, @followed1_post2.id, @followed1_post1.id, @before_range.id].sort)
     end
   end
 

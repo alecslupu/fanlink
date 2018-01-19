@@ -77,7 +77,9 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This gets a list of posts for a from date, to date, with an optional
   #   limit. Messages are returned newest first, and the limit is applied to that ordering.
-  #
+  #   Posts included are posts from the current user along with those of the users
+  #   the current user is following.
+  # 
   # @apiParam {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
@@ -103,7 +105,7 @@ class Api::V1::PostsController < ApiController
     else
       l = params[:limit].to_i
       l = nil if l == 0
-      @posts = Post.visible.following(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
+      @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
       return_the @posts
     end
   end

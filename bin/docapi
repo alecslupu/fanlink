@@ -4,7 +4,7 @@ if [ -d "../fan-link-web" ]; then
   cd ../fan-link-web
   git add .
   git commit -m "doc update"
-  git push heroku master
+  git push -f heroku master
 else
  echo "You need to have checkout out fan-link-web to a sibling directory of this one."
 fi

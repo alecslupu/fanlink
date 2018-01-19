@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   validate :sensible_dates
   validates :body, presence: { message: "Message body is required" }
 
-  scope :following, -> (follower) { includes(:person).where(person: follower.following) }
+  scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :in_date_range, -> (start_date, end_date) {
                               where("posts.created_at >= ? and posts.created_at <= ?",

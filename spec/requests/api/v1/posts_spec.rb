@@ -68,6 +68,7 @@ describe "Posts (v1)" do
     let!(:post12) { create(:post, person: @followee1, status: :published, created_at: created_in_range - 30.minutes) }
     let!(:post21) { create(:post, person: @followee2, status: :published, created_at: created_in_range) }
     let!(:post22) { create(:post, person: @followee2, status: :published, created_at: created_in_range + 30.minutes) }
+    let!(:postloggedin) { create(:post, person: @person, status: :published, created_at: created_in_range + 31.minutes) }
     let!(:postnofollow) { create(:post, person: @nonfollowee, status: :published, created_at: created_in_range) }
     let!(:postrejected) { create(:post, person: @followee1, status: :rejected, created_at: created_in_range) }
     let!(:postexpired) { create(:post, person: @followee2, status: :published, ends_at: Time.zone.now - 1.hour, created_at: created_in_range) }
@@ -79,13 +80,13 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts", params: { from_date: from, to_date: to }
       expect(response).to be_success
-      expect(json["posts"].map { |p| p["id"] }).to eq([post22.id.to_s, post21.id.to_s, post12.id.to_s, post11.id.to_s])
+      expect(json["posts"].map { |p| p["id"] }).to eq([ postloggedin.id.to_s, post22.id.to_s, post21.id.to_s, post12.id.to_s, post11.id.to_s])
     end
     it "should get a list of posts for a date range with limit" do
       login_as(@person)
       get "/posts", params: { from_date: from, to_date: to, limit: 2 }
       expect(response).to be_success
-      expect(json["posts"].map { |p| p["id"] }).to eq([post22.id.to_s, post21.id.to_s])
+      expect(json["posts"].map { |p| p["id"] }).to eq([postloggedin.id.to_s, post22.id.to_s])
     end
     it "should not get the list if not logged in" do
       get "/posts", params: { from_date: from, to_date: to, limit: 2 }
