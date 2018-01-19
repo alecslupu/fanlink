@@ -12,7 +12,10 @@ class Api::V1::RelationshipsController < ApiController
   # @apiDescription
   #   This is used to send a friend request to a person. You can send one to anyone unless
   #   there is a current unresolved request outstanding. Unresolved means it has
-  #   status of requested or friended
+  #   status of requested or friended.
+  #
+  #   If the person sending the request already has a pending request from the requested_to_id, then no additional
+  #   records will be created. The original relationship will be changed to friended and returned.
   #
   # @apiParam {Object} relationship
   #   Relationship object.
@@ -35,71 +38,86 @@ class Api::V1::RelationshipsController < ApiController
   #*
   def create
     requested_to = Person.find(relationship_params[:requested_to_id])
-    @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
-    if @relationship.valid?
-      @relationship.requested_to.friend_request_count += 1
+    @relationship = Relationship.find_by(requested_to: current_user, requested_by: requested_to, status: :requested)
+    if @relationship
+      @relationship.status = :friended
+      @relationship.requested_to.friend_request_count -= 1
       if update_relationship_count(@relationship.requested_to)
+        @relationship.save!
         @relationship.requested_to.save
+      else
+        @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
+      end
+    else
+      @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
+      if @relationship.valid?
+        @relationship.requested_to.friend_request_count += 1
+        if update_relationship_count(@relationship.requested_to)
+          @relationship.requested_to.save
+        else
+          @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
+        end
       end
     end
-    return_the @relationship
+    return_the @relationship.reload
   end
 
   #**
-  # @api {delete} /followings/:id Unfollow a person.
-  # @apiName DeleteFollowing
-  # @apiGroup Following
+  # @api {delete} /relationships/:id Unfriend a person.
+  # @apiName DeleteRelationship
+  # @apiGroup Relationship
   #
   # @apiDescription
-  #   This is used to unfollow a person.
+  #   This is used to unfriend a person.
   #
   # @apiParam {Integer} id
-  #   id of the underlying following
+  #   id of the underlying relationship
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #*
   def destroy
-    @following.destroy
-    head :ok
+    if current_user.can_status?(@relationship, :unfriended)
+      @relationship.status = :unfriended
+      @relationship.save
+      if @relationship.valid?
+        head :ok
+      else
+        render_error("Sorry, you cannot unfriend that person right now.")
+      end
+    else
+      render_not_found
+    end
   end
 
   #**
-  # @api {get} /followings Get followers or followings of a user.
-  # @apiName GetFollowings
-  # @apiGroup Following
+  # @api {get} /relationships Get current relationships of a person.
+  # @apiName GetRelationships
+  # @apiGroup Relationships
   #
   # @apiDescription
-  #   This is used to get a list of someone's followers or followed. If followed_id parameter
-  #   is supplied, it will get the follower's of that user. If follower_id is supplied,
-  #   it will get the people that person is following. If nothing is supplied, it will
-  #   get the people the current user is following.
+  #   This is used to get a list of someone's friends. If the person supplied is
+  #   the logged in user, 'requested' status is included for requests TO the current
+  #   user. Otherwise, only 'friended' status is included.
   #
-  # @apiParam {Integer} followed_id
-  #   Person to who's followers to get
-  #
-  # @apiParam {Integer} follower_id
-  #   Id of person who is following the people in the list we are getting.
+  # @apiParam {Integer} [person_id]
+  #   Person whose friends to get
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #   "followers [or following]" {
-  #     [ ... person json of follower/followed....],
+  #   "relationships" {
+  #     [ ... relationship json ...],
   #     ....
   #   }
   #*
   def index
-    followed_id = params[:followed_id].to_i
-    if followed_id > 0
-      followed = Person.find(followed_id)
-      @followers = followed.followers
-      return_the @followers
+    person = (params[:person_id].present?) ? Person.find(params[:person_id]) : current_user
+    if person == current_user
+      @relationships = Relationship.current_and_pending.for_person(person)
     else
-      follower_id = params[:follower_id].to_i
-      follower = (follower_id > 0) ? Person.find(follower_id) : current_user
-      @following = follower.following
-      return_the @following
+      @relationships = Relationship.friended.for_person(person)
     end
+    return_the @relationships
   end
 
   #**

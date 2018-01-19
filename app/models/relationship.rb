@@ -9,7 +9,7 @@ class Relationship < ApplicationRecord
       unfriended: []
   }
 
-  VISIBLE_STATUSES = %i[ requested friended unfriended ]
+  VISIBLE_STATUSES = %i[ requested friended ]
 
   before_create :check_outstanding
 
@@ -20,13 +20,19 @@ class Relationship < ApplicationRecord
   validate :check_non_self
   validate :valid_status_transition
 
+  scope :current_and_pending, -> { where(status: [:requested, :friended]) }
+  scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
   scope :visible, -> { where(status: VISIBLE_STATUSES) }
 
   def self.counted_transition?(before)
     before == :requested
   end
 
-  private
+  def person_involved?(person)
+    requested_to == person || requested_by == person
+  end
+
+private
 
   def check_non_self
     if requested_by_id == requested_to_id
@@ -43,8 +49,8 @@ class Relationship < ApplicationRecord
   end
 
   def valid_status_transition
-    if status_changed? && !STATUS_TRANSITIONS[status_was.to_sym].include?(status.to_sym)
-      errors.add(:status, "cannot go from #{status_was.titleize} to #{status.titleize}!")
+    if status_changed? && !(STATUS_TRANSITIONS[status_was.to_sym].include?(status.to_sym))
+      errors.add(:status, "Sorry, we cannot grant your request at this time.")
     end
   end
 end

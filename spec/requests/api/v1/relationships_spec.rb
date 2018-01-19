@@ -16,6 +16,17 @@ describe "Relationships (v1)" do
       expect(response).to be_success
       expect(json["relationship"]).to eq(relationship_json(Relationship.last, @requester))
     end
+    it "should just change request to friended if to person sends a new request to from person" do
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).and_return(true)
+      requester = create(:person)
+      requested = create(:person)
+      rel1 = create(:relationship, requested_by: requester, requested_to: requested)
+      login_as(requested)
+      post "/relationships", params: { relationship: { requested_to_id: requester.id } }
+      expect(response).to be_success
+      expect(Relationship.last).to eq(rel1)
+      expect(rel1.reload.friended?).to be_truthy
+    end
     it "should 404 if trying to befriend someone who does not exist" do
       login_as(@requester)
       post "/relationships", params: { relationship: { requested_to_id: Person.last.try(:id).to_i + 1 } }
@@ -23,6 +34,77 @@ describe "Relationships (v1)" do
     end
     it "should 401 if not logged in" do
       post "/relationships", params: { relationship: { requested_to_id: @requested.id } }
+      expect(response).to be_unauthorized
+    end
+  end
+
+  describe "#destroy" do
+    it "should unfriend a friend" do
+      friend = create(:person)
+      rel = create(:relationship, requested_by: friend, requested_to: create(:person), status: :friended)
+      login_as(friend)
+      delete "/relationships/#{rel.id}"
+      expect(response).to be_success
+      expect(rel.reload.unfriended?).to be_truthy
+    end
+    it "should not unfriend another couple of friends" do
+      imposter = create(:person)
+      rel = create(:relationship, requested_by: create(:person), requested_to: create(:person), status: :friended)
+      login_as(imposter)
+      delete "/relationships/#{rel.id}"
+      expect(response).to be_not_found
+      expect(rel.reload.friended?).to be_truthy
+    end
+    it "should not unfriend a friend who only has a request" do
+      rel = create(:relationship, requested_by: create(:person), requested_to: create(:person))
+      login_as(rel.requested_to)
+      delete "/relationships/#{rel.id}"
+      expect(response).to be_unprocessable
+      expect(rel.reload.requested?).to be_truthy
+    end
+    it "should not unfriend a friend who only has a withdrawn request" do
+      rel = create(:relationship, requested_by: create(:person), requested_to: create(:person), status: :withdrawn)
+      login_as(rel.requested_to)
+      delete "/relationships/#{rel.id}"
+      expect(response).to be_unprocessable
+      expect(rel.reload.withdrawn?).to be_truthy
+    end
+    it "should not unfriend a friend who only has a denied request" do
+      rel = create(:relationship, requested_by: create(:person), requested_to: create(:person), status: :denied)
+      login_as(rel.requested_to)
+      delete "/relationships/#{rel.id}"
+      expect(response).to be_unprocessable
+      expect(rel.reload.denied?).to be_truthy
+    end
+  end
+
+  describe "#index" do
+    let!(:person1) { create(:person) }
+    let!(:person2) { create(:person) }
+    let!(:person3) { create(:person) }
+    let!(:rel1) { create(:relationship, requested_by: person1, requested_to: person2) }
+    let!(:rel2) { create(:relationship, requested_by: person1, requested_to: person3, status: :friended) }
+    let!(:rel3) { create(:relationship, requested_by: person2, requested_to: person3, status: :friended) }
+    it "should get the current relationships of other user" do
+      login_as(person1)
+      get "/relationships", params: { person_id: person2.id.to_s }
+      expect(response).to be_success
+      expect(json["relationships"].map { |r| r["id"].to_i }.sort).to eq([rel3.id])
+    end
+    it "should get the current and pending relationships of current user" do
+      login_as(person2)
+      get "/relationships", params: { person_id: person2.id.to_s }
+      expect(response).to be_success
+      expect(json["relationships"].map { |r| r["id"].to_i }.sort).to eq([rel1.id, rel3.id])
+    end
+    it "should get the current and pending relationships of current user with no param" do
+      login_as(person2)
+      get "/relationships"
+      expect(response).to be_success
+      expect(json["relationships"].map { |r| r["id"].to_i }.sort).to eq([rel1.id, rel3.id])
+    end
+    it "should 401 if not logged in" do
+      post "/relationships"
       expect(response).to be_unauthorized
     end
   end
@@ -65,14 +147,13 @@ describe "Relationships (v1)" do
       get "/relationships/#{rel.id}"
       expect(response).to be_not_found
     end
-    it "should get relationship if relationship unfriended" do
+    it "should not get relationship if relationship unfriended" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
       rel.update_column(:status, :unfriended)
       get "/relationships/#{rel.id}"
-      expect(response).to be_success
-      expect(json["relationship"]).to eq(relationship_json(rel, person))
+      expect(response).to be_not_found
     end
   end
 

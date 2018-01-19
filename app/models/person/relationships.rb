@@ -3,8 +3,9 @@ class Person
 
   module Relationships
     def can_status?(relationship, status)
-      (relationship.requested_by == self) ? [ "withdrawn", "unfriended" ].include?(status) :
-                                            [ "denied", "friended", "unfriended" ].include?(status)
+      relationship.person_involved?(self) &&
+        ((relationship.requested_by == self) ? [ "withdrawn", "unfriended" ].include?(status.to_s) :
+                                            [ "denied", "friended", "unfriended" ].include?(status.to_s))
     end
 
     def friends

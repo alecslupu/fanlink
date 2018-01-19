@@ -1,5 +1,5 @@
-if defined?(@followers)
-  json.followers @followers, partial: "api/v1/people/person", as: :person
+if defined?(@relationships)
+  json.relationships @relationships, partial: "api/v1/relationships/relationship", as: :relationship
 else
-  json.following @following, partial: "api/v1/people/person", as: :person
+  json.relationships @relationships, partial: "api/v1/relationships/relationship", as: :relationship
 end
