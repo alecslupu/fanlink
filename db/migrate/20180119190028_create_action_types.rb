@@ -9,5 +9,6 @@ class CreateActionTypes < ActiveRecord::Migration[5.1]
     end
     add_index :action_types, [:product_id], name: "idx_action_types_product"
     add_index :action_types, [:product_id, :internal_name], name: "unq_action_types_product_internal_name", unique: true
+    add_index :action_types, [:product_id, :name], name: "unq_action_types_product_name", unique: true
   end
 end
