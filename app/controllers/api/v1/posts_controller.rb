@@ -79,7 +79,7 @@ class Api::V1::PostsController < ApiController
   #   limit. Messages are returned newest first, and the limit is applied to that ordering.
   #   Posts included are posts from the current user along with those of the users
   #   the current user is following.
-  # 
+  #
   # @apiParam {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #

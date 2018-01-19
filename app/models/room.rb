@@ -4,6 +4,7 @@ class Room < ApplicationRecord
   acts_as_tenant(:product)
 
   belongs_to :created_by, class_name: "Person"
+  belongs_to :product
 
   before_validation :canonicalize_name, if: :name_changed?
 
@@ -16,6 +17,7 @@ class Room < ApplicationRecord
   validates :name, presence: { message: "Room name is required." }, if: Proc.new { |r| r.public? }
   validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters", allow_blank: true }
 
+  #validates :product, presence: { message: "Room must be assigned to a product." }
   scope :privates, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false) }
   scope :publics, -> { where(public: true) }
 
