@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 20180119190028) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
-    t.text "title"
     t.text "body", null: false
     t.text "picture_id"
     t.boolean "global", default: false, null: false
@@ -129,7 +128,7 @@ ActiveRecord::Schema.define(version: 20180119190028) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical", null: false
+    t.text "name_canonical"
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
