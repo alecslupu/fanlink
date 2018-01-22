@@ -1,6 +1,28 @@
 require "rails_helper"
 
 RSpec.describe Badge, type: :model do
+  describe "#action_requirement" do
+    it "should not let you create a badge without an action requirement" do
+      badge = build(:badge, action_requirement: nil)
+      expect(badge).not_to be_valid
+      expect(badge.errors[:action_requirement]).not_to be_empty
+    end
+    it "should not let you create a badge with an action requirement less than 1" do
+      badge = build(:badge, action_requirement: 0)
+      expect(badge).not_to be_valid
+      expect(badge.errors[:action_requirement]).not_to be_empty
+    end
+  end
+  describe "action_type" do
+    it "should not let you set an action type for another product" do
+      current_product = create(:product)
+      diff_product = create(:product)
+      at = create(:action_type, product: diff_product)
+      badge = build(:badge, product: current_product, action_type: at)
+      expect(badge).not_to be_valid
+      expect(badge.errors[:action_type]).not_to be_empty
+    end
+  end
   describe "#internal_name" do
     it "should allow an internal name with lower case letters numbers and underscores" do
       expect(create(:badge, internal_name: "abc_d12"))
@@ -47,20 +69,16 @@ RSpec.describe Badge, type: :model do
       expect(at2.errors[:internal_name]).not_to be_empty
     end
     it "should allow two badges in different products to share internal name" do
-      at1 = create(:badge)
-      at2 = build(:badge, product: create(:product), internal_name: at1.internal_name)
-      expect(at2).to be_valid
+      b1 = create(:badge)
+      prod_b2 = create(:product, with_action_type: true)
+      b2 = build(:badge, product: prod_b2, internal_name: b1.internal_name, action_type: prod_b2.action_types.first)
+      expect(b2).to be_valid
     end
     it "should not allow two badges in the same product to share name" do
       at1 = create(:badge)
       at2 = build(:badge, name: at1.name)
       expect(at2).not_to be_valid
       expect(at2.errors[:name]).not_to be_empty
-    end
-    it "should allow two badges in different products to share internal name" do
-      at1 = create(:badge)
-      at2 = build(:badge, product: create(:product), name: at1.name)
-      expect(at2).to be_valid
     end
   end
   describe "#name" do
@@ -93,22 +111,10 @@ RSpec.describe Badge, type: :model do
     end
   end
   describe "#product" do
-    it "should not let you create an action type without a product" do
+    it "should not let you create a badge without a product" do
       at = build(:badge, product: nil)
       expect(at).not_to be_valid
       expect(at.errors[:product]).not_to be_empty
-    end
-  end
-  describe "#action_requirement" do
-    it "should not let you create a badge without an action requirement" do
-      badge = build(:badge, action_requirement: nil)
-      expect(badge).not_to be_valid
-      expect(badge.errors[:action_requirement]).not_to be_empty
-    end
-    it "should not let you create a badge with an action requirement less than 1" do
-      badge = build(:badge, action_requirement: 0)
-      expect(badge).not_to be_valid
-      expect(badge.errors[:action_requirement]).not_to be_empty
     end
   end
   describe "#valid?" do

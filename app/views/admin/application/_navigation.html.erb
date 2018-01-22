@@ -8,14 +8,16 @@ as defined by the routes in the `admin/` namespace
 %>
 
 <nav class="navigation" role="navigation">
-  <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-    <% unless resource.resource == "sessions" %>
-      <%= link_to(
-        display_resource_name(resource).titleize,
-        [namespace, resource.path],
-        class: "navigation__link navigation__link--#{nav_link_state(resource)}"
-      ) %>
+  <% if current_user %>
+    <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
+      <% unless resource.resource == "sessions" %>
+        <%= link_to(
+          display_resource_name(resource).titleize,
+          [namespace, resource.path],
+          class: "navigation__link navigation__link--#{nav_link_state(resource)}"
+        ) %>
+      <% end %>
     <% end %>
+    <%= link_to "Logout", admin_logout_path %>
   <% end %>
-  <%= link_to "Logout", admin_logout_path %>
 </nav>

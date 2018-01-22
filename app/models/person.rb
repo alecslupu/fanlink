@@ -9,7 +9,7 @@ class Person < ApplicationRecord
   acts_as_tenant(:product)
 
   attr_accessor :remember_me
-  
+
   belongs_to :product
 
   has_many :room_memberships, dependent: :destroy
