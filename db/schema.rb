@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119220550) do
+ActiveRecord::Schema.define(version: 20180122180539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,8 +82,6 @@ ActiveRecord::Schema.define(version: 20180119220550) do
     t.text "salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "remember_me_token"
-    t.datetime "remember_me_token_expires_at"
     t.text "facebookid"
     t.text "facebook_picture_url"
     t.text "picture_type"
@@ -91,11 +89,11 @@ ActiveRecord::Schema.define(version: 20180119220550) do
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
-    t.index ["remember_me_token"], name: "ind_people_remember_me_token"
   end
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
+    t.text "title"
     t.text "body", null: false
     t.text "picture_id"
     t.boolean "global", default: false, null: false
@@ -143,7 +141,7 @@ ActiveRecord::Schema.define(version: 20180119220550) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical"
+    t.text "name_canonical", null: false
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false

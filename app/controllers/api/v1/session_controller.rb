@@ -73,7 +73,7 @@ class Api::V1::SessionController < ApiController
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
-      @person = login(@person.email, params[:password], true) if @person
+      @person = login(@person.email, params[:password]) if @person
       return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
     end
     #bake_cookies_for(@person)
