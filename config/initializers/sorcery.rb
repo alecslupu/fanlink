@@ -3,7 +3,7 @@
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging, :external
 #Rails.application.config.sorcery.submodules = [:remember_me]
-Rails.application.config.sorcery.submodules = [] #remember me was causing spec issues and I don't know if we need it
+Rails.application.config.sorcery.submodules = []
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -28,13 +28,13 @@ Rails.application.config.sorcery.configure do |config|
   # Allow the remember_me cookie to be set through AJAX
   # Default: `true`
   #
-  # config.remember_me_httponly =
+  #config.remember_me_httponly =
 
   # -- session timeout --
   # How long in seconds to keep the session alive.
   # Default: `3600`
   #
-  # config.session_timeout =
+  #config.session_timeout = 12
 
   # Use the last action as the beginning of session timeout.
   # Default: `false`
@@ -255,7 +255,7 @@ Rails.application.config.sorcery.configure do |config|
     # How long in seconds the session length will be
     # Default: `604800`
     #
-    # user.remember_me_for =
+    #user.remember_me_for = 1.year
 
     # when true sorcery will persist a single remember me token for all
     # logins/logouts (supporting remembering on multiple browsers simultaneously).

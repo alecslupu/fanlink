@@ -1,12 +1,15 @@
 class Person < ApplicationRecord
+  authenticates_with_sorcery!
+
   include Person::Facebook
   include Person::Followings
   include Person::Relationships
 
-  authenticates_with_sorcery!
 
   acts_as_tenant(:product)
 
+  attr_accessor :remember_me
+  
   belongs_to :product
 
   has_many :room_memberships, dependent: :destroy
