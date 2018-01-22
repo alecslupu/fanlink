@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119190028) do
+ActiveRecord::Schema.define(version: 20180122180539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,11 @@ ActiveRecord::Schema.define(version: 20180119190028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_action_types_product_internal_name", unique: true
+    t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
+    t.index ["product_id", "name"], name: "unq_action_types_product_name", unique: true
+    t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "idx_action_types_product"
+    t.index ["product_id"], name: "idx_badges_product"
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -33,6 +37,17 @@ ActiveRecord::Schema.define(version: 20180119190028) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "ind_authentications_provider_uid"
+  end
+
+  create_table "badges", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.text "internal_name", null: false
+    t.text "picture_id"
+    t.integer "action_type_id", null: false
+    t.integer "action_requirement", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "followings", force: :cascade do |t|
@@ -67,8 +82,6 @@ ActiveRecord::Schema.define(version: 20180119190028) do
     t.text "salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "remember_me_token"
-    t.datetime "remember_me_token_expires_at"
     t.text "facebookid"
     t.text "facebook_picture_url"
     t.text "picture_type"
@@ -76,11 +89,11 @@ ActiveRecord::Schema.define(version: 20180119190028) do
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
-    t.index ["remember_me_token"], name: "ind_people_remember_me_token"
   end
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
+    t.text "title"
     t.text "body", null: false
     t.text "picture_id"
     t.boolean "global", default: false, null: false
@@ -128,7 +141,7 @@ ActiveRecord::Schema.define(version: 20180119190028) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical"
+    t.text "name_canonical", null: false
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -149,6 +162,7 @@ ActiveRecord::Schema.define(version: 20180119190028) do
   end
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
+  add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
