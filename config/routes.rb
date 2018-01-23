@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   JkoApi.routes self do
     version 1 do
+      resources :badge_actions, only: %i[ create ]
       resources :followings, only: %i[ create destroy index ]
       resources :people, only: %i[ create ]
       resources :posts, except: %i[ new edit ]

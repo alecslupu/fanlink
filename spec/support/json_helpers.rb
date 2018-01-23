@@ -3,6 +3,16 @@ module JsonHelpers
     @json ||= JSON.parse(response.body)
   end
 
+  def badge_json(badge)
+    {
+      "id"                  => badge.id.to_s,
+      "name"                => badge.name,
+      "internal_name"       => badge.internal_name,
+      "picture_url"         => badge.picture_url,
+      "action_requirement"  => badge.action_requirement
+    }
+  end
+
   def following_json(following, currnt_user)
     {
       "id"       => following.id.to_s,
@@ -18,6 +28,13 @@ module JsonHelpers
       "create_time" => msg.created_at.to_s,
       "picture_url" => msg.picture_id,
       "person" => person_profile_json(msg.person)
+    }
+  end
+
+  def pending_badge_json(earned, badge)
+    {
+      "badge_action_count"  => earned,
+      "badge"               => badge_json(badge)
     }
   end
 

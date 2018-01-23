@@ -12,6 +12,6 @@ class CreateBadges < ActiveRecord::Migration[5.1]
     add_index :action_types, [:product_id], name: "idx_badges_product"
     add_index :action_types, [:product_id, :internal_name], name: "unq_badges_product_internal_name", unique: true
     add_index :action_types, [:product_id, :name], name: "unq_badges_product_name", unique: true
-    add_foreign_key :badges, :action_types, name: "fk_badges_action_type", on_delete: :restrict
+    add_foreign_key :actions, :action_types, name: "fk_badges_action_type", on_delete: :restrict
   end
 end

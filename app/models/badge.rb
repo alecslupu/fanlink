@@ -20,6 +20,10 @@ class Badge < ApplicationRecord
             numericality: { greater_than: 0, message: "Action requirement must be greater than zero." }
 
 
+  def picture_url
+    nil
+  end
+
 private
 
   def action_type_product

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122180539) do
+ActiveRecord::Schema.define(version: 20180122220739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,22 @@ ActiveRecord::Schema.define(version: 20180122180539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "ind_authentications_provider_uid"
+  end
+
+  create_table "badge_actions", force: :cascade do |t|
+    t.integer "action_type_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["action_type_id", "person_id"], name: "ind_badge_actions_action_type_person"
+  end
+
+  create_table "badge_awards", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "badge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id", "badge_id"], name: "unq_badge_awards_people_badges", unique: true
   end
 
   create_table "badges", force: :cascade do |t|

@@ -12,6 +12,11 @@ class Person < ApplicationRecord
 
   belongs_to :product
 
+  has_many :badge_actions, dependent: :destroy
+  has_many :badge_awards
+
+  has_many :badges, through: :badge_awards
+
   has_many :room_memberships, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
