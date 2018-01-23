@@ -1,0 +1,1 @@
+json.pending_badges @badges, partial: "pending_badge", locals: { action_counts: @action_counts }
