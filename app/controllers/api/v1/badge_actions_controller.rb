@@ -3,21 +3,21 @@ class Api::V1::BadgeActionsController < ApiController
   before_action :load_action_type
 
   #**
-  # @api {post} /posts Create an badge action.
+  # @api {post} /posts Create a badge action.
   # @apiName CreateBadgeAction
   # @apiGroup Badges
   #
   # @apiDescription
-  #   This creates an action. An action is a record of something done of a particular action type in the app. Actions
-  #   are earned toward unearned badges of the action type matching the action. This call returns an array of badges.
-  #   Either all of the badges earned by virtue of this new action or, if none, the one badge which has the highest
-  #   percent completed of all badges assigned this action type.
+  #   This creates a badge action. A badge action is a record of something done of a particular action type in the app.
+  #   Badge actions are earned toward unearned badges of the action type matching the badge action. This call returns
+  #   either an array of earned badges or an object called pending_badge with the points earned so far and the badge info.
+  #   If more than one badge has been partially earned, the badge with the highest percentage earned is returned.
   #
-  # @apiParam {Object} action
-  #   The action object container.
+  # @apiParam {Object} badge_action
+  #   The badge_action object container.
   #
-  # @apiParam {String} action.action_type
-  #   The internal name of the action.
+  # @apiParam {String} badge_action.action_type
+  #   The internal name of the badge action.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
