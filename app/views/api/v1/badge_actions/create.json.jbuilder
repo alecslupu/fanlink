@@ -10,4 +10,3 @@ if @badge_awards.is_a?(Hash)
 else
   json.badges_awarded @badge_awards, partial: "api/v1/badges/badge", as: :badge
 end
-

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe BadgeAction, type: :model do
 
   describe "product sanity" do

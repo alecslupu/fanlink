@@ -42,7 +42,6 @@ describe "BadgeActions (v1)" do
       post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
       expect(response).to be_success
       expect(json["badges_awarded"].count).to eq(2)
-      puts json["badges_awarded"].inspect
       expect(json["badges_awarded"].first).to eq(badge_json(badge1))
       expect(json["badges_awarded"].last).to eq(badge_json(badge2))
     end
@@ -56,6 +55,24 @@ describe "BadgeActions (v1)" do
       expect(response).to be_success
       expect(json.keys).to include("pending_badge")
       expect(json["pending_badge"]).to be_nil
+    end
+    it "should not create an action if not enough time has passed since last one of this type" do
+      person = create(:person)
+      action_type = create(:action_type, product: person.product, seconds_lag: 120)
+      person.badge_actions.create(action_type: action_type)
+      login_as(person)
+      post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
+      expect(response.code).to eq("429")
+    end
+    it "should create an action if enough time has passed since last one of this type" do
+      person = create(:person)
+      action_type = create(:action_type, product: person.product, seconds_lag: 120)
+      person.badge_actions.create(action_type: action_type)
+      Timecop.travel(Time.zone.now + 121.seconds) do
+        login_as(person)
+        post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
+        expect(response).to be_success
+      end
     end
   end
 end

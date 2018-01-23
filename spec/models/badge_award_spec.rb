@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe BadgeAward, type: :model do
 
   describe ".award_badges" do
@@ -24,7 +22,7 @@ RSpec.describe BadgeAward, type: :model do
       badge2 = create(:badge, product: badge1.product, action_type: badge1.action_type, action_requirement: 3)
       action = BadgeAction.create(action_type: badge1.action_type, person: create(:person))
       precount = BadgeAward.count
-      expect(BadgeAward.award_badges(action)).to eq({ badge1 => 1 })
+      expect(BadgeAward.award_badges(action)).to eq(badge1 => 1)
       expect(BadgeAward.count - precount).to eq(0)
     end
   end

@@ -1,5 +1,4 @@
 class Api::V1::BadgeActionsController < ApiController
-
   before_action :load_action_type
 
   #**
@@ -22,7 +21,7 @@ class Api::V1::BadgeActionsController < ApiController
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
   #     badges_awarded: { [badge json], [badge_json],...} OR
-  #     pending_badge: {
+  #     pending_badge: { //NULL if there are no pending badges
   #         badge_action_count: 1,
   #         badge: [ badge json]
   #     }
@@ -31,14 +30,20 @@ class Api::V1::BadgeActionsController < ApiController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Action type invalid, blah blah blah" }
+  #     HTTP/1.1 429 - Not enough time since last submission of this action type
   #*
   def create
-    badge_action = current_user.badge_actions.create(action_type: @action_type)
-    @badge_awards = {}
-    if badge_action.valid?
-      @badge_awards = BadgeAward.award_badges(badge_action)
+    if @action_type.seconds_lag > 0 && current_user.badge_actions.where(action_type: @action_type).
+        where("created_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?
+      head :too_many_requests
+    else
+      badge_action = current_user.badge_actions.create(action_type: @action_type)
+      @badge_awards = {}
+      if badge_action.valid?
+        @badge_awards = BadgeAward.award_badges(badge_action)
+      end
+      return_the @badge_awards
     end
-    return_the @badge_awards
   end
 
 private
