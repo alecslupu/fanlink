@@ -60,6 +60,8 @@ end
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate"
 gem "administrate-field-enum"
+gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
+gem "aws-sdk"
 gem "email_validator"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "gettext_i18n_rails"
@@ -68,6 +70,7 @@ gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_
 gem "koala" #Facebook Graph API
 gem "paper_trail"
 gem "oauth2"
+gem "paperclip", "~> 5.0.0"
 gem "postgresql-check"
 gem "rubocop-rails"
 gem "sorcery"

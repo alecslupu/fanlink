@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122220739) do
+ActiveRecord::Schema.define(version: 20180124012523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 20180122220739) do
     t.text "username_canonical", null: false
     t.text "email"
     t.text "name"
-    t.text "picture_id"
     t.integer "product_id", null: false
     t.text "crypted_password"
     t.text "salt"
@@ -102,6 +101,10 @@ ActiveRecord::Schema.define(version: 20180122220739) do
     t.text "facebook_picture_url"
     t.text "picture_type"
     t.integer "friend_request_count", default: 0, null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true

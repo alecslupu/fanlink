@@ -13,14 +13,13 @@ class PersonDashboard < Administrate::BaseDashboard
     name: Field::Text.with_options(searchable: true),
     username: Field::Text.with_options(searchable: true),
     email: Field::Text.with_options(searchable: true),
+    picture: Field::Paperclip.with_options(blank_text: ''),
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
     salt: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    remember_me_token: Field::String,
-    remember_me_token_expires_at: Field::DateTime,
     password: PasswordField,
   }.freeze
 
@@ -34,6 +33,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :username,
     :email,
     :name,
+    :picture,
     :created_at,
   ].freeze
 
@@ -45,6 +45,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :username,
     :email,
     :name,
+    :picture,
     :facebookid,
     :facebook_picture_url,
     :created_at,
@@ -58,6 +59,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :product,
     :username,
     :email,
+    :picture,
     :name,
     :password
   ].freeze

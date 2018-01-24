@@ -5,12 +5,16 @@ class Person < ApplicationRecord
   include Person::Followings
   include Person::Relationships
 
-
   acts_as_tenant(:product)
 
   attr_accessor :remember_me
 
   belongs_to :product
+
+  has_attached_file :picture
+  validates_attachment :picture,
+                       content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+                       size: { in: 0..900.kilobytes }
 
   has_many :badge_actions, dependent: :destroy
   has_many :badge_awards
@@ -108,7 +112,7 @@ class Person < ApplicationRecord
   end
 
   def picture_url
-    facebook_picture_url #TBD attachment support TBD
+    picture.file? ? picture.url : nil
   end
 
   #
