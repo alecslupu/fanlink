@@ -58,6 +58,6 @@ class Api::V1::PeopleController < ApiController
   end
 
   def person_params
-    params.permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product)
+    params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product)
   end
 end

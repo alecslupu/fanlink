@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20180124012523) do
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_action_types_product_internal_name", unique: true
     t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_action_types_product_name", unique: true
     t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "idx_action_types_product"
     t.index ["product_id"], name: "idx_badges_product"
@@ -112,7 +111,6 @@ ActiveRecord::Schema.define(version: 20180124012523) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
-    t.text "title"
     t.text "body", null: false
     t.text "picture_id"
     t.boolean "global", default: false, null: false
@@ -160,7 +158,7 @@ ActiveRecord::Schema.define(version: 20180124012523) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical", null: false
+    t.text "name_canonical"
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -182,6 +180,7 @@ ActiveRecord::Schema.define(version: 20180124012523) do
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade

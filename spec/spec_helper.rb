@@ -139,4 +139,7 @@ RSpec.configure do |config|
   config.before :each, type: :request do
     @json = nil
   end
+
+  config.fixture_path = "spec/fixtures"
+
 end

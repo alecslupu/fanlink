@@ -9,16 +9,21 @@ describe "People (v1)" do
   end
 
   describe "#create" do
-    it "should sign up new user with email, username and password" do
+    it "should sign up new user with email, username, password and picture" do
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
       password = "secret"
-      post "/people", params: { product: @product.internal_name, person: { username: username, email: email, password: password } }
+      puts "path: #{self.class.fixture_path}"
+      picture = Rack::Test::UploadedFile.new("#{self.class.fixture_path}/images/large.jpg", 'image/jpeg', :binary)
+      post "/people", params:
+          { product: @product.internal_name,
+            person: { username: username, email: email, password: password, picture: picture } }
       expect(response).to be_success
       p = Person.last
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
       expect(json["person"]).to eq(person_private_json(p))
+      expect(p.picture_url).not_to be_nil
     end
     it "should sign up new user with FB auth token" do
       tok = "1234"
