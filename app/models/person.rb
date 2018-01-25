@@ -1,4 +1,6 @@
 class Person < ApplicationRecord
+  include AttachmentSupport
+
   authenticates_with_sorcery!
 
   include Person::Facebook
@@ -11,10 +13,7 @@ class Person < ApplicationRecord
 
   belongs_to :product
 
-  has_attached_file :picture
-  validates_attachment :picture,
-                       content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
-                       size: { in: 0..900.kilobytes }
+  has_image_called :picture
 
   has_many :badge_actions, dependent: :destroy
   has_many :badge_awards
@@ -109,10 +108,6 @@ class Person < ApplicationRecord
   #
   def self.named_like(term)
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
-  end
-
-  def picture_url
-    picture.file? ? picture.url : nil
   end
 
   #

@@ -29,11 +29,7 @@ class Api::V1::PeopleController < ApiController
   #   Password.
   # @apiParam {Attachment } [person.picture]
   #   NOT YET SUPPORTED Profile picture, this should be `image/gif`, `image/png`, or
-  #   `image/jpeg`. You should specify at most one of `picture` and
-  #   `picture_id`.
-  # @apiParam {ObjectId} [person.picture_id]
-  #   NOT YET SUPPORTED The profile picture as a temporary image. You should specify at
-  #   most one of `picture` and `picture_id`.
+  #   `image/jpeg`.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -62,13 +58,6 @@ class Api::V1::PeopleController < ApiController
   end
 
   def person_params
-    person = params.require(:person).permit(:email, :name, :username, :password, :picture, :picture_id)
-    if picture = person.delete(:picture).presence
-      person[:picture] = picture.respond_to?(:read) ? picture.read : picture
-    end
-    if picture_id = person.delete(:picture_id).presence
-      person[:picture] = TempImage.find(picture_id)
-    end
-    person
+    params.permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product)
   end
 end
