@@ -30,7 +30,7 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      if post_post(@post)
+      if post_post(@post, @post.person.followers)
         @post.published!
       else
         @post.destroy

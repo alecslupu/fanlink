@@ -40,8 +40,16 @@ module Messaging
     end
   end
 
-  def post_post(post)
-    client.set("#{user_path(post.person)}/last_post_id", post.id).response.status == 200
+  def post_post(post, to_be_notified)
+    if to_be_notified.empty?
+      true
+    else
+      payload = {}
+      to_be_notified.each do |p|
+        payload["#{user_path(p)}/last_post_id"] = post.id
+      end
+      client.update("", payload).response.status == 200
+    end
   end
 
   def set_message_counters(room, except_user)
