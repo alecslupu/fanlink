@@ -58,7 +58,7 @@ class Api::V1::PostsController < ApiController
   def destroy
     post = Post.visible.find(params[:id])
     if post.person == current_user
-      if delete_post(post)
+      if delete_post(post, post.person.followers)
         post.deleted!
         head :ok
       else
