@@ -10,14 +10,14 @@ describe "People (v1)" do
 
   describe "#create" do
     it "should sign up new user with email, username, password and picture" do
+      stub_request(:put, /https:\/\/flink-staging-bucket.s3.amazonaws.com\/people\/pictures\/[0-9]{3}\/[0-9]{3}\/[0-9]{3}\/original\/large.jpg/)
+      stub_request(:put, /https:\/\/flink-staging-bucket.s3.amazonaws.com\/people\/pictures\/[0-9]{3}\/[0-9]{3}\/[0-9]{3}\/thumbnail\/large.jpg/)
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
-      password = "secret"
-      puts "path: #{self.class.fixture_path}"
       picture = Rack::Test::UploadedFile.new("#{self.class.fixture_path}/images/large.jpg", 'image/jpeg', :binary)
       post "/people", params:
           { product: @product.internal_name,
-            person: { username: username, email: email, password: password, picture: picture } }
+            person: { username: username, email: email, password: "secret", picture: picture } }
       expect(response).to be_success
       p = Person.last
       expect(p.email).to eq(email)
