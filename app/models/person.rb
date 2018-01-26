@@ -3,6 +3,7 @@ class Person < ApplicationRecord
 
   authenticates_with_sorcery!
 
+  include Person::Blocks
   include Person::Facebook
   include Person::Followings
   include Person::Relationships
