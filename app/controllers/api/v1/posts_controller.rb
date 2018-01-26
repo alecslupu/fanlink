@@ -126,7 +126,7 @@ class Api::V1::PostsController < ApiController
   #         "body": "Stupid thing to say",
   #         "create_time": "2018-01-08'T'12:13:42'Z'"
   #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED,
-  #         "person": {...public person json...}
+  #         "person": {...public person json with relationships...}
   #       },....
   #     ]
   #

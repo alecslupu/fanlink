@@ -28,8 +28,7 @@ class Api::V1::PeopleController < ApiController
   # @apiParam {String} person.password
   #   Password.
   # @apiParam {Attachment } [person.picture]
-  #   NOT YET SUPPORTED Profile picture, this should be `image/gif`, `image/png`, or
-  #   `image/jpeg`.
+  #   Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
