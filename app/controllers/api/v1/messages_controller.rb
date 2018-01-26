@@ -149,15 +149,11 @@ class Api::V1::MessagesController < ApiController
     if room.public || !check_access(room)
       render_not_found
     else
-      if room.is_member?(current_user)
-        @message = room.messages.find(params[:id])
-        if @message.hidden
-          render_not_found
-        else
-          return_the @message
-        end
+      @message = room.messages.find(params[:id])
+      if @message.hidden
+        render_not_found
       else
-        head :unauthorized
+        return_the @message
       end
     end
   end
