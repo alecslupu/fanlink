@@ -34,6 +34,11 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
+  describe ".for_people" do
+    it "should get one relationship between two people with no specified limit" do
+      pending "do this one"
+    end
+  end
   describe "#status" do
     it "should allow transition from requested to friended" do
       rel = create(:relationship)
