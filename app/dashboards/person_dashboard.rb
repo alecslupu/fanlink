@@ -13,7 +13,7 @@ class PersonDashboard < Administrate::BaseDashboard
     name: Field::Text.with_options(searchable: true),
     username: Field::Text.with_options(searchable: true),
     email: Field::Text.with_options(searchable: true),
-    picture: Field::Paperclip.with_options(blank_text: ''),
+    picture: Field::Paperclip.with_options(blank_text: ""),
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,

@@ -13,7 +13,6 @@ module AttachmentSupport
           #{name}.file? ? #{name}.url : nil
         end
       EOE
-
     end
   end
 end
