@@ -35,8 +35,21 @@ RSpec.describe Relationship, type: :model do
   end
 
   describe ".for_people" do
-    it "should get one relationship between two people with no specified limit" do
-      pending "do this one"
+    it "should get one relationship between two people" do
+      rel = create(:relationship)
+      relationships = Relationship.for_people(rel.requested_by, rel.requested_to)
+      expect(relationships.count).to eq(1)
+      expect(relationships.first).to eq(rel)
+    end
+    it "should get two relationship between two people" do
+      rel1 = create(:relationship)
+      rel1.denied!
+      rel2 = create(:relationship, requested_by: rel1.requested_by, requested_to: rel1.requested_to)
+      create(:relationship, requested_by: rel1.requested_to)
+      relationships = Relationship.for_people(rel1.requested_by, rel1.requested_to)
+      expect(relationships.count).to eq(2)
+      expect(relationships.first).to eq(rel2)
+      expect(relationships.last).to eq(rel1)
     end
   end
   describe "#status" do
