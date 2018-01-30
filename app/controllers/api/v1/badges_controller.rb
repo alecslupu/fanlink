@@ -20,7 +20,14 @@ class Api::V1::BadgesController < ApiController
   #       {
   #         badge_action_count: 1,
   #         badge_awarded: false,
-  #         badge: { ...badge json ...}
+  #         badge: {
+  #           "id": 123,
+  #           "name": "Sheriff",
+  #           "internal_name": "sheriff"
+  #           "picture_url": NOT YET IMPLEMENTED,
+  #           "action_requirement": 1,
+  #           "point_value": 5
+  #         }
   #       },...
   #     ]
   #

@@ -9,7 +9,8 @@ module JsonHelpers
       "name"                => badge.name,
       "internal_name"       => badge.internal_name,
       "picture_url"         => badge.picture_url,
-      "action_requirement"  => badge.action_requirement
+      "action_requirement"  => badge.action_requirement,
+      "point_value"         => badge.point_value
     }
   end
 
