@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :level do
-    product_id 1
-    name "MyText"
+    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    name "My Level"
+    internal_name "my_level"
     points 1
   end
 end

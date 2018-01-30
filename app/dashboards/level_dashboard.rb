@@ -11,6 +11,7 @@ class LevelDashboard < Administrate::BaseDashboard
     id: Field::Number,
     product: Field::BelongsTo,
     name: Field::Text,
+    internal_name: Field::Text,
     points: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -26,6 +27,7 @@ class LevelDashboard < Administrate::BaseDashboard
     :id,
     :product,
     :name,
+    :internal_name,
     :picture,
     :points,
   ].freeze
@@ -36,6 +38,7 @@ class LevelDashboard < Administrate::BaseDashboard
     :id,
     :product,
     :name,
+    :internal_name,
     :points,
     :created_at,
     :updated_at,
@@ -48,6 +51,7 @@ class LevelDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :product,
     :name,
+    :internal_name,
     :points,
     :picture,
   ].freeze
