@@ -142,7 +142,7 @@ class Api::V1::MessagesController < ApiController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #
+  #*
   def show
     room = Room.find(params[:room_id])
     if room.public || !check_access(room)
