@@ -1,0 +1,28 @@
+class Api::V1::LevelsController < ApiController
+  #**
+  # @api {get} /levels Get all available levels.
+  # @apiName GetLevels
+  # @apiGroup Level
+  #
+  # @apiDescription
+  #   This gets a list of all levels available to be obtained.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "levels": [
+  #       {
+  #         "name": "Level One",
+  #         "internal_name": "level_one",
+  #         "points": 10,
+  #         "picture_url": "http://example.com/images/14"
+  #       },...
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
+  #*
+  def index
+    @levels = Level.order(:points)
+    return_the @levels
+  end
+end

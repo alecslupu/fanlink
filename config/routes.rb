@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :badge_actions, only: %i[ create ]
       resources :badges, only: %i[ index ]
       resources :followings, only: %i[ create destroy index ]
+      resources :levels, only: %i[ index ]
       resources :people, only: %i[ create ]
       resources :posts, except: %i[ new edit ]
       resources :relationships, except: %i[ new edit ]

@@ -101,6 +101,22 @@ RSpec.describe Level, type: :model do
       expect(level).not_to be_valid
       expect(level.errors[:points]).not_to be_empty
     end
+    it "should not let levels share point values within a product" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        level = create(:level)
+        l2 = build(:level, points: level.points)
+        expect(l2).not_to be_valid
+        expect(l2.errors[:points]).not_to be_empty
+      end
+    end
+    it "should let levels share point values in different products" do
+      points = 10
+      l1 = create(:level, points: points)
+      ActsAsTenant.with_tenant(create(:product)) do
+        l2 = create(:level, points: points)
+        expect(l2).to be_valid
+      end
+    end
   end
   describe "#valid?" do
     it "should be valid" do
