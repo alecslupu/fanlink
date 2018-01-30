@@ -15,6 +15,7 @@ class BadgeDashboard < Administrate::BaseDashboard
     picture_id: Field::Text,
     action_type: Field::BelongsTo,
     action_requirement: Field::Number,
+    point_value: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -42,6 +43,7 @@ class BadgeDashboard < Administrate::BaseDashboard
     :internal_name,
     :picture_id,
     :action_requirement,
+    :point_value,
     :created_at,
     :updated_at,
   ].freeze
@@ -56,6 +58,7 @@ class BadgeDashboard < Administrate::BaseDashboard
     :picture_id,
     :action_type,
     :action_requirement,
+    :point_value
   ].freeze
 
   # Overwrite this method to customize how badges are displayed
