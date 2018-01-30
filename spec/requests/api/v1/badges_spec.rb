@@ -1,7 +1,7 @@
 describe "Badges (v1)" do
 
   describe "#index" do
-    it "should return all badges" do
+    it "should return all badges for a passed in person" do
       person = create(:person)
       action_type = create(:action_type, product: person.product)
       action_type2 = create(:action_type, product: person.product)
@@ -9,8 +9,9 @@ describe "Badges (v1)" do
       badge2 = create(:badge, action_type: action_type2, action_requirement: 4)
       BadgeAward.create(badge: badge1, person: person)
       person.badge_actions.create(action_type: action_type)
-      login_as(person)
-      get "/badges"
+      person2 = create(:person, product: person.product)
+      login_as(person2)
+      get "/badges", params: { person_id: person.id.to_s }
       expect(response).to be_success
       expect(json["badges"].count).to eq(2)
       fb = json["badges"].first
