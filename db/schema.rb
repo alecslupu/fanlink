@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130015756) do
+ActiveRecord::Schema.define(version: 20180130022204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,20 @@ ActiveRecord::Schema.define(version: 20180130015756) do
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "idx_followings_followed"
     t.index ["follower_id", "followed_id"], name: "unq_followings_follower_followed", unique: true
+  end
+
+  create_table "levels", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.integer "points", default: 1000, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.index ["product_id", "name"], name: "unq_levels_product_name"
+    t.index ["product_id", "points"], name: "unq_levels_product_points"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -185,6 +199,7 @@ ActiveRecord::Schema.define(version: 20180130015756) do
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
+  add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
