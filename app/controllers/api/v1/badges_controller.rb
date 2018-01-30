@@ -10,6 +10,10 @@ class Api::V1::BadgesController < ApiController
   #   This gets a list of all badges earned for a passed in user. Will include points earned towards each badge and whether badge has been awarded
   #   to the user.
   #
+  # @apiParam {Integer} person_id
+  #   The id of the person whose badges you want.
+  #
+
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "pending_badges": [
