@@ -41,15 +41,14 @@ RSpec.describe Relationship, type: :model do
       expect(relationships.count).to eq(1)
       expect(relationships.first).to eq(rel)
     end
-    it "should get two relationship between two people" do
+    it "should get one relationship between two people with a denied one before" do
       rel1 = create(:relationship)
       rel1.denied!
-      rel2 = create(:relationship, requested_by: rel1.requested_by, requested_to: rel1.requested_to)
+      rel2 = create(:relationship, requested_by: rel1.requested_by, requested_to: rel1.requested_to, status: :friended)
       create(:relationship, requested_by: rel1.requested_to)
       relationships = Relationship.for_people(rel1.requested_by, rel1.requested_to)
-      expect(relationships.count).to eq(2)
+      expect(relationships.count).to eq(1)
       expect(relationships.first).to eq(rel2)
-      expect(relationships.last).to eq(rel1)
     end
   end
   describe "#status" do
