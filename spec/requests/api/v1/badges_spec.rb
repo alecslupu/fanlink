@@ -21,5 +21,18 @@ describe "Badges (v1)" do
       expect(sb["badge_action_count"]).to eq(0)
       expect(sb["badge"]).to eq(badge_json(badge2))
     end
+    it "should return 404 for non-existent passed in person" do
+      person2 = create(:person)
+      login_as(person2)
+      get "/badges", params: { person_id: (Person.last.id + 1).to_s }
+      expect(response).to be_not_found
+    end
+    it "should return 404 for passed in person from another product" do
+      person2 = create(:person)
+      login_as(person2)
+      person = create(:person, product: create(:product))
+      get "/badges", params: { person_id: person.id }
+      expect(response).to be_not_found
+    end
   end
 end
