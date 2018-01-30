@@ -48,8 +48,11 @@ RSpec.describe Level, type: :model do
     it "should allow two levels in different products to share internal name" do
       b1 = create(:level)
       prod_b2 = create(:product)
-      b2 = build(:level, product: prod_b2, internal_name: b1.internal_name)
-      expect(b2).to be_valid
+      ActsAsTenant.with_tenant(prod_b2) do
+        b2 = build(:level, internal_name: b1.internal_name)
+        expect(b2.product).to eq(prod_b2)
+        expect(b2).to be_valid
+      end
     end
     it "should not allow two levels in the same product to share name" do
       at1 = create(:level)
@@ -87,11 +90,16 @@ RSpec.describe Level, type: :model do
       expect(at.errors[:name]).not_to be_empty
     end
   end
-  describe "#product" do
-    it "should not let you create a level without a product" do
-      at = build(:level, product: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:product]).not_to be_empty
+  describe "#points" do
+    it "should not let you create a level without a point value" do
+      level = build(:level, points: nil)
+      expect(level).not_to be_valid
+      expect(level.errors[:points]).not_to be_empty
+    end
+    it "should not let you create a level with a point requirement less than 1" do
+      level = build(:level, points: 0)
+      expect(level).not_to be_valid
+      expect(level.errors[:points]).not_to be_empty
     end
   end
   describe "#valid?" do

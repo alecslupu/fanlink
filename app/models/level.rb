@@ -16,5 +16,6 @@ class Level < ApplicationRecord
             length: { in: 3..36 },
             uniqueness: { scope: :product_id, message: "There is already a level with that name." }
 
-
+  validates :points, presence: { message: "Point value is required." },
+            numericality: { greater_than: 0, message: "Point value must be greater than zero." }
 end
