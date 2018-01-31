@@ -32,12 +32,15 @@ class Api::V1::PeopleController < ApiController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #     "person": { // The full private version of the person.
+  #     "person": { // The full private version of the person (person json with email).
   #       "id": "5016",
-  #       "email": "addr@example.com",
   #       "username": "Pancakes.McGee",
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
+  #       "following_id": 12, //or null
+  #       "badge_points": 0,
+  #       "level": "something", //or null
+  #       "email": "addr@example.com",
   #     }
   #*
   def create
