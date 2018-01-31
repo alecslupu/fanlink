@@ -23,7 +23,8 @@ class Api::V1::BadgesController < ApiController
   #         badge: {
   #           "id": 123,
   #           "name": "Sheriff",
-  #           "internal_name": "sheriff"
+  #           "internal_name": "sheriff",
+  #           "description": "You get this badge for just existing, in true millennial fashion",
   #           "picture_url": "http://example.com/images/14,
   #           "action_requirement": 1,
   #           "point_value": 5
