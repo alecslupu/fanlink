@@ -24,7 +24,7 @@ class Api::V1::BadgesController < ApiController
   #           "id": 123,
   #           "name": "Sheriff",
   #           "internal_name": "sheriff"
-  #           "picture_url": NOT YET IMPLEMENTED,
+  #           "picture_url": "http://example.com/images/14,
   #           "action_requirement": 1,
   #           "point_value": 5
   #         }
