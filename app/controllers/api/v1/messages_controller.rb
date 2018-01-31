@@ -14,7 +14,7 @@ class Api::V1::MessagesController < ApiController
   # @apiParam {Object} message
   #   The message object container for the message parameters.
   #
-  # @apiParam {String} message.body
+  # @apiParam {String} [message.body]
   #   The body of the message.
   #
   # @apiParam {Attachment} [message.picture]
