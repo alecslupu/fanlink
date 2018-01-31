@@ -12,7 +12,7 @@ class MessageDashboard < Administrate::BaseDashboard
     room: Field::BelongsTo,
     id: Field::Number,
     body: Field::Text,
-    picture_id: Field::Text,
+    picture: Field::Paperclip.with_options(blank_text: ""),
     hidden: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -28,6 +28,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :room,
     :id,
     :body,
+    :picture
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -37,7 +38,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :room,
     :id,
     :body,
-    :picture_id,
+    :picture,
     :hidden,
     :created_at,
     :updated_at,
@@ -50,7 +51,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :person,
     :room,
     :body,
-    :picture_id,
+    :picture,
     :hidden,
   ].freeze
 

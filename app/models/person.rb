@@ -4,8 +4,10 @@ class Person < ApplicationRecord
   authenticates_with_sorcery!
 
   include Person::Blocks
+  include Person::Badges
   include Person::Facebook
   include Person::Followings
+  include Person::Levels
   include Person::Relationships
 
   acts_as_tenant(:product)
@@ -15,11 +17,6 @@ class Person < ApplicationRecord
   belongs_to :product
 
   has_image_called :picture
-
-  has_many :badge_actions, dependent: :destroy
-  has_many :badge_awards
-
-  has_many :badges, through: :badge_awards
 
   has_many :room_memberships, dependent: :destroy
 

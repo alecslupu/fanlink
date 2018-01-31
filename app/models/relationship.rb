@@ -21,6 +21,7 @@ class Relationship < ApplicationRecord
   validate :valid_status_transition
 
   scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
+  scope :for_people, -> (person1, person2) { where(requested_to: [person1, person2]).where(requested_by: [person1, person2]).where(status: %i[ requested friended ]).order(updated_at: :desc) }
   scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
   scope :visible, -> { where(status: VISIBLE_STATUSES) }
 

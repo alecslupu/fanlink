@@ -14,11 +14,11 @@ class Api::V1::MessagesController < ApiController
   # @apiParam {Object} message
   #   The message object container for the message parameters.
   #
-  # @apiParam {String} message.body
+  # @apiParam {String} [message.body]
   #   The body of the message.
   #
   # @apiParam {Attachment} [message.picture]
-  #   NOT YET IMPLEMENTED
+  #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
@@ -135,14 +135,14 @@ class Api::V1::MessagesController < ApiController
   #         "id": "5016",
   #         "body": "Stupid thing to say",
   #         "created_time": "2018-01-08'T'12:13:42'Z'"
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED,
+  #         "picture_url": "http://host.name/path",
   #         "person": {...public person json with relationships...}
   #       },....
   #     ]
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #
+  #*
   def show
     room = Room.find(params[:room_id])
     if room.public || !check_access(room)

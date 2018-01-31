@@ -13,6 +13,6 @@ class Product < ApplicationRecord
   has_many :people, dependent: :restrict_with_error
 
   def to_s
-    name
+    internal_name
   end
 end

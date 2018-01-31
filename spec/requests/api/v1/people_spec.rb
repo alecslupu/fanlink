@@ -9,21 +9,18 @@ describe "People (v1)" do
   end
 
   describe "#create" do
-    it "should sign up new user with email, username, password and picture" do
-      stub_request(:put, /https:\/\/flink-staging-bucket.s3.amazonaws.com\/people\/pictures\/[0-9]{3}\/[0-9]{3}\/[0-9]{3}\/original\/large.jpg/)
-      stub_request(:put, /https:\/\/flink-staging-bucket.s3.amazonaws.com\/people\/pictures\/[0-9]{3}\/[0-9]{3}\/[0-9]{3}\/thumbnail\/large.jpg/)
+    it "should sign up new user with email, username, and password" do
+      expect_any_instance_of(Person).to receive(:do_auto_follows)
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
-      picture = Rack::Test::UploadedFile.new("#{self.class.fixture_path}/images/large.jpg", 'image/jpeg', :binary)
       post "/people", params:
           { product: @product.internal_name,
-            person: { username: username, email: email, password: "secret", picture: picture } }
+            person: { username: username, email: email, password: "secret" } }
       expect(response).to be_success
       p = Person.last
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
       expect(json["person"]).to eq(person_private_json(p))
-      expect(p.picture_url).not_to be_nil
     end
     it "should sign up new user with FB auth token" do
       tok = "1234"

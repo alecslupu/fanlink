@@ -1,7 +1,11 @@
 class Badge < ApplicationRecord
+  include AttachmentSupport
+
   acts_as_tenant(:product)
 
   belongs_to :action_type
+
+  has_image_called :picture
 
   validate :action_type_product
 
@@ -19,10 +23,6 @@ class Badge < ApplicationRecord
   validates :action_requirement, presence: { message: "Action requirement is required." },
             numericality: { greater_than: 0, message: "Action requirement must be greater than zero." }
 
-
-  def picture_url
-    nil
-  end
 
 private
 

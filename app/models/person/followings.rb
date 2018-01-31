@@ -7,6 +7,12 @@ class Person
   has_many :followers, through: :passive_followings, source: :follower
 
   module Followings
+    def do_auto_follows
+      Person.where(auto_follow: true).each do |p|
+        follow(p)
+      end
+    end
+
     def follow(followed)
       active_followings.find_or_create_by(followed_id: followed.id)
     end

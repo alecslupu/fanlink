@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126200003) do
+ActiveRecord::Schema.define(version: 20180131205231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20180126200003) do
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_action_types_product_internal_name", unique: true
     t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
+    t.index ["product_id", "name"], name: "unq_action_types_product_name", unique: true
     t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "idx_action_types_product"
     t.index ["product_id"], name: "idx_badges_product"
@@ -58,11 +59,16 @@ ActiveRecord::Schema.define(version: 20180126200003) do
     t.integer "product_id", null: false
     t.text "name", null: false
     t.text "internal_name", null: false
-    t.text "picture_id"
     t.integer "action_type_id", null: false
     t.integer "action_requirement", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "point_value", default: 0, null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.text "description"
   end
 
   create_table "blocks", force: :cascade do |t|
@@ -81,15 +87,33 @@ ActiveRecord::Schema.define(version: 20180126200003) do
     t.index ["follower_id", "followed_id"], name: "unq_followings_follower_followed", unique: true
   end
 
+  create_table "levels", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.text "internal_name", null: false
+    t.integer "points", default: 1000, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.index ["product_id", "internal_name"], name: "unq_levels_product_internal_name"
+    t.index ["product_id", "points"], name: "unq_levels_product_points"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "room_id", null: false
-    t.text "body", null: false
-    t.text "picture_id"
+    t.text "body"
     t.boolean "hidden", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0, null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["room_id"], name: "idx_messages_room"
   end
 
@@ -111,6 +135,10 @@ ActiveRecord::Schema.define(version: 20180126200003) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
+    t.boolean "do_not_message_me", default: false, null: false
+    t.boolean "pin_messages_from", default: false, null: false
+    t.boolean "auto_follow", default: false, null: false
+    t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
@@ -118,8 +146,8 @@ ActiveRecord::Schema.define(version: 20180126200003) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
-    t.text "body", null: false
-    t.text "picture_id"
+    t.text "title"
+    t.text "body"
     t.boolean "global", default: false, null: false
     t.datetime "starts_at"
     t.datetime "ends_at"
@@ -127,6 +155,10 @@ ActiveRecord::Schema.define(version: 20180126200003) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["person_id"], name: "idx_posts_person"
   end
 
@@ -165,7 +197,7 @@ ActiveRecord::Schema.define(version: 20180126200003) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical"
+    t.text "name_canonical", null: false
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -187,11 +219,11 @@ ActiveRecord::Schema.define(version: 20180126200003) do
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
-  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
+  add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade

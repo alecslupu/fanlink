@@ -10,9 +10,8 @@ class PostDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     person: Field::BelongsTo,
     id: Field::Number,
-    title: Field::Text,
     body: Field::Text,
-    picture_id: Field::Text,
+    picture: Field::Paperclip.with_options(blank_text: ""),
     global: Field::Boolean,
     starts_at: Field::DateTime,
     ends_at: Field::DateTime,
@@ -29,8 +28,8 @@ class PostDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :person,
-    :title,
     :body,
+    :picture,
     :global,
     :starts_at,
     :ends_at,
@@ -44,9 +43,8 @@ class PostDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :person,
     :id,
-    :title,
     :body,
-    :picture_id,
+    :picture,
     :global,
     :starts_at,
     :ends_at,
@@ -60,9 +58,8 @@ class PostDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :title,
     :body,
-    :picture_id,
+    :picture,
     :global,
     :starts_at,
     :ends_at,
@@ -74,6 +71,6 @@ class PostDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(post)
-    "Post - #{(post.title || post.body).truncate(14)}"
+    "Post - #{post.body.truncate(14)}"
   end
 end

@@ -1,15 +1,15 @@
 class Message < ApplicationRecord
+  include AttachmentSupport
   enum status: %i[ pending posted postfailed ]
 
   belongs_to :person
   belongs_to :room
 
-  validates :body, presence: { message: "Message body is required" }
+  has_image_called :picture
 
   scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
                                                         where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit) }
   scope :visible, -> { where(hidden: false) }
-
 
   def as_json
     super(only: [:id, :body, :picture_id], methods: [:create_time],
@@ -18,6 +18,10 @@ class Message < ApplicationRecord
 
   def create_time
     created_at.to_s
+  end
+
+  def product
+    room.product
   end
 
   def visible?

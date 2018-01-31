@@ -8,8 +8,10 @@ module JsonHelpers
       "id"                  => badge.id.to_s,
       "name"                => badge.name,
       "internal_name"       => badge.internal_name,
+      "description"         => badge.description,
       "picture_url"         => badge.picture_url,
-      "action_requirement"  => badge.action_requirement
+      "action_requirement"  => badge.action_requirement,
+      "point_value"         => badge.point_value
     }
   end
 
@@ -21,12 +23,22 @@ module JsonHelpers
     }
   end
 
+  def level_json(level)
+    {
+        "id"                  => level.id.to_s,
+        "name"                => level.name,
+        "internal_name"       => level.internal_name,
+        "points"              => level.points,
+        "picture_url"         => level.picture_url
+    }
+  end
+
   def message_json(msg)
     {
       "id"        => msg.id.to_s,
       "body"      => msg.body,
       "create_time" => msg.created_at.to_s,
-      "picture_url" => msg.picture_id,
+      "picture_url" => msg.picture_url,
       "person" => person_profile_json(msg.person)
     }
   end
@@ -41,17 +53,21 @@ module JsonHelpers
   def person_private_json(person, potential_follower = nil)
     person_profile_json(person, potential_follower).merge(
       "email" => person.email
-    ).except("following_id")
+    )
   end
 
   def person_profile_json(person, potential_follower = nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
-      "id"           => person.id.to_s,
-      "username"     => person.username,
-      "name"         => person.name,
-      "picture_url"  => person.picture_url,
-      "following_id" => (following) ? following.id : nil
+      "id"                => person.id.to_s,
+      "username"          => person.username,
+      "name"              => person.name,
+      "picture_url"       => person.picture_url,
+      "following_id"      => (following) ? following.id : nil,
+      "badge_points"      => person.badge_points,
+      "level"             => (person.level.nil?) ? nil : level_json(person.level),
+      "do_not_message_me" => person.do_not_message_me,
+      "pin_messages_from" => person.pin_messages_from
     }
   end
   def post_json(post)
@@ -59,7 +75,7 @@ module JsonHelpers
       "id"          => post.id.to_s,
       "body"        => post.body,
       "create_time" => post.created_at.to_s,
-      "picture_url" => post.picture_id,
+      "picture_url" => post.picture_url,
       "person" => person_profile_json(post.person)
     }
   end

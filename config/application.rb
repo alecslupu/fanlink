@@ -31,14 +31,15 @@ module Fanlink
     config.paperclip_defaults = {
         storage: :s3,
         styles: { thumbnail: "100x100#" },
-        s3_region: ENV['AWS_REGION'],
-        bucket:    ENV['AWS_BUCKET'],
+        url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
+        s3_region: ENV["AWS_REGION"],
+        bucket:    ENV["AWS_BUCKET"],
+        hash_secret: ENV["PAPERCLIP_SECRET"],
         s3_host_name: "s3.#{ENV.fetch('AWS_REGION')}.amazonaws.com",
         s3_credentials: {
-            access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-            secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+            access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+            secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
         }
     }
-
   end
 end
