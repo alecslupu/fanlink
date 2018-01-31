@@ -8,7 +8,7 @@ RSpec.describe Person, type: :model do
     ActsAsTenant.current_tenant = @person.product
   end
 
-  describe "#auto_follow" do
+  describe "#do_auto_follows" do
     it "should auto follow the right accounts and only those" do
       ActsAsTenant.with_tenant(create(:product)) do
         create(:person, auto_follow: true, product: create(:product))
@@ -17,7 +17,7 @@ RSpec.describe Person, type: :model do
       auto2 = create(:person, auto_follow: true)
       create(:person, auto_follow: false)
       person = create(:person)
-      person.auto_follow
+      person.do_auto_follows
       expect(person.following.sort).to eq([auto1, auto2].sort)
     end
   end
