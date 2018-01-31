@@ -1,7 +1,11 @@
 class Badge < ApplicationRecord
+  include AttachmentSupport
+
   acts_as_tenant(:product)
 
   belongs_to :action_type
+
+  has_image_called :picture
 
   validate :action_type_product
 

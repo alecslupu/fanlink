@@ -12,10 +12,10 @@ class BadgeDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::Text,
     internal_name: Field::Text,
-    picture_id: Field::Text,
     action_type: Field::BelongsTo,
     action_requirement: Field::Number,
     point_value: Field::Number,
+    picture: Field::Paperclip.with_options(blank_text: ""),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -31,6 +31,7 @@ class BadgeDashboard < Administrate::BaseDashboard
     :action_type,
     :name,
     :internal_name,
+    :picture
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -41,9 +42,9 @@ class BadgeDashboard < Administrate::BaseDashboard
     :action_type,
     :name,
     :internal_name,
-    :picture_id,
     :action_requirement,
     :point_value,
+    :picture,
     :created_at,
     :updated_at,
   ].freeze
@@ -55,7 +56,7 @@ class BadgeDashboard < Administrate::BaseDashboard
     :product,
     :name,
     :internal_name,
-    :picture_id,
+    :picture,
     :action_type,
     :action_requirement,
     :point_value
