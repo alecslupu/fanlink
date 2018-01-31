@@ -16,6 +16,7 @@ class PersonDashboard < Administrate::BaseDashboard
     picture: Field::Paperclip.with_options(blank_text: ""),
     do_not_message_me: Field::Boolean,
     pin_messages_from: Field::Boolean,
+    auto_follow: Field::Boolean,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
@@ -50,6 +51,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :picture,
     :do_not_message_me,
     :pin_messages_from,
+    :auto_follow,
     :facebookid,
     :facebook_picture_url,
     :created_at,
@@ -67,6 +69,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :picture,
     :do_not_message_me,
     :pin_messages_from,
+    :auto_follow,
     :password
   ].freeze
 

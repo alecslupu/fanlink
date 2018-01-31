@@ -8,6 +8,19 @@ RSpec.describe Person, type: :model do
     ActsAsTenant.current_tenant = @person.product
   end
 
+  describe "#auto_follow" do
+    it "should auto follow the right accounts and only those" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        create(:person, auto_follow: true, product: create(:product))
+      end
+      auto1 = create(:person, auto_follow: true)
+      auto2 = create(:person, auto_follow: true)
+      create(:person, auto_follow: false)
+      person = create(:person)
+      person.auto_follow
+      expect(person.following.sort).to eq([auto1, auto2].sort)
+    end
+  end
   describe "#badge_points" do
     it "should give the total point value of badges earned when no badges earned" do
       person = create(:person)

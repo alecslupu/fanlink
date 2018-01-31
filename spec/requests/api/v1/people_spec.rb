@@ -10,6 +10,7 @@ describe "People (v1)" do
 
   describe "#create" do
     it "should sign up new user with email, username, and password" do
+      expect_any_instance_of(Person).to receive(:auto_follow)
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
       post "/people", params:

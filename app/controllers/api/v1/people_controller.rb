@@ -56,6 +56,7 @@ class Api::V1::PeopleController < ApiController
       @person = Person.create(person_params)
     end
     if @person.valid?
+      @person.auto_follow
       auto_login(@person)
     end
     return_the @person
