@@ -33,15 +33,9 @@ RSpec.describe Post, type: :model do
     end
   end
   describe "#body" do
-    it "should not let you create a disembodied nil post" do
+    it "should let you create a disembodied nil post" do
       post = build(:post, body: nil)
-      expect(post).not_to be_valid
-      expect(post.errors[:body]).not_to be_empty
-    end
-    it "should not let you create a disembodied empty string post" do
-      post = build(:post, body: "")
-      expect(post).not_to be_valid
-      expect(post.errors[:body]).not_to be_empty
+      expect(post).to be_valid
     end
   end
   describe "#create" do

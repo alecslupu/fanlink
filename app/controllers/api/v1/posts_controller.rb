@@ -12,7 +12,7 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Object} post
   #   The post object container for the post parameters.
   #
-  # @apiParam {String} post.body
+  # @apiParam {String} [post.body]
   #   The body of the message.
   #
   # @apiParam {Attachment} [post.picture]

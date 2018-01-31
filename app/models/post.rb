@@ -7,7 +7,6 @@ class Post < ApplicationRecord
   belongs_to :person
 
   validate :sensible_dates
-  validates :body, presence: { message: "Message body is required" }
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
