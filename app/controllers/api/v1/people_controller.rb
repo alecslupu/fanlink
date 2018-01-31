@@ -39,7 +39,8 @@ class Api::V1::PeopleController < ApiController
   #       "picture_url": "http://host.name/path",
   #       "following_id": 12, //or null
   #       "badge_points": 0,
-  #       "level": "something", //or null
+  #       "level": "something", //or null,
+  #       "do_not_message_me": false,
   #       "email": "addr@example.com",
   #     }
   #*

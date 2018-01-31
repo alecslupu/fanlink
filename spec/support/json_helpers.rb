@@ -58,13 +58,14 @@ module JsonHelpers
   def person_profile_json(person, potential_follower = nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
-      "id"           => person.id.to_s,
-      "username"     => person.username,
-      "name"         => person.name,
-      "picture_url"  => person.picture_url,
-      "following_id" => (following) ? following.id : nil,
-      "badge_points" => person.badge_points,
-      "level"        => (person.level.nil?) ? nil : level_json(person.level)
+      "id"                => person.id.to_s,
+      "username"          => person.username,
+      "name"              => person.name,
+      "picture_url"       => person.picture_url,
+      "following_id"      => (following) ? following.id : nil,
+      "badge_points"      => person.badge_points,
+      "level"             => (person.level.nil?) ? nil : level_json(person.level),
+      "do_not_message_me" => person.do_not_message_me
     }
   end
   def post_json(post)
