@@ -1,8 +1,11 @@
 class Message < ApplicationRecord
+  include AttachmentSupport
   enum status: %i[ pending posted postfailed ]
 
   belongs_to :person
   belongs_to :room
+
+  has_image_called :picture
 
   validates :body, presence: { message: "Message body is required" }
 
@@ -18,6 +21,10 @@ class Message < ApplicationRecord
 
   def create_time
     created_at.to_s
+  end
+
+  def product
+    room.product
   end
 
   def visible?

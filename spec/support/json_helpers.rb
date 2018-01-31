@@ -37,7 +37,7 @@ module JsonHelpers
       "id"        => msg.id.to_s,
       "body"      => msg.body,
       "create_time" => msg.created_at.to_s,
-      "picture_url" => msg.picture_id,
+      "picture_url" => msg.picture_url,
       "person" => person_profile_json(msg.person)
     }
   end
