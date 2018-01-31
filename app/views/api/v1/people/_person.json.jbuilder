@@ -16,3 +16,4 @@ else
   json.level lev, partial: "api/v1/levels/level", as: :level
 end
 json.do_not_message_me person.do_not_message_me
+json.pin_messages_from person.pin_messages_from

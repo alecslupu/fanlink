@@ -41,6 +41,7 @@ class Api::V1::PeopleController < ApiController
   #       "badge_points": 0,
   #       "level": "something", //or null,
   #       "do_not_message_me": false,
+  #       "pin_messages_from": false,
   #       "email": "addr@example.com",
   #     }
   #*

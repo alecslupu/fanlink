@@ -15,6 +15,7 @@ class PersonDashboard < Administrate::BaseDashboard
     email: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
     do_not_message_me: Field::Boolean,
+    pin_messages_from: Field::Boolean,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
@@ -48,6 +49,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :do_not_message_me,
+    :pin_messages_from,
     :facebookid,
     :facebook_picture_url,
     :created_at,
@@ -64,6 +66,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :do_not_message_me,
+    :pin_messages_from,
     :password
   ].freeze
 

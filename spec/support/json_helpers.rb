@@ -65,7 +65,8 @@ module JsonHelpers
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
-      "do_not_message_me" => person.do_not_message_me
+      "do_not_message_me" => person.do_not_message_me,
+      "pin_messages_from" => person.pin_messages_from
     }
   end
   def post_json(post)
