@@ -8,6 +8,24 @@ RSpec.describe Person, type: :model do
     ActsAsTenant.current_tenant = @person.product
   end
 
+  describe "#badge_points" do
+    it "should give the total point value of badges earned when no badges earned" do
+      person = create(:person)
+      expect(person.badge_points).to eq(0)
+    end
+    it "should give the total point value of badges earned when one badge earned" do
+      person = create(:person)
+      ba = create(:badge_award, person: person)
+      expect(person.badge_points).to eq(ba.badge.point_value)
+    end
+    it "should give the total point value of badges earned when multiple badges earned" do
+      person = create(:person)
+      ba1 = create(:badge_award, person: person)
+      ba2 = create(:badge_award, person: person)
+      expect(person.badge_points).to eq(ba1.badge.point_value + ba2.badge.point_value)
+    end
+  end
+
   describe "#email" do
     it "should not let you create a person with a blank email" do
       person = build(:person, email: "")
@@ -62,6 +80,41 @@ RSpec.describe Person, type: :model do
       expect(fwer.following?(fwed)).to be_truthy
       fwer.unfollow(fwed)
       expect(fwer.following?(fwed)).to be_falsey
+    end
+  end
+
+  describe "#level" do
+    it "should be nil for person with no badges" do
+      person = create(:person)
+      expect(person.level).to be_nil
+    end
+    it "should be nil for person with one badge below first level" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        person = create(:person)
+        badge = create(:badge, point_value: 10)
+        level = create(:level, points: 20)
+        create(:badge_award, badge: badge, person: person)
+        expect(person.level).to be_nil
+      end
+    end
+    it "should be right level for person with one badge above only level" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        person = create(:person)
+        badge = create(:badge, point_value: 20)
+        level = create(:level, points: 10)
+        create(:badge_award, badge: badge, person: person)
+        expect(person.level).to eq(level)
+      end
+    end
+    it "should be right level for person with one badge between levels" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        person = create(:person)
+        badge = create(:badge, point_value: 20)
+        level1 = create(:level, points: 10)
+        level2 = create(:level, points: 21)
+        create(:badge_award, badge: badge, person: person)
+        expect(person.level).to eq(level1)
+      end
     end
   end
 

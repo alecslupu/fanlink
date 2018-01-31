@@ -52,7 +52,7 @@ module JsonHelpers
   def person_private_json(person, potential_follower = nil)
     person_profile_json(person, potential_follower).merge(
       "email" => person.email
-    ).except("following_id")
+    )
   end
 
   def person_profile_json(person, potential_follower = nil)
@@ -62,7 +62,9 @@ module JsonHelpers
       "username"     => person.username,
       "name"         => person.name,
       "picture_url"  => person.picture_url,
-      "following_id" => (following) ? following.id : nil
+      "following_id" => (following) ? following.id : nil,
+      "badge_points" => person.badge_points,
+      "level"        => (person.level.nil?) ? nil : level_json(person.level)
     }
   end
   def post_json(post)

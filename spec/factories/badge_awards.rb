@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :badge_award do
-    person_id 1
-    badge_id 1
+    person_id { create(:person).id }
+    badge_id { create(:badge).id }
   end
 end

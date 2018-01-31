@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence(:internal_name) { |n| "action_#{n}" }
     picture_id "MyText"
     action_type_id { FactoryBot.create(:action_type).id }
+    point_value 10
   end
 end
