@@ -16,7 +16,7 @@ class Api::V1::PostsController < ApiController
   #   The body of the message.
   #
   # @apiParam {Attachment} [post.picture]
-  #   NOT YET IMPLEMENTED
+  #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
@@ -76,7 +76,7 @@ class Api::V1::PostsController < ApiController
   #
   # @apiDescription
   #   This gets a list of posts for a from date, to date, with an optional
-  #   limit. Messages are returned newest first, and the limit is applied to that ordering.
+  #   limit. Posts are returned newest first, and the limit is applied to that ordering.
   #   Posts included are posts from the current user along with those of the users
   #   the current user is following.
   #
@@ -91,8 +91,8 @@ class Api::V1::PostsController < ApiController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #     "messages": [
-  #       { ....message json..see get message action ....
+  #     "posts": [
+  #       { ....post json..see get post action ....
   #       },....
   #     ]
   #
@@ -125,7 +125,7 @@ class Api::V1::PostsController < ApiController
   #         "id": "5016",
   #         "body": "Stupid thing to say",
   #         "create_time": "2018-01-08'T'12:13:42'Z'"
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED,
+  #         "picture_url": "http://host.name/path",
   #         "person": {...public person json with relationships...}
   #       },....
   #     ]
@@ -146,6 +146,6 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:body)
+    params.require(:post).permit(:body, :picture)
   end
 end

@@ -72,7 +72,7 @@ module JsonHelpers
       "id"          => post.id.to_s,
       "body"        => post.body,
       "create_time" => post.created_at.to_s,
-      "picture_url" => post.picture_id,
+      "picture_url" => post.picture_url,
       "person" => person_profile_json(post.person)
     }
   end
