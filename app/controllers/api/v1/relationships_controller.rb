@@ -1,7 +1,6 @@
 class Api::V1::RelationshipsController < ApiController
   include Messaging
 
-  load_up_the Person, from: :requested_to_id, into: :@requested, only: %i[ create ]
   load_up_the Relationship, except: %i[ create index ]
 
   #**

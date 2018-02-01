@@ -6,9 +6,17 @@ class Person
   has_many :blocked_by_people, through: :blocks_on, source: :blocker
 
   module Blocks
-    # def follow(followed)
-    #   active_followings.find_or_create_by(followed_id: followed.id)
-    # end
+    def block(blocked)
+      blocks_by.create(blocked_id: blocked.id)
+    end
+
+    def blocked?(person)
+      blocked_people.include?(person)
+    end
+
+    def unblock(blocked)
+      blocked_people.destroy(blocked)
+    end
     #
     # def following?(someone)
     #   following.include?(someone)
