@@ -115,6 +115,15 @@ describe "Messages (v1)" do
       expect(response).to be_success
       expect(json["messages"].map { |m| m["id"] }).to eq([msg2.id.to_s])
     end
+    it "should get a list of messages not to include blocked people" do
+      blocked = create(:person, product: @person.product)
+      @person.block(blocked)
+      blocked_msg = create(:message, person: blocked)
+      login_as(@person)
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: "2019-12-01" } #if you are looking at this and cussing me out, just be glad by some miracle you lasted this long
+      expect(response).to be_success
+      expect(json["messages"].map { |m| m["id"] }).not_to include(blocked_msg.id)
+    end
     it "should return unprocessable if invalid from date" do
       login_as(@person)
       expect(Message).to_not receive(:for_date_range)
@@ -197,6 +206,14 @@ describe "Messages (v1)" do
       get "/rooms/#{@private_room.id}/messages/#{msg.id}"
       expect(response).to be_success
       expect(json["message"]).to eq(message_json(msg))
+    end
+    it "should not get a single private message from a blocked user" do
+      login_as(@person)
+      blocked = create(:person, product: @person.product)
+      @person.block(blocked)
+      msg = create(:message, room: @private_room, body: "this is my body", person: blocked)
+      get "/rooms/#{@private_room.id}/messages/#{msg.id}"
+      expect(response).to be_not_found
     end
     it "should not get message if not logged in" do
       msg = create(:message, room: @private_room, body: "this is my body")

@@ -30,6 +30,9 @@ class Api::V1::BlocksController < ApiController
   def create
     blocked = Person.find(block_params[:blocked_id])
     @block = current_user.block(blocked)
+    if @block.valid?
+      Relationship.for_people(current_user, blocked).destroy_all
+    end
     return_the @block
   end
 

@@ -14,6 +14,14 @@ class Person
       blocked_people.include?(person)
     end
 
+    def block_with?(person)
+      blocks_with.include?(person)
+    end
+
+    def blocks_with
+      blocked_people + blocked_by_people
+    end
+
     def unblock(blocked)
       blocked_people.destroy(blocked)
     end

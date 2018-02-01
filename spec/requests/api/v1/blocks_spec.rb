@@ -10,6 +10,15 @@ describe "Blocks (v1)" do
       expect(json["block"]).to eq(block_json(Block.last))
       expect(blocker.blocked?(to_be_blocked)).to be_truthy
     end
+    it "should kill relationships with person" do
+      blocker = create(:person)
+      to_be_blocked = create(:person, product: blocker.product)
+      rel1 = create(:relationship, requested_by: blocker, requested_to: to_be_blocked)
+      login_as(blocker)
+      post "/blocks", params: { block: { blocked_id: to_be_blocked.id } }
+      expect(response).to be_success
+      expect(rel1).not_to exist_in_database
+    end
     it "should not block person already blocked" do
       blocker = create(:person)
       to_be_blocked = create(:person, product: blocker.product)

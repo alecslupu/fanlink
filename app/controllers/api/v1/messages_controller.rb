@@ -113,7 +113,7 @@ class Api::V1::MessagesController < ApiController
       else
         l = params[:limit].to_i
         l = nil if l == 0
-        @messages = Message.visible.for_date_range(room, Date.parse(params[:from_date]), Date.parse(params[:to_date]), l)
+        @messages = Message.visible.unblocked(current_user.blocked_people).for_date_range(room, Date.parse(params[:from_date]), Date.parse(params[:to_date]), l)
         clear_count(room) if room.private?
         return_the @messages
       end
@@ -126,7 +126,8 @@ class Api::V1::MessagesController < ApiController
   # @apiGroup Messages
   #
   # @apiDescription
-  #   This gets a single message for a message id. Only works for messages in private rooms.
+  #   This gets a single message for a message id. Only works for messages in private rooms. If the message author
+  #   has been blocked by the current user, this will return 404 Not Found.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -148,7 +149,7 @@ class Api::V1::MessagesController < ApiController
     if room.public || !check_access(room)
       render_not_found
     else
-      @message = room.messages.find(params[:id])
+      @message = room.messages.unblocked(current_user.blocked_people).find(params[:id])
       if @message.hidden
         render_not_found
       else
