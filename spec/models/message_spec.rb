@@ -41,4 +41,15 @@ RSpec.describe Message, type: :model do
       end
     end
   end
+
+  describe ".unblocked" do
+    it "should exclude messages from blocked users" do
+      blocker = create(:person)
+      blocked = create(:person)
+      blocker.block(blocked)
+      msg = create(:message, room: @room, person_id: blocked.id)
+      expect(Message.unblocked(blocker.blocked_people)).not_to include(msg)
+    end
+  end
+
 end

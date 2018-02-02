@@ -16,6 +16,26 @@ describe "Relationships (v1)" do
       expect(response).to be_success
       expect(json["relationship"]).to eq(relationship_json(Relationship.last, @requester))
     end
+    it "should not send a friend request to someone you have blocked" do
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
+      requester = create(:person)
+      blocked = create(:person, product: requester.product)
+      requester.block(blocked)
+      login_as(requester)
+      post "/relationships", params: { relationship: { requested_to_id: blocked.id } }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("blocked")
+    end
+    it "should not send a friend request to someone who has blocked you" do
+      expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
+      requester = create(:person)
+      blocking = create(:person, product: requester.product)
+      blocking.block(requester)
+      login_as(requester)
+      post "/relationships", params: { relationship: { requested_to_id: blocking.id } }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("blocked")
+    end
     it "should just change request to friended if to person sends a new request to from person" do
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).and_return(true)
       requester = create(:person)

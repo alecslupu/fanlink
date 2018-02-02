@@ -8,6 +8,21 @@ RSpec.describe Person, type: :model do
     ActsAsTenant.current_tenant = @person.product
   end
 
+  describe "#block" do
+    it "should block a user" do
+      to_be_blocked = create(:person)
+      @person.block(to_be_blocked)
+      expect(@person.blocked?(to_be_blocked)).to be_truthy
+    end
+    it "should unblock a user" do
+      to_be_unblocked = create(:person)
+      @person.block(to_be_unblocked)
+      expect(@person.blocked?(to_be_unblocked)).to be_truthy
+      @person.unblock(to_be_unblocked)
+      expect(@person.blocked?(to_be_unblocked)).to be_falsey
+    end
+  end
+
   describe "#do_auto_follows" do
     it "should auto follow the right accounts and only those" do
       ActsAsTenant.with_tenant(create(:product)) do

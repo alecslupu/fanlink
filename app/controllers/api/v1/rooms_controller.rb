@@ -18,7 +18,8 @@ class Api::V1::RoomsController < ApiController
   #   NOT YET IMPLEMENTED
   #
   # @apiParam {Array} [room.member_ids]
-  #   Ids of persons to add as members. You do not need to include the current user, who will be made a member
+  #   Ids of persons to add as members.  Users who are blocked by or who are blocking the current user will
+  #   be silently excluded. You do not need to include the current user, who will be made a member
   #   automatically.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -47,12 +48,15 @@ class Api::V1::RoomsController < ApiController
   #       { "That name is too short, blah blah blah" }
   #*
   def create
-    @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id))
+    @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
-      members_ids = params[:members_ids].is_a?(Array) ? params[:members_ids].map { |m| m.to_i } : []
+      blocks_with = current_user.blocks_with.map { |b| b.id }
+      members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
       members_ids << current_user.id
       members_ids.uniq.each do |i|
-        @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+        unless blocks_with.include?(i)
+          @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+        end
       end
       @room.reload
       new_private_room(@room)

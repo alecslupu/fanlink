@@ -1,7 +1,6 @@
 class Api::V1::RelationshipsController < ApiController
   include Messaging
 
-  load_up_the Person, from: :requested_to_id, into: :@requested, only: %i[ create ]
   load_up_the Relationship, except: %i[ create index ]
 
   #**
@@ -38,28 +37,32 @@ class Api::V1::RelationshipsController < ApiController
   #*
   def create
     requested_to = Person.find(relationship_params[:requested_to_id])
-    @relationship = Relationship.find_by(requested_to: current_user, requested_by: requested_to, status: :requested)
-    if @relationship
-      @relationship.status = :friended
-      @relationship.requested_to.friend_request_count -= 1
-      if update_relationship_count(@relationship.requested_to)
-        @relationship.save!
-        @relationship.requested_to.save
-      else
-        @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
-      end
-    else
-      @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
-      if @relationship.valid?
-        @relationship.requested_to.friend_request_count += 1
+    if check_blocked(requested_to)
+      @relationship = Relationship.find_by(requested_to: current_user, requested_by: requested_to, status: :requested)
+      if @relationship
+        @relationship.status = :friended
+        @relationship.requested_to.friend_request_count -= 1
         if update_relationship_count(@relationship.requested_to)
+          @relationship.save!
           @relationship.requested_to.save
         else
           @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
         end
+      else
+        @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
+        if @relationship.valid?
+          @relationship.requested_to.friend_request_count += 1
+          if update_relationship_count(@relationship.requested_to)
+            @relationship.requested_to.save
+          else
+            @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
+          end
+        end
       end
+      return_the @relationship.reload
+    else
+      render_error("You have blocked this person or this person has blocked you.") && return
     end
-    return_the @relationship.reload
   end
 
   #**
@@ -205,6 +208,10 @@ class Api::V1::RelationshipsController < ApiController
   end
 
 private
+
+  def check_blocked(person)
+    !current_user.block_with?(person)
+  end
 
   def check_status
     Relationship.statuses.keys.include?(relationship_params[:status])

@@ -15,6 +15,13 @@ module JsonHelpers
     }
   end
 
+  def block_json(block)
+    {
+      "id"          => block.id.to_s,
+      "blocker_id"  => block.blocker_id,
+      "blocked_id"  => block.blocked_id
+    }
+  end
   def following_json(following, currnt_user)
     {
       "id"       => following.id.to_s,
