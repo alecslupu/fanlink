@@ -1,6 +1,8 @@
 class Person < ApplicationRecord
   include AttachmentSupport
 
+  enum role: %i[ normal staff admin super_admin ]
+
   authenticates_with_sorcery!
 
   include Person::Blocks
@@ -38,6 +40,7 @@ class Person < ApplicationRecord
   validates :password, presence: { message: "Password is required." }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
   validates :password, length: { minimum: 6, allow_blank: true }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
+  validate :check_role
 
   #
   # Return the canonical form of a username.
@@ -135,6 +138,12 @@ class Person < ApplicationRecord
     def canonicalize_username
       self.username_canonical = canonicalize(self.username)
       true
+    end
+
+    def check_role
+      if super_admin? && !product.can_have_supers
+        errors.add(:role, "This product cannot have super admins.")
+      end
     end
 
     def normalize_email

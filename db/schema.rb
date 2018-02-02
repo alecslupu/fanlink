@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202042221) do
+ActiveRecord::Schema.define(version: 20180202165605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20180202042221) do
     t.boolean "do_not_message_me", default: false, null: false
     t.boolean "pin_messages_from", default: false, null: false
     t.boolean "auto_follow", default: false, null: false
+    t.integer "role", default: 0, null: false
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
@@ -167,6 +168,7 @@ ActiveRecord::Schema.define(version: 20180202042221) do
     t.boolean "enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "can_have_supers", default: false, null: false
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end

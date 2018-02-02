@@ -146,6 +146,24 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "#role" do
+    it "should allow super in a product that can have such" do
+      prod = create(:product, can_have_supers: true)
+      ActsAsTenant.with_tenant(prod) do
+        person = create(:person, role: :super_admin)
+        expect(person).to be_valid
+      end
+    end
+    it "should not allow super in a product that cannot have such" do
+      prod = create(:product)
+      ActsAsTenant.with_tenant(prod) do
+        person = build(:person, role: :super_admin)
+        expect(person).not_to be_valid
+        expect(person.errors[:role]).not_to be_empty
+      end
+    end
+  end
+
   describe "#username" do
     it "should not let you create a person with a username less than 3 characters" do
       person = build(:person, username: "ab")
