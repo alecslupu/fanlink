@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131235341) do
+ActiveRecord::Schema.define(version: 20180202042221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,9 +200,12 @@ ActiveRecord::Schema.define(version: 20180131235341) do
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
-    t.text "picture_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 

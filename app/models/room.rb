@@ -1,4 +1,6 @@
 class Room < ApplicationRecord
+  include AttachmentSupport
+
   enum status: %i[ inactive active deleted ]
 
   acts_as_tenant(:product)
@@ -8,6 +10,8 @@ class Room < ApplicationRecord
 
   before_validation :canonicalize_name, if: :name_changed?
 
+  has_image_called :picture
+
   has_many :room_memberships, dependent: :destroy
   has_many :members, through: :room_memberships, source: :person
 
@@ -16,8 +20,7 @@ class Room < ApplicationRecord
   validate :name_uniqueness
   validates :name, presence: { message: "Room name is required." }, if: Proc.new { |r| r.public? }
   validates :name, length: { in: 3..36, message: "Room name must be between 3 and 36 characters", allow_blank: true }
-
-  #validates :product, presence: { message: "Room must be assigned to a product." }
+  validates :picture, absence: true, if: Proc.new { |r| !r.public? }
   scope :privates, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false) }
   scope :publics, -> { where(public: true) }
 

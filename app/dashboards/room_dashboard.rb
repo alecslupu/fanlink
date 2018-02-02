@@ -11,10 +11,10 @@ class RoomDashboard < Administrate::BaseDashboard
     product: Field::BelongsTo,
     id: Field::Number,
     name: Field::Text.with_options(searchable: true),
+    picture: Field::Paperclip.with_options(blank_text: ""),
     created_by: Field::BelongsTo.with_options(class_name: "Person"),
     status: Field::Enum,
-    public: Field::Boolean,
-    picture_id: Field::Text,
+    public: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -26,6 +26,7 @@ class RoomDashboard < Administrate::BaseDashboard
     :product,
     :id,
     :name,
+    :picture,
     :status
   ].freeze
 
@@ -35,11 +36,11 @@ class RoomDashboard < Administrate::BaseDashboard
     :product,
     :id,
     :name,
+    :picture,
     :status,
     :created_by,
     :status,
     :public,
-    :picture_id,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -48,8 +49,8 @@ class RoomDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :product,
     :name,
+    :picture,
     :status,
-    :picture_id,
   ].freeze
 
   # Overwrite this method to customize how rooms are displayed

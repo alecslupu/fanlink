@@ -29,14 +29,10 @@ class Api::V1::RoomsController < ApiController
   #         "id": "5016",
   #         "name": "Motley People Only",
   #         "owned": "true", # is current user the owner of room?
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
+  #         "picture_url": "http://host.name/path",
   #         "members": [
   #           {
-  #             "id": "1234",
-  #             "username": "george",
-  #             "name": "George Plimpton",
-  #             "picture_url": null, #NOT YET IMPLEMENTED
-  #             "following_id": 13 (or null)
+  #             ....person json...
   #           },....
   #         ]
   #
