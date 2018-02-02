@@ -46,16 +46,12 @@ describe "Rooms (v1)" do
       login_as(@person)
       member = create(:person, product: @product)
       member_blocked = create(:person, product: @product)
-      puts member_blocked.id
       @person.block(member_blocked)
-      n = "Some Room"
-      post "/rooms", params: { room: { name: n, member_ids: [ member.id.to_s, member_blocked.id.to_s ] } }
+      expect(@person.reload.blocked?(member_blocked)).to be_truthy
+      post "/rooms", params: { room: { name: "some roome", member_ids: [ member.id.to_s, member_blocked.id.to_s ] } }
       expect(response).to be_success
       room = Room.last
-      expect(room.name).to eq(n)
-      expect(room.active?).to be_truthy
       members = room.members
-      puts members.inspect
       expect(members.count).to eq(2)
       expect(members).not_to include(member_blocked)
     end

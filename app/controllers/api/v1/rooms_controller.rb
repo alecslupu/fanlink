@@ -18,7 +18,8 @@ class Api::V1::RoomsController < ApiController
   #   NOT YET IMPLEMENTED
   #
   # @apiParam {Array} [room.member_ids]
-  #   Ids of persons to add as members. You do not need to include the current user, who will be made a member
+  #   Ids of persons to add as members.  Users who are blocked by or who are blocking the current user will
+  #   be silently excluded. You do not need to include the current user, who will be made a member
   #   automatically.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -53,8 +54,6 @@ class Api::V1::RoomsController < ApiController
       members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
       members_ids << current_user.id
       members_ids.uniq.each do |i|
-        puts blocks_with
-        puts i
         unless blocks_with.include?(i)
           @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
         end

@@ -46,7 +46,7 @@ class Api::V1::RelationshipsController < ApiController
           @relationship.save!
           @relationship.requested_to.save
         else
-         @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
+          @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
         end
       else
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)

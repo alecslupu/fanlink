@@ -29,7 +29,7 @@ describe "Relationships (v1)" do
     it "should not send a friend request to someone who has blocked you" do
       expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
       requester = create(:person)
-      blocking= create(:person, product: requester.product)
+      blocking = create(:person, product: requester.product)
       blocking.block(requester)
       login_as(requester)
       post "/relationships", params: { relationship: { requested_to_id: blocking.id } }
