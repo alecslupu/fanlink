@@ -27,7 +27,6 @@ class BadgeDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :product,
     :id,
     :action_type,
     :name,
@@ -38,7 +37,6 @@ class BadgeDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :product,
     :id,
     :action_type,
     :name,
@@ -55,7 +53,6 @@ class BadgeDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :product,
     :name,
     :internal_name,
     :description,

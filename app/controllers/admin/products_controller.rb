@@ -1,5 +1,8 @@
 module Admin
   class ProductsController < Admin::ApplicationController
+
+    before_action :check_super
+
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
     #

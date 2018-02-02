@@ -96,7 +96,7 @@ class Person < ApplicationRecord
 
   def self.can_login_as_admin?(email)
     person = can_login?(email)
-    (person && person.username == "admin") ? person : nil
+    (person && person.some_admin?) ? person : nil
   end
 
   #
@@ -109,6 +109,10 @@ class Person < ApplicationRecord
   #
   def self.named_like(term)
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
+  end
+
+  def some_admin?
+    !normal?
   end
 
   #

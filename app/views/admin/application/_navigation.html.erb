@@ -10,7 +10,7 @@ as defined by the routes in the `admin/` namespace
 <nav class="navigation" role="navigation">
   <% if current_user %>
     <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-      <% unless resource.resource == "sessions" %>
+      <% unless resource.resource == "sessions" || (resource.resource == "products" && !current_user.super_admin?) %>
         <%= link_to(
           display_resource_name(resource).titleize,
           [namespace, resource.path],

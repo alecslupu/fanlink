@@ -164,6 +164,12 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "#some_admin?" do
+    it "should return false for normal" do
+      person = create(:person)
+      expect(person.some_admin?).to be_falsey
+    end
+  end
   describe "#username" do
     it "should not let you create a person with a username less than 3 characters" do
       person = build(:person, username: "ab")

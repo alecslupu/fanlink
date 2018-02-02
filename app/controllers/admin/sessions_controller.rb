@@ -2,8 +2,7 @@ module Admin
   class SessionsController < Admin::ApplicationController
     set_current_tenant_through_filter
 
-    before_action :set_product
-    skip_before_action :require_login, :authenticate_admin
+    skip_before_action :require_login, :authenticate_admin, :set_tenant
 
     def create
       @person = Person.can_login_as_admin?(params[:email_or_username])
@@ -23,12 +22,5 @@ module Admin
     def new
       @person = Person.new
     end
-
-    private
-
-      def set_product
-        product = Product.find_by(internal_name: "admin")
-        set_current_tenant(product)
-      end
   end
 end

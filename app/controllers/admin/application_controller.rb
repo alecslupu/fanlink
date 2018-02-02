@@ -6,10 +6,11 @@
 # you're free to overwrite the RESTful controller actions.
 module Admin
   class ApplicationController < Administrate::ApplicationController
-    before_action :require_login, :authenticate_admin
+    set_current_tenant_through_filter
+    before_action :require_login, :authenticate_admin, :set_tenant
 
     def authenticate_admin
-      not_authenticated unless current_user && current_user.username == "admin"
+      not_authenticated unless current_user && current_user.some_admin?
     end
     # Override this value to specify the number of elements to display at a time
     # on index pages. Defaults to 20.
@@ -17,10 +18,18 @@ module Admin
     #   params[:per_page] || 20
     # end
 
-    protected
+  protected
 
-      def not_authenticated
-        redirect_to admin_login_path, notice: "Login required."
-      end
+    def check_super
+      not_authenticated unless current_user.super_admin?
+    end
+
+    def not_authenticated
+      redirect_to admin_login_path, notice: "Login required."
+    end
+
+    def set_tenant
+      set_current_tenant(current_user.product) if current_user
+    end
   end
 end
