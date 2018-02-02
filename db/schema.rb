@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20180131205231) do
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_action_types_product_internal_name", unique: true
     t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_action_types_product_name", unique: true
     t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "idx_action_types_product"
     t.index ["product_id"], name: "idx_badges_product"
@@ -69,6 +68,13 @@ ActiveRecord::Schema.define(version: 20180131205231) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description"
+  end
+
+  create_table "blocks", force: :cascade do |t|
+    t.integer "blocker_id", null: false
+    t.integer "blocked_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blocker_id"], name: "ind_blocks_blocker"
   end
 
   create_table "followings", force: :cascade do |t|
@@ -139,7 +145,6 @@ ActiveRecord::Schema.define(version: 20180131205231) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
-    t.text "title"
     t.text "body"
     t.boolean "global", default: false, null: false
     t.datetime "starts_at"
@@ -190,7 +195,7 @@ ActiveRecord::Schema.define(version: 20180131205231) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical", null: false
+    t.text "name_canonical"
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -212,6 +217,9 @@ ActiveRecord::Schema.define(version: 20180131205231) do
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
+  add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
+  add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
