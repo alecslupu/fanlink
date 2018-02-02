@@ -17,7 +17,6 @@ class Post < ApplicationRecord
 
   scope :visible, -> { published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
                                                Time.zone.now, Time.zone.now) }
-
   def product
     person.product
   end

@@ -47,12 +47,17 @@ class Api::V1::RoomsController < ApiController
   #       { "That name is too short, blah blah blah" }
   #*
   def create
-    @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id))
+    @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
-      members_ids = params[:members_ids].is_a?(Array) ? params[:members_ids].map { |m| m.to_i } : []
+      blocks_with = current_user.blocks_with.map { |b| b.id }
+      members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
       members_ids << current_user.id
       members_ids.uniq.each do |i|
-        @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+        puts blocks_with
+        puts i
+        unless blocks_with.include?(i)
+          @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+        end
       end
       @room.reload
       new_private_room(@room)

@@ -6,7 +6,8 @@ class Api::V1::BlocksController < ApiController
   # @apiGroup Blocks
   #
   # @apiDescription
-  #   This is used to block a person.
+  #   This is used to block a person. When a person is blocked, any followings and relationships are immediately
+  #   removed between the users.
   #
   # @apiParam {Object} block
   #   Block object.
@@ -32,6 +33,8 @@ class Api::V1::BlocksController < ApiController
     @block = current_user.block(blocked)
     if @block.valid?
       Relationship.for_people(current_user, blocked).destroy_all
+      current_user.unfollow(blocked)
+      blocked.unfollow(current_user)
     end
     return_the @block
   end

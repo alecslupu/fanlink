@@ -120,7 +120,7 @@ describe "Messages (v1)" do
       @person.block(blocked)
       blocked_msg = create(:message, person: blocked)
       login_as(@person)
-      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: "2019-12-01" } #if you are looking at this and cussing me out, just be glad by some miracle you lasted this long
+      get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: "2019-12-01" }
       expect(response).to be_success
       expect(json["messages"].map { |m| m["id"] }).not_to include(blocked_msg.id)
     end

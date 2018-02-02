@@ -19,6 +19,24 @@ describe "Blocks (v1)" do
       expect(response).to be_success
       expect(rel1).not_to exist_in_database
     end
+    it "should unfollow person" do
+      blocker = create(:person)
+      to_be_blocked = create(:person, product: blocker.product)
+      blocker.follow(to_be_blocked)
+      login_as(blocker)
+      post "/blocks", params: { block: { blocked_id: to_be_blocked.id } }
+      expect(response).to be_success
+      expect(blocker.following?(to_be_blocked)).to be_falsey
+    end
+    it "should be unfollowed blocked person" do
+      blocker = create(:person)
+      to_be_blocked = create(:person, product: blocker.product)
+      to_be_blocked.follow(blocker)
+      login_as(blocker)
+      post "/blocks", params: { block: { blocked_id: to_be_blocked.id } }
+      expect(response).to be_success
+      expect(to_be_blocked.following?(blocker)).to be_falsey
+    end
     it "should not block person already blocked" do
       blocker = create(:person)
       to_be_blocked = create(:person, product: blocker.product)

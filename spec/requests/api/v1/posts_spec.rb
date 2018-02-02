@@ -88,6 +88,15 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["posts"].map { |p| p["id"] }).to eq([postloggedin.id.to_s, post22.id.to_s])
     end
+    it "should not include posts from blocked person" do
+      blocked = create(:person, product: @person.product)
+      post = create(:post, person: blocked, status: :published)
+      @person.block(blocked)
+      login_as(@person)
+      get "/posts", params: { from_date: from, to_date: "2019-12-31" }
+      expect(response).to be_success
+      expect(json["posts"].map { |p| p["id"] }).not_to include(post.id)
+    end
     it "should not get the list if not logged in" do
       get "/posts", params: { from_date: from, to_date: to, limit: 2 }
       expect(response).to be_unauthorized
