@@ -111,6 +111,14 @@ class Person < ApplicationRecord
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
   end
 
+  def roles_for_select
+    #(product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
+    [
+        { "label": "Normal", value: 0 },
+        { "label": "Staff", value: 1}
+    ]
+  end
+
   def some_admin?
     !normal?
   end
