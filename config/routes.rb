@@ -31,14 +31,19 @@ Rails.application.routes.draw do
     end
     resources :people
     resources :posts
-    resources :products
+    resources :products do
+      collection do
+        get "select_form" => "products#select_form"
+        post "select_product" => "products#select"
+      end
+    end
     resources :rooms
 
     get "login" => "sessions#new"
     post "login" => "sessions#create"
     get "logout" => "sessions#destroy"
 
-    root to: "products#index"
+    root to: "people#index"
   end
 
 end

@@ -10,3 +10,17 @@ form {
 .hidden {
   background-color: lightgrey;
 }
+
+.product-select {
+  padding-top: 50px;
+
+}
+
+.navigation__link {
+  margin-left: 15px;
+}
+
+.navigation .navigation__link:nth-child(2), a:last-child {
+  margin-top: 30px;
+}
+

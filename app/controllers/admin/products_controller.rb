@@ -3,6 +3,8 @@ module Admin
 
     before_action :check_super
 
+    skip_before_action :set_tenant
+
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
     #
@@ -20,5 +22,22 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+
+    def select
+      product_id = params[:product_id].to_i
+      if product_id > 0
+        product = Product.find_by(id: product_id)
+        if product.present?
+          session[:product_id] = product_id
+          redirect_to admin_people_path and return
+        end
+      end
+      redirect_to select_form_admin_products_path
+    end
+
+    def select_form
+      @selected_id = session[:product_id]
+      @products = Product.order(:name)
+    end
   end
 end
