@@ -11,13 +11,15 @@ as defined by the routes in the `admin/` namespace
     <% if current_user.super_admin? && !(controller.action_name == "select_form") %>
       <%= link_to "Select Product", select_form_admin_products_path, class: 'button' %>
     <% end %>
-    <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-      <% unless resource.resource == "sessions" || (controller.action_name == "select_form") %>
-        <%= link_to(
-          display_resource_name(resource).titleize,
-          [namespace, resource.path],
-          class: "navigation__link navigation__link--#{nav_link_state(resource)}"
-        ) %>
+    <% unless controller.action_name == "select_form" %>
+      <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
+        <% unless resource.resource == "sessions" || (!current_user.super_admin? && resource.resource == "products") %>
+          <%= link_to(
+            display_resource_name(resource).titleize,
+            [namespace, resource.path],
+            class: "navigation__link navigation__link--#{nav_link_state(resource)}"
+          ) %>
+        <% end %>
       <% end %>
     <% end %>
     <%= link_to "Logout", admin_logout_path, class: 'button' %>

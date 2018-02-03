@@ -31,8 +31,8 @@ module Admin
     def set_tenant
       if current_user
         if current_user.super_admin?
-          if session[:product_id].present?
-            set_current_tenant(Product.find(session[:product_id]))
+          if cookies[:product_id].present?
+            set_current_tenant(Product.find(cookies[:product_id]))
           else
             redirect_to select_form_admin_products_path
           end

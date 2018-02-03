@@ -7,8 +7,8 @@ module Admin
     def create
       @person = Person.can_login_as_admin?(params[:email_or_username])
       if @person && (@person = login(@person.email, params[:password]))
-        flash[:notice] = "Login successful"
         set_tenant
+        redirect_to admin_people_path unless performed?
       else
         flash.now[:alert] = "Login failed"
         render action: "new"

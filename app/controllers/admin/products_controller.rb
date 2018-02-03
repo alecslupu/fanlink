@@ -28,7 +28,7 @@ module Admin
       if product_id > 0
         product = Product.find_by(id: product_id)
         if product.present?
-          session[:product_id] = product_id
+          cookies[:product_id] = product_id
           redirect_to admin_people_path and return
         end
       end

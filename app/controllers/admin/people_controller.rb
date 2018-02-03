@@ -10,6 +10,9 @@ module Admin
     #     per(10)
     # end
 
+    def create
+      super
+    end
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
     #   Person.find_by!(slug: param)
