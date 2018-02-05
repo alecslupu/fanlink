@@ -59,7 +59,8 @@ end
 
 gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate"
-gem "administrate-field-enum", git: "https://github.com/guillaumemaka/administrate-field-enum.git"
+#gem "administrate-field-enum", git: "https://github.com/guillaumemaka/administrate-field-enum.git"
+gem "administrate-field-enum", git: "https://github.com/mark100net/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "aws-sdk"
 gem "email_validator"

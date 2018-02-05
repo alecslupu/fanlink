@@ -1,19 +1,20 @@
 GIT
-  remote: https://github.com/guillaumemaka/administrate-field-enum.git
-  revision: 97fb674c86c6c617916fdaa5d8a0477592f8f099
-  specs:
-    administrate-field-enum (0.0.1)
-      administrate (>= 0.2.0.rc1)
-      appraisal (~> 2.1)
-      rails (>= 4.2)
-
-GIT
   remote: https://github.com/mark100net/acts_as_tenant.git
   revision: d2cc0fdc99d88ac161901e6053e2a370aa55b902
   specs:
     acts_as_tenant (0.4.1)
       rails (>= 3.1)
       request_store (>= 1.0.5)
+
+GIT
+  remote: https://github.com/mark100net/administrate-field-enum.git
+  revision: 76659baca9afdd6e0eb0937cda21aa9f3859b836
+  branch: collection-member-fix
+  specs:
+    administrate-field-enum (0.0.1)
+      administrate (>= 0.2.0.rc1)
+      appraisal (~> 2.1)
+      rails (>= 4.2)
 
 GIT
   remote: https://github.com/mark100net/administrate-field-paperclip.git
