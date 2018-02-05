@@ -14,7 +14,7 @@ class PersonDashboard < Administrate::BaseDashboard
     username: Field::Text.with_options(searchable: true),
     email: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
-    role: Field::Enum,
+    role: Field::Enum.with_options(collection_method: :roles_for_select),
     do_not_message_me: Field::Boolean,
     pin_messages_from: Field::Boolean,
     auto_follow: Field::Boolean,

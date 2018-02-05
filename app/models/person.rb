@@ -112,11 +112,7 @@ class Person < ApplicationRecord
   end
 
   def roles_for_select
-    #(product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
-    [
-        { "label": "Normal", value: 0 },
-        { "label": "Staff", value: 1}
-    ]
+    (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
   end
 
   def some_admin?

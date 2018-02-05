@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/guillaumemaka/administrate-field-enum.git
+  revision: 97fb674c86c6c617916fdaa5d8a0477592f8f099
+  specs:
+    administrate-field-enum (0.0.1)
+      administrate (>= 0.2.0.rc1)
+      appraisal (~> 2.1)
+      rails (>= 4.2)
+
+GIT
   remote: https://github.com/mark100net/acts_as_tenant.git
   revision: d2cc0fdc99d88ac161901e6053e2a370aa55b902
   specs:
@@ -87,9 +96,10 @@ GEM
       momentjs-rails (~> 2.8)
       sass-rails (~> 5.0)
       selectize-rails (~> 0.6)
-    administrate-field-enum (0.0.4)
-      administrate
-      rails (>= 4.2, < 5.2)
+    appraisal (2.2.0)
+      bundler
+      rake
+      thor (>= 0.14.0)
     arel (8.0.0)
     ast (2.3.0)
     autoprefixer-rails (7.2.1)
@@ -913,7 +923,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_tenant!
   administrate
-  administrate-field-enum
+  administrate-field-enum!
   administrate-field-paperclip!
   aws-sdk
   better_errors
