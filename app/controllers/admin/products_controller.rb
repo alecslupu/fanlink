@@ -1,6 +1,5 @@
 module Admin
   class ProductsController < Admin::ApplicationController
-
     before_action :check_super
 
     skip_before_action :set_tenant
@@ -29,7 +28,7 @@ module Admin
         product = Product.find_by(id: product_id)
         if product.present?
           cookies[:product_id] = product_id
-          redirect_to admin_people_path and return
+          redirect_to admin_people_path && return
         end
       end
       redirect_to select_form_admin_products_path

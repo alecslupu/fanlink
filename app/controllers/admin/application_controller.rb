@@ -12,11 +12,12 @@ module Admin
     def authenticate_admin
       not_authenticated unless current_user && current_user.some_admin?
     end
-    # Override this value to specify the number of elements to display at a time
-    # on index pages. Defaults to 20.
-    # def records_per_page
-    #   params[:per_page] || 20
-    # end
+
+  # Override this value to specify the number of elements to display at a time
+  # on index pages. Defaults to 20.
+  # def records_per_page
+  #   params[:per_page] || 20
+  # end
 
   protected
 
