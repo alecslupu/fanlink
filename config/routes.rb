@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     end
     resources :rooms
 
-    get "login" => "sessions#new"
+    get ":product_internal_name/login" => "sessions#new"
     post "login" => "sessions#create"
     get "logout" => "sessions#destroy"
 

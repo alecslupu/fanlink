@@ -23,15 +23,17 @@ module Admin
     # for more information
 
     def select
+      product = nil
       product_id = params[:product_id].to_i
       if product_id > 0
         product = Product.find_by(id: product_id)
-        if product.present?
-          cookies[:product_id] = product_id
-          redirect_to admin_people_path && return
-        end
       end
-      redirect_to select_form_admin_products_path
+      if product.present?
+        cookies[:product_id] = product.id
+        redirect_to admin_people_path
+      else
+        redirect_to select_form_admin_products_path
+      end
     end
 
     def select_form

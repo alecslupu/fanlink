@@ -7,11 +7,7 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     set_current_tenant_through_filter
-    before_action :require_login, :authenticate_admin, :set_tenant
-
-    def authenticate_admin
-      not_authenticated unless current_user && current_user.some_admin?
-    end
+    before_action :require_login, :check_admin, :set_tenant
 
   # Override this value to specify the number of elements to display at a time
   # on index pages. Defaults to 20.
@@ -20,6 +16,10 @@ module Admin
   # end
 
   protected
+
+    def check_admin
+      not_authenticated unless (current_user.super_admin? || current_user.some_admin?)
+    end
 
     def check_super
       not_authenticated unless current_user.super_admin?
@@ -30,16 +30,20 @@ module Admin
     end
 
     def set_tenant
-      if current_user
+      product = nil
+      if params[:product_internal_name].present?
+        product = Product.find_by(internal_name: params[:product_internal_name])
+      else
         if current_user.super_admin?
-          if cookies[:product_id].present?
-            set_current_tenant(Product.find(cookies[:product_id]))
-          else
-            redirect_to select_form_admin_products_path
-          end
+          product = Product.find(cookies[:product_id])
         else
-          set_current_tenant(current_user.product)
+          product = current_user.product
         end
+      end
+      if product.present?
+        set_current_tenant(product)
+      else
+        head :not_found
       end
     end
   end
