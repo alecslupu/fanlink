@@ -35,6 +35,14 @@ module Admin
       end
     end
 
+    def login_redirect
+      if product = Product.find_by(internal_name: params[:product_internal_name])
+        redirect_to(admin_path(product_internal_name: product.internal_name))
+      else
+        render_not_found
+      end
+    end
+
     def new
       logout
       @product = nil

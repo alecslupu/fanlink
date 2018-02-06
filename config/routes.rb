@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     get ":product_internal_name/login" => "sessions#new"
     post "login" => "sessions#create"
     get "logout" => "sessions#destroy"
+    get ":product_internal_name" => "sessions#login_redirect"
 
     root to: "people#index"
   end

@@ -26,7 +26,15 @@ module Admin
     end
 
     def not_authenticated
-      redirect_to admin_login_path, notice: "Login required."
+      if cookies[:product_internal_name].present?
+        redirect_to admin_path(product_internal_name: cookies[:product_internal_name]), notice: "Login required."
+      else
+        render_not_found
+      end
+    end
+
+    def render_not_found
+      render file: "public/404.html", status: :not_found, layout: false
     end
 
     def set_tenant
@@ -42,6 +50,7 @@ module Admin
       end
       if product.present?
         set_current_tenant(product)
+        cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
       else
         head :not_found
       end
