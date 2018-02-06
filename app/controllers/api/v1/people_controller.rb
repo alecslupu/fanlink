@@ -5,6 +5,43 @@ class Api::V1::PeopleController < ApiController
   skip_before_action :require_login, only: %i[ create ]
 
   #**
+  # @api {patch} /people/:id/change_password Change your password.
+  # @apiName ChangePassword
+  # @apiGroup People
+  #
+  # @apiDescription
+  #   This is used to change the logged in user's password.
+  #
+  # @apiParam {ObjectId} id
+  #   The person id.
+  # @apiParam {Object} person
+  #   The person's information.
+  # @apiParam {String} person.current_password
+  #   Current password.
+  # @apiParam {String} [person.new_password]
+  #   New password.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok or 422
+  #*
+  def change_password
+    if @person == current_user
+      if @person.valid_password?(person_params[:current_password])
+        @person.password = person_params[:new_password]
+        if @person.save
+          head :ok
+        else
+          render_error(@person.errors.full_messages)
+        end
+      else
+        render_error("The password is incorrect")
+      end
+    else
+      render_not_found
+    end
+  end
+
+  #**
   # @api {post} /people Create person.
   # @apiName CreatePerson
   # @apiGroup People
@@ -131,9 +168,10 @@ class Api::V1::PeopleController < ApiController
     end
   end
 
-  private
+private
 
   def person_params
-    params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product)
+    params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product, :current_password,
+                                    :new_password)
   end
 end

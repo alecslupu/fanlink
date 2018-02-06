@@ -12,7 +12,7 @@ module Admin
       end
       if product.present?
         email  = params[:email_or_username].to_s
-        query  = email.include?('@') ? { email: email.strip.downcase } : { username_canonical: Person.canonicalize(email) }
+        query  = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: Person.canonicalize(email) }
         person = Person.find_by(query)
         person = login(person.email, params[:password]) if person
         if person

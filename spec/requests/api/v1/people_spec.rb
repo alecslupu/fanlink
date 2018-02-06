@@ -8,6 +8,43 @@ describe "People (v1)" do
     logout
   end
 
+  describe "#change_password" do
+    it "should change the current users password" do
+      current = "secret"
+      new_password = "newsecret"
+      person = create(:person, password: current)
+      login_as(person)
+      patch "/people/#{person.id}/change_password", params: { person: { current_password: current, new_password: new_password } }
+      expect(response).to be_success
+      expect(person.reload.valid_password?(new_password)).to be_truthy
+    end
+    it "should not change the current users password to one that is too short" do
+      current = "secret"
+      new_password = "short"
+      person = create(:person, password: current)
+      login_as(person)
+      patch "/people/#{person.id}/change_password", params: { person: { current_password: current, new_password: new_password } }
+      expect(response).to be_unprocessable
+      expect(json["errors"].first).to include("too short")
+    end
+    it "should not change the current users password if wrong password given" do
+      current = "secret"
+      new_password = "newsecret"
+      person = create(:person, password: current)
+      login_as(person)
+      patch "/people/#{person.id}/change_password", params: { person: { current_password: "wrongpassword", new_password: new_password } }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("incorrect")
+    end
+    it "should not change the user password if not logged in" do
+      current = "secret"
+      new_password = "newsecret"
+      person = create(:person, password: current)
+      patch "/people/#{person.id}/change_password", params: { person: { current_password: current, new_password: new_password } }
+      expect(response).to be_unauthorized
+      expect(person.reload.valid_password?(current)).to be_truthy
+    end
+  end
   describe "#create" do
     it "should sign up new user with email, username, and password" do
       expect_any_instance_of(Person).to receive(:do_auto_follows)
