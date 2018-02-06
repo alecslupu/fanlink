@@ -145,5 +145,51 @@ describe "People (v1)" do
       expect(response).to be_success
       expect(json["person"]).to eq(person_json(person))
     end
+    it "should not get person if not logged in" do
+      person = create(:person)
+      get "/people/#{person.id}"
+      expect(response).to be_unauthorized
+    end
+    it "should return 404 if bad id" do
+      person = create(:person)
+      login_as(person)
+      get "/people/#{Person.last.id + 1}"
+      expect(response).to be_not_found
+    end
+    it "should return 404 if from another product" do
+      person = create(:person)
+      login_as(person)
+      other = create(:person, product: create(:product))
+      get "/people/#{other.id}"
+      expect(response).to be_not_found
+    end
   end
+
+  describe "#update" do
+    it "should update a person" do
+      person = create(:person)
+      login_as(person)
+      new_username = "thisbetterbeunique"
+      new_email = "fooism@example.com"
+      new_name = "Joe Foo"
+      patch "/people/#{person.id}", params: { person: { email: new_email, name: new_name, username: new_username } }
+      expect(response).to be_success
+      per = person.reload
+      expect(per.username).to eq(new_username)
+      expect(per.email).to eq(new_email)
+      expect(per.name).to eq(new_name)
+    end
+    it "should not update a different person" do
+      person = create(:person)
+      other = create(:person, product: person.product)
+      original_username = other.username
+      login_as(person)
+      new_username = "thisbetterbeunique"
+      patch "/people/#{other.id}", params: { person: { username: new_username } }
+      expect(response).to be_not_found
+      oth = other.reload
+      expect(oth.username).to eq(original_username)
+    end
+  end
+
 end

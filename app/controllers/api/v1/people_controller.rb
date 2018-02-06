@@ -1,6 +1,7 @@
 class Api::V1::PeopleController < ApiController
   prepend_before_action :logout, only: :create
 
+  load_up_the Person
   skip_before_action :require_login, only: %i[ create ]
 
   #**
@@ -92,7 +93,45 @@ class Api::V1::PeopleController < ApiController
     return_the @person
   end
 
-private
+  #**
+  # @api {put | patch} /people/:id Update person.
+  # @apiName UpdatePerson
+  # @apiGroup People
+  #
+  # @apiDescription
+  #   This is used to update a person. Anything not mentioned is left
+  #   alone.
+  #
+  # @apiParam {ObjectId} id
+  #   The person id.
+  # @apiParam {Object} person
+  #   The person's information.
+  # @apiParam {String} [person.email]
+  #   Email address.
+  # @apiParam {String} [person.name]
+  #   Full name.
+  # @apiParam {String} [person.username]
+  #   Username. This needs to be unique.
+  # @apiParam {Attachment} [person.picture]
+  #   Profile picture, this should be `image/gif`, `image/png`, or
+  #   `image/jpeg`.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "person": { // The full private version of the person.
+  #       ...see create action....
+  #     }
+  #*
+  def update
+    if @person == current_user
+      @person.update(person_params)
+      return_the @person
+    else
+      render_not_found
+    end
+  end
+
+  private
 
   def person_params
     params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product)
