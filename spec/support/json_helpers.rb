@@ -25,8 +25,8 @@ module JsonHelpers
   def following_json(following, currnt_user)
     {
       "id"       => following.id.to_s,
-      "follower" => person_profile_json(following.follower, currnt_user),
-      "followed" => person_profile_json(following.followed, currnt_user)
+      "follower" => person_json(following.follower, currnt_user),
+      "followed" => person_json(following.followed, currnt_user)
     }
   end
 
@@ -46,7 +46,7 @@ module JsonHelpers
       "body"      => msg.body,
       "create_time" => msg.created_at.to_s,
       "picture_url" => msg.picture_url,
-      "person" => person_profile_json(msg.person)
+      "person" => person_json(msg.person)
     }
   end
 
@@ -58,12 +58,12 @@ module JsonHelpers
   end
 
   def person_private_json(person, potential_follower = nil)
-    person_profile_json(person, potential_follower).merge(
+    person_json(person, potential_follower).merge(
       "email" => person.email
     )
   end
 
-  def person_profile_json(person, potential_follower = nil)
+  def person_json(person, potential_follower = nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
       "id"                => person.id.to_s,
@@ -83,7 +83,7 @@ module JsonHelpers
       "body"        => post.body,
       "create_time" => post.created_at.to_s,
       "picture_url" => post.picture_url,
-      "person" => person_profile_json(post.person)
+      "person" => person_json(post.person)
     }
   end
 
@@ -93,8 +93,8 @@ module JsonHelpers
       "status"        => relationship.status,
       "create_time"   => relationship.created_at.to_s,
       "update_time"   => relationship.updated_at.to_s,
-      "requested_by"  => person_profile_json(relationship.requested_by, currnt_user),
-      "requested_to"  => person_profile_json(relationship.requested_to, currnt_user)
+      "requested_by"  => person_json(relationship.requested_by, currnt_user),
+      "requested_to"  => person_json(relationship.requested_to, currnt_user)
     }
   end
 end

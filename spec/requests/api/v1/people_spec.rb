@@ -136,4 +136,14 @@ describe "People (v1)" do
     end
 
   end
+
+  describe "#show" do
+    it "should get a single person" do
+      person = create(:person)
+      login_as(person)
+      get "/people/#{person.id}"
+      expect(response).to be_success
+      expect(json["person"]).to eq(person_json(person))
+    end
+  end
 end

@@ -62,6 +62,38 @@ class Api::V1::PeopleController < ApiController
     return_the @person
   end
 
+  #**
+  # @api {get} /people/:id Get a person.
+  # @apiName GetPerson
+  # @apiGroup People
+  #
+  # @apiDescription
+  #   This is used to get a person.
+  #
+  # @apiParam {ObjectId} id
+  #   The id of the person you want.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "person": {
+  #       "id": "5016",
+  #       "username": "Pancakes.McGee",
+  #       "name": "Pancakes McGee",
+  #       "picture_url": "http://host.name/path",
+  #       "following_id": 12, //or null
+  #       "badge_points": 0,
+  #       "level": {...level json...}, //or null,
+  #       "do_not_message_me": false,
+  #       "pin_messages_from": false
+  #     }
+  #*
+  def show
+    @person = Person.find(params[:id])
+    return_the @person
+  end
+
+private
+
   def person_params
     params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product)
   end
