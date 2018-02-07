@@ -1,9 +1,12 @@
 class Person < ApplicationRecord
+  authenticates_with_sorcery!
+
   include AttachmentSupport
 
   enum role: %i[ normal staff admin super_admin ]
 
-  authenticates_with_sorcery!
+  # no apparent reason why I have to explicity include this, but no includy if not
+  include Sorcery::Model::Submodules::ResetPassword
 
   include Person::Blocks
   include Person::Badges
@@ -13,8 +16,6 @@ class Person < ApplicationRecord
   include Person::Relationships
 
   acts_as_tenant(:product)
-
-  attr_accessor :remember_me
 
   belongs_to :product
 
