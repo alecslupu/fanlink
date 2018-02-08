@@ -2,7 +2,7 @@ class Api::V1::PasswordResetsController < ApiController
   skip_before_action :require_login, :set_product
 
   #**
-  # @api {post} /password_resets Initiate a password reset.
+  # @api {post} /people/password_forgot Initiate a password reset.
   # @apiName CreatePasswordReset
   # @apiGroup People
   #
@@ -44,7 +44,26 @@ class Api::V1::PasswordResetsController < ApiController
     end
   end
 
-  # This action fires when the user has sent the reset password form (which is a static form on fan.link).
+  #**
+  # @api {post} /password_reset Completes a password reset.
+  # @apiName UpdatePasswordReset
+  # @apiGroup People
+  #
+  # @apiDescription
+  #   This is used to complete a password reset. It takes a form submitted from fan.link
+  #
+  # @apiParam {String} token
+  #   Token from email link
+  # @apiParam {String} password
+  #   The new password.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok; or
+  #     HTTP/1.1 422 Unprocessable
+  #     "errors": { //if token/person not found or password bad
+  #       "...be better blah blah...."
+  #     }
+  #*
   def update
     grab_password_reset_stuff_and do |person, password|
       if person.reset_password_to(password)
