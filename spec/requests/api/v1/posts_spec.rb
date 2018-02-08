@@ -131,6 +131,24 @@ describe "Posts (v1)" do
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("Missing")
     end
+    it "should get a list of posts for a person" do
+      login_as(@person)
+      get "/posts", params: { from_date: from, to_date: to, person_id: @followee1.id }
+      expect(response).to be_success
+      expect(json["posts"].map { |p| p["id"] }).to eq([ post12.id.to_s, post11.id.to_s])
+    end
+    it "should return unprocessable for a badly formed person id" do
+      login_as(@person)
+      get "/posts", params: { from_date: from, to_date: to, person_id: "whodat" }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).not_to be_empty
+    end
+    it "should return unprocessable for a nonexistent person" do
+      login_as(@person)
+      get "/posts", params: { from_date: from, to_date: to, person_id: Person.last.id + 1 }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).not_to be_empty
+    end
   end
 
   describe "#show" do
