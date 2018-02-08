@@ -2,7 +2,6 @@
 # The default is nothing which will include only core features (password encryption, login/logout).
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging, :external
-#Rails.application.config.sorcery.submodules = [:remember_me]
 Rails.application.config.sorcery.submodules = []
 
 # Here you can configure each submodule's features.
@@ -12,7 +11,7 @@ Rails.application.config.sorcery.configure do |config|
   # override the 'not_authenticated' method of course.
   # Default: `:not_authenticated`
   #
-  #config.not_authenticated_action =
+  # config.not_authenticated_action =
 
   # When a non logged in user tries to enter a page that requires login, save
   # the URL he wanted to reach, and send him there after login, using 'redirect_back_or_to'.
@@ -28,13 +27,13 @@ Rails.application.config.sorcery.configure do |config|
   # Allow the remember_me cookie to be set through AJAX
   # Default: `true`
   #
-  #config.remember_me_httponly =
+  # config.remember_me_httponly =
 
   # -- session timeout --
   # How long in seconds to keep the session alive.
   # Default: `3600`
   #
-  #config.session_timeout = 12
+  # config.session_timeout =
 
   # Use the last action as the beginning of session timeout.
   # Default: `false`
@@ -223,7 +222,7 @@ Rails.application.config.sorcery.configure do |config|
     # change default salt attribute.
     # Default: `:salt`
     #
-    # user.salt_attribute_name =
+    #user.salt_attribute_name =
 
     # how many times to apply encryption to the password.
     # Default: `nil`
@@ -255,7 +254,7 @@ Rails.application.config.sorcery.configure do |config|
     # How long in seconds the session length will be
     # Default: `604800`
     #
-    #user.remember_me_for = 1.year
+    # user.remember_me_for =
 
     # when true sorcery will persist a single remember me token for all
     # logins/logouts (supporting remembering on multiple browsers simultaneously).
@@ -443,9 +442,11 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `:uid`
     #
     # user.provider_uid_attribute_name =
+    #user.reset_password_mailer = PersonMailer
   end
 
   # This line must come after the 'user config' block.
   # Define which model authenticates with sorcery.
-  config.user_class = "Person"
+  config.user_class = Person
+
 end

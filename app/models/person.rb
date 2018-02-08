@@ -1,9 +1,12 @@
 class Person < ApplicationRecord
+  authenticates_with_sorcery!
+
   include AttachmentSupport
 
   enum role: %i[ normal staff admin super_admin ]
 
-  authenticates_with_sorcery!
+  # no apparent reason why I have to explicity include this, but no includy if not
+  include Sorcery::Model::Submodules::ResetPassword
 
   include Person::Blocks
   include Person::Badges
@@ -13,8 +16,6 @@ class Person < ApplicationRecord
   include Person::Relationships
 
   acts_as_tenant(:product)
-
-  attr_accessor :remember_me
 
   belongs_to :product
 
@@ -109,6 +110,17 @@ class Person < ApplicationRecord
   #
   def self.named_like(term)
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
+  end
+
+  def reset_password_to(password)
+    self.password = password
+    self.reset_password_token = nil
+    self.save
+  end
+
+  def set_password_token!
+    self.reset_password_token = UUIDTools::UUID.random_create.to_s
+    save!
   end
 
   def roles_for_select

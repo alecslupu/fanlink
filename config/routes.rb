@@ -6,9 +6,14 @@ Rails.application.routes.draw do
       resources :blocks, only: %i[ create destroy ]
       resources :followings, only: %i[ create destroy index ]
       resources :levels, only: %i[ index ]
+      resources :password_resets, only: %i[ create update ]
       resources :people, only: %i[ create show update ] do
         member do
           patch "change_password"
+        end
+        collection do
+          post "password_forgot" => "password_resets#create"
+          post "password_reset" => "password_resets#update"
         end
       end
       resources :posts, except: %i[ new edit ]

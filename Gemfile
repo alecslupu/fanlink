@@ -69,6 +69,11 @@ gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51" # api versioning
 #gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'
 gem "koala" #Facebook Graph API
+# we can forgo this if they ever merge in
+# https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
+gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandrill"
+# I don't necessarily love this thing but then I don't love ActionMailer either
+gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
 gem "paperclip", "~> 5.0.0"
@@ -76,3 +81,4 @@ gem "postgresql-check"
 gem "rubocop-rails"
 gem "sorcery"
 gem "unicode_utils"
+gem "uuidtools"

@@ -41,5 +41,7 @@ module Fanlink
             secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
         }
     }
+
+    config.mandrill_mailer.default_url_options = { host: ENV["APP_URL"] || "fan.link" }
   end
 end
