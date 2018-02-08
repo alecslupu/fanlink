@@ -74,5 +74,15 @@ describe "BadgeActions (v1)" do
         expect(response).to be_success
       end
     end
+    it "should not create an action with dup person, action and identifier" do
+      person = create(:person)
+      action_type = create(:action_type, product: person.product)
+      ident = "myident"
+      person.badge_actions.create(action_type: action_type, identifier: ident)
+      login_as(person)
+      post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name, identifier: ident } }
+      expect(response).to be_unprocessable
+      expect(json["errors"].first).to include("cannot get credit for that action")
+    end
   end
 end

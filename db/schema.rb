@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206232459) do
+ActiveRecord::Schema.define(version: 20180208190126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,9 @@ ActiveRecord::Schema.define(version: 20180206232459) do
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "identifier"
     t.index ["action_type_id", "person_id"], name: "ind_badge_actions_action_type_person"
+    t.index ["person_id", "action_type_id", "identifier"], name: "unq_badge_action_person_action_type_identifier", unique: true, where: "(identifier IS NOT NULL)"
   end
 
   create_table "badge_awards", force: :cascade do |t|
