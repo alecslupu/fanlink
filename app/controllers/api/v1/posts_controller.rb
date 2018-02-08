@@ -82,7 +82,7 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Integer} [person_id]
   #   The person whose posts to get. If not supplied, posts from current user plus those from
-  #   people the current user is following.
+  #   people the current user is following will be returned.
   #
   # @apiParam {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
