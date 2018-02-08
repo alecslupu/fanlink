@@ -70,6 +70,7 @@ module JsonHelpers
       "username"          => person.username,
       "name"              => person.name,
       "picture_url"       => person.picture_url,
+      "product_account"   => person.product_account,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
