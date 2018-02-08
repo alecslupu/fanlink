@@ -11,6 +11,10 @@ Rails.application.routes.draw do
         member do
           patch "change_password"
         end
+        collection do
+          post "password_forgot" => "password_resets#create"
+          post "password_reset" => "password_resets#update"
+        end
       end
       resources :posts, except: %i[ new edit ]
       resources :relationships, except: %i[ new edit ]

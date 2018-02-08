@@ -2,7 +2,7 @@
 # The default is nothing which will include only core features (password encryption, login/logout).
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging, :external
-Rails.application.config.sorcery.submodules = [:reset_password]
+Rails.application.config.sorcery.submodules = []
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -222,7 +222,7 @@ Rails.application.config.sorcery.configure do |config|
     # change default salt attribute.
     # Default: `:salt`
     #
-    user.salt_attribute_name = :name
+    #user.salt_attribute_name =
 
     # how many times to apply encryption to the password.
     # Default: `nil`
@@ -442,7 +442,7 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `:uid`
     #
     # user.provider_uid_attribute_name =
-    user.reset_password_mailer = PersonMailer
+    #user.reset_password_mailer = PersonMailer
   end
 
   # This line must come after the 'user config' block.

@@ -112,6 +112,17 @@ class Person < ApplicationRecord
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
   end
 
+  def reset_password_to(password)
+    self.password = password
+    self.reset_password_token = nil
+    self.save
+  end
+
+  def set_password_token!
+    self.reset_password_token = UUIDTools::UUID.random_create.to_s
+    save!
+  end
+
   def roles_for_select
     (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
   end

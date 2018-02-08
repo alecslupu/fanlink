@@ -125,6 +125,7 @@ RSpec.configure do |config|
     end
   end
 
+  config.include MandrillMailerHelper
   config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers
