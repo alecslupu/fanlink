@@ -64,4 +64,11 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe "#to_s" do
+    it "should return the product internal name" do
+      prod = create(:product)
+      expect(prod.to_s).to eq(prod.internal_name)
+    end
+  end
+
 end
