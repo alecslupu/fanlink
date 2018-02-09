@@ -4,6 +4,9 @@ class BadgeAction < ApplicationRecord
 
   validate :product_match
 
+  validates :identifier, uniqueness: { scope: %i[ person_id action_type_id ],
+                                       message: "Sorry, you cannot get credit for that action again." }, allow_nil: true
+
 private
 
   def product_match

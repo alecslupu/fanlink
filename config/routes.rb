@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :blocks, only: %i[ create destroy ]
       resources :followings, only: %i[ create destroy index ]
       resources :levels, only: %i[ index ]
+      resources :notification_device_ids, only: %i[ create ]
       resources :people, only: %i[ create show update ] do
         member do
           patch "change_password"
@@ -28,6 +29,10 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  #temporary hack to get around need for Accept header with api stuff
+  # TODO: move the password reset controller update out of the api
+  post "/people/password_reset" => "api/v1/password_resets#update"
 
   namespace :admin do
     resources :action_types

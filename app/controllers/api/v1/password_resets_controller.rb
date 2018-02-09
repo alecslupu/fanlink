@@ -45,7 +45,7 @@ class Api::V1::PasswordResetsController < ApiController
   end
 
   #**
-  # @api {post} /password_reset Completes a password reset.
+  # @api {post} /people/password_reset Completes a password reset.
   # @apiName UpdatePasswordReset
   # @apiGroup People
   #

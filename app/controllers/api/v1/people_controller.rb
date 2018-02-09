@@ -75,6 +75,7 @@ class Api::V1::PeopleController < ApiController
   #       "username": "Pancakes.McGee",
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
+  #       "product_account": false,
   #       "following_id": 12, //or null
   #       "badge_points": 0,
   #       "level": "something", //or null,
@@ -118,6 +119,7 @@ class Api::V1::PeopleController < ApiController
   #       "username": "Pancakes.McGee",
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
+  #       "product_account": false,
   #       "following_id": 12, //or null
   #       "badge_points": 0,
   #       "level": {...level json...}, //or null,

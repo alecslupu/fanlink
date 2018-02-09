@@ -76,9 +76,13 @@ class Api::V1::PostsController < ApiController
   #
   # @apiDescription
   #   This gets a list of posts for a from date, to date, with an optional
-  #   limit. Posts are returned newest first, and the limit is applied to that ordering.
-  #   Posts included are posts from the current user along with those of the users
-  #   the current user is following.
+  #   limit and person. Posts are returned newest first, and the limit is applied to that ordering.
+  #   Posts included are posts from the passed in person or, if none, the current
+  #   user along with those of the users the current user is following.
+  #
+  # @apiParam {Integer} [person_id]
+  #   The person whose posts to get. If not supplied, posts from current user plus those from
+  #   people the current user is following will be returned.
   #
   # @apiParam {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
@@ -105,7 +109,17 @@ class Api::V1::PostsController < ApiController
     else
       l = params[:limit].to_i
       l = nil if l == 0
-      @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
+      if params[:person_id].present?
+        pid = params[:person_id].to_i
+        person = Person.find_by(id: pid)
+        if person
+          @posts = Post.visible.for_person(person).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
+        else
+          render_error("Cannot find that person.") && return
+        end
+      else
+        @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
+      end
       return_the @posts
     end
   end

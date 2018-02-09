@@ -18,6 +18,9 @@ class Api::V1::BadgeActionsController < ApiController
   # @apiParam {String} badge_action.action_type
   #   The internal name of the badge action.
   #
+  # @apiParam {String} [badge_action.identifier]
+  #   The identifier for this badge action.
+  #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
   #     badges_awarded: { [badge json], [badge_json],...} OR
@@ -29,20 +32,23 @@ class Api::V1::BadgeActionsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 422
   #     "errors" :
-  #       { "Action type invalid, blah blah blah" }
+  #       { "Action type invalid, cannot do that action again, blah blah blah" }
   #     HTTP/1.1 429 - Not enough time since last submission of this action type
+  #           or duplicate action type, person, identifier combination
   #*
   def create
     if @action_type.seconds_lag > 0 && current_user.badge_actions.where(action_type: @action_type).
         where("created_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?
       head :too_many_requests
     else
-      badge_action = current_user.badge_actions.create(action_type: @action_type)
-      @badge_awards = {}
+      badge_action = current_user.badge_actions.create(action_type: @action_type, identifier: params[:badge_action][:identifier])
       if badge_action.valid?
+        @badge_awards = {}
         @badge_awards = BadgeAward.award_badges(badge_action)
+        return_the @badge_awards
+      else
+        render_error(badge_action.errors.full_messages)
       end
-      return_the @badge_awards
     end
   end
 
