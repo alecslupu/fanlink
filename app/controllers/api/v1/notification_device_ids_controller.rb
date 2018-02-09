@@ -8,7 +8,7 @@ class Api::V1::NotificationDeviceIdsController < ApiController
   #   This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have
   #   any number of device ids.
   #
-  # @apiParam {Integer} device_id
+  # @apiParam {String} device_id
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -30,4 +30,33 @@ class Api::V1::NotificationDeviceIdsController < ApiController
       render_error("Missing device_id")
     end
   end
+
+  #**
+  # @api {delete} /notification_device_ids Delete a device id
+  # @apiName DeleteNotificationDeviceId
+  # @apiGroup People
+  #
+  # @apiDescription
+  #   This deletes a single device id. Can only be called by the owner.
+  #
+  # @apiParam {String} device_id
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found
+  #*
+  def destroy
+    if params[:device_id].present?
+      ndi = NotificationDeviceId.find_by(person_id: current_user.id, device_identifier: params[:device_id])
+      if ndi
+        ndi.destroy
+        head :ok
+        return
+      end
+    end
+    head :not_found
+  end
+
 end

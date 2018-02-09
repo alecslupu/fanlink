@@ -6,7 +6,11 @@ Rails.application.routes.draw do
       resources :blocks, only: %i[ create destroy ]
       resources :followings, only: %i[ create destroy index ]
       resources :levels, only: %i[ index ]
-      resources :notification_device_ids, only: %i[ create ]
+      resources :notification_device_ids, only: %i[ create ] do
+        collection do
+          delete "" => "notification_device_ids#destroy"
+        end
+      end
       resources :people, only: %i[ create show update ] do
         member do
           patch "change_password"
