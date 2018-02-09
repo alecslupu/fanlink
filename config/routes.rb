@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post "/people/password_reset" => "api/v1/password_resets#update"
+
   namespace :admin do
     resources :action_types
     resources :badges
