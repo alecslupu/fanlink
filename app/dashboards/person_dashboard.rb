@@ -26,6 +26,7 @@ class PersonDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     password: PasswordField,
+    notification_device_ids: Field::HasMany
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -40,6 +41,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :picture,
     :role,
     :created_at,
+    :notification_device_ids
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

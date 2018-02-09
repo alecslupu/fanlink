@@ -21,6 +21,7 @@ class Person < ApplicationRecord
 
   has_image_called :picture
 
+  has_many :notification_device_ids, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
