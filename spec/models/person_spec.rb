@@ -210,6 +210,10 @@ RSpec.describe Person, type: :model do
         }.to change { Person.count }.by(1)
         expect(p).to eq(Person.last)
       end
+      it "should return nil if api error" do
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", {:fields => [:id, :email, :picture]}).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        expect(Person.create_from_facebook("12345", "fdafafadadfa")).to be_nil
+      end
     end
     describe ".for_facebook_auth_token" do
       it "should return person with FB id if given proper token" do
@@ -219,6 +223,11 @@ RSpec.describe Person, type: :model do
         koala_result = { "id" => fbid, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect(Person.for_facebook_auth_token(tok)).to eq(person)
+      end
+      it "should return nil if given bad token" do
+        tok = "1234567"
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", { :fields => [:id] }).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        expect(Person.for_facebook_auth_token(tok)).to be_nil
       end
     end
   end
