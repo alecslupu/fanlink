@@ -1,5 +1,6 @@
 class Api::V1::RelationshipsController < ApiController
   include Messaging
+  include Push
 
   load_up_the Relationship, except: %i[ create index ]
 
@@ -57,6 +58,7 @@ class Api::V1::RelationshipsController < ApiController
           else
             @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
           end
+          friend_request_received_push(current_user, requested_to)
         end
       end
       return_the @relationship.reload

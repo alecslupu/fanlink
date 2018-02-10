@@ -698,6 +698,9 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     fast_gettext (1.6.0)
+    fcm (0.0.2)
+      httparty
+      json
     ffi (1.9.18)
     gettext (3.2.4)
       locale (>= 2.0.5)
@@ -715,6 +718,8 @@ GEM
       os (~> 0.9)
       signet (~> 0.7)
     hashdiff (0.3.7)
+    httparty (0.15.7)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
@@ -951,6 +956,7 @@ DEPENDENCIES
   email_validator
   factory_bot_rails
   faker
+  fcm
   firebase!
   gettext (>= 3.0.2)
   gettext_i18n_rails

@@ -81,6 +81,10 @@ class Person < ApplicationRecord
     Person.find_by(query)
   end
 
+  def device_tokens
+    notification_device_ids.map{ |ndi| ndi.device_identifier }
+  end
+
   #
   # Return a scoped query for people whose names match a string.
   #

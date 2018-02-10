@@ -64,6 +64,7 @@ gem "administrate-field-enum", git: "https://github.com/mark100net/administrate-
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "aws-sdk"
 gem "email_validator"
+gem "fcm" #Firebase Cloud Messaging
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51" # api versioning
