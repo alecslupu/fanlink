@@ -111,6 +111,15 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe ".for_username" do
+    it "should return a user for a valid username" do
+      expect(Person.for_username(@person.username)).to eq(@person)
+    end
+    it "should return nil for an invalid username" do
+      expect(Person.for_username("fafdasfdsfkddddd")).to be_nil
+    end
+  end
+
   describe "#level" do
     it "should be nil for person with no badges" do
       person = create(:person)
@@ -160,6 +169,19 @@ RSpec.describe Person, type: :model do
         person = build(:person, role: :super_admin)
         expect(person).not_to be_valid
         expect(person.errors[:role]).not_to be_empty
+      end
+    end
+  end
+
+  describe ".roles_for_select" do
+    it "should return all roles for a product that can have supers" do
+      ActsAsTenant.with_tenant(create(:product, can_have_supers: true)) do
+        expect(create(:person).roles_for_select).to eq(Person.roles)
+      end
+    end
+    it "should return all roles except suerp for a product that cannot have supers" do
+      ActsAsTenant.with_tenant(create(:product, can_have_supers: false)) do
+        expect(create(:person).roles_for_select).to eq(Person.roles.except(:super_admin))
       end
     end
   end

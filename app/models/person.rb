@@ -79,26 +79,6 @@ class Person < ApplicationRecord
     email  = email.to_s
     query  = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: canonicalize(email) }
     Person.find_by(query)
-
-    #
-    # This `valid?` stuff is a bit smelly but not too bad.
-    #
-    # add_error = lambda do |person, msg|
-    #   person.errors.add(:base, msg)
-    #   def person.valid?
-    #     false
-    #   end
-    # end
-    # if(person.suspended?)
-    #   support = opts[:property].try(:support_email) || 'support@flink.to'
-    #   add_error[person, _('Your account is currently suspended. Please contact support at %{support_email}') % { :support_email => support }]
-    # end
-    #person
-  end
-
-  def self.can_login_as_admin?(email)
-    person = can_login?(email)
-    (person && person.some_admin?) ? person : nil
   end
 
   #

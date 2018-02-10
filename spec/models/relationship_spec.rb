@@ -51,6 +51,22 @@ RSpec.describe Relationship, type: :model do
       expect(relationships.first).to eq(rel2)
     end
   end
+
+  #TODO this should be renamed friendships or made to return persons
+  describe "#friends" do
+    it "should get all friendships of a person" do
+      per = create(:person)
+      rel1 = create(:relationship, requested_by: per)
+      rel1.friended!
+      rel2 = create(:relationship, requested_to: per)
+      rel2.friended!
+      rel3 = create(:relationship, requested_by: per)
+      fr = per.friends
+      expect(fr.count).to eq(2)
+      expect(fr).not_to include(fr)
+    end
+  end
+
   describe "#status" do
     it "should allow transition from requested to friended" do
       rel = create(:relationship)

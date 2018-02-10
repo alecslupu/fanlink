@@ -42,6 +42,24 @@ RSpec.describe Message, type: :model do
     end
   end
 
+  describe "#visible?" do
+    it "should return true if message not hidden" do
+      msg = create(:message)
+      expect(msg.visible?).to be_truthy
+    end
+    it "should return false if message hidden" do
+      msg = create(:message, hidden: true)
+      expect(msg.visible?).to be_falsey
+    end
+  end
+
+  describe "#product" do
+    it "should return the product of the room" do
+      msg = create(:message)
+      expect(msg.product).to eq(msg.room.product)
+    end
+  end
+
   describe ".unblocked" do
     it "should exclude messages from blocked users" do
       blocker = create(:person)
