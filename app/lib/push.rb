@@ -20,6 +20,7 @@ private
       options[:data] = data
       options[:data][:notificaiton_type] = type
       options[:data][:priority] = 'high'
+      Rails.logger.debug("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
       client.send(tokens, options)
     end
   end
