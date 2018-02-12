@@ -6,7 +6,7 @@ module Push
 
 private
 
-  def client
+  def push_client
     @fbcm ||= FCM.new(FIREBASE_CM_KEY)
   end
 
@@ -21,7 +21,7 @@ private
       options[:data][:notificaiton_type] = type
       options[:data][:priority] = 'high'
       Rails.logger.debug("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
-      client.send(tokens, options)
+      push_client.send(tokens, options)
     end
   end
 end
