@@ -2,9 +2,10 @@
 if [ -d "../fan-link-web" ]; then
   apidoc -c config/ -i app/controllers/api/v1 -o ../fan-link-web/apidocs
   cd ../fan-link-web
+  git pull
   git add .
   git commit -m "doc update"
-  git push -f heroku master
+  git push heroku master
 else
  echo "You need to have checkout out fan-link-web to a sibling directory of this one."
 fi
