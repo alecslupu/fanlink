@@ -13,7 +13,7 @@ describe "PasswordResets (v1)" do
       email = "forgetful@example.com"
       person = create(:person, email: email)
       expect {
-        post "/people/password_forgot", params: { product_id: person.product.id.to_s, email_or_username: email }
+        post "/people/password_forgot", params: { product: person.product.internal_name, email_or_username: email }
       }.to change { MandrillMailer.deliveries.count }.by(1)
       expect(response).to be_success
       expect(person.reload.reset_password_token).not_to be_nil
@@ -27,7 +27,7 @@ describe "PasswordResets (v1)" do
       email = "forgetful@example.com"
       person = create(:person, email: email)
       expect {
-        post "/people/password_forgot", params: { product_id: person.product.id.to_s, email_or_username: "really_forgetful@example.com" }
+        post "/people/password_forgot", params: { product: person.product.internal_name, email_or_username: "really_forgetful@example.com" }
       }.to change { MandrillMailer.deliveries.count }.by(0)
       expect(response).to be_success
       expect(person.reload.reset_password_token).to be_nil
@@ -36,7 +36,7 @@ describe "PasswordResets (v1)" do
       username = "forgetful"
       person = create(:person, username: username)
       expect {
-        post "/people/password_forgot", params: { product_id: person.product.id.to_s, email_or_username: username }
+        post "/people/password_forgot", params: { product: person.product.internal_name, email_or_username: username }
       }.to change { MandrillMailer.deliveries.count }.by(1)
       expect(response).to be_success
       expect(person.reload.reset_password_token).not_to be_nil
@@ -50,7 +50,7 @@ describe "PasswordResets (v1)" do
       username = "forgetful"
       person = create(:person, username: username)
       expect {
-        post "/people/password_forgot", params: { product_id: person.product.id.to_s, email_or_username: "really_forgetful" }
+        post "/people/password_forgot", params: { product: person.product.internal_name, email_or_username: "really_forgetful" }
       }.to change { MandrillMailer.deliveries.count }.by(0)
       expect(response).to be_success
       expect(person.reload.reset_password_token).to be_nil
