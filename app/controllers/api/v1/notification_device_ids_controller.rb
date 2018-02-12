@@ -58,5 +58,4 @@ class Api::V1::NotificationDeviceIdsController < ApiController
     end
     head :not_found
   end
-
 end

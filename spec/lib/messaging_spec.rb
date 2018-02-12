@@ -37,7 +37,7 @@ describe "Messaging" do
       post = create(:post)
       tbn = [@person]
       expect_any_instance_of(FBStub).to receive(:update)
-        .with("", { "#{person_path(@person)}/deleted_post_id" => post.id }).and_return(Response.new)
+        .with("", "#{person_path(@person)}/deleted_post_id" => post.id).and_return(Response.new)
       @implementer.delete_post(post, tbn)
     end
     it "should do nothing if there are no people to be notified", :skip_before do
@@ -96,7 +96,7 @@ describe "Messaging" do
       post = create(:post)
       tbn = [@person]
       expect_any_instance_of(FBStub).to receive(:update)
-        .with("", { "#{person_path(@person)}/last_post_id" => post.id }).and_return(Response.new)
+        .with("", "#{person_path(@person)}/last_post_id" => post.id).and_return(Response.new)
       @implementer.post_post(post, tbn)
     end
     it "should do nothing if there are no people to be notified", :skip_before do

@@ -1,5 +1,4 @@
 module MessagingHelpers
-
   class ResponseStatus
     def status
       200
@@ -14,9 +13,9 @@ module MessagingHelpers
   class FBStub
     def delete(k)
     end
-    def set(k,v)
+    def set(k, v)
     end
-    def update(es,pl)
+    def update(es, pl)
     end
   end
 

@@ -196,6 +196,9 @@ class Api::V1::RelationshipsController < ApiController
             if update_relationship_count(@relationship.requested_to)
               @relationship.requested_to.save!
             end
+            if @relationship.friended?
+              friend_request_accepted_push(@relationship)
+            end
           end
           return_the @relationship
         else

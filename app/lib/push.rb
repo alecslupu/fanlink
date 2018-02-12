@@ -1,4 +1,13 @@
 module Push
+  def friend_request_accepted_push(relationship)
+    if relationship.friended?
+      do_push(relationship.requested_by.device_tokens,
+              "Friend Request Accepted",
+              "#{relationship.requested_to.username} accepted your friend request",
+              "friend_accepted",
+              person_id: relationship.requested_to.id)
+    end
+  end
 
   def friend_request_received_push(from, to)
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
@@ -16,10 +25,11 @@ private
       options[:notification] = {}
       options[:notification][:title] = title
       options[:notification][:body] = body
+      options[:notification][:sound] = "default"
       options[:content_available] = true
       options[:data] = data
       options[:data][:notificaiton_type] = type
-      options[:data][:priority] = 'high'
+      options[:data][:priority] = "high"
       Rails.logger.debug("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
       resp = push_client.send(tokens, options)
       Rails.logger.debug("Got FCM response: #{resp.inspect}")
