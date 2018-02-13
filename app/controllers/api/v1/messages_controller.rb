@@ -1,5 +1,6 @@
 class Api::V1::MessagesController < ApiController
   include Messaging
+  include Push
 
   load_up_the Room, from: :room_id
 
@@ -37,6 +38,7 @@ class Api::V1::MessagesController < ApiController
         if post_message(@message)
           if room.private?
             update_message_counts(room)
+            private_message_push(@message)
           end
         else
           messaging_error && return
