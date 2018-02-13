@@ -44,13 +44,8 @@ Rails.application.configure do
   config.assets.js_compressor = :uglifier
 
   config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
-
   config.eager_load = true
-
   config.force_ssl = true
-  config.ssl_options = { redirect: false }
-
-  config.serve_static_files = true
 
 
 end
