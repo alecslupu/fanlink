@@ -31,6 +31,7 @@ class Api::V1::PasswordResetsController < ApiController
       product = Product.find_by(internal_name: params[:product])
     end
     if product.present?
+      set_product
       person = Person.can_login?(params[:email_or_username])
       if person
         person.set_password_token!

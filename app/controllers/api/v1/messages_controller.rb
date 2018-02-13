@@ -133,15 +133,14 @@ class Api::V1::MessagesController < ApiController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #     "message": [
+  #     "message":
   #       {
   #         "id": "5016",
   #         "body": "Stupid thing to say",
   #         "created_time": "2018-01-08'T'12:13:42'Z'"
   #         "picture_url": "http://host.name/path",
   #         "person": {...public person json with relationships...}
-  #       },....
-  #     ]
+  #       }
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
