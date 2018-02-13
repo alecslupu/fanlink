@@ -61,7 +61,7 @@ class Api::V1::RelationshipsController < ApiController
           friend_request_received_push(current_user, requested_to)
         end
       end
-      return_the @relationship.reload
+      return_the @relationship
     else
       render_error("You have blocked this person or this person has blocked you.") && return
     end
