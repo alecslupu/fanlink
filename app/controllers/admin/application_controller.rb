@@ -26,7 +26,10 @@ module Admin
     end
 
     def not_authenticated
-      if cookies[:product_internal_name].present?
+      logout
+      if params[:product_internal_name].present?
+        redirect_to admin_path(product_internal_name: params[:product_internal_name]), notice: "Login required."
+      elsif cookies[:product_internal_name].present?
         redirect_to admin_path(product_internal_name: cookies[:product_internal_name]), notice: "Login required."
       else
         render_not_found

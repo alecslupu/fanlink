@@ -44,7 +44,6 @@ module Admin
     end
 
     def new
-      logout
       @product = nil
       if params[:product_internal_name].present?
         @product = Product.find_by(internal_name: params[:product_internal_name])
