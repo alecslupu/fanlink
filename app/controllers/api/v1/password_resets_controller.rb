@@ -7,7 +7,7 @@ class Api::V1::PasswordResetsController < ApiController
   # @apiGroup People
   #
   # @apiDescription
-  #   This is used to initiate a password reset. Product_id and email or username required. If email or username
+  #   This is used to initiate a password reset. Product and email or username required. If email or username
   # is not found, password reset will fail silently.
   #
   # @apiParam {String} product
@@ -26,6 +26,7 @@ class Api::V1::PasswordResetsController < ApiController
   #     }
   #*
   def create
+    logout
     product = person = nil
     if params[:product].present?
       product = Product.find_by(internal_name: params[:product])

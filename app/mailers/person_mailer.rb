@@ -6,7 +6,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
       template: "#{person.product.internal_name}-password-reset",
       subject: "%{name} - Forgot your password" % { name: person.product.name },
       vars: {
-        link: "http://#{hostname}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
+        link: "https://www.fan.link/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
         name: person.name
       },
       to: { email: person.email, name: person.name }
@@ -15,7 +15,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
 
 private
 
-  def hostname
-    MandrillMailer::config.default_url_options[:host]
-  end
+  # def hostname
+  #   MandrillMailer::config.default_url_options[:host]
+  # end
 end
