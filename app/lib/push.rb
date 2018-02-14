@@ -19,7 +19,7 @@ module Push
     tokens = []
     message.room.members.each do |m|
       next if m == message.person
-      tokens += m.notification_device_ids.map {|ndi| ndi.device_identifier }
+      tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
   end
