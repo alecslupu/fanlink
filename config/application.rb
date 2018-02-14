@@ -42,6 +42,6 @@ module Fanlink
         }
     }
 
-    config.mandrill_mailer.default_url_options = { host: ENV["APP_URL"] || "fan.link" }
+    config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
   end
 end
