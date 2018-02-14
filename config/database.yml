@@ -88,6 +88,6 @@ test:
 #
 production:
   <<: *default
-  database: fanlink_production
-  username: fanlink
-  password: <%= ENV['FANLINK_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL']
+  #username: fanlink
+  #password: <%= ENV['FANLINK_DATABASE_PASSWORD'] %>
