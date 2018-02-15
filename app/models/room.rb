@@ -16,6 +16,7 @@ class Room < ApplicationRecord
   has_many :members, through: :room_memberships, source: :person
 
   has_many :messages, dependent: :restrict_with_error
+  has_paper_trail
 
   validate :name_uniqueness
   validates :name, presence: { message: "Room name is required." }, if: Proc.new { |r| r.public? }

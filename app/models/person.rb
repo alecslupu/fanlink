@@ -1,6 +1,8 @@
 class Person < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_paper_trail
+
   include AttachmentSupport
 
   enum role: %i[ normal staff admin super_admin ]

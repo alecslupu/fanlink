@@ -6,6 +6,7 @@ class Message < ApplicationRecord
   belongs_to :room
 
   has_image_called :picture
+  has_paper_trail
 
   scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
                                                         where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit) }

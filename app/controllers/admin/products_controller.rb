@@ -1,7 +1,7 @@
 module Admin
   class ProductsController < Admin::ApplicationController
     before_action :check_super
-
+    before_action :set_paper_trail_whodunnit
     skip_before_action :set_tenant
 
     # To customize the behavior of this controller,

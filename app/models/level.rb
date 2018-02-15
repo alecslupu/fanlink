@@ -1,5 +1,6 @@
 class Level < ApplicationRecord
   include AttachmentSupport
+  has_paper_trail
 
   acts_as_tenant(:product)
 

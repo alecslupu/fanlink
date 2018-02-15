@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  #has_paper_trail
+  has_paper_trail
 
   has_many :action_types, dependent: :destroy
 

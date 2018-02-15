@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   enum status: %i[ errored pending published deleted rejected ]
 
   has_image_called :picture
+  has_paper_trail
 
   belongs_to :person
 

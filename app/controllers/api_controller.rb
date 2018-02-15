@@ -5,7 +5,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_product
+  before_action :set_product, :set_paper_trail_whodunnit
 
   #
   # Respond to an API request with an object. If the object is invalid
