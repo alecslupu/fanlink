@@ -77,8 +77,10 @@ gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandril
 gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
+gem "oj" #json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem "postgresql-check"
+gem "rollbar"
 gem "rubocop-rails"
 gem "sorcery"
 gem "unicode_utils"
