@@ -20,7 +20,7 @@ describe "NotificationDeviceIds (v1)" do
     it "should not insert a device id if missing identifier" do
       person = create(:person, product: @product)
       login_as(person)
-      post "/notification_device_ids", params: { }
+      post "/notification_device_ids", params: {}
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("Missing device_id")
     end

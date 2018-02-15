@@ -87,7 +87,7 @@ describe "BadgeActions (v1)" do
     it "should not create action if missing badge action" do
       person = create(:person)
       login_as(person)
-      post "/badge_actions", params: { }
+      post "/badge_actions", params: {}
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("You must supply a badge action type")
     end
