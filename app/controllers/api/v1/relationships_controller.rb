@@ -43,21 +43,15 @@ class Api::V1::RelationshipsController < ApiController
       if @relationship
         @relationship.status = :friended
         @relationship.requested_to.friend_request_count -= 1
-        if update_relationship_count(@relationship.requested_to)
-          @relationship.save!
-          @relationship.requested_to.save
-        else
-          @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
-        end
+        update_relationship_count(@relationship.requested_to)
+        @relationship.save
+        @relationship.requested_to.save
       else
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
         if @relationship.valid?
           @relationship.requested_to.friend_request_count += 1
-          if update_relationship_count(@relationship.requested_to)
-            @relationship.requested_to.save
-          else
-            @relationship.errors.add(:base, "There was a problem transmitting the friend request. Please try again laster.")
-          end
+          update_relationship_count(@relationship.requested_to)
+          @relationship.requested_to.save
           friend_request_received_push(current_user, requested_to)
         end
       end

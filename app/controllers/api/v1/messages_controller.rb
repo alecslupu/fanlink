@@ -41,6 +41,7 @@ class Api::V1::MessagesController < ApiController
             private_message_push(@message)
           end
         else
+          @message.destroy
           messaging_error && return
         end
       end

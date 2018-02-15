@@ -29,8 +29,17 @@ describe "Posts (v1)" do
     end
     it "should not create a new post if not logged in" do
       expect_any_instance_of(Api::V1::MessagesController).not_to receive(:post_post)
-      post "/posts", params: { message: { body: "not gonna see my body" } }
+      post "/posts", params: { post: { body: "not gonna see my body" } }
       expect(response).to be_unauthorized
+    end
+    it "should destroy the post and return error if unable to get it on the socket" do
+      login_as(@person)
+      precount = Post.count
+      expect_any_instance_of(Api::V1::PostsController).to receive(:post_post).and_return(false)
+      post "/posts", params: { post: { body: "not gonna post" } }
+      expect(response).to be_unprocessable
+      expect(Post.count - precount).to eq(0)
+      expect(json["errors"]).to include("unable to post your post")
     end
   end
 
@@ -52,7 +61,16 @@ describe "Posts (v1)" do
       expect(response).to be_not_found
       expect(post.reload.published?).to be_truthy
     end
-    it "should not delete message if not logged in" do
+    it "should not delete post if unable to delete on socket" do
+      login_as(@person)
+      expect_any_instance_of(Api::V1::PostsController).to receive(:delete_post).and_return(false)
+      post = create(:post, person: @person, status: :published)
+      delete "/posts/#{post.id}"
+      expect(response).to be_unprocessable
+      expect(post).to exist_in_database
+      expect(json["errors"]).to include("Unable to delete the post")
+    end
+    it "should not delete post if not logged in" do
       expect_any_instance_of(Api::V1::PostsController).to_not receive(:delete_post)
       post = create(:post, person: @person, status: :published)
       delete "/posts/#{post.id}"

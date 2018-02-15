@@ -43,8 +43,6 @@ class ApiController < ApplicationController
       render json: { errors: obj.errors.messages.values.flatten }, status: :unprocessable_entity
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       render action: opts[:using], formats: %i[json]
-    else
-      render json: { errors: obj.errors }, status: :unprocessable_entity
     end
   end
 
@@ -55,11 +53,7 @@ protected
   end
 
   def render_not_found
-    if request.format == "text/html"
-      render :not_found, status: :not_found
-    else
-      render json: { errors: { base: [ "Not found" ] } }, status: :not_found
-    end
+    render json: { errors: { base: [ "Not found" ] } }, status: :not_found
   end
 
   def set_product

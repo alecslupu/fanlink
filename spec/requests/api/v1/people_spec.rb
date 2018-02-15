@@ -44,6 +44,16 @@ describe "People (v1)" do
       expect(response).to be_unauthorized
       expect(person.reload.valid_password?(current)).to be_truthy
     end
+    it "should not change the password if wrong user id in url" do
+      pers = create(:person)
+      current = "secret"
+      new_password = "newsecret"
+      person = create(:person, password: current)
+      login_as(person)
+      patch "/people/#{pers.id}/change_password", params: { person: { current_password: current, new_password: new_password } }
+      expect(response).to be_not_found
+      expect(person.reload.valid_password?(current)).to be_truthy
+    end
   end
   describe "#create" do
     it "should sign up new user with email, username, and password" do
@@ -74,6 +84,17 @@ describe "People (v1)" do
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
       expect(json["person"]).to eq(person_private_json(p))
+    end
+    it "should not sign up new user if there is a problem with FB" do
+      tok = "1234"
+      username = "newuser#{Time.now.to_i}"
+      product = create(:product)
+      expect(Person).to receive(:create_from_facebook).with(tok, username).and_return(nil)
+      expect {
+        post "/people", params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
+      }.to change { Person.count }.by(0)
+      expect(response.status).to eq(503)
+      expect(json["errors"]).to include("problem contacting Facebook")
     end
     it "should not sign up new user with username already used" do
       username = "newuser#{Time.now.to_i}"

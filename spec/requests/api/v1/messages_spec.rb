@@ -65,6 +65,16 @@ describe "Messages (v1)" do
       expect(json["errors"]).to include("room is no longer active")
       @room.active!
     end
+    it "should destroy the message and return error if unable to post message to socket" do
+      expect_any_instance_of(Api::V1::MessagesController).to receive(:post_message).and_return(false)
+      login_as(@person)
+      body = "Do you like my body?"
+      precount = Message.count
+      post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
+      expect(response.status).to eq(503)
+      expect(Message.count - precount).to eq(0)
+      expect(json["errors"]).to include("problem sending the message")
+    end
   end
 
   describe "#destroy" do

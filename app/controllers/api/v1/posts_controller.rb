@@ -34,7 +34,6 @@ class Api::V1::PostsController < ApiController
         @post.published!
       else
         @post.destroy
-        @post.errored!
         render_error("Sorry unable to post your post. Please try again later.") && return
       end
     end

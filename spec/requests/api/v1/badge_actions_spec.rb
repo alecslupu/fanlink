@@ -84,5 +84,19 @@ describe "BadgeActions (v1)" do
       expect(response).to be_unprocessable
       expect(json["errors"].first).to include("cannot get credit for that action")
     end
+    it "should not create action if missing badge action" do
+      person = create(:person)
+      login_as(person)
+      post "/badge_actions", params: { }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("You must supply a badge action type")
+    end
+    it "should not create action if missing action type" do
+      person = create(:person)
+      login_as(person)
+      post "/badge_actions", params: { badge_action: { identifier: "fdafdf" } }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("You must supply a badge action type")
+    end
   end
 end

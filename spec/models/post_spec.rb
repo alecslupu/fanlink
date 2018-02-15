@@ -43,9 +43,12 @@ RSpec.describe Post, type: :model do
       expect(create(:post)).to be_valid
     end
   end
-  describe ".following" do
-  end
 
+  describe "#product" do
+    it "should return the product of the person" do
+      expect(@followed1_post1.product).to eq(@product)
+    end
+  end
   describe "#starts_at" do
     it "should not let you create a post that starts after it ends" do
       post = build(:post, starts_at: Time.now + 1.day, ends_at: Time.now + 23.hours)

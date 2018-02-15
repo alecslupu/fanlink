@@ -234,6 +234,15 @@ describe "Relationships (v1)" do
       expect(rel.reload.withdrawn?).to be_truthy
       expect(json["relationship"]).to eq(relationship_json(rel, person))
     end
+    it "should not update with an invalid status" do
+      person = create(:person)
+      login_as(person)
+      rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: :incestral } }
+      expect(response).to be_unprocessable
+      expect(rel.reload.requested?).to be_truthy
+      expect(json["errors"]).to include("status is invalid")
+    end
   end
 
 end

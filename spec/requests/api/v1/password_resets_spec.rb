@@ -55,6 +55,15 @@ describe "PasswordResets (v1)" do
       expect(response).to be_success
       expect(person.reload.reset_password_token).to be_nil
     end
+    it "should not process if missing product" do
+      email = "forgetful@example.com"
+      person = create(:person, email: email)
+      expect {
+        post "/people/password_forgot", params: { product: "foofarmfizzle", email_or_username: email }
+      }.to change { MandrillMailer.deliveries.count }.by(0)
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Required parameter missing")
+    end
   end
 
   describe "#update" do

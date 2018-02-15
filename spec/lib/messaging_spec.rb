@@ -11,7 +11,7 @@ describe "Messaging" do
   before(:each) do |example|
     unless example.metadata[:skip_before]
       expect(Firebase::Client).to receive(:new).and_return(@fb_stub)
-      @implementer = Implementer.new
+      @implementer = MessagingHelpers::Implementer.new
     end
   end
 
@@ -45,7 +45,7 @@ describe "Messaging" do
       tbn = []
       expect(Firebase::Client).not_to receive(:new)
       expect_any_instance_of(FBStub).not_to receive(:update)
-      expect(Implementer.new.delete_post(post, tbn)).to be_truthy
+      expect(MessagingHelpers::Implementer.new.delete_post(post, tbn)).to be_truthy
     end
   end
 
@@ -56,7 +56,7 @@ describe "Messaging" do
       @implementer.delete_room(room)
     end
     it "should delete private room" do
-      expect_any_instance_of(Implementer).to receive(:delete_room_for_member).with(@room, @person)
+      expect_any_instance_of(MessagingHelpers::Implementer).to receive(:delete_room_for_member).with(@room, @person)
       @implementer.delete_room(@room)
     end
   end
@@ -104,7 +104,7 @@ describe "Messaging" do
       tbn = []
       expect(Firebase::Client).not_to receive(:new)
       expect_any_instance_of(FBStub).not_to receive(:update)
-      expect(Implementer.new.post_post(post, tbn)).to be_truthy
+      expect(MessagingHelpers::Implementer.new.post_post(post, tbn)).to be_truthy
     end
   end
 

@@ -17,6 +17,13 @@ describe "NotificationDeviceIds (v1)" do
       expect(response).to be_success
       expect(person.notification_device_ids.where(device_identifier: did).exists?).to be_truthy
     end
+    it "should not insert a device id if missing identifier" do
+      person = create(:person, product: @product)
+      login_as(person)
+      post "/notification_device_ids", params: { }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Missing device_id")
+    end
     it "should not insert a new device id if not logged in" do
       person = create(:person, product: @product)
       did = "fkafkaf"

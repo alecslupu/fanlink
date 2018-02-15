@@ -116,24 +116,6 @@ class Person < ApplicationRecord
     !normal?
   end
 
-  #
-  # Check if a username is in use or not. If you give us a `person_id`,
-  # we'll ignore a match with that person.
-  #
-  # @param [String] name
-  #   The username to check.
-  # @param [ObjectID, Person, String] person
-  #   The (optional) person.
-  # @return [Boolean]
-  #   True if the name is used, false otherwise.
-  #
-  def self.username_used?(name, person = nil)
-    query = where(username_canonical: canonicalize(name))
-    query = query.where.not(id: person.to_id) if person
-    query.count > 0
-  end
-
-
   private
 
     def canonicalize(name)
