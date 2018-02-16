@@ -25,10 +25,10 @@ module Admin
 
     def index
       search_term = params[:search].to_s.strip
-      resources = Administrate::Search.new(scoped_resource,
+      resources = Administrate::Search.new(scoped_resource.where(public: true),
                                            dashboard_class,
                                            search_term).run
-      resources = resources.where(public: true).includes(*resource_includes) if resource_includes.any?
+      resources = resources.includes(*resource_includes) if resource_includes.any?
       resources = order.apply(resources)
       resources = resources.page(params[:page]).per(records_per_page)
       page = Administrate::Page::Collection.new(dashboard, order: order)
