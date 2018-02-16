@@ -11,6 +11,7 @@ class Message < ApplicationRecord
   scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
                                                         where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit) }
   scope :for_product, -> (product) { joins(:room).where("rooms.product_id = ?", product.id) }
+  scope :publics, -> { joins(:room).where("rooms.public = ?", true) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> { where(hidden: false) }
 
