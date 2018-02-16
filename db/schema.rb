@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208225901) do
+ActiveRecord::Schema.define(version: 20180216001204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,15 @@ ActiveRecord::Schema.define(version: 20180208225901) do
     t.datetime "picture_updated_at"
     t.index ["product_id", "internal_name"], name: "unq_levels_product_internal_name"
     t.index ["product_id", "points"], name: "unq_levels_product_points"
+  end
+
+  create_table "message_reports", force: :cascade do |t|
+    t.integer "message_id", null: false
+    t.integer "person_id", null: false
+    t.text "reason", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -245,6 +254,7 @@ ActiveRecord::Schema.define(version: 20180208225901) do
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
+  add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people"

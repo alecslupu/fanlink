@@ -1,6 +1,6 @@
 class Message < ApplicationRecord
   include AttachmentSupport
-  enum status: %i[ pending posted postfailed ]
+  enum status: %i[ pending posted ]
 
   belongs_to :person
   belongs_to :room
@@ -10,6 +10,7 @@ class Message < ApplicationRecord
 
   scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
                                                         where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit) }
+  scope :for_product, -> (product) { joins(:room).where("rooms.product_id = ?", product.id) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> { where(hidden: false) }
 
