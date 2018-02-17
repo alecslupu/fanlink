@@ -7,7 +7,9 @@ class MessageReport < ApplicationRecord
 
   has_paper_trail
 
+  validates :reason, length: { maximum: 500 }
   def create_time
     created_at.to_s
   end
+
 end

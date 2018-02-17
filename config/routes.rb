@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :relationships, except: %i[ new edit ]
       resources :rooms do
         resources :messages, except: %i[ new edit ]
+        resources :message_reports, only: %i[ create ]
         resources :room_memberships, only: %i[ create destroy ]
       end
       resources :session, only: %i[ create index ] do
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
       get "hide" => "messages#hide"
       get "unhide" => "messages#unhide"
     end
+    resources :message_reports, only: %i[ index update ]
     resources :people
     resources :posts
     resources :products do

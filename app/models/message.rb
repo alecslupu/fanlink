@@ -6,6 +6,7 @@ class Message < ApplicationRecord
   belongs_to :room
 
   has_image_called :picture
+  has_many :message_reports, dependent: :destroy
   has_paper_trail
 
   scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
@@ -26,6 +27,10 @@ class Message < ApplicationRecord
 
   def product
     room.product
+  end
+
+  def reported?
+    (message_reports.size > 0) ? "Yes" : "No"
   end
 
   def visible?

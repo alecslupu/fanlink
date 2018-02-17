@@ -8,5 +8,6 @@ class CreateMessageReports < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
     add_foreign_key :message_reports, :messages, name: "fk_message_reports_message", on_delete: :cascade
+    add_foreign_key :message_reports, :people, name: "fk_message_reports_people", on_delete: :cascade
   end
 end

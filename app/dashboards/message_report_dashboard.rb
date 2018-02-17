@@ -13,7 +13,7 @@ class MessageReportDashboard < Administrate::BaseDashboard
     versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
     id: Field::Number,
     reason: Field::Text,
-    addressed: Field::Boolean,
+    status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -26,19 +26,17 @@ class MessageReportDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :message,
     :person,
-    :versions,
-    :id,
+    :status,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
+    :id,
     :message,
     :person,
-    :versions,
-    :id,
     :reason,
-    :addressed,
+    :status,
     :updated_at,
   ].freeze
 
