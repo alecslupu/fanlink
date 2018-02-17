@@ -43,9 +43,9 @@ class MessageReportDashboard < Administrate::BaseDashboard
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  #FORM_ATTRIBUTES = [
-  #  :addressed
-  #].freeze
+  FORM_ATTRIBUTES = [
+    :status
+  ].freeze
 
   # Overwrite this method to customize how message reports are displayed
   # across all pages of the admin dashboard.

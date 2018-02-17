@@ -67,7 +67,7 @@ to display a collection of resources in an HTML table.
                class="action-show"
                >
               <% if attribute.name == "status" %>
-                <%= render partial: "status_form", locals: { message_report: resource } %>
+                <%= render partial: "form", locals: { message_report: resource } %>
               <% else %>
                 <%= render_field attribute %>
               <% end %>
