@@ -14,7 +14,7 @@ class Api::V1::MessageReportsController < ApiController
   #   Id of the room in which the message was created.
   #
   # @apiParam {Object} message_report
-  #   The message report object container for the message parameters.
+  #   The message report object container.
   #
   # @apiParam {Integer} message_report.message_id
   #   The id of the message being reported.
@@ -28,7 +28,7 @@ class Api::V1::MessageReportsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 422
   #     "errors" :
-  #       { "I don't like your reeason, etc." }
+  #       { "I don't like your reason, etc." }
   #*
   def create
     #room id is involved primarily so AaT can do its thing
