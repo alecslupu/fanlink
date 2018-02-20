@@ -39,7 +39,8 @@ module Fanlink
         s3_credentials: {
             access_key_id: ENV["AWS_ACCESS_KEY_ID"],
             secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
-        }
+        },
+        s3_protocol: :https
     }
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
