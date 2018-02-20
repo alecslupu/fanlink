@@ -27,7 +27,7 @@ describe "Messaging" do
     it "should set deleted message id" do
       msg = create(:message, hidden: true)
       expect_any_instance_of(FBStub).to receive(:set)
-        .with("#{msg.room.product.internal_name}/rooms/#{msg.room.id}/last_deleted_message_id", msg.id)
+        .with("#{msg.room.product.internal_name}/rooms/#{msg.room.id}/last_deleted_message_id", msg.id).and_return(Response.new)
       @implementer.delete_message(msg)
     end
   end
