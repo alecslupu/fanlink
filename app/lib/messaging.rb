@@ -6,7 +6,9 @@ module Messaging
 
   def delete_message(message)
     if message.hidden
-      client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
+      client.set("#{room_path(message.room)}/last_deleted_message_id", message.id).response.status == 200
+    else
+      false
     end
   end
 

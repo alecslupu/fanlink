@@ -1,8 +1,30 @@
 module Admin
   class MessageReportsController < Admin::ApplicationController
+    include Messaging
 
     def update
-
+      message_report = MessageReport.find(params["id"])
+      message_report.status = params["message_report"]["status"]
+      message = message_report.message
+      errored = false
+      if message_report.status == "message_hidden"
+        message.hidden = true
+        if message.save && delete_message(message)
+          message_report.save
+        else
+          errored = true
+        end
+      else
+        message.hidden = false
+        if !message.save
+          errored = true
+        end
+      end
+      if errored
+        render status: :unprocessable_entity, json: { error: "Unable to update the message. Please try again later." }
+      else
+        render status: :ok, json: { message: (message.hidden?) ? "Message hidden" : "Message not hidden" }
+      end
     end
 
     # Define a custom finder by overriding the `find_resource` method:
