@@ -80,6 +80,7 @@ gem "oauth2"
 gem "oj" #json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem "postgresql-check"
+gem 'rack-cors', :require => 'rack/cors'
 gem "rollbar"
 gem "rubocop-rails"
 gem "sorcery"

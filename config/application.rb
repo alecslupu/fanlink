@@ -44,5 +44,14 @@ module Fanlink
     }
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'https://www.fan.link', 'https://staging.fan.link', 'https://fan.link'
+        resource '*', :headers => :any, :methods => :any
+      end
+    end
+
+
   end
 end
