@@ -13,7 +13,7 @@ form {
 
 
 .inline-select-form select {
-  padding: 10px;
+  padding: 2px;
   width: auto;
   float: left; /* for width matching contents */
 }
@@ -42,8 +42,8 @@ form {
   float: right
 }
 
-.message-update-result {
-  padding: 10px;
+.message-update-result, .post-update-result {
+  padding: 12px;
   width: 200px;
   float: left;
 }

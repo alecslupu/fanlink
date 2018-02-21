@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         end
       end
       resources :posts, except: %i[ new edit ]
+      resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]
       resources :rooms do
         resources :messages, except: %i[ new edit ]
@@ -50,6 +51,7 @@ Rails.application.routes.draw do
     resources :message_reports, only: %i[ index update ]
     resources :people
     resources :posts
+    resources :post_reports, only: %i[ index update ]
     resources :products do
       collection do
         get "select_form" => "products#select_form"

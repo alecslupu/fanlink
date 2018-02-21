@@ -1,4 +1,4 @@
-<div class="inline-select-form">
+<div class="inline-select-form message-report-form">
   <%= select_tag("status",
              options_for_select(MessageReport.statuses.collect { |s| [s.first.titleize, s.first] }, message_report.status),
              data: {
@@ -7,5 +7,5 @@
              }
             )
   %>
-  <div class="message-update-result">result</div>
+  <div class="message-update-result"></div>
 </div>

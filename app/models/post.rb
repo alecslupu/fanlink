@@ -5,6 +5,8 @@ class Post < ApplicationRecord
   has_image_called :picture
   has_paper_trail
 
+  has_many :post_reports, dependent: :destroy
+
   belongs_to :person
 
   validate :sensible_dates
@@ -24,7 +26,11 @@ class Post < ApplicationRecord
     person.product
   end
 
-private
+  def reported?
+    (post_reports.size > 0) ? "Yes" : "No"
+  end
+
+  private
 
   def sensible_dates
     if starts_at.present? && ends_at.present? && starts_at > ends_at
