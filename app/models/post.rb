@@ -14,7 +14,7 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
-
+  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
   scope :in_date_range, -> (start_date, end_date) {
                               where("posts.created_at >= ? and posts.created_at <= ?",
                                 start_date.beginning_of_day, end_date.end_of_day)
