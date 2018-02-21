@@ -1,6 +1,7 @@
 class ActionType < ApplicationRecord
   acts_as_tenant(:product)
 
+  default_scope { where(active: true) }
   has_many :badges #all badges that implement this type
 
   has_paper_trail
@@ -15,4 +16,5 @@ class ActionType < ApplicationRecord
             presence: true,
             length: { in: 3..36 },
             uniqueness: { scope: :product_id, message: "There is already an action type with that name." }
+
 end
