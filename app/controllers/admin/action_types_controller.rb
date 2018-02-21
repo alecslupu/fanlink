@@ -10,6 +10,15 @@ module Admin
     #     per(10)
     # end
 
+    def destroy
+      if requested_resource.destroy
+        flash[:notice] = translate_with_resource("destroy.success")
+      else
+        flash[:alert] = requested_resource.errors.full_messages.first
+      end
+      redirect_to action: :index
+    end
+
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
     #   ActionType.find_by!(slug: param)
