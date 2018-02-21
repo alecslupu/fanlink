@@ -1,6 +1,8 @@
 class ActionType < ApplicationRecord
   acts_as_tenant(:product)
-  has_many :badges
+
+  default_scope { where(active: true) }
+  has_many :badges #all badges that implement this type
 
   has_paper_trail
 
@@ -26,5 +28,4 @@ private
       throw :abort
     end
   end
-
 end
