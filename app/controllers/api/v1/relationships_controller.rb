@@ -10,12 +10,11 @@ class Api::V1::RelationshipsController < ApiController
   # @apiGroup Relationships
   #
   # @apiDescription
-  #   This is used to send a friend request to a person. You can send one to anyone unless
-  #   there is a current unresolved request outstanding. Unresolved means it has
-  #   status of requested or friended.
+  #   This is used to send a friend request to a person. If there is a block between the people, an error will
+  #   be returned.
   #
-  #   If the person sending the request already has a pending request from the requested_to_id, then no additional
-  #   records will be created. The original relationship will be changed to friended and returned.
+  #   If the person sending the request already has a pending request (or friendship) from the requested_to_id, then no additional
+  #   records will be created. The original relationship will be changed to friended (if not already) and returned.
   #
   # @apiParam {Object} relationship
   #   Relationship object.
@@ -39,13 +38,15 @@ class Api::V1::RelationshipsController < ApiController
   def create
     requested_to = Person.find(relationship_params[:requested_to_id])
     if check_blocked(requested_to)
-      @relationship = Relationship.find_by(requested_to: current_user, requested_by: requested_to, status: :requested)
+      @relationship = Relationship.for_people(current_user, requested_to).first
       if @relationship
-        @relationship.status = :friended
-        @relationship.requested_to.friend_request_count -= 1
-        update_relationship_count(@relationship.requested_to)
-        @relationship.save
-        @relationship.requested_to.save
+        if @relationship.requested? && @relationship.requested_by == requested_to #there was request o/s from this user to us
+          @relationship.friended!
+          current_user.friend_request_count -= 1
+          update_relationship_count(current_user)
+          current_user.save
+          friend_request_accepted_push(@relationship)
+        end
       else
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
         if @relationship.valid?
@@ -76,10 +77,8 @@ class Api::V1::RelationshipsController < ApiController
   #     HTTP/1.1 200 Ok
   #*
   def destroy
-    if current_user.can_status?(@relationship, :unfriended)
-      @relationship.status = :unfriended
-      @relationship.save
-      if @relationship.valid?
+    if @relationship.person_involved?(current_user) && @relationship.friended?
+      if @relationship.destroy
         head :ok
       else
         render_error("Sorry, you cannot unfriend that person right now.")
@@ -142,7 +141,7 @@ class Api::V1::RelationshipsController < ApiController
   #     HTTP/1.1 404 Not Found
   #*
   def show
-    @relationship = current_user.relationships.visible.find(params[:id])
+    @relationship = current_user.relationships.find(params[:id])
     return_the @relationship
   end
 
@@ -152,7 +151,7 @@ class Api::V1::RelationshipsController < ApiController
   # @apiGroup Relationships
   #
   # @apiDescription
-  #   This is used to accept, deny or cancel a relationship (friend request).
+  #   This is used to accept, deny or unfriend a relationship (friend request).
   #
   # @apiParam {Object} relationship
   #   Relationship object.
@@ -180,21 +179,43 @@ class Api::V1::RelationshipsController < ApiController
   #*
   def update
     if check_status
-      if current_user.relationships.visible.include?(@relationship)
+      if current_user.relationships.include?(@relationship)
         old_status = @relationship.status
         new_status = relationship_params[:status]
-        if current_user.can_status?(@relationship, new_status)
-          @relationship.status = relationship_params[:status]
-          if @relationship.save && Relationship.counted_transition?(old_status.to_sym)
-            @relationship.requested_to.friend_request_count -= 1
-            if update_relationship_count(@relationship.requested_to)
-              @relationship.requested_to.save!
-            end
-            if @relationship.friended?
-              friend_request_accepted_push(@relationship)
-            end
+        can_status = true
+        #TODO: yeah this is a mess
+        if new_status == "friended"
+          if old_status == "requested" && @relationship.requested_to == current_user
+            @relationship.friended!
+            friend_request_accepted_push(@relationship)
+          else
+            can_status = false
           end
-          return_the @relationship
+        elsif new_status == "denied"
+          if old_status == "requested" && @relationship.requested_to == current_user
+            @relationship.destroy
+            current_user.friend_request_count -= 1
+            update_relationship_count(current_user)
+            current_user.save
+          else
+            can_status = false
+          end
+        else #withdrawn
+          if old_status == "requested" && @relationship.requested_by == current_user
+            @relationship.destroy
+            @relationship.requested_to.friend_request_count -= 1
+            update_relationship_count(@relationship.requested_to)
+            @relationship.requested_to.save!
+          else
+            can_status = false
+          end
+        end
+        if can_status
+          if @relationship.destroyed?
+            head :ok
+          else
+            return_the @relationship
+          end
         else
           render_error("You cannot change to the relationship to that status.")
         end
@@ -213,7 +234,7 @@ private
   end
 
   def check_status
-    Relationship.statuses.keys.include?(relationship_params[:status])
+    ["friended", "denied", "withdrawn"].include?(relationship_params[:status])
   end
 
   def relationship_params
