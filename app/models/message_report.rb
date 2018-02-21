@@ -1,5 +1,4 @@
 class MessageReport < ApplicationRecord
-
   enum status: %i[ pending no_action_needed message_hidden ]
 
   belongs_to :message
@@ -11,5 +10,4 @@ class MessageReport < ApplicationRecord
   def create_time
     created_at.to_s
   end
-
 end

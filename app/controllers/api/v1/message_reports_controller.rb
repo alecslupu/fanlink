@@ -1,5 +1,4 @@
 class Api::V1::MessageReportsController < ApiController
-
   load_up_the Room, from: :room_id
 
   #**
@@ -51,5 +50,4 @@ private
   def message_report_params
     params.require(:message_report).permit(:message_id, :reason).merge(person_id: current_user.id)
   end
-
 end

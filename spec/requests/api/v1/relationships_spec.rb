@@ -65,7 +65,7 @@ describe "Relationships (v1)" do
       login_as(friend)
       delete "/relationships/#{rel.id}"
       expect(response).to be_success
-      expect(rel.reload.unfriended?).to be_truthy
+      expect(rel).not_to exist_in_database
     end
     it "should not unfriend another couple of friends" do
       imposter = create(:person)
@@ -79,22 +79,8 @@ describe "Relationships (v1)" do
       rel = create(:relationship, requested_by: create(:person), requested_to: create(:person))
       login_as(rel.requested_to)
       delete "/relationships/#{rel.id}"
-      expect(response).to be_unprocessable
+      expect(response).to be_not_found
       expect(rel.reload.requested?).to be_truthy
-    end
-    it "should not unfriend a friend who only has a withdrawn request" do
-      rel = create(:relationship, requested_by: create(:person), requested_to: create(:person), status: :withdrawn)
-      login_as(rel.requested_to)
-      delete "/relationships/#{rel.id}"
-      expect(response).to be_unprocessable
-      expect(rel.reload.withdrawn?).to be_truthy
-    end
-    it "should not unfriend a friend who only has a denied request" do
-      rel = create(:relationship, requested_by: create(:person), requested_to: create(:person), status: :denied)
-      login_as(rel.requested_to)
-      delete "/relationships/#{rel.id}"
-      expect(response).to be_unprocessable
-      expect(rel.reload.denied?).to be_truthy
     end
   end
 
@@ -152,27 +138,11 @@ describe "Relationships (v1)" do
       get "/relationships/#{rel.id}"
       expect(response).to be_not_found
     end
-    it "should not get relationship if relationship denied" do
+    it "should not get relationship if relationship denied or withdrawn or unfriended" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      rel.denied!
-      get "/relationships/#{rel.id}"
-      expect(response).to be_not_found
-    end
-    it "should not get relationship if relationship withdrawn" do
-      person = create(:person)
-      login_as(person)
-      rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      rel.withdrawn!
-      get "/relationships/#{rel.id}"
-      expect(response).to be_not_found
-    end
-    it "should not get relationship if relationship unfriended" do
-      person = create(:person)
-      login_as(person)
-      rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      rel.update_column(:status, :unfriended)
+      rel.destroy
       get "/relationships/#{rel.id}"
       expect(response).to be_not_found
     end
@@ -183,9 +153,8 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).
-          with(rel.requested_to).and_return(true)
-      patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:friend_request_accepted_push).with(rel)
+      patch "/relationships/#{rel.id}", params: { relationship: { status: "friended" } }
       expect(response).to be_success
       expect(rel.reload.friended?).to be_truthy
       expect(json["relationship"]).to eq(relationship_json(rel, person))
@@ -195,7 +164,7 @@ describe "Relationships (v1)" do
       login_as(person)
       rel = create(:relationship, requested_to: create(:person, product: person.product), requested_by: person)
       expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
-      patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
+      patch "/relationships/#{rel.id}", params: { relationship: { status: "friended" } }
       expect(response).to be_unprocessable
       expect(rel.reload.requested?).to be_truthy
     end
@@ -206,7 +175,7 @@ describe "Relationships (v1)" do
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
       (Relationship.statuses.keys - ["requested", "friended"]).each do |s|
         rel.update_column(:status, s)
-        patch "/relationships/#{rel.id}", params: { relationship: { status: :friended } }
+        patch "/relationships/#{rel.id}", params: { relationship: { status: "friended" } }
         expect(rel.reload.status).to eq(s)
       end
     end
@@ -216,10 +185,9 @@ describe "Relationships (v1)" do
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
       person.update_attribute(:friend_request_count, 1)
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person).and_return(true)
-      patch "/relationships/#{rel.id}", params: { relationship: { status: :denied } }
+      patch "/relationships/#{rel.id}", params: { relationship: { status: "denied" } }
       expect(response).to be_success
-      expect(rel.reload.denied?).to be_truthy
-      expect(json["relationship"]).to eq(relationship_json(rel, person))
+      expect(rel).not_to exist_in_database
       expect(person.reload.friend_request_count).to eq(0)
     end
     it "should withdraw a friend request" do
@@ -231,8 +199,7 @@ describe "Relationships (v1)" do
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(req_to).and_return(true)
       patch "/relationships/#{rel.id}", params: { relationship: { status: :withdrawn } }
       expect(response).to be_success
-      expect(rel.reload.withdrawn?).to be_truthy
-      expect(json["relationship"]).to eq(relationship_json(rel, person))
+      expect(rel).not_to exist_in_database
     end
     it "should not update with an invalid status" do
       person = create(:person)
