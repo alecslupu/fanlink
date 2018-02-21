@@ -30,7 +30,7 @@ class Post < ApplicationRecord
     (post_reports.size > 0) ? "Yes" : "No"
   end
 
-  private
+private
 
   def sensible_dates
     if starts_at.present? && ends_at.present? && starts_at > ends_at

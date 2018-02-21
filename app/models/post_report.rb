@@ -1,5 +1,4 @@
 class PostReport < ApplicationRecord
-
   enum status: %i[ pending no_action_needed post_hidden ]
 
   belongs_to :post
@@ -11,5 +10,4 @@ class PostReport < ApplicationRecord
   def create_time
     created_at.to_s
   end
-
 end

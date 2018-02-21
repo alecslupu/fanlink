@@ -1,5 +1,4 @@
 class Api::V1::PostReportsController < ApiController
-
   #**
   # @api {post} /post_reports Report a post.
   # @apiName CreatePostReport
@@ -40,10 +39,9 @@ class Api::V1::PostReportsController < ApiController
     end
   end
 
-  private
+private
 
   def post_report_params
     params.require(:post_report).permit(:post_id, :reason).merge(person_id: current_user.id)
   end
-
 end
