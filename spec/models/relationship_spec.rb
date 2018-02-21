@@ -41,15 +41,6 @@ RSpec.describe Relationship, type: :model do
       expect(relationships.count).to eq(1)
       expect(relationships.first).to eq(rel)
     end
-    it "should get one relationship between two people with a denied one before" do
-      rel1 = create(:relationship)
-      rel1.denied!
-      rel2 = create(:relationship, requested_by: rel1.requested_by, requested_to: rel1.requested_to, status: :friended)
-      create(:relationship, requested_by: rel1.requested_to)
-      relationships = Relationship.for_people(rel1.requested_by, rel1.requested_to)
-      expect(relationships.count).to eq(1)
-      expect(relationships.first).to eq(rel2)
-    end
   end
 
   #TODO this should be renamed friendships or made to return persons
@@ -75,14 +66,8 @@ RSpec.describe Relationship, type: :model do
       valid_status(rel)
       expect(rel.friended?).to be_truthy
     end
-    it "should not allow transition from requested to unfriended" do
-      rel = create(:relationship)
-      expect(rel.requested?).to be_truthy
-      rel.status = :unfriended
-      invalid_status(rel)
-    end
     it "should allow transitions from requested" do
-      allowed = %i[ friended denied withdrawn ]
+      allowed = %i[ friended ]
       rel = create(:relationship)
       expect(rel.requested?).to be_truthy
       allowed.each do |s|
@@ -91,32 +76,13 @@ RSpec.describe Relationship, type: :model do
         rel.status = :requested
       end
     end
-    it "should disallow transitions from denied withdrawn and unfriended" do
-      %i[ denied withdrawn unfriended ].each do |s|
-        rel = create(:relationship)
-        rel.update_column(:status, Relationship.statuses[s])
-        Relationship.statuses.keys.each do |ss|
-          unless s == ss.to_sym
-            rel.status = ss
-            invalid_status(rel)
-            rel.status = s
-          end
-        end
-      end
-    end
     it "should disallow transitions from friended" do
       rel = create(:relationship)
-      %i[ requested denied withdrawn ].each do |s| # all but unfriended
+      %i[ requested ].each do |s|
         rel.update_column(:status, Relationship.statuses[:friended])
         rel.status = s
         invalid_status(rel)
       end
-    end
-    it "should allow transitions from friended to unfriended" do
-      rel = create(:relationship)
-      rel.update_column(:status, Relationship.statuses[:friended])
-      rel.status = :unfriended
-      valid_status(rel)
     end
   end
 
@@ -126,24 +92,6 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
-  describe ".visible" do
-    it "should be visible if requested" do
-      rel = create(:relationship)
-      expect(Relationship.visible).to include(rel)
-    end
-    it "should be visible if friended" do
-      rel = create(:relationship)
-      rel.friended!
-      expect(Relationship.visible).to include(rel)
-    end
-    it "should not be visible" do
-      rel = create(:relationship)
-      %i[ denied withdrawn ].each do |s|
-        rel.update_column(:status, s)
-        expect(Relationship.visible).not_to include(rel)
-      end
-    end
-  end
 
 private
 
