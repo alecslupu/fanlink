@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221194723) do
+ActiveRecord::Schema.define(version: 20180221012240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,7 +215,6 @@ ActiveRecord::Schema.define(version: 20180221194723) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["requested_by_id", "requested_to_id"], name: "unq_relationships_requested_by_requested_to", unique: true
     t.index ["requested_by_id"], name: "idx_relationships_requested_by_id"
     t.index ["requested_to_id"], name: "idx_relationships_requested_to_id"
   end
