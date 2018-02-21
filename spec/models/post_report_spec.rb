@@ -22,6 +22,21 @@ RSpec.describe PostReport, type: :model do
     end
   end
 
+  describe "#for_product" do
+    it "should get post reprots only involving the indicated product" do
+      prod = create(:product)
+      post = nil
+      ActsAsTenant.with_tenant(prod) do
+        post = create(:post)
+      end
+      report_wanted = create(:post_report, post: @post)
+      report_other = create(:post_report, post: post)
+      reps = PostReport.for_product(@product)
+      expect(reps.size).to eq(1)
+      expect(reps.first).to eq(report_wanted)
+    end
+  end
+
   describe "#reason" do
     it "should not let you give a reason more than 500 characters in length" do
       report = build(:post_report, reason: "a" * 501)
