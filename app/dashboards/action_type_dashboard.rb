@@ -8,7 +8,6 @@ class ActionTypeDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    product: Field::BelongsTo,
     id: Field::Number,
     name: Field::Text,
     internal_name: Field::Text,

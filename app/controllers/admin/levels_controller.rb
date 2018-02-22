@@ -1,6 +1,5 @@
 module Admin
   class LevelsController < Admin::ApplicationController
-
     def valid_action?(name, resource = resource_class)
       name == "index" || current_user.super_admin?
     end
