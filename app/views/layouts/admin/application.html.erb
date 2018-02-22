@@ -43,6 +43,13 @@ By default, it renders:
       <% end %>
       <%= render "flashes" -%>
       <%= yield %>
+      <% if current_user.present? %>
+        <% if Rails.env.staging? %>
+          <div class="admin-warning">
+            This is a staging server which exists for development and testing only. Any data is subject to deletion at any time without notice.
+          </div>
+        <% end %>
+      <% end %>
     </main>
   </div>
 
