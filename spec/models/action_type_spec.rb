@@ -1,6 +1,16 @@
 require "rails_helper"
 
 RSpec.describe ActionType, type: :model do
+  describe "#destroy" do
+    it "should not let you destroy an action type that has been used in a badge" do
+      act_type = create(:action_type)
+      badge = create(:badge, action_type: act_type)
+      expect(act_type.destroy).to be_falsey
+      expect(act_type).to exist_in_database
+      expect(act_type.errors[:base]).not_to be_empty
+    end
+  end
+
   describe "#internal_name" do
     it "should allow an internal name with lower case letters numbers and underscores" do
       expect(create(:action_type, internal_name: "abc_d12"))
