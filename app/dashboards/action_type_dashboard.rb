@@ -13,6 +13,7 @@ class ActionTypeDashboard < Administrate::BaseDashboard
     internal_name: Field::Text,
     seconds_lag: Field::Number,
     active: Field::Boolean,
+    in_use?: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -27,8 +28,8 @@ class ActionTypeDashboard < Administrate::BaseDashboard
     :name,
     :internal_name,
     :active,
+    :in_use?,
     :seconds_lag,
-    :active,
     :updated_at
   ].freeze
 

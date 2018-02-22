@@ -17,13 +17,30 @@ class ActionType < ApplicationRecord
             length: { in: 3..36 },
             uniqueness: { message: "There is already an action type with that name." }
 
+  def in_use?
+    actions_using? || badge_using.present?
+  end
+
 private
 
+  def actions_using?
+    BadgeAction.where(action_type: self).exists?
+  end
+
+  def badge_using
+    Badge.where(action_type_id: self.id).first
+  end
+
   def check_usage
-    badge = Badge.where(action_type_id: self.id).first
-    if badge
-      errors.add(:base, "You cannot destroy this action type because badge named: '#{badge.name}' is using it.")
+    if actions_using?
+      errors.add(:base, "You cannot destroy this action type because users have already received credit for it.")
       throw :abort
+    else
+      badge = badge_using
+      if badge
+        errors.add(:base, "You cannot destroy this action type because badge named: '#{badge.name}' is using it.")
+        throw :abort
+      end
     end
   end
 end

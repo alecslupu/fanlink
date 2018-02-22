@@ -9,7 +9,6 @@ module Admin
     set_current_tenant_through_filter
     before_action :require_login, :check_admin, :set_tenant, :set_paper_trail_whodunnit
 
-
   # Override this value to specify the number of elements to display at a time
   # on index pages. Defaults to 20.
   # def records_per_page
