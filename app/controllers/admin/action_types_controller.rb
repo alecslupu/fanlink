@@ -1,9 +1,5 @@
 module Admin
   class ActionTypesController < Admin::ApplicationController
-    def valid_action?(name, resource = resource_class)
-      name == "index" || current_user.super_admin?
-    end
-
     def index
       #search_term = params[:search].to_s.strip
       resources = ActionType.unscoped.page(params[:page]).per(records_per_page)
@@ -35,12 +31,10 @@ module Admin
       redirect_to action: :index
     end
 
-    # Define a custom finder by overriding the `find_resource` method:
-    # def find_resource(param)
-    #   ActionType.find_by!(slug: param)
-    # end
+  private
 
-    # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
-    # for more information
+    def valid_action?(name, resource = resource_class, action_type = nil)
+      name == "index" || (current_user.super_admin? && (action_type.nil? || !action_type.in_use?))
+    end
   end
 end
