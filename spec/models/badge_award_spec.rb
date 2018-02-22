@@ -29,9 +29,9 @@ RSpec.describe BadgeAward, type: :model do
 
   describe "product match" do
     it "should not let you award a badge from the wrong product" do
-      product = create(:product, with_action_type: true)
+      product = create(:product)
       person = create(:person)
-      badge = create(:badge, product: product, action_type: product.action_types.first)
+      badge = create(:badge, product: product, action_type: create(:action_type))
       ba = BadgeAward.new(person_id: person.id, badge_id: badge.id)
       expect(ba).not_to be_valid
     end

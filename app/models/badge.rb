@@ -7,8 +7,6 @@ class Badge < ApplicationRecord
 
   has_image_called :picture
 
-  validate :action_type_product
-
   validates :internal_name,
             presence: true,
             format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
@@ -22,13 +20,4 @@ class Badge < ApplicationRecord
 
   validates :action_requirement, presence: { message: "Action requirement is required." },
             numericality: { greater_than: 0, message: "Action requirement must be greater than zero." }
-
-
-private
-
-  def action_type_product
-    if action_type.nil? || action_type.product != product
-      errors.add(:action_type, "Action type must be from same product!")
-    end
-  end
 end

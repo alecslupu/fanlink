@@ -3,8 +3,8 @@ describe "Badges (v1)" do
   describe "#index" do
     it "should return all badges for a passed in person" do
       person = create(:person)
-      action_type = create(:action_type, product: person.product)
-      action_type2 = create(:action_type, product: person.product)
+      action_type = create(:action_type)
+      action_type2 = create(:action_type)
       badge1 = create(:badge, action_type: action_type, action_requirement: 1)
       badge2 = create(:badge, action_type: action_type2, action_requirement: 4)
       BadgeAward.create(badge: badge1, person: person)

@@ -1,5 +1,8 @@
 module Admin
   class BadgesController < Admin::ApplicationController
+    def valid_action?(name, resource = resource_class)
+      name == "index" || current_user.super_admin?
+    end
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
     #

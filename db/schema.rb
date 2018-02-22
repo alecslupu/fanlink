@@ -10,24 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221012240) do
+ActiveRecord::Schema.define(version: 20180221234141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "action_types", force: :cascade do |t|
-    t.integer "product_id", null: false
     t.text "name", null: false
     t.text "internal_name", null: false
     t.integer "seconds_lag", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id", "internal_name"], name: "unq_action_types_product_internal_name", unique: true
-    t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_action_types_product_name", unique: true
-    t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
-    t.index ["product_id"], name: "idx_action_types_product"
-    t.index ["product_id"], name: "idx_badges_product"
+    t.boolean "active", default: true, null: false
+    t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
+    t.index ["name"], name: "unq_action_types_name", unique: true
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -215,6 +211,7 @@ ActiveRecord::Schema.define(version: 20180221012240) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["requested_by_id", "requested_to_id"], name: "unq_relationships_requested_by_requested_to", unique: true
     t.index ["requested_by_id"], name: "idx_relationships_requested_by_id"
     t.index ["requested_to_id"], name: "idx_relationships_requested_to_id"
   end

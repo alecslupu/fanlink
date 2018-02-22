@@ -8,11 +8,11 @@ class ActionTypeDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    product: Field::BelongsTo,
     id: Field::Number,
     name: Field::Text,
     internal_name: Field::Text,
     seconds_lag: Field::Number,
+    active: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -26,7 +26,9 @@ class ActionTypeDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :internal_name,
+    :active,
     :seconds_lag,
+    :active,
     :updated_at
   ].freeze
 
@@ -36,6 +38,7 @@ class ActionTypeDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :internal_name,
+    :active,
     :seconds_lag,
     :created_at,
     :updated_at,
@@ -47,7 +50,8 @@ class ActionTypeDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :name,
     :internal_name,
-    :seconds_lag,
+    :active,
+    :seconds_lag
   ].freeze
 
   # Overwrite this method to customize how action types are displayed

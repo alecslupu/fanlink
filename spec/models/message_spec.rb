@@ -42,6 +42,22 @@ RSpec.describe Message, type: :model do
     end
   end
 
+  describe ".reported_action_needed" do
+    it "should give you the messages with pending reports" do
+      msg_in = create(:message)
+      create(:message_report, message: msg_in)
+      msg_in2 = create(:message)
+      create(:message_report, message: msg_in2)
+      msg_out = create(:message)
+      msg_out2 = create(:message)
+      create(:message_report, message: msg_out2, status: :no_action_needed)
+      messages = Message.reported_action_needed
+      expect(messages.size).to eq(2)
+      expect(messages).to include(msg_in)
+      expect(messages).to include(msg_in2)
+    end
+  end
+
   describe "#visible?" do
     it "should return true if message not hidden" do
       msg = create(:message)
