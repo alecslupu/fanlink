@@ -2,6 +2,18 @@ form {
   padding-top: 10px;
 }
 
+.admin-warning {
+  text-align: center;
+  font-size: large;
+  color: red;
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:30px;
+  width:100%;
+  background:lightgrey;
+}
+
 .button-width a {
   min-width: 100px;
   text-align: center;
