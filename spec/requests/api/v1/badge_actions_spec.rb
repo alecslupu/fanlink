@@ -11,7 +11,7 @@ describe "BadgeActions (v1)" do
   describe "#create" do
     it "should create a new action and return partially earned badge with highest percent earned" do
       login_as(@person)
-      action_type = create(:action_type, product: @product)
+      action_type = create(:action_type)
       badge1 = create(:badge, action_type: action_type, action_requirement: 3)
       badge2 = create(:badge, action_type: action_type, action_requirement: 4)
       badge_other = create(:badge)
@@ -22,7 +22,7 @@ describe "BadgeActions (v1)" do
     end
     it "should create a new action and return single earned badge" do
       login_as(@person)
-      action_type = create(:action_type, product: @product)
+      action_type = create(:action_type)
       badge1 = create(:badge, action_type: action_type, action_requirement: 1)
       badge2 = create(:badge, action_type: action_type, action_requirement: 4)
       badge_other = create(:badge)
@@ -34,7 +34,7 @@ describe "BadgeActions (v1)" do
     end
     it "should create a new action and return multiple earned badges" do
       login_as(@person)
-      action_type = create(:action_type, product: @product)
+      action_type = create(:action_type)
       badge1 = create(:badge, action_type: action_type, action_requirement: 1)
       badge2 = create(:badge, action_type: action_type, action_requirement: 1)
       badge_other = create(:badge)
@@ -47,7 +47,7 @@ describe "BadgeActions (v1)" do
     end
     it "should create a new action and return nil if everything already earned" do
       login_as(@person)
-      action_type = create(:action_type, product: @product)
+      action_type = create(:action_type)
       badge1 = create(:badge, action_type: action_type, action_requirement: 1)
       BadgeAward.create(person: @person, badge: badge1)
       login_as(@person)
@@ -58,7 +58,7 @@ describe "BadgeActions (v1)" do
     end
     it "should not create an action if not enough time has passed since last one of this type" do
       person = create(:person)
-      action_type = create(:action_type, product: person.product, seconds_lag: 120)
+      action_type = create(:action_type, seconds_lag: 120)
       person.badge_actions.create(action_type: action_type)
       login_as(person)
       post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
@@ -66,7 +66,7 @@ describe "BadgeActions (v1)" do
     end
     it "should create an action if enough time has passed since last one of this type" do
       person = create(:person)
-      action_type = create(:action_type, product: person.product, seconds_lag: 120)
+      action_type = create(:action_type, seconds_lag: 120)
       person.badge_actions.create(action_type: action_type)
       Timecop.travel(Time.zone.now + 121.seconds) do
         login_as(person)
@@ -76,7 +76,7 @@ describe "BadgeActions (v1)" do
     end
     it "should not create an action with dup person, action and identifier" do
       person = create(:person)
-      action_type = create(:action_type, product: person.product)
+      action_type = create(:action_type)
       ident = "myident"
       person.badge_actions.create(action_type: action_type, identifier: ident)
       login_as(person)

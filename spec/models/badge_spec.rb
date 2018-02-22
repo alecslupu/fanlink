@@ -13,16 +13,6 @@ RSpec.describe Badge, type: :model do
       expect(badge.errors[:action_requirement]).not_to be_empty
     end
   end
-  describe "action_type" do
-    it "should not let you set an action type for another product" do
-      current_product = create(:product)
-      diff_product = create(:product)
-      at = create(:action_type, product: diff_product)
-      badge = build(:badge, product: current_product, action_type: at)
-      expect(badge).not_to be_valid
-      expect(badge.errors[:action_type]).not_to be_empty
-    end
-  end
   describe "#internal_name" do
     it "should allow an internal name with lower case letters numbers and underscores" do
       expect(create(:badge, internal_name: "abc_d12"))
@@ -70,8 +60,8 @@ RSpec.describe Badge, type: :model do
     end
     it "should allow two badges in different products to share internal name" do
       b1 = create(:badge)
-      prod_b2 = create(:product, with_action_type: true)
-      b2 = build(:badge, product: prod_b2, internal_name: b1.internal_name, action_type: prod_b2.action_types.first)
+      prod_b2 = create(:product)
+      b2 = build(:badge, product: prod_b2, internal_name: b1.internal_name, action_type: create(:action_type))
       expect(b2).to be_valid
     end
     it "should not allow two badges in the same product to share name" do

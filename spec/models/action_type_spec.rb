@@ -40,27 +40,17 @@ RSpec.describe ActionType, type: :model do
       expect(at).not_to be_valid
       expect(at.errors[:internal_name]).not_to be_empty
     end
-    it "should not allow two action types in the same product to share internal name" do
+    it "should not allow two action types to share internal name" do
       at1 = create(:action_type)
       at2 = build(:action_type, internal_name: at1.internal_name)
       expect(at2).not_to be_valid
       expect(at2.errors[:internal_name]).not_to be_empty
     end
-    it "should allow two action types in the different products to share internal name" do
-      at1 = create(:action_type)
-      at2 = build(:action_type, product: create(:product), internal_name: at1.internal_name)
-      expect(at2).to be_valid
-    end
-    it "should not allow two action types in the same product to share name" do
+    it "should not allow two action types to share name" do
       at1 = create(:action_type)
       at2 = build(:action_type, name: at1.name)
       expect(at2).not_to be_valid
       expect(at2.errors[:name]).not_to be_empty
-    end
-    it "should allow two action types in different products to share internal name" do
-      at1 = create(:action_type)
-      at2 = build(:action_type, product: create(:product), name: at1.name)
-      expect(at2).to be_valid
     end
   end
   describe "#name" do
@@ -92,18 +82,9 @@ RSpec.describe ActionType, type: :model do
       expect(at.errors[:name]).not_to be_empty
     end
   end
-  describe "#product" do
-    it "should not let you create an action type without a product" do
-      at = build(:action_type, product: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:product]).not_to be_empty
-    end
-  end
   describe "#valid?" do
     it "should create a valid action type" do
       expect(create(:action_type)).to be_valid
     end
   end
-
-
 end
