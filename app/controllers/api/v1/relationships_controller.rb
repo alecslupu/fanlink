@@ -42,17 +42,13 @@ class Api::V1::RelationshipsController < ApiController
       if @relationship
         if @relationship.requested? && @relationship.requested_by == requested_to #there was request o/s from this user to us
           @relationship.friended!
-          current_user.friend_request_count -= 1
           update_relationship_count(current_user)
-          current_user.save
           friend_request_accepted_push(@relationship)
         end
       else
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
         if @relationship.valid?
-          @relationship.requested_to.friend_request_count += 1
           update_relationship_count(@relationship.requested_to)
-          @relationship.requested_to.save
           friend_request_received_push(current_user, requested_to)
         end
       end
@@ -110,6 +106,9 @@ class Api::V1::RelationshipsController < ApiController
   #*
   def index
     person = (params[:person_id].present?) ? Person.find(params[:person_id]) : current_user
+    if person == current_user
+      update_relationship_count(current_user) #FLAPI-89
+    end
     @relationships = Relationship.friended.for_person(person)
     if person == current_user
       @relationships += Relationship.pending_to_person(person)
@@ -194,18 +193,14 @@ class Api::V1::RelationshipsController < ApiController
         elsif new_status == "denied"
           if old_status == "requested" && @relationship.requested_to == current_user
             @relationship.destroy
-            current_user.friend_request_count -= 1
             update_relationship_count(current_user)
-            current_user.save
           else
             can_status = false
           end
         else #withdrawn
           if old_status == "requested" && @relationship.requested_by == current_user
             @relationship.destroy
-            @relationship.requested_to.friend_request_count -= 1
             update_relationship_count(@relationship.requested_to)
-            @relationship.requested_to.save!
           else
             can_status = false
           end

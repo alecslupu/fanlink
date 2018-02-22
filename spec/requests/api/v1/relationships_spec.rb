@@ -99,12 +99,14 @@ describe "Relationships (v1)" do
       expect(json["relationships"].map { |r| r["id"].to_i }.sort).to eq([rel3.id])
     end
     it "should get the current and pending relationships of current user" do
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person2).and_return(true)
       login_as(person2)
       get "/relationships", params: { person_id: person2.id.to_s }
       expect(response).to be_success
       expect(json["relationships"].map { |r| r["id"].to_i }.sort).to eq([rel1.id, rel3.id])
     end
     it "should get the current and pending relationships of current user with no param" do
+      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person2).and_return(true)
       login_as(person2)
       get "/relationships"
       expect(response).to be_success
@@ -183,7 +185,6 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      person.update_attribute(:friend_request_count, 1)
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(person).and_return(true)
       patch "/relationships/#{rel.id}", params: { relationship: { status: "denied" } }
       expect(response).to be_success
@@ -195,7 +196,6 @@ describe "Relationships (v1)" do
       req_to = create(:person, product: person.product)
       login_as(person)
       rel = create(:relationship, requested_by: person, requested_to: req_to)
-      rel.requested_to.update_attribute(:friend_request_count, 1)
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(req_to).and_return(true)
       patch "/relationships/#{rel.id}", params: { relationship: { status: :withdrawn } }
       expect(response).to be_success
