@@ -1,5 +1,4 @@
 class ActionType < ApplicationRecord
-
   default_scope { where(active: true) }
   has_many :badges #all badges that implement this type
 
