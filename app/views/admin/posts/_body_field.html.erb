@@ -1,0 +1,4 @@
+<% Post::LANGS.each do |l,n| %>
+  <label><%= "#{n}:" %></label>
+  <%= text_area_tag("post[body_#{l}]", f.object.new_record? ? "" : f.object.body(l)) %>
+<% end %>

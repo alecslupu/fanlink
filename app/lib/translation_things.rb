@@ -6,7 +6,7 @@ module TranslationThings
   end
 
   LANGS = {
-      'or' => 'Original',
+      'un' => 'Language Unspecified',
       'en' => 'English',
      # 'ar' => 'Arabic',
      # 'de' => 'German',
@@ -18,6 +18,7 @@ module TranslationThings
       'ro' => 'Romanian'
   }.freeze
 
+  DEFAULT_LANG = 'un'
 
   def self.word(code)
     LANGS[code]
@@ -78,8 +79,8 @@ module TranslationThings
     def add_translation_things_instance_methods_for(names)
       names.each do |name|
         translation_things_module.module_eval(%Q{
-          def #{name}(language = 'en')
-            read_attribute(:#{name}).to_h.values_at(language.to_s, 'en').compact.first
+          def #{name}(language = DEFAULT_LANG)
+            read_attribute(:#{name}).to_h.values_at(language.to_s, DEFAULT_LANG).compact.first
           end
 
           def #{name}_buffed(language = 'en')
@@ -90,17 +91,38 @@ module TranslationThings
           def #{name}=(val)
             h = {}
             if val.is_a?(String)
-              h['or'] = val
-            else
+              h[DEFAULT_LANG] = val
+            elsif val.is_a?(Hash)
               h = val
+            else
+              raise "Must set #{name} with a string or a hash."
             end
-            write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge(h))
+            h.each do |l,v|
+              lang = l
+              if !LANGS.keys.include?(lang)
+                raise "Unknown language: " + lang
+                lang = 'un'
+              end
+              write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge({ lang => v }))
+            end
           end
 
           def add_#{name}_translations(values)
             write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge(values.stringify_keys))
           end
         })
+
+        LANGS.keys.each do |lang|
+          translation_things_module.module_eval(%Q{
+            def body_#{lang}
+              #{name}(#{lang})
+            end
+
+            def body_#{lang}=(val)
+              self.#{name} = { "#{lang}" => val }
+            end
+          })
+        end
       end
     end
 

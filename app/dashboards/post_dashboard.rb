@@ -1,6 +1,14 @@
 require "administrate/base_dashboard"
 
 class PostDashboard < Administrate::BaseDashboard
+  def permitted_attributes
+    body_langs = []
+    Post::LANGS.keys.each do |l|
+      body_langs << "body_#{l}".to_sym
+    end
+    super + body_langs
+  end
+
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -19,7 +27,7 @@ class PostDashboard < Administrate::BaseDashboard
     status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    reported?: Field::String,
+    reported?: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -66,7 +74,7 @@ class PostDashboard < Administrate::BaseDashboard
     :starts_at,
     :ends_at,
     :repost_interval,
-    :status,
+    :status
   ].freeze
 
   # Overwrite this method to customize how posts are displayed
