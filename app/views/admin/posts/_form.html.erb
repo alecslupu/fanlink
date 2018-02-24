@@ -31,13 +31,13 @@ and renders all form fields for a resource's editable attributes.
   <% end %>
 
   <% page.attributes.each do |attribute| -%>
-    <div class="field-unit field-unit--<%= attribute.html_class %>">
-      <% if attribute.name == "body" %>
-        <%= render partial: "body_field", locals: { f: f } %>
-      <% else %>
+    <% if attribute.name == "body" %>
+      <%= render partial: "body_field", locals: { f: f } %>
+    <% else %>
+      <div class="field-unit field-unit--<%= attribute.html_class %>">
         <%= render_field attribute, f: f %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   <% end -%>
 
   <div class="form-actions">
