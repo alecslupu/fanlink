@@ -177,6 +177,24 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["post"]).to eq(post_json(post))
     end
+    it "should return default language body if not device language provided" do
+      post = create(:post, person: @person, status: :published)
+      login_as(@person)
+      get "/posts/#{post.id}"
+      expect(response).to be_success
+      expect(json["post"]["body"]).to eq(post_json(post)["body"])
+    end
+    it "should return correct language body if device language provided" do
+      lan = 'es'
+      headers = { "Accept-Language" => (lan + "-spa") } #letters dont matter because we should be just using first two characters
+      post = create(:post, person: @person, status: :published)
+      translation = "En espagnol"
+      post.body = { lan => translation }
+      login_as(@person)
+      get "/posts/#{post.id}", headers: headers
+      expect(response).to be_success
+      expect(json["post"]["body"]).to eq(translation)
+    end
     it "should not get a deleted post" do
       post = create(:post, person: @person, status: :deleted)
       login_as(@person)
