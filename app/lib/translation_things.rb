@@ -112,6 +112,14 @@ module TranslationThings
           def add_#{name}_translations(values)
             write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge(values.stringify_keys))
           end
+
+          def #{name}_translated?
+            LANGS.keys.each do |l|
+              next if l == DEFAULT_LANG
+              return true if #{name}(l).present?
+            end
+            false
+          end
         })
 
         LANGS.keys.each do |lang|

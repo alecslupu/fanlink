@@ -81,6 +81,10 @@ class PostDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(post)
-    "Post - #{post.body.truncate(14)}"
+    if post.body.nil?
+      "Post #{post.id} by #{post.person.name}"
+    else
+      "Post - #{post.body.truncate(22)}"
+    end
   end
 end
