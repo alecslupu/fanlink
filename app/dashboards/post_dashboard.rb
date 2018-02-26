@@ -82,7 +82,7 @@ class PostDashboard < Administrate::BaseDashboard
   #
   def display_resource(post)
     if post.body.nil?
-      "Post #{post.id} by #{post.person.name}"
+      "Post #{post.id} by #{post.person.username}"
     else
       "Post - #{post.body.truncate(22)}"
     end
