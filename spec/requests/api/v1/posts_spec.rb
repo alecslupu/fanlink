@@ -115,6 +115,18 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["posts"].map { |p| p["id"] }).not_to include(post.id)
     end
+    it "should return correct language if device language provided" do
+      lan = 'es'
+      headers = { "Accept-Language" => (lan + "-spa") } #letters dont matter because we should be just using first two characters
+      translation = "En espagnol"
+      post11.body = { lan => translation }
+      post11.save
+      login_as(@person)
+      get "/posts", params: { from_date: from, to_date: to }, headers: headers
+      expect(response).to be_success
+      post11_json = json["posts"].find { |p| p["id"] == post11.id.to_s }
+      expect(post11_json["body"]).to eq(translation)
+    end
     it "should not get the list if not logged in" do
       get "/posts", params: { from_date: from, to_date: to, limit: 2 }
       expect(response).to be_unauthorized
@@ -177,7 +189,7 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["post"]).to eq(post_json(post))
     end
-    it "should return default language body if not device language provided" do
+    it "should return default language body if no device language provided" do
       post = create(:post, person: @person, status: :published)
       login_as(@person)
       get "/posts/#{post.id}"
@@ -190,6 +202,7 @@ describe "Posts (v1)" do
       post = create(:post, person: @person, status: :published)
       translation = "En espagnol"
       post.body = { lan => translation }
+      post.save
       login_as(@person)
       get "/posts/#{post.id}", headers: headers
       expect(response).to be_success
