@@ -120,6 +120,21 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe ".friend_request_count" do
+    it "should give the number of oustanding friend request to person with none" do
+      expect(create(:person).friend_request_count).to eq(0)
+    end
+    it "should give the number of oustanding friend request to person with one new friend request" do
+      create(:relationship, requested_to: @person)
+      expect(@person.friend_request_count).to eq(1)
+    end
+    it "should give the number of oustanding friend request to person with one new friend request and one accepted" do
+      create(:relationship, requested_to: @person)
+      create(:relationship, requested_to: @person, status: :friended)
+      expect(@person.friend_request_count).to eq(1)
+    end
+  end
+
   describe "#level" do
     it "should be nil for person with no badges" do
       person = create(:person)

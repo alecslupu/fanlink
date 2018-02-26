@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221234141) do
+ActiveRecord::Schema.define(version: 20180222232718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,7 +147,6 @@ ActiveRecord::Schema.define(version: 20180221234141) do
     t.text "facebookid"
     t.text "facebook_picture_url"
     t.text "picture_type"
-    t.integer "friend_request_count", default: 0, null: false
     t.string "picture_file_name"
     t.string "picture_content_type"
     t.integer "picture_file_size"
