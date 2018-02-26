@@ -78,10 +78,10 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
-  def post_json(post)
+  def post_json(post, lang=nil)
     {
       "id"          => post.id.to_s,
-      "body"        => post.body,
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
       "create_time" => post.created_at.to_s,
       "picture_url" => post.picture_url,
       "person" => person_json(post.person)
