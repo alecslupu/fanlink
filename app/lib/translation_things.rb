@@ -94,16 +94,18 @@ module TranslationThings
               h[DEFAULT_LANG] = val
             elsif val.is_a?(Hash)
               h = val
-            else
-              raise "Must set #{name} with a string or a hash."
             end
-            h.each do |l,v|
-              lang = l
-              if !LANGS.keys.include?(lang)
-                raise "Unknown language: " + lang
-                lang = 'un'
+            if h.empty?
+              #{name} = {}
+            else
+              h.each do |l,v|
+                lang = l
+                if !LANGS.keys.include?(lang)
+                  raise "Unknown language: " + lang
+                  lang = 'un'
+                end
+                write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge({ lang => v }))
               end
-              write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge({ lang => v }))
             end
           end
 
