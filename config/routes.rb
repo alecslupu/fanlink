@@ -20,7 +20,9 @@ Rails.application.routes.draw do
           post "password_reset" => "password_resets#update"
         end
       end
-      resources :posts, except: %i[ new edit ]
+      resources :posts, except: %i[ new edit ] do
+        resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
+      end
       resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]
       resources :rooms do

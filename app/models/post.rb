@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   has_paper_trail
 
   has_many :post_reports, dependent: :destroy
+  has_many :post_reactions
 
   belongs_to :person
 
@@ -24,6 +25,10 @@ class Post < ApplicationRecord
                                                Time.zone.now, Time.zone.now) }
   def product
     person.product
+  end
+
+  def reactions
+    post_reactions
   end
 
   def reported?
