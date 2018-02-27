@@ -33,19 +33,23 @@ class Api::V1::MessagesController < ApiController
   def create
     room = Room.find(params[:room_id])
     if room.active?
-      @message = room.messages.create(message_params.merge(person_id: current_user.id))
-      if @message.valid?
-        if post_message(@message)
-          if room.private?
-            update_message_counts(room)
-            private_message_push(@message)
+      if room.public && current_user.chat_banned?
+        render json: { errors: "You are banned from chat." }, status: :unprocessable_entity
+      else
+        @message = room.messages.create(message_params.merge(person_id: current_user.id))
+        if @message.valid?
+          if post_message(@message)
+            if room.private?
+              update_message_counts(room)
+              private_message_push(@message)
+            end
+          else
+            @message.destroy
+            messaging_error && return
           end
-        else
-          @message.destroy
-          messaging_error && return
         end
+        return_the @message
       end
-      return_the @message
     else
       render json: { errors: "This room is no longer active." }, status: :unprocessable_entity
     end
