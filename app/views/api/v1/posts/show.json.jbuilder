@@ -1,1 +1,3 @@
-json.post @post, partial: "post", as: :post
+json.post do
+  json.partial! "post", locals: { post: @post, post_reaction: @post_reaction }
+end

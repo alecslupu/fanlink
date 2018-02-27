@@ -78,13 +78,15 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
-  def post_json(post)
+  def post_json(post, reaction = nil)
     {
       "id"          => post.id.to_s,
       "body"        => post.body,
       "create_time" => post.created_at.to_s,
       "picture_url" => post.picture_url,
-      "person" => person_json(post.person)
+      "person" => person_json(post.person),
+      "post_reaction_counts" => post.reaction_breakdown.to_json,
+      "post_reaction"    => (reaction.nil?) ? nil : post_reaction_json(reaction)
     }
   end
   def post_reaction_json(post_reaction)

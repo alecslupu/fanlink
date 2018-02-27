@@ -49,6 +49,20 @@ RSpec.describe Post, type: :model do
       expect(@followed1_post1.product).to eq(@product)
     end
   end
+
+  describe "#reaction_breakdown" do
+    it "should return the reaction counts in a hash" do
+      reaction1, reaction2, reaction3 = "1F600", "1F601", "1F602"
+      create(:post_reaction, post: @followed1_post1, reaction: reaction1)
+      create(:post_reaction, post: @followed1_post1, reaction: reaction1)
+      create(:post_reaction, post: @followed1_post1, reaction: reaction2)
+      counts = @followed1_post1.reaction_breakdown
+      expect(counts[reaction1]).to eq(2)
+      expect(counts[reaction2]).to eq(1)
+      expect(counts[reaction3]).to be_nil
+    end
+  end
+
   describe "#starts_at" do
     it "should not let you create a post that starts after it ends" do
       post = build(:post, starts_at: Time.now + 1.day, ends_at: Time.now + 23.hours)
