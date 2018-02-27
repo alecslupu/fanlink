@@ -21,4 +21,21 @@ RSpec.describe PostReaction, type: :model do
       expect(reaction.errors[:person]).not_to be_empty
     end
   end
+
+  describe "#person" do
+    it "should not let a person react more than once" do
+      reaction = create(:post_reaction)
+      rereaction = build(:post_reaction, person: reaction.person, post: reaction.post)
+      expect(rereaction).not_to be_valid
+      expect(rereaction.errors[:person]).not_to be_empty
+    end
+  end
+  describe "#reaction" do
+    it "should require a valid emoji sequence" do
+      nonemoji = "027A1"
+      reaction = build(:post_reaction, reaction: nonemoji)
+      expect(reaction).not_to be_valid
+      expect(reaction.errors[:reaction]).not_to be_empty
+    end
+  end
 end

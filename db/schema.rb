@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 20180227010351) do
     t.integer "post_id", null: false
     t.integer "person_id", null: false
     t.text "reaction", null: false
+    t.index ["post_id", "person_id"], name: "unq_post_reactions_post_person", unique: true
     t.index ["post_id"], name: "idx_post_reactions_post"
   end
 

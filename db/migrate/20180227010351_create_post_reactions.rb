@@ -6,6 +6,7 @@ class CreatePostReactions < ActiveRecord::Migration[5.1]
       t.text :reaction, null: false
     end
     add_index :post_reactions, %i[ post_id ], name: "idx_post_reactions_post"
+    add_index :post_reactions, %i[ post_id person_id ], unique: true, name: "unq_post_reactions_post_person"
     add_foreign_key :post_reactions, :posts, name: "fk_post_reactions_post", on_delete: :cascade
     add_foreign_key :post_reactions, :people, name: "fk_post_reactions_people", on_delete: :cascade
   end

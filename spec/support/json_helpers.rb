@@ -87,7 +87,14 @@ module JsonHelpers
       "person" => person_json(post.person)
     }
   end
-
+  def post_reaction_json(post_reaction)
+    {
+      "id"        => post_reaction.id.to_s,
+      "post_id"   => post_reaction.post_id,
+      "person_id" => post_reaction.person_id,
+      "reaction"  => post_reaction.reaction
+    }
+  end
   def relationship_json(relationship, currnt_user)
     {
       "id"            => relationship.id.to_s,

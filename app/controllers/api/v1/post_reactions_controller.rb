@@ -15,11 +15,16 @@ class Api::V1::PostReactionsController < ApiController
   #   The post reaction object container.
   #
   # @apiParam {String} reaction
-  #   The identifier for the reaction.
-  #
+  #   The identifier for the reaction. Accepts stringified hex values between 1F600 and 1F64F, inclusive.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
+  #   post_reaction {
+  #     "id": "1234",
+  #     "person_id": 1234,
+  #     "post_id": 1234,
+  #     "reaction": "1F601"
+  #   }
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 422
@@ -29,12 +34,8 @@ class Api::V1::PostReactionsController < ApiController
   def create
     parms = post_reaction_params
     if @post.person.try(:product) == current_user.product
-      post_reaction = PostReaction.create(parms)
-      if post_reaction.valid?
-        head :ok
-      else
-        render_error(post_reaction.errors)
-      end
+      @post_reaction = @post.reactions.create(parms)
+      return_the @post_reaction
     else
       render_not_found
     end
