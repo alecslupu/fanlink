@@ -71,6 +71,7 @@ module JsonHelpers
       "name"              => person.name,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
+      "chat_banned"       => person.chat_banned,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),

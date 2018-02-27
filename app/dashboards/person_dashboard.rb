@@ -19,6 +19,7 @@ class PersonDashboard < Administrate::BaseDashboard
     pin_messages_from: Field::Boolean,
     auto_follow: Field::Boolean,
     product_account: Field::Boolean,
+    chat_banned: Field::Boolean,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
@@ -56,6 +57,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :do_not_message_me,
     :pin_messages_from,
     :auto_follow,
+    :chat_banned,
     :product_account,
     :facebookid,
     :facebook_picture_url,
@@ -75,6 +77,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :do_not_message_me,
     :pin_messages_from,
     :auto_follow,
+    :chat_banned,
     :product_account,
     :password
   ].freeze
