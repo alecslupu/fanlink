@@ -135,21 +135,28 @@ class Api::V1::PostsController < ApiController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #     "post": [
-  #       {
+  #     "post": {
   #         "id": "5016",
   #         "body": "Stupid thing to say",
   #         "create_time": "2018-01-08'T'12:13:42'Z'"
   #         "picture_url": "http://host.name/path",
-  #         "person": {...public person json with relationships...}
-  #       },....
-  #     ]
+  #         "person": {...public person json with relationships...},
+  #         "post_reaction_counts": {
+  #           "1F600": 1,
+  #           "1F601": 3,....
+  #         },
+  #         "post_reaction": { #post_reaction of current user
+  #           ..post_reaction json or null
+  #         }
+  #
+  #     }
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
   def show
     @post = Post.visible.find(params[:id])
+    @post_reaction = @post.reactions.find_by(person: current_user)
     return_the @post
   end
 

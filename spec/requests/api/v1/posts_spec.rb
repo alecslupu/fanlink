@@ -208,6 +208,25 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["post"]["body"]).to eq(translation)
     end
+    it "should get a visible post with reaction counts" do
+      post = create(:post, person: @person, status: :published)
+      1.upto 4 do
+        create(:post_reaction, post: post)
+      end
+      login_as(@person)
+      get "/posts/#{post.id}"
+      expect(response).to be_success
+      expect(json["post"]).to eq(post_json(post))
+    end
+    it "should include current user reaction" do
+      post = create(:post, person: @person, status: :published)
+      reaction = create(:post_reaction, post: post, person: @person)
+      login_as(@person)
+      get "/posts/#{post.id}"
+      expect(response).to be_success
+      expect(json["post"]).to eq(post_json(post, nil, reaction))
+      expect(json["post"]["post_reaction"]).not_to be_nil
+    end
     it "should not get a deleted post" do
       post = create(:post, person: @person, status: :deleted)
       login_as(@person)
