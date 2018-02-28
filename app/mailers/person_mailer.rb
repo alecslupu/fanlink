@@ -13,7 +13,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
       template: "#{person.product.internal_name}-password-reset",
       subject: "%{name} - Forgot your password" % { name: person.product.name },
       vars: {
-        link: "https://www.fan.link/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
+        link: "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
         name: person.name
       },
       to: { email: person.email, name: person.name }
