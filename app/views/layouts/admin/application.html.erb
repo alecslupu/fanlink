@@ -1,0 +1,58 @@
+<%#
+# Application Layout
+
+This view template is used as the layout
+for every page that Administrate generates.
+
+By default, it renders:
+- Navigation
+- Content for a search bar
+  (if provided by a `content_for` block in a nested page)
+- Flashes
+- Links to stylesheets and JavaScripts
+%>
+
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="ROBOTS" content="NOODP">
+  <meta name="viewport" content="initial-scale=1">
+  <title>
+    <%= content_for(:title) %> - <%= Rails.application.class.parent_name.titlecase %>
+  </title>
+  <%= render "stylesheet" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render "icons" %>
+
+  <div class="app-container">
+    <%= render "navigation" -%>
+
+    <main class="main-content" role="main">
+      <% if current_user.present? %>
+        <div class="user-status">
+          Logged in: <%= current_user.username %>
+          <% if current_user.super_admin? && ActsAsTenant.current_tenant.present? %>
+            <div>
+              Current product: <%= ActsAsTenant.current_tenant.name %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= render "flashes" -%>
+      <%= yield %>
+      <% if current_user.present? %>
+        <% if Rails.env.staging? %>
+          <div class="admin-warning">
+            This is a staging server which exists for development and testing only. Any data is subject to deletion at any time without notice.
+          </div>
+        <% end %>
+      <% end %>
+    </main>
+  </div>
+
+  <%= render "javascript" %>
+</body>
+</html>

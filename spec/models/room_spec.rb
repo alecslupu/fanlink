@@ -84,4 +84,12 @@ RSpec.describe Room, type: :model do
     end
   end
 
+  describe "#picture" do
+    it "should not let you have a picture on a private room" do
+      room = build(:room, public: false, picture_file_name: "foo.jpg")
+      expect(room).not_to be_valid
+      expect(room.errors[:picture]).not_to be_empty
+    end
+  end
+
 end

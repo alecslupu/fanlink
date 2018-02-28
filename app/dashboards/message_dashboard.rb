@@ -12,8 +12,9 @@ class MessageDashboard < Administrate::BaseDashboard
     room: Field::BelongsTo,
     id: Field::Number,
     body: Field::Text,
-    picture_id: Field::Text,
+    picture: Field::Paperclip.with_options(blank_text: ""),
     hidden: Field::Boolean,
+    reported?: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -28,6 +29,8 @@ class MessageDashboard < Administrate::BaseDashboard
     :room,
     :id,
     :body,
+    :reported?,
+    :picture
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -37,7 +40,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :room,
     :id,
     :body,
-    :picture_id,
+    :picture,
     :hidden,
     :created_at,
     :updated_at,
@@ -50,14 +53,14 @@ class MessageDashboard < Administrate::BaseDashboard
     :person,
     :room,
     :body,
-    :picture_id,
+    :picture,
     :hidden,
   ].freeze
 
   # Overwrite this method to customize how messages are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(message)
-  #   "Message ##{message.id}"
-  # end
+  def display_resource(message)
+    message.body
+  end
 end

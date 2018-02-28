@@ -5,15 +5,14 @@ SimpleCov.start "rails" do
   add_filter "app/controllers/admin" #administrate stuff
   add_filter "app/dashboards"
   add_filter "app/fields"
-
   add_filter "app/jobs" #nothing here
-  add_filter "app/lib/fload_up" # not used yet
 end
 
 require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
+require "mandrill_mailer/offline"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -126,6 +125,8 @@ RSpec.configure do |config|
     end
   end
 
+  config.include MandrillMailerHelper
+  config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers
   config.include JsonHelpers, type: :request
@@ -140,4 +141,7 @@ RSpec.configure do |config|
   config.before :each, type: :request do
     @json = nil
   end
+
+  config.fixture_path = "spec/fixtures"
+
 end

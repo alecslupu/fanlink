@@ -13,15 +13,21 @@ class PersonDashboard < Administrate::BaseDashboard
     name: Field::Text.with_options(searchable: true),
     username: Field::Text.with_options(searchable: true),
     email: Field::Text.with_options(searchable: true),
+    picture: Field::Paperclip.with_options(blank_text: ""),
+    role: Field::Enum.with_options(collection_method: :roles_for_select),
+    do_not_message_me: Field::Boolean,
+    pin_messages_from: Field::Boolean,
+    auto_follow: Field::Boolean,
+    product_account: Field::Boolean,
+    chat_banned: Field::Boolean,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
     salt: Field::Text,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    remember_me_token: Field::String,
-    remember_me_token_expires_at: Field::DateTime,
     password: PasswordField,
+    notification_device_ids: Field::HasMany
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -30,21 +36,29 @@ class PersonDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :product,
     :username,
     :email,
     :name,
+    :picture,
+    :role,
     :created_at,
+    :notification_device_ids
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :id,
-    :product,
     :username,
     :email,
     :name,
+    :picture,
+    :role,
+    :do_not_message_me,
+    :pin_messages_from,
+    :auto_follow,
+    :chat_banned,
+    :product_account,
     :facebookid,
     :facebook_picture_url,
     :created_at,
@@ -55,10 +69,16 @@ class PersonDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :product,
     :username,
     :email,
     :name,
+    :picture,
+    :role,
+    :do_not_message_me,
+    :pin_messages_from,
+    :auto_follow,
+    :chat_banned,
+    :product_account,
     :password
   ].freeze
 

@@ -15,6 +15,7 @@
       <%= password_field_tag :password %>
     </div>
   </div>
+  <%= hidden_field_tag :product_internal_name, @product.internal_name %>
   <div class="form-actions">
     <%= submit_tag "Login" %>
   </div>

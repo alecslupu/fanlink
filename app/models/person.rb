@@ -1,12 +1,29 @@
 class Person < ApplicationRecord
-  include Person::Facebook
-
   authenticates_with_sorcery!
+
+  has_paper_trail
+
+  include AttachmentSupport
+
+  enum role: %i[ normal staff admin super_admin ]
+
+  # no apparent reason why I have to explicity include this, but no includy if not
+  include Sorcery::Model::Submodules::ResetPassword
+
+  include Person::Blocks
+  include Person::Badges
+  include Person::Facebook
+  include Person::Followings
+  include Person::Levels
+  include Person::Relationships
 
   acts_as_tenant(:product)
 
-  #belongs_to :product
+  belongs_to :product
 
+  has_image_called :picture
+
+  has_many :notification_device_ids, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
@@ -26,6 +43,8 @@ class Person < ApplicationRecord
 
   validates :password, presence: { message: "Password is required." }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
   validates :password, length: { minimum: 6, allow_blank: true }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+
+  validate :check_role
 
   #
   # Return the canonical form of a username.
@@ -62,26 +81,10 @@ class Person < ApplicationRecord
     email  = email.to_s
     query  = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: canonicalize(email) }
     Person.find_by(query)
-
-    #
-    # This `valid?` stuff is a bit smelly but not too bad.
-    #
-    # add_error = lambda do |person, msg|
-    #   person.errors.add(:base, msg)
-    #   def person.valid?
-    #     false
-    #   end
-    # end
-    # if(person.suspended?)
-    #   support = opts[:property].try(:support_email) || 'support@flink.to'
-    #   add_error[person, _('Your account is currently suspended. Please contact support at %{support_email}') % { :support_email => support }]
-    # end
-    #person
   end
 
-  def self.can_login_as_admin?(email)
-    person = can_login?(email)
-    (person && person.username == "admin") ? person : nil
+  def device_tokens
+    notification_device_ids.map { |ndi| ndi.device_identifier }
   end
 
   #
@@ -96,28 +99,29 @@ class Person < ApplicationRecord
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
   end
 
-  def picture_url
-    facebook_picture_url #TBD attachment support TBD
+  def reset_password_to(password)
+    self.password = password
+    self.reset_password_token = nil
+    self.save
   end
 
-  #
-  # Check if a username is in use or not. If you give us a `person_id`,
-  # we'll ignore a match with that person.
-  #
-  # @param [String] name
-  #   The username to check.
-  # @param [ObjectID, Person, String] person
-  #   The (optional) person.
-  # @return [Boolean]
-  #   True if the name is used, false otherwise.
-  #
-  def self.username_used?(name, person = nil)
-    query = where(username_canonical: canonicalize(name))
-    query = query.where.not(id: person.to_id) if person
-    query.count > 0
+  def set_password_token!
+    self.reset_password_token = UUIDTools::UUID.random_create.to_s
+    save!
   end
 
+  def roles_for_select
+    (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
+  end
 
+  def some_admin?
+    !normal?
+  end
+
+  def to_s
+    name || username
+  end
+  
   private
 
     def canonicalize(name)
@@ -127,6 +131,12 @@ class Person < ApplicationRecord
     def canonicalize_username
       self.username_canonical = canonicalize(self.username)
       true
+    end
+
+    def check_role
+      if super_admin? && !product.can_have_supers
+        errors.add(:role, "This product cannot have super admins.")
+      end
     end
 
     def normalize_email

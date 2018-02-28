@@ -55,7 +55,7 @@ to display a collection of resources in an HTML table.
 
   <tbody>
     <% resources.each do |resource| %>
-      <tr class="js-table-row <%= resource.hidden? ? 'hidden' : 'unhidden' %>"
+      <tr class="js-table-row <%= resource.hidden? ? 'item-hidden' : 'item-unhidden' %>"
           tabindex="0"
           <% if valid_action? :show, collection_presenter.resource_name %>
             <%= %(role=link data-url=#{polymorphic_path([namespace, resource])}) %>

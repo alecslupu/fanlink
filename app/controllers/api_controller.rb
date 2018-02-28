@@ -1,9 +1,11 @@
 class ApiController < ApplicationController
   include FloadUp
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+
   set_current_tenant_through_filter
 
-  before_action :set_product
+  before_action :set_product, :set_paper_trail_whodunnit
 
   #
   # Respond to an API request with an object. If the object is invalid
@@ -41,12 +43,18 @@ class ApiController < ApplicationController
       render json: { errors: obj.errors.messages.values.flatten }, status: :unprocessable_entity
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       render action: opts[:using], formats: %i[json]
-    else
-      render json: { errors: obj.errors }, status: :unprocessable_entity
     end
   end
 
 protected
+
+  def render_error(error)
+    render json: { errors: error }, status: :unprocessable_entity
+  end
+
+  def render_not_found
+    render json: { errors: { base: [ "Not found" ] } }, status: :not_found
+  end
 
   def set_product
     product = current_user.try(:product) || Product.find_by(internal_name: params[:product])

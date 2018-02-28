@@ -66,7 +66,6 @@ class Api::V1::SessionController < ApiController
   #*
   def create
     @person = nil
-    #fix_booleans_in!(:keep)
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
       return render json: { errors: [ "Unable to find user from token. Likely a problem contacting Facebook."] }, status: :service_unavailable if @person.nil?
@@ -76,7 +75,6 @@ class Api::V1::SessionController < ApiController
       @person = login(@person.email, params[:password]) if @person
       return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
     end
-    #bake_cookies_for(@person)
     return_the @person
   end
 
@@ -92,14 +90,4 @@ class Api::V1::SessionController < ApiController
     logout
     render body: nil, status: :ok
   end
-
-  private
-
-  # def bake_cookies_for(person)  #,,,refactor: this method has been copied here and there
-  #   return if(!person || !person.valid?)
-  #   session[:keep] = params[:keep]
-  #   cookie = { :value => 1 }
-  #   cookie[:expires] = 2.years.from_now if(params[:keep])
-  #   cookies[:logged] = cookie
-  # end
 end

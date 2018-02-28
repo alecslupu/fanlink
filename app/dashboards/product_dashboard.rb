@@ -13,6 +13,7 @@ class ProductDashboard < Administrate::BaseDashboard
     name: Field::Text,
     internal_name: Field::Text,
     enabled: Field::Boolean,
+    can_have_supers: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -27,6 +28,7 @@ class ProductDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :internal_name,
+    :can_have_supers,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -37,6 +39,7 @@ class ProductDashboard < Administrate::BaseDashboard
     :name,
     :internal_name,
     :enabled,
+    :can_have_supers,
     :created_at,
     :updated_at,
   ].freeze
@@ -49,6 +52,7 @@ class ProductDashboard < Administrate::BaseDashboard
     :name,
     :internal_name,
     :enabled,
+    :can_have_supers
   ].freeze
 
   # Overwrite this method to customize how products are displayed

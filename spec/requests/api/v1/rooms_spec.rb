@@ -41,6 +41,20 @@ describe "Rooms (v1)" do
       expect(members.count).to eq(2)
       expect(members.sort).to eq([member, @person].sort)
     end
+    it "should not include blocked users in private room" do
+      expect_any_instance_of(Api::V1::RoomsController).to receive(:new_private_room)
+      login_as(@person)
+      member = create(:person, product: @product)
+      member_blocked = create(:person, product: @product)
+      @person.block(member_blocked)
+      expect(@person.reload.blocked?(member_blocked)).to be_truthy
+      post "/rooms", params: { room: { name: "some roome", member_ids: [ member.id.to_s, member_blocked.id.to_s ] } }
+      expect(response).to be_success
+      room = Room.last
+      members = room.members
+      expect(members.count).to eq(2)
+      expect(members).not_to include(member_blocked)
+    end
   end
 
   describe "#destroy" do

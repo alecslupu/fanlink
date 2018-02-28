@@ -4,6 +4,10 @@ describe "Session (v1)" do
     @person = create(:person, password: @password)
   end
 
+  before(:each) do
+    logout
+  end
+
   describe "#create" do
     it "should log in a person with email from a regular account" do
       post "/session", params: { email_or_username: @person.email, password: @password, product: @person.product.internal_name }
@@ -30,6 +34,16 @@ describe "Session (v1)" do
       post "/session", params: { product: fbperson.product.internal_name, facebook_auth_token: tok }
       expect(response).to be_success
       expect(json["person"]).to eq(person_private_json(fbperson))
+    end
+    it "should not log in a person without a product" do
+      post "/session", params: { email_or_username: @person.email, password: @password }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("must supply a valid product")
+    end
+    it "should not log in a person with a bad product" do
+      post "/session", params: { email_or_username: @person.email, password: @password, product: "idonotexist" }
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("must supply a valid product")
     end
     it "should not log in a person via bad FB auth token" do
       tok = "1234"

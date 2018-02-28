@@ -6,16 +6,22 @@ By default, the navigation contains navigation links
 for all resources in the admin dashboard,
 as defined by the routes in the `admin/` namespace
 %>
-
 <nav class="navigation" role="navigation">
-  <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-    <% unless resource.resource == "sessions" %>
-      <%= link_to(
-        display_resource_name(resource),
-        [namespace, resource.path],
-        class: "navigation__link navigation__link--#{nav_link_state(resource)}"
-      ) %>
+  <% if current_user %>
+    <% if current_user.super_admin? && !(controller.action_name == "select_form") %>
+      <%= link_to "Select Product", select_form_admin_products_path, class: 'button' %>
     <% end %>
+    <% unless controller.action_name == "select_form" %>
+      <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
+        <% unless resource.resource == "sessions" || (!current_user.super_admin? && resource.resource == "products") %>
+          <%= link_to(
+            display_resource_name(resource).titleize,
+            [namespace, resource.path],
+            class: "navigation__link navigation__link--#{nav_link_state(resource)}"
+          ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <%= link_to "Logout", admin_logout_path, class: 'button' %>
   <% end %>
-  <%= link_to "Logout", admin_logout_path %>
 </nav>

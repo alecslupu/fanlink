@@ -11,10 +11,10 @@ class RoomDashboard < Administrate::BaseDashboard
     product: Field::BelongsTo,
     id: Field::Number,
     name: Field::Text.with_options(searchable: true),
+    picture: Field::Paperclip.with_options(blank_text: ""),
     created_by: Field::BelongsTo.with_options(class_name: "Person"),
     status: Field::Enum,
-    public: Field::Boolean,
-    picture_id: Field::Text,
+    public: Field::Boolean
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -23,33 +23,31 @@ class RoomDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :product,
     :id,
     :name,
+    :picture,
     :status
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :product,
     :id,
     :name,
+    :picture,
     :status,
     :created_by,
     :status,
     :public,
-    :picture_id,
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :product,
     :name,
+    :picture,
     :status,
-    :picture_id,
   ].freeze
 
   # Overwrite this method to customize how rooms are displayed

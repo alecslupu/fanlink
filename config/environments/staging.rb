@@ -8,7 +8,7 @@ Rails.application.configure do
   config.cache_classes = true
 
   # Disable full error reports.
-  config.consider_all_requests_local = false
+  config.consider_all_requests_local = true
 
   # Specifies the header that your server uses for sending files
   # config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -20,7 +20,8 @@ Rails.application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  config.log_level = :debug
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger::DEBUG
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -43,10 +44,8 @@ Rails.application.configure do
   config.assets.js_compressor = :uglifier
 
   config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
-
   config.eager_load = true
-
-  config.serve_static_files = true
+  config.force_ssl = true
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)

@@ -27,5 +27,29 @@ module Fanlink
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.paperclip_defaults = {
+        storage: :s3,
+        styles: { thumbnail: "100x100#" },
+        url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
+        s3_region: ENV["AWS_REGION"],
+        bucket:    ENV["AWS_BUCKET"],
+        hash_secret: ENV["PAPERCLIP_SECRET"],
+        s3_host_name: "s3.#{ENV.fetch('AWS_REGION')}.amazonaws.com",
+        s3_credentials: {
+            access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+            secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
+        },
+        s3_protocol: :https
+    }
+
+    config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins "https://www.fan.link", "https://staging.fan.link", "https://fan.link"
+        resource "*", headers: :any, methods: :any
+      end
+    end
   end
 end

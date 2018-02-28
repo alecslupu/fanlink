@@ -1,2 +1,2 @@
-json.id person.id.to_s
-json.(person, :email, :username, :name, :picture_url)
+json.partial! "api/v1/people/person", locals: { person: person }
+json.email person.email

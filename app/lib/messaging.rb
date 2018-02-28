@@ -1,15 +1,26 @@
+#TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
+  def clear_message_counter(room, person)
+    client.set("#{user_path(person)}/message_counts/#{room.id}", 0)
+  end
+
   def delete_message(message)
     if message.hidden
-      client.set("#{room_path(message.room)}/last_deleted_message_id", message.id)
+      client.set("#{room_path(message.room)}/last_deleted_message_id", message.id).response.status == 200
+    else
+      false
     end
   end
 
-  def post_message(message)
-    if message.room.public
-      post_public_message(message)
+  def delete_post(post, to_be_notified)
+    if to_be_notified.empty?
+      true
     else
-      post_private_message(message)
+      payload = {}
+      to_be_notified.each do |p|
+        payload["#{user_path(p)}/deleted_post_id"] = post.id
+      end
+      client.update("", payload).response.status == 200
     end
   end
 
@@ -29,6 +40,38 @@ module Messaging
     room.members.each do |m|
       add_room_for_member(room, m)
     end
+  end
+
+  def post_message(message)
+    if message.room.public
+      post_public_message(message)
+    else
+      post_private_message(message)
+    end
+  end
+
+  def post_post(post, to_be_notified)
+    if to_be_notified.empty?
+      true
+    else
+      payload = {}
+      to_be_notified.each do |p|
+        payload["#{user_path(p)}/last_post_id"] = post.id
+      end
+      client.update("", payload).response.status == 200
+    end
+  end
+
+  def set_message_counters(room, except_user)
+    payload = {}
+    room.room_memberships.each do |mem|
+      payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
+    end
+    client.update("", payload).response.status == 200
+  end
+
+  def update_relationship_count(requested_to)
+    client.set("#{user_path(requested_to)}/friend_request_count", requested_to.friend_request_count).response.status == 200
   end
 
 private
@@ -56,12 +99,16 @@ private
     client.delete(room_path(room))
   end
 
+  def message_counter_path(membership)
+    "#{user_path(membership.person)}/message_counts/#{membership.room.id}"
+  end
+
   def post_private_message(msg)
-    client.set("#{room_path(msg.room)}/last_message_id", msg.id)
+    client.set("#{room_path(msg.room)}/last_message_id", msg.id).response.status == 200
   end
 
   def post_public_message(msg)
-    client.set("#{room_path(msg.room)}/last_message", msg.as_json)
+    client.set("#{room_path(msg.room)}/last_message", msg.as_json).response.status == 200
   end
 
   def room_path(room)

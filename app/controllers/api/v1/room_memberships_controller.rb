@@ -15,15 +15,19 @@ class Api::V1::RoomMembershipsController < ApiController
   #     HTTP/1.1 200 Ok
   #
   # @apiErrorExample {json} Error-Response:
-  #     HTTP/1.1 422 Unprocessable - Room not active, current user not room owner, person is unwanted or illigitimate, etc.
+  #     HTTP/1.1 404 or 422 Unprocessable - Room not active (404), current user not room owner (404), person is unwanted or illigitimate (422), etc.
   #*
   def create
-    room = Room.find(params[:room_id])
-    mem = room.room_memberships.create(room_membership_params)
-    if mem.valid?
-      render body: nil, status: :ok
+    room = Room.active.privates.find_by(created_by_id: current_user.id, id: params[:room_id].to_i)
+    if room
+      mem = room.room_memberships.create(room_membership_params)
+      if mem.valid?
+        render body: nil, status: :ok
+      else
+        render json: { errors: mem.errors }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: mem.errors }, status: :unprocessable_entity
+      render_not_found
     end
   end
 

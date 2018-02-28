@@ -2,11 +2,68 @@ form {
   padding-top: 10px;
 }
 
+.admin-warning {
+  text-align: center;
+  font-size: large;
+  color: red;
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:30px;
+  width:100%;
+  background:lightgrey;
+}
+
 .button-width a {
   min-width: 100px;
   text-align: center;
 }
 
-.hidden {
+.item-hidden {
   background-color: lightgrey;
+}
+
+
+.inline-select-form select {
+  padding: 2px;
+  width: auto;
+  float: left; /* for width matching contents */
+}
+
+
+.product-select {
+  padding-top: 50px;
+
+}
+
+.navigation__link {
+  margin-left: 15px;
+}
+
+.navigation .navigation__link:nth-child(2), a:last-child {
+  margin-top: 30px;
+}
+
+.user-status {
+  background-color: lightblue;
+  display: inline-block;
+  padding: 8px;
+  border-radius: 5px;
+  margin: 6px;
+  font-size: x-small;
+  float: right
+}
+
+.message-update-result, .post-update-result {
+  padding: 12px;
+  width: 200px;
+  float: left;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
 }

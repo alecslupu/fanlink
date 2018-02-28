@@ -18,7 +18,8 @@ class Api::V1::RoomsController < ApiController
   #   NOT YET IMPLEMENTED
   #
   # @apiParam {Array} [room.member_ids]
-  #   Ids of persons to add as members. You do not need to include the current user, who will be made a member
+  #   Ids of persons to add as members.  Users who are blocked by or who are blocking the current user will
+  #   be silently excluded. You do not need to include the current user, who will be made a member
   #   automatically.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -28,9 +29,11 @@ class Api::V1::RoomsController < ApiController
   #         "id": "5016",
   #         "name": "Motley People Only",
   #         "owned": "true", # is current user the owner of room?
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
+  #         "picture_url": "http://host.name/path",
   #         "members": [
-  #           { ...person json....},....
+  #           {
+  #             ....person json...
+  #           },....
   #         ]
   #
   #       }
@@ -41,12 +44,15 @@ class Api::V1::RoomsController < ApiController
   #       { "That name is too short, blah blah blah" }
   #*
   def create
-    @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id))
+    @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
-      members_ids = params[:members_ids].is_a?(Array) ? params[:members_ids].map { |m| m.to_i } : []
+      blocks_with = current_user.blocks_with.map { |b| b.id }
+      members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
       members_ids << current_user.id
       members_ids.uniq.each do |i|
-        @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+        unless blocks_with.include?(i)
+          @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+        end
       end
       @room.reload
       new_private_room(@room)
@@ -100,18 +106,15 @@ class Api::V1::RoomsController < ApiController
   #     HTTP/1.1 200 Ok
   #     "rooms": [
   #       {
-  #         "id": "5016",
-  #         "name": "Motley People Only",
-  #         "owned": "false", # is current user the owner of room?
-  #         "picture_url": "http://host.name/path", #NOT YET IMPLEMENTED
-  #       },....
+  #         ....see room json under create above ....
+  #       },...
   #     ]
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
   def index
-    @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates(current_user) : Room.active.publics
+    @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics
     return_the @rooms
   end
 

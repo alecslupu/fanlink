@@ -17,6 +17,10 @@ module RequestHelpers
     super *add_accept_header(args)
   end
 
+  def patch(*args)
+    super *add_accept_header(args)
+  end
+
   def post(*args)
     super *add_accept_header(args)
   end
@@ -32,7 +36,7 @@ private
     if args.size == 1
       args << { headers: acc }
     elsif args[1][:headers]
-      args[1][:headers].merge(acc)
+      args[1][:headers].merge!(acc)
     else
       args[1][:headers] = acc
     end
