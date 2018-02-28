@@ -75,6 +75,31 @@ describe "Messages (v1)" do
       expect(Message.count - precount).to eq(0)
       expect(json["errors"]).to include("problem sending the message")
     end
+    it "should not let banned user create a message in public chat room" do
+      expect_any_instance_of(Api::V1::MessagesController).not_to receive(:post_message)
+      banned = create(:person, chat_banned: true)
+      login_as(banned)
+      body = "Do you like my body?"
+      precount = Message.count
+      post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
+      expect(response).to be_unprocessable
+      expect(Message.count - precount).to eq(0)
+      expect(json["errors"]).to include("You are banned from chat.")
+    end
+    it "should let banned user create a new message in a private room" do
+      expect_any_instance_of(Api::V1::MessagesController).to receive(:post_message).and_return(true)
+      expect_any_instance_of(Api::V1::MessagesController).to receive(:set_message_counters).and_return(true)
+      room = create(:room, product: @product, created_by: @person, status: :active)
+      room.members << @person
+      other_member = create(:person, product: @person.product, chat_banned: true)
+      room.members << other_member
+      login_as(other_member)
+      body = "Do you like my body?"
+      expect {
+        post "/rooms/#{room.id}/messages", params: { message: { body: body } }
+      }.to change { Message.count }.by(1)
+      expect(response).to be_success
+    end
   end
 
   describe "#destroy" do
