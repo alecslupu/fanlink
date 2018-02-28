@@ -1,6 +1,13 @@
 class PersonMailer < MandrillMailer::TemplateMailer
   default from: nil, view_content_link: true
 
+  def onboarding(person)
+    mandrill_mail(
+        template: "#{person.product.internal_name}-onboarding",
+        to: { email: person.email, name: person.name }
+    )
+  end
+
   def reset_password(person)
     mandrill_mail(
       template: "#{person.product.internal_name}-password-reset",
