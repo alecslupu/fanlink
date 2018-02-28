@@ -173,6 +173,6 @@ private
       end
       @lang = lang_header if Post::LANGS[lang_header].present?
     end
-    @lang = Post::DEFAULT_LANG if @lang.nil?
+    @lang = Post::DEFAULT_READ_LANG if @lang.nil?
   end
 end

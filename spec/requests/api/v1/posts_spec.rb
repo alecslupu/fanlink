@@ -189,12 +189,22 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["post"]).to eq(post_json(post))
     end
-    it "should return default language body if no device language provided" do
+    it "should return english language body if no device language provided and english exists" do
+      post = create(:post, person: @person, status: :published)
+      english = "This is English"
+      post.body = { "en" => english }
+      post.save
+      login_as(@person)
+      get "/posts/#{post.id}"
+      expect(response).to be_success
+      expect(json["post"]["body"]).to eq(english)
+    end
+    it "should return original language body if no device language provided and no english exists" do
       post = create(:post, person: @person, status: :published)
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]["body"]).to eq(post_json(post)["body"])
+      expect(json["post"]["body"]).to eq(post.body(Post::DEFAULT_LANG))
     end
     it "should return correct language body if device language provided" do
       lan = 'es'
