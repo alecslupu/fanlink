@@ -22,8 +22,6 @@ ActiveRecord::Schema.define(version: 20180227010351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true, null: false
-    t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
-    t.index ["name"], name: "unq_action_types_name", unique: true
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -159,7 +157,6 @@ ActiveRecord::Schema.define(version: 20180227010351) do
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
-    t.boolean "chat_banned", default: false, null: false
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
@@ -198,7 +195,7 @@ ActiveRecord::Schema.define(version: 20180227010351) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "body", default: {}, null: false
+    t.jsonb "body"
     t.index ["person_id"], name: "idx_posts_person"
   end
 
@@ -239,7 +236,7 @@ ActiveRecord::Schema.define(version: 20180227010351) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical", null: false
+    t.text "name_canonical"
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -264,15 +261,17 @@ ActiveRecord::Schema.define(version: 20180227010351) do
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
+  add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
-  add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people"
+  add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
