@@ -1,6 +1,10 @@
 class Post < ApplicationRecord
   include AttachmentSupport
-  enum status: %i[ errored pending published deleted rejected ]
+  include TranslationThings
+
+  enum status: %i[ pending published deleted rejected errored ]
+
+  has_manual_translated :body
 
   has_image_called :picture
   has_paper_trail

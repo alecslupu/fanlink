@@ -115,6 +115,18 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["posts"].map { |p| p["id"] }).not_to include(post.id)
     end
+    it "should return correct language if device language provided" do
+      lan = 'es'
+      headers = { "Accept-Language" => (lan + "-spa") } #letters dont matter because we should be just using first two characters
+      translation = "En espagnol"
+      post11.body = { lan => translation }
+      post11.save
+      login_as(@person)
+      get "/posts", params: { from_date: from, to_date: to }, headers: headers
+      expect(response).to be_success
+      post11_json = json["posts"].find { |p| p["id"] == post11.id.to_s }
+      expect(post11_json["body"]).to eq(translation)
+    end
     it "should not get the list if not logged in" do
       get "/posts", params: { from_date: from, to_date: to, limit: 2 }
       expect(response).to be_unauthorized
@@ -176,6 +188,35 @@ describe "Posts (v1)" do
       get "/posts/#{post.id}"
       expect(response).to be_success
       expect(json["post"]).to eq(post_json(post))
+    end
+    it "should return english language body if no device language provided and english exists" do
+      post = create(:post, person: @person, status: :published)
+      english = "This is English"
+      post.body = { "en" => english }
+      post.save
+      login_as(@person)
+      get "/posts/#{post.id}"
+      expect(response).to be_success
+      expect(json["post"]["body"]).to eq(english)
+    end
+    it "should return original language body if no device language provided and no english exists" do
+      post = create(:post, person: @person, status: :published)
+      login_as(@person)
+      get "/posts/#{post.id}"
+      expect(response).to be_success
+      expect(json["post"]["body"]).to eq(post.body(Post::DEFAULT_LANG))
+    end
+    it "should return correct language body if device language provided" do
+      lan = 'es'
+      headers = { "Accept-Language" => (lan + "-spa") } #letters dont matter because we should be just using first two characters
+      post = create(:post, person: @person, status: :published)
+      translation = "En espagnol"
+      post.body = { lan => translation }
+      post.save
+      login_as(@person)
+      get "/posts/#{post.id}", headers: headers
+      expect(response).to be_success
+      expect(json["post"]["body"]).to eq(translation)
     end
     it "should not get a deleted post" do
       post = create(:post, person: @person, status: :deleted)

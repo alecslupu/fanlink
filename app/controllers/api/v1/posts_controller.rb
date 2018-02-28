@@ -1,6 +1,8 @@
 class Api::V1::PostsController < ApiController
   include Messaging
 
+  before_action :set_language, only: %i[ index show ]
+
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -160,5 +162,17 @@ private
 
   def post_params
     params.require(:post).permit(:body, :picture)
+  end
+
+  def set_language
+    @lang = nil
+    lang_header = request.headers["Accept-Language"]
+    if lang_header.present?
+      if lang_header.length > 2
+        lang_header = lang_header[0..1]
+      end
+      @lang = lang_header if Post::LANGS[lang_header].present?
+    end
+    @lang = Post::DEFAULT_READ_LANG if @lang.nil?
   end
 end

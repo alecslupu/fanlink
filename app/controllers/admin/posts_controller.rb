@@ -1,5 +1,21 @@
 module Admin
   class PostsController < Admin::ApplicationController
+
+    def create
+      resource = resource_class.new(resource_params)
+      resource.person = current_user
+      if resource.save
+        redirect_to(
+            [namespace, resource],
+            notice: translate_with_resource("create.success"),
+            )
+      else
+        render :new, locals: {
+            page: Administrate::Page::Form.new(dashboard, resource),
+        }
+      end
+    end
+
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
     #
@@ -28,5 +44,16 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+  # private
+  #
+
+       #     body_params = []
+  #     Post::LANGS.keys.each do |l|
+  #       body_params << "body_#{l}".to_sym
+  #     end
+  #     permitted = [:global, :starts_at, :ends_at, :repost_interval, :status, :body_un, :body_es]
+  #     Rails.logger.debug(permitted)
+  #     params.require(:post).permit(permitted)
+  #   end
   end
 end
