@@ -4,7 +4,6 @@ require 'open3'
 
 class Deploy < Thor
   desc 'deploy BRANCH DESTINATION', 'deploy a branch to a heroku destination'
-  option :skip_version, :type => :boolean, :default => false
 
   def deploy(dest, branch)
 
