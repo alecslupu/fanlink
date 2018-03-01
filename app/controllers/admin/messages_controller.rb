@@ -22,7 +22,7 @@ module Admin
 
     def index
       #search_term = params[:search].to_s.strip
-      resources = Message.publics.for_product(ActsAsTenant.current_tenant).reported_action_needed.page(params[:page]).per(records_per_page)
+      resources = Message.publics.for_product(ActsAsTenant.current_tenant).order(created_at: :desc).page(params[:page]).per(records_per_page)
       page = Administrate::Page::Collection.new(dashboard, order: order)
 
       render locals: {
