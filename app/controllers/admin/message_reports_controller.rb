@@ -23,15 +23,15 @@ module Admin
       if message_report.status == "message_hidden"
         message.hidden = true
         if message.save && delete_message(message)
+          Rails.logger.debug("not errored")
           message_report.save
         else
+          Rails.logger.debug("errored")
           errored = true
         end
       else
         message.hidden = false
-        if !message.save
-          errored = true
-        end
+        errored = !message.save || !message_report.save
       end
       if errored
         render status: :unprocessable_entity, json: { error: "Unable to update the message. Please try again later." }
