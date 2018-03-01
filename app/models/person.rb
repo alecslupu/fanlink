@@ -118,6 +118,10 @@ class Person < ApplicationRecord
     !normal?
   end
 
+  def to_s
+    name || username
+  end
+
   private
 
     def canonicalize(name)

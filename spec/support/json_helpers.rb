@@ -71,6 +71,7 @@ module JsonHelpers
       "name"              => person.name,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
+      "chat_banned"       => person.chat_banned,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
@@ -78,10 +79,10 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
-  def post_json(post, reaction = nil)
+  def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,
-      "body"        => post.body,
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
       "create_time" => post.created_at.to_s,
       "picture_url" => post.picture_url,
       "person" => person_json(post.person),

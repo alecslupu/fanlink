@@ -34,3 +34,5 @@ en:
     label:
       badge:
         action_requirement: "Number of actions required to earn"
+      person:
+        chat_banned: "Public chat banned"

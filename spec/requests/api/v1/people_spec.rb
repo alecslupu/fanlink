@@ -56,7 +56,7 @@ describe "People (v1)" do
     end
   end
   describe "#create" do
-    it "should sign up new user with email, username, and password" do
+    it "should sign up new user with email, username, and password and send onboarding email" do
       expect_any_instance_of(Person).to receive(:do_auto_follows)
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
@@ -68,8 +68,11 @@ describe "People (v1)" do
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
       expect(json["person"]).to eq(person_private_json(p))
+      expect(email_sent(template: "#{p.product.internal_name}-onboarding",
+                        to_values: { email: p.email, name: p.name })
+      ).to_not be_nil
     end
-    it "should sign up new user with FB auth token" do
+    it "should sign up new user with FB auth token and send onboarding email" do
       tok = "1234"
       username = "newuser#{Time.now.to_i}"
       product = create(:product)
@@ -84,6 +87,26 @@ describe "People (v1)" do
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
       expect(json["person"]).to eq(person_private_json(p))
+      expect(email_sent(template: "#{p.product.internal_name}-onboarding",
+                        to_values: { email: p.email, name: p.name })
+      ).to_not be_nil
+    end
+    it "should sign up new user with FB auth token without email and not send onboarding email" do
+      tok = "1234"
+      username = "newuser#{Time.now.to_i}"
+      product = create(:product)
+      koala_result = { "id" => "12345", "name" => "John Smith" }
+      allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
+      expect {
+        post "/people", params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
+      }.to change { Person.count }.by(1)
+      expect(response).to be_success
+      p = Person.last
+      expect(p.username).to eq(username)
+      expect(json["person"]).to eq(person_private_json(p))
+      expect(email_sent(template: "#{p.product.internal_name}-onboarding",
+                        to_values: { name: p.name })
+      ).to be_nil
     end
     it "should not sign up new user if there is a problem with FB" do
       tok = "1234"

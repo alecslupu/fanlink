@@ -19,7 +19,7 @@ form {
   text-align: center;
 }
 
-.hidden {
+.item-hidden {
   background-color: lightgrey;
 }
 
@@ -58,4 +58,12 @@ form {
   padding: 12px;
   width: 200px;
   float: left;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
 }
