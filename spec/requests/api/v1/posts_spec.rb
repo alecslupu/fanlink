@@ -205,8 +205,9 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_json(post, reaction))
+      expect(json["post"]).to eq(post_json(post, nil, reaction))
       expect(json["post"]["post_reaction"]).not_to be_nil
+    end
     it "should return english language body if no device language provided and english exists" do
       post = create(:post, person: @person, status: :published)
       english = "This is English"
