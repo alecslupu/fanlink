@@ -79,7 +79,7 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
-  def post_json(post, lang=nil)
+  def post_json(post, lang = nil)
     {
       "id"          => post.id.to_s,
       "body"        => (lang.present?) ? post.body(lang) : post.body,

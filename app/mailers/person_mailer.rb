@@ -3,8 +3,8 @@ class PersonMailer < MandrillMailer::TemplateMailer
 
   def onboarding(person)
     mandrill_mail(
-        template: "#{person.product.internal_name}-onboarding",
-        to: { email: person.email, name: person.name }
+      template: "#{ person.product.internal_name }-onboarding",
+      to: { email: person.email, name: person.name }
     )
   end
 

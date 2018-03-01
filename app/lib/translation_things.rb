@@ -6,16 +6,16 @@ module TranslationThings
   end
 
   LANGS = {
-      'un' => 'Language Unspecified',
-      'en' => 'English',
-     # 'ar' => 'Arabic',
-     # 'de' => 'German',
-      'es' => 'Spanish',
-    #  'fr' => 'French',
-    #  'it' => 'Italian',
-    #  'ko' => 'Korean',
-    #  'pt' => 'Portuguese',
-      'ro' => 'Romanian'
+      "un" => "Language Unspecified",
+      "en" => "English",
+      # 'ar' => 'Arabic',
+      # 'de' => 'German',
+      "es" => "Spanish",
+      #  'fr' => 'French',
+      #  'it' => 'Italian',
+      #  'ko' => 'Korean',
+      #  'pt' => 'Portuguese',
+      "ro" => "Romanian"
   }.freeze
 
   DEFAULT_LANG = "un"
@@ -71,7 +71,7 @@ module TranslationThings
       add_translation_things_instance_methods_for(names)
     end
 
-    private
+  private
 
     def translation_things_module
       @translation_things_module ||= Module.new
@@ -138,7 +138,7 @@ module TranslationThings
     end
 
     def add_auto_translation_things_instance_methods_for(names)
-      translation_things_module.module_eval(%Q{
+      translation_things_module.module_eval(%q{
 
         attr_writer :skip_translation
 

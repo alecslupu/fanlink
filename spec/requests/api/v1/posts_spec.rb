@@ -116,7 +116,7 @@ describe "Posts (v1)" do
       expect(json["posts"].map { |p| p["id"] }).not_to include(post.id)
     end
     it "should return correct language if device language provided" do
-      lan = 'es'
+      lan = "es"
       headers = { "Accept-Language" => (lan + "-spa") } #letters dont matter because we should be just using first two characters
       translation = "En espagnol"
       post11.body = { lan => translation }
@@ -207,7 +207,7 @@ describe "Posts (v1)" do
       expect(json["post"]["body"]).to eq(post.body(Post::DEFAULT_LANG))
     end
     it "should return correct language body if device language provided" do
-      lan = 'es'
+      lan = "es"
       headers = { "Accept-Language" => (lan + "-spa") } #letters dont matter because we should be just using first two characters
       post = create(:post, person: @person, status: :published)
       translation = "En espagnol"
