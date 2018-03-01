@@ -121,7 +121,7 @@ class Person < ApplicationRecord
   def to_s
     name || username
   end
-  
+
   private
 
     def canonicalize(name)

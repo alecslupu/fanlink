@@ -32,7 +32,7 @@ class Post < ApplicationRecord
   end
 
   def reaction_breakdown
-    (post_reactions.count > 0) ? post_reactions.group(:reaction).count.sort_by { |r,c| r.to_i(16) }.to_h : nil
+    (post_reactions.count > 0) ? post_reactions.group(:reaction).count.sort_by { |r, c| r.to_i(16) }.to_h : nil
   end
 
   def reactions

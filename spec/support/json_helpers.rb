@@ -79,7 +79,6 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
-
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,
@@ -88,7 +87,7 @@ module JsonHelpers
       "picture_url" => post.picture_url,
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
-      "post_reaction"    => (reaction.nil?) ? nil : post_reaction_json(reaction)
+      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction)
     }
   end
   def post_reaction_json(post_reaction)
