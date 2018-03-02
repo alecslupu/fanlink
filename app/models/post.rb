@@ -1,6 +1,10 @@
 class Post < ApplicationRecord
   include AttachmentSupport
-  enum status: %i[ errored pending published deleted rejected ]
+  include TranslationThings
+
+  enum status: %i[ pending published deleted rejected errored ]
+
+  has_manual_translated :body
 
   has_image_called :picture
   has_paper_trail
@@ -28,7 +32,7 @@ class Post < ApplicationRecord
   end
 
   def reaction_breakdown
-    (post_reactions.count > 0) ? post_reactions.group(:reaction).count.sort_by { |r,c| r.to_i(16) }.to_h : nil
+    (post_reactions.count > 0) ? post_reactions.group(:reaction).count.sort_by { |r, c| r.to_i(16) }.to_h : nil
   end
 
   def reactions
