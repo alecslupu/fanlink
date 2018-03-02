@@ -11,8 +11,8 @@ class PostReaction < ApplicationRecord
 private
 
   def check_emoji
-    bottom = 0x1F600
-    top = 0x1F64F
+    bottom = 0x0
+    top = 0x10FFFF
     hex_val = reaction.to_i(16)
     if hex_val < bottom || hex_val > top
       errors.add(:reaction, "Reaction is not a valid value.")

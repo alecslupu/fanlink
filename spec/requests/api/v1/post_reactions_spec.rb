@@ -37,7 +37,7 @@ describe "PostReactions (v1)" do
     end
     it "should require valid emoji sequence" do
       login_as(@person)
-      nonemoji = "027A1"
+      nonemoji = "11FFFF"
       expect {
         post "/posts/#{@post.id}/reactions", params: { post_reaction: { reaction: nonemoji } }
       }.to change { PostReaction.count }.by(0)
