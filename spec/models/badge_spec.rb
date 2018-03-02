@@ -13,6 +13,15 @@ RSpec.describe Badge, type: :model do
       expect(badge.errors[:action_requirement]).not_to be_empty
     end
   end
+  describe "#destroy" do
+    it "should not let you destroy a badge that has been awarded" do
+      badge = create(:badge)
+      create(:badge_award, badge: badge)
+      expect(badge.destroy).to be_falsey
+      expect(badge).to exist_in_database
+    end
+  end
+
   describe "#internal_name" do
     it "should allow an internal name with lower case letters numbers and underscores" do
       expect(create(:badge, internal_name: "abc_d12"))
