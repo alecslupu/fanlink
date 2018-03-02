@@ -14,6 +14,5 @@ class AddSomeForeignKeys < ActiveRecord::Migration[5.1]
     remove_foreign_key :badge_awards, name: "fk_badge_awards_people"
     remove_foreign_key :badge_awards, name: "fk_badge_awards_badges"
     remove_foreign_key :badges, name: "fk_badges_products"
-    remove_foreign_key :message_reports, name: "fk_message_reports_people"
   end
 end
