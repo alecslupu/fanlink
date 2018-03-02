@@ -28,7 +28,7 @@ private
   end
 
   def badge_using
-    Badge.where(action_type_id: self.id).first
+    Badge.unscoped.where(action_type_id: self.id).first
   end
 
   def check_usage
