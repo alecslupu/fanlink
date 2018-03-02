@@ -3,7 +3,7 @@ class Api::V1::PostReactionsController < ApiController
   load_up_the PostReaction, only: %i[ destroy update ]
 
   #**
-  # @api {post} /post/:post_id/reactions React to a post.
+  # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction
   # @apiGroup Posts
   #
@@ -17,7 +17,7 @@ class Api::V1::PostReactionsController < ApiController
   #   The post reaction object container.
   #
   # @apiParam {String} post_reaction.reaction
-  #   The identifier for the reaction. Accepts stringified hex values between 1F600 and 1F64F, inclusive.
+  #   The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
@@ -44,7 +44,7 @@ class Api::V1::PostReactionsController < ApiController
   end
 
   #**
-  # @api {delete} /post/:post_id/reactions/:id Delete a reaction to a post.
+  # @api {delete} /posts/:post_id/reactions/:id Delete a reaction to a post.
   # @apiName DeletePostReaction
   # @apiGroup Posts
   #
@@ -73,7 +73,7 @@ class Api::V1::PostReactionsController < ApiController
   end
 
   #**
-  # @api {post} /post/:post_id/reactions/:id Update a reaction to a post.
+  # @api {post} /posts/:post_id/reactions/:id Update a reaction to a post.
   # @apiName UpdatePostReaction
   # @apiGroup Posts
   #
@@ -90,7 +90,7 @@ class Api::V1::PostReactionsController < ApiController
   #   The post reaction object container.
   #
   # @apiParam {String} post_reaction.reaction
-  #   The identifier for the reaction. Accepts stringified hex values between 1F600 and 1F64F, inclusive.
+  #   The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
