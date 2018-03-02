@@ -23,6 +23,15 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "#destroy" do
+    it "should not let you destroy a person who has reported a message" do
+      person = create(:person)
+      create(:message_report, person: person)
+      expect(person.destroy).to be_falsey
+      expect(person).to exist_in_database
+    end
+  end
+
   describe "#do_auto_follows" do
     it "should auto follow the right accounts and only those" do
       ActsAsTenant.with_tenant(create(:product)) do
@@ -89,6 +98,7 @@ RSpec.describe Person, type: :model do
       expect(Person.can_login?("nonexistentiamsure@example.com")).to be_nil
     end
   end
+
 
   describe "#follow" do
     it "should follow a person" do
