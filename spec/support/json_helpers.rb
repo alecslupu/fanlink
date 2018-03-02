@@ -79,7 +79,6 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
-
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,

@@ -49,7 +49,8 @@ class Api::V1::PeopleController < ApiController
   # @apiDescription
   #   This is used to create a new person.
   #
-  #   We will log them in along the way.
+  #   If they account creation is successful, they will be logged in and we will send an onboarding
+  #   email (if we have an email address for them).
   #
   # @apiParam {String} product
   #   Internal name of product
@@ -97,6 +98,9 @@ class Api::V1::PeopleController < ApiController
     if @person.valid?
       @person.do_auto_follows
       auto_login(@person)
+      if @person.email.present?
+        PersonMailer.onboarding(@person).deliver_now
+      end
     end
     return_the @person
   end

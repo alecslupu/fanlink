@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./deploy.rb deploy $1 $2
