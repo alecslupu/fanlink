@@ -9,7 +9,6 @@ class MerchandiseDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
-    versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
     id: Field::Number,
     name: Field::Text,
     description: Field::Text,
@@ -37,7 +36,6 @@ class MerchandiseDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :product,
-    :versions,
     :id,
     :name,
     :description,
@@ -63,6 +61,6 @@ class MerchandiseDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(merchandise)
-    "Merchandise ##{merchandise.name}"
+    "Merchandise #{merchandise.name}"
   end
 end
