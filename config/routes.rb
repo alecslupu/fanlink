@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     resources :action_types
     resources :badges
     resources :levels
+    resources :merchandise
     resources :messages do
       get "hide" => "messages#hide"
       get "unhide" => "messages#unhide"
