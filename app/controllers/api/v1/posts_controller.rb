@@ -121,6 +121,7 @@ class Api::V1::PostsController < ApiController
       else
         @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
       end
+      @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
       return_the @posts
     end
   end
