@@ -155,7 +155,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 404 Not Found
   #*
   def show
-    @post = Post.visible.find(params[:id])
+    @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
     @post_reaction = @post.reactions.find_by(person: current_user)
     return_the @post
   end
