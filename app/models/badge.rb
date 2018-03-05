@@ -1,6 +1,8 @@
 class Badge < ApplicationRecord
   include AttachmentSupport
 
+  has_many :badge_awards, dependent: :restrict_with_error
+
   has_paper_trail
   acts_as_tenant(:product)
 

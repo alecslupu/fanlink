@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227010351) do
+ActiveRecord::Schema.define(version: 20180302205722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(version: 20180227010351) do
     t.datetime "updated_at", null: false
     t.text "facebookid"
     t.text "facebook_picture_url"
-    t.text "picture_type"
     t.string "picture_file_name"
     t.string "picture_content_type"
     t.integer "picture_file_size"
@@ -239,7 +238,7 @@ ActiveRecord::Schema.define(version: 20180227010351) do
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name"
-    t.text "name_canonical", null: false
+    t.text "name_canonical"
     t.integer "created_by_id", null: false
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -263,16 +262,22 @@ ActiveRecord::Schema.define(version: 20180227010351) do
   end
 
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
+  add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
+  add_foreign_key "badge_actions", "people", name: "fk_badge_actions_people", on_delete: :cascade
+  add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
+  add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
+  add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
-  add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people"
+  add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade

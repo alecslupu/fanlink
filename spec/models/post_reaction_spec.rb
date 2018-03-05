@@ -32,7 +32,11 @@ RSpec.describe PostReaction, type: :model do
   end
   describe "#reaction" do
     it "should require a valid emoji sequence" do
-      nonemoji = "027A1"
+      nonemoji = "-1"
+      reaction = build(:post_reaction, reaction: nonemoji)
+      expect(reaction).not_to be_valid
+      expect(reaction.errors[:reaction]).not_to be_empty
+      nonemoji = "11FFFF"
       reaction = build(:post_reaction, reaction: nonemoji)
       expect(reaction).not_to be_valid
       expect(reaction.errors[:reaction]).not_to be_empty
