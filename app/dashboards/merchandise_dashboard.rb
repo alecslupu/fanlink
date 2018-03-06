@@ -15,6 +15,7 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     price: Field::Text,
     purchase_url: Field::Text,
     picture: Field::Paperclip.with_options(blank_text: ""),
+    available: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -42,6 +43,7 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     :price,
     :purchase_url,
     :picture,
+    :available,
     :created_at,
     :updated_at
   ].freeze
@@ -54,7 +56,8 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     :description,
     :price,
     :purchase_url,
-    :picture
+    :picture,
+    :available
   ].freeze
 
   # Overwrite this method to customize how merchandise are displayed
