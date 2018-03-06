@@ -19,7 +19,7 @@ module Admin
     # for more information
 
     def create
-      params[:room] = params[:room].merge(public: true, created_by_id: current_user.id)
+      params[:room] = params[:room].merge(public: true, created_by_id: current_user.id, product_id: ActsAsTenant.current_tenant.id)
       super
     end
 
@@ -44,7 +44,7 @@ module Admin
   private
 
     def resource_params
-      params.require(:room).permit((dashboard.permitted_attributes << %i[ public created_by_id ]).flatten)
+      params.require(:room).permit((dashboard.permitted_attributes << %i[ public created_by_id product_id ]).flatten)
     end
   end
 end
