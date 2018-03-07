@@ -51,5 +51,6 @@ module Fanlink
         resource "*", headers: :any, methods: :any
       end
     end
+    config.i18n.default_locale = :en
   end
 end
