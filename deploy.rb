@@ -1,12 +1,11 @@
 #!/usr/bin/env ruby
-require 'thor'
-require 'open3'
+require "thor"
+require "open3"
 
 class Deploy < Thor
-  desc 'deploy BRANCH DESTINATION', 'deploy a branch to a heroku destination'
+  desc "deploy BRANCH DESTINATION", "deploy a branch to a heroku destination"
 
-  def deploy(dest, branch)
-
+  def deploy(branch, dest)
     puts "Attempting to put #{branch} on #{dest}"
 
     current = `git rev-parse --abbrev-ref HEAD`.chomp
