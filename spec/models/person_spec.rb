@@ -23,6 +23,15 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "#destroy" do
+    it "should not let you destroy a person who has reported a message" do
+      person = create(:person)
+      create(:message_report, person: person)
+      expect(person.destroy).to be_falsey
+      expect(person).to exist_in_database
+    end
+  end
+
   describe "#do_auto_follows" do
     it "should auto follow the right accounts and only those" do
       ActsAsTenant.with_tenant(create(:product)) do
@@ -90,6 +99,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
+
   describe "#follow" do
     it "should follow a person" do
       fwer = create(:person)
@@ -135,27 +145,27 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe "#level" do
+  describe "#level_earned" do
     it "should be nil for person with no badges" do
       person = create(:person)
-      expect(person.level).to be_nil
+      expect(person.level_earned).to be_nil
     end
     it "should be nil for person with one badge below first level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
         badge = create(:badge, point_value: 10)
-        level = create(:level, points: 20)
+        level_earned = create(:level, points: 20)
         create(:badge_award, badge: badge, person: person)
-        expect(person.level).to be_nil
+        expect(person.level_earned).to be_nil
       end
     end
     it "should be right level for person with one badge above only level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
         badge = create(:badge, point_value: 20)
-        level = create(:level, points: 10)
+        level_earned = create(:level, points: 10)
         create(:badge_award, badge: badge, person: person)
-        expect(person.level).to eq(level)
+        expect(person.level_earned).to eq(level_earned)
       end
     end
     it "should be right level for person with one badge between levels" do
@@ -165,7 +175,7 @@ RSpec.describe Person, type: :model do
         level1 = create(:level, points: 10)
         level2 = create(:level, points: 21)
         create(:badge_award, badge: badge, person: person)
-        expect(person.level).to eq(level1)
+        expect(person.level_earned).to eq(level1)
       end
     end
   end

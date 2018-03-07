@@ -17,6 +17,9 @@ module Admin
       if @message.visible?
         @message.update_attribute(:hidden, true)
         delete_message(@message)
+        @message.message_reports.each do |report|
+          report.message_hidden!
+        end
       end
     end
 
@@ -37,6 +40,9 @@ module Admin
       @message = Message.find(params[:message_id])
       if @message.hidden?
         @message.update_attribute(:hidden, false)
+        @message.message_reports.each do |report|
+          report.pending!
+        end
       end
     end
 
