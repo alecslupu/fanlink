@@ -30,6 +30,6 @@ end
 
 if ActionType.count == 0
   unless Rails.env.production?
-    ActionType.create(name: "Some Cool Act", internal_name: "some_cool_act", product_id: Product.find_by(internal_name: "test").id)
+    ActionType.create(name: "Some Cool Act", internal_name: "some_cool_act")
   end
 end

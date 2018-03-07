@@ -65,9 +65,9 @@ RSpec.describe ActionType, type: :model do
     end
     it "should not allow two action types to share name" do
       at1 = create(:action_type)
-      at2 = build(:action_type, name: at1.name)
+      at2 = build(:action_type, internal_name: at1.internal_name)
       expect(at2).not_to be_valid
-      expect(at2.errors[:name]).not_to be_empty
+      expect(at2.errors[:internal_name]).not_to be_empty
     end
   end
   describe "#name" do
@@ -97,6 +97,12 @@ RSpec.describe ActionType, type: :model do
       at = build(:action_type, name: "a" * 37)
       expect(at).not_to be_valid
       expect(at.errors[:name]).not_to be_empty
+    end
+    it "should not allow two action types to share name" do
+      at1 = create(:action_type)
+      at2 = build(:action_type, name: at1.name)
+      expect(at2).not_to be_valid
+      expect(at2.errors[:name]).not_to be_empty
     end
   end
   describe "#valid?" do

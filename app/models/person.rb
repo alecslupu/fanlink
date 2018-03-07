@@ -23,6 +23,7 @@ class Person < ApplicationRecord
 
   has_image_called :picture
 
+  has_many :message_reports, dependent: :restrict_with_error
   has_many :notification_device_ids, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
 
