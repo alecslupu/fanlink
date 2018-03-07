@@ -5,7 +5,7 @@ class Room < ApplicationRecord
 
   acts_as_tenant(:product)
 
-  belongs_to :created_by, class_name: "Person"
+  belongs_to :created_by, class_name: "Person", required: false
   belongs_to :product
 
   before_validation :canonicalize_name, if: :name_changed?
