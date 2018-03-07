@@ -17,12 +17,15 @@ module Admin
       if @message.visible?
         @message.update_attribute(:hidden, true)
         delete_message(@message)
+        @message.message_reports.each do |report|
+          report.message_hidden!
+        end
       end
     end
 
     def index
       #search_term = params[:search].to_s.strip
-      resources = Message.publics.for_product(ActsAsTenant.current_tenant).reported_action_needed.page(params[:page]).per(records_per_page)
+      resources = Message.publics.for_product(ActsAsTenant.current_tenant).order(created_at: :desc).page(params[:page]).per(records_per_page)
       page = Administrate::Page::Collection.new(dashboard, order: order)
 
       render locals: {
@@ -37,6 +40,9 @@ module Admin
       @message = Message.find(params[:message_id])
       if @message.hidden?
         @message.update_attribute(:hidden, false)
+        @message.message_reports.each do |report|
+          report.pending!
+        end
       end
     end
 

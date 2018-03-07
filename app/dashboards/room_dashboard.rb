@@ -8,7 +8,7 @@ class RoomDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    product: Field::BelongsTo,
+    product_id: Field::Number,
     id: Field::Number,
     name: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
