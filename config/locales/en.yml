@@ -36,3 +36,12 @@ en:
         action_requirement: "Number of actions required to earn"
       person:
         chat_banned: "Public chat banned"
+  administrate:
+    actions:
+      show: "Show"
+  date:
+    formats:
+      default: "%d/%m/%Y %H:%M:%S"
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M:%S"
