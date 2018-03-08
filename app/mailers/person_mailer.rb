@@ -7,6 +7,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
       to: { email: person.email, name: person.name }
     )
   end
+  handle_asynchronously :onboarding
 
   def reset_password(person)
     mandrill_mail(
