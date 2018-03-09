@@ -36,7 +36,7 @@ class Api::V1::PasswordResetsController < ApiController
       person = Person.can_login?(params[:email_or_username])
       if person
         person.set_password_token!
-        PersonMailer.reset_password(person).deliver_now
+        person.send_password_reset_email
       end
       # Tell the user instructions have been sent whether or not email was found.
       # This is to not leak information to attackers about which emails exist in the system.
