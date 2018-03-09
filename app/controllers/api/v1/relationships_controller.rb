@@ -186,6 +186,7 @@ class Api::V1::RelationshipsController < ApiController
         if new_status == "friended"
           if old_status == "requested" && @relationship.requested_to == current_user
             @relationship.friended!
+            update_relationship_count(current_user)
             friend_request_accepted_push(@relationship)
           else
             can_status = false
