@@ -1,4 +1,5 @@
 class Api::V1::PeopleController < ApiController
+
   prepend_before_action :logout, only: :create
 
   load_up_the Person
@@ -99,7 +100,7 @@ class Api::V1::PeopleController < ApiController
       @person.do_auto_follows
       auto_login(@person)
       if @person.email.present?
-        PersonMailer.onboarding(@person).deliver_now
+        @person.send_onboarding_email
       end
     end
     return_the @person

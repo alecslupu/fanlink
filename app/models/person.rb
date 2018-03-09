@@ -15,6 +15,7 @@ class Person < ApplicationRecord
   include Person::Facebook
   include Person::Followings
   include Person::Levels
+  include Person::Mailing
   include Person::Relationships
 
   acts_as_tenant(:product)
