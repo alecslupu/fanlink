@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306065703) do
+ActiveRecord::Schema.define(version: 20180308193135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,21 @@ ActiveRecord::Schema.define(version: 20180306065703) do
     t.index ["blocker_id"], name: "ind_blocks_blocker"
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
   create_table "followings", force: :cascade do |t|
     t.integer "follower_id", null: false
     t.integer "followed_id", null: false
@@ -113,6 +128,7 @@ ActiveRecord::Schema.define(version: 20180306065703) do
     t.datetime "picture_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "available", default: true, null: false
     t.index ["product_id"], name: "idx_merchandise_product"
   end
 
