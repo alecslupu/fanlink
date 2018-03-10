@@ -14,8 +14,8 @@ describe "Messages (v1)" do
 
   describe "#create" do
     it "should create a new message in a public room" do
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:post_message).and_return(true)
-      expect_any_instance_of(Api::V1::MessagesController).not_to receive(:set_message_counters) #msg counters are only for closers!..er, private rooms
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).not_to receive(:increment_message_counters) #msg counters are only for closers!..er, private rooms
       login_as(@person)
       body = "Do you like my body?"
       post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
@@ -27,8 +27,8 @@ describe "Messages (v1)" do
       expect(json["message"]).to eq(message_json(msg))
     end
     it "should create a new message in a private room" do
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:post_message).and_return(true)
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:set_message_counters).and_return(true)
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).to receive(:increment_message_counters)
       room = create(:room, product: @product, created_by: @person, status: :active)
       room.members << @person
       other_member = create(:person, product: @person.product)
@@ -41,13 +41,11 @@ describe "Messages (v1)" do
       expect(msg.room).to eq(room)
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
-      expect(room.room_memberships.find_by(person_id: other_member.id).message_count).to eq(1) # not updating for message creator
-      expect(room.room_memberships.find_by(person_id: @person.id).message_count).to eq(0) # not updating for message creator
       expect(json["message"]).to eq(message_json(msg))
     end
     it "should not create a new message in an inactive room" do
       @room.inactive!
-      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:post_message)
+      expect_any_instance_of(Message).to_not receive(:post)
       login_as(@person)
       body = "Do you like my body?"
       post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
@@ -57,7 +55,7 @@ describe "Messages (v1)" do
     end
     it "should not create a new message in a deleted room" do
       @room.deleted!
-      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:post_message)
+      expect_any_instance_of(Message).to_not receive(:post)
       login_as(@person)
       body = "Do you like my body?"
       post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
@@ -65,18 +63,8 @@ describe "Messages (v1)" do
       expect(json["errors"]).to include("room is no longer active")
       @room.active!
     end
-    it "should destroy the message and return error if unable to post message to socket" do
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:post_message).and_return(false)
-      login_as(@person)
-      body = "Do you like my body?"
-      precount = Message.count
-      post "/rooms/#{@room.id}/messages", params: { message: { body: body } }
-      expect(response.status).to eq(503)
-      expect(Message.count - precount).to eq(0)
-      expect(json["errors"]).to include("problem sending the message")
-    end
     it "should not let banned user create a message in public chat room" do
-      expect_any_instance_of(Api::V1::MessagesController).not_to receive(:post_message)
+      expect_any_instance_of(Message).not_to receive(:post)
       banned = create(:person, chat_banned: true)
       login_as(banned)
       body = "Do you like my body?"
@@ -87,8 +75,8 @@ describe "Messages (v1)" do
       expect(json["errors"]).to include("You are banned from chat.")
     end
     it "should let banned user create a new message in a private room" do
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:post_message).and_return(true)
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:set_message_counters).and_return(true)
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).to receive(:increment_message_counters)
       room = create(:room, product: @product, created_by: @person, status: :active)
       room.members << @person
       other_member = create(:person, product: @person.product, chat_banned: true)
@@ -104,7 +92,7 @@ describe "Messages (v1)" do
 
   describe "#destroy" do
     it "should hide message from original creator" do
-      expect_any_instance_of(Api::V1::MessagesController).to receive(:delete_message).and_return(nil)
+      expect_any_instance_of(Message).to receive(:delete_real_time)
       login_as(@person)
       msg = create(:message, person: @person, room: @private_room, body: "this is my body")
       delete "/rooms/#{@private_room.id}/messages/#{msg.id}"
@@ -112,7 +100,7 @@ describe "Messages (v1)" do
       expect(msg.reload.hidden).to be_truthy
     end
     it "should not hide message from someone else" do
-      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:delete_message)
+      expect_any_instance_of(Message).to_not receive(:delete_real_time)
       p = create(:person)
       login_as(@person)
       msg = create(:message, person: p, room: @room, body: "this is my body")
@@ -121,7 +109,7 @@ describe "Messages (v1)" do
       expect(msg.reload.hidden).to be_falsey
     end
     it "should not hide message if not logged in" do
-      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:delete_message)
+      expect_any_instance_of(Message).to_not receive(:delete_real_time)
       msg = create(:message, person: @person, room: @room, body: "this is my body")
       delete "/rooms/#{@room.id}/messages/#{msg.id}"
       expect(response).to be_unauthorized
@@ -138,7 +126,7 @@ describe "Messages (v1)" do
     it "should get a list of messages for a date range without limit" do
       login_as(@person)
       expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), nil).and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
-      expect_any_instance_of(Api::V1::MessagesController).to_not receive(:set_message_counters) #only for priv rooms
+      expect_any_instance_of(Room).to_not receive(:increment_message_counters) #only for priv rooms
       get "/rooms/#{room.id}/messages", params: { from_date: from, to_date: to }
       expect(response).to be_success
       expect(json["messages"].map { |m| m["id"] }).to eq([msg2.id.to_s, msg1.id.to_s])
@@ -220,7 +208,7 @@ describe "Messages (v1)" do
         login_as(@person)
         msg = create(:message, room: @private_room, body: "wat wat")
         expect(Message).to receive(:for_date_range).with(@private_room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg.id]))
-        expect_any_instance_of(Api::V1::MessagesController).to receive(:clear_message_counter).with(@private_room, @person).and_return(true)
+        expect_any_instance_of(Room).to receive(:clear_message_counter).with(@private_room.room_memberships.where(person: @person).first)
         get "/rooms/#{@private_room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
         expect(response).to be_success
         expect(json["messages"].first).to eq(message_json(msg))

@@ -28,7 +28,7 @@ describe "Posts (v1)" do
       expect(json["post"]).to eq(post_json(post))
     end
     it "should not create a new post if not logged in" do
-      expect_any_instance_of(Api::V1::MessagesController).not_to receive(:post_post)
+      expect_any_instance_of(Api::V1::PostsController).not_to receive(:post_post)
       post "/posts", params: { post: { body: "not gonna see my body" } }
       expect(response).to be_unauthorized
     end

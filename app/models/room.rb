@@ -1,5 +1,6 @@
 class Room < ApplicationRecord
   include AttachmentSupport
+  include Room::RealTime
 
   enum status: %i[ inactive active deleted ]
 
