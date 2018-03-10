@@ -673,6 +673,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.3)
+    daemons (1.2.6)
     database_cleaner (1.6.2)
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
@@ -961,6 +962,7 @@ DEPENDENCIES
   binding_of_caller
   byebug
   coffee-rails (~> 4.2)
+  daemons
   database_cleaner
   delayed_job_active_record
   dotenv-rails

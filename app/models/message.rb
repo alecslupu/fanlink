@@ -1,5 +1,7 @@
 class Message < ApplicationRecord
   include AttachmentSupport
+  include Message::RealTime
+
   enum status: %i[ pending posted ]
 
   belongs_to :person
