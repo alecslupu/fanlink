@@ -1,5 +1,4 @@
 class Api::V1::MessagesController < ApiController
-  include Messaging
   include Push
 
   load_up_the Room, from: :room_id
@@ -40,7 +39,7 @@ class Api::V1::MessagesController < ApiController
         if @message.valid?
           @message.post
           if room.private?
-            update_message_counts(room)
+            room.increment_message_counters(current_user.id)
             private_message_push(@message)
           end
         end
@@ -71,7 +70,7 @@ class Api::V1::MessagesController < ApiController
     if msg.person == current_user
       msg.hidden = true
       msg.save
-      delete_message(msg)
+      msg.delete_real_time
       head :ok
     else
       head :unauthorized
@@ -172,11 +171,10 @@ private
   end
 
   def clear_count(room)
-    if clear_message_counter(room, current_user)
-      membership = room.room_memberships.find_by(person_id: current_user.id)
-      if membership
-        membership.update_attribute(:message_count, 0)
-      end
+    membership = room.room_memberships.find_by(person_id: current_user.id)
+    if membership
+      room.clear_message_counter(membership)
+      membership.update_attribute(:message_count, 0)
     end
   end
 
@@ -184,15 +182,4 @@ private
     params.require(:message).permit(:body, :picture)
   end
 
-  def messaging_error
-    render json: { errors: "There was a problem sending the message. Please try again laster." }, status: :service_unavailable
-  end
-
-  def update_message_counts(room)
-    if set_message_counters(room, current_user)
-      room.room_memberships.each do |mem|
-        mem.increment!(:message_count) unless mem.person == current_user
-      end
-    end
-  end
 end
