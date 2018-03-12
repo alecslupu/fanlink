@@ -1,6 +1,4 @@
 class Api::V1::PostsController < ApiController
-  include Messaging
-
   before_action :set_language, only: %i[ index show ]
 
   #**
@@ -32,12 +30,8 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      if post_post(@post, @post.person.followers)
-        @post.published!
-      else
-        @post.destroy
-        render_error("Sorry unable to post your post. Please try again later.") && return
-      end
+      @post.post
+      @post.published!
     end
     return_the @post
   end
@@ -59,12 +53,9 @@ class Api::V1::PostsController < ApiController
   def destroy
     post = Post.visible.find(params[:id])
     if post.person == current_user
-      if delete_post(post, post.person.followers)
-        post.deleted!
-        head :ok
-      else
-        render_error("Unable to delete the post. Please try again later.")
-      end
+      post.deleted!
+      post.delete_real_time
+      head :ok
     else
       render_not_found
     end
