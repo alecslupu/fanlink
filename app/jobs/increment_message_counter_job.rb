@@ -11,10 +11,4 @@ class IncrementMessageCounterJob < Struct.new(:room_id, :poster_id)
       client.update("", payload)
     end
   end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
 end

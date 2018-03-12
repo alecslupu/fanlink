@@ -9,7 +9,7 @@ class Room
     end
 
     def increment_message_counters(poster_id)
-      room.room_memberships.each do |mem|
+      room_memberships.each do |mem|
         mem.increment!(:message_count) unless mem.person.id == poster_id
       end
       Delayed::Job.enqueue(UpdateMessageCounterJob.new(self.id, poster_id))
