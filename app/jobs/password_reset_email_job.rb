@@ -6,7 +6,7 @@ class PasswordResetEmailJob < Struct.new(:person_id)
 
   def error(job, exception)
     if exception.is_a?(Mandrill::UnknownTemplateError)
-      job.destroy
+      Delayed::Job.where(id: job.id).destroy_all
     end
   end
 end

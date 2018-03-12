@@ -14,10 +14,4 @@ class DeletePostJob < Struct.new(:post_id)
       end
     end
   end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
 end
