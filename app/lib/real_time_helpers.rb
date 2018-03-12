@@ -1,5 +1,4 @@
 module RealTimeHelpers
-
 protected
 
   def client
@@ -17,5 +16,4 @@ protected
   def user_path(person)
     "#{person.product.internal_name}/users/#{person.id}"
   end
-
 end

@@ -9,5 +9,4 @@ class OnboardingEmailJob < Struct.new(:person_id)
       job.destroy
     end
   end
-
 end

@@ -13,5 +13,4 @@ class DeleteMessageJob < Struct.new(:message_id)
       job.destroy
     end
   end
-
 end

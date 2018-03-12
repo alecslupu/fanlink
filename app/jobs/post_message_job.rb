@@ -15,5 +15,4 @@ class PostMessageJob < Struct.new(:message_id)
       job.destroy
     end
   end
-
 end

@@ -1,5 +1,4 @@
 class Api::V1::PeopleController < ApiController
-
   prepend_before_action :logout, only: :create
 
   load_up_the Person

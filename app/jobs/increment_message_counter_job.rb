@@ -17,5 +17,4 @@ class IncrementMessageCounterJob < Struct.new(:room_id, :poster_id)
       job.destroy
     end
   end
-
 end
