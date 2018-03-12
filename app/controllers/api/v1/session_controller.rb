@@ -73,7 +73,7 @@ class Api::V1::SessionController < ApiController
     else
       @person = Person.can_login?(params[:email_or_username])
       if @person
-        if Rails.env.staging? && ENV['FAVORITE_CHARACTER'].present? && (params[:password] == ENV['FAVORITE_CHARACTER'])
+        if Rails.env.staging? && ENV["FAVORITE_CHARACTER"].present? && (params[:password] == ENV["FAVORITE_CHARACTER"])
           @person = auto_login(@person)
         else
           @person = login(@person.email, params[:password]) if @person
