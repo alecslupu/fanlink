@@ -14,5 +14,4 @@ class ClearMessageCounterJob < Struct.new(:room_id, :membership_id)
       job.destroy
     end
   end
-
 end

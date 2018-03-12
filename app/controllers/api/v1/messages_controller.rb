@@ -181,5 +181,4 @@ private
   def message_params
     params.require(:message).permit(:body, :picture)
   end
-
 end

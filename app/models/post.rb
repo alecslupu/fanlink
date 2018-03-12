@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   include AttachmentSupport
+  include Post::RealTime
   include TranslationThings
 
   enum status: %i[ pending published deleted rejected errored ]
