@@ -28,7 +28,7 @@ describe "Rooms (v1)" do
       expect(response).to be_unauthorized
     end
     it "should create a private room with a list of members and make it active" do
-      expect_any_instance_of(Api::V1::RoomsController).to receive(:new_private_room)
+      expect_any_instance_of(Room).to receive(:new_room)
       login_as(@person)
       member = create(:person, product: @product)
       n = "Some Room"
@@ -42,7 +42,7 @@ describe "Rooms (v1)" do
       expect(members.sort).to eq([member, @person].sort)
     end
     it "should not include blocked users in private room" do
-      expect_any_instance_of(Api::V1::RoomsController).to receive(:new_private_room)
+      expect_any_instance_of(Room).to receive(:new_room)
       login_as(@person)
       member = create(:person, product: @product)
       member_blocked = create(:person, product: @product)
@@ -61,13 +61,13 @@ describe "Rooms (v1)" do
     it "should completely destroy room without messages" do
       login_as(@person)
       room = create(:room, created_by: @person, product: @person.product)
-      expect_any_instance_of(Api::V1::RoomsController).to receive(:delete_room).with(room)
+      expect_any_instance_of(Room).not_to receive(:delete_me)
       delete "/rooms/#{room.id}"
       expect(response).to be_success
       expect(room).not_to exist_in_database
     end
     it "should not delete room if not room owner" do
-      expect_any_instance_of(Api::V1::RoomsController).to_not receive(:delete_room)
+      expect_any_instance_of(Room).to_not receive(:delete_me)
       login_as(create(:person, product: @person.product))
       room = create(:room, created_by: @person, product: @person.product)
       delete "/rooms/#{room.id}"
@@ -77,7 +77,7 @@ describe "Rooms (v1)" do
     it "should mark room deleted if it has messages" do
       login_as(@person)
       room = create(:room, created_by: @person, product: @person.product, status: :active)
-      expect_any_instance_of(Api::V1::RoomsController).to receive(:delete_room).with(room)
+      expect_any_instance_of(Room).to receive(:delete_me)
       room.messages.create(person: @person, body: "hi")
       delete "/rooms/#{room.id}"
       expect(response).to be_success

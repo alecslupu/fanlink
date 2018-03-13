@@ -1,4 +1,4 @@
-class IncrementMessageCounterJob < Struct.new(:room_id, :poster_id)
+class UpdateMessageCounterJob < Struct.new(:room_id, :poster_id)
   include RealTimeHelpers
 
   def perform
