@@ -48,7 +48,7 @@ module Fanlink
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins /\Ahttps:\/\/([\w]+\.)?fan.link\z/
-        resource "*", headers: :any, methods: :any
+        resource "*", headers: :any, methods: :any, credentials: true
       end
     end
     config.i18n.default_locale = :en
