@@ -82,6 +82,7 @@ module JsonHelpers
       "name"              => person.name,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
+      "recommended"       => person.recommended,
       "chat_banned"       => person.chat_banned,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,

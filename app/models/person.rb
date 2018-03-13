@@ -48,7 +48,6 @@ class Person < ApplicationRecord
   validates :password, length: { minimum: 6, allow_blank: true }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
   validate :check_role
-
   #
   # Return the canonical form of a username.
   #
