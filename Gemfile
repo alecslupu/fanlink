@@ -67,6 +67,7 @@ gem "aws-sdk"
 gem "delayed_job_active_record"
 gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging
+gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "gettext_i18n_rails"
 gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51" # api versioning

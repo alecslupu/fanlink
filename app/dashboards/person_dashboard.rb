@@ -86,6 +86,6 @@ class PersonDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(person)
-    person.name
+    person.username
   end
 end
