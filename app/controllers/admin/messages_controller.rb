@@ -23,18 +23,26 @@ module Admin
       end
     end
 
-    # def index
-    #   #search_term = params[:search].to_s.strip
-    #   resources = Message.publics.for_product(ActsAsTenant.current_tenant).order(created_at: :desc).page(params[:page]).per(records_per_page)
-    #   page = Administrate::Page::Collection.new(dashboard, order: order)
-    #
-    #   render locals: {
-    #       resources: resources,
-    #       #search_term: search_term,
-    #       page: page,
-    #       show_search_bar: false
-    #   }
-    # end
+    def index
+      page = Administrate::Page::Collection.new(dashboard, order: order)
+      params[:filterrific] ||= {}
+      if params[:order].present?
+        params[:filterrific][:sorted_by] = "#{params[:order]} #{params[:direction]}"
+      end
+      @filterrific = initialize_filterrific(
+        Message.publics.for_product(ActsAsTenant.current_tenant),
+        params[:filterrific],
+        select_options: {
+          with_reported_status: Message::FilterrificImpl.options_for_reported_status_filter
+        }
+      ) or return
+      resources = @filterrific.find.page(params[:page])
+      render locals: {
+          resources: resources,
+          page: page,
+          show_search_bar: false
+      }
+    end
 
     def unhide
       @message = Message.find(params[:message_id])

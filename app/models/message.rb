@@ -1,5 +1,6 @@
 class Message < ApplicationRecord
   include AttachmentSupport
+  include Message::FilterrificImpl
   include Message::RealTime
 
   enum status: %i[ pending posted ]
@@ -29,12 +30,20 @@ class Message < ApplicationRecord
     created_at.to_s
   end
 
+  def name
+    person.name
+  end
+
   def product
     room.product
   end
 
   def reported?
     (message_reports.size > 0) ? "Yes" : "No"
+  end
+
+  def username
+    person.username
   end
 
   def visible?

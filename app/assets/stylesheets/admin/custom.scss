@@ -36,6 +36,36 @@ form {
 
 }
 
+.new_filterrific fieldset {
+  display: inline-block;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px groove grey;
+  border-radius: 10px;
+  div {
+    margin-top: 10px;
+  }
+  legend {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  input {
+    width: 400px;
+  }
+
+  select {
+    width: auto;
+  }
+  input[type="number"] {
+    width: 140px;
+  }
+  .button {
+    max-width: 140px;
+  }
+}
+
 .navigation__link {
   margin-left: 15px;
 }
