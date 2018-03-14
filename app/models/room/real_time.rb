@@ -16,7 +16,7 @@ class Room
       room_memberships.each do |mem|
         mem.increment!(:message_count) unless mem.person.id == poster_id
       end
-      Delayed::Job.enqueue(ClearMessageCounterJob.new(self.id, poster_id))
+      Delayed::Job.enqueue(UpdateMessageCounterJob.new(self.id, poster_id))
     end
 
     def new_room
