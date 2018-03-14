@@ -26,9 +26,7 @@ module Admin
     def index
       page = Administrate::Page::Collection.new(dashboard, order: order)
       params[:filterrific] ||= {}
-      if params[:order].present?
-        params[:filterrific][:sorted_by] = "#{params[:order]} #{params[:direction]}"
-      end
+      params[:filterrific][:sorted_by] = params[:order].present? ? "#{params[:order]} #{params[:direction]}" : "created desc"
       @filterrific = initialize_filterrific(
         Message.publics.for_product(ActsAsTenant.current_tenant),
         params[:filterrific],
@@ -58,6 +56,10 @@ module Admin
 
     def message_params
       params.require(:message).permit(:hidden)
+    end
+
+    def scoped_resource
+      Message.publics.for_product(ActsAsTenant.current_tenant)
     end
 
     def valid_action?(name, resource = resource_class)

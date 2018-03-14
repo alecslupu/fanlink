@@ -16,8 +16,8 @@ class MessageReportDashboard < Administrate::BaseDashboard
     status: Field::Enum,
     reporter: Field::String,
     poster: Field::String,
-    created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    created: Field::String,
+    updated: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -26,6 +26,7 @@ class MessageReportDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :created,
     :message,
     :poster,
     :reporter,
@@ -42,7 +43,8 @@ class MessageReportDashboard < Administrate::BaseDashboard
     :reporter,
     :reason,
     :status,
-    :updated_at,
+    :created,
+    :updated,
   ].freeze
 
 
