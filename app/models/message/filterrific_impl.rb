@@ -14,7 +14,7 @@ class Message
         scope :sorted_by, lambda { |sort_option|
           direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
           case sort_option.to_s
-            when /^created_at/
+            when /^created/
               order("created_at #{direction}")
             when /^person/
               joins(:person).order("LOWER(people.username) #{ direction }")
