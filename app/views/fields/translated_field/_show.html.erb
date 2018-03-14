@@ -1,0 +1,10 @@
+<% unless field.resource.send(field.name).blank? %>
+  <table class="translation-show">
+    <% TranslationThings::LANGS.each do |lang, lang_name| %>
+      <% val = field.resource.send(field.name, lang) %>
+      <% unless val.blank? %>
+        <tr><td><%= lang_name %></td><td><%= val %></td></tr>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>
