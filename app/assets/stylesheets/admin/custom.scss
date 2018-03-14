@@ -69,9 +69,12 @@ form {
 }
 
 .post-reactions {
-  margin: 20px;
+  margin: 80px;
   table {
     width: 300px;
-    margin: 15px;
+    caption {
+      text-align: left;
+      font-weight: bold;
+    }
   }
 }

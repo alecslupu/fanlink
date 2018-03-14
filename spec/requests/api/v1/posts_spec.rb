@@ -16,7 +16,7 @@ describe "Posts (v1)" do
 
   describe "#create" do
     it "should create a new post and publish it" do
-      expect_any_instance_of(Api::V1::PostsController).to receive(:post_post).and_return(true)
+      expect_any_instance_of(Post).to receive(:post)
       login_as(@person)
       body = "Do you like my body?"
       post "/posts", params: { post: { body: body } }
@@ -28,24 +28,15 @@ describe "Posts (v1)" do
       expect(json["post"]).to eq(post_json(post))
     end
     it "should not create a new post if not logged in" do
-      expect_any_instance_of(Api::V1::MessagesController).not_to receive(:post_post)
+      expect_any_instance_of(Post).not_to receive(:post)
       post "/posts", params: { post: { body: "not gonna see my body" } }
       expect(response).to be_unauthorized
-    end
-    it "should destroy the post and return error if unable to get it on the socket" do
-      login_as(@person)
-      precount = Post.count
-      expect_any_instance_of(Api::V1::PostsController).to receive(:post_post).and_return(false)
-      post "/posts", params: { post: { body: "not gonna post" } }
-      expect(response).to be_unprocessable
-      expect(Post.count - precount).to eq(0)
-      expect(json["errors"]).to include("unable to post your post")
     end
   end
 
   describe "#destroy" do
     it "should delete message from original creator" do
-      expect_any_instance_of(Api::V1::PostsController).to receive(:delete_post).and_return(true)
+      expect_any_instance_of(Post).to receive(:delete_real_time)
       login_as(@person)
       post = create(:post, person: @person, status: :published)
       delete "/posts/#{post.id}"
@@ -53,7 +44,7 @@ describe "Posts (v1)" do
       expect(post.reload.deleted?).to be_truthy
     end
     it "should not delete post from someone else" do
-      expect_any_instance_of(Api::V1::PostsController).to_not receive(:delete_message)
+      expect_any_instance_of(Post).to_not receive(:delete_real_time)
       p = create(:person)
       login_as(@person)
       post = create(:post, person: p, status: :published)
@@ -61,17 +52,8 @@ describe "Posts (v1)" do
       expect(response).to be_not_found
       expect(post.reload.published?).to be_truthy
     end
-    it "should not delete post if unable to delete on socket" do
-      login_as(@person)
-      expect_any_instance_of(Api::V1::PostsController).to receive(:delete_post).and_return(false)
-      post = create(:post, person: @person, status: :published)
-      delete "/posts/#{post.id}"
-      expect(response).to be_unprocessable
-      expect(post).to exist_in_database
-      expect(json["errors"]).to include("Unable to delete the post")
-    end
     it "should not delete post if not logged in" do
-      expect_any_instance_of(Api::V1::PostsController).to_not receive(:delete_post)
+      expect_any_instance_of(Post).to_not receive(:delete_real_time)
       post = create(:post, person: @person, status: :published)
       delete "/posts/#{post.id}"
       expect(response).to be_unauthorized

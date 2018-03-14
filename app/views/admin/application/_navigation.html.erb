@@ -16,7 +16,7 @@ as defined by the routes in the `admin/` namespace
         <% unless resource.resource == "sessions" || (!current_user.super_admin? && resource.resource == "products") %>
           <%= link_to(
             display_resource_name(resource).titleize,
-            [namespace, resource.path],
+            [namespace, resource_index_route_key(resource)],
             class: "navigation__link navigation__link--#{nav_link_state(resource)}"
           ) %>
         <% end %>

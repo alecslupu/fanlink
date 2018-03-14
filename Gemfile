@@ -44,6 +44,7 @@ end
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
+  gem "daemons"
   gem "gettext", ">=3.0.2", require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
@@ -63,6 +64,7 @@ gem "administrate", ">= 0.9.0"
 gem "administrate-field-enum", git: "https://github.com/mark100net/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "aws-sdk"
+gem "delayed_job_active_record"
 gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
@@ -81,6 +83,7 @@ gem "oj" #json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem "postgresql-check"
 gem "rack-cors", require: "rack/cors"
+gem "rack-timeout"
 gem "rollbar"
 gem "rubocop-rails"
 gem "sorcery"

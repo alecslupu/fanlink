@@ -40,6 +40,17 @@ module JsonHelpers
     }
   end
 
+  def merchandise_json(merchandise)
+    {
+      "id"           => merchandise.id.to_s,
+      "name"         => merchandise.name,
+      "description"  => merchandise.description,
+      "price"        => merchandise.price,
+      "purchase_url" => merchandise.purchase_url,
+      "picture_url"  => merchandise.picture_url
+    }
+  end
+
   def message_json(msg)
     {
       "id"        => msg.id.to_s,

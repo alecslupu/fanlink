@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :blocks, only: %i[ create destroy ]
       resources :followings, only: %i[ create destroy index ]
       resources :levels, only: %i[ index ]
+      resources :merchandise, only: %i[ index show ]
       resources :notification_device_ids, only: %i[ create ] do
         collection do
           delete "" => "notification_device_ids#destroy"
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
     resources :action_types
     resources :badges
     resources :levels
+    resources :merchandise
     resources :messages do
       get "hide" => "messages#hide"
       get "unhide" => "messages#unhide"

@@ -45,6 +45,9 @@ as well as a link to its edit page.
       <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
           ><%= render_field attribute %></dd>
     <% end %>
+    <dt></dt>
+      <dd>
+        <%= render partial: "reactions", locals: { post: page.resource } %>
+      </dd>
   </dl>
-  <%= render partial: "reactions", locals: { post: page.resource } %>
 </section>
