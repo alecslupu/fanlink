@@ -1,5 +1,8 @@
 class Person < ApplicationRecord
+  include TranslationThings
   authenticates_with_sorcery!
+
+  has_manual_translated :designation
 
   has_paper_trail
 

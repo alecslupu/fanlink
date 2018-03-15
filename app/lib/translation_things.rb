@@ -125,11 +125,11 @@ module TranslationThings
 
         LANGS.keys.each do |lang|
           translation_things_module.module_eval(%Q{
-            def body_#{lang}
+            def #{name}_#{lang}
               #{name}(#{lang})
             end
 
-            def body_#{lang}=(val)
+            def #{name}_#{lang}=(val)
               self.#{name} = { "#{lang}" => val }
             end
           })
