@@ -1,3 +1,4 @@
+<% raw_hash = f.object.send(field.attribute.to_s + "_to_h") %>
 <div class="field-unit__label">
   <%= f.label field.attribute %>
 </div>
@@ -16,7 +17,7 @@
         <label><%= n %></label>
       </div>
       <div class="field-unit__field">
-        <%= text_area_tag("person[#{field.attribute}_#{l}]", f.object.new_record? ? "" : f.object.send(field.attribute, l), rows: 1, cols: 120) %>
+        <%= text_area_tag("person[#{field.attribute}_#{l}]", f.object.new_record? ? "" : raw_hash[l], rows: 1, cols: 120) %>
       </div>
     </div>
   <% end %>
