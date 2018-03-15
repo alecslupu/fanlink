@@ -715,6 +715,8 @@ GEM
       fast_gettext (>= 0.9.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    google_places (1.1.0)
+      httparty (>= 0.13.1)
     googleauth (0.6.2)
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
@@ -973,6 +975,7 @@ DEPENDENCIES
   firebase!
   gettext (>= 3.0.2)
   gettext_i18n_rails
+  google_places
   jbuilder (~> 2.5)
   jko_api!
   koala
