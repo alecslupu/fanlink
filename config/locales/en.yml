@@ -39,6 +39,9 @@ en:
   administrate:
     actions:
       show: "Show"
+  date:
+    formats:
+      default: "%d/%m/%Y %H:%M:%S"
   time:
     formats:
-      default: "%Y-%m-%d %H:%M:%S"
+      default: "%d/%m/%Y %H:%M:%S"
