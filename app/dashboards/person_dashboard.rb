@@ -20,6 +20,8 @@ class PersonDashboard < Administrate::BaseDashboard
     auto_follow: Field::Boolean,
     product_account: Field::Boolean,
     chat_banned: Field::Boolean,
+    level_earned: Field::BelongsTo::with_options(class_name: "Level"),
+    badges: Field::HasMany,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
@@ -63,6 +65,8 @@ class PersonDashboard < Administrate::BaseDashboard
     :facebook_picture_url,
     :created_at,
     :updated_at,
+    :level_earned,
+    :badges
   ].freeze
 
   # FORM_ATTRIBUTES

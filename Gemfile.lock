@@ -45,6 +45,22 @@ GIT
       json
 
 GIT
+  remote: https://github.com/thoughtbot/administrate.git
+  revision: eb1c9f81c3f126aa0de7e9bf90954d5e1b2fb961
+  specs:
+    administrate (0.9.0)
+      actionpack (>= 4.2, < 5.2)
+      actionview (>= 4.2, < 5.2)
+      activerecord (>= 4.2, < 5.2)
+      autoprefixer-rails (>= 6.0)
+      datetime_picker_rails (~> 0.0.7)
+      jquery-rails (>= 4.0)
+      kaminari (>= 1.0)
+      momentjs-rails (~> 2.8)
+      sass-rails (~> 5.0)
+      selectize-rails (~> 0.6)
+
+GIT
   remote: https://markfraser@bitbucket.org/markfraser/mandrill-api-ruby.git
   revision: ef242421a06bb3a299900f97929dbf85e4cd6063
   specs:
@@ -94,24 +110,13 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    administrate (0.9.0)
-      actionpack (>= 4.2, < 5.2)
-      actionview (>= 4.2, < 5.2)
-      activerecord (>= 4.2, < 5.2)
-      autoprefixer-rails (>= 6.0)
-      datetime_picker_rails (~> 0.0.7)
-      jquery-rails (>= 4.0)
-      kaminari (>= 1.0)
-      momentjs-rails (~> 2.8)
-      sass-rails (~> 5.0)
-      selectize-rails (~> 0.6)
     appraisal (2.2.0)
       bundler
       rake
       thor (>= 0.14.0)
     arel (8.0.0)
     ast (2.3.0)
-    autoprefixer-rails (8.1.0)
+    autoprefixer-rails (8.1.0.1)
       execjs
     aws-partitions (1.56.0)
     aws-sdk (3.0.1)
@@ -691,7 +696,7 @@ GEM
       railties (>= 3.2, < 5.2)
     email_validator (1.6.0)
       activemodel
-    erubi (1.7.0)
+    erubi (1.7.1)
     excon (0.60.0)
     execjs (2.7.0)
     factory_bot (4.8.2)
@@ -849,7 +854,7 @@ GEM
     rainbow (2.2.2)
       rake
     rake (12.3.0)
-    rb-fsevent (0.10.2)
+    rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     request_store (1.3.2)
@@ -954,7 +959,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tenant!
-  administrate
+  administrate!
   administrate-field-enum!
   administrate-field-paperclip!
   aws-sdk

@@ -39,4 +39,6 @@ en:
   administrate:
     actions:
       show: "Show"
-            
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M:%S"
