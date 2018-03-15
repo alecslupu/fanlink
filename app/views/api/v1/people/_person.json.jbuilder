@@ -1,5 +1,6 @@
 json.id person.id.to_s
 json.(person, :username, :name, :picture_url, :product_account, :chat_banned)
+json.designation person.designation(@lang)
 if fol = current_user && current_user.following_for_person(person)
   json.following_id fol.id
 else

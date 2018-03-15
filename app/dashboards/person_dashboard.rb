@@ -15,6 +15,7 @@ class PersonDashboard < Administrate::BaseDashboard
     email: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
     role: Field::Enum.with_options(collection_method: :roles_for_select),
+    designation: Field::TranslatedField,
     do_not_message_me: Field::Boolean,
     pin_messages_from: Field::Boolean,
     auto_follow: Field::Boolean,
@@ -54,6 +55,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :role,
+    :designation,
     :do_not_message_me,
     :pin_messages_from,
     :auto_follow,
@@ -74,6 +76,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :role,
+    :designation,
     :do_not_message_me,
     :pin_messages_from,
     :auto_follow,
@@ -86,6 +89,6 @@ class PersonDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(person)
-    person.name
+    person.username
   end
 end
