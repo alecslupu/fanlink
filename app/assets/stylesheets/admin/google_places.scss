@@ -1,8 +1,8 @@
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 #map {
-  height: 400px;
-  width: 700px;
+  height: 500px;
+  width: 800px;
 }
 
 .controls {
@@ -34,4 +34,12 @@
 }
 #map #infowindow-content {
   display: inline;
+}
+
+#pac-input {
+  display: none;
+}
+
+#use-place {
+  width: 100px;
 }

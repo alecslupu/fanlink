@@ -4,7 +4,7 @@
 <div class="field-unit__field">
   <%= f.text_field :place_identifier %>
   <%= text_field_tag "pac-input", "", class: "controls", placeholder: "Enter a location to look up" %>
-  <div id="map"</div>
+  <div id="map"></div>
   <div id="infowindow-content">
     <span id="place-name"  class="title"></span><br>
     Place ID <span id="place-id"></span><br>
@@ -23,7 +23,7 @@
 
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -33.8688, lng: 151.2195},
+      center: {lat: 36.11, lng: -115.17},
       zoom: 13
     });
 
@@ -32,7 +32,7 @@
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(input);
 
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
@@ -42,6 +42,23 @@
     });
     marker.addListener('click', function() {
       infowindow.open(map, marker);
+    });
+    var anch = document.createElement("a");
+    anch.setAttribute("id", "use-place");
+    anch.setAttribute("class", "button");
+    anch.setAttribute("style", "display:block");
+    var textNode = document.createTextNode("Use This");
+    anch.appendChild(textNode);
+    anch.addEventListener('click', function() {
+      document.getElementById("event_place_identifier").value = infowindowContent.children['place-id'].textContent;
+      infowindow.close();
+    });
+    infowindowContent.appendChild(anch);
+
+    google.maps.event.addDomListener(input, 'keydown', function(event) {
+      if (event.keyCode == 13) {
+          event.preventDefault();
+      }
     });
 
     autocomplete.addListener('place_changed', function() {
@@ -70,6 +87,7 @@
           place.formatted_address;
       infowindow.open(map, marker);
     });
+    setTimeout(function() { document.getElementById('pac-input').style.display = 'block' }, 1000);
   }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_PLACES_KEY'] %>&libraries=places&callback=initMap"
