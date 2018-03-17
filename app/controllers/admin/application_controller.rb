@@ -46,10 +46,9 @@ module Admin
         product = Product.find_by(internal_name: params[:product_internal_name])
       else
         if current_user.super_admin? && (cookies[:product_id].to_i > 0)
-          product = Product.find(cookies[:product_id])
-        else
-          product = current_user.product
+          product = Product.where(id: cookies[:product_id].to_i)
         end
+        product = current_user.product if product.nil?
       end
       if product.present?
         set_current_tenant(product)
