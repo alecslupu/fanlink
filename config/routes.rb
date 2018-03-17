@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :action_types
     resources :badges
+    resources :events
     resources :levels
     resources :merchandise
     resources :messages do
