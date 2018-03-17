@@ -45,24 +45,11 @@ module Fanlink
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
 
-    ALWAYS_ALLOW_CORS= %w[ https://www.fan.link https://staging.fan.link ]
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        #origins "https://www.fan.link", "http://smiley.fan.link", "https://nbc.fan.link", "https://staging.fan.link", "https://inna.fan.link", "https://adara.fan.link"
         origins do |source, env|
-          # this proc should return true or false
-          # You can dynamically check the database/redis or any other storage for your origins
-          if ALWAYS_ALLOW_CORS.include?(source)
-            true
-          else
-            if source =~ /\Ahttps:\/\/([\w]+)\.fan\.link\z/
-              Product.where(internal_name: $1).exists?
-            else
-              false
-            end
-          end
+          CorsGuard.allow_from?(source)
         end
-
         resource "*", headers: :any, methods: :any, credentials: true
       end
     end
