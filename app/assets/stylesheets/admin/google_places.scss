@@ -5,6 +5,15 @@
   width: 800px;
 }
 
+#event_place_identifier {
+  width: 400px;
+  float: left;
+}
+.clear-button {
+  height: 35px;
+  margin-left: 6px;
+}
+
 .controls {
   background-color: #fff;
   border-radius: 2px;
@@ -23,6 +32,7 @@
   width: 400px;
 }
 
+
 .controls:focus {
   border-color: #4d90fe;
 }
@@ -38,6 +48,20 @@
 
 #pac-input {
   display: none;
+  bottom: 0;
+}
+
+.place-info {
+  font-size: small;
+  padding: 12px;
+  display: inline-block;
+  border: 1px dotted grey;
+  border-radius: 4px;
+  margin-top: 10px;
+  ul {
+    margin-left: 30px;
+    list-style-type: disc;
+  }
 }
 
 #use-place {

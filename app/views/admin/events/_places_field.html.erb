@@ -1,8 +1,9 @@
+<% place_info = f.object.place_info %>
 <div class="field-unit__label">
   <%= f.label :place_identifier %>
 </div>
 <div class="field-unit__field">
-  <%= f.text_field :place_identifier %>
+  <%= f.text_field :place_identifier, readonly: true %><span class="clear-button button" data-for="event_place_identifier">Clear</span>
   <%= text_field_tag "pac-input", "", class: "controls", placeholder: "Enter a location to look up" %>
   <div id="map"></div>
   <div id="infowindow-content">
@@ -22,9 +23,12 @@
   // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
   function initMap() {
+    var lat = <%= place_info.present? ? place_info.lat : 36.11 %>;
+    var lng = <%= place_info.present? ? place_info.lng : -115.17 %>;
     var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 36.11, lng: -115.17},
-      zoom: 13
+      center: {lat: lat, lng: lng},
+      zoom: 13,
+      mapTypeControl: false
     });
 
     var input = document.getElementById('pac-input');
@@ -33,7 +37,6 @@
     autocomplete.bindTo('bounds', map);
 
     map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(input);
-
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
     infowindow.setContent(infowindowContent);

@@ -9,8 +9,11 @@ class EventDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
+    product: Field::BelongsTo,
     name: Field::Text,
-    start_time: Field::DateTime,
+    description: Field::Text,
+    starts_at: Field::DateTime,
+    ends_at: Field::DateTime,
     ticket_url: Field::Text,
     place_identifier: Field::Text,
     created_at: Field::DateTime,
@@ -25,7 +28,7 @@ class EventDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :name,
-    :start_time,
+    :starts_at,
     :ticket_url,
   ].freeze
 
@@ -34,7 +37,9 @@ class EventDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :name,
-    :start_time,
+    :description,
+    :starts_at,
+    :ends_at,
     :ticket_url,
     :place_identifier,
     :created_at,
@@ -46,7 +51,9 @@ class EventDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
-    :start_time,
+    :description,
+    :starts_at,
+    :ends_at,
     :ticket_url,
     :place_identifier,
   ].freeze

@@ -111,6 +111,7 @@ GEM
       thor (>= 0.14.0)
     arel (8.0.0)
     ast (2.3.0)
+    attribute_normalizer (1.2.0)
     autoprefixer-rails (8.1.0)
       execjs
     aws-partitions (1.56.0)
@@ -959,6 +960,7 @@ DEPENDENCIES
   administrate
   administrate-field-enum!
   administrate-field-paperclip!
+  attribute_normalizer
   aws-sdk
   better_errors
   binding_of_caller
