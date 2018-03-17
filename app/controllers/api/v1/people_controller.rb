@@ -77,6 +77,8 @@ class Api::V1::PeopleController < ApiController
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
   #       "product_account": false,
+  #       "chat_banned": false,
+  #       "designation": "Grand Poobah",
   #       "following_id": 12, //or null
   #       "badge_points": 0,
   #       "level": "something", //or null,
