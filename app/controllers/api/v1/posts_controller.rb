@@ -96,7 +96,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
   def index
-    if !check_dates
+    if !check_dates(true)
       render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
     else
       l = params[:limit].to_i
@@ -153,11 +153,6 @@ class Api::V1::PostsController < ApiController
   end
 
 private
-
-  def check_dates
-    params[:from_date].present? && DateUtil.valid_date_string?(params[:from_date]) &&
-        params[:to_date].present? && DateUtil.valid_date_string?(params[:to_date])
-  end
 
   def post_params
     params.require(:post).permit(:body, :picture)
