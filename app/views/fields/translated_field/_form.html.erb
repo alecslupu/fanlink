@@ -1,0 +1,33 @@
+<% raw_hash = f.object.send(field.attribute.to_s + "_to_h") %>
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field translated-field">
+  <% translated = f.object.send("#{field.attribute}_translated?") %>
+  <% translate_button = false %>
+  <% TranslationThings::LANGS.each do |l,n| %>
+    <% if translated || l == TranslationThings::DEFAULT_LANG %>
+      <% visi_class = "display-block" %>
+    <% else %>
+      <% visi_class = "display-none" %>
+      <% translate_button = true %>
+    <% end %>
+    <div class="field-unit field-unit--text post-body <%= visi_class %>">
+      <div class="field-unit__label">
+        <label><%= n %></label>
+      </div>
+      <div class="field-unit__field">
+        <%= text_area_tag("person[#{field.attribute}_#{l}]", f.object.new_record? ? "" : raw_hash[l], rows: 1, cols: 120) %>
+      </div>
+    </div>
+  <% end %>
+  <% if translate_button %>
+    <div class="field-unit">
+      <div class="field-unit__label"></div>
+      <div class="field-unit__field translate-button">
+        <a class="button">Translate</a>
+      </div>
+    </div>
+  <% end %>
+
+</div>

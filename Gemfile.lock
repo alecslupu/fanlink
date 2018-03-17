@@ -45,6 +45,22 @@ GIT
       json
 
 GIT
+  remote: https://github.com/thoughtbot/administrate.git
+  revision: 7f56e7ca93726e210cea15865c970205a0533045
+  specs:
+    administrate (0.9.0)
+      actionpack (>= 4.2, < 5.2)
+      actionview (>= 4.2, < 5.2)
+      activerecord (>= 4.2, < 5.2)
+      autoprefixer-rails (>= 6.0)
+      datetime_picker_rails (~> 0.0.7)
+      jquery-rails (>= 4.0)
+      kaminari (>= 1.0)
+      momentjs-rails (~> 2.8)
+      sass-rails (~> 5.0)
+      selectize-rails (~> 0.6)
+
+GIT
   remote: https://markfraser@bitbucket.org/markfraser/mandrill-api-ruby.git
   revision: ef242421a06bb3a299900f97929dbf85e4cd6063
   specs:
@@ -94,24 +110,13 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    administrate (0.9.0)
-      actionpack (>= 4.2, < 5.2)
-      actionview (>= 4.2, < 5.2)
-      activerecord (>= 4.2, < 5.2)
-      autoprefixer-rails (>= 6.0)
-      datetime_picker_rails (~> 0.0.7)
-      jquery-rails (>= 4.0)
-      kaminari (>= 1.0)
-      momentjs-rails (~> 2.8)
-      sass-rails (~> 5.0)
-      selectize-rails (~> 0.6)
     appraisal (2.2.0)
       bundler
       rake
       thor (>= 0.14.0)
     arel (8.0.0)
     ast (2.3.0)
-    autoprefixer-rails (8.1.0)
+    autoprefixer-rails (8.1.0.1)
       execjs
     aws-partitions (1.56.0)
     aws-sdk (3.0.1)
@@ -954,7 +959,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tenant!
-  administrate (>= 0.9.0)
+  administrate!
   administrate-field-enum!
   administrate-field-paperclip!
   aws-sdk

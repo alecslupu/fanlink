@@ -84,6 +84,10 @@ module TranslationThings
             read_attribute(:#{name}).to_h.values_at(language.to_s, DEFAULT_READ_LANG, DEFAULT_LANG).compact.first
           end
 
+          def #{name}_to_h
+            read_attribute(:#{name}).to_h
+          end
+
           def #{name}_buffed(language = 'en')
             unbuffed = #{name}(language)
             unbuffed.gsub("{{", "").gsub("}}", "")
@@ -105,7 +109,11 @@ module TranslationThings
                   raise "Unknown language: " + lang
                   lang = 'un'
                 end
-                write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge({ lang => v }))
+                if v.blank?
+                  write_attribute(:#{name}, read_attribute(:#{name}).to_h.except(lang))
+                else
+                  write_attribute(:#{name}, read_attribute(:#{name}).to_h.merge({ lang => v }))
+                end
               end
             end
           end
@@ -115,9 +123,12 @@ module TranslationThings
           end
 
           def #{name}_translated?
-            LANGS.keys.each do |l|
-              next if l == DEFAULT_LANG
-              return true if #{name}(l).present?
+            raw_hash = self.#{name}_to_h
+            if raw_hash.size > 0
+              LANGS.keys.each do |l|
+                next if l == DEFAULT_LANG
+                return true if raw_hash[l].present?
+              end
             end
             false
           end
@@ -125,11 +136,11 @@ module TranslationThings
 
         LANGS.keys.each do |lang|
           translation_things_module.module_eval(%Q{
-            def body_#{lang}
+            def #{name}_#{lang}
               #{name}(#{lang})
             end
 
-            def body_#{lang}=(val)
+            def #{name}_#{lang}=(val)
               self.#{name} = { "#{lang}" => val }
             end
           })
