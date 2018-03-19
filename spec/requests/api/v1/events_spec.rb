@@ -28,7 +28,7 @@ describe "Events (v1)" do
     end
     it "should get events specifying start time" do
       login_as(@person)
-      get "/events", params: { start_time: @base_time.strftime("%Y-%m-%d") }
+      get "/events", params: { from_date: @base_time.strftime("%Y-%m-%d") }
       expect(response).to be_success
       expected = [@event1, @event2, @starts_in_month]
       expect(json["events"].count).to eq(expected.size)
