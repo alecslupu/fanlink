@@ -10,6 +10,11 @@ class Event < ApplicationRecord
   validates :name, presence: { message: "Name is required" }
   validates :starts_at, presence: { message: "Starts at is required" }
 
+  scope :in_date_range, -> (from, to) {
+    where("events.starts_at >= ? and events.starts_at <= ?",
+          from.beginning_of_day, to.end_of_day)
+  }
+
   def place_info
     info = nil
     if self.place_identifier.present?
