@@ -47,7 +47,9 @@ module Fanlink
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins "https://www.fan.link", "https://staging.fan.link", "https://smiley.fan.link", "https://inna.fan.link", "https://adara.fan.link"
+        origins do |source, env|
+          CorsGuard.allow_from?(source)
+        end
         resource "*", headers: :any, methods: :any, credentials: true
       end
     end
