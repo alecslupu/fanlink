@@ -22,6 +22,17 @@ module JsonHelpers
       "blocked_id"  => block.blocked_id
     }
   end
+  def event_json(event)
+    {
+      "id"          => event.id.to_s,
+      "name"        => event.name,
+      "description" => event.description,
+      "starts_at"   => event.starts_at.to_s,
+      "ends_at"     => event.ends_at.to_s,
+      "ticket_url"  => event.place_identifier,
+      "place_identifier" => event.place_identifier
+    }
+  end
   def following_json(following, currnt_user)
     {
       "id"       => following.id.to_s,
@@ -74,7 +85,7 @@ module JsonHelpers
     )
   end
 
-  def person_json(person, potential_follower = nil)
+  def person_json(person, potential_follower = nil, lang=nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
       "id"                => person.id.to_s,
@@ -83,6 +94,7 @@ module JsonHelpers
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
       "chat_banned"       => person.chat_banned,
+      "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
