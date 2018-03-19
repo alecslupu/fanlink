@@ -3,9 +3,13 @@ class DeleteRoomJob < Struct.new(:room_id)
 
   def perform
     room = Room.find(room_id)
+    payload = {}
     c = client
     room.members.each do |m|
-      c.delete("#{user_path(m)}/message_counts/#{room_id}")
+      payload[message_counter_path(m)] = 0
+      payload["#{user_path(m)}/deleted_room_id"] = m.room_id
     end
+    c.update("", payload)
+    c.delete(room_path(room))
   end
 end
