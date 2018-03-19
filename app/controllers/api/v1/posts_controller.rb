@@ -1,5 +1,4 @@
 class Api::V1::PostsController < ApiController
-  before_action :set_language, only: %i[ index show ]
 
   #**
   # @api {post} /posts Create a post.
@@ -96,7 +95,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
   def index
-    if !check_dates
+    if !check_dates(true)
       render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
     else
       l = params[:limit].to_i
@@ -154,24 +153,7 @@ class Api::V1::PostsController < ApiController
 
 private
 
-  def check_dates
-    params[:from_date].present? && DateUtil.valid_date_string?(params[:from_date]) &&
-        params[:to_date].present? && DateUtil.valid_date_string?(params[:to_date])
-  end
-
   def post_params
     params.require(:post).permit(:body, :picture)
-  end
-
-  def set_language
-    @lang = nil
-    lang_header = request.headers["Accept-Language"]
-    if lang_header.present?
-      if lang_header.length > 2
-        lang_header = lang_header[0..1]
-      end
-      @lang = lang_header if Post::LANGS[lang_header].present?
-    end
-    @lang = Post::DEFAULT_READ_LANG if @lang.nil?
   end
 end

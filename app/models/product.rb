@@ -10,6 +10,8 @@ class Product < ApplicationRecord
 
   has_many :people, dependent: :restrict_with_error
 
+  scope :enabled, -> { where(enabled: true) }
+
   def to_s
     internal_name
   end

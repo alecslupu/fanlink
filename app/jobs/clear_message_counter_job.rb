@@ -8,10 +8,4 @@ class ClearMessageCounterJob < Struct.new(:room_id, :membership_id)
       client.set("#{user_path(room_membership.person)}/message_counts/#{room.id}", 0)
     end
   end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
 end
