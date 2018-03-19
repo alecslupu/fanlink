@@ -33,7 +33,7 @@ class Message
           if reported == 'Yes'
             joins(:message_reports).where.not(message_reports: { message_id: nil } )
           elsif reported == 'No'
-            includes(:message_reports).where(message_reports: { message_id: nil } )
+            joins(:message_reports).where(message_reports: { message_id: nil } )
           else
             nil
           end
