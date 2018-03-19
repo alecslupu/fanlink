@@ -46,7 +46,7 @@ module Admin
         product = Product.find_by(internal_name: params[:product_internal_name])
       else
         if current_user.super_admin? && (cookies[:product_id].to_i > 0)
-          product = Product.where(id: cookies[:product_id].to_i)
+          product = Product.find_by(id: cookies[:product_id].to_i)
         end
         product = current_user.product if product.nil?
       end
