@@ -93,12 +93,18 @@ ActiveRecord::Schema.define(version: 20180315232120) do
   end
 
   create_table "events", force: :cascade do |t|
+    t.integer "product_id", null: false
     t.text "name", null: false
-    t.datetime "start_time", null: false
+    t.text "description"
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at"
     t.text "ticket_url"
     t.text "place_identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["ends_at"], name: "ind_events_ends_at"
+    t.index ["product_id"], name: "ind_events_products"
+    t.index ["starts_at"], name: "ind_events_starts_at"
   end
 
   create_table "followings", force: :cascade do |t|
@@ -312,6 +318,7 @@ ActiveRecord::Schema.define(version: 20180315232120) do
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
+  add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"

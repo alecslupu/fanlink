@@ -48,6 +48,20 @@ class ApiController < ApplicationController
 
 protected
 
+  def check_dates(required = false)
+    if params[:from_date].present?
+      return false unless DateUtil.valid_date_string?(params[:from_date])
+    else
+      return false if required
+    end
+    if params[:to_date].present?
+      return false unless DateUtil.valid_date_string?(params[:to_date])
+    else
+      return false if required
+    end
+    true
+  end
+
   def render_error(error)
     render json: { errors: error }, status: :unprocessable_entity
   end

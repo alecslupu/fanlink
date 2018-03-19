@@ -22,6 +22,17 @@ module JsonHelpers
       "blocked_id"  => block.blocked_id
     }
   end
+  def event_json(event)
+    {
+      "id"          => event.id.to_s,
+      "name"        => event.name,
+      "description" => event.description,
+      "starts_at"   => event.starts_at.to_s,
+      "ends_at"     => event.ends_at.to_s,
+      "ticket_url"  => event.place_identifier,
+      "place_identifier" => event.place_identifier
+    }
+  end
   def following_json(following, currnt_user)
     {
       "id"       => following.id.to_s,
