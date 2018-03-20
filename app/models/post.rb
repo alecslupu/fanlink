@@ -5,6 +5,8 @@ class Post < ApplicationRecord
 
   enum status: %i[ pending published deleted rejected errored ]
 
+  after_save :adjust_priorities
+
   has_manual_translated :body
 
   has_image_called :picture
@@ -45,6 +47,17 @@ class Post < ApplicationRecord
   end
 
 private
+
+  def adjust_priorities
+    if priority > 0 && saved_change_to_attribute?(:priority)
+      same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
+      if same_priority.count > 0
+        person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |p|
+          p.increment!(:priority)
+        end
+      end
+    end
+  end
 
   def sensible_dates
     if starts_at.present? && ends_at.present? && starts_at > ends_at
