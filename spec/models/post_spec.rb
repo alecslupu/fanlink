@@ -44,6 +44,30 @@ RSpec.describe Post, type: :model do
     end
   end
 
+  describe "#priority" do
+    let(:person) { create(:person, product: @product) }
+    let!(:post1) { create(:post, person: person, priority: 1) }
+    let!(:post2) { create(:post, person: person, priority: 2) }
+    let!(:post_other) { create(:post, priority: 1) }
+    it "should not adjust priorities if priority is 0" do
+      pre = post1.priority
+      create(:post, person: person)
+      expect(post1.reload.priority).to eq(pre)
+    end
+    it "should adjust priorities if priority is greater than 0 and there is post of equal priority" do
+      create(:post, person: person, priority: 1)
+      expect(post1.reload.priority).to eq(2)
+      expect(post2.reload.priority).to eq(3)
+      expect(post_other.priority).to eq(1)
+    end
+    it "should not adjust priorities if priority is greater than 0 but there is no post of equal priority" do
+      _person = create(:person, product: @product)
+      _post1 = create(:post, person: person, priority: 2)
+      create(:post, person: _person, priority: 1)
+      expect(_post1.reload.priority).to eq(2)
+    end
+  end
+
   describe "#product" do
     it "should return the product of the person" do
       expect(@followed1_post1.product).to eq(@product)
