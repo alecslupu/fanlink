@@ -25,6 +25,7 @@ class PostDashboard < Administrate::BaseDashboard
     ends_at: Field::DateTime,
     repost_interval: Field::Number,
     status: Field::Enum,
+    priority: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     reported?: Field::String
@@ -44,6 +45,7 @@ class PostDashboard < Administrate::BaseDashboard
     :ends_at,
     :repost_interval,
     :status,
+    :priority,
     :reported?,
     :created_at
   ].freeze
@@ -60,6 +62,7 @@ class PostDashboard < Administrate::BaseDashboard
     :ends_at,
     :repost_interval,
     :status,
+    :priority,
     :created_at,
     :updated_at,
   ].freeze
@@ -74,7 +77,8 @@ class PostDashboard < Administrate::BaseDashboard
     :starts_at,
     :ends_at,
     :repost_interval,
-    :status
+    :status,
+    :priority,
   ].freeze
 
   # Overwrite this method to customize how posts are displayed
