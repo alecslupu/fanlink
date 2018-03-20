@@ -13,6 +13,7 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     name: Field::Text,
     description: Field::Text,
     price: Field::Text,
+    priority: Field::Number,
     purchase_url: Field::Text,
     picture: Field::Paperclip.with_options(blank_text: ""),
     available: Field::Boolean,
@@ -30,6 +31,7 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     :name,
     :description,
     :price,
+    :priority,
     :picture
   ].freeze
 
@@ -41,6 +43,7 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     :name,
     :description,
     :price,
+    :priority,
     :purchase_url,
     :picture,
     :available,
@@ -55,6 +58,7 @@ class MerchandiseDashboard < Administrate::BaseDashboard
     :name,
     :description,
     :price,
+    :priority,
     :purchase_url,
     :picture,
     :available

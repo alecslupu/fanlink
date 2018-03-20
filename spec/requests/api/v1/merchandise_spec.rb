@@ -3,8 +3,8 @@ describe "Merchandise (v1)" do
   before(:all) do
     @product = Product.first || create(:product)
     @person = create(:person, product: @product)
-    @merch1 = create(:merchandise, product: @product)
-    @merch2 = create(:merchandise, product: @product, updated_at: @merch1.updated_at + 1.day)
+    @merch1 = create(:merchandise, product: @product, priority: 2)
+    @merch2 = create(:merchandise, product: @product, priority: 1)
     @other_product = create(:merchandise, product: create(:product))
     @unavailable = create(:merchandise, product: @product, available: false)
   end
@@ -14,7 +14,7 @@ describe "Merchandise (v1)" do
   end
 
   describe "#index" do
-    it "should get the available merchandise" do
+    it "should get the available merchandise in priority order" do
       login_as(@person)
       get "/merchandise"
       expect(response).to be_success
