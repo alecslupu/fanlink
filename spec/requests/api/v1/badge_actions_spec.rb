@@ -20,6 +20,15 @@ describe "BadgeActions (v1)" do
       expect(response).to be_success
       expect(json["pending_badge"]).to eq(pending_badge_json(1, badge1))
     end
+    it "should not include badge before issued_from time as partially earned badge with highest percent earned" do
+      login_as(@person)
+      action_type = create(:action_type)
+      badge1 = create(:badge, action_type: action_type, action_requirement: 3)
+      create(:badge, action_type: action_type, action_requirement: 2, issued_from: Time.now + 1.day) #pre-issue badge
+      post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
+      expect(response).to be_success
+      expect(json["pending_badge"]).to eq(pending_badge_json(1, badge1))
+    end
     it "should create a new action and return single earned badge" do
       login_as(@person)
       action_type = create(:action_type)
