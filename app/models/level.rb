@@ -1,10 +1,13 @@
 class Level < ApplicationRecord
   include AttachmentSupport
+  include TranslationThings
+
   has_paper_trail
 
   acts_as_tenant(:product)
 
   has_image_called :picture
+  has_manual_translated :description
 
   validates :internal_name,
             presence: true,

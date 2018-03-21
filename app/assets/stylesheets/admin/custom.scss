@@ -118,3 +118,10 @@ form {
     }
   }
 }
+
+.translated-field {
+  &.field-unit__field {
+    width: 90%;
+  }
+  width: auto;
+}

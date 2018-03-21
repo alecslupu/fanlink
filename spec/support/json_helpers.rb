@@ -41,11 +41,12 @@ module JsonHelpers
     }
   end
 
-  def level_json(level)
+  def level_json(level, lang=nil)
     {
         "id"                  => level.id.to_s,
         "name"                => level.name,
         "internal_name"       => level.internal_name,
+        "description"         => (lang.present?) ? level.description(lang) : level.description,
         "points"              => level.points,
         "picture_url"         => level.picture_url
     }
