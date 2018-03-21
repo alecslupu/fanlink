@@ -11,7 +11,7 @@ class LevelDashboard < Administrate::BaseDashboard
     id: Field::Number,
     product: Field::BelongsTo,
     name: Field::Text,
-    description: Field::TranslatedField,
+    description: TranslatedField,
     internal_name: Field::Text,
     points: Field::Number,
     created_at: Field::DateTime,
