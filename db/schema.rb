@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321222016) do
+ActiveRecord::Schema.define(version: 20180322012912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20180321222016) do
 
   create_table "levels", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.text "name", null: false
+    t.text "name_text_old"
     t.text "internal_name", null: false
     t.integer "points", default: 1000, null: false
     t.datetime "created_at", null: false
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20180321222016) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.jsonb "description", default: {}, null: false
+    t.jsonb "name", default: {}, null: false
     t.index ["product_id", "internal_name"], name: "unq_levels_product_internal_name"
     t.index ["product_id", "points"], name: "unq_levels_product_points"
   end

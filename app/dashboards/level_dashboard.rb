@@ -10,7 +10,7 @@ class LevelDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     product: Field::BelongsTo,
-    name: Field::Text,
+    name: TranslatedField,
     description: TranslatedField,
     internal_name: Field::Text,
     points: Field::Number,
