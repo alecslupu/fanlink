@@ -1,5 +1,4 @@
 class CorsGuard
-
   #TODO use redis or something for better thread safety
   ALWAYS_ALLOW = %w[ https://www.fan.link https://staging.fan.link ]
   CORS_KEY = "cors_allowed"

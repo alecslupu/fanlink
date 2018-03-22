@@ -21,5 +21,4 @@ describe ".allow_from?" do
     product = create(:product, enabled: false)
     expect(CorsGuard.allow_from?("https://#{product.internal_name}.fan.link")).to be_falsey
   end
-
 end

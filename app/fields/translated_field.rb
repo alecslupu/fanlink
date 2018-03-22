@@ -1,6 +1,7 @@
 require "administrate/field/base"
+
 class TranslatedField < Administrate::Field::Text
-  def self.permitted_attribute attr
+  def self.permitted_attribute(attr)
     attributes = []
     TranslationThings::LANGS.keys.each do |l|
       attributes << "#{attr}_#{l}"
