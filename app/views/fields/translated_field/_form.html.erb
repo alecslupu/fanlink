@@ -3,6 +3,7 @@
   <%= f.label field.attribute %>
 </div>
 <div class="field-unit__field translated-field">
+  <div class="legend">Translated</div>
   <% translated = f.object.send("#{field.attribute}_translated?") %>
   <% translate_button = false %>
   <% TranslationThings::LANGS.each do |l,n| %>

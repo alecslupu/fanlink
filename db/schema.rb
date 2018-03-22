@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180320225055) do
+ActiveRecord::Schema.define(version: 20180321222016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20180320225055) do
 
   create_table "badges", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.text "name", null: false
+    t.text "name_text_old"
     t.text "internal_name", null: false
     t.integer "action_type_id", null: false
     t.integer "action_requirement", default: 1, null: false
@@ -66,9 +66,11 @@ ActiveRecord::Schema.define(version: 20180320225055) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.text "description"
+    t.text "description_text_old"
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
   end
