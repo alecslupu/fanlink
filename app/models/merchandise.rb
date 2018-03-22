@@ -8,5 +8,4 @@ class Merchandise < ApplicationRecord
   has_paper_trail
 
   scope :listable, -> { where(available: true) }
-
 end
