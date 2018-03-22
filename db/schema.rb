@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322012912) do
+ActiveRecord::Schema.define(version: 20180322183017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,8 +141,8 @@ ActiveRecord::Schema.define(version: 20180322012912) do
 
   create_table "merchandise", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.text "name", null: false
-    t.text "description"
+    t.text "name_text_old"
+    t.text "description_text_old"
     t.text "price"
     t.text "purchase_url"
     t.string "picture_file_name"
@@ -153,6 +153,8 @@ ActiveRecord::Schema.define(version: 20180322012912) do
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
     t.integer "priority", default: 0, null: false
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end
@@ -297,8 +299,7 @@ ActiveRecord::Schema.define(version: 20180322012912) do
 
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.text "name"
-    t.text "name_canonical"
+    t.text "name_text_old"
     t.integer "created_by_id"
     t.integer "status", default: 0, null: false
     t.boolean "public", default: false, null: false
@@ -308,6 +309,7 @@ ActiveRecord::Schema.define(version: 20180322012912) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
+    t.jsonb "name", default: {}, null: false
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 

@@ -8,10 +8,10 @@ class AddTranslatedBadgeFields < ActiveRecord::Migration[5.1]
     add_column :badges, :description, :jsonb, default: {}, null: false
 
     Badge.all.each do |b|
-      if b.name_text_old.present?
+      unless b.name_text_old.nil?
         b.name = b.name_text_old
       end
-      if b.description_text_old.present?
+      unless b.description_text_old.nil?
         b.description = b.description_text_old
       end
       b.save

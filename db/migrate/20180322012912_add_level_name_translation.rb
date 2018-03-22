@@ -5,7 +5,7 @@ class AddLevelNameTranslation < ActiveRecord::Migration[5.1]
     add_column :levels, :name, :jsonb, default: {}, null: false
 
     Level.all.each do |l|
-      if l.name_text_old.present?
+      unless l.name_text_old.nil?
         l.name = l.name_text_old
         l.save
       end
