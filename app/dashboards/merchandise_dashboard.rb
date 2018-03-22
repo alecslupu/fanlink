@@ -10,8 +10,8 @@ class MerchandiseDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
-    name: Field::Text,
-    description: Field::Text,
+    name: TranslatedField,
+    description: TranslatedField,
     price: Field::Text,
     priority: Field::Number,
     purchase_url: Field::Text,
@@ -29,7 +29,6 @@ class MerchandiseDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :name,
-    :description,
     :price,
     :priority,
     :picture

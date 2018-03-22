@@ -124,4 +124,13 @@ form {
     width: 90%;
   }
   width: auto;
+  padding: 4px;
+  .legend {
+    background-color: black;
+    border-radius: 2px;
+    padding: 2px;
+    color: white;
+    display: inline-block;
+    font-size: x-small;
+  }
 }
