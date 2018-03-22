@@ -9,13 +9,13 @@ class MessageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     person: Field::BelongsTo,
-    room: Field::BelongsTo,
+    room: Field::BelongsTo.with_options(order: "name"),
     id: Field::Number,
     body: Field::Text,
     hidden: Field::Boolean,
     reported?: Field::String,
-    created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    created: Field::String,
+    updated: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -24,6 +24,7 @@ class MessageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :created,
     :person,
     :room,
     :id,
@@ -39,8 +40,8 @@ class MessageDashboard < Administrate::BaseDashboard
     :id,
     :body,
     :hidden,
-    :created_at,
-    :updated_at,
+    :created,
+    :updated,
   ].freeze
 
   # FORM_ATTRIBUTES

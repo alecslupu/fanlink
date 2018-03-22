@@ -2,6 +2,7 @@ describe "People (v1)" do
 
   before(:all) do
     @product = Product.first || create(:product)
+    @prod_name = @product.internal_name
   end
 
   before(:each) do

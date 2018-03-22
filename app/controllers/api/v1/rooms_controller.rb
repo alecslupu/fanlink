@@ -1,5 +1,4 @@
 class Api::V1::RoomsController < ApiController
-  include Messaging
   #**
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom
@@ -55,7 +54,7 @@ class Api::V1::RoomsController < ApiController
         end
       end
       @room.reload
-      new_private_room(@room)
+      @room.new_room
     end
     return_the @room
   end
@@ -84,8 +83,8 @@ class Api::V1::RoomsController < ApiController
         @room.destroy
       else
         @room.deleted!
+        @room.delete_me
       end
-      delete_room(@room)
       head :ok
     end
   end

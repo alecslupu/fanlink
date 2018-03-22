@@ -15,12 +15,15 @@ class PersonDashboard < Administrate::BaseDashboard
     email: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
     role: Field::Enum.with_options(collection_method: :roles_for_select),
+    designation: TranslatedField,
     do_not_message_me: Field::Boolean,
     pin_messages_from: Field::Boolean,
     auto_follow: Field::Boolean,
     product_account: Field::Boolean,
     recommended: Field::Boolean,
     chat_banned: Field::Boolean,
+    level_earned: Field::BelongsTo::with_options(class_name: "Level"),
+    badges: Field::HasMany,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,
     crypted_password: Field::Text,
@@ -55,6 +58,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :role,
+    :designation,
     :do_not_message_me,
     :pin_messages_from,
     :auto_follow,
@@ -65,6 +69,8 @@ class PersonDashboard < Administrate::BaseDashboard
     :facebook_picture_url,
     :created_at,
     :updated_at,
+    :level_earned,
+    :badges
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -76,6 +82,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :role,
+    :designation,
     :do_not_message_me,
     :pin_messages_from,
     :auto_follow,
@@ -89,6 +96,6 @@ class PersonDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(person)
-    person.name
+    person.username
   end
 end

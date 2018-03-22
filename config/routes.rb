@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :badge_actions, only: %i[ create ]
       resources :badges, only: %i[ index ]
       resources :blocks, only: %i[ create destroy ]
+      resources :events, only: %i[ index show ]
       resources :followings, only: %i[ create destroy index ]
       resources :levels, only: %i[ index ]
       resources :merchandise, only: %i[ index show ]
@@ -47,6 +48,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :action_types
     resources :badges
+    resources :events
     resources :levels
     resources :merchandise
     resources :messages do

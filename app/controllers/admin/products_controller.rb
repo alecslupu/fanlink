@@ -3,6 +3,7 @@ module Admin
     before_action :check_super
     before_action :set_paper_trail_whodunnit
     skip_before_action :set_tenant
+    after_action :clear_cors_cache, only: %i[ create update destroy ]
 
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
@@ -21,7 +22,6 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
-
     def select
       product = nil
       product_id = params[:product_id].to_i
@@ -39,6 +39,12 @@ module Admin
     def select_form
       @selected_id = session[:product_id]
       @products = Product.order(:name)
+    end
+
+  private
+
+    def clear_cors_cache
+      CorsGuard.invalidate
     end
   end
 end

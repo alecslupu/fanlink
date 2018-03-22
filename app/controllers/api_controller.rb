@@ -5,7 +5,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_product, :set_paper_trail_whodunnit
+  before_action :set_language, :set_product, :set_paper_trail_whodunnit
 
   #
   # Respond to an API request with an object. If the object is invalid
@@ -48,12 +48,38 @@ class ApiController < ApplicationController
 
 protected
 
+  def check_dates(required = false)
+    if params[:from_date].present?
+      return false unless DateUtil.valid_date_string?(params[:from_date])
+    else
+      return false if required
+    end
+    if params[:to_date].present?
+      return false unless DateUtil.valid_date_string?(params[:to_date])
+    else
+      return false if required
+    end
+    true
+  end
+
   def render_error(error)
     render json: { errors: error }, status: :unprocessable_entity
   end
 
   def render_not_found
     render json: { errors: { base: [ "Not found" ] } }, status: :not_found
+  end
+
+  def set_language
+    @lang = nil
+    lang_header = request.headers["Accept-Language"]
+    if lang_header.present?
+      if lang_header.length > 2
+        lang_header = lang_header[0..1]
+      end
+      @lang = lang_header if TranslationThings::LANGS[lang_header].present?
+    end
+    @lang = TranslationThings::DEFAULT_READ_LANG if @lang.nil?
   end
 
   def set_product

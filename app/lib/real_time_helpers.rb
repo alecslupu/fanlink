@@ -5,8 +5,8 @@ protected
     Firebase::Client.new(FIREBASE_URL, FIREBASE_KEY)
   end
 
-  def message_counter_path(membership, room_id)
-    "#{user_path(membership.person)}/message_counts/#{room_id}"
+  def message_counter_path(membership)
+    "#{user_path(membership.person)}/message_counts/#{membership.room_id}"
   end
 
   def room_path(room)
