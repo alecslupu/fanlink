@@ -86,7 +86,7 @@ module JsonHelpers
     )
   end
 
-  def person_json(person, potential_follower = nil, lang=nil)
+  def person_json(person, potential_follower = nil, lang = nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
       "id"                => person.id.to_s,
@@ -99,6 +99,7 @@ module JsonHelpers
       "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
+      "role"              => person.role,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
       "do_not_message_me" => person.do_not_message_me,
       "pin_messages_from" => person.pin_messages_from
