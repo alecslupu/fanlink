@@ -10,6 +10,7 @@ if defined?(relationships) && !relationships.empty?
   json.relationships relationships, partial: "api/v1/relationships/relationship", as: :relationship
 end
 json.badge_points person.badge_points
+json.role person.role
 lev = person.level_earned
 if lev.nil?
   json.level nil

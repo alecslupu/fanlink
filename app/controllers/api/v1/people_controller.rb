@@ -126,8 +126,12 @@ class Api::V1::PeopleController < ApiController
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
   #       "product_account": false,
+  #       "chat_banned": false,
+  #       "designation": "Grand Poobah", #translated
   #       "following_id": 12, //or null
+  #       "relationships": [..relationship json..], #only present if relationships exist
   #       "badge_points": 0,
+  #       "role": "normal",
   #       "level": {...level json...}, //or null,
   #       "do_not_message_me": false,
   #       "pin_messages_from": false
