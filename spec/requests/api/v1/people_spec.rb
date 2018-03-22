@@ -3,6 +3,7 @@ describe "People (v1)" do
   before(:all) do
     @product = Product.first || create(:product)
     @prod_name = @product.internal_name
+    @person = create(:person, product: @product)
   end
 
   before(:each) do
@@ -217,6 +218,19 @@ describe "People (v1)" do
       expect(json["errors"]).to include("A user has already signed up with that email address.")
     end
 
+  end
+
+  describe "#index" do
+    let!(:person1) { create(:person, product: @person.product, username: "pers1", email: "pers1@example.com")}
+    let!(:person2) { create(:person, product: @person.product, username: "pers2", email: "pers2@example.com")}
+    let!(:person_other) { create(:person, product: create(:product), username: "person_other", email: "person_other@example.com")}
+    it "should get all people with no filter" do
+      login_as(@person)
+      get "/people/index"
+      expect(response).to be_success
+      expect(json["people"].count).to eq(2)
+      expect(json["people"].sort).to eq([person1, person2].map{ |p| person_json(p) }.sort)
+    end
   end
 
   describe "#show" do

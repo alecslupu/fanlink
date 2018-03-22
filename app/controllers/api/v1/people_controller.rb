@@ -1,7 +1,7 @@
 class Api::V1::PeopleController < ApiController
   prepend_before_action :logout, only: :create
 
-  load_up_the Person
+  load_up_the Person, except: %i[ index ]
   skip_before_action :require_login, only: %i[ create ]
 
   #**
@@ -108,6 +108,31 @@ class Api::V1::PeopleController < ApiController
   end
 
   #**
+  # @api {get} /people Get a list of people.
+  # @apiName GetPeople
+  # @apiGroup People
+  #
+  # @apiDescription
+  #   This is used to get a list of people.
+  #
+  # @apiParam {String} [username_filter]
+  #   A username or username fragment to filter on.
+  #
+  # @apiParam {String} [email_filter]
+  #   An email or email fragment to filter on.
+
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "people": [
+  #         {...see show action for person json....},....
+  #      ]
+  #*
+  def index
+    @people = apply_filters
+    return_the @people
+  end
+
+  #**
   # @api {get} /people/:id Get a person.
   # @apiName GetPerson
   # @apiGroup People
@@ -177,6 +202,12 @@ class Api::V1::PeopleController < ApiController
   end
 
 private
+
+  def apply_filters
+    params.each do |p, v|
+
+    end
+  end
 
   def person_params
     params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product, :current_password,

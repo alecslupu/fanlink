@@ -16,6 +16,7 @@ class Person < ApplicationRecord
   include Person::Blocks
   include Person::Badges
   include Person::Facebook
+  include Person::Filters
   include Person::Followings
   include Person::Levels
   include Person::Mailing
