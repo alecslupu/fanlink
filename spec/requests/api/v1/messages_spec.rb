@@ -222,6 +222,36 @@ describe "Messages (v1)" do
     end
   end
 
+  describe "#list" do
+    let!(:room1) { create(:room, product: @product, public: true) }
+    let!(:room2) { create(:room, product: @product, public: false) }
+    let!(:membership1) { create(:room_membership, room: room2, person: create(:person, username: "membership1")) }
+    let!(:membership2) { create(:room_membership, room: room2) }
+    let!(:msg1) { create(:message, room: room1) }
+    let!(:msg2) { create(:message, room: room1) }
+    let!(:msg3) { create(:message, room: room2, person: membership1.person) }
+    let!(:admin) { create(:person, product: @product, role: :admin) }
+    it "should give you all messages from all rooms" do
+      login_as(admin)
+      get "/messages"
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(3)
+    end
+    it "should give you messages filtered on id" do
+      login_as(admin)
+      get "/messages", params: { id_filter: msg1.id }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_json(msg1))
+    end
+    it "should give you messages filtered on username" do
+      login_as(admin)
+      get "/messages", params: { person_filter: "ship1" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_json(msg3))
+    end
+  end
   describe "#show" do
     it "should get a single private message" do
       login_as(@person)
