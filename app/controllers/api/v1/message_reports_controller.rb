@@ -1,6 +1,7 @@
 class Api::V1::MessageReportsController < ApiController
   load_up_the Room, from: :room_id
 
+  before_action :admin_only, only: %i[ index ]
   #**
   # @api {post} /rooms/:room_id/message_reports Report a message in a public room.
   # @apiName CreateMessageReport

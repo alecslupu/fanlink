@@ -50,12 +50,40 @@ describe "MessageReports (v1)" do
   end
 
   describe "#index" do
-    it "should get all reports" do
-      person = create(:person, role: :admin, product: @product)
+    let(:person) { create(:person, product: @product, role: :admin) }
+    it "should get all reports but only for correct product" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        create(:message_report)
+      end
       login_as(person)
       get "/message_reports"
       expect(response).to be_success
       expect(json["message_reports"].count).to eq(2)
+    end
+    it "should get all reports with pending status" do
+      login_as(person)
+      get "/message_reports", params: { status_filter: "pending" }
+      expect(response).to be_success
+      expect(json["message_reports"].count).to eq(1)
+      expect(json["message_reports"].first).to eq(message_reports_json(@message_report_pending))
+    end
+    it "should return unauthorized if not logged in" do
+      get "/message_reports"
+      expect(response).to be_unauthorized
+    end
+    it "should return unauthorized not logged in as normal" do
+      login_as(create(:person, role: :normal))
+      get "/message_reports"
+      expect(response).to be_unauthorized
+    end
+    it "should return not get message reports if logged in as admin from another product" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        other = create(:person, role: :admin)
+        login_as(other)
+        get "/message_reports"
+        expect(response).to be_success
+        expect(json["message_reports"]).to be_empty
+      end
     end
   end
 
