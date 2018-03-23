@@ -223,14 +223,15 @@ describe "Messages (v1)" do
   end
 
   describe "#list" do
-    let!(:room1) { create(:room, product: @product, public: true) }
-    let!(:room2) { create(:room, product: @product, public: false) }
-    let!(:membership1) { create(:room_membership, room: room2, person: create(:person, username: "membership1")) }
+    let(:product) { create(:product) }
+    let!(:room1) { create(:room, product: product, public: true) }
+    let!(:room2) { create(:room, product: product, public: false) }
+    let!(:membership1) { create(:room_membership, room: room2, person: create(:person, username: "membership1", product: product)) }
     let!(:membership2) { create(:room_membership, room: room2) }
-    let!(:msg1) { create(:message, room: room1) }
+    let!(:msg1) { create(:message, room: room1, body: "this is some body", person: create(:person, product: product, username: "message1person")) }
     let!(:msg2) { create(:message, room: room1) }
     let!(:msg3) { create(:message, room: room2, person: membership1.person) }
-    let!(:admin) { create(:person, product: @product, role: :admin) }
+    let!(:admin) { create(:person, product: product, role: :admin) }
     it "should give you all messages from all rooms" do
       login_as(admin)
       get "/messages"
@@ -242,14 +243,53 @@ describe "Messages (v1)" do
       get "/messages", params: { id_filter: msg1.id }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_json(msg1))
+      expect(json["messages"].first).to eq(message_list_json(msg1))
     end
-    it "should give you messages filtered on username" do
+    it "should give you messages filtered on person" do
       login_as(admin)
       get "/messages", params: { person_filter: "ship1" }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_json(msg3))
+      expect(json["messages"].first).to eq(message_list_json(msg3))
+    end
+    it "should give you messages filtered on room" do
+      login_as(admin)
+      get "/messages", params: { room_id_filter: room1.id }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(2)
+      expect(json["messages"].last).to eq(message_list_json(msg1))
+      expect(json["messages"].first).to eq(message_list_json(msg2))
+    end
+    it "should give you messages filtered on body" do
+      login_as(admin)
+      get "/messages", params: { body_filter: "is some" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
+    end
+    it "should give you reported messages" do
+      create(:message_report, message: msg1)
+      login_as(admin)
+      get "/messages", params: { reported_filter: "Yes" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
+    end
+    it "should return unauth if not logged in" do
+      get "/messages"
+      expect(response).to be_unauthorized
+    end
+    it "should return unauth if not admin" do
+      login_as(create(:person, product: product, role: :normal))
+      get "/messages"
+      expect(response).to be_unauthorized
+    end
+    it "should give you messages filtered on room and person" do
+      login_as(admin)
+      get "/messages", params: { room_id_filter: room1.id, person_filter:  "essage1" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
     end
   end
   describe "#show" do

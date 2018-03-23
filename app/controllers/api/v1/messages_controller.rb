@@ -1,6 +1,8 @@
 class Api::V1::MessagesController < ApiController
   include Push
 
+  before_action :admin_only, only: %i[ list ]
+
   load_up_the Room, from: :room_id
 
   #**
@@ -148,8 +150,16 @@ class Api::V1::MessagesController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "messages": [
-  #       { ....message json..see get message action ....
-  #       },....
+  #       {
+  #         "id": "123",
+  #         "person_id": 123,
+  #         "room_id": 123,
+  #         "body": "Do you like my body?",
+  #         "hidden": false,
+  #         "picture_url": "http://example.com/pic.jpg",
+  #         "created_at": "2018-01-08'T'12:13:42'Z'",
+  #         "updated_at": "2018-01-08'T'12:13:42'Z'"
+  #       },...
   #     ]
   #
   # @apiErrorExample {json} Error-Response:
