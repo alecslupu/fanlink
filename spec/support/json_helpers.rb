@@ -105,7 +105,9 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from,
       "auto_follow"       => person.auto_follow,
       "facebookid"        => person.facebookid,
-      "facebook_picture_url" => person.facebook_picture_url
+      "facebook_picture_url" => person.facebook_picture_url,
+      "created_at"        => person.created_at.to_s,
+      "updated_at"        => person.updated_at.to_s
     }
   end
   def post_json(post, lang = nil, reaction = nil)
