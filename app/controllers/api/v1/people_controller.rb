@@ -154,6 +154,8 @@ class Api::V1::PeopleController < ApiController
   #       "auto_follow": false,
   #       "facebookid": 'fadfasdfa',
   #       "facebook_picture_url": "facebook.com/zuck_you.jpg"
+  #       "created_at": "2018-03-12T18:55:30Z",
+  #       "updated_at": "2018-03-12T18:55:30Z"
   #     }
   #*
   def show
@@ -202,7 +204,7 @@ class Api::V1::PeopleController < ApiController
 private
 
   def apply_filters
-    people = Person.all
+    people = Person.order(created_at: :desc)
     params.each do |p, v|
       if p.end_with?("_filter") && Person.respond_to?(p)
         people = people.send(p, v)

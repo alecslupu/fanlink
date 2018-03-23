@@ -21,4 +21,5 @@ json.pin_messages_from person.pin_messages_from
 json.auto_follow person.auto_follow
 json.facebookid person.facebookid
 json.facebook_picture_url person.facebook_picture_url
-
+json.created_at person.created_at.to_s
+json.updated_at person.updated_at.to_s
