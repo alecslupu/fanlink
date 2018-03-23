@@ -45,9 +45,50 @@ class Api::V1::MessageReportsController < ApiController
     end
   end
 
-private
-
-  def message_report_params
-    params.require(:message_report).permit(:message_id, :reason).merge(person_id: current_user.id)
+  #**
+  # @api {get} /message_reports Get list of messages reports (ADMIN).
+  # @apiName GetMessageReports
+  # @apiGroup Messages
+  #
+  # @apiDescription
+  #   This gets a list of message reports with optional filter.
+  #
+  # @apiParam {String} status_filter
+  #
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "message_reports": [
+  #       {
+  #         "id": "1234",
+  #         "created_at": "2018-01-08'T'12:13:42'Z",
+  #         "updated_at": "2018-01-08'T'12:13:42'Z",
+  #         "message_id": 1234,
+  #         "poster": "message_username",
+  #         "reporter": "message_report_username",
+  #         "reason": "I don't like your message",
+  #         "status": "pending"
+  #       },....
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
+  #*
+  def index
+    @message_reports = apply_filters
+    return_the @message_reports
   end
+
+  private
+
+  def apply_filters
+    message_reports = MessageReport.includes([{ message: :room }, :person]).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)
+    params.each do |p, v|
+      if p.end_with?("_filter") && MessageReport.respond_to?(p)
+        message_reports = message_reports.send(p, v)
+      end
+    end
+    message_reports
+  end
+
 end

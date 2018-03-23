@@ -5,6 +5,8 @@ describe "MessageReports (v1)" do
     @person = create(:person, product: @product)
     room = create(:room, public: true, status: :active, product: @product)
     @message = create(:message, room: room)
+    @message_report_pending = create(:message_report, message: @message)
+    @message_report_resolved = create(:message_report, message: @message, status: :no_action_needed)
   end
 
   before(:each) do
@@ -46,4 +48,15 @@ describe "MessageReports (v1)" do
       expect(response).to be_not_found
     end
   end
+
+  describe "#index" do
+    it "should get all reports" do
+      person = create(:person, role: :admin, product: @product)
+      login_as(person)
+      get "/message_reports"
+      expect(response).to be_success
+      expect(json["message_reports"].count).to eq(2)
+    end
+  end
+
 end
