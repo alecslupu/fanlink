@@ -159,12 +159,6 @@ RSpec.describe Badge, type: :model do
         expect(b2).to be_valid
       end
     end
-    it "should not allow two badges in the same product to share name" do
-      at1 = create(:badge)
-      at2 = build(:badge, name: at1.name)
-      expect(at2).not_to be_valid
-      expect(at2.errors[:name]).not_to be_empty
-    end
   end
 
   describe "#issued_to" do
