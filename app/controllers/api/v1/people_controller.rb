@@ -74,19 +74,8 @@ class Api::V1::PeopleController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "person": { // The full private version of the person (person json with email).
-  #       "id": "5016",
-  #       "username": "Pancakes.McGee",
-  #       "name": "Pancakes McGee",
-  #       "picture_url": "http://host.name/path",
-  #       "product_account": false,
-  #       "chat_banned": false,
-  #       "designation": "Grand Poobah",
-  #       "following_id": 12, //or null
-  #       "badge_points": 0,
-  #       "level": "something", //or null,
-  #       "do_not_message_me": false,
-  #       "pin_messages_from": false,
-  #       "email": "addr@example.com",
+  #       ....see show action for person json...,
+  #       "email" : "foo@example.com"
   #     }
   #*
   def create
@@ -153,11 +142,18 @@ class Api::V1::PeopleController < ApiController
   #       "name": "Pancakes McGee",
   #       "picture_url": "http://host.name/path",
   #       "product_account": false,
+  #       "recommended": false,
+  #       "chat_banned": false,
+  #       "designation": "Grand Poobah",
   #       "following_id": 12, //or null
+  #       "relationships": [ {json for each relationship}], //only present if relationships present
   #       "badge_points": 0,
   #       "level": {...level json...}, //or null,
   #       "do_not_message_me": false,
-  #       "pin_messages_from": false
+  #       "pin_messages_from": false,
+  #       "auto_follow": false,
+  #       "facebookid": 'fadfasdfa',
+  #       "facebook_picture_url": "facebook.com/zuck_you.jpg"
   #     }
   #*
   def show

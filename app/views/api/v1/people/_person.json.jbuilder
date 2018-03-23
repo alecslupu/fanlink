@@ -18,3 +18,7 @@ else
 end
 json.do_not_message_me person.do_not_message_me
 json.pin_messages_from person.pin_messages_from
+json.auto_follow person.auto_follow
+json.facebookid person.facebookid
+json.facebook_picture_url person.facebook_picture_url
+

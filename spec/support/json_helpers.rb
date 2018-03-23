@@ -101,7 +101,10 @@ module JsonHelpers
       "badge_points"      => person.badge_points,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
       "do_not_message_me" => person.do_not_message_me,
-      "pin_messages_from" => person.pin_messages_from
+      "pin_messages_from" => person.pin_messages_from,
+      "auto_follow"       => person.auto_follow,
+      "facebookid"        => person.facebookid,
+      "facebook_picture_url" => person.facebook_picture_url
     }
   end
   def post_json(post, lang = nil, reaction = nil)
