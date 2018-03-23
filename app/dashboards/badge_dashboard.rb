@@ -10,9 +10,9 @@ class BadgeDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
-    name: Field::Text,
+    name: TranslatedField,
     internal_name: Field::Text,
-    description: Field::Text,
+    description: TranslatedField,
     action_type: Field::BelongsTo,
     action_requirement: Field::Number,
     point_value: Field::Number,

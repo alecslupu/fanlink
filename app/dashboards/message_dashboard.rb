@@ -9,7 +9,7 @@ class MessageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     person: Field::BelongsTo,
-    room: Field::BelongsTo.with_options({ order: "name" }),
+    room: Field::BelongsTo.with_options(order: "name"),
     id: Field::Number,
     body: Field::Text,
     hidden: Field::Boolean,

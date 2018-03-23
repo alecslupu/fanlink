@@ -1,5 +1,4 @@
 class Api::V1::PostsController < ApiController
-
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost

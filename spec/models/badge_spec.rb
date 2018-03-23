@@ -174,36 +174,6 @@ RSpec.describe Badge, type: :model do
       expect(badge.errors[:issued_to]).not_to be_empty
     end
   end
-
-  describe "#name" do
-    it "should allow a name with spaces" do
-      at = build(:badge, name: "Abc d12")
-      expect(at).to be_valid
-    end
-    it "should allow a name with exclamation" do
-      at = build(:badge, name: "abc_d12!")
-      expect(at).to be_valid
-    end
-    it "should not allow a nil name" do
-      at = build(:badge, name: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow an empty name" do
-      at = build(:badge, name: "")
-      expect(at).not_to be_valid
-    end
-    it "should not allow a name with less than 3 characters" do
-      at = build(:badge, name: "ab")
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow a name with more than 36 characters" do
-      at = build(:badge, name: "a" * 37)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-  end
   describe "#product" do
     it "should not let you create a badge without a product" do
       ActsAsTenant.without_tenant do

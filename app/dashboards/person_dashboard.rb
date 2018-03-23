@@ -15,11 +15,12 @@ class PersonDashboard < Administrate::BaseDashboard
     email: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
     role: Field::Enum.with_options(collection_method: :roles_for_select),
-    designation: Field::TranslatedField,
+    designation: TranslatedField,
     do_not_message_me: Field::Boolean,
     pin_messages_from: Field::Boolean,
     auto_follow: Field::Boolean,
     product_account: Field::Boolean,
+    recommended: Field::Boolean,
     chat_banned: Field::Boolean,
     level_earned: Field::BelongsTo::with_options(class_name: "Level"),
     badges: Field::HasMany,
@@ -63,6 +64,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :auto_follow,
     :chat_banned,
     :product_account,
+    :recommended,
     :facebookid,
     :facebook_picture_url,
     :created_at,
@@ -86,6 +88,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :auto_follow,
     :chat_banned,
     :product_account,
+    :recommended,
     :password
   ].freeze
 
