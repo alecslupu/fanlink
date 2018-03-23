@@ -1,6 +1,8 @@
 class Api::V1::MessagesController < ApiController
   include Push
 
+  before_action :admin_only, only: %i[ list ]
+
   load_up_the Room, from: :room_id
 
   #**
@@ -123,6 +125,52 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
+  # @api {get} /messages Get a list of messages without regard to room (ADMIN ONLY).
+  # @apiName GetMessages
+  # @apiGroup Messages
+  #
+  # @apiDescription
+  #   This gets a list of messages without regard to room (with possible exception of room filter).
+  #
+  # @apiParam {Integer} [id_filter]
+  #   Full match on Message id.
+  #
+  # @apiParam {String} [person_filter]
+  #   Full or partial match on person username.
+  #
+  # @apiParam {Integer} [room_id_filter]
+  #   Full match on Room id.
+  #
+  # @apiParam {String} [body_filter]
+  #   Full or partial match on message body.
+  #
+  # @apiParam {Boolean} [reported_filter]
+  #   Filter on whether the message has been reported.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "messages": [
+  #       {
+  #         "id": "123",
+  #         "person_id": 123,
+  #         "room_id": 123,
+  #         "body": "Do you like my body?",
+  #         "hidden": false,
+  #         "picture_url": "http://example.com/pic.jpg",
+  #         "created_at": "2018-01-08'T'12:13:42'Z'",
+  #         "updated_at": "2018-01-08'T'12:13:42'Z'"
+  #       },...
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401 Unautorized
+  #*
+  def list
+    @messages = apply_filters
+    return_the @messages
+  end
+
+  #**
   # @api {get} /rooms/{room_id}/messages/id Get a single message.
   # @apiName GetMessage
   # @apiGroup Messages
@@ -160,6 +208,16 @@ class Api::V1::MessagesController < ApiController
   end
 
 private
+
+  def apply_filters
+    messages = Message.joins(:room).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).order(created_at: :desc)
+    params.each do |p, v|
+      if p.end_with?("_filter") && Message.respond_to?(p)
+        messages = messages.send(p, v)
+      end
+    end
+    messages
+  end
 
   def check_access(room)
     room.active? && (room.public || room.members.include?(current_user))
