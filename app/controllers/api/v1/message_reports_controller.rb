@@ -79,7 +79,7 @@ class Api::V1::MessageReportsController < ApiController
     return_the @message_reports
   end
 
-  private
+private
 
   def apply_filters
     message_reports = MessageReport.includes([{ message: :room }, :person]).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)
@@ -91,4 +91,7 @@ class Api::V1::MessageReportsController < ApiController
     message_reports
   end
 
+  def message_report_params
+    params.require(:message_report).permit(:message_id, :reason).merge(person_id: current_user.id)
+  end
 end
