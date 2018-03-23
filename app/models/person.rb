@@ -1,4 +1,13 @@
 class Person < ApplicationRecord
+  include AttachmentSupport
+  include Person::Blocks
+  include Person::Badges
+  include Person::Facebook
+  include Person::Filters
+  include Person::Followings
+  include Person::Levels
+  include Person::Mailing
+  include Person::Relationships
   include TranslationThings
   authenticates_with_sorcery!
 
@@ -6,20 +15,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  include AttachmentSupport
-
   enum role: %i[ normal staff admin super_admin ]
-
-  # no apparent reason why I have to explicity include this, but no includy if not
-  include Sorcery::Model::Submodules::ResetPassword
-
-  include Person::Blocks
-  include Person::Badges
-  include Person::Facebook
-  include Person::Followings
-  include Person::Levels
-  include Person::Mailing
-  include Person::Relationships
 
   acts_as_tenant(:product)
 
@@ -37,6 +33,9 @@ class Person < ApplicationRecord
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
+
+  scope :username_filter, -> (query) { where( "people.username_canonical ilike ?", "%#{query}%") }
+  scope :email_filter,    -> (query) { where( "people.email ilike ?", "%#{query}%") }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: "A user has already signed up with that Facebook account." }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: "A user has already signed up with that email address." }

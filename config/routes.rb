@@ -13,7 +13,7 @@ Rails.application.routes.draw do
           delete "" => "notification_device_ids#destroy"
         end
       end
-      resources :people, only: %i[ create show update ] do
+      resources :people, only: %i[ create index show update ] do
         member do
           patch "change_password"
         end

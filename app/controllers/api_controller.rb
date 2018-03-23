@@ -48,6 +48,10 @@ class ApiController < ApplicationController
 
 protected
 
+  def admin_only
+    head :unauthorized unless current_user.some_admin?
+  end
+
   def check_dates(required = false)
     if params[:from_date].present?
       return false unless DateUtil.valid_date_string?(params[:from_date])
