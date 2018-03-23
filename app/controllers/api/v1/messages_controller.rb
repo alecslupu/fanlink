@@ -125,7 +125,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {get} /messages Get a list of messages without regard to room (ADMIN ONLY).
+  # @api {get} /messages Get a list of messages without regard to room (ADMIN).
   # @apiName GetMessages
   # @apiGroup Messages
   #

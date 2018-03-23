@@ -1,4 +1,6 @@
 class MessageReport < ApplicationRecord
+  include MessageReport::PortalFilters
+
   enum status: %i[ pending no_action_needed message_hidden ]
 
   belongs_to :message
