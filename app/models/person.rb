@@ -31,6 +31,7 @@ class Person < ApplicationRecord
   has_many :notification_device_ids, dependent: :destroy
   has_many :post_reactions, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
 
@@ -51,7 +52,6 @@ class Person < ApplicationRecord
   validates :password, length: { minimum: 6, allow_blank: true }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
   validate :check_role
-
   #
   # Return the canonical form of a username.
   #

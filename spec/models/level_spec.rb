@@ -54,12 +54,6 @@ RSpec.describe Level, type: :model do
         expect(b2).to be_valid
       end
     end
-    it "should not allow two levels in the same product to share name" do
-      at1 = create(:level)
-      at2 = build(:level, name: at1.name)
-      expect(at2).not_to be_valid
-      expect(at2.errors[:name]).not_to be_empty
-    end
   end
   describe "#name" do
     it "should allow a name with spaces" do
@@ -69,25 +63,6 @@ RSpec.describe Level, type: :model do
     it "should allow a name with exclamation" do
       at = build(:level, name: "abc_d12!")
       expect(at).to be_valid
-    end
-    it "should not allow a nil name" do
-      at = build(:level, name: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow an empty name" do
-      at = build(:level, name: "")
-      expect(at).not_to be_valid
-    end
-    it "should not allow a name with less than 3 characters" do
-      at = build(:level, name: "ab")
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow a name with more than 36 characters" do
-      at = build(:level, name: "a" * 37)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
     end
   end
   describe "#points" do

@@ -11,8 +11,10 @@ class Api::V1::LevelsController < ApiController
   #     HTTP/1.1 200 Ok
   #     "levels": [
   #       {
+  #         "id": "123"
   #         "name": "Level One",
   #         "internal_name": "level_one",
+  #         "description": "some level translated to current language",
   #         "points": 10,
   #         "picture_url": "http://example.com/images/14"
   #       },...

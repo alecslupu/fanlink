@@ -73,41 +73,6 @@ RSpec.describe Badge, type: :model do
       b2 = build(:badge, product: prod_b2, internal_name: b1.internal_name, action_type: create(:action_type))
       expect(b2).to be_valid
     end
-    it "should not allow two badges in the same product to share name" do
-      at1 = create(:badge)
-      at2 = build(:badge, name: at1.name)
-      expect(at2).not_to be_valid
-      expect(at2.errors[:name]).not_to be_empty
-    end
-  end
-  describe "#name" do
-    it "should allow a name with spaces" do
-      at = build(:badge, name: "Abc d12")
-      expect(at).to be_valid
-    end
-    it "should allow a name with exclamation" do
-      at = build(:badge, name: "abc_d12!")
-      expect(at).to be_valid
-    end
-    it "should not allow a nil name" do
-      at = build(:badge, name: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow an empty name" do
-      at = build(:badge, name: "")
-      expect(at).not_to be_valid
-    end
-    it "should not allow a name with less than 3 characters" do
-      at = build(:badge, name: "ab")
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow a name with more than 36 characters" do
-      at = build(:badge, name: "a" * 37)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
   end
   describe "#product" do
     it "should not let you create a badge without a product" do

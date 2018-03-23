@@ -1,9 +1,11 @@
 class Merchandise < ApplicationRecord
   include AttachmentSupport
+  include TranslationThings
 
   after_save :adjust_priorities
 
   has_image_called :picture
+  has_manual_translated :description, :name
 
   acts_as_tenant(:product)
 
@@ -23,5 +25,4 @@ private
       end
     end
   end
-
 end
