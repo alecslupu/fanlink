@@ -84,6 +84,7 @@ class Api::V1::MessageReportsController < ApiController
     return_the @message_reports
   end
 
+  #**
   # @api {patch} /message_reports/:id Update a Message Report.
   # @apiName UpdateMessageReport
   # @apiGroup Messages
