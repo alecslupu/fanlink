@@ -21,4 +21,8 @@ class MessageReport < ApplicationRecord
   def reporter
     person
   end
+
+  def self.valid_status?(s)
+    statuses.include?(s.to_s)
+  end
 end

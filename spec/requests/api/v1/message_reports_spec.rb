@@ -46,4 +46,38 @@ describe "MessageReports (v1)" do
       expect(response).to be_not_found
     end
   end
+
+  describe "#update" do
+    let(:report) { create(:message_report, message: @message) }
+    it "should update a message report" do
+      admin = create(:person, product: report.message.room.product, role: :admin)
+      login_as(admin)
+      patch "/message_reports/#{report.id}", params: { message_report: { status: "no_action_needed" } }
+      expect(response).to be_success
+      expect(report.reload.status).to eq("no_action_needed")
+    end
+    it "should not update a message report to an invalid status" do
+      admin = create(:person, product: report.message.room.product, role: :admin)
+      login_as(admin)
+      patch "/message_reports/#{report.id}", params: { message_report: { status: "punting" } }
+      expect(response).to be_unprocessable
+    end
+    it "should not update a message report if not logged in" do
+      report = create(:message_report, message: @message)
+      patch "/message_reports/#{report.id}", params: { message_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+    it "should not update a message report if not logged in" do
+      report = create(:message_report, message: @message)
+      patch "/message_reports/#{report.id}", params: { message_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+    it "should not update a message report if not admin" do
+      login_as(create(:person, product: @product, role: :normal))
+      patch "/message_reports/#{report.id}", params: { message_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+  end
+
+
 end
