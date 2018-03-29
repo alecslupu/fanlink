@@ -216,7 +216,7 @@ class Api::V1::MessagesController < ApiController
   #
   # @apiDescription
   #   This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is
-  #   hidden, Firebase will be updated to inform that app that the message has been hidden.
+  #   hidden, Firebase will be updated to inform the app that the message has been hidden.
   #
   # @apiParam {Object} message
   #   The message object container for the message parameters.
