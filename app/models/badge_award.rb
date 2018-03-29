@@ -10,10 +10,10 @@ class BadgeAward < ApplicationRecord
     badge_awards = []
     badge_pending = {}
     best_perc = 0.0
-    achieved = badge_action.person.badge_actions.where(action_type_id: badge_action.action_type_id).count
     already_earned = badge_action.person.badges
     badge_action.action_type.badges.each do |b|
-      next if already_earned.include?(b)
+      next if already_earned.include?(b) || !b.current?
+      achieved = b.action_count_earned_by(badge_action.person)
       required = b.action_requirement
       if achieved >= required
         create(person: badge_action.person, badge: b)
