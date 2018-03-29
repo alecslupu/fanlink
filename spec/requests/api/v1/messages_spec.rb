@@ -3,6 +3,7 @@ describe "Messages (v1)" do
   before(:all) do
     @product = Product.first || create(:product)
     @person = create(:person, product: @product)
+    @admin_person = create(:person, product: @product, role: :admin)
     @room = create(:room, public: true, status: :active, product: @product)
     @private_room = create(:room, public: false, status: :active, product: @product)
     @private_room.members << @person << @private_room.created_by
@@ -92,6 +93,14 @@ describe "Messages (v1)" do
 
   describe "#destroy" do
     it "should hide message from original creator" do
+      expect_any_instance_of(Message).to receive(:delete_real_time)
+      login_as(@person)
+      msg = create(:message, person: @person, room: @private_room, body: "this is my body")
+      delete "/rooms/#{@private_room.id}/messages/#{msg.id}"
+      expect(response).to be_success
+      expect(msg.reload.hidden).to be_truthy
+    end
+    it "should hide message by admin" do
       expect_any_instance_of(Message).to receive(:delete_real_time)
       login_as(@person)
       msg = create(:message, person: @person, room: @private_room, body: "this is my body")
@@ -332,6 +341,36 @@ describe "Messages (v1)" do
       msg = create(:message, room: @room, body: "this is my body")
       get "/rooms/#{@room.id}/messages/#{msg.id}"
       expect(response).to be_not_found
+    end
+  end
+
+  describe "#update" do
+    it "should hide a message by an admin" do
+      expect_any_instance_of(Message).to receive(:delete_real_time)
+      login_as(@admin_person)
+      msg = create(:message, room: create(:room, public: true, product: @product))
+      expect(msg.hidden).to be_falsey
+      patch "/messages/#{msg.id}", params: { message: { hidden: true } }
+      expect(response).to be_success
+      expect(msg.reload.hidden).to be_truthy
+      expect(json["message"]).to eq(message_list_json(msg))
+    end
+    it "should unhide a message by an admin" do
+      expect_any_instance_of(Message).to_not receive(:delete_real_time)
+      login_as(@admin_person)
+      msg = create(:message, room: create(:room, public: true, product: @product), hidden: true)
+      expect(msg.hidden).to be_truthy
+      patch "/messages/#{msg.id}", params: { message: { hidden: false } }
+      expect(response).to be_success
+      expect(msg.reload.hidden).to be_falsey
+      expect(json["message"]).to eq(message_list_json(msg))
+    end
+    it "should not hide a message if not logged in" do
+      expect_any_instance_of(Message).to_not receive(:delete_real_time)
+      msg = create(:message, room: create(:room, public: true, product: @product))
+      patch "/messages/#{msg.id}", params: { message: { hidden: true } }
+      expect(response).to be_unauthorized
+      expect(msg.reload.hidden).to be_falsey
     end
   end
 end

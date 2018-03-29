@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :merchandise, only: %i[ index show ]
       get "messages" => "messages#list"
       resources :message_reports, only: %i[ index update ]
+      resources :messages, only: %i[ update ]
       resources :notification_device_ids, only: %i[ create ] do
         collection do
           delete "" => "notification_device_ids#destroy"
