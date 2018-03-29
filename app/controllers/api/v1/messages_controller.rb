@@ -1,9 +1,11 @@
 class Api::V1::MessagesController < ApiController
   include Push
 
-  before_action :admin_only, only: %i[ list ]
+  before_action :admin_only, only: %i[ list update ]
 
-  load_up_the Room, from: :room_id
+  load_up_the Message, only: %i[ update ]
+  load_up_the Room, from: :room_id, except: %i[ update ]
+
 
   #**
   # @api {post} /rooms/{room_id}/messages Create a message in a room.
@@ -207,7 +209,37 @@ class Api::V1::MessagesController < ApiController
     end
   end
 
-private
+  #**
+  # @api {patch} /messages/{id} Update a message
+  # @apiName UpdateMessage
+  # @apiGroup Messages
+  #
+  # @apiDescription
+  #   This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is
+  #   hidden, Firebase will be updated to inform that app that the message has been hidden.
+  #
+  # @apiParam {Object} message
+  #   The message object container for the message parameters.
+  #
+  # @apiParam {Boolean} message.hidden
+  #   Whether or not the item is hidden.
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     message: { ..message json..see list messages action ....}
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401, 404
+  #*
+  def update
+    @message.update_attributes(message_update_params)
+    if @message.hidden
+      @message.delete_real_time
+    end
+    return_the @message
+  end
+
+  private
 
   def apply_filters
     messages = Message.joins(:room).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).order(created_at: :desc)
@@ -239,4 +271,9 @@ private
   def message_params
     params.require(:message).permit(:body, :picture)
   end
+
+  def message_update_params
+    params.require(:message).permit(:hidden)
+  end
+
 end
