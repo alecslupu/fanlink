@@ -13,8 +13,8 @@ class Api::V2::MessagesController < Api::V1::MessagesController
   #
   #   Page number to get.
   #
-  # @apiParam {Integer} per_page
-  #   Number of messages in a page.
+  # @apiParam {Integer} [per_page]
+  #   Number of messages in a page. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
