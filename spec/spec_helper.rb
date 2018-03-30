@@ -136,6 +136,7 @@ RSpec.configure do |config|
 
   config.before :each, type: :request do
     @json = nil
+    @api_version = 1
   end
 
   config.fixture_path = "spec/fixtures"

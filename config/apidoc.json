@@ -7,6 +7,6 @@
   },
   "header": {
     "title": "Introduction",
-    "filename": "app/controllers/api/v1/api-doc-header.md"
+    "filename": "app/controllers/api/v2/api-doc-header.md"
   }
 }
