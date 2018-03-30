@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    version 2
   end
 
   #temporary hack to get around need for Accept header with api stuff
