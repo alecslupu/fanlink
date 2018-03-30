@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322183017) do
+ActiveRecord::Schema.define(version: 20180330001839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -217,8 +218,12 @@ ActiveRecord::Schema.define(version: 20180322183017) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.boolean "recommended", default: false, null: false
     t.jsonb "designation", default: {}, null: false
+    t.boolean "recommended", default: false, null: false
+    t.date "birthdate"
+    t.text "city"
+    t.text "country"
+    t.text "gender"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
@@ -329,6 +334,7 @@ ActiveRecord::Schema.define(version: 20180322183017) do
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
   add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
