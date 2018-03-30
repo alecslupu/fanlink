@@ -110,6 +110,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    api-pagination (4.7.0)
     appraisal (2.2.0)
       bundler
       rake
@@ -965,6 +966,7 @@ DEPENDENCIES
   administrate!
   administrate-field-enum!
   administrate-field-paperclip!
+  api-pagination
   attribute_normalizer
   aws-sdk
   better_errors
@@ -985,6 +987,7 @@ DEPENDENCIES
   google_places
   jbuilder (~> 2.5)
   jko_api!
+  kaminari
   koala
   listen (>= 3.0.5, < 3.2)
   mandrill-api!

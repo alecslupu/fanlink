@@ -1,4 +1,4 @@
-class ApiController < ApplicationController
+class ApiController < ApiApplicationController
   include FloadUp
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
