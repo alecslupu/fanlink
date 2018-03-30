@@ -10,6 +10,7 @@ class Api::V2::MessagesController < Api::V1::MessagesController
   #   This gets a list of messages for a page number and a per page parameter.
   #
   # @apiParam {Integer} page
+  #
   #   Page number to get.
   #
   # @apiParam {Integer} per_page
@@ -30,7 +31,7 @@ class Api::V2::MessagesController < Api::V1::MessagesController
     if !check_access(room)
       render_not_found
     else
-      @messages = paginate(Message.visible.unblocked(current_user.blocked_people))
+      @messages = paginate(room.messages.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
       clear_count(room) if room.private?
       return_the @messages
     end
