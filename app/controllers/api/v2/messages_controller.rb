@@ -1,7 +1,7 @@
 class Api::V2::MessagesController < Api::V1::MessagesController
   include Rails::Pagination
   #**
-  # @api {get} /rooms/{room_id}/messages Get paginated messages.
+  # @api {get} /rooms/{room_id}/messages Get messages.
   # @apiName GetMessages
   # @apiGroup Messages
   # @apiVersion 2.0.0
@@ -13,7 +13,7 @@ class Api::V2::MessagesController < Api::V1::MessagesController
   #   Page number to get.
   #
   # @apiParam {Integer} per_page
-  #   To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
+  #   Number of messages in a page.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
