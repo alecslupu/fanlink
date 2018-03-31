@@ -1,4 +1,5 @@
 class Api::V1::MessagesController < ApiController
+  include Rails::Pagination
   include Push
 
   before_action :admin_only, only: %i[ list update ]
@@ -128,8 +129,8 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {get} /messages Get a list of messages without regard to room (ADMIN).
-  # @apiName GetMessages
+  # @api {get} /messages Get a list of messages without regard to room (ADMIN ONLY).
+  # @apiName ListMessages
   # @apiGroup Messages
   #
   # @apiDescription
@@ -150,6 +151,12 @@ class Api::V1::MessagesController < ApiController
   # @apiParam {Boolean} [reported_filter]
   #   Filter on whether the message has been reported.
   #
+  # @apiParam {Integer} [page]
+  #   Page number. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   Messages per page. Default is 25.
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "messages": [
@@ -169,7 +176,7 @@ class Api::V1::MessagesController < ApiController
   #     HTTP/1.1 401 Unautorized
   #*
   def list
-    @messages = apply_filters
+    @messages = paginate apply_filters
     return_the @messages
   end
 
