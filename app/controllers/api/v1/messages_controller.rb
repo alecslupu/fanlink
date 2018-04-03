@@ -185,7 +185,7 @@ class Api::V1::MessagesController < ApiController
   #       {
   #         "id": "5016",
   #         "body": "Stupid thing to say",
-  #         "created_time": "2018-01-08'T'12:13:42'Z'"
+  #         "created_time": "2018-01-08T12:13:42Z"
   #         "picture_url": "http://host.name/path",
   #         "person": {...public person json with relationships...}
   #       }
