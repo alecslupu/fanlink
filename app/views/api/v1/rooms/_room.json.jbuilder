@@ -1,5 +1,5 @@
 json.id room.id
-json.name room.name
+json.name room.name(@lang)
 json.owned room.created_by_id == current_user.id
 json.picture_url room.picture_url
 json.public room.public

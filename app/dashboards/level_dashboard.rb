@@ -10,7 +10,8 @@ class LevelDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     id: Field::Number,
     product: Field::BelongsTo,
-    name: Field::Text,
+    name: TranslatedField,
+    description: TranslatedField,
     internal_name: Field::Text,
     points: Field::Number,
     created_at: Field::DateTime,
@@ -37,6 +38,7 @@ class LevelDashboard < Administrate::BaseDashboard
     :id,
     :name,
     :internal_name,
+    :description,
     :points,
     :created_at,
     :updated_at,
@@ -49,6 +51,7 @@ class LevelDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :name,
     :internal_name,
+    :description,
     :points,
     :picture,
   ].freeze

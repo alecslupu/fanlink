@@ -10,5 +10,4 @@ class ApplicationRecord < ActiveRecord::Base
   def updated
     updated_at.strftime(DATETIME_FORMAT)
   end
-
 end
