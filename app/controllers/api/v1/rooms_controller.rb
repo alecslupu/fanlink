@@ -13,6 +13,9 @@ class Api::V1::RoomsController < ApiController
   # @apiParam {String} room.name
   #   The name of the room. Must be between 3 and 26 characters, inclusive.
   #
+  # @apiParam {String} [room.description]
+  #   The description of the room.
+  #
   # @apiParam {Attachment} [room.picture]
   #   NOT YET IMPLEMENTED
   #
@@ -27,6 +30,7 @@ class Api::V1::RoomsController < ApiController
   #       {
   #         "id": "5016",
   #         "name": "Motley People Only",
+  #         "description": "Room description",
   #         "owned": "true", # is current user the owner of room?
   #         "picture_url": "http://host.name/path",
   #         "members": [
