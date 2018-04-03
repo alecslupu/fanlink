@@ -13,6 +13,8 @@ class Badge < ApplicationRecord
 
   has_image_called :picture
 
+  validate :issued_time_sanity
+
   validates :internal_name,
             presence: true,
             format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
@@ -21,4 +23,23 @@ class Badge < ApplicationRecord
 
   validates :action_requirement, presence: { message: "Action requirement is required." },
             numericality: { greater_than: 0, message: "Action requirement must be greater than zero." }
+
+
+  def action_count_earned_by(person)
+    time_frame_start = (issued_from.present?) ? issued_from : Time.now - 10.years
+    time_frame_end = (issued_to.present?) ? issued_to : Time.now + 10.years
+    person.badge_actions.where(action_type: action_type).where("created_at >= ?", time_frame_start).where("created_at <= ?", time_frame_end).count
+  end
+
+  def current?
+    (issued_from.nil? || (Time.zone.now > issued_from)) && (issued_to.nil? || (Time.zone.now < issued_to))
+  end
+
+private
+
+  def issued_time_sanity
+    if issued_from.present? && issued_to.present? && issued_from > issued_to
+      errors.add(:issued_to, "Issued to cannot be before issued from.")
+    end
+  end
 end

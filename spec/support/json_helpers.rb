@@ -41,7 +41,7 @@ module JsonHelpers
     }
   end
 
-  def level_json(level, lang=nil)
+  def level_json(level, lang = nil)
     {
         "id"                  => level.id.to_s,
         "name"                => level.name,

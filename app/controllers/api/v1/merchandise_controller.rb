@@ -5,7 +5,7 @@ class Api::V1::MerchandiseController < ApiController
   # @apiGroup Merchandise
   #
   # @apiDescription
-  #   This gets a list of merchandise, in reverse updated_at order.
+  #   This gets a list of merchandise, in priority order.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -18,7 +18,7 @@ class Api::V1::MerchandiseController < ApiController
   #     HTTP/1.1 401 Unauthorized
   #*
   def index
-    @merchandise = Merchandise.listable.order(updated_at: :desc)
+    @merchandise = Merchandise.listable.order(:priority)
   end
 
   #**
