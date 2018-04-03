@@ -10,13 +10,15 @@ class BadgeDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     id: Field::Number,
-    name: Field::Text,
+    name: TranslatedField,
     internal_name: Field::Text,
-    description: Field::Text,
+    description: TranslatedField,
     action_type: Field::BelongsTo,
     action_requirement: Field::Number,
     point_value: Field::Number,
     picture: Field::Paperclip.with_options(blank_text: ""),
+    issued_from: Field::DateTime,
+    issued_to: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -45,6 +47,8 @@ class BadgeDashboard < Administrate::BaseDashboard
     :action_requirement,
     :point_value,
     :picture,
+    :issued_from,
+    :issued_to,
     :created_at,
     :updated_at,
   ].freeze
@@ -59,7 +63,9 @@ class BadgeDashboard < Administrate::BaseDashboard
     :picture,
     :action_type,
     :action_requirement,
-    :point_value
+    :point_value,
+    :issued_from,
+    :issued_to
   ].freeze
 
   # Overwrite this method to customize how badges are displayed

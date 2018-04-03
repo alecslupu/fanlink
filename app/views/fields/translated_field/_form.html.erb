@@ -3,6 +3,7 @@
   <%= f.label field.attribute %>
 </div>
 <div class="field-unit__field translated-field">
+  <div class="legend">Translated</div>
   <% translated = f.object.send("#{field.attribute}_translated?") %>
   <% translate_button = false %>
   <% TranslationThings::LANGS.each do |l,n| %>
@@ -12,12 +13,12 @@
       <% visi_class = "display-none" %>
       <% translate_button = true %>
     <% end %>
-    <div class="field-unit field-unit--text post-body <%= visi_class %>">
+    <div class="field-unit field-unit--text <%= visi_class %>">
       <div class="field-unit__label">
         <label><%= n %></label>
       </div>
       <div class="field-unit__field">
-        <%= text_area_tag("person[#{field.attribute}_#{l}]", f.object.new_record? ? "" : raw_hash[l], rows: 1, cols: 120) %>
+        <%= text_area_tag("#{f.object_name}[#{field.attribute}_#{l}]", f.object.new_record? ? "" : raw_hash[l], rows: 3, class: "translate-field") %>
       </div>
     </div>
   <% end %>

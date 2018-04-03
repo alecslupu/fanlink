@@ -1,6 +1,62 @@
 require "rails_helper"
 
 RSpec.describe Badge, type: :model do
+
+  before(:all) do
+    @product = create(:product)
+    ActsAsTenant.current_tenant = @product
+  end
+
+  describe "#action_count_earned_by" do
+    let(:badge) { create(:badge) }
+    let(:person) { create(:person) }
+    it "should return 0 for person with nothing" do
+      expect(badge.action_count_earned_by(create(:person))).to eq(0)
+    end
+    it "should return 0 for person with actions before issued_from with no issued to" do
+      b = create(:badge, issued_from: Time.now + 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(badge.action_count_earned_by(person)).to eq(0)
+    end
+    it "should return single for person with actions after issued_from with no issued to" do
+      b = create(:badge, issued_from: Time.now - 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(b.action_count_earned_by(person)).to eq(1)
+    end
+    it "should return multiple for person with actions after issued_from with no issued to" do
+      b = create(:badge, issued_from: Time.now - 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(b.action_count_earned_by(person)).to eq(2)
+    end
+    it "should return single for person with actions after issued_from before  issued to" do
+      b = create(:badge, issued_from: Time.now - 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(b.action_count_earned_by(person)).to eq(1)
+    end
+    it "should return multiple for person with actions after issued_from before issued to" do
+      b = create(:badge, issued_from: Time.now - 1.day, issued_to: Time.now + 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(b.action_count_earned_by(person)).to eq(2)
+    end
+    it "should return 0 for person with actions after issued to with no issued from" do
+      b = create(:badge, issued_to: Time.now - 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(badge.action_count_earned_by(person)).to eq(0)
+    end
+    it "should return 0 for person with actions after issued to with no issued from" do
+      b = create(:badge, issued_to: Time.now - 1.day)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(badge.action_count_earned_by(person)).to eq(0)
+    end
+    it "should return 0 for person with actions after issued to with issued from" do
+      b = create(:badge, issued_to: Time.now - 1.day, issued_from: Time.now - 3.days)
+      create(:badge_action, action_type: b.action_type, person: person)
+      expect(badge.action_count_earned_by(person)).to eq(0)
+    end
+  end
+
   describe "#action_requirement" do
     it "should not let you create a badge without an action requirement" do
       badge = build(:badge, action_requirement: nil)
@@ -13,6 +69,35 @@ RSpec.describe Badge, type: :model do
       expect(badge.errors[:action_requirement]).not_to be_empty
     end
   end
+
+  describe "current" do
+    let(:current_time) { Time.now }
+    it "should not be current if before issued_from with no issued_to" do
+      badge = create(:badge, issued_from: current_time + 1.minute)
+      expect(badge.current?).to be_falsey
+    end
+    it "should not be current if before issued_from with also an issued_to" do
+      badge = create(:badge, issued_from: current_time + 1.minute, issued_to: current_time + 3.minutes)
+      expect(badge.current?).to be_falsey
+    end
+    it "should not be current if after issued_to with no issued_from" do
+      badge = create(:badge, issued_to: current_time - 1.minutes)
+      expect(badge.current?).to be_falsey
+    end
+    it "should not be current if after issued_to with issued_from" do
+      badge = create(:badge, issued_from: current_time - 1.minutes, issued_to: current_time - 1.second)
+      expect(badge.current?).to be_falsey
+    end
+    it "should be current if after issued_from with no issued_to" do
+      badge = create(:badge, issued_from: current_time - 1.minute)
+      expect(badge.current?).to be_truthy
+    end
+    it "should be current if after issued_from with and before issued_to" do
+      badge = create(:badge, issued_from: current_time - 1.minute, issued_to: current_time + 1.minute)
+      expect(badge.current?).to be_truthy
+    end
+  end
+
   describe "#destroy" do
     it "should not let you destroy a badge that has been awarded" do
       badge = create(:badge)
@@ -69,51 +154,27 @@ RSpec.describe Badge, type: :model do
     end
     it "should allow two badges in different products to share internal name" do
       b1 = create(:badge)
-      prod_b2 = create(:product)
-      b2 = build(:badge, product: prod_b2, internal_name: b1.internal_name, action_type: create(:action_type))
-      expect(b2).to be_valid
-    end
-    it "should not allow two badges in the same product to share name" do
-      at1 = create(:badge)
-      at2 = build(:badge, name: at1.name)
-      expect(at2).not_to be_valid
-      expect(at2.errors[:name]).not_to be_empty
+      ActsAsTenant.with_tenant(create(:product)) do
+        b2 = build(:badge, internal_name: b1.internal_name, action_type: create(:action_type))
+        expect(b2).to be_valid
+      end
     end
   end
-  describe "#name" do
-    it "should allow a name with spaces" do
-      at = build(:badge, name: "Abc d12")
-      expect(at).to be_valid
-    end
-    it "should allow a name with exclamation" do
-      at = build(:badge, name: "abc_d12!")
-      expect(at).to be_valid
-    end
-    it "should not allow a nil name" do
-      at = build(:badge, name: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow an empty name" do
-      at = build(:badge, name: "")
-      expect(at).not_to be_valid
-    end
-    it "should not allow a name with less than 3 characters" do
-      at = build(:badge, name: "ab")
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
-    end
-    it "should not allow a name with more than 36 characters" do
-      at = build(:badge, name: "a" * 37)
-      expect(at).not_to be_valid
-      expect(at.errors[:name]).not_to be_empty
+
+  describe "#issued_to" do
+    it "should not allow issued_to before issued_from" do
+      badge = build(:badge, issued_to: Time.now - 1.day, issued_from: Time.now)
+      expect(badge).not_to be_valid
+      expect(badge.errors[:issued_to]).not_to be_empty
     end
   end
   describe "#product" do
     it "should not let you create a badge without a product" do
-      at = build(:badge, product: nil)
-      expect(at).not_to be_valid
-      expect(at.errors[:product]).not_to be_empty
+      ActsAsTenant.without_tenant do
+        at = build(:badge, product: nil)
+        expect(at).not_to be_valid
+        expect(at.errors[:product]).not_to be_empty
+      end
     end
   end
   describe "#valid?" do

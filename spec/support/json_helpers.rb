@@ -41,11 +41,12 @@ module JsonHelpers
     }
   end
 
-  def level_json(level)
+  def level_json(level, lang = nil)
     {
         "id"                  => level.id.to_s,
         "name"                => level.name,
         "internal_name"       => level.internal_name,
+        "description"         => (lang.present?) ? level.description(lang) : level.description,
         "points"              => level.points,
         "picture_url"         => level.picture_url
     }
@@ -85,7 +86,7 @@ module JsonHelpers
     )
   end
 
-  def person_json(person, potential_follower = nil, lang=nil)
+  def person_json(person, potential_follower = nil, lang = nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
     {
       "id"                => person.id.to_s,
@@ -93,6 +94,7 @@ module JsonHelpers
       "name"              => person.name,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
+      "recommended"       => person.recommended,
       "chat_banned"       => person.chat_banned,
       "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
       "following_id"      => (following) ? following.id : nil,
