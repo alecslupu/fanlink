@@ -127,7 +127,7 @@ class Api::V1::RecommendedPeopleController < ApiController
     end
   end
 
-  private
+private
 
   def check_blocked(person)
     !current_user.block_with?(person)
