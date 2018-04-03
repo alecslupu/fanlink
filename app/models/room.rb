@@ -10,7 +10,7 @@ class Room < ApplicationRecord
   belongs_to :created_by, class_name: "Person", required: false
   belongs_to :product
 
-  has_manual_translated :name
+  has_manual_translated :description, :name
 
   has_image_called :picture
 
