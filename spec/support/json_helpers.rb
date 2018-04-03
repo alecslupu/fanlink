@@ -41,11 +41,12 @@ module JsonHelpers
     }
   end
 
-  def level_json(level)
+  def level_json(level, lang = nil)
     {
         "id"                  => level.id.to_s,
         "name"                => level.name,
         "internal_name"       => level.internal_name,
+        "description"         => (lang.present?) ? level.description(lang) : level.description,
         "points"              => level.points,
         "picture_url"         => level.picture_url
     }
@@ -93,6 +94,7 @@ module JsonHelpers
       "name"              => person.name,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
+      "recommended"       => person.recommended,
       "chat_banned"       => person.chat_banned,
       "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
       "following_id"      => (following) ? following.id : nil,
@@ -100,7 +102,12 @@ module JsonHelpers
       "role"              => person.role,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
       "do_not_message_me" => person.do_not_message_me,
-      "pin_messages_from" => person.pin_messages_from
+      "pin_messages_from" => person.pin_messages_from,
+      "auto_follow"       => person.auto_follow,
+      "facebookid"        => person.facebookid,
+      "facebook_picture_url" => person.facebook_picture_url,
+      "created_at"        => person.created_at.to_s,
+      "updated_at"        => person.updated_at.to_s
     }
   end
   def post_json(post, lang = nil, reaction = nil)

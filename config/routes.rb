@@ -13,13 +13,14 @@ Rails.application.routes.draw do
           delete "" => "notification_device_ids#destroy"
         end
       end
-      resources :people, only: %i[ create show update ] do
+      resources :people, only: %i[ create index show update ] do
         member do
           patch "change_password"
         end
         collection do
           post "password_forgot" => "password_resets#create"
           post "password_reset" => "password_resets#update"
+          get "recommended" => "recommended_people#index"
         end
       end
       resources :posts, except: %i[ new edit ] do
