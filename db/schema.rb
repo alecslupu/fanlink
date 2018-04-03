@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322183017) do
+ActiveRecord::Schema.define(version: 20180403191804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,7 @@ ActiveRecord::Schema.define(version: 20180322183017) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 

@@ -4,7 +4,7 @@ module Message::FilterrificImpl
     base.class_exec do
       scope :person_name_query, -> (query)  { joins(:person).where( "people.name ilike ?", "%#{query}%") }
       scope :person_username_query, -> (query)  { joins(:person).where( "people.username_canonical ilike ?", "%#{query}%") }
-      scope :room_query,   -> (query)  { joins(:room).where( "rooms.name_canonical ilike ?", "%#{query}%") }
+      scope :room_query,   -> (query)  { joins(:room).where( "rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
       scope :id_query,     -> (query)  { where(id: query.to_i) }
       scope :body_query,   -> (query)  { where("messages.body ilike ?", "%#{query}%") }
       scope :sorted_by, lambda { |sort_option|
