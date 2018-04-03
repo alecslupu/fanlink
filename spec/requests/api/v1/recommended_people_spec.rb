@@ -41,4 +41,3 @@ describe "Recommended People (v1)" do
     end
   end
 end
-
