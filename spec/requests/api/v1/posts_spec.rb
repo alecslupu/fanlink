@@ -277,4 +277,12 @@ describe "Posts (v1)" do
       expect(response).to be_not_found
     end
   end
+  describe "#share" do
+    it "should get a visible post without authentication" do
+      post = create(:post, person: @person, status: :published)
+      get "/posts/#{post.id}/share", params: {product: @product.internal_name}
+      expect(response).to be_success
+      expect(json["post"]).to eq(post_share_json(post))
+    end
+  end
 end

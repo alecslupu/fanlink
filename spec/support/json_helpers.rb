@@ -104,6 +104,15 @@ module JsonHelpers
       "pin_messages_from" => person.pin_messages_from
     }
   end
+
+  def person_share_json(person, potential_follower = nil, lang = nil)
+    following = (potential_follower) ? potential_follower.following_for_person(person) : nil
+    {
+      "username"          => person.username,
+      "picture_url"       => person.picture_url
+    }
+  end
+
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,
@@ -113,6 +122,13 @@ module JsonHelpers
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
       "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction)
+    }
+  end
+  def post_share_json(post, lang = nil, reaction = nil)
+    {
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
+      "picture_url" => post.picture_url,
+      "person" => person_share_json(post.person),
     }
   end
   def post_reaction_json(post_reaction)

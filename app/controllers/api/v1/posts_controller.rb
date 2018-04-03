@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApiController
 
-  skip_before_action :require_login, :set_product, only: %i[ share ]
+  skip_before_action :require_login, only: %i[ share ]
 
   #**
   # @api {post} /posts Create a post.
