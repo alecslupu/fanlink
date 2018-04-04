@@ -116,6 +116,59 @@ class Api::V1::PostsController < ApiController
   end
 
   #**
+  # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
+  # @apiName ListPosts
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This gets a list of posts with optional filters.
+  #
+  # @apiParam {Integer} [person_id_filter]
+  #   Full match on person id.
+  #
+  # @apiParam {String} [person_filter]
+  #   Full or partial match on person username or email.
+  #
+  # @apiParam {String} [body_filter]
+  #   Full or partial match on post body.
+  #
+  # @apiParam {Datetime} [posted_after]
+  #   Posted at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #
+  # @apiParam {Datetime} [posted_before]
+  #   Posted at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #
+  # @apiParam {String} [status]
+  #   Post status. Valid values: pending published deleted rejected errored
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "posts": [
+  #       {
+  #         "id": "123",
+  #         "person_id": 123,
+  #         "body": "Do you like my body?",
+  #         "picture_url": "http://example.com/pic.jpg",
+  #         "global": false,
+  #         "starts_at":  "2018-01-01T00:00:00Z",
+  #         "ends_at":    "2018-01-31T23:59:59Z",
+  #         "repost_interval": 0,
+  #         "status": "published",
+  #         "priority": 0,
+  #         "created_at": "2017-12-31T12:13:42Z",
+  #         "updated_at": "2017-12-31T12:13:42Z"
+  #       },...
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401 Unauthorized
+  #*
+  def list
+    @posts = apply_filters
+    return_the @posts
+  end
+
+  #**
   # @api {get} /posts/:id Get a single post.
   # @apiName GetPost
   # @apiGroup Posts
@@ -126,19 +179,12 @@ class Api::V1::PostsController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "post": {
-  #         "id": "5016",
-  #         "body": "Stupid thing to say",
-  #         "create_time": "2018-01-08'T'12:13:42'Z'"
-  #         "picture_url": "http://host.name/path",
-  #         "person": {...public person json with relationships...},
-  #         "post_reaction_counts": {
-  #           "1F600": 1,
-  #           "1F601": 3,....
-  #         },
-  #         "post_reaction": { #post_reaction of current user
-  #           ..post_reaction json or null
-  #         }
-  #
+  #       "id": "1234",
+  #       "create_time":"2018-02-18T06:32:24Z",
+  #       "body":"post body",
+  #       "person": ....public person json...,
+  #       "post_reaction_counts":{"1F389":1},
+  #       "post_reaction":...see post reaction create json....(or null if current user has not reacted)
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -151,6 +197,16 @@ class Api::V1::PostsController < ApiController
   end
 
 private
+
+  def apply_filters
+    posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
+    params.each do |p, v|
+      if p.end_with?("_filter") && Post.respond_to?(p)
+        posts = posts.send(p, v)
+      end
+    end
+    posts
+  end
 
   def post_params
     params.require(:post).permit(:body, :picture)

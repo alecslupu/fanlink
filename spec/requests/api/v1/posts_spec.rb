@@ -167,14 +167,78 @@ describe "Posts (v1)" do
     before(:all) do
       Post.for_product(@product).destroy_all
       @admin = create(:person, role: :admin)
-      @people_list = [create(:person, product: @product), create(:person, product: @product), create(:person, product: @product)]
+      @people_list = [create(:person, product: @product, username: "user111", email: "user1112@example.com"),
+                      create(:person, product: @product, username: "user112", email: "user112@example.com"),
+                      create(:person, product: @product, username: "user121", email: "user121@example.com")]
       @total_list_posts = 10
       @total_list_posts.times do |n|
         create(:post, person: @people_list.sample)
       end
     end
     it "should get the list of all posts unfiltered" do
-      pending("do this thing")
+      login_as(@admin)
+      get "/posts/list"
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts unfiltered" do
+      login_as(@admin)
+      get "/posts/list"
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts filtered on person_id" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/posts/list", params: { person_id_filter: person.id }
+      expect(response).to be_success
+      posts = Post.where(person_id: person.id)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on full person username match" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/posts/list", params: { person_filter: person.username }
+      expect(response).to be_success
+      posts = Post.where(person_id: person.id)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on partial person username match" do
+      login_as(@admin)
+      people = [@people_list.first, @people_list[1] ]
+      get "/posts/list", params: { person_filter: "user11" }
+      expect(response).to be_success
+      posts = Post.where(person_id: people)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on full person email match" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/posts/list", params: { person_filter: person.email }
+      expect(response).to be_success
+      posts = Post.where(person_id: person.id)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on partial person email match" do
+      login_as(@admin)
+      people = [@people_list.first, @people_list[1] ]
+      get "/posts/list", params: { person_filter: "112@example" }
+      expect(response).to be_success
+      posts = Post.where(person_id: people)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on full body match" do
+      login_as(@admin)
+      post = Post.for_product(@product).sample
+      get "/posts/list", params: { body_filter: post.body }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(1)
+      expect(json["posts"].first.id).to eq(post.id.to_s)
     end
   end
 

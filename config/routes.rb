@@ -24,6 +24,9 @@ Rails.application.routes.draw do
         end
       end
       resources :posts, except: %i[ new edit ] do
+        collection do
+          get "list" => "posts#list"
+        end
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
       end
       resources :post_reports, only: %i[ create ]
