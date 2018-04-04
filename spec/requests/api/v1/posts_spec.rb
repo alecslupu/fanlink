@@ -163,6 +163,140 @@ describe "Posts (v1)" do
     end
   end
 
+  describe "#list" do
+    before(:all) do
+      Post.for_product(@product).destroy_all
+      @admin = create(:person, role: :admin)
+      @people_list = [create(:person, product: @product, username: "user111", email: "user1112@example.com"),
+                      create(:person, product: @product, username: "user112", email: "user112@example.com"),
+                      create(:person, product: @product, username: "user121", email: "user121@example.com")]
+      @total_list_posts = 10
+      @first_time = Time.zone.now - 10.days
+      @total_list_posts.times do |n|
+        create(:post, person: @people_list.sample, body: "some body that I made up #{n}", status: Post.statuses.keys.sample, created_at: @first_time + n.days)
+      end
+    end
+    it "should get the list of all posts unfiltered" do
+      login_as(@admin)
+      get "/posts/list"
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts unfiltered" do
+      login_as(@admin)
+      get "/posts/list"
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts filtered on person_id" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/posts/list", params: { person_id_filter: person.id }
+      expect(response).to be_success
+      posts = Post.where(person_id: person.id)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on full person username match" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/posts/list", params: { person_filter: person.username }
+      expect(response).to be_success
+      posts = Post.where(person_id: person.id)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on partial person username match" do
+      login_as(@admin)
+      people = [@people_list.first, @people_list[1] ]
+      get "/posts/list", params: { person_filter: "user11" }
+      expect(response).to be_success
+      posts = Post.where(person_id: people)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on full person email match" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/posts/list", params: { person_filter: person.email }
+      expect(response).to be_success
+      posts = Post.where(person_id: person.id)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on partial person email match" do
+      login_as(@admin)
+      people = [@people_list.first, @people_list[1] ]
+      get "/posts/list", params: { person_filter: "112@example" }
+      expect(response).to be_success
+      posts = Post.where(person_id: people)
+      expect(json["posts"].count).to eq(posts.count)
+      expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all posts filtered on full body match" do
+      login_as(@admin)
+      post = Post.for_product(@product).sample
+      get "/posts/list", params: { body_filter: post.body }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(1)
+      expect(json["posts"].first["id"]).to eq(post.id.to_s)
+    end
+    it "should get the list of all posts filtered on partial body match" do
+      login_as(@admin)
+      get "/posts/list", params: { body_filter: "some body" }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts posted at or after some time matching all" do
+      login_as(@admin)
+      get "/posts/list", params: { posted_after_filter: @first_time.to_s }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts posted at or after some time matching some" do
+      login_as(@admin)
+      get "/posts/list", params: { posted_after_filter: (@first_time + 3.days).to_s }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts - 3)
+    end
+    it "should get the list of all posts posted at or before some time matching all" do
+      login_as(@admin)
+      get "/posts/list", params: { posted_before_filter: (@first_time + 11.days).to_s }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get the list of all posts posted on or after some time matching some" do
+      login_as(@admin)
+      get "/posts/list", params: { posted_before_filter: (@first_time + 3.days).to_s }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(@total_list_posts - 7)
+    end
+    it "should get the list of all posts matching a status" do
+      login_as(@admin)
+      published_posts = Post.published
+      get "/posts/list", params: { status_filter: "published" }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(published_posts.count)
+    end
+    it "should get a list of posts filtered on body and posted_after" do
+      login_as(@admin)
+      time_to_use = @first_time + 4.days
+      posts = Post.where(person: @people_list.first).where("created_at >= ?", time_to_use)
+      get "/posts/list", params: { person_id_filter: @people_list.first.id, posted_after_filter: time_to_use.to_s }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(posts.count)
+    end
+    it "should not give you anything if not logged in" do
+      get "/posts/list"
+      expect(response).to be_unauthorized
+    end
+    it "should not give you anything if logged in as normal" do
+      login_as(@person)
+      get "/posts/list"
+      expect(response).to be_unauthorized
+    end
+  end
+
   describe "#show" do
     it "should get a visible post" do
       post = create(:post, person: @person, status: :published)
