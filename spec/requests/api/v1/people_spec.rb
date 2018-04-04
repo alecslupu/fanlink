@@ -223,9 +223,9 @@ describe "People (v1)" do
     let!(:product) { create(:product) }
     let!(:person) { create(:person, product: product, username: "phil", email: "phil@example.com", role: :admin) }
     let!(:normal_person) { create(:person, product: product, username: "normal", email: "normal@example.com") }
-    let!(:person1) { create(:person, product: product, username: "pers1", email: "pers1@example.com")}
-    let!(:person2) { create(:person, product: product, username: "pers2", email: "pers2@example.com")}
-    let!(:person_other) { create(:person, product: create(:product), username: "person_other", email: "person_other@example.com")}
+    let!(:person1) { create(:person, product: product, username: "pers1", email: "pers1@example.com") }
+    let!(:person2) { create(:person, product: product, username: "pers2", email: "pers2@example.com") }
+    let!(:person_other) { create(:person, product: create(:product), username: "person_other", email: "person_other@example.com") }
     it "should not get people if not admin" do
       login_as(normal_person)
       get "/people"
@@ -237,7 +237,7 @@ describe "People (v1)" do
       expect(response).to be_success
       expected = [person.id, person1.id, person2.id, normal_person.id]
       expect(json["people"].count).to eq(expected.count)
-      listed_ids = json["people"].map{ |p| p["id"].to_i }
+      listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids.sort).to eq(expected.sort)
     end
     it "should get no people with username filter" do
@@ -251,7 +251,7 @@ describe "People (v1)" do
       get "/people", params: { username_filter: "ers" }
       expect(response).to be_success
       expect(json["people"].count).to eq(2)
-      listed_ids = json["people"].map{ |p| p["id"].to_i }
+      listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids.sort).to eq([person1.id, person2.id].sort)
     end
     it "should get a person with username filter" do
@@ -259,7 +259,7 @@ describe "People (v1)" do
       get "/people", params: { username_filter: "ers1" }
       expect(response).to be_success
       expect(json["people"].count).to eq(1)
-      listed_ids = json["people"].map{ |p| p["id"].to_i }
+      listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids).to eq([person1.id])
     end
     it "should get no people with email filter" do
@@ -273,7 +273,7 @@ describe "People (v1)" do
       get "/people", params: { email_filter: "ers" }
       expect(response).to be_success
       expect(json["people"].count).to eq(2)
-      listed_ids = json["people"].map{ |p| p["id"].to_i }
+      listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids.sort).to eq([person1.id, person2.id].sort)
     end
     it "should get a person with email filter" do
@@ -281,7 +281,7 @@ describe "People (v1)" do
       get "/people", params: { email_filter: "ers1" }
       expect(response).to be_success
       expect(json["people"].count).to eq(1)
-      listed_ids = json["people"].map{ |p| p["id"].to_i }
+      listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids).to eq([person1.id])
     end
     it "should people with username and email filter" do
@@ -289,7 +289,7 @@ describe "People (v1)" do
       get "/people", params: { email_filter: "example.com", username_filter: "pers" }
       expect(response).to be_success
       expect(json["people"].count).to eq(2)
-      listed_ids = json["people"].map{ |p| p["id"].to_i }
+      listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids.sort).to eq([person1.id, person2.id].sort)
     end
   end
