@@ -163,6 +163,21 @@ describe "Posts (v1)" do
     end
   end
 
+  describe "#list" do
+    before(:all) do
+      Post.for_product(@product).destroy_all
+      @admin = create(:person, role: :admin)
+      @people_list = [create(:person, product: @product), create(:person, product: @product), create(:person, product: @product)]
+      @total_list_posts = 10
+      @total_list_posts.times do |n|
+        create(:post, person: @people_list.sample)
+      end
+    end
+    it "should get the list of all posts unfiltered" do
+      pending("do this thing")
+    end
+  end
+
   describe "#show" do
     it "should get a visible post" do
       post = create(:post, person: @person, status: :published)
