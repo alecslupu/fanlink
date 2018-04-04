@@ -1,5 +1,4 @@
 class Api::V1::PostsController < ApiController
-
   skip_before_action :require_login, :set_product, only: %i[ share ]
 
   #**
