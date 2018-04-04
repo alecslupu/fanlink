@@ -25,6 +25,7 @@ Rails.application.routes.draw do
           get "recommended" => "recommended_people#index"
         end
       end
+      resources :post_reports, only: %i[ index ]
       resources :posts, except: %i[ new edit ] do
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
         get "share", on: :member
