@@ -4,17 +4,9 @@ module Post::PortalFilters
   included do
     scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
     scope :person_filter, -> (query) { joins(:person).where( "people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
-    # scope :room_id_filter, -> (query) { joins(:room).where("rooms.id = ?", query.to_i) }
-    # scope :body_filter, -> (query) { where("body ilike ?", "%#{query}%") }
-    #
-    # scope :reported_filter, lambda { |reported|
-    #   if reported == 'Yes'
-    #     joins(:message_reports).where.not(message_reports: { message_id: nil } )
-    #   elsif reported == 'No'
-    #     joins(:message_reports).where(message_reports: { message_id: nil } )
-    #   else
-    #     nil
-    #   end
-    # }
+    scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+    scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
+    scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+    scope :status_filter, -> (query) { where(status: query.to_sym) }
   end
 end

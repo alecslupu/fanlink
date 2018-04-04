@@ -1,4 +1,5 @@
 class Api::V1::PostsController < ApiController
+  before_action :admin_only, only: %i[ list ]
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -132,13 +133,13 @@ class Api::V1::PostsController < ApiController
   # @apiParam {String} [body_filter]
   #   Full or partial match on post body.
   #
-  # @apiParam {Datetime} [posted_after]
+  # @apiParam {Datetime} [posted_after_filter]
   #   Posted at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
   #
-  # @apiParam {Datetime} [posted_before]
+  # @apiParam {Datetime} [posted_before_filter]
   #   Posted at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
   #
-  # @apiParam {String} [status]
+  # @apiParam {String} [status_filter]
   #   Post status. Valid values: pending published deleted rejected errored
   #
   # @apiSuccessExample {json} Success-Response:
