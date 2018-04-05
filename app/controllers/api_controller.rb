@@ -87,6 +87,7 @@ protected
   end
 
   def set_product
+    Rails.logger.debug(params.inspect)
     product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
