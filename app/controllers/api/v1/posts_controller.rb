@@ -161,7 +161,7 @@ class Api::V1::PostsController < ApiController
   #   This gets a single post for a post id without authentication.
   #
   # @apiParam {String} product
-  #   Product internal name From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
+  #   Product internal name.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
