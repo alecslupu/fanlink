@@ -163,47 +163,6 @@ describe "Posts (v1)" do
     end
   end
 
-  describe "#share" do
-    let(:post) { create(:post, person: @person, status: :published) }
-    it "should get a post without authentication" do
-      get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
-      expect(response).to be_success
-      expect(json["post"]).to eq(post_share_json(post))
-    end
-    it "should 404 with valid post in different product" do
-      post = create(:post, person: create(:person, product: create(:product)), status: :published)
-      get "/posts/#{post.id}/share", params: { product: @product.internal_name }
-      expect(response).to be_not_found
-    end
-    it "should 404 with invalid post id" do
-      use_id = (Post.count > 0) ? Post.last.id + 1 : 1
-      get "/posts/#{use_id}/share", params: { product: @product.internal_name }
-      expect(response).to be_not_found
-    end
-    it "should 422 with invalid product" do
-      get "/posts/#{post.id}/share", params: { product: "thiscannotpossiblyexist" }
-      expect(response).to be_unprocessable
-    end
-    it "should 422 with missing product" do
-      get "/posts/#{post.id}/share", params: { product: "thiscannotpossiblyexist" }
-      expect(response).to be_unprocessable
-    end
-    it "should get a post for different product than logged in" do
-      login_as(create(:person, product: create(:product)))
-      get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
-      expect(response).to be_success
-      expect(json["post"]).to eq(post_share_json(post))
-    end
-    it "should 404 on an unpublished post" do
-      post = create(:post)
-      Post.statuses.keys.each do |s|
-        next if s == "published"
-        post.update_column(:status, Post.statuses[s])
-        get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
-        expect(response).to be_not_found
-      end
-    end
-  end
   describe "#list" do
     before(:all) do
       Post.for_product(@product).destroy_all
@@ -338,6 +297,49 @@ describe "Posts (v1)" do
     end
   end
 
+  describe "#share" do
+    let(:post) { create(:post, person: @person, status: :published) }
+    it "should get a post without authentication" do
+      get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
+      expect(response).to be_success
+      expect(json["post"]).to eq(post_share_json(post))
+    end
+    it "should 404 with valid post in different product" do
+      post = create(:post, person: create(:person, product: create(:product)), status: :published)
+      get "/posts/#{post.id}/share", params: { product: @product.internal_name }
+      expect(response).to be_not_found
+    end
+    it "should 404 with invalid post id" do
+      use_id = (Post.count > 0) ? Post.last.id + 1 : 1
+      get "/posts/#{use_id}/share", params: { product: @product.internal_name }
+      expect(response).to be_not_found
+    end
+    it "should 422 with invalid product" do
+      get "/posts/#{post.id}/share", params: { product: "thiscannotpossiblyexist" }
+      expect(response).to be_unprocessable
+    end
+    it "should 422 with missing product" do
+      get "/posts/#{post.id}/share", params: { product: "thiscannotpossiblyexist" }
+      expect(response).to be_unprocessable
+    end
+    it "should get a post for different product than logged in" do
+      #login_as(create(:person, product: create(:product)))
+
+      get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
+      expect(response).to be_success
+      expect(json["post"]).to eq(post_share_json(post))
+    end
+    it "should 404 on an unpublished post" do
+      post = create(:post)
+      Post.statuses.keys.each do |s|
+        next if s == "published"
+        post.update_column(:status, Post.statuses[s])
+        get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
+        expect(response).to be_not_found
+      end
+    end
+  end
+
   describe "#show" do
     it "should get a visible post" do
       post = create(:post, person: @person, status: :published)
@@ -469,14 +471,6 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_not_found
-    end
-  end
-  describe "#share" do
-    it "should get a visible post without authentication" do
-      post = create(:post, person: @person, status: :published)
-      get "/posts/#{post.id}/share", params: {product: @product.internal_name}
-      expect(response).to be_success
-      expect(json["post"]).to eq(post_share_json(post))
     end
   end
 end
