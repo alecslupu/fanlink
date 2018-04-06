@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       end
       resources :posts, except: %i[ new edit ] do
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
+        get "share", on: :member
       end
       resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]

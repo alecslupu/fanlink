@@ -1,4 +1,6 @@
 class Api::V1::PostsController < ApiController
+  skip_before_action :require_login, :set_product, only: %i[ share ]
+
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -147,6 +149,34 @@ class Api::V1::PostsController < ApiController
   def show
     @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
     @post_reaction = @post.reactions.find_by(person: current_user)
+    return_the @post
+  end
+
+  #**
+  # @api {get} /posts/:id/share Get a single, shareable post.
+  # @apiName GetShareablePost
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This gets a single post for a post id without authentication.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "post": {
+  #         "body": "Stupid thing to say",
+  #         "picture_url": "http://host.name/path",
+  #         "person": {
+  #             "username": Tester McTestingson,
+  #             "picture_url": "http://host.name/path"
+  #          },
+  #     }
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found
+  #*
+
+  def share
+    @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
     return_the @post
   end
 
