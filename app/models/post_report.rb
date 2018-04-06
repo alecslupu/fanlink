@@ -1,4 +1,6 @@
 class PostReport < ApplicationRecord
+  include PostReport::PortalFilters
+
   enum status: %i[ pending no_action_needed post_hidden ]
 
   belongs_to :post

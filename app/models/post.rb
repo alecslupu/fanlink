@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   include AttachmentSupport
+  include Post::PortalFilters
   include Post::RealTime
   include TranslationThings
 

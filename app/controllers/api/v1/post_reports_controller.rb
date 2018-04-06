@@ -1,4 +1,6 @@
 class Api::V1::PostReportsController < ApiController
+  before_action :admin_only, only: %i[ index ]
+
   #**
   # @api {post} /post_reports Report a post.
   # @apiName CreatePostReport
@@ -39,7 +41,50 @@ class Api::V1::PostReportsController < ApiController
     end
   end
 
+  #**
+  # @api {get} /post_reports Get list of post reports (ADMIN).
+  # @apiName GetPostReports
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This gets a list of post reports with optional filter.
+  #
+  # @apiParam {String} [status_filter]
+  #   If provided, valid values are "pending", "no_action_needed", and "post_hidden"
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "post_reports": [
+  #       {
+  #         "id": "1234",
+  #         "created_at": "2018-01-08T12:13:42Z",
+  #         "post_id": 1234,
+  #         "poster": "post_username",
+  #         "reporter": "post_report_username",
+  #         "reason": "I don't like your post",
+  #         "status": "pending"
+  #       },....
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
+  #*
+  def index
+    @post_reports = apply_filters
+    return_the @post_reports
+  end
+
 private
+
+  def apply_filters
+    post_reports = PostReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
+    params.each do |p, v|
+      if p.end_with?("_filter") && PostReport.respond_to?(p)
+        post_reports = post_reports.send(p, v)
+      end
+    end
+    post_reports
+  end
 
   def post_report_params
     params.require(:post_report).permit(:post_id, :reason).merge(person_id: current_user.id)
