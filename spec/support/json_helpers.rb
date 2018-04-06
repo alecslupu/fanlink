@@ -155,6 +155,16 @@ module JsonHelpers
       "reaction"  => post_reaction.reaction
     }
   end
+
+  def post_share_json(post, lang = nil)
+    {
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
+      "picture_url" => post.picture_url,
+      "person" => { "username" => post.person.username,
+                    "picture_url" => post.person.picture_url }
+    }
+  end
+
   def relationship_json(relationship, currnt_user)
     {
       "id"            => relationship.id.to_s,
