@@ -160,6 +160,9 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This gets a single post for a post id without authentication.
   #
+  # @apiParam {String} product
+  #   Product internal name From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "post": {
@@ -174,13 +177,25 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
-
   def share
-    @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
-    return_the @post
+    product = get_product
+    if product.nil?
+      render_error("Missing or invalid product.")
+    else
+      @post = Post.for_product(product).visible.find(params[:id])
+      return_the @post
+    end
   end
 
 private
+
+  def get_product
+    product = nil
+    if params[:product].present?
+      product = Product.find_by(internal_name: params[:product])
+    end
+    product
+  end
 
   def post_params
     params.require(:post).permit(:body, :picture)
