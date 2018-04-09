@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :merchandise, only: %i[ index show ]
       get "messages" => "messages#list"
       resources :messages, only: %i[ update ]
+      resources :message_reports, only: %i[ index update ]
       resources :notification_device_ids, only: %i[ create ] do
         collection do
           delete "" => "notification_device_ids#destroy"
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
       end
       resources :posts, except: %i[ new edit ] do
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
+        get "share", on: :member
       end
       resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]

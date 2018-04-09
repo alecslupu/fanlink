@@ -148,6 +148,7 @@ class Api::V1::PeopleController < ApiController
   #       "following_id": 12, //or null
   #       "relationships": [ {json for each relationship}], //only present if relationships present
   #       "badge_points": 0,
+  #       "role": "normal",
   #       "level": {...level json...}, //or null,
   #       "do_not_message_me": false,
   #       "pin_messages_from": false,

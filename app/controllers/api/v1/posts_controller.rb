@@ -1,4 +1,6 @@
 class Api::V1::PostsController < ApiController
+  skip_before_action :require_login, :set_product, only: %i[ share ]
+
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -150,7 +152,50 @@ class Api::V1::PostsController < ApiController
     return_the @post
   end
 
+  #**
+  # @api {get} /posts/:id/share Get a single, shareable post.
+  # @apiName GetShareablePost
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This gets a single post for a post id without authentication.
+  #
+  # @apiParam {String} product
+  #   Product internal name.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "post": {
+  #         "body": "Stupid thing to say",
+  #         "picture_url": "http://host.name/path",
+  #         "person": {
+  #             "username": Tester McTestingson,
+  #             "picture_url": "http://host.name/path"
+  #          },
+  #     }
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found
+  #*
+  def share
+    product = get_product
+    if product.nil?
+      render_error("Missing or invalid product.")
+    else
+      @post = Post.for_product(product).visible.find(params[:id])
+      return_the @post
+    end
+  end
+
 private
+
+  def get_product
+    product = nil
+    if params[:product].present?
+      product = Product.find_by(internal_name: params[:product])
+    end
+    product
+  end
 
   def post_params
     params.require(:post).permit(:body, :picture)
