@@ -10,6 +10,8 @@ class Message < ApplicationRecord
   belongs_to :room
 
   has_image_called :picture
+
+  has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy
   has_paper_trail
 
@@ -33,6 +35,16 @@ class Message < ApplicationRecord
 
   def name
     person.name
+  end
+
+  def mentions
+    message_mentions
+  end
+
+  def mentions=(mention_params)
+    mention_params.each do |mp|
+      message_mentions.build(person_id: mp[:person_id], linked_text: mp[:linked_text])
+    end
   end
 
   def product
