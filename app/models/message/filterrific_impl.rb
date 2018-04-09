@@ -29,7 +29,7 @@ module Message::FilterrificImpl
         if reported == 'Yes'
           joins(:message_reports).where.not(message_reports: { message_id: nil } )
         elsif reported == 'No'
-          joins(:message_reports).where(message_reports: { message_id: nil } )
+          left_outer_joins(:message_reports).where(message_reports: { message_id: nil } )
         else
           nil
         end
