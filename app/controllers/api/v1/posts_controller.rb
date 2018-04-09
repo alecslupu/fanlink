@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApiController
-  before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
+  before_action :admin_only, only: %i[ list ]
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -235,6 +235,17 @@ class Api::V1::PostsController < ApiController
 
 private
 
+<<<<<<< HEAD
+=======
+  def get_product
+    product = nil
+    if params[:product].present?
+      product = Product.find_by(internal_name: params[:product])
+    end
+    product
+  end
+
+>>>>>>> 20ce2c6b1319f6569683dda8002fed182dd8e56a
   def apply_filters
     posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
@@ -243,6 +254,7 @@ private
       end
     end
     posts
+<<<<<<< HEAD
   end
 
   def get_product
@@ -251,6 +263,8 @@ private
       product = Product.find_by(internal_name: params[:product])
     end
     product
+=======
+>>>>>>> 20ce2c6b1319f6569683dda8002fed182dd8e56a
   end
 
   def post_params

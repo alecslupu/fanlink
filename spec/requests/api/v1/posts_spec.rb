@@ -296,6 +296,7 @@ describe "Posts (v1)" do
       expect(response).to be_unauthorized
     end
   end
+
   describe "#share" do
     let(:post) { create(:post, person: @person, status: :published) }
     it "should get a post without authentication" do
@@ -322,7 +323,8 @@ describe "Posts (v1)" do
       expect(response).to be_unprocessable
     end
     it "should get a post for different product than logged in" do
-      login_as(create(:person, product: create(:product)))
+      #login_as(create(:person, product: create(:product)))
+
       get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
       expect(response).to be_success
       expect(json["post"]).to eq(post_share_json(post))
@@ -469,14 +471,6 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_not_found
-    end
-  end
-  describe "#share" do
-    it "should get a visible post without authentication" do
-      post = create(:post, person: @person, status: :published)
-      get "/posts/#{post.id}/share", params: {product: @product.internal_name}
-      expect(response).to be_success
-      expect(json["post"]).to eq(post_share_json(post))
     end
   end
 end
