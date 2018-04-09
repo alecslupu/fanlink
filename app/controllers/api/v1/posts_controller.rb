@@ -235,8 +235,6 @@ class Api::V1::PostsController < ApiController
 
 private
 
-<<<<<<< HEAD
-=======
   def get_product
     product = nil
     if params[:product].present?
@@ -245,7 +243,6 @@ private
     product
   end
 
->>>>>>> 20ce2c6b1319f6569683dda8002fed182dd8e56a
   def apply_filters
     posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
@@ -254,19 +251,7 @@ private
       end
     end
     posts
-<<<<<<< HEAD
   end
-
-  def get_product
-    product = nil
-    if params[:product].present?
-      product = Product.find_by(internal_name: params[:product])
-    end
-    product
-=======
->>>>>>> 20ce2c6b1319f6569683dda8002fed182dd8e56a
-  end
-
   def post_params
     params.require(:post).permit(:body, :picture)
   end
