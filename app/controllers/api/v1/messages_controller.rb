@@ -24,6 +24,9 @@ class Api::V1::MessagesController < ApiController
   # @apiParam {Attachment} [message.picture]
   #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam {Array} [mentions]
+  #   Array of mentions each consisting of required person_id (integer) and required linked_text (string)
+  #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
   #     message: { ..message json..see get message action ....}
@@ -270,7 +273,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   def message_params
-    params.require(:message).permit(:body, :picture)
+    params.require(:message).permit(:body, :picture, mentions: %i[ person_id linked_text ])
   end
 
   def message_update_params

@@ -31,7 +31,7 @@ describe "Messages (v1)" do
     end
     it "should create a new message in a public room with mentions" do
       expect_any_instance_of(Message).to receive(:post)
-      expect_any_instance_of(Room).not_to receive(:increment_message_counters) #msg counters are only for closers!..er, private rooms
+      expect_any_instance_of(Room).not_to receive(:increment_message_counters)
       login_as(@person)
       body = "Do you like my body?"
       post "/rooms/#{@room.id}/messages",
@@ -45,8 +45,24 @@ describe "Messages (v1)" do
       expect(response).to be_success
       msg = Message.last
       expect(msg.mentions.count).to eq(2)
+      expect(json["message"]["mentions"].count).to eq(2)
     end
-
+    it "should not create a new message in a public room with a mention without a person_id" do
+      expect_any_instance_of(Message).not_to receive(:post)
+      login_as(@person)
+      body = "Do you like my body?"
+      expect {
+        post "/rooms/#{@room.id}/messages",
+             params: { message: { body: body,
+                                  mentions: [ { linked_text: "not really in the message but they didn't specify validation of that so whatever" },
+                                              { person_id: @mentioned2.id,
+                                                linked_text: "not this one either" } ]
+        } }
+      }.to change { Message.count }.by(0)
+      expect(response).to be_unprocessable
+      puts json["errors"]
+      expect(json["errors"]).not_to be_empty
+    end
     it "should create a new message in a private room" do
       expect_any_instance_of(Message).to receive(:post)
       expect_any_instance_of(Room).to receive(:increment_message_counters)
@@ -63,6 +79,24 @@ describe "Messages (v1)" do
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
       expect(json["message"]).to eq(message_json(msg))
+    end
+    it "should create a new message in a private room with a mention" do
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).to receive(:increment_message_counters)
+      room = create(:room, product: @product, created_by: @person, status: :active)
+      room.members << @person
+      other_member = create(:person, product: @person.product)
+      room.members << other_member
+      login_as(@person)
+      body = "Do you like my body?"
+      post "/rooms/#{room.id}/messages",
+           params: { message: { body: body, mentions: [{ person_id: @mentioned1.id,
+                                                                      linked_text: "just some text" } ]
+                    } }
+      expect(response).to be_success
+      msg = Message.last
+      expect(msg.mentions.count).to eq(1)
+      expect(json["message"]["mentions"].count).to eq(1)
     end
     it "should not create a new message in an inactive room" do
       @room.inactive!

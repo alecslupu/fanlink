@@ -69,7 +69,8 @@ module JsonHelpers
       "body"      => msg.body,
       "create_time" => msg.created_at.to_s,
       "picture_url" => msg.picture_url,
-      "person" => person_json(msg.person)
+      "person" => person_json(msg.person),
+      "mentions" => message_mentions_json(msg)
     }
   end
 
@@ -84,6 +85,18 @@ module JsonHelpers
         "created_at" => msg.created_at.to_s,
         "updated_at" => msg.updated_at.to_s
     }
+  end
+
+  def message_mentions_json(msg)
+    if msg.mentions.count > 0
+      mentions = []
+      msg.mentions.each do |m|
+        mentions << { person_id: m.person_id, linked_text: m.linked_text }
+      end
+      mentions
+    else
+      nil
+    end
   end
 
   def pending_badge_json(earned, badge)

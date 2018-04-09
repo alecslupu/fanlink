@@ -345,8 +345,8 @@ ActiveRecord::Schema.define(version: 20180409192538) do
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
-  add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages"
-  add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people"
+  add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
+  add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people", on_delete: :cascade
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
   add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
