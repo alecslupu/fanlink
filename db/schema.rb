@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403191804) do
+ActiveRecord::Schema.define(version: 20180409192538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,13 @@ ActiveRecord::Schema.define(version: 20180403191804) do
     t.jsonb "description", default: {}, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
+  end
+
+  create_table "message_mentions", force: :cascade do |t|
+    t.integer "message_id", null: false
+    t.integer "person_id", null: false
+    t.text "linked_text", null: false
+    t.index ["message_id"], name: "ind_message_mentions_people"
   end
 
   create_table "message_reports", force: :cascade do |t|
@@ -338,6 +345,8 @@ ActiveRecord::Schema.define(version: 20180403191804) do
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
+  add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages"
+  add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people"
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
   add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade

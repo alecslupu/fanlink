@@ -7,6 +7,8 @@ describe "Messages (v1)" do
     @room = create(:room, public: true, status: :active, product: @product)
     @private_room = create(:room, public: false, status: :active, product: @product)
     @private_room.members << @person << @private_room.created_by
+    @mentioned1 = create(:person, product: @product)
+    @mentioned2 = create(:person, product: @product)
   end
 
   before(:each) do
@@ -27,6 +29,24 @@ describe "Messages (v1)" do
       expect(msg.body).to eq(body)
       expect(json["message"]).to eq(message_json(msg))
     end
+    it "should create a new message in a public room with mentions" do
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).not_to receive(:increment_message_counters) #msg counters are only for closers!..er, private rooms
+      login_as(@person)
+      body = "Do you like my body?"
+      post "/rooms/#{@room.id}/messages",
+           params: { message: { body: body,
+                                mentions: [ { person_id: @mentioned1.id,
+                                              linked_text: "not really in the message but they didn't specify validation of that so whatever" },
+                                            { person_id: @mentioned2.id,
+                                              linked_text: "not this one either" } ]
+                                }
+                    }
+      expect(response).to be_success
+      msg = Message.last
+      expect(msg.mentions.count).to eq(2)
+    end
+
     it "should create a new message in a private room" do
       expect_any_instance_of(Message).to receive(:post)
       expect_any_instance_of(Room).to receive(:increment_message_counters)
