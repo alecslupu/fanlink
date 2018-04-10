@@ -216,6 +216,6 @@ private
 
   def person_params
     params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product, :current_password,
-                                    :new_password)
+                                    :new_password, :birthdate, :gender, :city, :country)
   end
 end
