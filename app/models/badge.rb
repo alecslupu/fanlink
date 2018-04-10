@@ -32,7 +32,7 @@ class Badge < ApplicationRecord
   end
 
   def current?
-    (issued_from.nil? || (Time.zone.now > issued_from )) && (issued_to.nil? || (Time.zone.now < issued_to))
+    (issued_from.nil? || (Time.zone.now > issued_from)) && (issued_to.nil? || (Time.zone.now < issued_to))
   end
 
 private
@@ -42,5 +42,4 @@ private
       errors.add(:issued_to, "Issued to cannot be before issued from.")
     end
   end
-
 end
