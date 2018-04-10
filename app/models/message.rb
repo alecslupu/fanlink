@@ -1,5 +1,6 @@
 class Message < ApplicationRecord
   include AttachmentSupport
+  include Message::PortalFilters
   include Message::RealTime
 
   enum status: %i[ pending posted ]
