@@ -5,6 +5,7 @@ class Api::V1::PostsController < ApiController
   # @api {post} /posts Create a post.
   # @apiName CreatePost
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This creates a post and puts in on the feed of the author's followers.
@@ -40,6 +41,7 @@ class Api::V1::PostsController < ApiController
   # @api {delete} /posts/:id Delete (hide) a single post.
   # @apiName DeletePost
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This deletes a single post by marking as deleted. Can only be called by the creator.
@@ -65,6 +67,7 @@ class Api::V1::PostsController < ApiController
   # @api {get} /posts Get posts for a date range.
   # @apiName GetPosts
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of posts for a from date, to date, with an optional
@@ -121,6 +124,7 @@ class Api::V1::PostsController < ApiController
   # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
   # @apiName ListPosts
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of posts with optional filters.
@@ -174,6 +178,7 @@ class Api::V1::PostsController < ApiController
   # @api {get} /posts/:id Get a single post.
   # @apiName GetPost
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a single post for a post id.
@@ -202,6 +207,7 @@ class Api::V1::PostsController < ApiController
   # @api {get} /posts/:id/share Get a single, shareable post.
   # @apiName GetShareablePost
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a single post for a post id without authentication.
