@@ -1,6 +1,5 @@
 class ApiController < ApplicationController
   include FloadUp
-
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   set_current_tenant_through_filter
@@ -47,6 +46,10 @@ class ApiController < ApplicationController
   end
 
 protected
+
+  def admin_only
+    head :unauthorized unless current_user.some_admin?
+  end
 
   def check_dates(required = false)
     if params[:from_date].present?

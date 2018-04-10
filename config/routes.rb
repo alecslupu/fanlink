@@ -8,12 +8,15 @@ Rails.application.routes.draw do
       resources :followings, only: %i[ create destroy index ]
       resources :levels, only: %i[ index ]
       resources :merchandise, only: %i[ index show ]
+      get "messages" => "messages#list"
+      resources :messages, only: %i[ update ]
+      resources :message_reports, only: %i[ index update ]
       resources :notification_device_ids, only: %i[ create ] do
         collection do
           delete "" => "notification_device_ids#destroy"
         end
       end
-      resources :people, only: %i[ create show update ] do
+      resources :people, only: %i[ create index show update ] do
         member do
           patch "change_password"
         end
@@ -23,8 +26,13 @@ Rails.application.routes.draw do
           get "recommended" => "recommended_people#index"
         end
       end
+      resources :post_reports, only: %i[ index ]
       resources :posts, except: %i[ new edit ] do
+        collection do
+          get "list" => "posts#list"
+        end
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
+        get "share", on: :member
       end
       resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]
@@ -39,6 +47,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    version 2
   end
 
   #temporary hack to get around need for Accept header with api stuff
