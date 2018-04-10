@@ -2,12 +2,7 @@ class PostMessageJob < Struct.new(:message_id)
   include RealTimeHelpers
 
   def perform
-    message = Message.find(message_id)
-    if message.room.public?
-      client.set("#{room_path(message.room)}/last_message", message.as_json)
-    else
-      client.set("#{room_path(message.room)}/last_message_id", message.id)
-    end
+    client.set("#{room_path(message.room)}/last_message_id", message_id)
   end
 
   def error(job, exception)
