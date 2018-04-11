@@ -3,6 +3,7 @@ describe "Messages (v1)" do
   before(:all) do
     @product = Product.first || create(:product)
     @person = create(:person, product: @product)
+    @admin_person = create(:person, product: @product, role: :admin)
     @room = create(:room, public: true, status: :active, product: @product)
     @private_room = create(:room, public: false, status: :active, product: @product)
     @private_room.members << @person << @private_room.created_by
@@ -92,6 +93,14 @@ describe "Messages (v1)" do
 
   describe "#destroy" do
     it "should hide message from original creator" do
+      expect_any_instance_of(Message).to receive(:delete_real_time)
+      login_as(@person)
+      msg = create(:message, person: @person, room: @private_room, body: "this is my body")
+      delete "/rooms/#{@private_room.id}/messages/#{msg.id}"
+      expect(response).to be_success
+      expect(msg.reload.hidden).to be_truthy
+    end
+    it "should hide message by admin" do
       expect_any_instance_of(Message).to receive(:delete_real_time)
       login_as(@person)
       msg = create(:message, person: @person, room: @private_room, body: "this is my body")
@@ -222,6 +231,108 @@ describe "Messages (v1)" do
     end
   end
 
+  describe "#list" do
+    let(:product) { create(:product) }
+    let!(:room1) { create(:room, product: product, public: true) }
+    let!(:room2) { create(:room, product: product, public: false) }
+    let!(:membership1) { create(:room_membership, room: room2, person: create(:person, username: "membership1", product: product)) }
+    let!(:membership2) { create(:room_membership, room: room2) }
+    let!(:msg1) { create(:message, created_at: Time.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, product: product, username: "message1person")) }
+    let!(:msg2) { create(:message, created_at: Time.now - 9.minutes, room: room1, body: "msg2") }
+    let!(:msg12) { create(:message, created_at: Time.now - 8.minutes, room: room1, body: "msg12") }
+    let!(:msg13) { create(:message, created_at: Time.now - 7.minutes, room: room1, body: "msg13") }
+    let!(:msg14) { create(:message, created_at: Time.now - 6.minutes, room: room1, body: "msg14") }
+    let!(:msg3) { create(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3") }
+    let!(:admin) { create(:person, product: product, role: :admin) }
+    it "should give you all messages from all rooms with no page specified" do
+      toget = [msg1, msg2, msg12, msg13, msg14, msg3 ]
+      login_as(admin)
+      get "/messages"
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(toget.size)
+    end
+    it "should give you page 1 with 2 per page" do
+      toget = [msg3, msg14]
+      login_as(admin)
+      get "/messages", params: { page: 1, per_page: 2 }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(toget.size)
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
+    end
+    it "should give you page 1 with 2 per page if no page specified" do
+      toget = [msg3, msg14]
+      login_as(admin)
+      get "/messages", params: { per_page: 2 }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(toget.size)
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
+    end
+    it "should give you page 2 with 2 per page" do
+      toget = [msg13, msg12]
+      login_as(admin)
+      get "/messages", params: { page: 2, per_page: 2 }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(toget.size)
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
+    end
+    it "should give you messages filtered on id" do
+      login_as(admin)
+      get "/messages", params: { id_filter: msg1.id }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
+    end
+    it "should give you messages filtered on person" do
+      login_as(admin)
+      get "/messages", params: { person_filter: "ship1" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg3))
+    end
+    it "should give you messages filtered on room" do
+      toget = [msg14, msg13, msg12, msg2, msg1 ]
+      login_as(admin)
+      get "/messages", params: { room_id_filter: room1.id }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(toget.size)
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+    end
+    it "should give you messages filtered on body" do
+      login_as(admin)
+      get "/messages", params: { body_filter: "his is msg1" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
+    end
+    it "should give you reported messages" do
+      create(:message_report, message: msg1)
+      login_as(admin)
+      get "/messages", params: { reported_filter: "Yes" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
+    end
+    it "should return unauth if not logged in" do
+      get "/messages"
+      expect(response).to be_unauthorized
+    end
+    it "should return unauth if not admin" do
+      login_as(create(:person, product: product, role: :normal))
+      get "/messages"
+      expect(response).to be_unauthorized
+    end
+    it "should give you messages filtered on room and person" do
+      login_as(admin)
+      get "/messages", params: { room_id_filter: room1.id, person_filter:  "essage1" }
+      expect(response).to be_success
+      expect(json["messages"].count).to eq(1)
+      expect(json["messages"].first).to eq(message_list_json(msg1))
+    end
+  end
   describe "#show" do
     it "should get a single private message" do
       login_as(@person)
@@ -262,6 +373,36 @@ describe "Messages (v1)" do
       msg = create(:message, room: @room, body: "this is my body")
       get "/rooms/#{@room.id}/messages/#{msg.id}"
       expect(response).to be_not_found
+    end
+  end
+
+  describe "#update" do
+    it "should hide a message by an admin" do
+      expect_any_instance_of(Message).to receive(:delete_real_time)
+      login_as(@admin_person)
+      msg = create(:message, room: create(:room, public: true, product: @product))
+      expect(msg.hidden).to be_falsey
+      patch "/messages/#{msg.id}", params: { message: { hidden: true } }
+      expect(response).to be_success
+      expect(msg.reload.hidden).to be_truthy
+      expect(json["message"]).to eq(message_list_json(msg))
+    end
+    it "should unhide a message by an admin" do
+      expect_any_instance_of(Message).to_not receive(:delete_real_time)
+      login_as(@admin_person)
+      msg = create(:message, room: create(:room, public: true, product: @product), hidden: true)
+      expect(msg.hidden).to be_truthy
+      patch "/messages/#{msg.id}", params: { message: { hidden: false } }
+      expect(response).to be_success
+      expect(msg.reload.hidden).to be_falsey
+      expect(json["message"]).to eq(message_list_json(msg))
+    end
+    it "should not hide a message if not logged in" do
+      expect_any_instance_of(Message).to_not receive(:delete_real_time)
+      msg = create(:message, room: create(:room, public: true, product: @product))
+      patch "/messages/#{msg.id}", params: { message: { hidden: true } }
+      expect(response).to be_unauthorized
+      expect(msg.reload.hidden).to be_falsey
     end
   end
 end
