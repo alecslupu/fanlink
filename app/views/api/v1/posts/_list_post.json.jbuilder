@@ -1,0 +1,12 @@
+json.id post.id.to_s
+json.person_id post.person_id
+json.body post.body(@lang)
+json.picture_url post.picture_url
+json.global post.global
+json.starts_at post.starts_at.to_s
+json.ends_at post.ends_at.to_s
+json.repost_interval post.repost_interval
+json.status post.status
+json.priority post.priority
+json.created_at post.created_at.to_s
+json.updated_at post.updated_at.to_s

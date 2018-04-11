@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322183017) do
+ActiveRecord::Schema.define(version: 20180409192538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(version: 20180322183017) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
   end
@@ -152,11 +152,18 @@ ActiveRecord::Schema.define(version: 20180322183017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
+  end
+
+  create_table "message_mentions", force: :cascade do |t|
+    t.integer "message_id", null: false
+    t.integer "person_id", null: false
+    t.text "linked_text", null: false
+    t.index ["message_id"], name: "ind_message_mentions_people"
   end
 
   create_table "message_reports", force: :cascade do |t|
@@ -310,6 +317,7 @@ ActiveRecord::Schema.define(version: 20180322183017) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 
@@ -337,6 +345,8 @@ ActiveRecord::Schema.define(version: 20180322183017) do
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
+  add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
+  add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people", on_delete: :cascade
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
   add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade

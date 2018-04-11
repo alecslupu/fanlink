@@ -57,11 +57,8 @@ class Api::V1::SessionController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "person": {
-  #       "id": "5016",
   #       "email": "addr@example.com",
-  #       "username": "Pancakes.McGee",
-  #       "name": "Pancakes McGee",
-  #       "picture_url": "http://host.name/path",
+  #       ...see person get for the rest of the fields...
   #     }
   #*
   def create

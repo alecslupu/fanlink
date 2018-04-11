@@ -41,7 +41,7 @@ module JsonHelpers
     }
   end
 
-  def level_json(level, lang=nil)
+  def level_json(level, lang = nil)
     {
         "id"                  => level.id.to_s,
         "name"                => level.name,
@@ -125,6 +125,7 @@ module JsonHelpers
       "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
       "following_id"      => (following) ? following.id : nil,
       "badge_points"      => person.badge_points,
+      "role"              => person.role,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),
       "do_not_message_me" => person.do_not_message_me,
       "pin_messages_from" => person.pin_messages_from,
@@ -154,6 +155,16 @@ module JsonHelpers
       "reaction"  => post_reaction.reaction
     }
   end
+
+  def post_share_json(post, lang = nil)
+    {
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
+      "picture_url" => post.picture_url,
+      "person" => { "username" => post.person.username,
+                    "picture_url" => post.person.picture_url }
+    }
+  end
+
   def relationship_json(relationship, currnt_user)
     {
       "id"            => relationship.id.to_s,
