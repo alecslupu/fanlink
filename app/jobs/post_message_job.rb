@@ -3,7 +3,7 @@ class PostMessageJob < Struct.new(:message_id)
 
   def perform
     message = Message.find(message_id)
-    ActsAsTenant.with_tenant(msg.room.product) do
+    ActsAsTenant.with_tenant(message.room.product) do
       if message.room.public?
         client.set("#{room_path(message.room)}/last_message", message.as_json)
       else
