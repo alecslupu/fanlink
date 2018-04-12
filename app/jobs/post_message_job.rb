@@ -3,7 +3,13 @@ class PostMessageJob < Struct.new(:message_id)
 
   def perform
     message = Message.find(message_id)
-    client.set("#{room_path(message.room)}/last_message_id", message_id)
+    ActsAsTenant.with_tenant(msg.room.product) do
+      if message.room.public?
+        client.set("#{room_path(message.room)}/last_message", message.as_json)
+      else
+        client.set("#{room_path(message.room)}/last_message_id", message.id)
+      end
+    end
   end
 
   def error(job, exception)
