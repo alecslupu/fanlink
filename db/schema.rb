@@ -155,7 +155,10 @@ ActiveRecord::Schema.define(version: 20180409192538) do
     t.boolean "available", default: true, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+<<<<<<< HEAD
     t.integer "priority", default: 0, null: false
+=======
+>>>>>>> 28667ffa72f2ea130649ed8a321a1a473cc4e30f
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end
