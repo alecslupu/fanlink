@@ -10,7 +10,7 @@ var db = firebase.database();
 
 var rooms = [1];
 
-var log_stream = fs.createWriteStream("listener.log");
+var log_stream = fs.createWriteStream("logs/listener.log");
 
 log_stream.once('open', function(fd) {
   rooms.forEach(function(elem) {

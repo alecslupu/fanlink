@@ -26,3 +26,5 @@ coverage
 
 FanLink-API-Docs.zip
 
+/spec/load/firebase_listener/logs
+/spec/load/jmeter/results
