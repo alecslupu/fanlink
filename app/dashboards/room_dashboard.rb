@@ -11,6 +11,7 @@ class RoomDashboard < Administrate::BaseDashboard
     product_id: Field::Number,
     id: Field::Number,
     name: TranslatedField,
+    description: TranslatedField,
     picture: Field::Paperclip.with_options(blank_text: ""),
     created_by: Field::BelongsTo.with_options(class_name: "Person"),
     status: Field::Enum,
@@ -34,6 +35,7 @@ class RoomDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :id,
     :name,
+    :description,
     :picture,
     :status,
     :created_by,
@@ -46,6 +48,7 @@ class RoomDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
+    :description,
     :picture,
     :status,
   ].freeze

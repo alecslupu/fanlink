@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ -d "../fan-link-web" ]; then
-  apidoc -c config/ -i app/controllers/api/v1 -o ../fan-link-web/apidocs
+  apidoc -c config/ -i app/controllers/api -o ../fan-link-web/apidocs
   cd ../fan-link-web
   git pull
   git add .

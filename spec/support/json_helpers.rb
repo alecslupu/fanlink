@@ -73,6 +73,19 @@ module JsonHelpers
     }
   end
 
+  def message_list_json(msg)
+    {
+        "id"        => msg.id.to_s,
+        "person_id" => msg.person_id,
+        "room_id"   => msg.room_id,
+        "body"      => msg.body,
+        "hidden"    => msg.hidden,
+        "picture_url" => msg.picture_url,
+        "created_at" => msg.created_at.to_s,
+        "updated_at" => msg.updated_at.to_s
+    }
+  end
+
   def pending_badge_json(earned, badge)
     {
       "badge_action_count"  => earned,
@@ -129,6 +142,16 @@ module JsonHelpers
       "reaction"  => post_reaction.reaction
     }
   end
+
+  def post_share_json(post, lang = nil)
+    {
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
+      "picture_url" => post.picture_url,
+      "person" => { "username" => post.person.username,
+                    "picture_url" => post.person.picture_url }
+    }
+  end
+
   def relationship_json(relationship, currnt_user)
     {
       "id"            => relationship.id.to_s,

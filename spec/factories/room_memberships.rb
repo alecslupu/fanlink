@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :room_membership do
-    room_id 1
-    person_id 1
+    room { create(:room, public: false) }
+    person { create(:person) }
   end
 end

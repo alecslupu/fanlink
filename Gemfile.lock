@@ -26,16 +26,6 @@ GIT
       rails (>= 4.2, < 6)
 
 GIT
-  remote: https://github.com/mark100net/jko_api.git
-  revision: 9ec978c3be5a5d5c39a2e1ae8ea3d88d9ea34c2e
-  branch: rails_51
-  specs:
-    jko_api (0.2.6)
-      rails (>= 4.2.7, <= 5.1.4)
-      responders (= 2.4.0)
-      warden-oauth2
-
-GIT
   remote: https://github.com/oscardelben/firebase-ruby.git
   revision: 8153576ed501b3571d4c8d9411afbd5e1bfce719
   specs:
@@ -110,6 +100,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    api-pagination (4.7.0)
     appraisal (2.2.0)
       bundler
       rake
@@ -732,6 +723,7 @@ GEM
       os (~> 0.9)
       signet (~> 0.7)
     hashdiff (0.3.7)
+    hitimes (1.2.6)
     httparty (0.15.7)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
@@ -740,6 +732,10 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jko_api (0.2.7.0)
+      rails (>= 4.2.7, <= 5.1.4)
+      responders (= 2.4.0)
+      warden-oauth2
     jmespath (1.3.1)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
@@ -824,6 +820,8 @@ GEM
     postgresql-check (0.1.3)
       activerecord (>= 3.2.0)
     powerpack (0.1.1)
+    promise_pool (0.9.1)
+      timers (>= 4.0.1)
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.4)
@@ -864,6 +862,14 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rest-builder (0.9.2)
+      httpclient
+      mime-types
+      promise_pool
+    rest-core (4.0.1)
+      rest-builder
+    rest-firebase (1.1.0)
+      rest-core (>= 4.0.0)
     rollbar (2.15.5)
       multi_json
     rspec-core (3.7.0)
@@ -933,6 +939,8 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.8)
     timecop (0.9.1)
+    timers (4.1.2)
+      hitimes
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.0.1)
@@ -965,6 +973,7 @@ DEPENDENCIES
   administrate!
   administrate-field-enum!
   administrate-field-paperclip!
+  api-pagination
   attribute_normalizer
   aws-sdk
   better_errors
@@ -984,7 +993,8 @@ DEPENDENCIES
   gettext_i18n_rails
   google_places
   jbuilder (~> 2.5)
-  jko_api!
+  jko_api
+  kaminari
   koala
   listen (>= 3.0.5, < 3.2)
   mandrill-api!
@@ -999,6 +1009,7 @@ DEPENDENCIES
   rack-cors
   rack-timeout
   rails (~> 5.1.4)
+  rest-firebase
   rollbar
   rspec-rails
   rubocop-rails

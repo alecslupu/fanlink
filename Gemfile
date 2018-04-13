@@ -63,6 +63,7 @@ gem "administrate", git: "https://github.com/thoughtbot/administrate.git"
 #gem "administrate-field-enum", git: "https://github.com/guillaumemaka/administrate-field-enum.git"
 gem "administrate-field-enum", git: "https://github.com/mark100net/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
+gem "api-pagination"
 gem "attribute_normalizer"
 gem "aws-sdk"
 gem "delayed_job_active_record"
@@ -71,8 +72,8 @@ gem "fcm" #Firebase Cloud Messaging
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "gettext_i18n_rails"
 gem "google_places"
-gem "jko_api", git: "https://github.com/mark100net/jko_api.git", branch: "rails_51" # api versioning
-#gem 'jko_api', github: 'jwoertink/jko_api', branch: 'rails_51'
+gem "jko_api" # api versioning
+gem "kaminari"
 gem "koala" #Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
@@ -86,6 +87,7 @@ gem "paperclip", "~> 5.0.0"
 gem "postgresql-check"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
+gem "rest-firebase"
 gem "rollbar"
 gem "rubocop-rails"
 gem "sorcery"

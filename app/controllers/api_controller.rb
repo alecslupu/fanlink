@@ -1,6 +1,5 @@
 class ApiController < ApplicationController
   include FloadUp
-
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   set_current_tenant_through_filter
