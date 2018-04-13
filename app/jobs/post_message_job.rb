@@ -4,7 +4,7 @@ class PostMessageJob < Struct.new(:message_id)
   def perform
     message = Message.find(message_id)
     if message.room.public?
-      client.set("#{room_path(message.room)}/last_message", message.as_json.to_s)
+      client.set("#{room_path(message.room)}/last_message", message.as_json.to_json)
     else
       client.set("#{room_path(message.room)}/last_message_id", message.id)
     end
