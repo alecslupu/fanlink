@@ -19,7 +19,7 @@ log_stream.once('open', function(fd) {
         var d = new Date();
         var msg = snapshot.val();
         var create_time = Date.parse(msg["create_time"])
-        log_stream.write("Body: " + msg["body"] + " -- Created: " + msg["create_time"] + " -- Current: " + d.toString() + " -- Lag: " + (d.getTime() - create_time) + "\n");
+        log_stream.write("Msg ID: " + msg["id"] + " -- Body: " + msg["body"] + " -- Created: " + msg["create_time"] + " -- Current: " + d.toString() + " -- Lag: " + (d.getTime() - create_time) + "\n");
       }, function (errorObject) {
         log_stream.write("The read failed: " + errorObject.code + "\n");
     });
