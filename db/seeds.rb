@@ -22,9 +22,17 @@ if Person.count == 0
   end
 end
 
-if Room.count == 0
+if Room.count < 10
   unless Rails.env.production?
-    Room.create(name: "Public room", created_by_id: Person.find_by(name: "Admin User").id, public: true, product_id: Product.find_by(internal_name: "test").id)
+    prod = Product.find_by(internal_name: "test").try(:id)
+    u = Person.find_by(name: "Admin User").try(:id)
+    if prod && u
+      1.upto 10 do |n|
+        unless (Room.where(id: n)).exists?
+          Room.create(name: "Public room #{n}", created_by_id: u, public: true, product_id: prod)
+        end
+      end
+    end
   end
 end
 
