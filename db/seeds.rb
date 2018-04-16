@@ -29,7 +29,7 @@ if Room.count < 10
     if prod && u
       1.upto 10 do |n|
         unless (Room.where(id: n)).exists?
-          Room.create(name: "Public room #{n}", created_by_id: u, public: true, product_id: prod)
+          Room.create(name: "Public room #{n}", created_by_id: u, public: true, product_id: prod, status: :active)
         end
       end
     end
