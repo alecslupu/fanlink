@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409192538) do
+ActiveRecord::Schema.define(version: 20180416224258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,7 +166,8 @@ ActiveRecord::Schema.define(version: 20180409192538) do
   create_table "message_mentions", force: :cascade do |t|
     t.integer "message_id", null: false
     t.integer "person_id", null: false
-    t.text "linked_text", null: false
+    t.integer "location", default: 0, null: false
+    t.integer "length", default: 0, null: false
     t.index ["message_id"], name: "ind_message_mentions_people"
   end
 

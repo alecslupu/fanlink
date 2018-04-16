@@ -54,11 +54,6 @@
       <hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="room_id" elementType="Argument">
-            <stringProp name="Argument.name">room_id</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="num_chatters" elementType="Argument">
             <stringProp name="Argument.name">num_chatters</stringProp>
             <stringProp name="Argument.value">1000</stringProp>
@@ -84,6 +79,15 @@
         <stringProp name="TestPlan.comments">This group of users will create an account and then enter the chat</stringProp>
       </ThreadGroup>
       <hashTree>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Room ID Signup and Chat" enabled="true">
+          <stringProp name="maximumValue">10</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <boolProp name="perThread">true</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">room_id</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
         <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="New User Counter" enabled="true">
           <stringProp name="CounterConfig.start">${__time()}</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
@@ -179,6 +183,15 @@
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
       </ThreadGroup>
       <hashTree>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Room ID Login and Chat" enabled="true">
+          <stringProp name="maximumValue">10</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <boolProp name="perThread">true</boolProp>
+          <stringProp name="randomSeed"></stringProp>
+          <stringProp name="variableName">room_id</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
         <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Counter Controller" enabled="true"/>
         <hashTree>
           <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Chatter counter" enabled="true">

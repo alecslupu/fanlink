@@ -87,6 +87,18 @@ module JsonHelpers
     }
   end
 
+  def message_mentions_json(msg)
+    if msg.mentions.count > 0
+      mentions = []
+      msg.mentions.each do |m|
+        mentions << { person_id: m.person_id, linked_text: m.linked_text }
+      end
+      mentions
+    else
+      nil
+    end
+  end
+
   def message_reports_json(msg_report)
     {
         "id"          => msg_report.id.to_s,
@@ -110,6 +122,8 @@ module JsonHelpers
     else
       nil
     end
+=======
+>>>>>>> FLAPI-159-message-mentions
   end
 
   def pending_badge_json(earned, badge)
