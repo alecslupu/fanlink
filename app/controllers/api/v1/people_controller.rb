@@ -1,8 +1,6 @@
 class Api::V1::PeopleController < ApiController
   prepend_before_action :logout, only: :create
 
-  before_action :admin_only, only: %i[ index ]
-
   load_up_the Person, except: %i[ index ]
   skip_before_action :require_login, only: %i[ create ]
 
