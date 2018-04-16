@@ -280,7 +280,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   def message_params
-    params.require(:message).permit(:body, :picture, mentions: %i[ person_id linked_text ])
+    params.require(:message).permit(:body, :picture, mentions: %i[ person_id location length ])
   end
 
   def message_update_params

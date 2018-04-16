@@ -37,14 +37,18 @@ describe "Messages (v1)" do
       post "/rooms/#{@room.id}/messages",
            params: { message: { body: body,
                                 mentions: [ { person_id: @mentioned1.id,
-                                              linked_text: "not really in the message but they didn't specify validation of that so whatever" },
+                                              location: 11,
+                                              length: 8 },
                                             { person_id: @mentioned2.id,
-                                              linked_text: "not this one either" } ]
+                                              location: 14,
+                                              length: 4 } ]
                                 }
                     }
       expect(response).to be_success
       msg = Message.last
       expect(msg.mentions.count).to eq(2)
+      expect(msg.mentions.first.location).to eq(11)
+      expect(msg.mentions.first.length).to eq(8)
       expect(json["message"]["mentions"].count).to eq(2)
     end
     it "should not create a new message in a public room with a mention without a person_id" do
@@ -54,9 +58,9 @@ describe "Messages (v1)" do
       expect {
         post "/rooms/#{@room.id}/messages",
              params: { message: { body: body,
-                                  mentions: [ { linked_text: "not really in the message but they didn't specify validation of that so whatever" },
+                                  mentions: [ { location: 4, length: 11 },
                                               { person_id: @mentioned2.id,
-                                                linked_text: "not this one either" } ]
+                                                location: 5, length: 1 } ]
         } }
       }.to change { Message.count }.by(0)
       expect(response).to be_unprocessable
@@ -91,7 +95,8 @@ describe "Messages (v1)" do
       body = "Do you like my body?"
       post "/rooms/#{room.id}/messages",
            params: { message: { body: body, mentions: [{ person_id: @mentioned1.id,
-                                                                      linked_text: "just some text" } ]
+                                                                      location: 14,
+                                                                      length: 4 } ]
                     } }
       expect(response).to be_success
       msg = Message.last

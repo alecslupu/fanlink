@@ -38,7 +38,7 @@ class Message < ApplicationRecord
 
   def mentions=(mention_params)
     mention_params.each do |mp|
-      message_mentions.build(person_id: mp[:person_id], linked_text: mp[:linked_text])
+      message_mentions.build(person_id: mp[:person_id], location: mp[:location].to_i, length: mp[:length].to_i)
     end
   end
 
