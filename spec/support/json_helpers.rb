@@ -98,6 +98,18 @@ module JsonHelpers
       nil
     end
   end
+  def message_reports_json(msg_report)
+    {
+        "id"          => msg_report.id.to_s,
+        "created_at"  => msg_report.created_at.to_s,
+        "updated_at"  => msg_report.updated_at.to_s,
+        "message_id"  => msg_report.message_id,
+        "poster"      => msg_report.message.person.username,
+        "reporter"    => msg_report.person.username,
+        "reason"      => msg_report.reason,
+        "status"      => msg_report.status
+    }
+  end
 
   def pending_badge_json(earned, badge)
     {

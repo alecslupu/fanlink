@@ -1,4 +1,6 @@
 class MessageReport < ApplicationRecord
+  include MessageReport::PortalFilters
+
   enum status: %i[ pending no_action_needed message_hidden ]
 
   belongs_to :message
@@ -20,5 +22,9 @@ class MessageReport < ApplicationRecord
 
   def reporter
     person
+  end
+
+  def self.valid_status?(s)
+    statuses.include?(s.to_s)
   end
 end
