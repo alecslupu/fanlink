@@ -1,6 +1,6 @@
 class CorsGuard
   #TODO use redis or something for better thread safety
-  ALWAYS_ALLOW = %w[ https://www.fan.link https://staging.fan.link https://portal.dev.fanlinkmusic.com ]
+  ALWAYS_ALLOW = %w[ https://www.fan.link https://staging.fan.link https://portal.dev.fanlinkmusic.com https://portal.fanlinkmusic.com ]
   CORS_KEY = "cors_allowed"
 
   def self.allow_from?(source)
