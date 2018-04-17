@@ -234,10 +234,10 @@ ActiveRecord::Schema.define(version: 20180416233351) do
   end
 
   create_table "post_comments", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "person_id"
-    t.text "body"
-    t.boolean "hidden"
+    t.integer "post_id", null: false
+    t.integer "person_id", null: false
+    t.text "body", null: false
+    t.boolean "hidden", default: false, null: false
     t.index ["post_id"], name: "idx_post_comments_post"
   end
 
