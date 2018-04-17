@@ -13,6 +13,7 @@ class Post < ApplicationRecord
   has_image_called :picture
   has_paper_trail
 
+  has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
 
