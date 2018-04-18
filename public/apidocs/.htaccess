@@ -1,1 +1,4 @@
-deny from all
+<RequireAll>
+  Require ip 12.34.34.34
+</RequireAll>
+
