@@ -23,7 +23,7 @@ class Message < ApplicationRecord
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
-          include: { person: { only: %i[ id username name product_account chat_banned badge_points
+          include: { person: { only: %i[ id username name designation product_account chat_banned badge_points
                                         level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
   end
 
