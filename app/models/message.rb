@@ -1,5 +1,6 @@
 class Message < ApplicationRecord
   include AttachmentSupport
+  include Message::FilterrificImpl
   include Message::PortalFilters
   include Message::RealTime
 
@@ -40,6 +41,9 @@ class Message < ApplicationRecord
     mention_params.each do |mp|
       message_mentions.build(person_id: mp[:person_id], location: mp[:location].to_i, length: mp[:length].to_i)
     end
+
+  def name
+    person.name
   end
 
   def product
@@ -48,6 +52,10 @@ class Message < ApplicationRecord
 
   def reported?
     (message_reports.size > 0) ? "Yes" : "No"
+  end
+
+  def username
+    person.username
   end
 
   def visible?

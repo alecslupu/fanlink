@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby "2.4.2"
+ruby "2.5.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "~> 5.1.4"
@@ -69,6 +69,7 @@ gem "aws-sdk"
 gem "delayed_job_active_record"
 gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging
+gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "gettext_i18n_rails"
 gem "google_places"
