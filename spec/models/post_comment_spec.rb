@@ -18,5 +18,16 @@ RSpec.describe PostComment, type: :model do
       expect(cmt).not_to be_valid
     end
   end
-
+  describe "#body" do
+    it "should not let you create a post comment without a body" do
+      cmt = @followed1_post1.post_comments.create(person_id: @person.id)
+      expect(cmt).not_to be_valid
+    end
+  end
+  describe "#post" do
+    it "should not let you create a post comment without a post" do
+      cmt = PostComment.create(body: "this will not work", person_id: @person.id)
+      expect(cmt).not_to be_valid
+    end
+  end
 end

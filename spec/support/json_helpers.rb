@@ -136,6 +136,28 @@ module JsonHelpers
       "updated_at"        => person.updated_at.to_s
     }
   end
+
+  def post_comment_json(post_comment)
+    {
+      "id"            => post_comment.id.to_s,
+      "create_time"   => post_comment.created_at.to_s,
+      "body"          => post_comment.body,
+      "mentions"      => post_comment_mentions_json(post_comment)
+    }
+  end
+
+  def post_comment_mentions_json(post_comment)
+    if post_comment.mentions.count > 0
+      mentions = []
+      post_comment.mentions.each do |m|
+        mentions << { "person_id" => m.person_id, "location" => m.location, "length" => m.length }
+      end
+      mentions
+    else
+      nil
+    end
+  end
+
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,

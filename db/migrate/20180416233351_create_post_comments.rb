@@ -5,6 +5,7 @@ class CreatePostComments < ActiveRecord::Migration[5.1]
       t.integer :person_id, null: false
       t.text :body, null: false
       t.boolean :hidden, default: false, null: false
+      t.timestamps null: false
     end
     add_index :post_comments, %i[ post_id ], name: "idx_post_comments_post"
     add_foreign_key :post_comments, :posts, name: "fk_post_comments_post", on_delete: :cascade
