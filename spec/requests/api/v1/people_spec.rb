@@ -226,13 +226,12 @@ describe "People (v1)" do
     let!(:person1) { create(:person, product: product, username: "pers1", email: "pers1@example.com") }
     let!(:person2) { create(:person, product: product, username: "pers2", email: "pers2@example.com") }
     let!(:person_other) { create(:person, product: create(:product), username: "person_other", email: "person_other@example.com") }
-    it "should not get people if not admin" do
-      login_as(normal_person)
+    it "should not get people if not logged in" do
       get "/people"
       expect(response).to be_unauthorized
     end
     it "should get all people with no filter" do
-      login_as(person)
+      login_as(normal_person)
       get "/people"
       expect(response).to be_success
       expected = [person.id, person1.id, person2.id, normal_person.id]
