@@ -5,6 +5,8 @@ class PostComment < ApplicationRecord
 
   has_many :post_comment_mentions, dependent: :destroy
 
+  scope :visible, -> { where(hidden: false) }
+
   def mentions
     post_comment_mentions
   end

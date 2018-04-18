@@ -56,10 +56,33 @@ class Api::V1::PostCommentsController < ApiController
     return_the @post_comment
   end
 
-private
+  #**
+  # @api {get} /posts/:id/comments Get the comments on a post.
+  # @apiName GetPostComments
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This gets all the non-hidden comments on a post.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "post_comments": [
+  #       {
+  #         ...post comment json..see create action ...
+  #       }, ...
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
+  #*
+  def index
+    @post_comments = @post.comments.visible.order(created_at: :desc)
+    return_the @post_comments
+  end
 
-  # load up doesn't work well at this point with nested tenancy type things like this. Doing it this way makes sure
-  # the tenant has been set before trying to retrieve the post
+  private
+
+  # fload up doesn't work well at this point with nested tenancy type things like this (the post being only indirectly tenanted).
   def load_post
     @post = Post.for_product(current_user.product).find(params[:post_id])
     if @post.nil?
