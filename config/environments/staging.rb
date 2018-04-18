@@ -46,6 +46,6 @@ Rails.application.configure do
   config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
   config.eager_load = true
   config.force_ssl = true
-
+  config.public_file_server.enabled = true
 
 end
