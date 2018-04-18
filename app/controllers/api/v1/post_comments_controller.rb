@@ -60,6 +60,7 @@ class Api::V1::PostCommentsController < ApiController
   # @api {get} /posts/:id/comments Get the comments on a post.
   # @apiName GetPostComments
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets all the non-hidden comments on a post.
