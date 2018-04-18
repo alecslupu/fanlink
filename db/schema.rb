@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180416224258) do
+ActiveRecord::Schema.define(version: 20180418003005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -68,10 +67,10 @@ ActiveRecord::Schema.define(version: 20180416224258) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
   end
@@ -153,12 +152,9 @@ ActiveRecord::Schema.define(version: 20180416224258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-<<<<<<< HEAD
-    t.integer "priority", default: 0, null: false
-=======
->>>>>>> 28667ffa72f2ea130649ed8a321a1a473cc4e30f
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end
@@ -229,8 +225,8 @@ ActiveRecord::Schema.define(version: 20180416224258) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.date "birthdate"
     t.text "city"
     t.text "country"
@@ -239,6 +235,24 @@ ActiveRecord::Schema.define(version: 20180416224258) do
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
+  end
+
+  create_table "post_comment_mentions", force: :cascade do |t|
+    t.integer "post_comment_id", null: false
+    t.integer "person_id", null: false
+    t.integer "location", default: 0, null: false
+    t.integer "length", default: 0, null: false
+    t.index ["post_comment_id"], name: "ind_post_comment_mentions_post_comments"
+  end
+
+  create_table "post_comments", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "person_id", null: false
+    t.text "body", null: false
+    t.boolean "hidden", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "idx_post_comments_post"
   end
 
   create_table "post_reactions", force: :cascade do |t|
@@ -346,7 +360,6 @@ ActiveRecord::Schema.define(version: 20180416224258) do
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
   add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
-  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
@@ -363,6 +376,10 @@ ActiveRecord::Schema.define(version: 20180416224258) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
+  add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
+  add_foreign_key "post_comments", "people", name: "fk_post_comments_people", on_delete: :cascade
+  add_foreign_key "post_comments", "posts", name: "fk_post_comments_post", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade

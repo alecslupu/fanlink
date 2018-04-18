@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         collection do
           get "list" => "posts#list"
         end
+        resources :post_comments, only: %i[ create ], path: :comments
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
         get "share", on: :member
       end
