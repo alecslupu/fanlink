@@ -250,7 +250,7 @@ class Api::V1::MessagesController < ApiController
     return_the @message
   end
 
-  private
+private
 
   def apply_filters
     messages = Message.joins(:room).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).order(created_at: :desc)
@@ -286,5 +286,4 @@ class Api::V1::MessagesController < ApiController
   def message_update_params
     params.require(:message).permit(:hidden)
   end
-
 end
