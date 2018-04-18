@@ -34,10 +34,6 @@ class Message < ApplicationRecord
     created_at.to_s
   end
 
-  def name
-    person.name
-  end
-
   def mentions
     message_mentions
   end
@@ -46,6 +42,10 @@ class Message < ApplicationRecord
     mention_params.each do |mp|
       message_mentions.build(person_id: mp[:person_id], location: mp[:location].to_i, length: mp[:length].to_i)
     end
+  end
+
+  def name
+    person.name
   end
 
   def product
