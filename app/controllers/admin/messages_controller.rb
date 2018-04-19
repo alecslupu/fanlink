@@ -33,7 +33,7 @@ module Admin
         select_options: {
           with_reported_status: Message::FilterrificImpl.options_for_reported_status_filter
         }
-      ) or return
+      ) || return
       resources = @filterrific.find.page(params[:page])
       render locals: {
           resources: resources,

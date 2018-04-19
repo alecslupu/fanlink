@@ -42,6 +42,28 @@ RSpec.describe Message, type: :model do
     end
   end
 
+  describe ".pinned" do
+    before(:all) do
+      @pintest_room = create(:room)
+      @pinned_person1 = create(:person, pin_messages_from: true)
+      @pinned_person2 = create(:person, pin_messages_from: true)
+      @non_pinned_person = create(:person, pin_messages_from: false)
+      @pinned_msg1 = create(:message, person: @pinned_person1, room: @pintest_room)
+      @pinned_msg2 = create(:message, person: @pinned_person2, room: @pintest_room)
+      @nonpinned_msg = create(:message, person: @non_pinned_person, room: @pintest_room)
+    end
+    it "should give you only pinned messages if Yes is provided" do
+      msgs = Message.pinned("Yes")
+      expect(msgs.count).to eq(2)
+      expect(msgs.map { |m| m.id }.sort).to eq([@pinned_msg1.id, @pinned_msg2.id].sort)
+    end
+    it "should give you only nonpinned messages if No is provided" do
+      msgs = Message.pinned("No")
+      expect(msgs.count).to eq(1)
+      expect(msgs.first.id).to eq(@nonpinned_msg.id)
+    end
+  end
+
   describe ".reported_action_needed" do
     it "should give you the messages with pending reports" do
       msg_in = create(:message)

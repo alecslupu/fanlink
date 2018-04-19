@@ -98,7 +98,7 @@ describe "Posts (v2)" do
       get "/posts", params: { page: 1, per_page: 2, person_id: person.id }
       expect(response).to be_success
       expect(json["posts"].count).to eq(2)
-      expect(json["posts"].map { |p| p["id"] }).to eq([posts.last, posts[-2] ].map { |p| p.id.to_s } )
+      expect(json["posts"].map { |p| p["id"] }).to eq([posts.last, posts[-2] ].map { |p| p.id.to_s })
     end
     it "should return unprocessable for a badly formed person id" do
       login_as(@person)

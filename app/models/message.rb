@@ -18,6 +18,7 @@ class Message < ApplicationRecord
   scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
                                                         where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit) }
   scope :for_product, -> (product) { joins(:room).where("rooms.product_id = ?", product.id) }
+  scope :pinned, -> (param) { joins(:person).where("people.pin_messages_from = ?", (param.downcase == "yes") ? true : false) }
   scope :publics, -> { joins(:room).where("rooms.public = ?", true) }
   scope :reported_action_needed, -> { joins(:message_reports).where("message_reports.status = ?", MessageReport.statuses[:pending]) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
@@ -25,7 +26,7 @@ class Message < ApplicationRecord
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
-          include: { person: { only: %i[ id username name product_account chat_banned badge_points
+          include: { person: { only: %i[ id username name designation product_account chat_banned badge_points
                                         level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
   end
 
