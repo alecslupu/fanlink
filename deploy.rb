@@ -18,6 +18,8 @@ class Deploy < Thor
     if branch != "master"
       puts "Generating docs"
       `bin/docapi`
+      `git add public/apidocs/*`
+      `git commit -m 'doc update'`
     end
 
     if !(`git remote | sort | uniq`.match(dest))
