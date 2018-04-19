@@ -157,11 +157,14 @@ that result in calls to Firebase should stub all `Messaging` calls. Calls
 to external services should never happen when running specs. The webmock
 gem should enforce this.
 
+* When creating a new heroku instance, setting up the config variables is complicated by the very long
+API key necessary for Firebase. After downloading the ".json" key file from Firebase, you will need
+to get its contents into the config variable on Heroku. This command has worked:
+
+    `heroku config:set FIREBASE_KEY="$(< /Local/Path/tokeyfile/file.json)" -r remotename`
+    
 ## Technical Todo's
 
-* Administrative and portal permissions (using [pundit](https://github.com/varvet/pundit)?)
-* Implement [paper trail](https://github.com/airblade/paper_trail) gem (already in `Gemfile`).
-* Production Heroku instance
 * When appropriate use master git branches for gems not currently using them (acts_as_tenant, firebase, jko_api).
 
     

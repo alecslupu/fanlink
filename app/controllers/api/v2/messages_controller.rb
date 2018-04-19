@@ -1,5 +1,4 @@
 class Api::V2::MessagesController < Api::V1::MessagesController
-  include Rails::Pagination
   #**
   # @api {get} /rooms/{room_id}/messages Get messages.
   # @apiName GetMessages

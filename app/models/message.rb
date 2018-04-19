@@ -1,5 +1,6 @@
 class Message < ApplicationRecord
   include AttachmentSupport
+  include Message::FilterrificImpl
   include Message::PortalFilters
   include Message::RealTime
 
@@ -23,12 +24,16 @@ class Message < ApplicationRecord
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
-          include: { person: { only: %i[ id username name product_account chat_banned badge_points
+          include: { person: { only: %i[ id username name designation product_account chat_banned badge_points
                                         level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
   end
 
   def create_time
     created_at.to_s
+  end
+
+  def name
+    person.name
   end
 
   def product
@@ -37,6 +42,10 @@ class Message < ApplicationRecord
 
   def reported?
     (message_reports.size > 0) ? "Yes" : "No"
+  end
+
+  def username
+    person.username
   end
 
   def visible?

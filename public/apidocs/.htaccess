@@ -1,7 +1,0 @@
-AuthUserFile ./.htpasswd
-AuthType Basic
-AuthName "API Docs"
-Require valid-user
-
-
-
