@@ -15,6 +15,11 @@ class Deploy < Thor
       exit
     end
 
+    if branch != "master"
+      puts "Generating docs"
+      `bin/docapi`
+    end
+
     if !(`git remote | sort | uniq`.match(dest))
       puts "Don't see #{dest} in the list of remotes."
       exit
@@ -28,7 +33,10 @@ class Deploy < Thor
 
     puts "Filling it with a fart from DHH."
     `git push #{dest} #{branch}:master`
-    puts "Away it goes."
+
+    puts "Removing local docs"
+
+    `rm -rf public/apidocs`
 
     puts "Running Migrations"
     Open3.popen2(*%w[heroku run rails db:migrate -r], dest) do |input, output, _|
