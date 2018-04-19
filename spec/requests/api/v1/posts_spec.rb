@@ -172,8 +172,9 @@ describe "Posts (v1)" do
                       create(:person, product: @product, username: "user121", email: "user121@example.com")]
       @total_list_posts = 10
       @first_time = Time.zone.now - 10.days
+      @list_posts = []
       @total_list_posts.times do |n|
-        create(:post, person: @people_list.sample, body: "some body that I made up #{n}", status: Post.statuses.keys.sample, created_at: @first_time + n.days)
+        @list_posts << create(:post, person: @people_list.sample, body: "some body that I made up #{n}", status: Post.statuses.keys.sample, created_at: @first_time + n.days)
       end
     end
     it "should get the list of all posts unfiltered" do
@@ -187,6 +188,24 @@ describe "Posts (v1)" do
       get "/posts/list"
       expect(response).to be_success
       expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get list paginated at page 1" do
+      login_as(@admin)
+      pp = 2
+      get "/posts/list", params: { page: 1, per_page: pp }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(pp)
+      expect(json["posts"].first).to eq(post_list_json(@list_posts.last))
+      expect(json["posts"].last).to eq(post_list_json(@list_posts[-2]))
+    end
+    it "should get list paginated at page 2" do
+      login_as(@admin)
+      pp = 2
+      get "/posts/list", params: { page: 2, per_page: pp }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(pp)
+      expect(json["posts"].first).to eq(post_list_json(@list_posts[-3]))
+      expect(json["posts"].last).to eq(post_list_json(@list_posts[-4]))
     end
     it "should get the list of all posts filtered on person_id" do
       login_as(@admin)
