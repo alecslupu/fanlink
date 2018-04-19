@@ -34,7 +34,7 @@ class Deploy < Thor
     puts "Filling it with a fart from DHH."
     `git push #{dest} #{branch}:master`
 
-    puts "Removing local docs"
+    puts "Removing local docs if any"
 
     `rm -rf public/apidocs`
 
