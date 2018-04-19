@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419205739) do
+ActiveRecord::Schema.define(version: 20180416224258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,10 +227,6 @@ ActiveRecord::Schema.define(version: 20180419205739) do
     t.boolean "chat_banned", default: false, null: false
     t.boolean "recommended", default: false, null: false
     t.jsonb "designation", default: {}, null: false
-    t.integer "gender", default: 0, null: false
-    t.date "birthdate"
-    t.text "city"
-    t.text "country_code"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
