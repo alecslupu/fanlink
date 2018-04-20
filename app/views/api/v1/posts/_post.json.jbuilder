@@ -11,3 +11,9 @@ if defined?(post_reaction) && post_reaction.present?
 else
   json.post_reaction nil
 end
+json.global post.global
+json.starts_at (post.starts_at.nil?) ? nil : post.starts_at.to_s
+json.ends_at (post.ends_at.nil?) ? nil : post.ends_at.to_s
+json.repost_interval post.repost_interval
+json.status post.status
+json.priority post.priority

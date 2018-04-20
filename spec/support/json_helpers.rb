@@ -151,12 +151,18 @@ module JsonHelpers
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,
-      "body"        => (lang.present?) ? post.body(lang) : post.body,
       "create_time" => post.created_at.to_s,
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
       "picture_url" => post.picture_url,
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
-      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction)
+      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction),
+      "global"      => post.global,
+      "starts_at"   => (post.starts_at.present?) ? post.starts_at.to_s : nil,
+      "ends_at"   => (post.ends_at.present?) ? post.ends_at.to_s : nil,
+      "repost_interval" =>  post.repost_interval,
+      "status"        => post.status,
+      "priority"      => post.priority
     }
   end
   def post_reaction_json(post_reaction)

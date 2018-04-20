@@ -189,9 +189,16 @@ class Api::V1::PostsController < ApiController
   #       "id": "1234",
   #       "create_time":"2018-02-18T06:32:24Z",
   #       "body":"post body",
+  #       "picture_url": "www.example.com/pic.jpg",
   #       "person": ....public person json...,
   #       "post_reaction_counts":{"1F389":1},
   #       "post_reaction":...see post reaction create json....(or null if current user has not reacted)
+  #       "global": false,
+  #       "starts_at":  "2018-01-01T00:00:00Z",
+  #       "ends_at":    "2018-01-31T23:59:59Z",
+  #       "repost_interval": 0,
+  #       "status": "published",
+  #       "priority": 0
   #     }
   #
   # @apiErrorExample {json} Error-Response:
