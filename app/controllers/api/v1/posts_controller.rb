@@ -1,8 +1,10 @@
 class Api::V1::PostsController < ApiController
   include Rails::Pagination
-
-  before_action :admin_only, only: %i[ list ]
+  before_action :admin_only, only: %i[ list update ]
+  before_action :load_post, only: %i[ update ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
+
+
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -254,6 +256,52 @@ class Api::V1::PostsController < ApiController
     end
   end
 
+  #**
+  # @api {patch} /posts/{id} Update a post (ADMIN)
+  # @apiName UpdatePost
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This updates a post.
+  #
+  # @apiParam {Object} post
+  #   The post object container for the post parameters.
+  #
+  # @apiParam {String} [post.body]
+  #   The body of the post.
+  #
+  # @apiParam {Attachment} [post.picture]
+  #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
+  #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     post: { ..post json..see list posts action ....}
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401, 404
+  #*
+  def update
+    @post.update_attributes(post_update_params)
+  end
+
 private
 
   def get_product
@@ -273,7 +321,24 @@ private
     end
     posts
   end
+
+  def get_product
+    product = nil
+    if params[:product].present?
+      product = Product.find_by(internal_name: params[:product])
+    end
+    product
+  end
+
+  def load_post
+    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
+  end
+
   def post_params
     params.require(:post).permit(:body, :picture)
+  end
+
+  def post_update_params
+    params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority )
   end
 end
