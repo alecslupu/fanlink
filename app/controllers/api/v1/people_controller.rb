@@ -1,4 +1,5 @@
 class Api::V1::PeopleController < ApiController
+  include Rails::Pagination
   prepend_before_action :logout, only: :create
 
   load_up_the Person, except: %i[ index ]
@@ -127,6 +128,12 @@ class Api::V1::PeopleController < ApiController
   # @apiDescription
   #   This is used to get a list of people.
   #
+  # @apiParam {Integer} [page]
+  #   Page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   Page division. Default is 25.
+  #
   # @apiParam {String} [username_filter]
   #   A username or username fragment to filter on.
   #
@@ -140,7 +147,7 @@ class Api::V1::PeopleController < ApiController
   #      ]
   #*
   def index
-    @people = apply_filters
+    @people = paginate apply_filters
     return_the @people
   end
 
