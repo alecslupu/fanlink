@@ -452,4 +452,47 @@ describe "Posts (v1)" do
       expect(response).to be_not_found
     end
   end
+
+  describe "#update" do
+    let(:newbody) { "Do you like my new body?" }
+    let(:global) { true }
+    let(:starts_at) { "2018-03-12T18:55:30Z" }
+    let(:ends_at) { "2018-03-13T18:55:30Z" }
+    let(:repost_interval) { 5 }
+    let(:status) { "published" }
+    let(:priority) { 2 }
+    let(:admin) { create(:person, role: :admin, product: @person.product) }
+    let(:post) { create(:post, person: @person) }
+    it "should let admin update a post" do
+      login_as(admin)
+      post = create(:post, person: @person)
+      patch "/posts/#{post.id}", params: { post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_success
+      post.reload
+      expect(post.body).to eq(newbody)
+      expect(post.global).to eq(global)
+      expect(post.starts_at).to eq(Time.parse(starts_at))
+      expect(post.ends_at).to eq(Time.parse(ends_at))
+      expect(post.repost_interval).to eq(repost_interval)
+      expect(post.status).to eq(status)
+      expect(post.priority).to eq(priority)
+    end
+    it "should not let normal update a post" do
+      login_as(@person)
+      orig = post.body
+      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_unauthorized
+      expect(post.body).to eq(orig)
+    end
+    it "should not let not logged in update a post" do
+      orig = post.body
+      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_unauthorized
+      expect(post.body).to eq(orig)
+    end
+  end
+
 end
