@@ -27,6 +27,24 @@ describe "Posts (v1)" do
       expect(post.published?).to be_truthy
       expect(json["post"]).to eq(post_json(post))
     end
+    it "should create a new post and publish it with a lot of fields normal users really should not have access to but i am told they should" do
+      expect_any_instance_of(Post).not_to receive(:post)
+      login_as(@person)
+      body = "Do you like my body?"
+      startat = "2018-01-08T12:15:00Z"
+      endat = "2018-06-08T12:15:59Z"
+      prior = 123
+      rpi = 1
+      post "/posts", params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: "rejected", priority: prior } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.global).to be_truthy
+      expect(post.starts_at).to eq(Time.parse(startat))
+      expect(post.ends_at).to eq(Time.parse(endat))
+      expect(post.repost_interval).to eq(rpi)
+      expect(post.status).to eq("rejected")
+      expect(post.priority).to eq(prior)
+    end
     it "should not create a new post if not logged in" do
       expect_any_instance_of(Post).not_to receive(:post)
       post "/posts", params: { post: { body: "not gonna see my body" } }

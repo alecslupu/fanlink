@@ -22,6 +22,24 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
+  #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
   #     post: { ..post json..see get post action ....}
@@ -34,8 +52,10 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      @post.post
-      @post.published!
+      unless post_params["status"].present?
+        @post.published!
+      end
+      @post.post if @post.published?
     end
     return_the @post
   end
@@ -292,7 +312,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 401, 404
   #*
   def update
-    @post.update_attributes(post_update_params)
+    @post.update_attributes(post_params)
   end
 
 private
@@ -320,10 +340,6 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:body, :picture)
-  end
-
-  def post_update_params
     params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority )
   end
 end
