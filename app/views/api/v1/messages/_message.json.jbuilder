@@ -5,3 +5,8 @@ json.picture_url message.picture_url
 json.person do
   json.partial! "api/v1/people/person", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }
 end
+if message.mentions.count > 0
+  json.mentions message.mentions, partial: "api/v1/messages/mention", as: :mention
+else
+  json.mentions nil
+end

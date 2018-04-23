@@ -54,20 +54,39 @@ class Api::V1::PeopleController < ApiController
   #
   # @apiParam {String} product
   #   Internal name of product
+  #
   # @apiParam {Object} person
   #   The person's information.
+  #
   # @apiParam {String} person.email
   #   Email address (required unless using FB auth token).
+  #
   # @apiParam {String} facebook_auth_token
   #   Auth token from Facebook
+  #
   # @apiParam {String} [person.name]
   #   Name.
+  #
   # @apiParam {String} person.username
   #   Username. This needs to be unique within product scope.
+  #
   # @apiParam {String} person.password
   #   Password.
+  #
   # @apiParam {Attachment } [person.picture]
   #   Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
+  #
+  # @apiParam {String} [person.gender]
+  #   Gender. Valid options: unspecified (default), male, female
+  #
+  # @apiParam {String} [person.birthdate]
+  #   Birth dateTo date in format "YYYY-MM-DD".
+  #
+  # @apiParam {String} [person.city]
+  #   Person's supplied city.
+  #
+  # @apiParam {String} [person.country_code]
+  #   Alpha2 code (two letters) from ISO 3166 list.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -77,23 +96,27 @@ class Api::V1::PeopleController < ApiController
   #     }
   #*
   def create
-    parms = person_params
-    if params[:facebook_auth_token].present?
-      @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
-      if @person.nil?
-        (render json: { errors: "There was a problem contacting Facebook" }, status: :service_unavailable) && return
-      end
+    if !check_gender
+      render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
     else
-      @person = Person.create(person_params)
-    end
-    if @person.valid?
-      @person.do_auto_follows
-      auto_login(@person)
-      if @person.email.present?
-        @person.send_onboarding_email
+      parms = person_params
+      if params[:facebook_auth_token].present?
+        @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
+        if @person.nil?
+          (render json: { errors: "There was a problem contacting Facebook" }, status: :service_unavailable) && return
+        end
+      else
+        @person = Person.create(person_params)
       end
+      if @person.valid?
+        @person.do_auto_follows
+        auto_login(@person)
+        if @person.email.present?
+          @person.send_onboarding_email
+        end
+      end
+      return_the @person
     end
-    return_the @person
   end
 
   #**
@@ -179,11 +202,24 @@ class Api::V1::PeopleController < ApiController
   #   Email address.
   # @apiParam {String} [person.name]
   #   Full name.
+  #
   # @apiParam {String} [person.username]
   #   Username. This needs to be unique.
   # @apiParam {Attachment} [person.picture]
   #   Profile picture, this should be `image/gif`, `image/png`, or
   #   `image/jpeg`.
+  #
+  # @apiParam {String} [person.gender]
+  #   Gender. Valid options: unspecified (default), male, female
+  #
+  # @apiParam {String} [person.birthdate]
+  #   Birth dateTo date in format "YYYY-MM-DD".
+  #
+  # @apiParam {String} [person.city]
+  #   Person's supplied city.
+  #
+  # @apiParam {String} [person.country_code]
+  #   Alpha2 code (two letters) from ISO 3166 list.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -192,11 +228,15 @@ class Api::V1::PeopleController < ApiController
   #     }
   #*
   def update
-    if @person == current_user
-      @person.update(person_params)
-      return_the @person
+    if !check_gender
+      render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
     else
-      render_not_found
+      if @person == current_user
+        @person.update(person_params)
+        return_the @person
+      else
+        render_not_found
+      end
     end
   end
 
@@ -212,8 +252,12 @@ private
     people
   end
 
+  def check_gender
+    return params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
+  end
+
   def person_params
-    params.require(:person).permit(:email, :facebook_auth_token, :name, :username, :password, :picture, :product, :current_password,
-                                    :new_password)
+    params.require(:person).permit(:email, :facebook_auth_token, :name, :gender, :birthdate, :city, :country_code,
+                                   :username, :password, :picture, :product, :current_password, :new_password)
   end
 end

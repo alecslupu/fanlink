@@ -69,7 +69,8 @@ module JsonHelpers
       "body"      => msg.body,
       "create_time" => msg.created_at.to_s,
       "picture_url" => msg.picture_url,
-      "person" => person_json(msg.person)
+      "person" => person_json(msg.person),
+      "mentions" => message_mentions_json(msg)
     }
   end
 
@@ -86,6 +87,17 @@ module JsonHelpers
     }
   end
 
+  def message_mentions_json(msg)
+    if msg.mentions.count > 0
+      mentions = []
+      msg.mentions.each do |m|
+        mentions << { person_id: m.person_id, linked_text: m.linked_text }
+      end
+      mentions
+    else
+      nil
+    end
+  end
   def message_reports_json(msg_report)
     {
         "id"          => msg_report.id.to_s,
@@ -118,6 +130,10 @@ module JsonHelpers
       "id"                => person.id.to_s,
       "username"          => person.username,
       "name"              => person.name,
+      "gender"            => person.gender,
+      "city"              => person.city,
+      "country_code"      => person.country_code,
+      "birthdate"         => (person.birthdate.present?) ? person.birthdate.to_s : nil,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
       "recommended"       => person.recommended,
