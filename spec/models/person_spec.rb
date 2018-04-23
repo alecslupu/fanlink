@@ -23,6 +23,28 @@ RSpec.describe Person, type: :model do
     end
   end
 
+  describe "#country" do
+    it "should accept a valid country code" do
+      person = create(:person, country_code: "US")
+      expect(person).to be_valid
+      expect(person.country_code).to eq("US")
+    end
+    it "should not accept an invalid country code" do
+      person = build(:person, country_code: "USA")
+      expect(person).not_to be_valid
+      expect(person.errors[:country_code]).not_to be_empty
+    end
+    it "should not accept an empty string country code" do
+      person = build(:person, country_code: "")
+      expect(person).not_to be_valid
+      expect(person.errors[:country_code]).not_to be_empty
+    end
+    it "should upcase it" do
+      person = create(:person, country_code: "us")
+      expect(person.reload.country_code).to eq("US")
+    end
+  end
+
   describe "#destroy" do
     it "should not let you destroy a person who has reported a message" do
       person = create(:person)
@@ -98,7 +120,6 @@ RSpec.describe Person, type: :model do
       expect(Person.can_login?("nonexistentiamsure@example.com")).to be_nil
     end
   end
-
 
   describe "#follow" do
     it "should follow a person" do
