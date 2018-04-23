@@ -7,6 +7,8 @@ describe "Messages (v1)" do
     @room = create(:room, public: true, status: :active, product: @product)
     @private_room = create(:room, public: false, status: :active, product: @product)
     @private_room.members << @person << @private_room.created_by
+    @mentioned1 = create(:person, product: @product)
+    @mentioned2 = create(:person, product: @product)
   end
 
   before(:each) do
@@ -27,6 +29,43 @@ describe "Messages (v1)" do
       expect(msg.body).to eq(body)
       expect(json["message"]).to eq(message_json(msg))
     end
+    it "should create a new message in a public room with mentions" do
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).not_to receive(:increment_message_counters)
+      login_as(@person)
+      body = "Do you like my body?"
+      post "/rooms/#{@room.id}/messages",
+           params: { message: { body: body,
+                                mentions: [ { person_id: @mentioned1.id,
+                                              location: 11,
+                                              length: 8 },
+                                            { person_id: @mentioned2.id,
+                                              location: 14,
+                                              length: 4 } ]
+                                }
+                    }
+      expect(response).to be_success
+      msg = Message.last
+      expect(msg.mentions.count).to eq(2)
+      expect(msg.mentions.first.location).to eq(11)
+      expect(msg.mentions.first.length).to eq(8)
+      expect(json["message"]["mentions"].count).to eq(2)
+    end
+    it "should not create a new message in a public room with a mention without a person_id" do
+      expect_any_instance_of(Message).not_to receive(:post)
+      login_as(@person)
+      body = "Do you like my body?"
+      expect {
+        post "/rooms/#{@room.id}/messages",
+             params: { message: { body: body,
+                                  mentions: [ { location: 4, length: 11 },
+                                              { person_id: @mentioned2.id,
+                                                location: 5, length: 1 } ]
+        } }
+      }.to change { Message.count }.by(0)
+      expect(response).to be_unprocessable
+      expect(json["errors"]).not_to be_empty
+    end
     it "should create a new message in a private room" do
       expect_any_instance_of(Message).to receive(:post)
       expect_any_instance_of(Room).to receive(:increment_message_counters)
@@ -43,6 +82,25 @@ describe "Messages (v1)" do
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
       expect(json["message"]).to eq(message_json(msg))
+    end
+    it "should create a new message in a private room with a mention" do
+      expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Room).to receive(:increment_message_counters)
+      room = create(:room, product: @product, created_by: @person, status: :active)
+      room.members << @person
+      other_member = create(:person, product: @person.product)
+      room.members << other_member
+      login_as(@person)
+      body = "Do you like my body?"
+      post "/rooms/#{room.id}/messages",
+           params: { message: { body: body, mentions: [{ person_id: @mentioned1.id,
+                                                                      location: 14,
+                                                                      length: 4 } ]
+                    } }
+      expect(response).to be_success
+      msg = Message.last
+      expect(msg.mentions.count).to eq(1)
+      expect(json["message"]["mentions"].count).to eq(1)
     end
     it "should not create a new message in an inactive room" do
       @room.inactive!
