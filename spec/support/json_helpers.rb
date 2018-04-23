@@ -160,7 +160,8 @@ module JsonHelpers
       "picture_url" => post.picture_url,
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
-      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction)
+      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction),
+      "recommended"   => post.recommended
     }
   end
   def post_list_json(post, lang = nil)
@@ -175,6 +176,7 @@ module JsonHelpers
       "repost_interval" => post.repost_interval,
       "status"          => post.status,
       "priority"        => post.priority,
+      "recommended"     => post.recommended,
       "created_at"      => post.created_at.to_s,
       "updated_at"      => post.updated_at.to_s
     }

@@ -11,3 +11,4 @@ if defined?(post_reaction) && post_reaction.present?
 else
   json.post_reaction nil
 end
+json.recommended post.recommended
