@@ -75,6 +75,7 @@ class Api::V1::PostReportsController < ApiController
     return_the @post_reports
   end
 
+  #**
   # @api {patch} /post_reports/:id Update a Post Report.
   # @apiName UpdatePostReport
   # @apiGroup Posts
