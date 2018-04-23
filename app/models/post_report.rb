@@ -14,4 +14,8 @@ class PostReport < ApplicationRecord
   def create_time
     created_at.to_s
   end
+
+  def self.valid_status?(s)
+    statuses.include?(s.to_s)
+  end
 end

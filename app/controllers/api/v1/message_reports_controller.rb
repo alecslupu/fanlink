@@ -85,7 +85,7 @@ class Api::V1::MessageReportsController < ApiController
   end
 
   #**
-  # @api {patch} /message_reports/:id Update a Message Report.
+  # @api {patch} /message_reports/:id Update a Message Report. (Admin)
   # @apiName UpdateMessageReport
   # @apiGroup Messages
   #
