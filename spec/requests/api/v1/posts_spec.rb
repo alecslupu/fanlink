@@ -172,8 +172,9 @@ describe "Posts (v1)" do
                       create(:person, product: @product, username: "user121", email: "user121@example.com")]
       @total_list_posts = 10
       @first_time = Time.zone.now - 10.days
+      @list_posts = []
       @total_list_posts.times do |n|
-        create(:post, person: @people_list.sample, body: "some body that I made up #{n}", status: Post.statuses.keys.sample, created_at: @first_time + n.days)
+        @list_posts << create(:post, person: @people_list.sample, body: "some body that I made up #{n}", status: Post.statuses.keys.sample, created_at: @first_time + n.days)
       end
     end
     it "should get the list of all posts unfiltered" do
@@ -187,6 +188,24 @@ describe "Posts (v1)" do
       get "/posts/list"
       expect(response).to be_success
       expect(json["posts"].count).to eq(@total_list_posts)
+    end
+    it "should get list paginated at page 1" do
+      login_as(@admin)
+      pp = 2
+      get "/posts/list", params: { page: 1, per_page: pp }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(pp)
+      expect(json["posts"].first).to eq(post_list_json(@list_posts.last))
+      expect(json["posts"].last).to eq(post_list_json(@list_posts[-2]))
+    end
+    it "should get list paginated at page 2" do
+      login_as(@admin)
+      pp = 2
+      get "/posts/list", params: { page: 2, per_page: pp }
+      expect(response).to be_success
+      expect(json["posts"].count).to eq(pp)
+      expect(json["posts"].first).to eq(post_list_json(@list_posts[-3]))
+      expect(json["posts"].last).to eq(post_list_json(@list_posts[-4]))
     end
     it "should get the list of all posts filtered on person_id" do
       login_as(@admin)
@@ -473,4 +492,47 @@ describe "Posts (v1)" do
       expect(response).to be_not_found
     end
   end
+
+  describe "#update" do
+    let(:newbody) { "Do you like my new body?" }
+    let(:global) { true }
+    let(:starts_at) { "2018-03-12T18:55:30Z" }
+    let(:ends_at) { "2018-03-13T18:55:30Z" }
+    let(:repost_interval) { 5 }
+    let(:status) { "published" }
+    let(:priority) { 2 }
+    let(:admin) { create(:person, role: :admin, product: @person.product) }
+    let(:post) { create(:post, person: @person) }
+    it "should let admin update a post" do
+      login_as(admin)
+      post = create(:post, person: @person)
+      patch "/posts/#{post.id}", params: { post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_success
+      post.reload
+      expect(post.body).to eq(newbody)
+      expect(post.global).to eq(global)
+      expect(post.starts_at).to eq(Time.parse(starts_at))
+      expect(post.ends_at).to eq(Time.parse(ends_at))
+      expect(post.repost_interval).to eq(repost_interval)
+      expect(post.status).to eq(status)
+      expect(post.priority).to eq(priority)
+    end
+    it "should not let normal update a post" do
+      login_as(@person)
+      orig = post.body
+      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_unauthorized
+      expect(post.body).to eq(orig)
+    end
+    it "should not let not logged in update a post" do
+      orig = post.body
+      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_unauthorized
+      expect(post.body).to eq(orig)
+    end
+  end
+
 end

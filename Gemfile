@@ -66,6 +66,7 @@ gem "administrate-field-paperclip", git: "https://github.com/mark100net/administ
 gem "api-pagination"
 gem "attribute_normalizer"
 gem "aws-sdk"
+gem "countries"
 gem "delayed_job_active_record"
 gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging

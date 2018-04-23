@@ -1,6 +1,10 @@
 class Api::V1::PostsController < ApiController
+  include Rails::Pagination
+  before_action :admin_only, only: %i[ list update ]
+  before_action :load_post, only: %i[ update ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
-  before_action :admin_only, only: %i[ list ]
+
+
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -127,7 +131,13 @@ class Api::V1::PostsController < ApiController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This gets a list of posts with optional filters.
+  #   This gets a list of posts with optional filters and pagination.
+  #
+  # @apiParam {Integer} [page]
+  #   The page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   The pagination division. Default is 25.
   #
   # @apiParam {Integer} [person_id_filter]
   #   Full match on person id.
@@ -170,7 +180,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 401 Unauthorized
   #*
   def list
-    @posts = apply_filters
+    @posts = paginate apply_filters
     return_the @posts
   end
 
@@ -189,9 +199,16 @@ class Api::V1::PostsController < ApiController
   #       "id": "1234",
   #       "create_time":"2018-02-18T06:32:24Z",
   #       "body":"post body",
+  #       "picture_url": "www.example.com/pic.jpg",
   #       "person": ....public person json...,
   #       "post_reaction_counts":{"1F389":1},
   #       "post_reaction":...see post reaction create json....(or null if current user has not reacted)
+  #       "global": false,
+  #       "starts_at":  "2018-01-01T00:00:00Z",
+  #       "ends_at":    "2018-01-31T23:59:59Z",
+  #       "repost_interval": 0,
+  #       "status": "published",
+  #       "priority": 0
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -239,6 +256,52 @@ class Api::V1::PostsController < ApiController
     end
   end
 
+  #**
+  # @api {patch} /posts/{id} Update a post (ADMIN)
+  # @apiName UpdatePost
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This updates a post.
+  #
+  # @apiParam {Object} post
+  #   The post object container for the post parameters.
+  #
+  # @apiParam {String} [post.body]
+  #   The body of the post.
+  #
+  # @apiParam {Attachment} [post.picture]
+  #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
+  #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     post: { ..post json..see list posts action ....}
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401, 404
+  #*
+  def update
+    @post.update_attributes(post_update_params)
+  end
+
 private
 
   def get_product
@@ -258,7 +321,24 @@ private
     end
     posts
   end
+
+  def get_product
+    product = nil
+    if params[:product].present?
+      product = Product.find_by(internal_name: params[:product])
+    end
+    product
+  end
+
+  def load_post
+    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
+  end
+
   def post_params
     params.require(:post).permit(:body, :picture)
+  end
+
+  def post_update_params
+    params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority )
   end
 end

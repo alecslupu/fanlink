@@ -143,6 +143,10 @@ module JsonHelpers
       "id"                => person.id.to_s,
       "username"          => person.username,
       "name"              => person.name,
+      "gender"            => person.gender,
+      "city"              => person.city,
+      "country_code"      => person.country_code,
+      "birthdate"         => (person.birthdate.present?) ? person.birthdate.to_s : nil,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
       "recommended"       => person.recommended,
@@ -193,12 +197,18 @@ module JsonHelpers
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,
-      "body"        => (lang.present?) ? post.body(lang) : post.body,
       "create_time" => post.created_at.to_s,
+      "body"        => (lang.present?) ? post.body(lang) : post.body,
       "picture_url" => post.picture_url,
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
-      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction)
+      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction),
+      "global"      => post.global,
+      "starts_at"   => (post.starts_at.present?) ? post.starts_at.to_s : nil,
+      "ends_at"   => (post.ends_at.present?) ? post.ends_at.to_s : nil,
+      "repost_interval" =>  post.repost_interval,
+      "status"        => post.status,
+      "priority"      => post.priority
     }
   end
   def post_share_json(post, lang = nil, reaction = nil)
@@ -208,12 +218,42 @@ module JsonHelpers
       "person" => person_share_json(post.person),
     }
   end
+
+  def post_list_json(post, lang = nil)
+    {
+      "id"              => post.id.to_s,
+      "person_id"       => post.person_id,
+      "body"            => (lang.present?) ? post.body(lang) : post.body,
+      "picture_url"     =>  post.picture_url,
+      "global"          => post.global,
+      "starts_at"       => post.starts_at.to_s,
+      "ends_at"         => post.ends_at.to_s,
+      "repost_interval" => post.repost_interval,
+      "status"          => post.status,
+      "priority"        => post.priority,
+      "created_at"      => post.created_at.to_s,
+      "updated_at"      => post.updated_at.to_s
+    }
+  end
+
   def post_reaction_json(post_reaction)
     {
       "id"        => post_reaction.id.to_s,
       "post_id"   => post_reaction.post_id,
       "person_id" => post_reaction.person_id,
       "reaction"  => post_reaction.reaction
+    }
+  end
+
+  def post_report_json(post_report)
+    {
+        "id"        => post_report.id.to_s,
+        "created_at"=> post_report.created_at.to_s,
+        "post_id"   => post_report.post_id,
+        "poster"    => post_report.post.person.username,
+        "reporter"  => post_report.person.username,
+        "reason"    => post_report.reason,
+        "status"    => post_report.status
     }
   end
 
