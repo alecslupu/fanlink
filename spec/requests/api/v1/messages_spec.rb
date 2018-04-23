@@ -64,7 +64,6 @@ describe "Messages (v1)" do
         } }
       }.to change { Message.count }.by(0)
       expect(response).to be_unprocessable
-      puts json["errors"]
       expect(json["errors"]).not_to be_empty
     end
     it "should create a new message in a private room" do
