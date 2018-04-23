@@ -1,5 +1,5 @@
 class Api::V1::PostCommentsController < ApiController
-
+  include Rails::Pagination
   before_action :load_post
 
   #**
@@ -63,7 +63,13 @@ class Api::V1::PostCommentsController < ApiController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This gets all the non-hidden comments on a post.
+  #   This gets all the non-hidden comments on a post with pagination.
+  #
+  # @apiParam {Integer} [page]
+  #   The page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   The pagination division. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -77,7 +83,7 @@ class Api::V1::PostCommentsController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
   def index
-    @post_comments = @post.comments.visible.order(created_at: :desc)
+    @post_comments = paginate @post.comments.visible.order(created_at: :desc)
     return_the @post_comments
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419205739) do
+ActiveRecord::Schema.define(version: 20180423213711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,8 +289,10 @@ ActiveRecord::Schema.define(version: 20180419205739) do
     t.datetime "picture_updated_at"
     t.jsonb "body", default: {}, null: false
     t.integer "priority", default: 0, null: false
+    t.boolean "recommended", default: false, null: false
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
+    t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
   end
 
   create_table "products", force: :cascade do |t|
