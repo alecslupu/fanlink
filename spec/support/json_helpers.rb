@@ -209,6 +209,7 @@ module JsonHelpers
       "repost_interval" =>  post.repost_interval,
       "status"        => post.status,
       "priority"      => post.priority
+      "recommended"   => post.recommended
     }
   end
   def post_share_json(post, lang = nil, reaction = nil)
@@ -231,6 +232,7 @@ module JsonHelpers
       "repost_interval" => post.repost_interval,
       "status"          => post.status,
       "priority"        => post.priority,
+      "recommended"     => post.recommended,
       "created_at"      => post.created_at.to_s,
       "updated_at"      => post.updated_at.to_s
     }

@@ -17,3 +17,4 @@ json.ends_at (post.ends_at.nil?) ? nil : post.ends_at.to_s
 json.repost_interval post.repost_interval
 json.status post.status
 json.priority post.priority
+json.recommended post.recommended
