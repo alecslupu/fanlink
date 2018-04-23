@@ -65,7 +65,7 @@ describe "People (v1)" do
       post "/people", params:
           { product: @product.internal_name,
             person: { username: username, email: email, password: "secret", gender: "male",
-                      birthdate: "2000-01-02", city: "Shambala", country_code: 'us' } }
+                      birthdate: "2000-01-02", city: "Shambala", country_code: "us" } }
       expect(response).to be_success
       p = Person.last
       expect(p.email).to eq(email)
@@ -73,7 +73,7 @@ describe "People (v1)" do
       expect(p.gender).to eq("male")
       expect(p.birthdate).to eq(Date.parse("2000-01-02"))
       expect(p.city).to eq("Shambala")
-      expect(p.country_code).to eq('US')
+      expect(p.country_code).to eq("US")
       expect(json["person"]).to eq(person_private_json(p))
       expect(email_sent(template: "#{p.product.internal_name}-onboarding",
                         to_values: { email: p.email, name: p.name })
@@ -334,7 +334,7 @@ describe "People (v1)" do
       new_email = "fooism@example.com"
       new_name = "Joe Foo"
       patch "/people/#{person.id}", params: { person: { email: new_email, name: new_name, username: new_username,
-                                        gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: 'fr' } }
+                                        gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: "fr" } }
       expect(response).to be_success
       per = person.reload
       expect(per.username).to eq(new_username)
@@ -343,7 +343,7 @@ describe "People (v1)" do
       expect(per.gender).to eq("female")
       expect(per.birthdate).to eq(Date.parse("1999-03-03"))
       expect(per.city).to eq("FooismTown")
-      expect(per.country_code).to eq('FR')
+      expect(per.country_code).to eq("FR")
     end
     it "should not update a different person" do
       person = create(:person)
