@@ -1,4 +1,6 @@
 class Api::V1::PostsController < ApiController
+  include Rails::Pagination
+
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
   #**
@@ -127,7 +129,13 @@ class Api::V1::PostsController < ApiController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This gets a list of posts with optional filters.
+  #   This gets a list of posts with optional filters and pagination.
+  #
+  # @apiParam {Integer} [page]
+  #   The page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   The pagination division. Default is 25.
   #
   # @apiParam {Integer} [person_id_filter]
   #   Full match on person id.
@@ -170,7 +178,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 401 Unauthorized
   #*
   def list
-    @posts = apply_filters
+    @posts = paginate apply_filters
     return_the @posts
   end
 

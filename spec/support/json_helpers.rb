@@ -130,6 +130,10 @@ module JsonHelpers
       "id"                => person.id.to_s,
       "username"          => person.username,
       "name"              => person.name,
+      "gender"            => person.gender,
+      "city"              => person.city,
+      "country_code"      => person.country_code,
+      "birthdate"         => (person.birthdate.present?) ? person.birthdate.to_s : nil,
       "picture_url"       => person.picture_url,
       "product_account"   => person.product_account,
       "recommended"       => person.recommended,
@@ -159,6 +163,23 @@ module JsonHelpers
       "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction)
     }
   end
+  def post_list_json(post, lang = nil)
+    {
+      "id"              => post.id.to_s,
+      "person_id"       => post.person_id,
+      "body"            => (lang.present?) ? post.body(lang) : post.body,
+      "picture_url"     =>  post.picture_url,
+      "global"          => post.global,
+      "starts_at"       => post.starts_at.to_s,
+      "ends_at"         => post.ends_at.to_s,
+      "repost_interval" => post.repost_interval,
+      "status"          => post.status,
+      "priority"        => post.priority,
+      "created_at"      => post.created_at.to_s,
+      "updated_at"      => post.updated_at.to_s
+    }
+  end
+
   def post_reaction_json(post_reaction)
     {
       "id"        => post_reaction.id.to_s,

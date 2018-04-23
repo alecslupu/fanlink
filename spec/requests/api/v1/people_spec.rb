@@ -58,17 +58,22 @@ describe "People (v1)" do
     end
   end
   describe "#create" do
-    it "should sign up new user with email, username, and password and send onboarding email" do
+    it "should sign up new user with email, username, and password, profile fields and send onboarding email" do
       expect_any_instance_of(Person).to receive(:do_auto_follows)
       username = "newuser#{Time.now.to_i}"
       email = "#{username}@example.com"
       post "/people", params:
           { product: @product.internal_name,
-            person: { username: username, email: email, password: "secret" } }
+            person: { username: username, email: email, password: "secret", gender: "male",
+                      birthdate: "2000-01-02", city: "Shambala", country_code: "us" } }
       expect(response).to be_success
       p = Person.last
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
+      expect(p.gender).to eq("male")
+      expect(p.birthdate).to eq(Date.parse("2000-01-02"))
+      expect(p.city).to eq("Shambala")
+      expect(p.country_code).to eq("US")
       expect(json["person"]).to eq(person_private_json(p))
       expect(email_sent(template: "#{p.product.internal_name}-onboarding",
                         to_values: { email: p.email, name: p.name })
@@ -372,12 +377,17 @@ describe "People (v1)" do
       new_username = "thisbetterbeunique"
       new_email = "fooism@example.com"
       new_name = "Joe Foo"
-      patch "/people/#{person.id}", params: { person: { email: new_email, name: new_name, username: new_username } }
+      patch "/people/#{person.id}", params: { person: { email: new_email, name: new_name, username: new_username,
+                                        gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: "fr" } }
       expect(response).to be_success
       per = person.reload
       expect(per.username).to eq(new_username)
       expect(per.email).to eq(new_email)
       expect(per.name).to eq(new_name)
+      expect(per.gender).to eq("female")
+      expect(per.birthdate).to eq(Date.parse("1999-03-03"))
+      expect(per.city).to eq("FooismTown")
+      expect(per.country_code).to eq("FR")
     end
     it "should not update a different person" do
       person = create(:person)
