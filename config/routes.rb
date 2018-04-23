@@ -26,7 +26,7 @@ Rails.application.routes.draw do
           get "recommended" => "recommended_people#index"
         end
       end
-      resources :post_reports, only: %i[ index ]
+      resources :post_reports, only: %i[ index update ]
       resources :posts, except: %i[ new edit ] do
         collection do
           get "list" => "posts#list"
