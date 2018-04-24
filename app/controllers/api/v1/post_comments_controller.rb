@@ -57,6 +57,36 @@ class Api::V1::PostCommentsController < ApiController
   end
 
   #**
+  # @api {delete} /posts/:post_id/comments/:id Delete a comment on a post.
+  # @apiName DeletePostComment
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This deletes a comment on a post. Can be performed by admin or creator of comment.
+  #
+  # @apiParam {Integer} post_id
+  #   The id of the post to which the comment relates
+  #
+  # @apiParam {Integer} id
+  #   The id of the post comment you are deleting
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404
+  #*
+  def destroy
+    comment = @post.comments.find(params[:id])
+    if current_user.admin? || comment.person == current_user
+      comment.destroy
+      head :ok
+    else
+      render_not_found
+    end
+  end
+
+  #**
   # @api {get} /posts/:id/comments Get the comments on a post.
   # @apiName GetPostComments
   # @apiGroup Posts
