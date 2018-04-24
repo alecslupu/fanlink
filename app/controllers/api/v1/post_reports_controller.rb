@@ -1,5 +1,7 @@
 class Api::V1::PostReportsController < ApiController
-  before_action :admin_only, only: %i[ index ]
+  include Rails::Pagination
+  before_action :admin_only, only: %i[ index update ]
+  load_up_the PostReport, only: :update
 
   #**
   # @api {post} /post_reports Report a post.
@@ -49,6 +51,12 @@ class Api::V1::PostReportsController < ApiController
   # @apiDescription
   #   This gets a list of post reports with optional filter.
   #
+  # @apiParam {Integer} [page]
+  #   Page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   Page division. Default is 25.
+  #
   # @apiParam {String} [status_filter]
   #   If provided, valid values are "pending", "no_action_needed", and "post_hidden"
   #
@@ -70,11 +78,47 @@ class Api::V1::PostReportsController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
   def index
-    @post_reports = apply_filters
+    @post_reports = paginate apply_filters
     return_the @post_reports
   end
 
-private
+  #**
+  # @api {patch} /post_reports/:id Update a Post Report.
+  # @apiName UpdatePostReport
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This updates a post report. The only value that can be
+  #   changed is the status.
+  #
+  # @apiParam {id} id
+  #   URL parameter. id of the post report you want to update.
+  #
+  # @apiParam {Object} post_report
+  #   The post report object container.
+  #
+  # @apiParam {status} post_report.status
+  #   The new status. Valid statuses are "pending", "no_action_needed", "post_hidden"
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 422
+  #     "errors" :
+  #       { "Invalid or missing status." }
+  #*
+  def update
+    parms = post_report_update_params
+    if PostReport.valid_status?(parms[:status])
+      @post_report.update(parms)
+      head :ok
+    else
+      render_error("Invalid or missing status.")
+    end
+  end
+
+  private
 
   def apply_filters
     post_reports = PostReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
@@ -88,5 +132,9 @@ private
 
   def post_report_params
     params.require(:post_report).permit(:post_id, :reason).merge(person_id: current_user.id)
+  end
+
+  def post_report_update_params
+    params.require(:post_report).permit(:status)
   end
 end

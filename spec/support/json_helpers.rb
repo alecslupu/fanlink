@@ -189,6 +189,18 @@ module JsonHelpers
     }
   end
 
+  def post_report_json(post_report)
+    {
+        "id"        => post_report.id.to_s,
+        "created_at"=> post_report.created_at.to_s,
+        "post_id"   => post_report.post_id,
+        "poster"    => post_report.post.person.username,
+        "reporter"  => post_report.person.username,
+        "reason"    => post_report.reason,
+        "status"    => post_report.status
+    }
+  end
+
   def post_share_json(post, lang = nil)
     {
       "body"        => (lang.present?) ? post.body(lang) : post.body,
