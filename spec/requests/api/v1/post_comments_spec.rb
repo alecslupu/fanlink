@@ -69,6 +69,52 @@ describe "PostComments (v1)" do
     end
   end
 
+  describe "#destroy" do
+    it "should delete a comment by an admin" do
+      comment = @post.comments.create(person: create(:person, product: @product), body: "bleeb blub")
+      expect(comment).to exist_in_database
+      login_as(create(:person, role: :admin, product: @product))
+      delete "/posts/#{@post.id}/comments/#{comment.id}"
+      expect(response).to be_success
+      expect(comment).not_to exist_in_database
+    end
+    it "should delete a comment by creator" do
+      creator = create(:person, product: @product)
+      comment = @post.comments.create(person: creator, body: "bleeb blub")
+      expect(comment).to exist_in_database
+      login_as(creator)
+      delete "/posts/#{@post.id}/comments/#{comment.id}"
+      expect(response).to be_success
+      expect(comment).not_to exist_in_database
+    end
+    it "should not delete a comment by other than creator or admin" do
+      creator = create(:person, product: @product)
+      comment = @post.comments.create(person: creator, body: "bleeb blub")
+      expect(comment).to exist_in_database
+      login_as(create(:person))
+      delete "/posts/#{@post.id}/comments/#{comment.id}"
+      expect(response).to be_not_found
+      expect(comment).to exist_in_database
+    end
+    it "should not delete a comment from another product by admin" do
+      creator = create(:person, product: @product)
+      comment = @post.comments.create(person: creator, body: "bleeb blub")
+      expect(comment).to exist_in_database
+      login_as(create(:person, role: :admin, product: create(:product)))
+      delete "/posts/#{@post.id}/comments/#{comment.id}"
+      expect(response).to be_not_found
+      expect(comment).to exist_in_database
+    end
+    it "should not delete a comment if not logged in" do
+      creator = create(:person, product: @product)
+      comment = @post.comments.create(person: creator, body: "bleeb blub")
+      expect(comment).to exist_in_database
+      delete "/posts/#{@post.id}/comments/#{comment.id}"
+      expect(response).to be_unauthorized
+      expect(comment).to exist_in_database
+    end
+  end
+
   describe "#index" do
     it "should get the first page of the comments for a post" do
       login_as(@person)
