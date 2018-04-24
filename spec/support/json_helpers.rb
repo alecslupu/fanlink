@@ -162,20 +162,16 @@ module JsonHelpers
     }
   end
 
-  def post_comment_list_json(post, lang = nil)
+  def post_comment_list_json(post_comment, lang = nil)
     {
-        "id"              => post.id.to_s,
-        "person_id"       => post.person_id,
-        "body"            => (lang.present?) ? post.body(lang) : post.body,
-        "picture_url"     =>  post.picture_url,
-        "global"          => post.global,
-        "starts_at"       => post.starts_at.to_s,
-        "ends_at"         => post.ends_at.to_s,
-        "repost_interval" => post.repost_interval,
-        "status"          => post.status,
-        "priority"        => post.priority,
-        "created_at"      => post.created_at.to_s,
-        "updated_at"      => post.updated_at.to_s
+        "id"              => post_comment.id.to_s,
+        "post_id"         => post_comment.post_id,
+        "person_id"       => post_comment.person_id,
+        "body"            => (lang.present?) ? post_comment.body(lang) : post_comment.body,
+        "hidden"          => post_comment.hidden,
+        "created_at"      => post_comment.created_at.to_s,
+        "updated_at"      => post_comment.updated_at.to_s,
+        "mentions"        => post_comment_mentions_json(post_comment)
     }
   end
 
