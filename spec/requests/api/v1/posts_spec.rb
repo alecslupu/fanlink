@@ -305,6 +305,15 @@ describe "Posts (v1)" do
       expect(response).to be_success
       expect(json["posts"].count).to eq(posts.count)
     end
+    it "should give you a single post filtered on post id" do
+      login_as(@admin)
+      post = @list_posts.first
+      get "/posts/list", params: { id_filter: post.id }
+      expect(response).to be_success
+      pjson = json["posts"]
+      expect(pjson.count).to eq(1)
+      expect(pjson.first).to eq(post_list_json(post))
+    end
     it "should not give you anything if not logged in" do
       get "/posts/list"
       expect(response).to be_unauthorized

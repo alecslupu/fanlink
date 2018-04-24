@@ -137,6 +137,9 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
+  # @apiParam {Integer} [id_filter]
+  #   Full match on post.id. Will return either a one element array or an empty array.
+  #
   # @apiParam {Integer} [person_id_filter]
   #   Full match on person id.
   #
