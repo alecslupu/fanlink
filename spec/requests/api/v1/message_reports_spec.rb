@@ -5,8 +5,13 @@ describe "MessageReports (v1)" do
     @person = create(:person, product: @product)
     room = create(:room, public: true, status: :active, product: @product)
     @message = create(:message, room: room)
-    @message_report_pending = create(:message_report, message: @message)
+    @message_report_pending1 = create(:message_report, message: @message)
+    @message_report_pending2 = create(:message_report, message: @message)
+    @message_report_pending3 = create(:message_report, message: @message)
+    @message_report_pending4 = create(:message_report, message: @message)
     @message_report_resolved = create(:message_report, message: @message, status: :no_action_needed)
+    @reports = [@message_report_resolved, @message_report_pending4, @message_report_pending3,
+                  @message_report_pending2, @message_report_pending1]
   end
 
   before(:each) do
@@ -58,14 +63,22 @@ describe "MessageReports (v1)" do
       login_as(person)
       get "/message_reports"
       expect(response).to be_success
-      expect(json["message_reports"].count).to eq(2)
+      expect(json["message_reports"].count).to eq(@reports.count)
     end
     it "should get all reports with pending status" do
       login_as(person)
       get "/message_reports", params: { status_filter: "pending" }
       expect(response).to be_success
-      expect(json["message_reports"].count).to eq(1)
-      expect(json["message_reports"].first).to eq(message_reports_json(@message_report_pending))
+      expect(json["message_reports"].count).to eq(@reports.count - 1)
+      expect(json["message_reports"].first).to eq(message_reports_json(@message_report_pending4))
+    end
+    it "should page 1 of all reports with pending status" do
+      login_as(person)
+      get "/message_reports", params: { status_filter: "pending", page: 1, per_page: 2 }
+      expect(response).to be_success
+      expect(json["message_reports"].count).to eq(2)
+      expect(json["message_reports"].first).to eq(message_reports_json(@message_report_pending4))
+      expect(json["message_reports"].last).to eq(message_reports_json(@message_report_pending3))
     end
     it "should return unauthorized if not logged in" do
       get "/message_reports"

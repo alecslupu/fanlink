@@ -1,4 +1,5 @@
 class Api::V1::PostReportsController < ApiController
+  include Rails::Pagination
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update
 
@@ -50,6 +51,12 @@ class Api::V1::PostReportsController < ApiController
   # @apiDescription
   #   This gets a list of post reports with optional filter.
   #
+  # @apiParam {Integer} [page]
+  #   Page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   Page division. Default is 25.
+  #
   # @apiParam {String} [status_filter]
   #   If provided, valid values are "pending", "no_action_needed", and "post_hidden"
   #
@@ -71,7 +78,7 @@ class Api::V1::PostReportsController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
   def index
-    @post_reports = apply_filters
+    @post_reports = paginate apply_filters
     return_the @post_reports
   end
 
