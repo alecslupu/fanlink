@@ -1,6 +1,6 @@
 class Api::V1::PostCommentsController < ApiController
   include Rails::Pagination
-  before_action :load_post
+  before_action :load_post, except: %i[ list ]
 
   #**
   # @api {post} /posts/:id/comments Create a comment on a post.
@@ -87,7 +87,67 @@ class Api::V1::PostCommentsController < ApiController
     return_the @post_comments
   end
 
+  #**
+  # @api {get} /post_comments/list Get a list of post comments (ADMIN).
+  # @apiName ListPostComments
+  # @apiGroup Posts
+  # @apiVersion 1.0.0
+  #
+  # @apiDescription
+  #   This gets a list of post comments with optional filters and pagination.
+  #
+  # @apiParam {Integer} [page]
+  #   The page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   The pagination division. Default is 25.
+  #
+  # @apiParam {String} [body_filter]
+  #   Full or partial match on comment body.
+  #
+  # @apiParam {String} [person_filter]
+  #   Full or partial match on person username or email.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "post_comments": [
+  #       {
+  #         "id": "123",
+  #         "post_id": 3,
+  #         "person_id": 123,
+  #         "body": "Do you like my body?",
+  #         "hidden": false,
+  #         "created_at": "2017-12-31T12:13:42Z",
+  #         "updated_at": "2017-12-31T12:13:42Z"
+  #         "mentions": [
+  #           {
+  #             "person_id": 1,
+  #             "location": 1,
+  #             "length": 3
+  #           }, ...
+  #         ]
+  #       },...
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401 Unauthorized
+  #*
+  def list
+    @post_comments = paginate apply_filters
+    return_the @post_comments
+  end
+
   private
+
+  def apply_filters
+    post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
+    params.each do |p, v|
+      if p.end_with?("_filter") && PostComment.respond_to?(p)
+        post_comments = post_comments.send(p, v)
+      end
+    end
+    post_comments
+  end
 
   # fload up doesn't work well at this point with nested tenancy type things like this (the post being only indirectly tenanted).
   def load_post

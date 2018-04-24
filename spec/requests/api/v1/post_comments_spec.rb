@@ -85,4 +85,91 @@ describe "PostComments (v1)" do
       expect(json["post_comments"].count).to eq(0)
     end
   end
+  describe "#list" do
+    before(:all) do
+      Post.for_product(@product).destroy_all
+      @admin = create(:person, role: :admin)
+      @people_list = [create(:person, product: @product, username: "cuser111", email: "cuser1112@example.com"),
+                      create(:person, product: @product, username: "cuser112", email: "cuser112@example.com"),
+                      create(:person, product: @product, username: "cuser121", email: "cuser121@example.com")]
+      @total_list_posts = 3
+      @first_time = Time.zone.now - 30.days
+      @list_posts = []
+      @total_list_posts.times do |n|
+        @list_posts << create(:post, person: @people_list.sample, body: "some body that I made up #{n}", status: Post.statuses.keys.sample, created_at: @first_time + n.days)
+      end
+      @total_list_comments = 10
+      @list_comments = []
+      @total_list_comments.times do |n|
+        @list_comments << @list_posts.sample.comments.create(person: @people_list.sample, body: "some body that I made up #{n}", created_at: @first_time + (@total_list_posts + n).days)
+      end
+      @per_page = 2
+      @page = 1
+    end
+    it "should get the paginated list of all comments unfiltered" do
+      login_as(@admin)
+      get "/post_comments/list", params: { per_page: @per_page, page: @page }
+      expect(response).to be_success
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(@per_page)
+      expect(pc_json.first).to eq(post_comment_list_json(@list_comments.last))
+    end
+    it "should get list of comments paginated at page 2" do
+      login_as(@admin)
+      get "/post_comments/list", params: { per_page: @per_page, page: 2 }
+      expect(response).to be_success
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(@per_page)
+      expect(pc_json.first).to eq(post_comment_list_json(@list_comments[-3]))
+    end
+    it "should get the list of all post comments filtered on body" do
+      login_as(@admin)
+      fragment = "made up 2"
+      get "/post_comments/list", params: { body_filter: fragment }
+      expect(response).to be_success
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(1)
+      expect(pc_json.first["body"]).to include(fragment)
+    end
+    it "should get the list of all post comments filtered on full person username match" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/post_comments/list", params: { person_filter: person.username }
+      expect(response).to be_success
+      post_comments = PostComment.where(person_id: person.id)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all post comments filtered on partial person username match" do
+      login_as(@admin)
+      people = [@people_list.first, @people_list[1] ]
+      get "/post_comments/list", params: { person_filter: "cuser11" }
+      expect(response).to be_success
+      post_comments = PostComment.where(person_id: people)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all post comments filtered on full person email match" do
+      login_as(@admin)
+      person = @people_list.sample
+      get "/post_comments/list", params: { person_filter: person.email }
+      expect(response).to be_success
+      post_comments = PostComment.where(person_id: person.id)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+    end
+    it "should get the list of all post comments filtered on partial person email match" do
+      login_as(@admin)
+      people = [@people_list.first, @people_list[1] ]
+      get "/post_comments/list", params: { person_filter: "112@example" }
+      expect(response).to be_success
+      post_comments = PostComment.where(person_id: people)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+    end
+  end
 end

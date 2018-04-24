@@ -1,4 +1,5 @@
 class PostComment < ApplicationRecord
+  include PostComment::PortalFilters
   belongs_to :person
   belongs_to :post
   validates :body, presence: true

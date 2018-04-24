@@ -182,6 +182,19 @@ module JsonHelpers
     }
   end
 
+  def post_comment_list_json(post_comment, lang = nil)
+    {
+        "id"              => post_comment.id.to_s,
+        "post_id"         => post_comment.post_id,
+        "person_id"       => post_comment.person_id,
+        "body"            => (lang.present?) ? post_comment.body(lang) : post_comment.body,
+        "hidden"          => post_comment.hidden,
+        "created_at"      => post_comment.created_at.to_s,
+        "updated_at"      => post_comment.updated_at.to_s,
+        "mentions"        => post_comment_mentions_json(post_comment)
+    }
+  end
+
   def post_comment_mentions_json(post_comment)
     if post_comment.mentions.count > 0
       mentions = []
