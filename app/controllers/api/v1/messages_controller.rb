@@ -26,7 +26,7 @@ class Api::V1::MessagesController < ApiController
   #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
   # @apiParam {Array} [mentions]
-  #   Array of mentions each consisting of required person_id (integer) and required linked_text (string)
+  #   Array of mentions each consisting of required person_id (integer), location (integer) and length (integer)
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
