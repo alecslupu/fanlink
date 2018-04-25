@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       resources :posts, except: %i[ new edit ] do
         collection do
           get "list" => "posts#list"
+          get "recommended" => "recommended_posts#index"
         end
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
         get "share", on: :member
