@@ -1,6 +1,7 @@
 class Api::V1::PostCommentReportsController < ApiController
   include Rails::Pagination
-  before_action :admin_only, only: %i[ index ]
+  before_action :admin_only, only: %i[ index update ]
+  load_up_the PostCommentReport, only: :update
   #**
   # @api {post} /post_comment_reports Report a post comment.
   # @apiName CreatePostReportComment
@@ -80,6 +81,42 @@ class Api::V1::PostCommentReportsController < ApiController
     return_the @post_comment_reports
   end
 
+  #**
+  # @api {patch} /post_reports/:id Update a Post Comment Report (Admin).
+  # @apiName UpdatePostCommentReport
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This updates a post comment report. The only value that can be
+  #   changed is the status.
+  #
+  # @apiParam {id} id
+  #   URL parameter. id of the post comment report you want to update.
+  #
+  # @apiParam {Object} post_comment_report
+  #   The post report object container.
+  #
+  # @apiParam {status} post_comment_report.status
+  #   The new status. Valid statuses are "pending", "no_action_needed", "comment_hidden"
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 422
+  #     "errors" :
+  #       { "Invalid or missing status." }
+  #*
+  def update
+    parms = post_comment_report_update_params
+    if PostCommentReport.valid_status?(parms[:status])
+      @post_comment_report.update(parms)
+      head :ok
+    else
+      render_error("Invalid or missing status.")
+    end
+  end
+
   private
 
   def apply_filters
@@ -95,4 +132,9 @@ class Api::V1::PostCommentReportsController < ApiController
   def post_comment_report_params
     params.require(:post_comment_report).permit(:post_comment_id, :reason).merge(person_id: current_user.id)
   end
+
+  def post_comment_report_update_params
+    params.require(:post_comment_report).permit(:status)
+  end
+
 end
