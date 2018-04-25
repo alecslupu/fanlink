@@ -187,6 +187,18 @@ module JsonHelpers
     end
   end
 
+  def post_comment_report_json(post_comment_report)
+    {
+        "id"              => post_comment_report.id.to_s,
+        "created_at"      => post_comment_report.created_at.to_s,
+        "post_comment_id" => post_comment_report.post_comment_id,
+        "commenter"       => post_comment_report.post_comment.person.username,
+        "reporter"        => post_comment_report.person.username,
+        "reason"          => post_comment_report.reason,
+        "status"          => post_comment_report.status
+    }
+  end
+
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,

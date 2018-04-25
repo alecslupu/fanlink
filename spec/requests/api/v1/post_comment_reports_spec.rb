@@ -36,4 +36,76 @@ describe "PostCommentReports (v1)" do
       expect(response).to be_not_found
     end
   end
+
+  describe "#index" do
+    before(:all) do
+      @index_admin = create(:person, product: create(:product), role: :admin)
+      @index_people = [create(:person, product: @index_admin.product), create(:person, product: @index_admin.product), create(:person, product: @index_admin.product)]
+      @reporting_people = [create(:person, product: @index_admin.product), create(:person, product: @index_admin.product), create(:person, product: @index_admin.product)]
+      @index_post_comments = []
+      6.times do
+        @index_post_comments << create(:post_comment, person: @index_people.sample)
+      end
+      @index_reports = []
+      base_time = Time.now - 4.days
+      5.times do |n|
+        @index_reports << create(:post_comment_report, post_comment: @index_post_comments.sample,
+                                 person: @reporting_people.sample, status: PostCommentReport.statuses.keys.sample,
+                                 created_at: base_time + n.hours)
+      end
+    end
+    it "should get all reports but only for correct product" do
+      ActsAsTenant.with_tenant(create(:product)) do
+        create(:post_comment_report)
+      end
+      login_as(@index_admin)
+      get "/post_comment_reports", params: { page: 1, per_page: 100 }
+      expect(response).to be_success
+      expect(json["post_comment_reports"].count).to eq(@index_reports.count)
+    end
+    it "should get all reports paginated to page 1" do
+      login_as(@index_admin)
+      get "/post_comment_reports", params: { page: 1, per_page: 2 }
+      expect(response).to be_success
+      expect(json["post_comment_reports"].count).to eq(2)
+      expect(json["post_comment_reports"].first).to eq(post_comment_report_json(@index_reports.last))
+      expect(json["post_comment_reports"].last).to eq(post_comment_report_json(@index_reports[-2]))
+    end
+    # it "should get all reports paginated to page 2" do
+    #   login_as(@index_admin)
+    #   get "/post_reports", params: { page: 2, per_page: 2 }
+    #   expect(response).to be_success
+    #   expect(json["post_reports"].count).to eq(2)
+    #   expect(json["post_reports"].first).to eq(post_report_json(@index_reports[-3]))
+    #   expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-4]))
+    # end
+    # it "should get all reports with pending status" do
+    #   login_as(@index_admin)
+    #   get "/post_reports", params: { status_filter: "pending" }
+    #   expect(response).to be_success
+    #   pending = PostReport.for_product(@index_admin.product).where(status: :pending)
+    #   reports_json = json["post_reports"]
+    #   expect(reports_json.count).to eq(pending.count)
+    #   expect(reports_json.map { |rj| rj["id"] }.sort).to eq(pending.map { |pr| pr.id.to_s }.sort)
+    # end
+    # it "should return unauthorized if not logged in" do
+    #   get "/post_reports"
+    #   expect(response).to be_unauthorized
+    # end
+    # it "should return unauthorized if logged in as normal" do
+    #   login_as(create(:person, product: @index_admin.product, role: :normal))
+    #   get "/post_reports"
+    #   expect(response).to be_unauthorized
+    # end
+    # it "should return no reports if logged in as admin from another product" do
+    #   ActsAsTenant.with_tenant(create(:product)) do
+    #     other = create(:person, role: :admin)
+    #     login_as(other)
+    #     get "/post_reports"
+    #     expect(response).to be_success
+    #     expect(json["post_reports"]).to be_empty
+    #   end
+    # end
+  end
+
 end

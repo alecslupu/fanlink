@@ -1,5 +1,5 @@
 class PostCommentReport < ApplicationRecord
-  #include PostComment::PortalFilters
+  include PostCommentReport::PortalFilters
   enum status: %i[ pending no_action_needed comment_hidden ]
 
   belongs_to :person
