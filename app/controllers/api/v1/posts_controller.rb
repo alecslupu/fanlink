@@ -21,6 +21,9 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam {Boolean} [post.recommended] (Admin)
+  #   Whether the post is recommended.
+  #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
   #     post: { ..post json..see get post action ....}
@@ -169,6 +172,7 @@ class Api::V1::PostsController < ApiController
   #         "repost_interval": 0,
   #         "status": "published",
   #         "priority": 0,
+  #         "recommended": false,
   #         "created_at": "2017-12-31T12:13:42Z",
   #         "updated_at": "2017-12-31T12:13:42Z"
   #       },...
@@ -199,7 +203,8 @@ class Api::V1::PostsController < ApiController
   #       "body":"post body",
   #       "person": ....public person json...,
   #       "post_reaction_counts":{"1F389":1},
-  #       "post_reaction":...see post reaction create json....(or null if current user has not reacted)
+  #       "post_reaction":...see post reaction create json....(or null if current user has not reacted),
+  #       "recommended": false
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -268,6 +273,6 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:body, :picture)
+    params.require(:post).permit([:body, :picture] + ((current_user.admin?) ? [:recommended] : []))
   end
 end
