@@ -106,4 +106,31 @@ describe "PostCommentReports (v1)" do
       end
     end
   end
+
+  describe "#update" do
+    let(:post_comment) { create(:post_comment) }
+    let(:report) { create(:post_comment_report, post_comment: post_comment) }
+    let(:admin) { create(:person, product: report.person.product, role: :admin) }
+    it "should update a post comment report" do
+      login_as(admin)
+      patch "/post_comment_reports/#{report.id}", params: { post_comment_report: { status: "no_action_needed" } }
+      expect(response).to be_success
+      expect(report.reload.status).to eq("no_action_needed")
+    end
+    it "should not update a post comment report to an invalid status" do
+      login_as(admin)
+      patch "/post_comment_reports/#{report.id}", params: { post_comment_report: { status: "punting" } }
+      expect(response).to be_unprocessable
+    end
+    it "should not update a post comment report if not logged in" do
+      patch "/post_comment_reports/#{report.id}", params: { post_comment_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+    it "should not update a post comment report if not admin" do
+      login_as(create(:person, product: post_comment.product, role: :normal))
+      patch "/post_comment_reports/#{report.id}", params: { post_comment_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+  end
+
 end

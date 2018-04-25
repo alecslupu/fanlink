@@ -28,7 +28,7 @@ Rails.application.routes.draw do
       end
       get "post_comments/list" => "post_comments#list"
       resources :post_reports, only: %i[ create index update ]
-      resources :post_comment_reports, only: %i[ create index ]
+      resources :post_comment_reports, only: %i[ create index update ]
       resources :posts, except: %i[ new edit ] do
         collection do
           get "list" => "posts#list"
