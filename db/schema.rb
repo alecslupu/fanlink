@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423213711) do
+ActiveRecord::Schema.define(version: 20180424224548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,16 @@ ActiveRecord::Schema.define(version: 20180423213711) do
     t.index ["post_comment_id"], name: "ind_post_comment_mentions_post_comments"
   end
 
+  create_table "post_comment_reports", force: :cascade do |t|
+    t.integer "post_comment_id", null: false
+    t.integer "person_id", null: false
+    t.text "reason"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_comment_id"], name: "idx_post_comment_reports_post_comment"
+  end
+
   create_table "post_comments", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "person_id", null: false
@@ -380,6 +390,8 @@ ActiveRecord::Schema.define(version: 20180423213711) do
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
+  add_foreign_key "post_comment_reports", "people", name: "fk_post__comment_reports_people", on_delete: :cascade
+  add_foreign_key "post_comment_reports", "post_comments", name: "fk_post_comment_reports_post_comments", on_delete: :cascade
   add_foreign_key "post_comments", "people", name: "fk_post_comments_people", on_delete: :cascade
   add_foreign_key "post_comments", "posts", name: "fk_post_comments_post", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
