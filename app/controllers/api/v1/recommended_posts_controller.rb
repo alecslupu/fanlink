@@ -4,6 +4,7 @@ class Api::V1::RecommendedPostsController < ApiController
   # @api {get} /posts/recommended Get recommended posts.
   # @apiName GetRecommendedPosts
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to get a list of published posts flagged as 'recommended'.
