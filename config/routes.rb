@@ -27,7 +27,8 @@ Rails.application.routes.draw do
         end
       end
       get "post_comments/list" => "post_comments#list"
-      resources :post_reports, only: %i[ index update ]
+      resources :post_reports, only: %i[ create index update ]
+      resources :post_comment_reports, only: %i[ create ]
       resources :posts, except: %i[ new edit ] do
         collection do
           get "list" => "posts#list"
@@ -36,7 +37,6 @@ Rails.application.routes.draw do
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
         get "share", on: :member
       end
-      resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]
       resources :rooms do
         resources :messages, except: %i[ new edit ]

@@ -17,4 +17,8 @@ class PostComment < ApplicationRecord
       post_comment_mentions.build(person_id: mp["person_id"].to_i, location: mp["location"].to_i, length: mp["length"].to_i)
     end
   end
+
+  def product
+    post.product
+  end
 end
