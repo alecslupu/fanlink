@@ -1,5 +1,6 @@
 class Api::V1::PostCommentReportsController < ApiController
   include Rails::Pagination
+  before_action :admin_only, only: %i[ index ]
   #**
   # @api {post} /post_comment_reports Report a post comment.
   # @apiName CreatePostReportComment
