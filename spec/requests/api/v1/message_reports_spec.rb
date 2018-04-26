@@ -120,11 +120,6 @@ describe "MessageReports (v1)" do
       patch "/message_reports/#{report.id}", params: { message_report: { status: "pending" } }
       expect(response).to be_unauthorized
     end
-    it "should not update a message report if not logged in" do
-      report = create(:message_report, message: @message)
-      patch "/message_reports/#{report.id}", params: { message_report: { status: "pending" } }
-      expect(response).to be_unauthorized
-    end
     it "should not update a message report if not admin" do
       login_as(create(:person, product: @product, role: :normal))
       patch "/message_reports/#{report.id}", params: { message_report: { status: "pending" } }

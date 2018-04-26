@@ -1,5 +1,4 @@
 class Person
-
   enum gender: %i[ unspecified male female ]
 
   validate :valid_country_code

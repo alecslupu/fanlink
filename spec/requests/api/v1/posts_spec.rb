@@ -27,6 +27,40 @@ describe "Posts (v1)" do
       expect(post.published?).to be_truthy
       expect(json["post"]).to eq(post_json(post))
     end
+    it "should allow admin to create recommended post" do
+      expect_any_instance_of(Post).to receive(:post)
+      login_as(create(:person, product: @product, role: :admin))
+      post "/posts", params: { post: { recommended: true } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.recommended).to be_truthy
+    end
+    it "should not allow non admin to create recommended post" do
+      expect_any_instance_of(Post).to receive(:post)
+      login_as(@person)
+      post "/posts", params: { post: { recommended: true } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.recommended).to be_falsey
+    end
+    it "should create a new post and publish it with a lot of fields normal users really should not have access to but i am told they should" do
+      expect_any_instance_of(Post).not_to receive(:post)
+      login_as(@person)
+      body = "Do you like my body?"
+      startat = "2018-01-08T12:15:00Z"
+      endat = "2018-06-08T12:15:59Z"
+      prior = 123
+      rpi = 1
+      post "/posts", params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: "rejected", priority: prior } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.global).to be_truthy
+      expect(post.starts_at).to eq(Time.parse(startat))
+      expect(post.ends_at).to eq(Time.parse(endat))
+      expect(post.repost_interval).to eq(rpi)
+      expect(post.status).to eq("rejected")
+      expect(post.priority).to eq(prior)
+    end
     it "should not create a new post if not logged in" do
       expect_any_instance_of(Post).not_to receive(:post)
       post "/posts", params: { post: { body: "not gonna see my body" } }
@@ -304,6 +338,15 @@ describe "Posts (v1)" do
       get "/posts/list", params: { person_id_filter: @people_list.first.id, posted_after_filter: time_to_use.to_s }
       expect(response).to be_success
       expect(json["posts"].count).to eq(posts.count)
+    end
+    it "should give you a single post filtered on post id" do
+      login_as(@admin)
+      post = @list_posts.first
+      get "/posts/list", params: { id_filter: post.id }
+      expect(response).to be_success
+      pjson = json["posts"]
+      expect(pjson.count).to eq(1)
+      expect(pjson.first).to eq(post_list_json(post))
     end
     it "should not give you anything if not logged in" do
       get "/posts/list"

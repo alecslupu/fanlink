@@ -23,6 +23,27 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam {Boolean} [post.recommended] (Admin)
+  #   Whether the post is recommended.
+  #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
+  #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
   #     post: { ..post json..see get post action ....}
@@ -35,8 +56,10 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      @post.post
-      @post.published!
+      unless post_params["status"].present?
+        @post.published!
+      end
+      @post.post if @post.published?
     end
     return_the @post
   end
@@ -139,6 +162,9 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
+  # @apiParam {Integer} [id_filter]
+  #   Full match on post.id. Will return either a one element array or an empty array.
+  #
   # @apiParam {Integer} [person_id_filter]
   #   Full match on person id.
   #
@@ -149,10 +175,10 @@ class Api::V1::PostsController < ApiController
   #   Full or partial match on post body.
   #
   # @apiParam {Datetime} [posted_after_filter]
-  #   Posted at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #   Posted at or after timestamp. Format: "2018-01-08T12:13:42Z"
   #
   # @apiParam {Datetime} [posted_before_filter]
-  #   Posted at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #   Posted at or before timestamp. Format: "2018-01-08T12:13:42Z"
   #
   # @apiParam {String} [status_filter]
   #   Post status. Valid values: pending published deleted rejected errored
@@ -171,6 +197,7 @@ class Api::V1::PostsController < ApiController
   #         "repost_interval": 0,
   #         "status": "published",
   #         "priority": 0,
+  #         "recommended": false,
   #         "created_at": "2017-12-31T12:13:42Z",
   #         "updated_at": "2017-12-31T12:13:42Z"
   #       },...
@@ -209,6 +236,8 @@ class Api::V1::PostsController < ApiController
   #       "repost_interval": 0,
   #       "status": "published",
   #       "priority": 0
+  #       "post_reaction":...see post reaction create json....(or null if current user has not reacted),
+  #       "recommended": false
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -299,7 +328,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 401, 404
   #*
   def update
-    @post.update_attributes(post_update_params)
+    @post.update_attributes(post_params)
   end
 
 private
@@ -335,10 +364,11 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:body, :picture)
+    params.require(:post).permit([:body, :picture] + ((current_user.admin?) ? [:recommended] : []))
   end
 
   def post_update_params
-    params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority )
+    params.require(:post).permit([:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status,
+                                            :priority] + ((current_user.admin?) ? [:recommended] : []))
   end
 end

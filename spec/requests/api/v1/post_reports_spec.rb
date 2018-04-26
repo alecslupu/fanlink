@@ -105,4 +105,31 @@ describe "PostReports (v1)" do
       end
     end
   end
+
+  describe "#update" do
+    let(:post) { create(:post) }
+    let(:report) { create(:post_report, post: post) }
+    let(:admin) { create(:person, product: report.person.product, role: :admin) }
+    it "should update a post report" do
+      login_as(admin)
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "no_action_needed" } }
+      expect(response).to be_success
+      expect(report.reload.status).to eq("no_action_needed")
+    end
+    it "should not update a post report to an invalid status" do
+      login_as(admin)
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "punting" } }
+      expect(response).to be_unprocessable
+    end
+    it "should not update a post report if not logged in" do
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+    it "should not update a post report if not admin" do
+      login_as(create(:person, product: post.product, role: :normal))
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+  end
+
 end

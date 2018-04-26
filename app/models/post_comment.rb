@@ -1,4 +1,5 @@
 class PostComment < ApplicationRecord
+  include PostComment::PortalFilters
   belongs_to :person
   belongs_to :post
   validates :body, presence: true
@@ -15,5 +16,9 @@ class PostComment < ApplicationRecord
     mention_params.each do |mp|
       post_comment_mentions.build(person_id: mp["person_id"].to_i, location: mp["location"].to_i, length: mp["length"].to_i)
     end
+  end
+
+  def product
+    post.product
   end
 end

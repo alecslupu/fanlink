@@ -182,6 +182,19 @@ module JsonHelpers
     }
   end
 
+  def post_comment_list_json(post_comment, lang = nil)
+    {
+        "id"              => post_comment.id.to_s,
+        "post_id"         => post_comment.post_id,
+        "person_id"       => post_comment.person_id,
+        "body"            => (lang.present?) ? post_comment.body(lang) : post_comment.body,
+        "hidden"          => post_comment.hidden,
+        "created_at"      => post_comment.created_at.to_s,
+        "updated_at"      => post_comment.updated_at.to_s,
+        "mentions"        => post_comment_mentions_json(post_comment)
+    }
+  end
+
   def post_comment_mentions_json(post_comment)
     if post_comment.mentions.count > 0
       mentions = []
@@ -192,6 +205,18 @@ module JsonHelpers
     else
       nil
     end
+  end
+
+  def post_comment_report_json(post_comment_report)
+    {
+        "id"              => post_comment_report.id.to_s,
+        "created_at"      => post_comment_report.created_at.to_s,
+        "post_comment_id" => post_comment_report.post_comment_id,
+        "commenter"       => post_comment_report.post_comment.person.username,
+        "reporter"        => post_comment_report.person.username,
+        "reason"          => post_comment_report.reason,
+        "status"          => post_comment_report.status
+    }
   end
 
   def post_json(post, lang = nil, reaction = nil)
@@ -209,6 +234,7 @@ module JsonHelpers
       "repost_interval" =>  post.repost_interval,
       "status"        => post.status,
       "priority"      => post.priority
+      "recommended"   => post.recommended
     }
   end
   def post_share_json(post, lang = nil, reaction = nil)
@@ -231,6 +257,7 @@ module JsonHelpers
       "repost_interval" => post.repost_interval,
       "status"          => post.status,
       "priority"        => post.priority,
+      "recommended"     => post.recommended,
       "created_at"      => post.created_at.to_s,
       "updated_at"      => post.updated_at.to_s
     }
@@ -247,13 +274,13 @@ module JsonHelpers
 
   def post_report_json(post_report)
     {
-        "id"        => post_report.id.to_s,
-        "created_at"=> post_report.created_at.to_s,
-        "post_id"   => post_report.post_id,
-        "poster"    => post_report.post.person.username,
-        "reporter"  => post_report.person.username,
-        "reason"    => post_report.reason,
-        "status"    => post_report.status
+        "id"          => post_report.id.to_s,
+        "created_at"  => post_report.created_at.to_s,
+        "post_id"     => post_report.post_id,
+        "poster"      => post_report.post.person.username,
+        "reporter"    => post_report.person.username,
+        "reason"      => post_report.reason,
+        "status"      => post_report.status
     }
   end
 

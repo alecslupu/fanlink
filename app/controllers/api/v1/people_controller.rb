@@ -260,7 +260,7 @@ private
   end
 
   def check_gender
-    return params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
+    params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
   end
 
   def person_params
