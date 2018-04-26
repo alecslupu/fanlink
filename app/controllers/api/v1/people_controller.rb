@@ -174,6 +174,7 @@ class Api::V1::PeopleController < ApiController
   #       "chat_banned": false,
   #       "designation": "Grand Poobah",
   #       "following_id": 12, //or null
+  #       "num_followers": 0,
   #       "relationships": [ {json for each relationship}], //only present if relationships present
   #       "badge_points": 0,
   #       "role": "normal",
