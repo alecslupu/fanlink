@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423213711) do
+ActiveRecord::Schema.define(version: 20180427192506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +237,17 @@ ActiveRecord::Schema.define(version: 20180423213711) do
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
+  create_table "portal_notifications", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "product_id", null: false
+    t.jsonb "body", default: {}, null: false
+    t.datetime "send_me_at", null: false
+    t.integer "status", default: 0, null: false
+    t.index ["product_id"], name: "idx_portal_notifications_products"
+    t.index ["send_me_at"], name: "idx_portal_notifications_send_me_at"
+    t.index ["status"], name: "idx_portal_notifications_status"
+  end
+
   create_table "post_reactions", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "person_id", null: false
@@ -360,6 +371,8 @@ ActiveRecord::Schema.define(version: 20180423213711) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "portal_notifications", "people", name: "fk_portal_notifications_people", on_delete: :restrict
+  add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade
