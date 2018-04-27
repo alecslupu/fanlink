@@ -49,7 +49,7 @@ class Api::V1::RelationshipsController < ApiController
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
         if @relationship.valid?
           update_relationship_count(@relationship.requested_to)
-          friend_request_received_push(current_user, requested_to)
+          @relationship.friend_request_received_push
         end
       end
       return_the @relationship
