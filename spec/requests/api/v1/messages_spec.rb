@@ -68,6 +68,7 @@ describe "Messages (v1)" do
     end
     it "should create a new message in a private room" do
       expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Message).to receive(:private_message_push)
       expect_any_instance_of(Room).to receive(:increment_message_counters)
       room = create(:room, product: @product, created_by: @person, status: :active)
       room.members << @person
@@ -85,6 +86,7 @@ describe "Messages (v1)" do
     end
     it "should create a new message in a private room with a mention" do
       expect_any_instance_of(Message).to receive(:post)
+      expect_any_instance_of(Message).to receive(:private_message_push)
       expect_any_instance_of(Room).to receive(:increment_message_counters)
       room = create(:room, product: @product, created_by: @person, status: :active)
       room.members << @person
