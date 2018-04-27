@@ -1,6 +1,5 @@
 class Api::V1::RelationshipsController < ApiController
   include Messaging
-  include Push
 
   load_up_the Relationship, except: %i[ create index ]
 
@@ -43,7 +42,7 @@ class Api::V1::RelationshipsController < ApiController
         if @relationship.requested? && @relationship.requested_by == requested_to #there was request o/s from this user to us
           @relationship.friended!
           update_relationship_count(current_user)
-          friend_request_accepted_push(@relationship)
+          @relationship.friend_request_accepted_push
         end
       else
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
@@ -187,7 +186,7 @@ class Api::V1::RelationshipsController < ApiController
           if old_status == "requested" && @relationship.requested_to == current_user
             @relationship.friended!
             update_relationship_count(current_user)
-            friend_request_accepted_push(@relationship)
+            @relationship.friend_request_accepted_push
           else
             can_status = false
           end

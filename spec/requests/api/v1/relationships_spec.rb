@@ -156,7 +156,7 @@ describe "Relationships (v1)" do
       person = create(:person)
       login_as(person)
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-      expect_any_instance_of(Api::V1::RelationshipsController).to receive(:friend_request_accepted_push).with(rel)
+      expect_any_instance_of(Relationship).to receive(:friend_request_accepted_push)
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).with(rel.requested_to)
       patch "/relationships/#{rel.id}", params: { relationship: { status: "friended" } }
       expect(response).to be_success
