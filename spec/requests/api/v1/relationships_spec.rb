@@ -11,6 +11,7 @@ describe "Relationships (v1)" do
   describe "#create" do
     it "should send a friend request to someone" do
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).and_return(true)
+      expect_any_instance_of(Relationship).to receive(:friend_request_received_push)
       login_as(@requester)
       post "/relationships", params: { relationship: { requested_to_id: @requested.id } }
       expect(response).to be_success
