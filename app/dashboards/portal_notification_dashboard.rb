@@ -20,7 +20,7 @@ class PortalNotificationDashboard < Administrate::BaseDashboard
       id: Field::Number,
       body: TranslatedField,
       send_me_at: Field::DateTime,
-      status: Field::Enum,
+      sent_status: Field::Enum,
       created_at: Field::DateTime,
       updated_at: Field::DateTime
   }.freeze
@@ -34,7 +34,7 @@ class PortalNotificationDashboard < Administrate::BaseDashboard
       :person,
       :body,
       :send_me_at,
-      :status,
+      :sent_status,
       :created_at
   ].freeze
 
@@ -45,7 +45,7 @@ class PortalNotificationDashboard < Administrate::BaseDashboard
       :id,
       :body,
       :send_me_at,
-      :status,
+      :sent_status,
       :created_at,
       :updated_at
   ].freeze
@@ -56,10 +56,10 @@ class PortalNotificationDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
        :body,
        :send_me_at,
-       :status
+       :sent_status
    ].freeze
 
   def display_resource(portal_notification)
-    "Portal Notification - #{portal_notification.body.truncate(22)}"
+    "Portalotification - #{portal_notification.body.truncate(22)}"
   end
 end

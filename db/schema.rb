@@ -242,12 +242,12 @@ ActiveRecord::Schema.define(version: 20180427192506) do
     t.integer "product_id", null: false
     t.jsonb "body", default: {}, null: false
     t.datetime "send_me_at", null: false
-    t.integer "status", default: 0, null: false
+    t.integer "sent_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "idx_portal_notifications_products"
     t.index ["send_me_at"], name: "idx_portal_notifications_send_me_at"
-    t.index ["status"], name: "idx_portal_notifications_status"
+    t.index ["sent_status"], name: "idx_portal_notifications_sent_status"
   end
 
   create_table "post_reactions", force: :cascade do |t|
