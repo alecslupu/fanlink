@@ -67,6 +67,7 @@ Rails.application.routes.draw do
     end
     resources :message_reports, only: %i[ index update ]
     resources :people
+    resources :portal_notifications
     resources :posts
     resources :post_reports, only: %i[ index update ]
     resources :products do

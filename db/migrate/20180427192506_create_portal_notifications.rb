@@ -6,6 +6,7 @@ class CreatePortalNotifications < ActiveRecord::Migration[5.1]
       t.jsonb :body, default: {}, null: false
       t.datetime :send_me_at, null: false
       t.integer :status, default: 0, null: false
+      t.timestamps null: false
     end
     add_index :portal_notifications, [:product_id], name: "idx_portal_notifications_products"
     add_index :portal_notifications, [:send_me_at], name: "idx_portal_notifications_send_me_at"
