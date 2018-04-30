@@ -29,3 +29,16 @@ FanLink-API-Docs.zip
 /spec/load/firebase_listener/logs
 /spec/load/jmeter/results
 /spec/load/jmeter/jmeter.log
+
+# Created by https://www.gitignore.io/api/VisualStudioCode
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+
+# End of https://www.gitignore.io/api/VisualStudioCode
