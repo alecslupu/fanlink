@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180423213711) do
+ActiveRecord::Schema.define(version: 20180425175007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,13 @@ ActiveRecord::Schema.define(version: 20180423213711) do
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
   end
 
+  create_table "product_beacons", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "beacon_pid", null: false
+    t.integer "requirement_id"
+    t.index ["product_id"], name: "ind_beacons_products"
+  end
+
   create_table "products", force: :cascade do |t|
     t.text "name", null: false
     t.text "internal_name", null: false
@@ -286,6 +293,28 @@ ActiveRecord::Schema.define(version: 20180423213711) do
     t.boolean "can_have_supers", default: false, null: false
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
+  end
+
+  create_table "quest_activities", force: :cascade do |t|
+  end
+
+  create_table "quest_activity_requirements", force: :cascade do |t|
+  end
+
+  create_table "quest_person_completions", force: :cascade do |t|
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "event_id"
+    t.text "name", null: false
+    t.text "internal_name", null: false
+    t.text "description", null: false
+    t.text "picture_id"
+    t.text "status"
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at"
+    t.index ["product_id"], name: "ind_quests_products"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -365,6 +394,7 @@ ActiveRecord::Schema.define(version: 20180423213711) do
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade
   add_foreign_key "post_reports", "posts", name: "fk_post_reports_post", on_delete: :cascade
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
+  add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
