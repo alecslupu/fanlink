@@ -1,4 +1,5 @@
 class Relationship < ApplicationRecord
+  include Relationship::RealTime
   enum status: %i[ requested friended ]
 
   has_paper_trail
