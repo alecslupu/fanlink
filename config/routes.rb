@@ -49,10 +49,6 @@ Rails.application.routes.draw do
           delete "" => "session#destroy"
         end
       end
-      resources :quests do
-        get "activities" => "quest_activities#index"
-        post "activities" => "quest_activities#create"
-      end
     end
     version 2
   end
@@ -82,8 +78,6 @@ Rails.application.routes.draw do
       end
     end
     resources :rooms
-
-    resources :quests
 
     get ":product_internal_name/login" => "sessions#new"
     post "login" => "sessions#create"
