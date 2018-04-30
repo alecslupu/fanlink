@@ -5,6 +5,6 @@ class CreateQuestPersonCompletion < ActiveRecord::Migration[5.1]
       t.integer :quest_id, null: false
       t.integer :activity_id
     end
-    add_index :quest_person_completions, [:product_id], name: "ind_quest_person_completions"
+    add_index :quest_person_completions, [:person_id], name: "ind_quest_person_completions"
   end
 end
