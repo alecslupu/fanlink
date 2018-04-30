@@ -180,7 +180,8 @@ module JsonHelpers
       "id"            => post_comment.id.to_s,
       "create_time"   => post_comment.created_at.to_s,
       "body"          => post_comment.body,
-      "mentions"      => post_comment_mentions_json(post_comment)
+      "mentions"      => post_comment_mentions_json(post_comment),
+      "person"        => person_json(post_comment.person)
     }
   end
 
