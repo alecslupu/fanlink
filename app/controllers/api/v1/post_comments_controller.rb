@@ -38,12 +38,13 @@ class Api::V1::PostCommentsController < ApiController
   #       "id": 1234,
   #       "body": "Do you like my body?",
   #       "mentions": [
-  #       {
-  #         "person_id": 1234,
-  #         "location": 1,
-  #         "length": 1
-  #       }, ....
+  #         {
+  #           "person_id": 1234,
+  #           "location": 1,
+  #           "length": 1
+  #         },...
   #       ]
+  #       "person": { person json }
   #     }
   #
   # @apiErrorExample {json} Error-Response:
