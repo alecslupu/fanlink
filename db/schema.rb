@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< Updated upstream
 ActiveRecord::Schema.define(version: 20180425175007) do
+=======
+ActiveRecord::Schema.define(version: 20180322183017) do
+>>>>>>> Stashed changes
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -67,10 +72,10 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.datetime "issued_from"
-    t.datetime "issued_to"
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.datetime "issued_from"
+    t.datetime "issued_to"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
   end
@@ -152,9 +157,9 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
-    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.integer "priority", default: 0, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end
@@ -225,12 +230,15 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.boolean "recommended", default: false, null: false
     t.jsonb "designation", default: {}, null: false
+<<<<<<< Updated upstream
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
     t.text "country_code"
+=======
+    t.boolean "recommended", default: false, null: false
+>>>>>>> Stashed changes
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
@@ -372,7 +380,6 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 
