@@ -3,8 +3,8 @@ class Api::V1::QuestActivitiesController < ApiController
     load_up_the QuestActivity, only: %i[ update ]
 
     def create
-        @activity = @quest.quest_activity.create(activity_params)
-        return_the @activity
+        @quest_activity = @quest.quest_activities.create(activity_params)
+        return_the @quest_activity
     end
 
     def update

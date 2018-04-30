@@ -1,6 +1,1 @@
-json.quests do
-    json.array!(@quests) do |quest|
-      json.partial! "quest", locals: { quest: quest, lang: @lang] }
-    end
-  end
-  
+json.activities @quest.quest_activities, partial: "activity", as: :activity

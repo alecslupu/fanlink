@@ -1,4 +1,1 @@
-json.quest do
-    json.partial! "activity", locals: { activity: @quest_activity, lang: nil }
-end
-  
+json.quest_activity @quest_activity, partial: "activity", as: :activity
