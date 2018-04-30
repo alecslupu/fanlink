@@ -9,7 +9,6 @@ class Product < ApplicationRecord
             uniqueness: true
 
   has_many :people, dependent: :restrict_with_error
-  has_many :quests, dependent: :restrict_with_error
 
   scope :enabled, -> { where(enabled: true) }
 
