@@ -47,8 +47,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.logger = Logger.new(STDOUT)
-  config.logger.level = Logger::ERROR
+  # config.logger = Logger.new(STDOUT)
+  # config.logger.level = Logger::ERROR
 
   config.web_console.whitelisted_ips = '172.18.0.1'
 
