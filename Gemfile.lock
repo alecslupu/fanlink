@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/mark100net/administrate-field-enum.git
-  revision: 76659baca9afdd6e0eb0937cda21aa9f3859b836
+  revision: 5bea42d1ae695a2b740c8f9e6f1aa430eda13736
   branch: collection-member-fix
   specs:
     administrate-field-enum (0.0.1)
