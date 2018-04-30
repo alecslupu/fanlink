@@ -1,0 +1,11 @@
+json.id quest.id.to_s
+json.product_id quest.product_id.to_s
+json.event_id quest.event_id.to_s
+json.name quest.name
+json.internal_name quest.internal_name
+json.description quest.description(@lang)
+json.picture_url quest.picture_url
+json.starts_at quest.starts_at.to_s
+json.ends_at quest.ends_at.to_s
+json.created_at quest.created_at.to_s
+json.updated_at quest.updated_at.to_s
