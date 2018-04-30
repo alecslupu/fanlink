@@ -5,12 +5,11 @@ class Quest < ApplicationRecord
     enum status: %i[ disabled enabled active deleted ]
 
     belongs_to :product
-    # belongs_to :event
     
     has_image_called :picture
     # has_manual_translated :description, :name
     
-    has_many :quest_activities, dependent: :destroy
+    has_many :quest_activities
 
     accepts_nested_attributes_for :quest_activities
 
@@ -29,6 +28,7 @@ class Quest < ApplicationRecord
       }
     
     scope :for_product, -> (product) { includes(:product).where(roduct: product) } 
+
 
 private
 

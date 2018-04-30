@@ -332,6 +332,7 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
+    t.index ["internal_name"], name: "ind_quests_internal_name"
     t.index ["product_id"], name: "ind_quests_products"
   end
 

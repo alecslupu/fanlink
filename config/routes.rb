@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       end
       resources :quests do
         get "activities" => "quest_activities#index"
+        post "activities" => "quest_activities#create"
       end
     end
     version 2
