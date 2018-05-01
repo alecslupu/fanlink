@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.boolean "image"
     t.boolean "audio"
     t.text "requires"
+    t.boolean "deleted", default: false
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
