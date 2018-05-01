@@ -4,7 +4,7 @@ class Api::V1::ProductBeaconsController < ApiController
     before_action :admin_only
     
     #**
-    # 
+    # @apiIgnore
     # @api {get} /admin/:product_internal_name/beacons Beacons for a product
     # @apiName ProductBeacons
     # @apiGroup Product
@@ -35,7 +35,7 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # 
+    # @apiIgnore
     # @api {method} /path title
     # @apiName apiName
     # @apiGroup group
@@ -67,7 +67,7 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # 
+    # @apiIgnore
     # @api {method} /path title
     # @apiName apiName
     # @apiGroup group
@@ -99,7 +99,7 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # 
+    # @apiIgnore
     # @api {method} /path title
     # @apiName apiName
     # @apiGroup group
