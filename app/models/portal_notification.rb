@@ -2,6 +2,9 @@ class PortalNotification < ApplicationRecord
   include PortalNotification::RealTime
   include TranslationThings
 
+  #specify languages not used for respective fields
+  IGNORE_TRANSLATION_LANGS = { body: ["un"] }
+
   enum sent_status: %i[ pending sent cancelled errored ]
 
   has_manual_translated :body
@@ -12,12 +15,16 @@ class PortalNotification < ApplicationRecord
 
   belongs_to :person
 
-  validates :body, length: { in: 3..200 }
+  validates :body, length: { in: 3..200, message: "Body must be between 3 and 200 characters." }
   validates :send_me_at, presence: true
 
   validate :sensible_send_time
 
   scope :for_product, -> (product) { where(product_id: product.id) }
+
+  def ignore_translation_lang?(field, lang)
+    IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)
+  end
 
   private
 

@@ -6,6 +6,13 @@ module Admin
       super
     end
 
+    def new
+      resource = resource_class.new(send_me_at: (Time.zone.now + 1.hour).beginning_of_hour)
+      authorize_resource(resource)
+      render locals: {
+          page: Administrate::Page::Form.new(dashboard, resource),
+      }
+    end
     private
 
     def resource_params
