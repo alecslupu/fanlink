@@ -14,3 +14,6 @@ class CreateQuestActivity < ActiveRecord::Migration[5.1]
     add_foreign_key :quest_activities, :quests, name: "fk_activities_quests"
   end
 end
+
+
+
