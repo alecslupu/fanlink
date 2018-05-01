@@ -318,6 +318,17 @@ ActiveRecord::Schema.define(version: 20180427192506) do
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
   end
 
+  create_table "product_beacons", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "beacon_pid", null: false
+    t.integer "attached_to"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["beacon_pid"], name: "ind_beacons_pid"
+    t.index ["product_id"], name: "ind_beacons_products"
+  end
+
   create_table "products", force: :cascade do |t|
     t.text "name", null: false
     t.text "internal_name", null: false
@@ -327,6 +338,45 @@ ActiveRecord::Schema.define(version: 20180427192506) do
     t.boolean "can_have_supers", default: false, null: false
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
+  end
+
+  create_table "quest_activities", force: :cascade do |t|
+    t.integer "quest_id", null: false
+    t.text "description"
+    t.text "hint"
+    t.boolean "post"
+    t.boolean "image"
+    t.boolean "audio"
+    t.text "requires"
+    t.boolean "deleted", default: false
+    t.index ["quest_id"], name: "ind_activity_quest"
+  end
+
+  create_table "quest_person_completions", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "quest_id", null: false
+    t.integer "activity_id"
+    t.index ["person_id"], name: "ind_quest_person_completions"
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "event_id"
+    t.text "name", null: false
+    t.text "internal_name", null: false
+    t.text "description", null: false
+    t.integer "status", default: 2, null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
+    t.index ["internal_name"], name: "ind_quests_internal_name"
+    t.index ["product_id"], name: "ind_quests_products"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -414,6 +464,9 @@ ActiveRecord::Schema.define(version: 20180427192506) do
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade
   add_foreign_key "post_reports", "posts", name: "fk_post_reports_post", on_delete: :cascade
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
+  add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
+  add_foreign_key "quest_activities", "quests", name: "fk_activities_quests"
+  add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
