@@ -26,7 +26,14 @@ class PortalNotification < ApplicationRecord
     IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)
   end
 
-  private
+  def push_topics
+    topics = {}
+    LANGS.keys.each do |l|
+      topics[l] = "#{product.internal_name}-portal_notices-#{l}" unless ignore_translation_lang?(:body, l)
+    end
+    topics
+  end
+private
 
   def sensible_send_time
     unless persisted?
