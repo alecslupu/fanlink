@@ -52,6 +52,11 @@ Rails.application.routes.draw do
         get "activities" => "quest_activities#index"
         post "activities" => "quest_activities#create"
       end
+
+      get ":product_internal_name/beacons" => "productbeacons#index"
+      get ":product_internal_name/beacons/:id" => "productbeacons#show"
+      post ":product_internal_name/beacons" => "productbeacons#create"
+      post ":product_internal_name/beacons/:id" => "productbeacons#update"
     end
     version 2
   end
@@ -82,12 +87,8 @@ Rails.application.routes.draw do
     end
     resources :rooms
 
-    resources :quests
+    # resources :quests
 
-    get ":product_internal_name/beacons" => "productbeacons#index"
-    get ":product_internal_name/beacons/:id" => "productbeacons#show"
-    post ":product_internal_name/beacons" => "productbeacons#create"
-    post ":product_internal_name/beacons/:id" => "productbeacons#update"
 
     get ":product_internal_name/login" => "sessions#new"
     post "login" => "sessions#create"
