@@ -1,0 +1,16 @@
+class FriendRequestAcceptedPushJob < Struct.new(:relationship_id)
+  include Push
+
+  def perform
+    relationship = Relationship.find(relationship_id)
+    ActsAsTenant.with_tenant(relationship.requested_by.product) do
+      friend_request_accepted_push(relationship)
+    end
+  end
+
+  def error(job, exception)
+    if exception.is_a?(ActiveRecord::RecordNotFound)
+      job.destroy
+    end
+  end
+end

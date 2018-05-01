@@ -140,6 +140,8 @@ module JsonHelpers
       "chat_banned"       => person.chat_banned,
       "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
       "following_id"      => (following) ? following.id : nil,
+      "num_followers"     => person.followers.count,
+      "num_following"     => person.following.count,
       "badge_points"      => person.badge_points,
       "role"              => person.role,
       "level"             => (person.level.nil?) ? nil : level_json(person.level),

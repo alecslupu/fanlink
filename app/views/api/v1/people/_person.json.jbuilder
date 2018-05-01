@@ -20,6 +20,8 @@ end
 json.do_not_message_me person.do_not_message_me
 json.pin_messages_from person.pin_messages_from
 json.auto_follow person.auto_follow
+json.num_followers person.followers.count
+json.num_following person.following.count
 json.facebookid person.facebookid
 json.facebook_picture_url person.facebook_picture_url
 json.created_at person.created_at.to_s
