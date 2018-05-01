@@ -49,8 +49,11 @@ Rails.application.routes.draw do
       end
       resources :quest_activities, only: %i[ update show ]
       resources :quests do
-        get "activities" => "quest_activities#index"
-        post "activities" => "quest_activities#create"
+        collection do
+          get "list" => "quests#list"
+          get "activities" => "quest_activities#index"
+          post "activities" => "quest_activities#create"
+        end
       end
 
       get ":product_internal_name/beacons" => "productbeacons#index"
