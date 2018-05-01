@@ -12,3 +12,6 @@ class CreateProductBeacon < ActiveRecord::Migration[5.1]
     add_foreign_key :product_beacons, :products, name: "fk_beacons_products"
   end
 end
+
+
+

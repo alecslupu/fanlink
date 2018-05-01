@@ -18,3 +18,5 @@ class CreateQuest < ActiveRecord::Migration[5.1]
     add_foreign_key :quests, :products, name: "fk_quests_products"
   end
 end
+
+
