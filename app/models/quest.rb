@@ -7,6 +7,7 @@ class Quest < ApplicationRecord
     belongs_to :product
     
     has_image_called :picture
+    #TODO Add translation support
     # has_manual_translated :description, :name
     
     has_many :quest_activities
