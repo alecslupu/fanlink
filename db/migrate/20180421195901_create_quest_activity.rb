@@ -8,6 +8,7 @@ class CreateQuestActivity < ActiveRecord::Migration[5.1]
       t.boolean :image
       t.boolean :audio
       t.text :requires
+      t.boolean :deleted, default: false
     end
     add_index :quest_activities, [:quest_id], name: "ind_activity_quest"
     add_foreign_key :quest_activities, :quests, name: "fk_activities_quests"

@@ -47,7 +47,7 @@ Rails.application.routes.draw do
           delete "" => "session#destroy"
         end
       end
-      resources :quest_activities, only: %i[ update ]
+      resources :quest_activities, only: %i[ update show ]
       resources :quests do
         get "activities" => "quest_activities#index"
         post "activities" => "quest_activities#create"
@@ -88,7 +88,7 @@ Rails.application.routes.draw do
     get ":product_internal_name/beacons/:id" => "productbeacons#show"
     post ":product_internal_name/beacons" => "productbeacons#create"
     post ":product_internal_name/beacons/:id" => "productbeacons#update"
-    
+
     get ":product_internal_name/login" => "sessions#new"
     post "login" => "sessions#create"
     get "logout" => "sessions#destroy"
