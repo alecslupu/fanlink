@@ -117,7 +117,7 @@ class Api::V1::PostCommentReportsController < ApiController
     end
   end
 
-  private
+private
 
   def apply_filters
     post_comment_reports = PostCommentReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
@@ -136,5 +136,4 @@ class Api::V1::PostCommentReportsController < ApiController
   def post_comment_report_update_params
     params.require(:post_comment_report).permit(:status)
   end
-
 end

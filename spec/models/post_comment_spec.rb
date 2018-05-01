@@ -8,7 +8,7 @@ RSpec.describe PostComment, type: :model do
     @person.follow(@followed1)
     @person.follow(@followed2)
     @followed1_post1 = create(:post, person: @followed1)
-    @followed1_post2 = create(:post,person: @followed1)
+    @followed1_post2 = create(:post, person: @followed1)
     @followed2_post1 = create(:post, person: @followed2)
   end
 
