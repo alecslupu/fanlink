@@ -299,6 +299,48 @@ ActiveRecord::Schema.define(version: 20180427192506) do
     t.index ["name"], name: "unq_products_name", unique: true
   end
 
+<<<<<<< HEAD
+=======
+  create_table "quest_activities", force: :cascade do |t|
+    t.integer "quest_id", null: false
+    t.text "description"
+    t.text "hint"
+    t.boolean "post"
+    t.boolean "image"
+    t.boolean "audio"
+    t.text "requires"
+    t.boolean "deleted", default: false
+    t.index ["quest_id"], name: "ind_activity_quest"
+  end
+
+  create_table "quest_person_completions", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "quest_id", null: false
+    t.integer "activity_id"
+    t.index ["person_id"], name: "ind_quest_person_completions"
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "event_id"
+    t.text "name", null: false
+    t.text "internal_name", null: false
+    t.text "description", null: false
+    t.integer "status", default: 2, null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
+    t.index ["internal_name"], name: "ind_quests_internal_name"
+    t.index ["product_id"], name: "ind_quests_products"
+  end
+
+>>>>>>> c84eb86323f4e948ca1f214f3d87f13bb6abc1ad
   create_table "relationships", force: :cascade do |t|
     t.integer "requested_by_id", null: false
     t.integer "requested_to_id", null: false

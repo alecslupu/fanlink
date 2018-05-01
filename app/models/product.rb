@@ -9,6 +9,11 @@ class Product < ApplicationRecord
             uniqueness: true
 
   has_many :people, dependent: :restrict_with_error
+<<<<<<< HEAD
+=======
+  has_many :quests, dependent: :restrict_with_error
+  has_many :product_beacons, dependent: :restrict_with_error
+>>>>>>> c84eb86323f4e948ca1f214f3d87f13bb6abc1ad
 
   scope :enabled, -> { where(enabled: true) }
 
