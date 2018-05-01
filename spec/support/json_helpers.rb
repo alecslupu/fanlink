@@ -182,7 +182,7 @@ module JsonHelpers
     if post_comment.mentions.count > 0
       mentions = []
       post_comment.mentions.each do |m|
-        mentions << { "person_id" => m.person_id, "location" => m.location, "length" => m.length }
+        mentions << { "id" => m.id.to_s, "person_id" => m.person_id, "location" => m.location, "length" => m.length }
       end
       mentions
     else
