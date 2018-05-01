@@ -13,6 +13,7 @@ class Post < ApplicationRecord
   has_image_called :picture
   has_paper_trail
 
+  has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
 
@@ -31,6 +32,11 @@ class Post < ApplicationRecord
 
   scope :visible, -> { published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
                                                Time.zone.now, Time.zone.now) }
+
+  def comments
+    post_comments
+  end
+
   def product
     person.product
   end
