@@ -16,7 +16,7 @@ module Push
   end
 
   def portal_notification_push(portal_notification)
-    topics = portal_notification.get_push_topics
+    topics = portal_notification.push_topics
     topics.each do |l, c|
       body = (portal_notification.body(l).blank?) ? portal_notification.body : portal_notification.body(l)
       do_topic_push(c, body)
