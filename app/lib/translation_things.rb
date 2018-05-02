@@ -7,7 +7,7 @@ module TranslationThings
 
   LANGS = {
       "un" => "Language Unspecified",
-      "en" => "English",
+      "en" => "English*",
       # 'ar' => 'Arabic',
       # 'de' => 'German',
       "es" => "Spanish",

@@ -236,7 +236,7 @@ module JsonHelpers
       "ends_at"   => (post.ends_at.present?) ? post.ends_at.to_s : nil,
       "repost_interval" =>  post.repost_interval,
       "status"        => post.status,
-      "priority"      => post.priority
+      "priority"      => post.priority,
       "recommended"   => post.recommended
     }
   end
