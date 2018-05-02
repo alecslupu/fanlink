@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/mark100net/administrate-field-enum.git
-  revision: 76659baca9afdd6e0eb0937cda21aa9f3859b836
+  revision: cb5f6743221c1d7fd1f667c67ad22bd7706b500f
   branch: collection-member-fix
   specs:
     administrate-field-enum (0.0.1)
@@ -108,7 +108,7 @@ GEM
     arel (8.0.0)
     ast (2.3.0)
     attribute_normalizer (1.2.0)
-    autoprefixer-rails (8.3.0.1)
+    autoprefixer-rails (8.4.1)
       execjs
     aws-partitions (1.56.0)
     aws-sdk (3.0.1)
