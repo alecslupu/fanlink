@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180425175007) do
+=======
+ActiveRecord::Schema.define(version: 20180502193222) do
+>>>>>>> 2c08b0265a97a25a2401381c40ec997c5dfb27f7
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,6 +241,21 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
+<<<<<<< HEAD
+=======
+  create_table "portal_notifications", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.jsonb "body", default: {}, null: false
+    t.datetime "send_me_at", null: false
+    t.integer "sent_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "idx_portal_notifications_products"
+    t.index ["send_me_at"], name: "idx_portal_notifications_send_me_at"
+    t.index ["sent_status"], name: "idx_portal_notifications_sent_status"
+  end
+
+>>>>>>> 2c08b0265a97a25a2401381c40ec997c5dfb27f7
   create_table "post_comment_mentions", force: :cascade do |t|
     t.integer "post_comment_id", null: false
     t.integer "person_id", null: false
@@ -439,6 +458,10 @@ ActiveRecord::Schema.define(version: 20180425175007) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+<<<<<<< HEAD
+=======
+  add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
+>>>>>>> 2c08b0265a97a25a2401381c40ec997c5dfb27f7
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
   add_foreign_key "post_comment_reports", "people", name: "fk_post__comment_reports_people", on_delete: :cascade
