@@ -7,7 +7,7 @@ RSpec.describe PortalNotification, type: :model do
 
   describe "#create" do
     it "should create and save a valid notification" do
-      expect(create(:portal_notification, person: @person, product: @product)).to be_valid
+      expect(create(:portal_notification, product: @product)).to be_valid
     end
   end
 
