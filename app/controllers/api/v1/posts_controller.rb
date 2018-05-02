@@ -1,9 +1,8 @@
 class Api::V1::PostsController < ApiController
   include Rails::Pagination
-  before_action :admin_only, only: %i[ list update ]
   before_action :load_post, only: %i[ update ]
+  before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
-
 
   #**
   # @api {post} /posts Create a post.
@@ -43,6 +42,8 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
+  # @apiParam {Boolean} [post.recommended] (Admin)
+  #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
@@ -235,9 +236,9 @@ class Api::V1::PostsController < ApiController
   #       "ends_at":    "2018-01-31T23:59:59Z",
   #       "repost_interval": 0,
   #       "status": "published",
-  #       "priority": 0
   #       "post_reaction":...see post reaction create json....(or null if current user has not reacted),
-  #       "recommended": false
+  #       "recommended": false,
+  #       "priority": 0,
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -364,11 +365,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit([:body, :picture] + ((current_user.admin?) ? [:recommended] : []))
-  end
-
-  def post_update_params
-    params.require(:post).permit([:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status,
-                                            :priority] + ((current_user.admin?) ? [:recommended] : []))
+    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority ] +
+                                     ((current_user.admin?) ? [:recommended] : []))
   end
 end
