@@ -157,7 +157,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #*
 
     def index
-        @quest_activities = @quest.quest_activities
+        @quest_activities = @quest.quest_activities.all
         return_the @quest_activities
     end
 
