@@ -51,7 +51,9 @@ Rails.application.routes.draw do
       end
       resources :quest_activities, only: %i[ update show ]
       resources :quests do
+        collection do
           get "list" => "quests#list"
+        end
           get "activities" => "quest_activities#index"
           post "activities" => "quest_activities#create"
       end
