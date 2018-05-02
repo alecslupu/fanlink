@@ -57,7 +57,7 @@ private
 
   def do_topic_push(topic, msg)
     Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
-    resp = push_client.send_to_topic(topic, { notification: "Notification", data: { message: msg } } )
+    resp = push_client.send_to_topic(topic, notification: { body: msg })
     Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
   end
 end
