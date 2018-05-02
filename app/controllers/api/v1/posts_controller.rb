@@ -150,10 +150,10 @@ class Api::V1::PostsController < ApiController
   #   Full or partial match on post body.
   #
   # @apiParam {Datetime} [posted_after_filter]
-  #   Posted at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #   Posted at or after timestamp. Format: "2018-01-08T12:13:42Z"
   #
   # @apiParam {Datetime} [posted_before_filter]
-  #   Posted at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #   Posted at or before timestamp. Format: "2018-01-08T12:13:42Z"
   #
   # @apiParam {String} [status_filter]
   #   Post status. Valid values: pending published deleted rejected errored

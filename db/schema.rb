@@ -237,6 +237,34 @@ ActiveRecord::Schema.define(version: 20180425175007) do
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
+  create_table "post_comment_mentions", force: :cascade do |t|
+    t.integer "post_comment_id", null: false
+    t.integer "person_id", null: false
+    t.integer "location", default: 0, null: false
+    t.integer "length", default: 0, null: false
+    t.index ["post_comment_id"], name: "ind_post_comment_mentions_post_comments"
+  end
+
+  create_table "post_comment_reports", force: :cascade do |t|
+    t.integer "post_comment_id", null: false
+    t.integer "person_id", null: false
+    t.text "reason"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_comment_id"], name: "idx_post_comment_reports_post_comment"
+  end
+
+  create_table "post_comments", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "person_id", null: false
+    t.text "body", null: false
+    t.boolean "hidden", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "idx_post_comments_post"
+  end
+
   create_table "post_reactions", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "person_id", null: false
@@ -411,6 +439,12 @@ ActiveRecord::Schema.define(version: 20180425175007) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
+  add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
+  add_foreign_key "post_comment_reports", "people", name: "fk_post__comment_reports_people", on_delete: :cascade
+  add_foreign_key "post_comment_reports", "post_comments", name: "fk_post_comment_reports_post_comments", on_delete: :cascade
+  add_foreign_key "post_comments", "people", name: "fk_post_comments_people", on_delete: :cascade
+  add_foreign_key "post_comments", "posts", name: "fk_post_comments_post", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade

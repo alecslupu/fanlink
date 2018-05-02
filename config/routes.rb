@@ -26,16 +26,18 @@ Rails.application.routes.draw do
           get "recommended" => "recommended_people#index"
         end
       end
-      resources :post_reports, only: %i[ index update ]
+      get "post_comments/list" => "post_comments#list"
+      resources :post_reports, only: %i[ create index update ]
+      resources :post_comment_reports, only: %i[ create index update ]
       resources :posts, except: %i[ new edit ] do
         collection do
           get "list" => "posts#list"
           get "recommended" => "recommended_posts#index"
         end
+        resources :post_comments, only: %i[ create destroy index ], path: :comments
         resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
         get "share", on: :member
       end
-      resources :post_reports, only: %i[ create ]
       resources :relationships, except: %i[ new edit ]
       resources :rooms do
         resources :messages, except: %i[ new edit ]
@@ -49,11 +51,9 @@ Rails.application.routes.draw do
       end
       resources :quest_activities, only: %i[ update show ]
       resources :quests do
-        collection do
           get "list" => "quests#list"
           get "activities" => "quest_activities#index"
           post "activities" => "quest_activities#create"
-        end
       end
 
       get ":product_internal_name/beacons" => "productbeacons#index"
