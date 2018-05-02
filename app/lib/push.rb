@@ -15,6 +15,14 @@ module Push
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
   end
 
+  def portal_notification_push(portal_notification)
+    topics = portal_notification.get_push_topics
+    topics.each do |l, c|
+      body = (portal_notification.body(l).blank?) ? portal_notification.body : portal_notification.body(l)
+      do_topic_push(c, body)
+    end
+  end
+
   def private_message_push(message)
     tokens = []
     message.room.members.each do |m|
@@ -45,5 +53,11 @@ private
       resp = push_client.send(tokens, options)
       Rails.logger.debug("Got FCM response: #{resp.inspect}")
     end
+  end
+
+  def do_topic_push(topic, msg)
+    Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
+    resp = push_client.send_to_topic(topic, data: { message: msg })
+    Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
   end
 end
