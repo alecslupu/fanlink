@@ -18,6 +18,8 @@ class Deploy < Thor
     if branch != "master"
       puts "Generating docs"
       `bin/docapi`
+      `git add -f public/apidocs/*`
+      `git commit -m 'doc update'`
     end
 
     if !(`git remote | sort | uniq`.match(dest))
@@ -32,7 +34,7 @@ class Deploy < Thor
     `bundle`
 
     puts "Filling it with a fart from DHH."
-    `git push #{dest} #{branch}:master`
+    `git push -f #{dest} #{branch}:master`
 
     puts "Running Migrations"
     Open3.popen2(*%w[heroku run rails db:migrate -r], dest) do |input, output, _|

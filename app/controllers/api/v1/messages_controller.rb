@@ -1,6 +1,5 @@
 class Api::V1::MessagesController < ApiController
   include Rails::Pagination
-  include Push
 
   before_action :admin_only, only: %i[ list update ]
 
@@ -48,7 +47,7 @@ class Api::V1::MessagesController < ApiController
           @message.post
           if room.private?
             room.increment_message_counters(current_user.id)
-            private_message_push(@message)
+            @message.private_message_push
           end
         end
         return_the @message

@@ -4,9 +4,10 @@
 </div>
 <div class="field-unit__field translated-field">
   <div class="legend">Translated</div>
-  <% translated = f.object.send("#{field.attribute}_translated?") %>
+  <% translated = f.object.send("#{field.attribute}_translated?") || f.object.respond_to?(:ignore_translation_lang?) %>
   <% translate_button = false %>
   <% TranslationThings::LANGS.each do |l,n| %>
+    <% next if f.object.respond_to?(:ignore_translation_lang?) && f.object.ignore_translation_lang?(field.attribute, l) %>
     <% if translated || l == TranslationThings::DEFAULT_LANG %>
       <% visi_class = "display-block" %>
     <% else %>

@@ -8,5 +8,6 @@ json.ends_at post.ends_at.to_s
 json.repost_interval post.repost_interval
 json.status post.status
 json.priority post.priority
+json.recommended post.recommended
 json.created_at post.created_at.to_s
 json.updated_at post.updated_at.to_s
