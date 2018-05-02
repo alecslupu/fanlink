@@ -9,5 +9,5 @@
     "title": "Introduction",
     "filename": "app/controllers/api/v2/api-doc-header.md"
   },
-  "version": "2.0.0"
+  "version": "1.0.0"
 }
