@@ -1,6 +1,8 @@
 class Api::V1::PostsController < ApiController
-  before_action :admin_only, only: %i[ list update ]
   before_action :load_post, only: %i[ update ]
+  include Rails::Pagination
+
+  before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
 
 
@@ -39,6 +41,8 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
+  # @apiParam {Boolean} [post.recommended] (Admin)
+  #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
@@ -150,7 +154,13 @@ class Api::V1::PostsController < ApiController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This gets a list of posts with optional filters.
+  #   This gets a list of posts with optional filters and pagination.
+  #
+  # @apiParam {Integer} [page]
+  #   The page number to get. Default is 1.
+  #
+  # @apiParam {Integer} [per_page]
+  #   The pagination division. Default is 25.
   #
   # @apiParam {Integer} [person_id_filter]
   #   Full match on person id.
@@ -162,10 +172,10 @@ class Api::V1::PostsController < ApiController
   #   Full or partial match on post body.
   #
   # @apiParam {Datetime} [posted_after_filter]
-  #   Posted at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #   Posted at or after timestamp. Format: "2018-01-08T12:13:42Z"
   #
   # @apiParam {Datetime} [posted_before_filter]
-  #   Posted at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
+  #   Posted at or before timestamp. Format: "2018-01-08T12:13:42Z"
   #
   # @apiParam {String} [status_filter]
   #   Post status. Valid values: pending published deleted rejected errored
@@ -184,6 +194,7 @@ class Api::V1::PostsController < ApiController
   #         "repost_interval": 0,
   #         "status": "published",
   #         "priority": 0,
+  #         "recommended": false,
   #         "created_at": "2017-12-31T12:13:42Z",
   #         "updated_at": "2017-12-31T12:13:42Z"
   #       },...
@@ -193,7 +204,7 @@ class Api::V1::PostsController < ApiController
   #     HTTP/1.1 401 Unauthorized
   #*
   def list
-    @posts = apply_filters
+    @posts = paginate apply_filters
     return_the @posts
   end
 
@@ -221,7 +232,8 @@ class Api::V1::PostsController < ApiController
   #       "ends_at":    "2018-01-31T23:59:59Z",
   #       "repost_interval": 0,
   #       "status": "published",
-  #       "priority": 0
+  #       "priority": 0,
+  #       "recommended": false
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -340,6 +352,6 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority )
+    params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority, :recommended )
   end
 end

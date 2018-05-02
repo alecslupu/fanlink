@@ -47,8 +47,9 @@ describe "PostReports (v1)" do
         @index_posts << create(:post, person: @index_people.sample)
       end
       @index_reports = []
-      5.times do
-        @index_reports << create(:post_report, post: @index_posts.sample, person: @reporting_people.sample, status: PostReport.statuses.keys.sample)
+      base_time = Time.now - 4.days
+      5.times do |n|
+        @index_reports << create(:post_report, post: @index_posts.sample, person: @reporting_people.sample, status: PostReport.statuses.keys.sample, created_at: base_time + n.hours)
       end
     end
     it "should get all reports but only for correct product" do
@@ -59,6 +60,22 @@ describe "PostReports (v1)" do
       get "/post_reports"
       expect(response).to be_success
       expect(json["post_reports"].count).to eq(@index_reports.count)
+    end
+    it "should get all reports paginated to page 1" do
+      login_as(@index_admin)
+      get "/post_reports", params: { page: 1, per_page: 2 }
+      expect(response).to be_success
+      expect(json["post_reports"].count).to eq(2)
+      expect(json["post_reports"].first).to eq(post_report_json(@index_reports.last))
+      expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-2]))
+    end
+    it "should get all reports paginated to page 2" do
+      login_as(@index_admin)
+      get "/post_reports", params: { page: 2, per_page: 2 }
+      expect(response).to be_success
+      expect(json["post_reports"].count).to eq(2)
+      expect(json["post_reports"].first).to eq(post_report_json(@index_reports[-3]))
+      expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-4]))
     end
     it "should get all reports with pending status" do
       login_as(@index_admin)
@@ -88,4 +105,31 @@ describe "PostReports (v1)" do
       end
     end
   end
+
+  describe "#update" do
+    let(:post) { create(:post) }
+    let(:report) { create(:post_report, post: post) }
+    let(:admin) { create(:person, product: report.person.product, role: :admin) }
+    it "should update a post report" do
+      login_as(admin)
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "no_action_needed" } }
+      expect(response).to be_success
+      expect(report.reload.status).to eq("no_action_needed")
+    end
+    it "should not update a post report to an invalid status" do
+      login_as(admin)
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "punting" } }
+      expect(response).to be_unprocessable
+    end
+    it "should not update a post report if not logged in" do
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+    it "should not update a post report if not admin" do
+      login_as(create(:person, product: post.product, role: :normal))
+      patch "/post_reports/#{report.id}", params: { post_report: { status: "pending" } }
+      expect(response).to be_unauthorized
+    end
+  end
+
 end

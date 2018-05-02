@@ -1,4 +1,5 @@
 class Api::V1::MessageReportsController < ApiController
+  include Rails::Pagination
   before_action :admin_only, only: %i[ index update ]
 
   load_up_the Room, from: :room_id
@@ -79,16 +80,16 @@ class Api::V1::MessageReportsController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
   def index
-    @message_reports = apply_filters
+    @message_reports = paginate apply_filters
     return_the @message_reports
   end
 
-  # @api {patch} /message_reports/:id Update a Message Report.
+  # @api {patch} /message_reports/:id Update a Message Report. (Admin)
   # @apiName UpdateMessageReport
   # @apiGroup Messages
   #
   # @apiDescription
-  #   This updates a message reports. The only value that can be
+  #   This updates a message report. The only value that can be
   #   changed is the status.
   #
   # @apiParam {id} id

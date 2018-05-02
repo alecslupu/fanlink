@@ -7,6 +7,7 @@ class Person < ApplicationRecord
   include Person::Followings
   include Person::Levels
   include Person::Mailing
+  include Person::Profile
   include Person::Relationships
   include TranslationThings
   authenticates_with_sorcery!

@@ -1,6 +1,5 @@
 class Api::V1::MessagesController < ApiController
   include Rails::Pagination
-  include Push
 
   before_action :admin_only, only: %i[ list update ]
 
@@ -26,7 +25,7 @@ class Api::V1::MessagesController < ApiController
   #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
   # @apiParam {Array} [mentions]
-  #   Array of mentions each consisting of required person_id (integer) and required linked_text (string)
+  #   Array of mentions each consisting of required person_id (integer), location (integer) and length (integer)
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
@@ -48,7 +47,7 @@ class Api::V1::MessagesController < ApiController
           @message.post
           if room.private?
             room.increment_message_counters(current_user.id)
-            private_message_push(@message)
+            @message.private_message_push
           end
         end
         return_the @message
