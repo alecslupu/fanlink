@@ -531,14 +531,6 @@ describe "Posts (v1)" do
       expect(post.status).to eq(status)
       expect(post.priority).to eq(priority)
     end
-    it "should not let normal update a post" do
-      login_as(@person)
-      orig = post.body
-      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
-                                                   repost_interval: repost_interval, status: status, priority: priority } }
-      expect(response).to be_unauthorized
-      expect(post.body).to eq(orig)
-    end
     it "should not let not logged in update a post" do
       orig = post.body
       patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,

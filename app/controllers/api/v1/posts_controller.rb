@@ -352,6 +352,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(:body, :picture, :global, :starts_at, :ends_at, :repost_interval, :status, :priority, :recommended )
+    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority ] +
+                                     ((current_user.admin?) ? [:recommended] : []))
   end
 end
