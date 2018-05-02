@@ -125,7 +125,7 @@ describe "PostReports (v1)" do
       patch "/post_reports/#{report.id}", params: { post_report: { status: "pending" } }
       expect(response).to be_unauthorized
     end
-    it "should not update a message report if not admin" do
+    it "should not update a post report if not admin" do
       login_as(create(:person, product: post.product, role: :normal))
       patch "/post_reports/#{report.id}", params: { post_report: { status: "pending" } }
       expect(response).to be_unauthorized

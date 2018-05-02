@@ -154,6 +154,54 @@ module JsonHelpers
       "updated_at"        => person.updated_at.to_s
     }
   end
+
+  def post_comment_json(post_comment)
+    {
+      "id"            => post_comment.id.to_s,
+      "create_time"   => post_comment.created_at.to_s,
+      "body"          => post_comment.body,
+      "mentions"      => post_comment_mentions_json(post_comment),
+      "person"        => person_json(post_comment.person)
+    }
+  end
+
+  def post_comment_list_json(post_comment, lang = nil)
+    {
+        "id"              => post_comment.id.to_s,
+        "post_id"         => post_comment.post_id,
+        "person_id"       => post_comment.person_id,
+        "body"            => (lang.present?) ? post_comment.body(lang) : post_comment.body,
+        "hidden"          => post_comment.hidden,
+        "created_at"      => post_comment.created_at.to_s,
+        "updated_at"      => post_comment.updated_at.to_s,
+        "mentions"        => post_comment_mentions_json(post_comment)
+    }
+  end
+
+  def post_comment_mentions_json(post_comment)
+    if post_comment.mentions.count > 0
+      mentions = []
+      post_comment.mentions.each do |m|
+        mentions << { "id" => m.id.to_s, "person_id" => m.person_id, "location" => m.location, "length" => m.length }
+      end
+      mentions
+    else
+      nil
+    end
+  end
+
+  def post_comment_report_json(post_comment_report)
+    {
+        "id"              => post_comment_report.id.to_s,
+        "created_at"      => post_comment_report.created_at.to_s,
+        "post_comment_id" => post_comment_report.post_comment_id,
+        "commenter"       => post_comment_report.post_comment.person.username,
+        "reporter"        => post_comment_report.person.username,
+        "reason"          => post_comment_report.reason,
+        "status"          => post_comment_report.status
+    }
+  end
+
   def post_json(post, lang = nil, reaction = nil)
     {
       "id"          => post.id.to_s,

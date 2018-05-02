@@ -60,6 +60,6 @@ class PortalNotificationDashboard < Administrate::BaseDashboard
    ].freeze
 
   def display_resource(portal_notification)
-    "Portalotification - #{portal_notification.body.truncate(22)}"
+    "Portal Notification - #{portal_notification.body.truncate(22)}"
   end
 end
