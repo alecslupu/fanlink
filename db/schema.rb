@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180502193222) do
+ActiveRecord::Schema.define(version: 20180503202153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
   end
@@ -152,9 +152,9 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end
@@ -237,8 +237,6 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
-<<<<<<< HEAD
-=======
   create_table "portal_notifications", force: :cascade do |t|
     t.integer "product_id", null: false
     t.jsonb "body", default: {}, null: false
@@ -251,7 +249,6 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.index ["sent_status"], name: "idx_portal_notifications_sent_status"
   end
 
->>>>>>> 2c08b0265a97a25a2401381c40ec997c5dfb27f7
   create_table "post_comment_mentions", force: :cascade do |t|
     t.integer "post_comment_id", null: false
     t.integer "person_id", null: false
@@ -349,8 +346,9 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.boolean "post"
     t.boolean "image"
     t.boolean "audio"
-    t.text "requires"
+    t.text "beacon"
     t.boolean "deleted", default: false
+    t.integer "step"
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
@@ -454,10 +452,7 @@ ActiveRecord::Schema.define(version: 20180502193222) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
-<<<<<<< HEAD
-=======
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
->>>>>>> 2c08b0265a97a25a2401381c40ec997c5dfb27f7
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
   add_foreign_key "post_comment_reports", "people", name: "fk_post__comment_reports_people", on_delete: :cascade
