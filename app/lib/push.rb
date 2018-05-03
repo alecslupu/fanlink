@@ -34,6 +34,11 @@ module Push
     end
   end
 
+  def post_comment_mention_push(post_comment_mention)
+    do_push(post_comment_mention.person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
+              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id)
+  end
+
   def private_message_push(message)
     tokens = []
     message.room.members.each do |m|
