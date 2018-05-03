@@ -53,9 +53,9 @@ Rails.application.routes.draw do
       resources :quests do
         collection do
           get "list" => "quests#list"
+        end
           get "activities" => "quest_activities#index"
           post "activities" => "quest_activities#create"
-        end
       end
 
       get ":product_internal_name/beacons" => "productbeacons#index"

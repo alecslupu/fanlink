@@ -17,9 +17,20 @@ module Push
 
   def portal_notification_push(portal_notification)
     topics = portal_notification.push_topics
+    tried = succeeded = 0
     topics.each do |l, c|
       body = (portal_notification.body(l).blank?) ? portal_notification.body : portal_notification.body(l)
-      do_topic_push(c, body)
+      tried += 1
+      if do_topic_push(c, body)
+        succeeded += 1
+      end
+    end
+    if tried > 0
+      if tried == succeeded
+        portal_notification.sent!
+      else
+        (succeeded == 0) ? portal_notification.errored! : portal_notification.partly_errored!
+      end
     end
   end
 
@@ -57,7 +68,8 @@ private
 
   def do_topic_push(topic, msg)
     Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
-    resp = push_client.send_to_topic(topic, { notification: "Notification", data: { message: msg } } )
+    resp = push_client.send_to_topic(topic, notification: { body: msg })
     Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
+    resp[:status_code] == 200
   end
 end

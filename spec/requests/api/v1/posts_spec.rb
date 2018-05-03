@@ -61,6 +61,22 @@ describe "Posts (v1)" do
       expect(post.status).to eq("rejected")
       expect(post.priority).to eq(prior)
     end
+    it "should allow admin to create recommended post" do
+      expect_any_instance_of(Post).to receive(:post)
+      login_as(create(:person, product: @product, role: :admin))
+      post "/posts", params: { post: { recommended: true } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.recommended).to be_truthy
+    end
+    it "should not allow non admin to create recommended post" do
+      expect_any_instance_of(Post).to receive(:post)
+      login_as(@person)
+      post "/posts", params: { post: { recommended: true } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.recommended).to be_falsey
+    end
     it "should not create a new post if not logged in" do
       expect_any_instance_of(Post).not_to receive(:post)
       post "/posts", params: { post: { body: "not gonna see my body" } }
@@ -560,14 +576,6 @@ describe "Posts (v1)" do
       expect(post.repost_interval).to eq(repost_interval)
       expect(post.status).to eq(status)
       expect(post.priority).to eq(priority)
-    end
-    it "should not let normal update a post" do
-      login_as(@person)
-      orig = post.body
-      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
-                                                   repost_interval: repost_interval, status: status, priority: priority } }
-      expect(response).to be_unauthorized
-      expect(post.body).to eq(orig)
     end
     it "should not let not logged in update a post" do
       orig = post.body
