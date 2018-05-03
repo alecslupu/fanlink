@@ -41,6 +41,7 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
+  #
   # @apiParam {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
   #
@@ -315,6 +316,9 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
+  #
+  # @apiParam {Boolean} [post.recommended] (Admin)
+  #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
