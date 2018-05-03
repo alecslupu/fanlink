@@ -15,6 +15,12 @@ module Push
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
   end
 
+  def message_mention_push(message_mention)
+    do_push(message_mention.person.device_tokens, "Mention", "#{message_mention.message.person.username} mentioned you in a message.",
+                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id)
+
+  end
+
   def portal_notification_push(portal_notification)
     topics = portal_notification.push_topics
     tried = succeeded = 0

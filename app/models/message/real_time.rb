@@ -6,10 +6,19 @@ class Message
 
     def post
       Delayed::Job.enqueue(PostMessageJob.new(self.id))
+      push_mentions
     end
 
     def private_message_push
       Delayed::Job.enqueue(PrivateMessagePushJob.new(self.id))
+    end
+
+
+  private
+    def push_mentions
+      message_mentions.each do |m|
+        Delayed::Job.enqueue(MessageMentionPushJob.new(m.id))
+      end
     end
   end
 end
