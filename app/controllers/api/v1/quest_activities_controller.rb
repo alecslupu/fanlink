@@ -243,6 +243,6 @@ class Api::V1::QuestActivitiesController < ApiController
 
 private
     def activity_params
-        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :group)
+        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :step)
     end
 end
