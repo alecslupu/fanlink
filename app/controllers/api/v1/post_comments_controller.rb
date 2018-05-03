@@ -54,6 +54,7 @@ class Api::V1::PostCommentsController < ApiController
   #*
   def create
     @post_comment = @post.post_comments.create(post_comment_params)
+    @post_comment.post if @post_comment.valid?
     return_the @post_comment
   end
 
