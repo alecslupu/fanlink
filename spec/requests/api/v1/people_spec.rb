@@ -389,7 +389,7 @@ describe "People (v1)" do
       expect(per.city).to eq("FooismTown")
       expect(per.country_code).to eq("FR")
     end
-    it "should not update a different person" do
+    it "should not update a different person by normal person" do
       person = create(:person)
       other = create(:person, product: person.product)
       original_username = other.username
@@ -399,6 +399,24 @@ describe "People (v1)" do
       expect(response).to be_not_found
       oth = other.reload
       expect(oth.username).to eq(original_username)
+    end
+    it "should update recommended by admin" do
+      person = create(:person, product: @product, role: :admin)
+      rec_person = create(:person, product: @product)
+      expect(rec_person.recommended).to be_falsey
+      login_as(person)
+      patch "/people/#{rec_person.id}", params: { person: { recommended: true } }
+      expect(response).to be_success
+      expect(rec_person.reload.recommended).to be_truthy
+    end
+    it "should update recommended by product account" do
+      person = create(:person, product: @product, product_account: true)
+      rec_person = create(:person, product: @product)
+      expect(rec_person.recommended).to be_falsey
+      login_as(person)
+      patch "/people/#{rec_person.id}", params: { person: { recommended: true } }
+      expect(response).to be_success
+      expect(rec_person.reload.recommended).to be_truthy
     end
   end
 
