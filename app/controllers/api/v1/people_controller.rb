@@ -230,6 +230,9 @@ class Api::V1::PeopleController < ApiController
   # @apiParam {String} [person.country_code]
   #   Alpha2 code (two letters) from ISO 3166 list.
   #
+  # @apiParam {Boolean} [recommended]
+  #   Whether this is a recommended persion. (Admin or product account only)
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "person": { // The full private version of the person.
@@ -240,7 +243,7 @@ class Api::V1::PeopleController < ApiController
     if !check_gender
       render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
     else
-      if @person == current_user
+      if @person == current_user || current_user.admin? || current_user.product_account
         @person.update(person_params)
         return_the @person
       else
@@ -266,7 +269,8 @@ private
   end
 
   def person_params
-    params.require(:person).permit(:email, :facebook_auth_token, :name, :gender, :birthdate, :city, :country_code,
-                                   :username, :password, :picture, :product, :current_password, :new_password)
+    params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate city country_code
+                                      username password picture product current_password new_password ] +
+                                   ( (current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []))
   end
 end
