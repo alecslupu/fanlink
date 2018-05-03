@@ -5,4 +5,5 @@ json.hint activity.hint
 json.post activity.post
 json.image activity.image
 json.audio activity.audio
-json.requires activity.requires
+json.beacon activity.beacon
+json.step activity.step
