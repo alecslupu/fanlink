@@ -1,9 +1,14 @@
 class Api::V1::PostsController < ApiController
+  before_action :load_post, only: %i[ update ]
   include Rails::Pagination
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 769e029926c665ff3a470f1482de8deeb1b53e43
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -21,6 +26,24 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
+  #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
   #
   # @apiParam {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
@@ -237,9 +260,14 @@ class Api::V1::PostsController < ApiController
   #       "ends_at":    "2018-01-31T23:59:59Z",
   #       "repost_interval": 0,
   #       "status": "published",
+<<<<<<< HEAD
   #       "post_reaction":...see post reaction create json....(or null if current user has not reacted),
   #       "recommended": false,
   #       "priority": 0,
+=======
+  #       "priority": 0,
+  #       "recommended": false
+>>>>>>> 769e029926c665ff3a470f1482de8deeb1b53e43
   #     }
   #
   # @apiErrorExample {json} Error-Response:
@@ -288,7 +316,11 @@ class Api::V1::PostsController < ApiController
   end
 
   #**
+<<<<<<< HEAD
   # @api {patch} /posts/{id} Update a post
+=======
+  # @api {patch} /posts/{id} Update a post (ADMIN)
+>>>>>>> 769e029926c665ff3a470f1482de8deeb1b53e43
   # @apiName UpdatePost
   # @apiGroup Posts
   #
@@ -322,7 +354,11 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
   #
+<<<<<<< HEAD
   # @apiParam {Boolean} [post.recommended] (Admin or Product account)
+=======
+  # @apiParam {Boolean} [post.recommended] (Admin)
+>>>>>>> 769e029926c665ff3a470f1482de8deeb1b53e43
   #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:
@@ -370,6 +406,10 @@ private
 
   def post_params
     params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority ] +
+<<<<<<< HEAD
                                      ((current_user.admin? || current_user.product_account?) ? [:recommended] : []))
+=======
+                                     ((current_user.admin?) ? [:recommended] : []))
+>>>>>>> 769e029926c665ff3a470f1482de8deeb1b53e43
   end
 end
