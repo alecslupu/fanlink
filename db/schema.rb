@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180502193222) do
+ActiveRecord::Schema.define(version: 20180503202153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -346,8 +346,9 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.boolean "post"
     t.boolean "image"
     t.boolean "audio"
-    t.text "requires"
+    t.text "beacon"
     t.boolean "deleted", default: false
+    t.integer "step"
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
