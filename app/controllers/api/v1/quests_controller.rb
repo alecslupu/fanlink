@@ -134,7 +134,7 @@ class Api::V1::QuestsController < ApiController
     # @apiSuccessExample {type} Success-Response:
     # HTTP/1.1 200 OK
     # {
-    # "quest": {
+    #    "quest": {
     #         "id": "1",
     #         "product_id": "1",
     #         "event_id": "",

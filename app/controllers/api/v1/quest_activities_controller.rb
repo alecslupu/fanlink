@@ -20,7 +20,8 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {Boolean} [post] Boolean for whether or not the activity requires a post
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
-    # @apiParam  {String} [requires] Used to determine if a previous activity is required. Used for step based quests.
+    # @apiParam  {String} beacon Beacon attached to the activity
+    # @apiParam  {int} group Used to group activities together
     # 
     # @apiSuccess (200) {json} quest_activity Returns the create quest activity
     # 
@@ -38,7 +39,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": null,
     #         "image": null,
     #         "audio": null,
-    #         "requires": null
+    #         "beacon": 123456-7890,
+    #         "group": 0
     #     }
     # }
     # 
@@ -67,7 +69,8 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {Boolean} [post] Boolean for whether or not the activity requires a post
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
-    # @apiParam  {String} [requires] Used to determine if a previous activity is required. Used for step based quests.
+    # @apiParam  {String} beacon Beacon attached to the activity
+    # @apiParam  {int} group Used to group activities together
     # 
     # @apiSuccess (200) {JSON} quest_activity Returns the updated quest activity
     # 
@@ -93,7 +96,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": null,
     #         "image": null,
     #         "audio": null,
-    #         "requires": null
+    #         "beacon": 123456-7890,
+    #         "group": 0
     #     }
     # }
     # Updated
@@ -106,7 +110,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": null,
     #         "image": null,
     #         "audio": null,
-    #         "requires": null
+    #         "beacon": 123456-7890,
+    #         "group": 0
     #     }
     # }
     # 
@@ -148,7 +153,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "post": null,
     #             "image": null,
     #             "audio": null,
-    #             "requires": null
+    #             "beacon": 123456-7890,
+    #             "group": 0
     #         }
     #     ]
     # }
@@ -176,7 +182,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiSuccess (200) {Object} activity Activity Object   
     # 
     # @apiParamExample  {type} Request-Example:
-    # https://example.com/quest_activity/1
+    # https://example.com/quest_activities/1
     # 
     # 
     # @apiSuccessExample {json} Success-Response:
@@ -190,7 +196,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": null,
     #         "image": null,
     #         "audio": null,
-    #         "requires": null
+    #         "beacon": 123456-7890,
+    #         "group": 0
     #     }
     # }
     # 
@@ -236,6 +243,6 @@ class Api::V1::QuestActivitiesController < ApiController
 
 private
     def activity_params
-        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :requires)
+        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :group)
     end
 end
