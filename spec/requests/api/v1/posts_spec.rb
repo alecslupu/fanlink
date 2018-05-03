@@ -529,7 +529,8 @@ describe "Posts (v1)" do
       login_as(admin)
       post = create(:post, person: @person)
       patch "/posts/#{post.id}", params: { post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                   repost_interval: repost_interval, status: status, priority: priority } }
+                                                   repost_interval: repost_interval, status: status, priority: priority,
+                                                    recommended: true } }
       expect(response).to be_success
       post.reload
       expect(post.body).to eq(newbody)
@@ -539,6 +540,7 @@ describe "Posts (v1)" do
       expect(post.repost_interval).to eq(repost_interval)
       expect(post.status).to eq(status)
       expect(post.priority).to eq(priority)
+      expect(post.recommended).to be_truthy
     end
     it "should not let not logged in update a post" do
       orig = post.body
@@ -546,6 +548,26 @@ describe "Posts (v1)" do
                                                    repost_interval: repost_interval, status: status, priority: priority } }
       expect(response).to be_unauthorized
       expect(post.body).to eq(orig)
+    end
+    it "should not let normal user update recommended" do
+      login_as(@person)
+      post = create(:post, person: @person)
+      expect(post.recommended).to be_falsey
+      patch "/posts/#{post.id}", params: { post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
+                                                 recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_success
+      post.reload
+      expect(post.recommended).to be_falsey
+    end
+    it "should let product account update recommended" do
+      login_as(create(:person, product: @product, product_account: true))
+      post = create(:post, person: @person)
+      expect(post.recommended).to be_falsey
+      patch "/posts/#{post.id}", params: { post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_success
+      post.reload
+      expect(post.recommended).to be_truthy
     end
   end
 

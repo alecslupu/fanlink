@@ -320,7 +320,7 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
   #
-  # @apiParam {Boolean} [post.recommended] (Admin)
+  # @apiParam {Boolean} [post.recommended] (Admin or Product account)
   #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:
@@ -360,6 +360,6 @@ private
 
   def post_params
     params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority ] +
-                                     ((current_user.admin?) ? [:recommended] : []))
+                                     ((current_user.admin? || current_user.product_account?) ? [:recommended] : []))
   end
 end
