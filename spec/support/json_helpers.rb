@@ -251,7 +251,7 @@ module JsonHelpers
   def post_list_json(post, lang = nil)
     {
       "id"              => post.id.to_s,
-      "person_id"       => post.person_id,
+      "person"          => person_json(post.person),
       "body"            => (lang.present?) ? post.body(lang) : post.body,
       "picture_url"     =>  post.picture_url,
       "global"          => post.global,

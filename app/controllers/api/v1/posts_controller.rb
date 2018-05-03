@@ -5,10 +5,6 @@ class Api::V1::PostsController < ApiController
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 769e029926c665ff3a470f1482de8deeb1b53e43
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost

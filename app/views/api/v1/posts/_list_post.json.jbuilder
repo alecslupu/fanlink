@@ -1,5 +1,7 @@
 json.id post.id.to_s
-json.person_id post.person_id
+json.person do
+  json.partial! "api/v1/people/person", locals: { person: post.person }
+end
 json.body post.body(@lang)
 json.picture_url post.picture_url
 json.global post.global
