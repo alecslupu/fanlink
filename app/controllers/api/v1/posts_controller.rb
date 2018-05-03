@@ -288,7 +288,7 @@ class Api::V1::PostsController < ApiController
   end
 
   #**
-  # @api {patch} /posts/{id} Update a post (ADMIN)
+  # @api {patch} /posts/{id} Update a post
   # @apiName UpdatePost
   # @apiGroup Posts
   #
