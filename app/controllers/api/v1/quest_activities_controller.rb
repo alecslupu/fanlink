@@ -7,7 +7,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {post} /quests/:id/activities Create quest activity
     # @apiName CreateQuestActivity
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiDescription Create a quest activity
     # @apiPermission admin
@@ -21,7 +21,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
     # @apiParam  {String} beacon Beacon attached to the activity
-    # @apiParam  {int} group Used to group activities together
+    # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
     # 
     # @apiSuccess (200) {json} quest_activity Returns the create quest activity
     # 
@@ -40,7 +40,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "image": null,
     #         "audio": null,
     #         "beacon": 123456-7890,
-    #         "group": 0
+    #         "step": 0
     #     }
     # }
     # 
@@ -56,7 +56,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {patch} /quest_activities/:id Update a quest activity
     # @apiName QuestActivityUpdate
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiDescription Update a quest activity with optional fields
     # @apiPermission admin
@@ -70,7 +70,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
     # @apiParam  {String} beacon Beacon attached to the activity
-    # @apiParam  {int} group Used to group activities together
+    # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
     # 
     # @apiSuccess (200) {JSON} quest_activity Returns the updated quest activity
     # 
@@ -97,7 +97,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "image": null,
     #         "audio": null,
     #         "beacon": 123456-7890,
-    #         "group": 0
+    #         "step": 0
     #     }
     # }
     # Updated
@@ -111,7 +111,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "image": null,
     #         "audio": null,
     #         "beacon": 123456-7890,
-    #         "group": 0
+    #         "step": 0
     #     }
     # }
     # 
@@ -127,7 +127,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {get} /quests/:id/activities Get Quest Activities
     # @apiName GetQuestActivities
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiDescription Retrieve all activities for a given quest
     # @apiPermission user
@@ -154,7 +154,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "image": null,
     #             "audio": null,
     #             "beacon": 123456-7890,
-    #             "group": 0
+    #             "step": 0
     #         }
     #     ]
     # }
@@ -171,7 +171,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {get} /quest_activities/:id Get a quest activity
     # @apiName GetQuestActivity
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiDescription Retrieve a single quest activity from the database
     # @apiPermission user
@@ -197,7 +197,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "image": null,
     #         "audio": null,
     #         "beacon": 123456-7890,
-    #         "group": 0
+    #         "step": 0
     #     }
     # }
     # 
@@ -213,7 +213,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {delete} /quest_activities/:id Destroy a quest activity
     # @apiName QuestActivityDestroy
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # 
     # 

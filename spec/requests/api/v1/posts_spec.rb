@@ -27,6 +27,24 @@ describe "Posts (v1)" do
       expect(post.published?).to be_truthy
       expect(json["post"]).to eq(post_json(post))
     end
+    it "should create a new post and publish it with a lot of fields normal users really should not have access to but i am told they should" do
+      expect_any_instance_of(Post).not_to receive(:post)
+      login_as(@person)
+      body = "Do you like my body?"
+      startat = "2018-01-08T12:15:00Z"
+      endat = "2018-06-08T12:15:59Z"
+      prior = 123
+      rpi = 1
+      post "/posts", params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: "rejected", priority: prior } }
+      expect(response).to be_success
+      post = Post.last
+      expect(post.global).to be_truthy
+      expect(post.starts_at).to eq(Time.parse(startat))
+      expect(post.ends_at).to eq(Time.parse(endat))
+      expect(post.repost_interval).to eq(rpi)
+      expect(post.status).to eq("rejected")
+      expect(post.priority).to eq(prior)
+    end
     it "should allow admin to create recommended post" do
       expect_any_instance_of(Post).to receive(:post)
       login_as(create(:person, product: @product, role: :admin))
@@ -496,4 +514,39 @@ describe "Posts (v1)" do
       expect(response).to be_not_found
     end
   end
+
+  describe "#update" do
+    let(:newbody) { "Do you like my new body?" }
+    let(:global) { true }
+    let(:starts_at) { "2018-03-12T18:55:30Z" }
+    let(:ends_at) { "2018-03-13T18:55:30Z" }
+    let(:repost_interval) { 5 }
+    let(:status) { "published" }
+    let(:priority) { 2 }
+    let(:admin) { create(:person, role: :admin, product: @person.product) }
+    let(:post) { create(:post, person: @person) }
+    it "should let admin update a post" do
+      login_as(admin)
+      post = create(:post, person: @person)
+      patch "/posts/#{post.id}", params: { post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_success
+      post.reload
+      expect(post.body).to eq(newbody)
+      expect(post.global).to eq(global)
+      expect(post.starts_at).to eq(Time.parse(starts_at))
+      expect(post.ends_at).to eq(Time.parse(ends_at))
+      expect(post.repost_interval).to eq(repost_interval)
+      expect(post.status).to eq(status)
+      expect(post.priority).to eq(priority)
+    end
+    it "should not let not logged in update a post" do
+      orig = post.body
+      patch "/posts/#{post.id}", params: { post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
+                                                   repost_interval: repost_interval, status: status, priority: priority } }
+      expect(response).to be_unauthorized
+      expect(post.body).to eq(orig)
+    end
+  end
+
 end

@@ -1,8 +1,11 @@
 class Api::V1::PostsController < ApiController
+  before_action :load_post, only: %i[ update ]
   include Rails::Pagination
 
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
+
+
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -21,6 +24,24 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
+  #
   # @apiParam {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
   #
@@ -36,8 +57,10 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      @post.post
-      @post.published!
+      unless post_params["status"].present?
+        @post.published!
+      end
+      @post.post if @post.published?
     end
     return_the @post
   end
@@ -204,9 +227,16 @@ class Api::V1::PostsController < ApiController
   #       "id": "1234",
   #       "create_time":"2018-02-18T06:32:24Z",
   #       "body":"post body",
+  #       "picture_url": "www.example.com/pic.jpg",
   #       "person": ....public person json...,
   #       "post_reaction_counts":{"1F389":1},
-  #       "post_reaction":...see post reaction create json....(or null if current user has not reacted),
+  #       "post_reaction":...see post reaction create json....(or null if current user has not reacted)
+  #       "global": false,
+  #       "starts_at":  "2018-01-01T00:00:00Z",
+  #       "ends_at":    "2018-01-31T23:59:59Z",
+  #       "repost_interval": 0,
+  #       "status": "published",
+  #       "priority": 0,
   #       "recommended": false
   #     }
   #
@@ -255,6 +285,55 @@ class Api::V1::PostsController < ApiController
     end
   end
 
+  #**
+  # @api {patch} /posts/{id} Update a post (ADMIN)
+  # @apiName UpdatePost
+  # @apiGroup Posts
+  #
+  # @apiDescription
+  #   This updates a post.
+  #
+  # @apiParam {Object} post
+  #   The post object container for the post parameters.
+  #
+  # @apiParam {String} [post.body]
+  #   The body of the post.
+  #
+  # @apiParam {Attachment} [post.picture]
+  #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
+  #
+  # @apiParam {Boolean} [post.global]
+  #   Whether the post is global (seen by all users).
+  #
+  # @apiParam {String} [post.starts_at]
+  #   When the post should start being visible (same format as in responses).
+  #
+  # @apiParam {String} [post.ends_at]
+  #   When the post should stop being visible (same format as in responses).
+  #
+  # @apiParam {Integer} [post.repost_interval]
+  #   How often this post should be republished.
+  #
+  # @apiParam {String} [post.status]
+  #   Valid values: "pending", "published", "deleted", "rejected"
+  #
+  # @apiParam {Integer} [post.priority]
+  #   Priority value for post.
+  #
+  # @apiParam {Boolean} [post.recommended] (Admin)
+  #   Whether the post is recommended.
+  #
+  # @apiSuccessExample Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     post: { ..post json..see list posts action ....}
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401, 404
+  #*
+  def update
+    @post.update_attributes(post_params)
+  end
+
 private
 
   def apply_filters
@@ -275,7 +354,12 @@ private
     product
   end
 
+  def load_post
+    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
+  end
+
   def post_params
-    params.require(:post).permit([:body, :picture] + ((current_user.admin?) ? [:recommended] : []))
+    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority ] +
+                                     ((current_user.admin?) ? [:recommended] : []))
   end
 end
