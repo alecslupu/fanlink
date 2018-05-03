@@ -28,7 +28,7 @@ module Admin
       resources = Administrate::Search.new(scoped_resource.where(public: true),
                                            dashboard_class,
                                            search_term).run
-      resources = resources.includes(*resource_includes) if resource_includes.any?
+      resources = apply_resource_includes(resources)
       resources = order.apply(resources)
       resources = resources.page(params[:page]).per(records_per_page)
       page = Administrate::Page::Collection.new(dashboard, order: order)
