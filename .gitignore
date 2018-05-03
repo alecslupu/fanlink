@@ -30,11 +30,6 @@ FanLink-API-Docs.zip
 /spec/load/jmeter/results
 /spec/load/jmeter/jmeter.log
 
-<<<<<<< HEAD
-=======
-/public/apidocs
-
->>>>>>> 390a8d1353f7fb625493f52af88d57dc7c185875
 # Created by https://www.gitignore.io/api/VisualStudioCode
 
 ### VisualStudioCode ###
