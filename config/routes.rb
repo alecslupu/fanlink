@@ -44,6 +44,11 @@ Rails.application.routes.draw do
         resources :message_reports, only: %i[ create ]
         resources :room_memberships, only: %i[ create destroy ]
       end
+      resources :product_beacons do
+        collection do
+          get "list" => "product_beacons#list"
+        end
+      end
       resources :session, only: %i[ create index ] do
         collection do
           delete "" => "session#destroy"
@@ -58,10 +63,6 @@ Rails.application.routes.draw do
           post "activities" => "quest_activities#create"
       end
 
-      get ":product_internal_name/beacons" => "productbeacons#index"
-      get ":product_internal_name/beacons/:id" => "productbeacons#show"
-      post ":product_internal_name/beacons" => "productbeacons#create"
-      post ":product_internal_name/beacons/:id" => "productbeacons#update"
     end
     version 2
   end
@@ -100,6 +101,11 @@ Rails.application.routes.draw do
     post "login" => "sessions#create"
     get "logout" => "sessions#destroy"
     get ":product_internal_name" => "sessions#login_redirect"
+
+    # get ":product_internal_name/beacons" => "productbeacons#index"
+    # get ":product_internal_name/beacons/:id" => "productbeacons#show"
+    # post ":product_internal_name/beacons" => "productbeacons#create"
+    # post ":product_internal_name/beacons/:id" => "productbeacons#update"
 
     root to: "people#index"
   end

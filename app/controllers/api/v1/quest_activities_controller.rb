@@ -26,10 +26,12 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiSuccess (200) {json} quest_activity Returns the create quest activity
     # 
     # @apiParamExample  {Number} Request-Example:
-    # https://example.com/quest/1/activities
+    # {
+    #     "url": "https://api.example.com/quests/1/activities"
+    # }
     # 
     # 
-    # @apiSuccessExample {JSON} Success-Response:
+    # @apiSuccessExample {Object} Success-Response:
     # {
     #     "activity": {
     #         "id": "1",
@@ -72,11 +74,8 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {String} beacon Beacon attached to the activity
     # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
     # 
-    # @apiSuccess (200) {JSON} quest_activity Returns the updated quest activity
+    # @apiSuccess (200) {Object} quest_activity Returns the updated quest activity
     # 
-    # @apiParamExample  {number} Request-Example:
-    # https://example.com/quest_activity/1
-    #
     # @apiParamExample  {JSON} Request-Example:
     # {
     #     "quest_activity": {
@@ -84,23 +83,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #     }
     # }
     # 
-    # @apiSuccessExample {JSON} Success-Response:
+    # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
-    # Original
-    # {
-    #     "activity": {
-    #         "id": "1",
-    #         "quest_id": "1",
-    #         "description": "Break into the museum",
-    #         "hint": "Don't get caught",
-    #         "post": null,
-    #         "image": null,
-    #         "audio": null,
-    #         "beacon": 123456-7890,
-    #         "step": 0
-    #     }
-    # }
-    # Updated
     # {
     #     "activity": {
     #         "id": "1",
@@ -138,10 +122,11 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiSuccess (200) {Object[]} quest_activities An array of activity objects
     # 
     # @apiParamExample  {Number} Request-Example:
-    # https://example.com/quest/1/activities
+    # {
+    #     "url": "https://api.example.com/quests/1/activities"
+    # }
     # 
-    # 
-    # @apiSuccessExample {type} Success-Response:
+    # @apiSuccessExample {Object[]} Success-Response:
     # HTTP/1.1 200 OK
     # {
     #     "activities": [
@@ -181,11 +166,12 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccess (200) {Object} activity Activity Object   
     # 
-    # @apiParamExample  {type} Request-Example:
-    # https://example.com/quest_activities/1
+    # @apiParamExample  {Url} Request-Example:
+    # {
+    #     "url": "https://api.example.com/quest_activities/1"
+    # }
     # 
-    # 
-    # @apiSuccessExample {json} Success-Response:
+    # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
      # {
     #     "activity": {
@@ -219,11 +205,12 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiParam  {Number} id Activity id
     # 
-    # @apiSuccess (200) {header} header 200 OK header response
+    # @apiSuccess (200) {Header} header 200 OK header response
     # 
-    # @apiParamExample  {number} Request-Example:
-    # https://example.com/quest_activity/1
-    # 
+    # @apiParamExample  {Url} Request-Example:
+    # {
+    #     "url": "https://api.example.com/quest_activity/1"
+    # }
     # 
     # @apiSuccessExample {Header} Success-Response:
     # HTTP/1.1 200 OK
