@@ -19,7 +19,8 @@ should not need `sudo` unless otherwise specified.
 
     brew install postgresql@9.6
 
-Follow instructions at end of install for start at boot as desired (do `brew info postgresql@9.6` if you need to see again)
+Follow instructions at end of install for start at boot as          })
+ desired (do `brew info postgresql@9.6` if you need to see again)
 
 We will install the project database as a later step.
 
@@ -30,16 +31,16 @@ We will install the project database as a later step.
     brew install rbenv
 
 Now check the `Gemfile` in the cloned repo to get the desired Ruby version. Assumed
-for the rest of this document to be `2.4.2`  
+for the rest of this document to be `2.5.1`  
 
-    rbenv install 2.4.2
+    rbenv install 2.5.1
     
 CD to repo directory.
 
-    rbenv local 2.4.2
+    rbenv local 2.5.1
     
 This should create a `.ruby-version` file so that all actions performed in this directory
-will use version `2.4.2`                
+will use version `2.5.1`                
 
 Put this in your `~/.bash_profile`:
 
@@ -90,7 +91,7 @@ Start the server
 
     rails s
 
-In browser go to `localhost:3000/admin` to see the admin.
+In browser go to `localhost:3000/admin/admin` to see the admin.
 
     Username: admin
     Password: flink_admin
