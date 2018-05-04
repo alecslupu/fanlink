@@ -34,6 +34,12 @@ module Push
     end
   end
 
+  #sends to posts followers
+  def post_push(post)
+    do_push(NotificationDeviceId.where(person_id: post.person.followers).map { |ndi| ndi.device_identifier },
+              "New Post", "#{post.person.username} posted", "new_post", post_id: post.id)
+  end
+
   def private_message_push(message)
     tokens = []
     message.room.members.each do |m|

@@ -210,14 +210,15 @@ module JsonHelpers
       "picture_url" => post.picture_url,
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
-      "post_reaction" => (reaction.nil?) ? nil : post_reaction_json(reaction),
-      "global"      => post.global,
-      "starts_at"   => (post.starts_at.present?) ? post.starts_at.to_s : nil,
-      "ends_at"   => (post.ends_at.present?) ? post.ends_at.to_s : nil,
-      "repost_interval" =>  post.repost_interval,
-      "status"        => post.status,
-      "priority"      => post.priority,
-      "recommended"   => post.recommended
+      "post_reaction"     => (reaction.nil?) ? nil : post_reaction_json(reaction),
+      "global"            => post.global,
+      "starts_at"         => (post.starts_at.present?) ? post.starts_at.to_s : nil,
+      "ends_at"           => (post.ends_at.present?) ? post.ends_at.to_s : nil,
+      "repost_interval"   =>  post.repost_interval,
+      "status"            => post.status,
+      "priority"          => post.priority,
+      "recommended"       => post.recommended,
+      "notify_followers"  => post.notify_followers
     }
   end
   def post_list_json(post, lang = nil)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180502193222) do
+ActiveRecord::Schema.define(version: 20180504185446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
   end
@@ -152,9 +152,9 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end
@@ -312,6 +312,7 @@ ActiveRecord::Schema.define(version: 20180502193222) do
     t.jsonb "body", default: {}, null: false
     t.integer "priority", default: 0, null: false
     t.boolean "recommended", default: false, null: false
+    t.boolean "notify_followers", default: false, null: false
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"

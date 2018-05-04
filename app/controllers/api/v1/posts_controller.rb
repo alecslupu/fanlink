@@ -13,7 +13,8 @@ class Api::V1::PostsController < ApiController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This creates a post and puts in on the feed of the author's followers.
+  #   This creates a post and puts in on the feed of the author's followers. It also sends a push notification
+  #   to poster's followers if the notify_followers flag is set to true.
   #
   # @apiParam {Object} post
   #   The post object container for the post parameters.
@@ -44,6 +45,9 @@ class Api::V1::PostsController < ApiController
   #
   # @apiParam {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
+  #
+  # @apiParam {Boolean} [post.notify_followers]
+  #   Whether a push notification should be sent to the posters followers.
   #
   # @apiSuccessExample Success-Response:
   #     HTTP/1.1 200 Ok
