@@ -7,6 +7,7 @@ class Api::V1::RelationshipsController < ApiController
   # @api {post} /relationships Send a friend request to a person.
   # @apiName CreateRelationship
   # @apiGroup Relationships
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to send a friend request to a person. If there is a block between the people, an error will
@@ -61,6 +62,7 @@ class Api::V1::RelationshipsController < ApiController
   # @api {delete} /relationships/:id Unfriend a person.
   # @apiName DeleteRelationship
   # @apiGroup Relationship
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to unfriend a person.
@@ -87,6 +89,7 @@ class Api::V1::RelationshipsController < ApiController
   # @api {get} /relationships Get current relationships of a person.
   # @apiName GetRelationships
   # @apiGroup Relationships
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to get a list of someone's friends. If the person supplied is
@@ -119,6 +122,7 @@ class Api::V1::RelationshipsController < ApiController
   # @api {get} /relationships/:id Get a single relationship.
   # @apiName GetRelationship
   # @apiGroup Relationships
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a single relationship for a relationship id. Only available to a participating user.
@@ -147,6 +151,7 @@ class Api::V1::RelationshipsController < ApiController
   # @api {patch} /relationships Update a relationship.
   # @apiName UpdateRelationship
   # @apiGroup Relationships
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to accept, deny or unfriend a relationship (friend request).
@@ -181,7 +186,7 @@ class Api::V1::RelationshipsController < ApiController
         old_status = @relationship.status
         new_status = relationship_params[:status]
         can_status = true
-        #TODO: yeah this is a mess
+        #TODO: simplify this mess
         if new_status == "friended"
           if old_status == "requested" && @relationship.requested_to == current_user
             @relationship.friended!

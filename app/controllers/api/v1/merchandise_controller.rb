@@ -3,6 +3,7 @@ class Api::V1::MerchandiseController < ApiController
   # @api {get} /merchandise Get available merchandise.
   # @apiName GetMerchandise
   # @apiGroup Merchandise
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of merchandise, in priority order.
@@ -25,6 +26,7 @@ class Api::V1::MerchandiseController < ApiController
   # @api {get} /merchandise/:id Get a single piece of merchandise.
   # @apiName GetMerchandise
   # @apiGroup Merchandise
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a single piece of merchandise for a merchandise id.

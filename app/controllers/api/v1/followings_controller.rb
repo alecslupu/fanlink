@@ -6,6 +6,7 @@ class Api::V1::FollowingsController < ApiController
   # @api {post} /followings Follow a person.
   # @apiName CreateFollowing
   # @apiGroup Following
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to follow a person.
@@ -31,6 +32,7 @@ class Api::V1::FollowingsController < ApiController
   # @api {delete} /followings/:id Unfollow a person.
   # @apiName DeleteFollowing
   # @apiGroup Following
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to unfollow a person.
@@ -50,6 +52,7 @@ class Api::V1::FollowingsController < ApiController
   # @api {get} /followings Get followers or followings of a user.
   # @apiName GetFollowings
   # @apiGroup Following
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to get a list of someone's followers or followed. If followed_id parameter

@@ -6,6 +6,7 @@ class Api::V1::PostCommentReportsController < ApiController
   # @api {post} /post_comment_reports Report a post comment.
   # @apiName CreatePostReportComment
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This reports a post comment.
@@ -46,6 +47,7 @@ class Api::V1::PostCommentReportsController < ApiController
   # @api {get} /post_comment_reports Get list of post comment reports (ADMIN).
   # @apiName GetPostCommentReports
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of post comment reports with optional filter.
@@ -85,6 +87,7 @@ class Api::V1::PostCommentReportsController < ApiController
   # @api {patch} /post_comment_reports/:id Update a Post Comment Report (Admin).
   # @apiName UpdatePostCommentReport
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This updates a post comment report. The only value that can be

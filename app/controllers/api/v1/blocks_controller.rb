@@ -3,6 +3,7 @@ class Api::V1::BlocksController < ApiController
   # @api {post} /blocks Block a person.
   # @apiName CreateBlock
   # @apiGroup Blocks
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to block a person. When a person is blocked, any followings and relationships are immediately
@@ -42,6 +43,7 @@ class Api::V1::BlocksController < ApiController
   # @api {delete} /blocks/:id Unblock a person.
   # @apiName DeleteBlock
   # @apiGroup Blocks
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to unblock a person.

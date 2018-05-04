@@ -42,7 +42,7 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
   #
-  # @apiParam {Boolean} [post.recommended] (Admin)
+  # @apiParam {Boolean} [post.recommended] (Admin or product account)
   #   Whether the post is recommended.
   #
   # @apiParam {Boolean} [post.global]
@@ -313,6 +313,7 @@ class Api::V1::PostsController < ApiController
   # @api {patch} /posts/{id} Update a post
   # @apiName UpdatePost
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This updates a post.

@@ -3,6 +3,7 @@ class Api::V1::RecommendedPeopleController < ApiController
   # @api {get} /people/recommended Get recommended people.
   # @apiName GetRecommendedPeople
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to get a list of people flagged as 'recommended'. It excludes the current user and anyone

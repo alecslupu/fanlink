@@ -3,6 +3,7 @@ class Api::V1::LevelsController < ApiController
   # @api {get} /levels Get all available levels.
   # @apiName GetLevels
   # @apiGroup Level
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of all levels available to be obtained.

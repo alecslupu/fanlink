@@ -3,6 +3,7 @@ class Api::V1::EventsController < ApiController
   # @api {get} /events Get available events.
   # @apiName GetEvents
   # @apiGroup Events
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of events, in starts_at order.
@@ -37,6 +38,7 @@ class Api::V1::EventsController < ApiController
   # @api {get} /events/:id Get a single event.
   # @apiName GetEvent
   # @apiGroup Events
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a single event for an event id.

@@ -9,6 +9,7 @@ class Api::V1::MessageReportsController < ApiController
   # @api {post} /rooms/:room_id/message_reports Report a message in a public room.
   # @apiName CreateMessageReport
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This reports a message that was posted to a public room.
@@ -53,6 +54,7 @@ class Api::V1::MessageReportsController < ApiController
   # @api {get} /message_reports Get list of messages reports (ADMIN).
   # @apiName GetMessageReports
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of message reports with optional filter.
@@ -88,6 +90,7 @@ class Api::V1::MessageReportsController < ApiController
   # @api {patch} /message_reports/:id Update a Message Report. (Admin)
   # @apiName UpdateMessageReport
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This updates a message report. The only value that can be
