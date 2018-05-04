@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Product.count == 0
-  Product.create(name: "Admin", internal_name: "admin", can_have_supers: true)
+  Product.create(name: "Admin", internal_name: "admin", can_have_supers: true, enabled: true)
   unless Rails.env.production?
     Product.create(name: "Test Product", internal_name: "test")
     Product.create(name: "Test Product2", internal_name: "test2")
