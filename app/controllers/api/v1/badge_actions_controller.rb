@@ -5,6 +5,7 @@ class Api::V1::BadgeActionsController < ApiController
   # @api {post} /badge_actions Create a badge action.
   # @apiName CreateBadgeAction
   # @apiGroup Badges
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This creates a badge action. A badge action is a record of something done of a particular action type in the app.

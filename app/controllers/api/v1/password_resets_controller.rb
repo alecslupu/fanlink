@@ -5,6 +5,7 @@ class Api::V1::PasswordResetsController < ApiController
   # @api {post} /people/password_forgot Initiate a password reset.
   # @apiName CreatePasswordReset
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to initiate a password reset. Product and email or username required. If email or username
@@ -39,7 +40,7 @@ class Api::V1::PasswordResetsController < ApiController
         person.send_password_reset_email
       end
       # Tell the user instructions have been sent whether or not email was found.
-      # This is to not leak information to attackers about which emails exist in the system.
+      # This is to not leak information about which emails exist in the system.
       render json: { message: "Reset password instructions have been sent to your email, if it exists in our system" }, status: :ok
     else
       render json: { errors: "Required parameter missing." }, status: :unprocessable_entity
@@ -50,6 +51,7 @@ class Api::V1::PasswordResetsController < ApiController
   # @api {post} /people/password_reset Completes a password reset.
   # @apiName UpdatePasswordReset
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to complete a password reset. It takes a form submitted from fan.link

@@ -6,6 +6,7 @@ class Api::V1::PostReactionsController < ApiController
   # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This reacts to a post.
@@ -47,6 +48,7 @@ class Api::V1::PostReactionsController < ApiController
   # @api {delete} /posts/:post_id/reactions/:id Delete a reaction to a post.
   # @apiName DeletePostReaction
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This deletes a reaction to a post.
@@ -76,6 +78,7 @@ class Api::V1::PostReactionsController < ApiController
   # @api {post} /posts/:post_id/reactions/:id Update a reaction to a post.
   # @apiName UpdatePostReaction
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This updates a reaction to a post.

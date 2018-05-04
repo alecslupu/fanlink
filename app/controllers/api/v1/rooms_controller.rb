@@ -3,6 +3,7 @@ class Api::V1::RoomsController < ApiController
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom
   # @apiGroup Rooms
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   The creates a private room and makes it active.
@@ -17,7 +18,7 @@ class Api::V1::RoomsController < ApiController
   #   The description of the room.
   #
   # @apiParam {Attachment} [room.picture]
-  #   NOT YET IMPLEMENTED
+  #   Picture for the room.
   #
   # @apiParam {Array} [room.member_ids]
   #   Ids of persons to add as members.  Users who are blocked by or who are blocking the current user will
@@ -67,6 +68,7 @@ class Api::V1::RoomsController < ApiController
   # @api {delete} /rooms/id Delete a private room.
   # @apiName DeleteRoom
   # @apiGroup Rooms
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the
@@ -97,6 +99,7 @@ class Api::V1::RoomsController < ApiController
   # @api {get} /rooms Get a list of rooms.
   # @apiName GetRooms
   # @apiGroup Rooms
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of active rooms (public or private, as specified by the "private" parameter).
@@ -125,6 +128,7 @@ class Api::V1::RoomsController < ApiController
   # @api {patch} /rooms/id Update a private room (name).
   # @apiName UpdateRoom
   # @apiGroup Rooms
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   The updates a private room. Only the name can by updated, and only by the owner.

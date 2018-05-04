@@ -7,6 +7,7 @@ class Api::V1::PostReportsController < ApiController
   # @api {post} /post_reports Report a post.
   # @apiName CreatePostReport
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This reports a post that was posted to a feed.
@@ -47,6 +48,7 @@ class Api::V1::PostReportsController < ApiController
   # @api {get} /post_reports Get list of post reports (ADMIN).
   # @apiName GetPostReports
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of post reports with optional filter.
@@ -86,6 +88,7 @@ class Api::V1::PostReportsController < ApiController
   # @api {patch} /post_reports/:id Update a Post Report.
   # @apiName UpdatePostReport
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This updates a post report. The only value that can be

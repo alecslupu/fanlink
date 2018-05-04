@@ -9,6 +9,7 @@ class Api::V1::PeopleController < ApiController
   # @api {patch} /people/:id/change_password Change your password.
   # @apiName ChangePassword
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to change the logged in user's password.
@@ -46,11 +47,12 @@ class Api::V1::PeopleController < ApiController
   # @api {post} /people Create person.
   # @apiName CreatePerson
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to create a new person.
   #
-  #   If they account creation is successful, they will be logged in and we will send an onboarding
+  #   If the account creation is successful, they will be logged in and we will send an onboarding
   #   email (if we have an email address for them).
   #
   # @apiParam {String} product
@@ -124,6 +126,7 @@ class Api::V1::PeopleController < ApiController
   # @api {get} /people Get a list of people.
   # @apiName GetPeople
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to get a list of people.
@@ -155,6 +158,7 @@ class Api::V1::PeopleController < ApiController
   # @api {get} /people/:id Get a person.
   # @apiName GetPerson
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to get a person.
@@ -168,14 +172,16 @@ class Api::V1::PeopleController < ApiController
   #       "id": "5016",
   #       "username": "Pancakes.McGee",
   #       "name": "Pancakes McGee",
+  #       "gender": "unspecified",
+  #       "city": "Neverland",
+  #       "country_code": "US",
+  #       "birthdate": null,
   #       "picture_url": "http://host.name/path",
   #       "product_account": false,
   #       "recommended": false,
   #       "chat_banned": false,
   #       "designation": "Grand Poobah",
   #       "following_id": 12, //or null
-  #       "num_followers": 0,
-  #       "num_following": 0,
   #       "relationships": [ {json for each relationship}], //only present if relationships present
   #       "badge_points": 0,
   #       "role": "normal",
@@ -183,6 +189,8 @@ class Api::V1::PeopleController < ApiController
   #       "do_not_message_me": false,
   #       "pin_messages_from": false,
   #       "auto_follow": false,
+  #       "num_followers": 0,
+  #       "num_following": 0,
   #       "facebookid": 'fadfasdfa',
   #       "facebook_picture_url": "facebook.com/zuck_you.jpg"
   #       "created_at": "2018-03-12T18:55:30Z",
@@ -198,6 +206,7 @@ class Api::V1::PeopleController < ApiController
   # @api {put | patch} /people/:id Update person.
   # @apiName UpdatePerson
   # @apiGroup People
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to update a person. Anything not mentioned is left

@@ -62,6 +62,7 @@ class Api::V1::PostCommentsController < ApiController
   # @api {delete} /posts/:post_id/comments/:id Delete a comment on a post.
   # @apiName DeletePostComment
   # @apiGroup Posts
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This deletes a comment on a post. Can be performed by admin or creator of comment.

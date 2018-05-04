@@ -11,6 +11,7 @@ class Api::V1::MessagesController < ApiController
   # @api {post} /rooms/{room_id}/messages Create a message in a room.
   # @apiName CreateMessage
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This creates a message in a room and posts it to Firebase as appropriate.
@@ -61,6 +62,7 @@ class Api::V1::MessagesController < ApiController
   # @api {delete} /rooms/{room_id}/messages/id Delete (hide) a single message.
   # @apiName DeleteMessage
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This deletes a single message by marking as hidden. Can only be called by the creator.
@@ -134,6 +136,7 @@ class Api::V1::MessagesController < ApiController
   # @api {get} /messages Get a list of messages without regard to room (ADMIN ONLY).
   # @apiName ListMessages
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a list of messages without regard to room (with possible exception of room filter).
@@ -186,6 +189,7 @@ class Api::V1::MessagesController < ApiController
   # @api {get} /rooms/{room_id}/messages/id Get a single message.
   # @apiName GetMessage
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This gets a single message for a message id. Only works for messages in private rooms. If the message author
@@ -223,6 +227,7 @@ class Api::V1::MessagesController < ApiController
   # @api {patch} /messages/{id} Update a message
   # @apiName UpdateMessage
   # @apiGroup Messages
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is

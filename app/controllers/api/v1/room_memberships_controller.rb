@@ -3,6 +3,7 @@ class Api::V1::RoomMembershipsController < ApiController
   # @api {post} /room/id/room_memberships Add a room member.
   # @apiName CreateRoomMembership
   # @apiGroup Rooms
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This adds a person to a private room. On success (person added), just returns 200.

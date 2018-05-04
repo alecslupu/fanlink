@@ -7,6 +7,7 @@ class Api::V1::SessionController < ApiController
   # @api {get} /session Check a session.
   # @apiName GetSession
   # @apiGroup Sessions
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to see if your current session is valid. We return the
@@ -38,6 +39,7 @@ class Api::V1::SessionController < ApiController
   # @api {post} /session Log someone in.
   # @apiName CreateSession
   # @apiGroup Sessions
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to log someone in.
@@ -85,6 +87,7 @@ class Api::V1::SessionController < ApiController
   # @api {delete} /session Log someone out.
   # @apiName DestroySession
   # @apiGroup Sessions
+  # @apiVersion 1.0.0
   #
   # @apiDescription
   #   This is used to log someone out.
