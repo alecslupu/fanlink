@@ -61,7 +61,7 @@ end
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "administrate", "~> 0.10.0" #git: "https://github.com/thoughtbot/administrate.git"
 
-gem "administrate-field-enum", git: "https://bitbucket.org/markfraser/administrate-field-enum", branch: "collection-member-fix"
+gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
 
 # For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
 # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only

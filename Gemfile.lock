@@ -1,14 +1,4 @@
 GIT
-  remote: https://bitbucket.org/markfraser/administrate-field-enum
-  revision: cb5f6743221c1d7fd1f667c67ad22bd7706b500f
-  branch: collection-member-fix
-  specs:
-    administrate-field-enum (0.0.1)
-      administrate (>= 0.2.0.rc1)
-      appraisal (~> 2.1)
-      rails (>= 4.2)
-
-GIT
   remote: https://github.com/mark100net/administrate-field-paperclip.git
   revision: 00f63fbbb049b5fae37606c02d345069b5736a3b
   branch: blank-attachment-text
@@ -25,6 +15,16 @@ GIT
       googleauth
       httpclient (>= 2.5.3)
       json
+
+GIT
+  remote: https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git
+  revision: cb5f6743221c1d7fd1f667c67ad22bd7706b500f
+  branch: collection-member-fix
+  specs:
+    administrate-field-enum (0.0.1)
+      administrate (>= 0.2.0.rc1)
+      appraisal (~> 2.1)
+      rails (>= 4.2)
 
 GIT
   remote: https://markfraser@bitbucket.org/markfraser/mandrill-api-ruby.git
