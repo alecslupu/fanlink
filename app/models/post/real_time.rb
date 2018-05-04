@@ -6,6 +6,9 @@ class Post
 
     def post
       Delayed::Job.enqueue(PostPostJob.new(self.id))
+      if post.notify_followers && (post.person.followers.count > 0)
+        Delayed::Job.enqueue(PostPushNotificationJob.new(post.id))
+      end
     end
   end
 end
