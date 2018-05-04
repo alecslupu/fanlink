@@ -206,10 +206,16 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # 
     # @apiSuccessExample {type} Success-Response:
+    # HTTP/1.1 200 OK
     # {
-    #     property : value
+    #     "product_beacon": {
+    #         "id": 1,
+    #         "product_id": 1,
+    #         "beacon_pid": "abcdef-123456",
+    #         "attached_to": 5,
+    #         "created_at": "Datetime"
+    #      }
     # }
-    # 
     # 
     #*
 
