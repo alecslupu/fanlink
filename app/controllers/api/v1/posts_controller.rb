@@ -344,7 +344,10 @@ class Api::V1::PostsController < ApiController
   # @apiParam {Integer} [post.priority]
   #   Priority value for post.
   #
-  # @apiParam {Boolean} [post.recommended] (Admin or Product account)
+  # @apiParam {Boolean} [post.notify_followers]
+  #   Whether a push notification should be sent to the posters followers.
+  #
+  # @apiParam {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:
@@ -391,7 +394,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority ] +
+    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority notify_followers ] +
                                      ((current_user.admin? || current_user.product_account?) ? [:recommended] : []))
   end
 end
