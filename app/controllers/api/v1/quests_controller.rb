@@ -14,7 +14,7 @@ class Api::V1::QuestsController < ApiController
     # 
     # @apiParam  {String} [product] Product name. Uses current_user if not passed.
     # 
-    # @apiSuccess (200) {Array} data List of quests for product
+    # @apiSuccess (200) {Object[]} data List of quests for product
     # 
     # @apiParamExample  {json} Request-Example:
     # {
@@ -22,7 +22,7 @@ class Api::V1::QuestsController < ApiController
     # }
     # 
     # 
-    # @apiSuccessExample {Array} Success-Response:
+    # @apiSuccessExample {Object[]} Success-Response:
     #   HTTP/1.1 200 OK
     # {
     #    "quests":
@@ -75,11 +75,11 @@ class Api::V1::QuestsController < ApiController
     # 
     # @apiParamExample  {json} Request-Example:
     # {
-    #     id : 1
+    #     "id" : 1
     # }
     # 
     # 
-    # @apiSuccessExample {json} Success-Response:
+    # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
     # {
     #     "quest": {
@@ -127,11 +127,11 @@ class Api::V1::QuestsController < ApiController
     # @apiParam  {Datetime} [quest.ends_at] Datetime String for when the quest is over.
     # 
     #
-    # @apiSuccess (200) {Json} quest Quest object that was saved to the database
+    # @apiSuccess (200) {Object} quest Quest object that was saved to the database
     # 
     # 
     # 
-    # @apiSuccessExample {type} Success-Response:
+    # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
     # {
     #    "quest": {
@@ -197,8 +197,35 @@ class Api::V1::QuestsController < ApiController
     # @apiSuccess (200) {Object[]} quests Returns a quests object with an array of quests
     # 
     # @apiSuccessExample {200} Success-Response:
+    #   HTTP/1.1 200 OK
     # {
-    #     Same as index. Returns soft deleted quests as well
+    #    "quests":
+    #       [
+    #            {
+    #               "quest_id": 1,
+    #               "product_id": 1,
+    #               "event_id": 99,
+    #               "name": "My New Quest",
+    #               "description": "Find Waldy",
+    #               "picture_url": https://assets.example.com/hi.jpg,
+    #               "status": "enabled",
+    #               "starts_at": "2031-08-18T10:22:08Z",
+    #               "ends_at": "2033-08-18T10:22:08Z",
+    #               "activities": [{See Quest_Activity#show method}]
+    #            
+    #           },
+    #           {
+    #               "quest_id": 2,
+    #               "product_id": 1,
+    #               "event_id": 102,
+    #               "name": "Don't get caught",
+    #               "description": "Steal the Declaration of Independence",
+    #               "picture_url": https://assets.example.com/hi.jpg,
+    #               "status": "deleted",
+    #               "starts_at": 1776-07-04T10:22:08Z,
+    #               "ends_at": 2004-11-19T10:22:08Z
+    #       },
+    #    ]
     # }
     # 
     # 
