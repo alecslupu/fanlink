@@ -1,13 +1,5 @@
 GIT
-  remote: https://github.com/mark100net/acts_as_tenant.git
-  revision: d2cc0fdc99d88ac161901e6053e2a370aa55b902
-  specs:
-    acts_as_tenant (0.4.1)
-      rails (>= 3.1)
-      request_store (>= 1.0.5)
-
-GIT
-  remote: https://github.com/mark100net/administrate-field-enum.git
+  remote: https://bitbucket.org/markfraser/administrate-field-enum
   revision: cb5f6743221c1d7fd1f667c67ad22bd7706b500f
   branch: collection-member-fix
   specs:
@@ -33,22 +25,6 @@ GIT
       googleauth
       httpclient (>= 2.5.3)
       json
-
-GIT
-  remote: https://github.com/thoughtbot/administrate.git
-  revision: d7cf75ccf0f5e505de01147f099b8646a01ba0d3
-  specs:
-    administrate (0.10.0)
-      actionpack (>= 4.2, < 6.0)
-      actionview (>= 4.2, < 6.0)
-      activerecord (>= 4.2, < 6.0)
-      autoprefixer-rails (>= 6.0)
-      datetime_picker_rails (~> 0.0.7)
-      jquery-rails (>= 4.0)
-      kaminari (>= 1.0)
-      momentjs-rails (~> 2.8)
-      sass-rails (~> 5.0)
-      selectize-rails (~> 0.6)
 
 GIT
   remote: https://markfraser@bitbucket.org/markfraser/mandrill-api-ruby.git
@@ -98,8 +74,22 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_tenant (0.4.3)
+      rails (>= 4.0)
+      request_store (>= 1.0.5)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    administrate (0.10.0)
+      actionpack (>= 4.2, < 6.0)
+      actionview (>= 4.2, < 6.0)
+      activerecord (>= 4.2, < 6.0)
+      autoprefixer-rails (>= 6.0)
+      datetime_picker_rails (~> 0.0.7)
+      jquery-rails (>= 4.0)
+      kaminari (>= 1.0)
+      momentjs-rails (~> 2.8)
+      sass-rails (~> 5.0)
+      selectize-rails (~> 0.6)
     api-pagination (4.7.0)
     appraisal (2.2.0)
       bundler
@@ -979,8 +969,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_tenant!
-  administrate!
+  acts_as_tenant
+  administrate (~> 0.10.0)
   administrate-field-enum!
   administrate-field-paperclip!
   api-pagination

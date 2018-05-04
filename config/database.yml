@@ -18,8 +18,8 @@ default: &default
   encoding: utf8
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  username: postgres
-  password: postgres
+  username: <%= ENV.fetch("FANLINK_PG_USER") %>
+  password: <%= ENV.fetch("FANLINK_PG_PASSWORD") %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
