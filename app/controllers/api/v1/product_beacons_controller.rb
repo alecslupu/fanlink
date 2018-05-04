@@ -12,8 +12,13 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParam  {String} product_internal_name Internal name of the product
     # 
-    # @apiSuccess (200) {Object[]} name description
-    # 
+    # @apiSuccess (200) {Object[]} beacons Beacons container
+    # @apiSuccess (200) {Number} beacons.id Beacon ID
+    # @apiSuccess (200) {Number} beacons.product_id Product ID the beacon is registered to
+    # @apiSuccess (200) {String} beacons.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {Number} beacons.attached_to The activity the beacon is attached to. Can be null.
+    # @apiSuccess (200) {Datetime} beacons.created_at The date and time the beacon was added to the database.
+    #
     # @apiParamExample  {url} Request-Example:
     # {
     #     "url": "https://api.example.com/admin/admin/beacons"
@@ -54,8 +59,14 @@ class Api::V1::ProductBeaconsController < ApiController
     #
     # @apiParam {Integer} [per_page] The pagination division. Default is 25.
     # 
-    # @apiSuccess (200) {json} beacons A list of all the beacons
-    # 
+    # @apiSuccess (200) {Object[]} beacons A list of all the beacons
+    # @apiSuccess (200) {Number} beacons.id Beacon ID
+    # @apiSuccess (200) {Number} beacons.product_id Product ID the beacon is registered to
+    # @apiSuccess (200) {String} beacons.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {Boolean} beacons.deleted Is set to true if a beacon has been soft deleted.
+    # @apiSuccess (200) {Number} beacons.attached_to The activity the beacon is attached to. Can be null.
+    # @apiSuccess (200) {Datetime} beacons.created_at The date and time the beacon was added to the database.
+    #
     # @apiParamExample  {url} Request-Example:
     # {
     #     "url": "https://api.example.com/admin/admin/beacons/list"
@@ -63,7 +74,7 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiSuccessExample {type} Success-Response:
     # {
-    #     "product_beacons": [
+    #     "beacons": [
     #       {
     #         "id": 1,
     #         "product_id": 1,
@@ -96,7 +107,12 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParam  {String} id Product ID of beacon
     #
-    # @apiSuccess (200) {Object} product_beacon The product beacon object
+    # @apiSuccess (200) {Object} beacon The product beacon object
+    # @apiSuccess (200) {Number} beacon.id Beacon ID
+    # @apiSuccess (200) {Number} beacon.product_id Product ID the beacon is registered to
+    # @apiSuccess (200) {String} beacon.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {Number} beacon.attached_to The activity the beacon is attached to. Can be null.
+    # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
     # 
     # @apiParamExample  {Url} Request-Example:
     # {
@@ -138,6 +154,11 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiParam  {Number} [attached_to] The activity the beacon is attached to.
     # 
     # @apiSuccess (200) {Object} beacon Returns the newly created beacon
+    # @apiSuccess (200) {Number} beacon.id Beacon ID
+    # @apiSuccess (200) {Number} beacon.product_id Product ID the beacon is registered to
+    # @apiSuccess (200) {String} beacon.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {Number} beacon.attached_to The activity the beacon is attached to. Can be null.
+    # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
     # 
     # @apiParamExample  {Url} Request-Example:
     # {
@@ -176,7 +197,12 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiParam  {Object} product_beacon The product beacon container
     # @apiParam  {Number} [attached_to] The activity the beacon is attached to.
     # 
-    # @apiSuccess (200) {Object} product_beacon Returns the updated beacon
+    # @apiSuccess (200) {Object} beacon The response beacon container
+    # @apiSuccess (200) {Number} beacon.id Beacon ID
+    # @apiSuccess (200) {Number} beacon.product_id Product ID the beacon is registered to
+    # @apiSuccess (200) {String} beacon.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {Number} beacon.attached_to The activity the beacon is attached to. Can be null.
+    # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
     # 
     # @apiParamExample  {type} Request-Example:
     # {

@@ -1,0 +1,1 @@
+json.beacons @product.product_beacons, partial: "list_beacon", as: :beacon
