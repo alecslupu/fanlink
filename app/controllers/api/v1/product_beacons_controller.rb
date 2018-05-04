@@ -4,15 +4,16 @@ class Api::V1::ProductBeaconsController < ApiController
     before_action :admin_only
     
     #**
-    # @api {get} /admin/:product_internal_name/beacons Beacons for a product
+    # @api {get} /product_beacons Beacons for a product
     # @apiName ProductBeacons
     # @apiGroup Beacons
     # @apiVersion  1.0.0
     # 
+    # @apiParam {Integer} [page]  The page number to get. Default is 1.
+    #
+    # @apiParam {Integer} [per_page] The pagination division. Default is 25.
     # 
-    # @apiParam  {String} product_internal_name Internal name of the product
-    # 
-    # @apiSuccess (200) {Object[]} beacons Beacons container
+    # @apiSuccess (200) {Object} beacons Beacons container
     # @apiSuccess (200) {Number} beacons.id Beacon ID
     # @apiSuccess (200) {Number} beacons.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacons.beacon_pid The beacon product id located on the box
@@ -21,7 +22,7 @@ class Api::V1::ProductBeaconsController < ApiController
     #
     # @apiParamExample  {url} Request-Example:
     # {
-    #     "url": "https://api.example.com/admin/admin/beacons"
+    #     "url": "https://api.example.com/product_beacons"
     # }
     # 
     # @apiSuccessExample {type} Success-Response:
@@ -47,19 +48,16 @@ class Api::V1::ProductBeaconsController < ApiController
 
     #**
     # 
-    # @api {get} /admin/:product_internal_name/beacons/list Get a list of all beacons.
+    # @api {get} /product_beacons/list Get a list of all beacons.
     # @apiName GetBeaconsList
     # @apiGroup Beacons
     # @apiVersion  1.0.0
-    # 
-    # 
-    # @apiParam  {String} product_internal_name Name of the product
     #
     # @apiParam {Integer} [page]  The page number to get. Default is 1.
     #
     # @apiParam {Integer} [per_page] The pagination division. Default is 25.
     # 
-    # @apiSuccess (200) {Object[]} beacons A list of all the beacons
+    # @apiSuccess (200) {Object} beacons A list of all the beacons
     # @apiSuccess (200) {Number} beacons.id Beacon ID
     # @apiSuccess (200) {Number} beacons.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacons.beacon_pid The beacon product id located on the box
@@ -69,7 +67,7 @@ class Api::V1::ProductBeaconsController < ApiController
     #
     # @apiParamExample  {url} Request-Example:
     # {
-    #     "url": "https://api.example.com/admin/admin/beacons/list"
+    #     "url": "https://api.example.com/product_beacons/list"
     # }
     # 
     # @apiSuccessExample {type} Success-Response:
@@ -90,18 +88,15 @@ class Api::V1::ProductBeaconsController < ApiController
     #*
 
     def list
-        @product_beacons = paginate
+        @product_beacons = paginate(ProductBeacon.where("product_id =?", ActsAsTenant.current_tenant.id))
         return_the @product_beacons
     end
 
     #**
-    # @api {get} /admin/:product_internal_name/beacons/:id Get Beacon by id or it's product id
+    # @api {get} /product_beacons/:id Get Beacon by id or it's product id
     # @apiName GetBeacon
     # @apiGroup Beacons
     # @apiVersion  1.0.0
-    # 
-    # 
-    # @apiParam  {String} product_internal_name Internal name of the product
     #
     # @apiParam  {Number} id ID of beacon
     # 
@@ -116,8 +111,8 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParamExample  {Url} Request-Example:
     # {
-    #     "id" : "https://api.example.com/admin/admin/beacons/1",
-    #     "pid": "https://api.example.com/admin/admin/beacons/abcdef-123456"
+    #     "id" : "https://api.example.com/product_beacons/1",
+    #     "pid": "https://api.example.com/product_beacons/abcdef-123456"
     # }
     # 
     # 
@@ -137,18 +132,16 @@ class Api::V1::ProductBeaconsController < ApiController
     #*
 
     def show
-        @product_beacon = ProductBeacons.where.not(deleted: true).for_id_or_pid(params[:id]);
+        @product_beacon = ProductBeacon.where.not(deleted: true).for_id_or_pid(params[:id]);
         return_the @product_beacon
     end
 
     #**
-    # @api {post} /admin/:product_internal_name/beacons Add a beacon to a product
+    # @api {post} /product_beacons Add a beacon to a product
     # @apiName CreateBeacon
     # @apiGroup Beacons
     # @apiVersion  1.0.0
     # 
-    # 
-    # @apiParam  {String} product_internal_name Internal name of the product
     # @apiParam  {Object} product_beacon The product beacon container
     # @apiParam  {String} product_beacon.beacon_pid The Beacon's product id listed on the box
     # @apiParam  {Number} [attached_to] The activity the beacon is attached to.
@@ -162,7 +155,7 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParamExample  {Url} Request-Example:
     # {
-    #     "url" : "https://api.example.com/admin/admin/beacons"
+    #     "url" : "https://api.example.com/product_beacons"
     # }
     # 
     # @apiSuccessExample {Object} Success-Response:
@@ -187,7 +180,7 @@ class Api::V1::ProductBeaconsController < ApiController
 
     #**
     # 
-    # @api {patch} /admin/:product_internal_name/beacons/:id Update a beacon
+    # @api {patch} /product_beacons/:id Update a beacon
     # @apiName BeaconUpdate
     # @apiGroup Beacons
     # @apiVersion  1.0.0
@@ -226,7 +219,7 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # @api {delete} /admin/:product_internal_name/beacons/:id title
+    # @api {delete} /product_beacons/:id title
     # @apiName DeleteBeacon
     # @apiGroup Beacons
     # @apiVersion  1.0.0
@@ -238,8 +231,8 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParamExample  {type} Request-Example:
     # {
-    #     "id" : "https://api.example.com/admin/admin/beacons/1",
-    #     "pid": "https://api.example.com/admin/admin/beacons/abcdef-123456"
+    #     "id" : "https://api.example.com/product_beacons/1",
+    #     "pid": "https://api.example.com/product_beacons/abcdef-123456"
     # }
     # 
     # @apiSuccessExample {Header} Success-Response:
