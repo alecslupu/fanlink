@@ -82,7 +82,7 @@ class Api::V1::PostCommentReportsController < ApiController
   end
 
   #**
-  # @api {patch} /post_reports/:id Update a Post Comment Report (Admin).
+  # @api {patch} /post_comment_reports/:id Update a Post Comment Report (Admin).
   # @apiName UpdatePostCommentReport
   # @apiGroup Posts
   #
