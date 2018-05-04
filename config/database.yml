@@ -18,13 +18,14 @@ default: &default
   encoding: utf8
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
+  username: <%= ENV.fetch("FANLINK_PG_USER") %>
+  password: <%= ENV.fetch("FANLINK_PG_PASSWORD") %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   adapter: postgresql
   database: fanlink_development
-  password:
   host: localhost
 
 staging:
@@ -66,7 +67,6 @@ test:
   <<: *default
   adapter: postgresql
   database: fanlink_test
-  password: <%= ENV['FLINK_PG_PASSWORD'] %>
   host: localhost
 
 # As with config/secrets.yml, you never want to store sensitive information,

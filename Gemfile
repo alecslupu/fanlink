@@ -58,9 +58,14 @@ group :test do
   gem "webmock"
 end
 
-gem "acts_as_tenant", git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
-gem "administrate", git: "https://github.com/thoughtbot/administrate.git"
-gem "administrate-field-enum", git: "https://github.com/mark100net/administrate-field-enum.git", branch: "collection-member-fix"
+gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
+gem "administrate", "~> 0.10.0" #git: "https://github.com/thoughtbot/administrate.git"
+
+gem "administrate-field-enum", git: "https://bitbucket.org/markfraser/administrate-field-enum", branch: "collection-member-fix"
+
+# For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
+# I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
+# 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "api-pagination"
 gem "attribute_normalizer"
