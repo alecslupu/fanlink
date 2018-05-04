@@ -4,10 +4,9 @@ class Api::V1::ProductBeaconsController < ApiController
     before_action :admin_only
     
     #**
-    # @apiIgnore
     # @api {get} /admin/:product_internal_name/beacons Beacons for a product
     # @apiName ProductBeacons
-    # @apiGroup Product
+    # @apiGroup Beacons
     # @apiVersion  1.0.0
     # 
     # 
@@ -16,9 +15,7 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Object[]} name description
     # 
     # @apiParamExample  {type} Request-Example:
-    # {
-    #     property : value
-    # }
+    # https://api.example.com/adnmin/admin/beacons
     # 
     # 
     # @apiSuccessExample {type} Success-Response:
@@ -35,14 +32,13 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # @apiIgnore
-    # @api {method} /path title
-    # @apiName apiName
-    # @apiGroup group
-    # @apiVersion  major.minor.patch
+    # @api {get} /:product_internal_name/beacons/:id Get Beacon by id or it's product id
+    # @apiName GetBeacon
+    # @apiGroup Beacons
+    # @apiVersion  1.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam  {String} product_internal_name Internal name of the product
     # 
     # @apiSuccess (200) {type} name description
     # 
@@ -68,13 +64,13 @@ class Api::V1::ProductBeaconsController < ApiController
 
     #**
     # @apiIgnore
-    # @api {method} /path title
-    # @apiName apiName
-    # @apiGroup group
-    # @apiVersion  major.minor.patch
+    # @api {POST} /:product_internal_name/beacons title
+    # @apiName CreateBeacon
+    # @apiGroup Beacons
+    # @apiVersion  1.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam  {String} product_internal_name Internal name of the product
     # 
     # @apiSuccess (200) {type} name description
     # 
@@ -99,21 +95,22 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # @apiIgnore
-    # @api {method} /path title
-    # @apiName apiName
-    # @apiGroup group
-    # @apiVersion  major.minor.patch
+    # @api {delete} /:product_internal_name/beacons/:id title
+    # @apiName DeleteBeacon
+    # @apiGroup Beacons
+    # @apiVersion  1.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam  {String} product_internal_name Internal name of the product
     # 
-    # @apiSuccess (200) {type} name description
+    # @apiSuccess (200) {Header} header Returns a 200 response if successfull
     # 
     # @apiParamExample  {type} Request-Example:
-    # {
-    #     property : value
-    # }
+    # https://api.example.com/admin/admin/1
+    # 
+    # or 
+    #
+    # https://api.examplpe.com/admin/admin/abcdef-123456
     # 
     # 
     # @apiSuccessExample {type} Success-Response:

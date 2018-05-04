@@ -110,7 +110,7 @@ class Api::V1::QuestsController < ApiController
     # 
     # @api {post} /quests Create a quest
     # @apiName CreateQuest
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiDescription Creates a quest for the product.
     # @apiPermission admin
@@ -162,7 +162,7 @@ class Api::V1::QuestsController < ApiController
     # 
     # @api {get} /quests/list Get a list of all quests (ADMIN ONLY)
     # @apiName GetQuestList
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiDescription Returns a list of all quests regardless of status.
     # @apiPermission admin
@@ -212,7 +212,7 @@ class Api::V1::QuestsController < ApiController
     # 
     # @api {delete} /quests/:id Delete Quest
     # @apiName QuestDelete
-    # @apiGroup Quest
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # @apiPermission admin, superadmin
     # 
