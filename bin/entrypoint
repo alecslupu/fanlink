@@ -1,0 +1,26 @@
+#!/bin/sh
+
+echo "Running start up script..."
+
+echo "Checking installed gems..."
+# sed -i 's/ruby "2.4.2"/ruby "~> 2.4.2"/' /tmp/Gemfile
+/usr/src/app/bin/bundle check || /usr/src/app/bin/bundle install
+
+
+echo "Checking DB migrations..."
+/usr/src/app/bin/rake db:setup
+/usr/src/app/bin/rails db:migrate # 2>/dev/null || /usr/src/app/bin/rake db:setup
+/usr/src/app/bin/rake db:seed
+
+if [ "$RAILS_ENV" == "test" ]; then
+  echo "Running tests"
+  /usr/src/app/bin/rails db:test:prepare
+  /usr/src/app/bin/rails spec
+else
+  if [ -f '/usr/src/app/tmp/pids/server.pid' ]; then
+    echo "Found existing Puma server process id file, deleting..."
+    rm /usr/src/app/tmp/pids/server.pid
+  fi
+  echo "Starting server."
+  /usr/src/app/bin/rails s
+fi

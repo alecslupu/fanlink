@@ -1,0 +1,36 @@
+version: "3.6"
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: flapi-postgres
+    # volumes: #Uncomment this to use persistant storage for postgres
+    #   - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+  flapi:
+    container_name: flapi
+    build:
+      context: ./
+      dockerfile: flapi.dev.dockerfile
+      args:
+        BUILD_ENV: ${RAILS_ENV}
+        FOLDER_PATH: ${BUILD_PATH}
+    image: flapi:dev
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      RAILS_ENV: ${RAILS_ENV}
+      DATABASE_URL: postgresql://${FANLINK_PG_USER}@${FANLINK_PG_HOST}
+      APP_URL: ${APP_URL}
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+      - gems:/gems
+    env_file: flapi.env
+
+volumes:
+  gems:
+  #pgdata: #Uncomment this to use persistant storage for postgres

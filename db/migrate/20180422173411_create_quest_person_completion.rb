@@ -8,6 +8,3 @@ class CreateQuestPersonCompletion < ActiveRecord::Migration[5.1]
     add_index :quest_person_completions, [:person_id], name: "ind_quest_person_completions"
   end
 end
-
-
-

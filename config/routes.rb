@@ -61,8 +61,15 @@ Rails.application.routes.draw do
         end
           get "activities" => "quest_activities#index"
           post "activities" => "quest_activities#create"
+          get "completions" => "quest_completions#index"
+          post "completions" => "quest_completions#create"
       end
 
+      resources :quest_completions, only: %i[ update show ] do
+        collection do
+          get "list" => "quest_completions#list"
+        end
+      end
     end
     version 2
   end

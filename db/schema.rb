@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503202153) do
+ActiveRecord::Schema.define(version: 20180508142622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,7 +352,7 @@ ActiveRecord::Schema.define(version: 20180503202153) do
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
-  create_table "quest_person_completions", force: :cascade do |t|
+  create_table "quest_completions", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "quest_id", null: false
     t.integer "activity_id"
