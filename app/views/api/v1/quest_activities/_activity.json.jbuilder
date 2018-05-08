@@ -6,4 +6,5 @@ json.post activity.post
 json.image activity.image
 json.audio activity.audio
 json.beacon activity.beacon
-json.step activity.step
+json.activity_code activity.activity_code.to_s
+json.step activity.step.to_s

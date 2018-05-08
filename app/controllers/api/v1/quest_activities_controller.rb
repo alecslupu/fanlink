@@ -21,7 +21,8 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
     # @apiParam  {String} beacon Beacon attached to the activity
-    # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
+    # @apiParam  {Number} [actvity_code] The code required to enable the activity
+    # @apiParam  {Number} step Used to order the activities. Multiple activities can share the same step
     # 
     # @apiSuccess (200) {json} quest_activity Returns the create quest activity
     # 
@@ -33,17 +34,18 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccessExample {Object} Success-Response:
     # {
-    #     "activity": {
-    #         "id": "1",
-    #         "quest_id": "1",
-    #         "description": "Break into the museum",
-    #         "hint": "Don't get caught",
-    #         "post": null,
-    #         "image": null,
-    #         "audio": null,
-    #         "beacon": 123456-7890,
-    #         "step": 0
-    #     }
+        # "activity": {
+        #     "id": "1",
+        #     "quest_id": "1",
+        #     "description": "Break into the museum",
+        #     "hint": "Don't get caught",
+        #     "post": null,
+        #     "image": null,
+        #     "audio": null,
+        #     "beacon": "123456-7890",
+        #     "activity_code": 983213,
+        #     "step": 0
+        # }
     # }
     # 
     # 
@@ -94,7 +96,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": null,
     #         "image": null,
     #         "audio": null,
-    #         "beacon": 123456-7890,
+    #         "beacon": "123456-7890",
+    #         "activity_code": 23813921
     #         "step": 0
     #     }
     # }
@@ -138,7 +141,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "post": null,
     #             "image": null,
     #             "audio": null,
-    #             "beacon": 123456-7890,
+    #             "beacon": "123456-7890",
+    #             "activity_code": 23813921
     #             "step": 0
     #         }
     #     ]
@@ -182,7 +186,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": null,
     #         "image": null,
     #         "audio": null,
-    #         "beacon": 123456-7890,
+    #         "beacon": "123456-7890",
+    #         "activity_code": 23813921
     #         "step": 0
     #     }
     # }
@@ -230,6 +235,6 @@ class Api::V1::QuestActivitiesController < ApiController
 
 private
     def activity_params
-        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :step)
+        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :activity_code, :step)
     end
 end

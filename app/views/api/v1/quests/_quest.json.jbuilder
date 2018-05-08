@@ -10,7 +10,7 @@ json.starts_at quest.starts_at.to_s
 json.ends_at quest.ends_at.to_s
 json.create_time quest.created_at.to_s
 if quest.quest_activities.count > 0
-    json.activities quest.quest_activities, partial: "api/v1/quests/activity", as: :activity
+    json.activities quest.quest_activities, partial: "api/v1/quest_activities/activity", as: :activity
 else
     json.activities nil
 end

@@ -11,7 +11,7 @@ RUN apk add --no-cache \
           nodejs \
           tzdata
 
-RUN npm install -g apidoc
+RUN npm install -g apidoc https://github.com/zshaw-brightcove/apidoc-swagger
 
 RUN cat ${FIREBASE_JSON_FILE_PATH}/fanlink-${BUILD_ENV}.json > ./fanlink-${BUILD_ENV}.json
 COPY ./fanlink-${BUILD_ENV}.json /usr/src/app/
