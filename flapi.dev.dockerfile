@@ -1,7 +1,8 @@
 FROM ruby:2.5.1-alpine3.7
 
 ARG BUILD_ENV=production
-ARG FOLDER_PATH=./
+ARG FIREBASE_JSON_FILE_PATH=./
+
 
 RUN apk add --no-cache \
           git \
@@ -11,9 +12,7 @@ RUN apk add --no-cache \
           tzdata
 
 
-COPY ./bin/entrypoint /
-COPY ./fanlink-development.json /usr/src/app/
-COPY ./flapi.env /usr/src/app/.env
+COPY ${FIREBASE_JSON_FILE_PATH}/fanlink-${BUILD_ENV}.json /usr/src/app/
 
 ENV BUNDLE_PATH /gems
 ENV BUNDLE_GEMFILE /tmp/Gemfile
@@ -26,4 +25,4 @@ WORKDIR /usr/src/app
 
 VOLUME /usr/src/app
 
-CMD ["/entrypoint"]
+CMD ["/bin/entrypoint"]

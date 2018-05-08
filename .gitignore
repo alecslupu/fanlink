@@ -23,6 +23,7 @@ FanLink-API-Docs/
 coverage
 
 .env
+fanlink-*.json
 
 FanLink-API-Docs.zip
 

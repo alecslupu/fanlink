@@ -12,7 +12,7 @@ echo "Checking DB migrations..."
 /usr/src/app/bin/rails db:migrate # 2>/dev/null || /usr/src/app/bin/rake db:setup
 /usr/src/app/bin/rake db:seed
 
-if [ "$RAILS_ENV" == "test" ]; then
+if [ "$RUN_TESTS" == "true" ]; then
   echo "Running tests"
   /usr/src/app/bin/rails db:test:prepare
   /usr/src/app/bin/rails spec
