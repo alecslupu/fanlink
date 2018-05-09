@@ -39,9 +39,9 @@ class Api::V1::QuestActivitiesController < ApiController
         #     "quest_id": "1",
         #     "description": "Break into the museum",
         #     "hint": "Don't get caught",
-        #     "post": null,
-        #     "image": null,
-        #     "audio": null,
+        #     "post": false,
+        #     "image": false,
+        #     "audio": false,
         #     "beacon": "123456-7890",
         #     "activity_code": 983213,
         #     "step": 0
@@ -93,9 +93,9 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "quest_id": "1",
     #         "description": "Break into the museum",
     #         "hint": "Got Caught! Again!",
-    #         "post": null,
-    #         "image": null,
-    #         "audio": null,
+    #         "post": false,
+    #         "image": false,
+    #         "audio": false,
     #         "beacon": "123456-7890",
     #         "activity_code": 23813921
     #         "step": 0
@@ -138,9 +138,9 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "quest_id": "1",
     #             "description": "Break into the museum",
     #             "hint": "Got Caught! Again!",
-    #             "post": null,
-    #             "image": null,
-    #             "audio": null,
+    #             "post": false,
+    #             "image": false,
+    #             "audio": false,
     #             "beacon": "123456-7890",
     #             "activity_code": 23813921
     #             "step": 0
@@ -183,9 +183,9 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "quest_id": "1",
     #         "description": "Break into the museum",
     #         "hint": "Don't get caught",
-    #         "post": null,
-    #         "image": null,
-    #         "audio": null,
+    #         "post": false,
+    #         "image": false,
+    #         "audio": false,
     #         "beacon": "123456-7890",
     #         "activity_code": 23813921
     #         "step": 0
