@@ -95,3 +95,4 @@ gem "rubocop-rails"
 gem "sorcery"
 gem "unicode_utils"
 gem "uuidtools"
+gem 'wisper', '2.0.0'

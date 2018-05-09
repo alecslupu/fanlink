@@ -17,6 +17,9 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Number} beacons.id Beacon ID
     # @apiSuccess (200) {Number} beacons.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacons.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {UUID} beacons.uuid Beacon UUID
+    # @apiSuccess (200) {Number} beacons.lower Lower
+    # @apiSuccess (200) {Number} beacons.upper Upper
     # @apiSuccess (200) {Number} beacons.attached_to The activity the beacon is attached to. Can be null.
     # @apiSuccess (200) {Datetime} beacons.created_at The date and time the beacon was added to the database.
     #
@@ -25,16 +28,17 @@ class Api::V1::ProductBeaconsController < ApiController
     #     "url": "https://api.example.com/product_beacons"
     # }
     # 
-    # @apiSuccessExample {type} Success-Response:
+    # @apiSuccessExample {json} Success-Response:
     # {
-    #     "product_beacons": [
-    #       {
-    #         "id": 1,
-    #         "product_id": 1,
-    #         "beacon_pid": "abcdef-123456",
-    #         "attached_to": 1,
-    #         "created_at": "Datetime"
-    #      }
+    #     "beacons": [
+    #       "id": "1",
+    #         "product_id": "1",
+    #         "beacon_pid": "A12FC4-12912",
+    #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #         "lower": "25",
+    #         "upper": "75",
+    #         "attachd_to": "",
+    #         "created_at": "2018-05-09T21:52:48.653Z"
     #    ]
     # }
     # 
@@ -61,6 +65,9 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Number} beacons.id Beacon ID
     # @apiSuccess (200) {Number} beacons.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacons.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {UUID} beacons.uuid Beacon UUID
+    # @apiSuccess (200) {Number} beacons.lower Lower
+    # @apiSuccess (200) {Number} beacons.upper Upper
     # @apiSuccess (200) {Boolean} beacons.deleted Is set to true if a beacon has been soft deleted.
     # @apiSuccess (200) {Number} beacons.attached_to The activity the beacon is attached to. Can be null.
     # @apiSuccess (200) {Datetime} beacons.created_at The date and time the beacon was added to the database.
@@ -70,17 +77,17 @@ class Api::V1::ProductBeaconsController < ApiController
     #     "url": "https://api.example.com/product_beacons/list"
     # }
     # 
-    # @apiSuccessExample {type} Success-Response:
+    # @apiSuccessExample {json} Success-Response:
     # {
     #     "beacons": [
-    #       {
-    #         "id": 1,
-    #         "product_id": 1,
-    #         "beacon_pid": "abcdef-123456",
-    #         "attached_to": 1,
-    #         "deleted": false,
-    #         "created_at": "Datetime"
-    #      }
+    #       "id": "1",
+    #         "product_id": "1",
+    #         "beacon_pid": "A12FC4-12912",
+    #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #         "lower": "25",
+    #         "upper": "75",
+    #         "attachd_to": "",
+    #         "created_at": "2018-05-09T21:52:48.653Z"
     #    ]
     # }
     # 
@@ -106,6 +113,9 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Number} beacon.id Beacon ID
     # @apiSuccess (200) {Number} beacon.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacon.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {UUID} beacon.uuid Beacon UUID
+    # @apiSuccess (200) {Number} beacon.lower Lower
+    # @apiSuccess (200) {Number} beacon.upper Upper
     # @apiSuccess (200) {Number} beacon.attached_to The activity the beacon is attached to. Can be null.
     # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
     # 
@@ -119,13 +129,16 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
     # {
-    #     "product_beacon": {
-    #         "id": 1,
-    #         "product_id": 1,
-    #         "beacon_pid": "abcdef-123456",
-    #         "attached_to": 1,
-    #         "created_at": "Datetime"
-    #      }
+    #     "beacon": {
+    #         "id": "1",
+    #         "product_id": "1",
+    #         "beacon_pid": "A12FC4-12912",
+    #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #         "lower": "25",
+    #         "upper": "75",
+    #         "attachd_to": "",
+    #         "created_at": "2018-05-09T21:52:48.653Z"
+    #     }
     # }
     # 
     # 
@@ -144,12 +157,18 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParam  {Object} product_beacon The product beacon container
     # @apiParam  {String} product_beacon.beacon_pid The Beacon's product id listed on the box
+    # @apiParam  {UUID} product_beacon.uuid Beacon UUID
+    # @apiParam  {Number} product_beacon.lower Lower
+    # @apiParam  {Nummber} product_beacon.upper Upper
     # @apiParam  {Number} [attached_to] The activity the beacon is attached to.
     # 
     # @apiSuccess (200) {Object} beacon Returns the newly created beacon
     # @apiSuccess (200) {Number} beacon.id Beacon ID
     # @apiSuccess (200) {Number} beacon.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacon.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {UUID} beacon.uuid Beacon UUID
+    # @apiSuccess (200) {Number} beacon.lower Lower
+    # @apiSuccess (200) {Number} beacon.upper Upper
     # @apiSuccess (200) {Number} beacon.attached_to The activity the beacon is attached to. Can be null.
     # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
     # 
@@ -161,13 +180,16 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
     # {
-    #     "product_beacon": {
-    #         "id": 1,
-    #         "product_id": 1,
-    #         "beacon_pid": "abcdef-123456",
-    #         "attached_to": 1,
-    #         "created_at": "Datetime"
-    #      }
+    #     "beacon": {
+    #         "id": "1",
+    #         "product_id": "1",
+    #         "beacon_pid": "A12FC4-12912",
+    #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #         "lower": "25",
+    #         "upper": "75",
+    #         "attachd_to": "",
+    #         "created_at": "2018-05-09T21:52:48.653Z"
+    #     }
     # }
     # 
     # 
@@ -188,12 +210,18 @@ class Api::V1::ProductBeaconsController < ApiController
     # 
     # @apiParam  {String} product_internal_name Internal name of the product
     # @apiParam  {Object} product_beacon The product beacon container
-    # @apiParam  {Number} [attached_to] The activity the beacon is attached to.
+    # @apiParam  {UUID} [product_beacon.uuid] Beacon UUID
+    # @apiParam  {Number} [product_beacon.lower] Lower
+    # @apiParam  {Number} [product_beacon.upper] Upper
+    # @apiParam  {Number} [product_beacon.attached_to] The activity the beacon is attached to.
     # 
     # @apiSuccess (200) {Object} beacon The response beacon container
     # @apiSuccess (200) {Number} beacon.id Beacon ID
     # @apiSuccess (200) {Number} beacon.product_id Product ID the beacon is registered to
     # @apiSuccess (200) {String} beacon.beacon_pid The beacon product id located on the box
+    # @apiSuccess (200) {UUID} uuid Beacon UUID
+    # @apiSuccess (200) {Number} lower Lower
+    # @apiSuccess (200) {Number} upper Upper
     # @apiSuccess (200) {Number} beacon.attached_to The activity the beacon is attached to. Can be null.
     # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
     # 
@@ -208,13 +236,16 @@ class Api::V1::ProductBeaconsController < ApiController
     # @apiSuccessExample {type} Success-Response:
     # HTTP/1.1 200 OK
     # {
-    #     "product_beacon": {
-    #         "id": 1,
-    #         "product_id": 1,
-    #         "beacon_pid": "abcdef-123456",
-    #         "attached_to": 5,
-    #         "created_at": "Datetime"
-    #      }
+    #     "beacon": {
+    #         "id": "1",
+    #         "product_id": "1",
+    #         "beacon_pid": "A12FC4-12912",
+    #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #         "lower": "25",
+    #         "upper": "75",
+    #         "attachd_to": "",
+    #         "created_at": "2018-05-09T21:52:48.653Z"
+    #     }
     # }
     # 
     #*
@@ -260,10 +291,10 @@ class Api::V1::ProductBeaconsController < ApiController
 private
 
     def beacon_params
-        params.require(:product_beacon).permit(:beacon_pid, :attached_to)
+        params.require(:product_beacon).permit(:beacon_pid, :attached_to, :uuid, :lower, :upper)
     end    
     
     def beacon_update_params
-        params.require(:product_beacon).permit(:attached_to)
+        params.require(:product_beacon).permit(:attached_to, :uuid, :lower, :upper)
     end
 end
