@@ -17,10 +17,12 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
     # {
-        # "id": 1,
-        # "person_id": 14
-        # "quest_id": 2
-        # "activity_id": 3
+    #     "completion": {
+    #         "id": "1",
+    #         "person_id": "1",
+    #         "activity_id": "1",
+    #         "create_time": "2018-05-08T23:24:48Z"
+    #     }
     # }
     #
     #**
@@ -34,6 +36,24 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiSuccess (200) {Number} completions.quest_id ID of the quest
     # @apiSuccess (200) {Number} completions.activity_id ID of the activity that was completed
     # @apiSuccess (200) {DateTime} completions.created_at The date and time the completion was created.
+    #
+    # @apiSuccessExample {Object[]} Success-Response:
+    # {
+    #     "completions": [
+    #         {
+    #             "id": "1",
+    #             "person_id": "1",
+    #             "activity_id": "1",
+    #             "create_time": "2018-05-09T17:14:07Z"
+    #         },
+    #         {
+    #             "id": "2",
+    #             "person_id": "1",
+    #             "activity_id": "2",
+    #             "create_time": "2018-05-09T17:14:13Z"
+    #         }
+    #     ]
+    # }
     #**
 
 
@@ -50,10 +70,11 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiUse SuccessResponse
     # 
-    # @apiParamExample  {url} Request-Example:
-    # {
-    #     "id" : value
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X GET \
+    # http://192.168.1.110:3000/quests/1/completions \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     # 
     #*
@@ -75,8 +96,11 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiUse SuccessResponse
     # 
-    # @apiParamExample  {url} Request-Example:
-    # https://api.example.com/people/1/completions
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X GET \
+    # http://api.examplecom/people/1/completions \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     # 
     #*
@@ -100,7 +124,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiUse SuccessResponses
     # 
     # @apiParamExample  {url} Request-Example:
-    # https://api.example.com/quest_activity/1/completions
+    # https://localhost:3000/quest_activity/1/completions
     # 
     # 
     #*
@@ -122,10 +146,11 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiUse SuccessResponse
     # 
-    # @apiParamExample  {type} Request-Example:
-    # {
-    #   "activity_id": 1
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X GET \
+    # http://localhost:3000/quest_activities/1/completions \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     #*
 
@@ -146,10 +171,11 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiUse SuccessResponse
     # 
-    # @apiParamExample  {json} Request-Example:
-    # {
-    #     "id" : 1
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X GET \
+    # http://localhost:3000/completions/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     #*
 
@@ -176,11 +202,11 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiParam {Number} [activity_id_filter] Full match on activity id.
     # @apiParam {String} [activity_filter] Full match name of activity.
     # 
-    # @apiParamExample  {type} Request-Example:
-    # {
-    #     "page" : 2,
-    #
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X GET \
+    # 'http://localhost:3000/completions/list?person__id_filter=1' \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     # 
     # @apiUse SuccessResponses
@@ -202,13 +228,19 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # 
     # @apiParam  {Number} id ID of the completion being updated
-    # @apiParam  {Number} [quest_id] The id of the quest the completion is associated with
     # @apiParam  {Number} [activity_id] The id of the completed activity
     # 
-    # @apiParamExample  {type} Request-Example:
-    # {
-    #     property : value
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X PATCH \
+    # http://localhost:3000/completions/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/json' \
+    # -d '{
+    #     "quest_completion": {
+    #         "activity_id": 2
+    #     }
+    # }'
     # 
     # 
     # @apiUse SuccessResponse
@@ -257,6 +289,16 @@ class Api::V1::QuestCompletionsController < ApiController
 private
     def completion_params
         params.require(:quest_completion).permit(:activity_id)
+    end
+
+    def apply_filters
+        completions = QuestCompletion.order(created_at: :desc)
+        params.each do |p, v|
+            if p.end_with?("_filter") && QuestCompletion.respond_to?(p)
+              completions = completions.send(p, v)
+            end
+        end
+        completions
     end
 
 end
