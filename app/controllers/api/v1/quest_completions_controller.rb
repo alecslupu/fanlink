@@ -5,7 +5,8 @@ class Api::V1::QuestCompletionsController < ApiController
     load_up_the Person, from: :person_id, only: %i[ for_person ]
     load_up_the QuestActivity, from: :quest_activity_id, only: %i[ for_actvitiy ]
 
-    # @apiDefine successResponse Success Response
+    #**
+    # @apiDefine SuccessResponse
     #    The success response for a single completion
     # @apiSuccess (200) {Object} completion Container for the completion data
     # @apiSuccess (200) {Number} completion.id ID of the created completion
@@ -17,16 +18,16 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
     # {
-        # "id": 1,
-        # "person_id": 14
-        # "quest_id": 2
-        # "activity_id": 3
+    #   "id": 1,
+    #   "person_id": 14,
+    #   "quest_id": 2,
+    #   "activity_id": 3
     # }
     #
     #**
 
-    
-    # @apiDefine successResponses Array of success responses
+    #**
+    # @apiDefine SuccessResponses
     #    Returns an array as a response
     # @apiSuccess (200) {Object} completions Container for the completion data
     # @apiSuccess (200) {Number} completions.id ID of the created completion
@@ -34,6 +35,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiSuccess (200) {Number} completions.quest_id ID of the quest
     # @apiSuccess (200) {Number} completions.activity_id ID of the activity that was completed
     # @apiSuccess (200) {DateTime} completions.created_at The date and time the completion was created.
+    #
     #**
 
 
@@ -48,7 +50,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiParam  {id} id Quest ID
     # 
-    # @apiUse successResponse
+    # @apiUse SuccessResponse
     # 
     # @apiParamExample  {url} Request-Example:
     # {
@@ -73,7 +75,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiParam  {id} id Person ID
     # 
-    # @apiUse successResponse
+    # @apiUse SuccessResponse
     # 
     # @apiParamExample  {url} Request-Example:
     # https://api.example.com/people/1/completions
@@ -83,7 +85,6 @@ class Api::V1::QuestCompletionsController < ApiController
 
     def for_person
         @completions = @person.quest_completions
-        puts @person.inspect
         return_the @completions
     end
 
@@ -97,7 +98,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiParam  {id} id Activity ID
     # 
-    # @apiUse successResponses
+    # @apiUse SuccessResponses
     # 
     # @apiParamExample  {url} Request-Example:
     # https://api.example.com/quest_activity/1/completions
@@ -120,7 +121,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # @apiParam  {Number} quest_id The id of the quest the completion is associated with
     # @apiParam  {Number} activity_id The id of the completed activity
     # 
-    # @apiUse successResponse
+    # @apiUse SuccessResponse
     # 
     # @apiParamExample  {type} Request-Example:
     # {
@@ -144,7 +145,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # 
     # @apiParam  {Number} id ID of the completion
     # 
-    # @apiUse successResponse
+    # @apiUse SuccessResponse
     # 
     # @apiParamExample  {json} Request-Example:
     # {
@@ -161,8 +162,8 @@ class Api::V1::QuestCompletionsController < ApiController
     #**
     # 
     # @api {get} /quests/:id/completions/list Get a quest by completion id
-    # @apiName apiName
-    # @apiGroup group
+    # @apiName GetQuestCompletionsList
+    # @apiGroup Quests
     # @apiVersion  1.0.0
     # 
     # @apiParam {Number} [page] The page number to get. Default is 1.
@@ -183,7 +184,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # }
     # 
     # 
-    # @apiUse successResponses
+    # @apiUse SuccessResponses
     # 
     # 
     #*
@@ -211,7 +212,7 @@ class Api::V1::QuestCompletionsController < ApiController
     # }
     # 
     # 
-    # @apiUse successResponse
+    # @apiUse SuccessResponse
     # 
     # 
     #*
