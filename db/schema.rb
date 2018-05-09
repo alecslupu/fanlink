@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508225241) do
+ActiveRecord::Schema.define(version: 20180509181906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -354,6 +354,13 @@ ActiveRecord::Schema.define(version: 20180508225241) do
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
+  create_table "quest_completeds", force: :cascade do |t|
+    t.integer "quest_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "quest_completions", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "quest_id", null: false
@@ -470,6 +477,8 @@ ActiveRecord::Schema.define(version: 20180508225241) do
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
   add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
   add_foreign_key "quest_activities", "quests", name: "fk_activities_quests"
+  add_foreign_key "quest_completeds", "people", name: "fk_quest_completeds_people"
+  add_foreign_key "quest_completeds", "quests", name: "fk_quest_completeds_quests"
   add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
