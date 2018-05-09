@@ -5,8 +5,12 @@ class Api::V1::QuestCompletionsController < ApiController
     load_up_the Person, from: :person_id, only: %i[ for_person ]
     load_up_the QuestActivity, from: :quest_activity_id, only: %i[ for_actvitiy ]
 
+<<<<<<< HEAD
     #**
     # @apiDefine SuccessResponse
+=======
+    # @apiDefine SuccessResponse Success Response
+>>>>>>> d915a75c2353ad160896e432f7b70205368bda93
     #    The success response for a single completion
     # @apiSuccess (200) {Object} completion Container for the completion data
     # @apiSuccess (200) {Number} completion.id ID of the created completion
@@ -26,8 +30,13 @@ class Api::V1::QuestCompletionsController < ApiController
     #
     #**
 
+<<<<<<< HEAD
     #**
     # @apiDefine SuccessResponses
+=======
+    
+    # @apiDefine SuccessResponses Array of success responses
+>>>>>>> d915a75c2353ad160896e432f7b70205368bda93
     #    Returns an array as a response
     # @apiSuccess (200) {Object} completions Container for the completion data
     # @apiSuccess (200) {Number} completions.id ID of the created completion
