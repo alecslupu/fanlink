@@ -1,0 +1,1 @@
+json.completions @completions, partial: "api/v1/quest_completions/completion", as: :completion

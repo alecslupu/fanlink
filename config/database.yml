@@ -26,7 +26,9 @@ development:
   <<: *default
   adapter: postgresql
   database: fanlink_development
-  host: localhost
+  username: <%= ENV.fetch("FANLINK_PG_USER", "root") %>
+  password: <%= ENV.fetch('FLINK_PG_PASSWORD', "") %>
+  host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
 
 staging:
   <<: *default
@@ -67,7 +69,9 @@ test:
   <<: *default
   adapter: postgresql
   database: fanlink_test
-  host: localhost
+  username: <%= ENV.fetch("FANLINK_PG_USER", "root") %>
+  password: <%= ENV.fetch('FANLINK_PG_PASSWORD', "") %>
+  host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -1,7 +1,7 @@
 class Api::V1::QuestsController < ApiController
-    include Rails::Pagination
-
     before_action :admin_only, except: %i[ index show ]
+    include Rails::Pagination
+    load_up_the Quest, only: %i[ update ]
 
     #**
     # 
@@ -209,6 +209,68 @@ class Api::V1::QuestsController < ApiController
 
     #**
     # 
+    # @api {patch} /quest/:id Update a quest
+    # @apiName QuestUpdate
+    # @apiGroup Quests
+    # @apiVersion  1.0.0
+    # 
+    # 
+    # @apiParam  {Number} id ID of the quest to update
+    # @apiParam  {String} [product] Product name. Uses current_user if not passed.
+    # @apiParam  {Object} quest Quest container for form data
+    # @apiParam  {Number} [quest.event_id] Optional event id to attach a quest to an event
+    # @apiParam  {String} [quest.name] Name of the quest
+    # @apiParam  {String} [quest.internal_name] Internal name for the quest
+    # @apiParam  {String} [quest.description] Desciption of the quest.
+    # @apiParam  {Object} [quest.picture] Image attached to the quest
+    # @apiParam  {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
+    # @apiParam  {Datetime} [quest.starts_at] Datetime String for when the quest starts.
+    # @apiParam  {Datetime} [quest.ends_at] Datetime String for when the quest is over.
+    # 
+    #
+    # @apiSuccess (200) {Object} quest Quest object that was saved to the database
+    # @apiSuccess (200) {Number} quest.id ID of quest
+    # @apiSuccess (200) {Number} quest.product_id Product id the quest is attached to
+    # @apiSuccess (200) {Number} quest.event_id Optional event id the quest is attached to
+    # @apiSuccess (200) {String} quest.name Name of the quest
+    # @apiSuccess (200) {String} quest.description Description of the quest
+    # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
+    # @apiSuccess (200) {String} quest.status The current status of the quest. Can be Active, Enabled, Disabled.
+    # @apiSuccess (200) {DateTime} quest.starts_at When the quest should be active.
+    # @apiSuccess (200) {DateTime} quest.ends_at Optional end time for when the quest should be disabled.
+    # @apiSuccess (200) {Object[]} quest.activities The activities associated with the quest
+    # 
+    # 
+    # 
+    # @apiSuccessExample {Object} Success-Response:
+    # HTTP/1.1 200 OK
+    # {
+    #    "quest": {
+    #         "id": "1",
+    #         "product_id": "1",
+    #         "event_id": "",
+    #         "name": "Don't get caught",
+    #         "internal_name": "national_treasure",
+    #         "description": "Steal the Declaration of Independence",
+    #         "picture_url": null,
+    #         "status": "enabled",
+    #         "starts_at": "1776-07-04T10:22:08Z",
+    #         "ends_at": "2004-11-19T10:22:08Z",
+    #         "create_time": "2018-04-30T23:00:20Z",
+    #         "activities": null
+    #     }
+    # }
+    # 
+    # 
+    #*
+
+    def update
+        @quest.update_attributes(quest_params)
+        return_the @quest
+    end
+
+    #**
+    # 
     # @api {get} /quests/list Get a list of all quests (ADMIN ONLY)
     # @apiName GetQuestList
     # @apiGroup Quests
@@ -223,7 +285,7 @@ class Api::V1::QuestsController < ApiController
     #   The pagination division. Default is 25.
     #
     # @apiParam {Integer} [product_id_filter]
-    #   Full match on person id.
+    #   Full match on product id.
     #
     # @apiParam {String} [name_filter]
     #   Full or partial match on quest name.
@@ -341,6 +403,10 @@ private
             end
         end
         quests
+    end
+
+    def load_quest
+        @quest = Quest.where(product_id: ActsAsTenant.current_tenant.id).find(params[:id])
     end
 
     def quest_params

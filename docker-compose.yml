@@ -1,0 +1,45 @@
+version: "3.6"
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: flapi-postgres
+    # volumes: #Uncomment this to use persistant storage for postgres
+    #   - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+  flapi:
+    container_name: flapi
+    build:
+      context: ./
+      dockerfile: flapi.dev.dockerfile
+      args:
+        BUILD_ENV: ${RAILS_ENV}
+        FIREBASE_JSON_FILE_PATH: ${FIREBASE_JSON_FILE_PATH}
+    image: flapi:dev
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      RAILS_ENV: ${RAILS_ENV}
+      FANLINK_PG_USER: ${FANLINK_PG_USER}
+      FANLINK_PG_HOST: ${FANLINK_PG_HOST}
+      FIREBASE_CM_KEY: ${FIREBASE_CM_KEY}
+      FIREBASE_URL: ${FIREBASE_URL}
+      FIREBASE_KEY: ${FIREBASE_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_BUCKET: ${AWS_BUCKET}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      MANDRILL_API_KEY: ${MANDRILL_API_KEY}
+      PAPERCLIP_SECRET: ${PAPERCLIP_SECRET}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    ports:
+      - 3000:3000
+    volumes:
+      - $PWD/:/usr/src/app
+      - gems:/gems
+
+volumes:
+  gems:
+  #pgdata: #Uncomment this to use persistant storage for postgres

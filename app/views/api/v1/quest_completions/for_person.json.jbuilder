@@ -1,0 +1,1 @@
+json.completions @completions, partial: "completion", as: :completion
