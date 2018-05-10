@@ -410,6 +410,6 @@ private
     end
 
     def quest_params
-        params.require(:quest).permit(:event_id, :name, :internal_name, :description, :picture, :status, :starts_at, :ends_at, quest_activities: %i[ description hint post image audio requires ])
+        params.require(:quest).permit(:event_id, :name, :internal_name, :description, :picture, :status, :starts_at, :ends_at, quest_activities: %i[ description hint post image audio requires picture activity_code ])
     end    
 end
