@@ -8,7 +8,7 @@ class Quest < ApplicationRecord
     
     has_image_called :picture
     #TODO Add translation support
-    # has_manual_translated :description, :name
+    has_manual_translated :description, :name
     
     has_many :quest_activities, dependent: :destroy
     has_many :quest_completions, dependent: :destroy

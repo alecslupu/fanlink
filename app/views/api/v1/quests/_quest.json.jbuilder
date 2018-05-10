@@ -5,6 +5,8 @@ json.name quest.name
 json.internal_name quest.internal_name
 json.description quest.description
 json.picture_url quest.picture_url
+json.picture_width quest.picture.width
+json.picture_height quest.picture.height
 json.status quest.status.to_s
 json.starts_at quest.starts_at.to_s
 json.ends_at quest.ends_at.to_s

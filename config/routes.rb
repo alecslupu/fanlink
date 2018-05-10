@@ -45,7 +45,7 @@ Rails.application.routes.draw do
         resources :message_reports, only: %i[ create ]
         resources :room_memberships, only: %i[ create destroy ]
       end
-      resources :product_beacons do
+      resources :beacons, :controller => "product_beacons" do
         collection do
           get "list" => "product_beacons#list"
         end
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
           delete "" => "session#destroy"
         end
       end
-      resources :quest_activities, only: %i[ update show ] do
+      resources :activities, :controller => "quest_activities", only: %i[ update show ] do
         get "completions" => "quest_completions#for_activity"
       end
       resources :quests do

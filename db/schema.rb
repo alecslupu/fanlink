@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180509212318) do
+ActiveRecord::Schema.define(version: 20180510190345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,15 +344,22 @@ ActiveRecord::Schema.define(version: 20180509212318) do
 
   create_table "quest_activities", force: :cascade do |t|
     t.integer "quest_id", null: false
-    t.text "description"
-    t.text "hint"
+    t.text "description_text_old"
+    t.text "hint_text_old"
     t.boolean "post", default: false
     t.boolean "image", default: false
     t.boolean "audio", default: false
     t.text "beacon"
     t.boolean "deleted", default: false
     t.integer "step"
-    t.integer "activity_code"
+    t.string "activity_code"
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.text "picture_meta"
+    t.jsonb "hint", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
@@ -376,9 +383,9 @@ ActiveRecord::Schema.define(version: 20180509212318) do
   create_table "quests", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "event_id"
-    t.text "name", null: false
+    t.text "name_text_old"
     t.text "internal_name", null: false
-    t.text "description", null: false
+    t.text "description_text_old"
     t.integer "status", default: 2, null: false
     t.datetime "starts_at", null: false
     t.datetime "ends_at"
@@ -388,6 +395,9 @@ ActiveRecord::Schema.define(version: 20180509212318) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
+    t.text "picture_meta"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
     t.index ["internal_name"], name: "ind_quests_internal_name"
     t.index ["product_id"], name: "ind_quests_products"

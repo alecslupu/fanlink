@@ -9,7 +9,9 @@ RUN apk add --no-cache \
           build-base \
           postgresql-dev \
           nodejs \
-          tzdata
+          tzdata \
+          imagemagick \
+          file
 
 RUN npm install -g apidoc https://github.com/zshaw-brightcove/apidoc-swagger
 

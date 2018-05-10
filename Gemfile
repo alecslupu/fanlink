@@ -86,6 +86,7 @@ gem "paper_trail"
 gem "oauth2"
 gem "oj" #json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
+gem 'paperclip-meta'
 gem "postgresql-check"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
@@ -96,3 +97,4 @@ gem "sorcery"
 gem "unicode_utils"
 gem "uuidtools"
 gem 'wisper', '2.0.0'
+gem 'wisper-activejob'

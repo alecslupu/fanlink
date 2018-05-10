@@ -1,7 +1,7 @@
 class Api::V1::QuestActivitiesController < ApiController
     before_action :admin_only, except: %i[ index show ]
-    load_up_the Quest, from: :quest_id, except: %i[ update ]
-    load_up_the QuestActivity, only: %i[ update ]
+    load_up_the Quest, from: :quest_id, except: %i[ update show delete ]
+    load_up_the QuestActivity, only: :update 
 
     #**
     # 
@@ -34,18 +34,21 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccessExample {Object} Success-Response:
     # {
-        # "activity": {
-        #     "id": "1",
-        #     "quest_id": "1",
-        #     "description": "Break into the museum",
-        #     "hint": "Don't get caught",
-        #     "post": false,
-        #     "image": false,
-        #     "audio": false,
-        #     "beacon": "123456-7890",
-        #     "activity_code": 983213,
-        #     "step": 0
-        # }
+    #   "activity": {
+    #     "id": "1",
+    #     "quest_id": "1",
+    #     "description": "Break into the museum",
+    #     "hint": "Don't get caught",
+    #     "picture_url": "https://example.com/hi.jpg",
+    #     "picture_width": 1920,
+    #     "picture_height": 1080,
+    #     "post": false,
+    #     "image": false,
+    #     "audio": false,
+    #     "beacon": "123456-7890",
+    #     "activity_code": "983213",
+    #     "step": 0
+    #   }
     # }
     # 
     # 
@@ -58,7 +61,7 @@ class Api::V1::QuestActivitiesController < ApiController
 
     #**
     # 
-    # @api {patch} /quest_activities/:id Update a quest activity
+    # @api {patch} /activities/:id Update a quest activity
     # @apiName QuestActivityUpdate
     # @apiGroup Quests
     # @apiVersion  1.0.0
@@ -93,11 +96,14 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "quest_id": "1",
     #         "description": "Break into the museum",
     #         "hint": "Got Caught! Again!",
+    #         "picture_url": "https://example.com/hi.jpg",
+    #         "picture_width": 1920,
+    #         "picture_height": 1080,
     #         "post": false,
     #         "image": false,
     #         "audio": false,
     #         "beacon": "123456-7890",
-    #         "activity_code": 23813921
+    #         "activity_code": "23813921"
     #         "step": 0
     #     }
     # }
@@ -138,11 +144,12 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "quest_id": "1",
     #             "description": "Break into the museum",
     #             "hint": "Got Caught! Again!",
+    #             "picture_url": "https://example.com/hi.jpg",
     #             "post": false,
     #             "image": false,
     #             "audio": false,
     #             "beacon": "123456-7890",
-    #             "activity_code": 23813921
+    #             "activity_code": "23813921"
     #             "step": 0
     #         }
     #     ]
@@ -158,7 +165,7 @@ class Api::V1::QuestActivitiesController < ApiController
 
     #**
     # 
-    # @api {get} /quest_activities/:id Get a quest activity
+    # @api {get} /activities/:id Get a quest activity
     # @apiName GetQuestActivity
     # @apiGroup Quests
     # @apiVersion  1.0.0
@@ -183,11 +190,12 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "quest_id": "1",
     #         "description": "Break into the museum",
     #         "hint": "Don't get caught",
+    #         "picture_url": "https://example.com/hi.jpg",
     #         "post": false,
     #         "image": false,
     #         "audio": false,
     #         "beacon": "123456-7890",
-    #         "activity_code": 23813921
+    #         "activity_code": "23813921"
     #         "step": 0
     #     }
     # }
@@ -202,7 +210,7 @@ class Api::V1::QuestActivitiesController < ApiController
 
     #**
     # 
-    # @api {delete} /quest_activities/:id Destroy a quest activity
+    # @api {delete} /activities/:id Destroy a quest activity
     # @apiName QuestActivityDestroy
     # @apiGroup Quests
     # @apiVersion  1.0.0
@@ -235,6 +243,6 @@ class Api::V1::QuestActivitiesController < ApiController
 
 private
     def activity_params
-        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :activity_code, :step)
+        params.require(:quest_activity).permit( :description, :hint, :post, :image, :audio, :beacon, :activity_code, :step, :picture)
     end
 end
