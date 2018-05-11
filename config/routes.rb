@@ -55,7 +55,7 @@ Rails.application.routes.draw do
           delete "" => "session#destroy"
         end
       end
-      resources :activities, :controller => "quest_activities", only: %i[ update show ] do
+      resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
         get "completions" => "quest_completions#for_activity"
       end
       resources :quests do

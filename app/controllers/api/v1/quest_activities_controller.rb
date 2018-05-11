@@ -232,8 +232,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #*
 
     def destroy
-        quest_activity = QuestActiviy.find(params[:id])
-        if current_user.some_admin
+        quest_activity = QuestActivity.find(params[:id])
+        if current_user.some_admin?
             quest_activity.deleted = true
             head :ok
         else
