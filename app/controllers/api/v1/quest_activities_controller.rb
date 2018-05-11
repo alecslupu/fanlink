@@ -24,7 +24,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiParam  {Number} [actvity_code] The code required to enable the activity
     # @apiParam  {Number} step Used to order the activities. Multiple activities can share the same step
     # 
-    # @apiSuccess (200) {json} quest_activity Returns the create quest activity
+    # @apiSuccess (200) {curl} quest_activity Returns the create quest activity
     # 
     # curl -X POST \
     # http://localhost:3000/quests/1/activities \
@@ -251,6 +251,7 @@ class Api::V1::QuestActivitiesController < ApiController
         quest_activity = QuestActivity.find(params[:id])
         if current_user.some_admin?
             quest_activity.deleted = true
+            quest_activity.save
             head :ok
         else
           render_not_found
