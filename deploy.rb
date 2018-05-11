@@ -6,37 +6,39 @@ class Deploy < Thor
   desc "deploy BRANCH DESTINATION", "deploy a branch to a heroku destination"
 
   def deploy(branch, dest)
-    puts "Attempting to put #{branch} on #{dest}"
+    say "Attempting to put #{branch} on #{dest}", :yellow
 
     current = `git rev-parse --abbrev-ref HEAD`.chomp
 
     if current != branch
-      puts "Not on the branch #{branch}.  Switch away from #{current}"
+      say "Not on the branch #{branch}.  Switch away from #{current}", :red
       exit
     end
 
-    if branch != "master"
-      puts "Generating docs"
+    if branch == "master" || branch == "staging"
+      say "Generating docs for #{branch}", :blue
+      `git --git-dir ../apidocs/.git checkout #{branch}`
       `bin/docapi`
-      `git add -f public/apidocs/*`
-      `git commit -m 'doc update'`
+      `git --git-dir ../apidocs/.git add .`
+      `git --git-dir ../apidocs/.git commit -m 'doc update'`
+      `git --git-dir ../apidocs/.git push origin #{branch}`
     end
 
     if !(`git remote | sort | uniq`.match(dest))
-      puts "Don't see #{dest} in the list of remotes."
+      say "Don't see #{dest} in the list of remotes.", :red
       exit
     end
 
-    puts "Ensuring we are up to date."
+    say "Ensuring we are up to date.", :blue
     `git pull origin #{branch}`
 
-    puts "Make a bundle"
+    say "Make a bundle", :blue
     `bundle`
 
-    puts "Filling it with a fart from DHH."
+    say "git push -f #{dest} #{branch}:master", :yellow
     `git push -f #{dest} #{branch}:master`
 
-    puts "Running Migrations"
+    say "Running Migrations", :blue
     Open3.popen2(*%w[heroku run rails db:migrate -r], dest) do |input, output, _|
       input.close
       output.each { |line| puts line }
