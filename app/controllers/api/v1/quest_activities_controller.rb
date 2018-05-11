@@ -1,7 +1,7 @@
 class Api::V1::QuestActivitiesController < ApiController
     before_action :admin_only, except: %i[ index show ]
     load_up_the Quest, from: :quest_id, except: %i[ update show delete ]
-    load_up_the QuestActivity, only: :update 
+    load_up_the QuestActivity, only: %i[ update show ]
 
     #**
     # 
@@ -26,10 +26,19 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccess (200) {json} quest_activity Returns the create quest activity
     # 
-    # @apiParamExample  {Number} Request-Example:
-    # {
-    #     "url": "https://api.example.com/quests/1/activities"
-    # }
+    # curl -X POST \
+    # http://localhost:3000/quests/1/activities \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Accept-Language: en' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: multipart/form-data' \
+    # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+    # -F 'quest_activity[description]=Escape to Boston' \
+    # -F 'quest_activity[hint]=Find the glasses' \
+    # -F 'quest_activity[beacon]=123456-7890' \
+    # -F 'quest_activity[activity_code]=293812' \
+    # -F 'quest_activity[step]=0' \
+    # -F 'quest_activity[picture]=undefined'
     # 
     # 
     # @apiSuccessExample {Object} Success-Response:
@@ -81,12 +90,13 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccess (200) {Object} quest_activity Returns the updated quest activity
     # 
-    # @apiParamExample  {JSON} Request-Example:
-    # {
-    #     "quest_activity": {
-    #          "hint": "Got Caught! Again!"
-    #     }
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X PATCH \
+    # http://localhost:3000/activities/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+    # -F 'quest_activity[beacon]=09876-54321'
     # 
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
@@ -102,7 +112,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": false,
     #         "image": false,
     #         "audio": false,
-    #         "beacon": "123456-7890",
+    #         "beacon": "09876-54321",
     #         "activity_code": "23813921"
     #         "step": 0
     #     }
@@ -130,11 +140,12 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccess (200) {Object[]} quest_activities An array of activity objects
     # 
-    # @apiParamExample  {Number} Request-Example:
-    # {
-    #     "url": "https://api.example.com/quests/1/activities"
-    # }
-    # 
+    # @apiParamExample  {curl} Request-Example:
+    #curl -X GET \
+    # http://localhost:3000/quests/1/activities \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
+    #
     # @apiSuccessExample {Object[]} Success-Response:
     # HTTP/1.1 200 OK
     # {
@@ -145,6 +156,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "description": "Break into the museum",
     #             "hint": "Got Caught! Again!",
     #             "picture_url": "https://example.com/hi.jpg",
+    #             "picture_width": 1920,
+    #             "picture_height": 1080,
     #             "post": false,
     #             "image": false,
     #             "audio": false,
@@ -178,9 +191,10 @@ class Api::V1::QuestActivitiesController < ApiController
     # @apiSuccess (200) {Object} activity Activity Object   
     # 
     # @apiParamExample  {Url} Request-Example:
-    # {
-    #     "url": "https://api.example.com/quest_activities/1"
-    # }
+    # curl -X GET \
+    # http://localhost:3000/activities/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
@@ -191,6 +205,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "description": "Break into the museum",
     #         "hint": "Don't get caught",
     #         "picture_url": "https://example.com/hi.jpg",
+    #         "picture_width": 1920,
+    #         "picture_height": 1080,
     #         "post": false,
     #         "image": false,
     #         "audio": false,
@@ -220,11 +236,11 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @apiSuccess (200) {Header} header 200 OK header response
     # 
-    # @apiParamExample  {Url} Request-Example:
-    # {
-    #     "url": "https://api.example.com/quest_activity/1"
-    # }
-    # 
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X DELETE \
+    # http://localhost:3000/activities/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # @apiSuccessExample {Header} Success-Response:
     # HTTP/1.1 200 OK
     # 
@@ -232,8 +248,8 @@ class Api::V1::QuestActivitiesController < ApiController
     #*
 
     def destroy
-        quest_activity = QuestActiviy.find(params[:id])
-        if current_user.some_admin
+        quest_activity = QuestActivity.find(params[:id])
+        if current_user.some_admin?
             quest_activity.deleted = true
             head :ok
         else
