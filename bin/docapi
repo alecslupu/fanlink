@@ -5,5 +5,5 @@ branch=`git rev-parse --abbrev-ref HEAD`
 if [ $branch = "master" ]; then
     echo "Do not run this on master!"
 else
-    apidoc -c config/ -i app/controllers/api -o public/apidocs
+    apidoc -c config/ -i app/controllers/api -o ../apidocs
 fi
