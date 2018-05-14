@@ -7,21 +7,21 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {post} /quests/:id/activities Create quest activity
     # @apiName CreateQuestActivity
-    # @apiGroup Quests
+    # @apiGroup Quest Activities
     # @apiVersion  1.0.0
     # @apiDescription Create a quest activity
     # @apiPermission admin
     # 
     # 
     # @apiParam  {number} id Quest ID
-    # @apiParam  {Object} quest_activity Container for the quest activity fields
+    # @apiParam  {Object} activity Container for the quest activity fields
     # @apiParam  {String} description A description of the requirements for the activity
     # @apiParam  {String} [hint] Optional hint text
     # @apiParam  {Boolean} [post] Boolean for whether or not the activity requires a post
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
-    # @apiParam  {String} beacon Beacon attached to the activity
-    # @apiParam  {Number} [actvity_code] The code required to enable the activity
+    # @apiParam  {Number} beacon Beacon attached to the activity
+    # @apiParam  {String} [actvity_code] The code required to enable the activity
     # @apiParam  {Number} step Used to order the activities. Multiple activities can share the same step
     # 
     # @apiSuccess (200) {curl} quest_activity Returns the create quest activity
@@ -35,7 +35,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
     # -F 'quest_activity[description]=Escape to Boston' \
     # -F 'quest_activity[hint]=Find the glasses' \
-    # -F 'quest_activity[beacon]=123456-7890' \
+    # -F 'quest_activity[beacon]=1' \
     # -F 'quest_activity[activity_code]=293812' \
     # -F 'quest_activity[step]=0' \
     # -F 'quest_activity[picture]=undefined'
@@ -54,9 +54,18 @@ class Api::V1::QuestActivitiesController < ApiController
     #     "post": false,
     #     "image": false,
     #     "audio": false,
-    #     "beacon": "123456-7890",
+    #     "beacon": {
+    #         "id": "1",
+    #         "product_id": "1",
+    #         "beacon_pid": "A12FC4-12912",
+    #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #         "lower": "25",
+    #         "upper": "75",
+    #         "created_at": "2018-05-14T08:12:25.042Z"
+    #     },
     #     "activity_code": "983213",
-    #     "step": 0
+    #     "step": 0,
+    #     "created_at": "2018-05-14T08:12:32.419Z"
     #   }
     # }
     # 
@@ -65,6 +74,12 @@ class Api::V1::QuestActivitiesController < ApiController
 
     def create
         @quest_activity = @quest.quest_activities.create(activity_params)
+        if @quest_activity.errors.any?
+            @quest_activity.errors.full_messages.each do |message|
+                puts message
+            end
+        end
+
         return_the @quest_activity
     end
 
@@ -72,20 +87,21 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {patch} /activities/:id Update a quest activity
     # @apiName QuestActivityUpdate
-    # @apiGroup Quests
+    # @apiGroup Quest Activities
     # @apiVersion  1.0.0
     # @apiDescription Update a quest activity with optional fields
     # @apiPermission admin
     # 
     # 
     # @apiParam  {Number} id ID of activity to update
-    # @apiParam  {Object} quest_activity Container for the quest activity fields
+    # @apiParam  {Object} activity Container for the quest activity fields
     # @apiParam  {String} [description] A description of the requirements for the activity
     # @apiParam  {String} [hint] Optional hint text
     # @apiParam  {Boolean} [post] Boolean for whether or not the activity requires a post
     # @apiParam  {Boolean} [image] Boolean for whether or not the activity requires an image to be attached
     # @apiParam  {Boolean} [audio] Boolean for whether or not the activity requires an audio file
-    # @apiParam  {String} beacon Beacon attached to the activity
+    # @apiParam  {Number} beacon Beacon attached to the activity
+    # @apiParam  {String} [activity_code] The code required to enable the activity
     # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
     # 
     # @apiSuccess (200) {Object} quest_activity Returns the updated quest activity
@@ -96,7 +112,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache' \
     # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
-    # -F 'quest_activity[beacon]=09876-54321'
+    # -F 'quest_activity[beacon]=2'
     # 
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
@@ -112,9 +128,18 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": false,
     #         "image": false,
     #         "audio": false,
-    #         "beacon": "09876-54321",
-    #         "activity_code": "23813921"
-    #         "step": 0
+    #         "beacon": {
+    #             "id": "1",
+    #             "product_id": "1",
+    #             "beacon_pid": "A12FC4-12912",
+    #             "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #             "lower": "25",
+    #             "upper": "75",
+    #             "created_at": "2018-05-14T08:12:25.042Z"
+    #         },
+    #         "activity_code": "23813921",
+    #         "step": 0,
+    #         "created_at": "2018-05-14T08:12:32.419Z"
     #     }
     # }
     # 
@@ -130,7 +155,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {get} /quests/:id/activities Get Quest Activities
     # @apiName GetQuestActivities
-    # @apiGroup Quests
+    # @apiGroup Quest Activities
     # @apiVersion  1.0.0
     # @apiDescription Retrieve all activities for a given quest
     # @apiPermission user
@@ -161,9 +186,18 @@ class Api::V1::QuestActivitiesController < ApiController
     #             "post": false,
     #             "image": false,
     #             "audio": false,
-    #             "beacon": "123456-7890",
-    #             "activity_code": "23813921"
-    #             "step": 0
+    #             "beacon": {
+    #                 "id": "1",
+    #                 "product_id": "1",
+    #                 "beacon_pid": "A12FC4-12912",
+    #                 "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #                 "lower": "25",
+    #                 "upper": "75",
+    #                 "created_at": "2018-05-14T08:12:25.042Z"
+    #             },
+    #             "activity_code": "23813921",
+    #             "step": 0,
+    #             "created_at": "2018-05-14T08:12:32.419Z"
     #         }
     #     ]
     # }
@@ -172,7 +206,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #*
 
     def index
-        @quest_activities = @quest.quest_activities.all
+        @quest_activities = @quest.quest_activities.all.order(created_at: :desc)
         return_the @quest_activities
     end
 
@@ -180,7 +214,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {get} /activities/:id Get a quest activity
     # @apiName GetQuestActivity
-    # @apiGroup Quests
+    # @apiGroup Quest Activities
     # @apiVersion  1.0.0
     # @apiDescription Retrieve a single quest activity from the database
     # @apiPermission user
@@ -210,9 +244,18 @@ class Api::V1::QuestActivitiesController < ApiController
     #         "post": false,
     #         "image": false,
     #         "audio": false,
-    #         "beacon": "123456-7890",
-    #         "activity_code": "23813921"
-    #         "step": 0
+    #         "beacon": {
+    #             "id": "1",
+    #             "product_id": "1",
+    #             "beacon_pid": "A12FC4-12912",
+    #             "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #             "lower": "25",
+    #             "upper": "75",
+    #             "created_at": "2018-05-14T08:12:25.042Z"
+    #         },
+    #         "activity_code": "23813921",
+    #         "step": 0,
+    #         "created_at": "2018-05-14T08:12:32.419Z"
     #     }
     # }
     # 
@@ -228,7 +271,7 @@ class Api::V1::QuestActivitiesController < ApiController
     # 
     # @api {delete} /activities/:id Destroy a quest activity
     # @apiName QuestActivityDestroy
-    # @apiGroup Quests
+    # @apiGroup Quest Activities
     # @apiVersion  1.0.0
     # 
     # 

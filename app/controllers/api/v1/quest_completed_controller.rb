@@ -1,4 +1,4 @@
-class Api::V1::QuestCompletedsController < ApiController
+class Api::V1::QuestCompletedController < ApiController
     include Rails::Pagination
 
     #**

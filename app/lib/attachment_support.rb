@@ -3,7 +3,7 @@ module AttachmentSupport
 
   module ClassMethods
     def has_image_called(name)
-      has_attached_file name
+      has_attached_file name , :default_url => nil
       validates_attachment name,
                           content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
                           size: { in: 0..10.megabytes }

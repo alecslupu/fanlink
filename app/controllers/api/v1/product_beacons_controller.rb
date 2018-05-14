@@ -4,7 +4,7 @@ class Api::V1::ProductBeaconsController < ApiController
     before_action :admin_only
     
     #**
-    # @api {get} /product_beacons Beacons for a product
+    # @api {get} /beacons Beacons for a product
     # @apiName ProductBeacons
     # @apiGroup Beacons
     # @apiVersion  1.0.0
@@ -25,7 +25,7 @@ class Api::V1::ProductBeaconsController < ApiController
     #
     # @apiParamExample  {url} Request-Example:
     # {
-    #     "url": "https://api.example.com/product_beacons"
+    #     "url": "https://api.example.com/beacons"
     # }
     # 
     # @apiSuccessExample {json} Success-Response:
@@ -37,7 +37,7 @@ class Api::V1::ProductBeaconsController < ApiController
     #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
     #         "lower": "25",
     #         "upper": "75",
-    #         "attachd_to": "",
+    #         "attached_to": null,
     #         "created_at": "2018-05-09T21:52:48.653Z"
     #    ]
     # }
@@ -46,13 +46,13 @@ class Api::V1::ProductBeaconsController < ApiController
     #*
 
     def index
-        @product_beacons = paginate(ProductBeacon.where.not(deleted: true))
+        @product_beacons = paginate(ProductBeacon.where.not(deleted: true).order(created_at: :desc))
         return_the @product_beacons
     end
 
     #**
     # 
-    # @api {get} /product_beacons/list Get a list of all beacons.
+    # @api {get} /beacons/list Get a list of all beacons.
     # @apiName GetBeaconsList
     # @apiGroup Beacons
     # @apiVersion  1.0.0
@@ -86,7 +86,7 @@ class Api::V1::ProductBeaconsController < ApiController
     #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
     #         "lower": "25",
     #         "upper": "75",
-    #         "attachd_to": "",
+    #         "attached_to": null,
     #         "created_at": "2018-05-09T21:52:48.653Z"
     #    ]
     # }
@@ -100,7 +100,7 @@ class Api::V1::ProductBeaconsController < ApiController
     end
 
     #**
-    # @api {get} /product_beacons/:id Get Beacon by id or it's product id
+    # @api {get} /beacons/:id Get Beacon by id or it's product id
     # @apiName GetBeacon
     # @apiGroup Beacons
     # @apiVersion  1.0.0

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510190345) do
+ActiveRecord::Schema.define(version: 20180514080813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,9 +349,9 @@ ActiveRecord::Schema.define(version: 20180510190345) do
     t.boolean "post", default: false
     t.boolean "image", default: false
     t.boolean "audio", default: false
-    t.text "beacon"
+    t.integer "beacon"
     t.boolean "deleted", default: false
-    t.integer "step"
+    t.integer "step", null: false
     t.string "activity_code"
     t.string "picture_file_name"
     t.string "picture_content_type"
@@ -360,6 +360,8 @@ ActiveRecord::Schema.define(version: 20180510190345) do
     t.text "picture_meta"
     t.jsonb "hint", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 

@@ -5,7 +5,8 @@ echo "Running start up script..."
 echo "$(git rev-parse --abbrev-ref HEAD)"
 if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
   echo "Generating Postman import"
-  apidoc-swagger -i /usr/src/app/app/controllers/api -o /usr/src/app/public/swagger
+  
+  cd /usr/src/app/config && apidoc-swagger -c /usr/src/app/config -i /usr/src/app/app/controllers/api -o /usr/src/app/public/swagger && cd -
 fi
 
 echo "Checking installed gems..."

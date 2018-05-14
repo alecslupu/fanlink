@@ -25,7 +25,6 @@ Rails.application.routes.draw do
           post "password_reset" => "password_resets#update"
           get "recommended" => "recommended_people#index"
         end
-        get "completions" => "quest_completions#for_person"
       end
       get "post_comments/list" => "post_comments#list"
       resources :post_reports, only: %i[ create index update ]
@@ -56,7 +55,6 @@ Rails.application.routes.draw do
         end
       end
       resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
-        get "completions" => "quest_completions#for_activity"
       end
       resources :quests do
         collection do
@@ -64,11 +62,10 @@ Rails.application.routes.draw do
         end
           get "activities" => "quest_activities#index"
           post "activities" => "quest_activities#create"
-          get "completions" => "quest_completions#index"
           post "completions" => "quest_completions#create"
       end
 
-      resources :completions, :controller => "quest_completions", only: %i[ update show ] do
+      resources :completions, :controller => "quest_completions", only: %i[ index update show ] do
         collection do
           get "list" => "quest_completions#list"
         end
