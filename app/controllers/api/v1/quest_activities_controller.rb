@@ -206,7 +206,7 @@ class Api::V1::QuestActivitiesController < ApiController
     #*
 
     def index
-        @quest_activities = @quest.quest_activities.all.order(created_at: :desc)
+        @quest_activities = @quest.quest_activities.where.not(deleted: true).order(created_at: :desc)
         return_the @quest_activities
     end
 
