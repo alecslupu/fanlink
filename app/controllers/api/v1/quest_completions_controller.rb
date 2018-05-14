@@ -21,6 +21,7 @@ class Api::V1::QuestCompletionsController < ApiController
     #     "completion": {
     #         "id": "1",
     #         "person_id": "1",
+    #         "quest_id": "1",    
     #         "activity_id": "1",
     #         "create_time": "2018-05-08T23:24:48Z"
     #     }
@@ -45,12 +46,14 @@ class Api::V1::QuestCompletionsController < ApiController
     #         {
     #             "id": "1",
     #             "person_id": "1",
+    #             "quest_id": "1",
     #             "activity_id": "1",
     #             "create_time": "2018-05-09T17:14:07Z"
     #         },
     #         {
     #             "id": "2",
     #             "person_id": "1",
+    #             "quest_id": "1",
     #             "activity_id": "2",
     #             "create_time": "2018-05-09T17:14:13Z"
     #         }
@@ -58,11 +61,12 @@ class Api::V1::QuestCompletionsController < ApiController
     # }
     #**
 
+    #**
     #   
     # @api {get} /completions Get the completions for the current user. Filterable
     # @apiName CurrentUserCompletions
     # @apiGroup Quest Activity Completion
-    # @apiVersion  1.0.1
+    # @apiVersion  1.0.0
     #
     # @apiParam {Number} [quest_id_filter] Full match on quest id.
     # @apiParam {Number} [activity_id_filter] Full match on activity id.
@@ -84,6 +88,7 @@ class Api::V1::QuestCompletionsController < ApiController
         return_the @completions
     end
 
+    #**
     # 
     # @api {post} /quests/:id/completions Register an activity for quest as complete
     # @apiName CreateCompletion
