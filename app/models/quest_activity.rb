@@ -5,6 +5,7 @@ class QuestActivity < ApplicationRecord
     has_manual_translated :description, :nam
     belongs_to :quest
     has_many :quest_completions, :foreign_key => "activity_id"
+    belongs_to :product_beacon, :foreign_key => "beacon"
     has_image_called :picture
 
     def product
