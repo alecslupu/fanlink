@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514080813) do
+ActiveRecord::Schema.define(version: 20180514185307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,8 +326,8 @@ ActiveRecord::Schema.define(version: 20180514080813) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "uuid"
-    t.integer "lower"
-    t.integer "upper"
+    t.integer "lower", null: false
+    t.integer "upper", null: false
     t.index ["beacon_pid"], name: "ind_beacons_pid"
     t.index ["product_id"], name: "ind_beacons_products"
   end
