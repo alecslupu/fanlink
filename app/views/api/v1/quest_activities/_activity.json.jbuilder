@@ -8,6 +8,11 @@ json.picture_height activity.picture.height
 json.post activity.post
 json.image activity.image
 json.audio activity.audio
+if defined?(activity.quest_completions) && !activity.quest_completions.empty?
+    json.completed true
+else 
+    json.completed false
+end
 json.beacon do 
     json.partial! "api/v1/product_beacons/beacon", locals: { beacon: ProductBeacon.find(activity.beacon) }
 end
