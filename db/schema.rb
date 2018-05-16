@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514185307) do
+ActiveRecord::Schema.define(version: 20180516010921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,8 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_message_reports_on_created_at"
+    t.index ["status"], name: "index_message_reports_on_status"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -188,6 +190,7 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
+    t.index ["created_at"], name: "index_messages_on_created_at"
     t.index ["room_id"], name: "idx_messages_room"
   end
 
@@ -231,6 +234,7 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.date "birthdate"
     t.text "city"
     t.text "country_code"
+    t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
@@ -264,6 +268,7 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_post_comment_reports_on_created_at"
     t.index ["post_comment_id"], name: "idx_post_comment_reports_post_comment"
   end
 
@@ -274,6 +279,7 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.boolean "hidden", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_post_comments_on_created_at"
     t.index ["post_id"], name: "idx_post_comments_post"
   end
 
@@ -292,6 +298,7 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_post_reports_on_created_at"
     t.index ["post_id"], name: "idx_post_reports_post"
   end
 
@@ -313,6 +320,7 @@ ActiveRecord::Schema.define(version: 20180514185307) do
     t.integer "priority", default: 0, null: false
     t.boolean "recommended", default: false, null: false
     t.boolean "notify_followers", default: false, null: false
+    t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
