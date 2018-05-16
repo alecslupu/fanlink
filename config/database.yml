@@ -27,7 +27,7 @@ development:
   adapter: postgresql
   database: fanlink_development
   username: <%= ENV.fetch("FANLINK_PG_USER", "root") %>
-  password: <%= ENV.fetch('FLINK_PG_PASSWORD', "") %>
+  password: <%= ENV.fetch('FANLINK_PG_PASSWORD', "") %>
   host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
 
 staging:
