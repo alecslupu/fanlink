@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180516010921) do
+ActiveRecord::Schema.define(version: 20180518115614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 20180516010921) do
     t.boolean "active", default: true, null: false
     t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
     t.index ["name"], name: "unq_action_types_name", unique: true
+  end
+
+  create_table "activity_types", force: :cascade do |t|
+    t.integer "activity_id", null: false
+    t.text "atype", null: false
+    t.jsonb "value", default: {}, null: false
+    t.index ["activity_id"], name: "ind_activity_id"
   end
 
   create_table "authentications", force: :cascade do |t|
@@ -355,12 +362,7 @@ ActiveRecord::Schema.define(version: 20180516010921) do
     t.integer "quest_id", null: false
     t.text "description_text_old"
     t.text "hint_text_old"
-    t.boolean "post", default: false
-    t.boolean "image", default: false
-    t.boolean "audio", default: false
-    t.integer "beacon"
     t.boolean "deleted", default: false
-    t.integer "step", null: false
     t.string "activity_code"
     t.string "picture_file_name"
     t.string "picture_content_type"
@@ -371,6 +373,7 @@ ActiveRecord::Schema.define(version: 20180516010921) do
     t.jsonb "description", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "step_id", null: false
     t.index ["quest_id"], name: "ind_activity_quest"
   end
 
@@ -387,8 +390,11 @@ ActiveRecord::Schema.define(version: 20180516010921) do
     t.integer "activity_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "status", default: "0", null: false
+    t.integer "step_id", null: false
     t.index ["person_id"], name: "ind_quest_person_completions"
     t.index ["quest_id"], name: "ind_quest_completions"
+    t.index ["step_id"], name: "idx_completions_step"
   end
 
   create_table "quests", force: :cascade do |t|
@@ -454,6 +460,23 @@ ActiveRecord::Schema.define(version: 20180516010921) do
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 
+  create_table "step_completed", force: :cascade do |t|
+    t.integer "step_id", null: false
+    t.integer "person_id", null: false
+    t.text "status", default: "0", null: false
+  end
+
+  create_table "steps", force: :cascade do |t|
+    t.integer "quest_id", null: false
+    t.text "display"
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "unlocks", default: [], null: false, array: true
+    t.integer "initial_status", default: 0, null: false
+    t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin
+  end
+
   create_table "versions", force: :cascade do |t|
     t.text "item_type", null: false
     t.integer "item_id", null: false
@@ -464,6 +487,7 @@ ActiveRecord::Schema.define(version: 20180516010921) do
     t.index ["item_type", "item_id"], name: "ind_versions_item_type_item_id"
   end
 
+  add_foreign_key "activity_types", "quest_activities", column: "activity_id", name: "fk_activity_types_quest_activities"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
   add_foreign_key "badge_actions", "people", name: "fk_badge_actions_people", on_delete: :cascade
@@ -499,9 +523,10 @@ ActiveRecord::Schema.define(version: 20180516010921) do
   add_foreign_key "post_reports", "posts", name: "fk_post_reports_post", on_delete: :cascade
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
   add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
-  add_foreign_key "quest_activities", "quests", name: "fk_activities_quests"
+  add_foreign_key "quest_activities", "steps", name: "fk_activities_steps"
   add_foreign_key "quest_completeds", "people", name: "fk_quest_completeds_people"
   add_foreign_key "quest_completeds", "quests", name: "fk_quest_completeds_quests"
+  add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
   add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
@@ -509,4 +534,5 @@ ActiveRecord::Schema.define(version: 20180516010921) do
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
+  add_foreign_key "steps", "quests", name: "fk_steps_quests"
 end

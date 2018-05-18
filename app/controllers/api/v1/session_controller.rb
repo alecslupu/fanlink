@@ -94,6 +94,7 @@ class Api::V1::SessionController < ApiController
   #*
   def destroy
     logout
+    cookies.delete :_fanlink_session
     render body: nil, status: :ok
   end
 end
