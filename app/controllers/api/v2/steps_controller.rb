@@ -2,6 +2,7 @@ class Api::V2::StepsController < ApiController
     include Wisper::Publisher
     load_up_the Quest, from: :quest_id, only: %i[ create index ]
     load_up_the Step, from: :id, only: %i[ update delete ]
+
     #**
     # @apiDefine Success
     #    description 
@@ -28,7 +29,7 @@ class Api::V2::StepsController < ApiController
     #*
 
     #**
-    # @apiDefine SuccessArray
+    # @apiDefine Successes
     #    Array of success objects 
     # @apiSuccess (200) {Object[]} Steps Steps container
     # @apiSuccess (200) {Number} steps.id ID of the step
