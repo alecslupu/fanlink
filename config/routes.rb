@@ -55,20 +55,26 @@ Rails.application.routes.draw do
         end
       end
       resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
+        resources :types, :controller => "activity_types", only: %i[ create index ]
       end
+
+      resources :activity_types, only: %i[ show update destroy ] 
+
       resources :quests do
+        resources :steps, only: %i[ create index ]
         collection do
           get "list" => "quests#list"
         end
-          get "activities" => "quest_activities#index"
-          post "activities" => "quest_activities#create"
-          post "completions" => "quest_completions#create"
       end
 
-      resources :completions, :controller => "quest_completions", only: %i[ index update show ] do
+      resources :completions, :controller => "quest_completions", only: %i[ update show ] do
         collection do
           get "list" => "quest_completions#list"
         end
+      end
+      resources :steps, only: %i[ show update destroy ] do
+        resources :activities, :controller => "quest_activities", only: %i[ create index ]
+        resources :completions, :controller => "quest_completions", only: %i[ create index ]
       end
     end
     version 2
@@ -80,6 +86,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :action_types
+    resources :activity_types
     resources :badges
     resources :events
     resources :levels
@@ -99,9 +106,13 @@ Rails.application.routes.draw do
         post "select_product" => "products#select"
       end
     end
+    resources :product_beacons
     resources :rooms
 
-    # resources :quests
+    resources :quests
+    resources :quest_activities
+    resources :quest_completions
+    resources :steps
 
 
     get ":product_internal_name/login" => "sessions#new"

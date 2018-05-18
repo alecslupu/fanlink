@@ -30,6 +30,8 @@ class Person < ApplicationRecord
   has_many :room_memberships, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :quest_completions, dependent: :destroy
+  has_many :step_completed, dependent: :destroy
+  has_many :quest_completed, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
 
@@ -104,6 +106,14 @@ class Person < ApplicationRecord
   #
   def self.named_like(term)
     where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
+  end
+
+  def self.current_user
+    Thread.current[:user]
+  end
+
+  def self.current_user=(user)
+    Thread.current[:user] = user
   end
 
   def reset_password_to(password)

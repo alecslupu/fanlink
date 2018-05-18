@@ -1,3 +1,374 @@
-class Api::V2::QuestActivitiesController < Api::V1::QuestActivitiesController 
+class Api::V2::QuestActivitiesController < ApiController
+    include Wisper::Publisher
+    before_action :admin_only, except: %i[ index show ]
+    load_up_the Step, from: :step_id, except: %i[ update show delete ]
+    load_up_the QuestActivity, only: %i[ update show ]
 
+    #**
+    # 
+    # @api {post} /quests/:id/activities Create quest activity
+    # @apiName CreateQuestActivity
+    # @apiGroup Quest Activities
+    # @apiVersion  2.0.0
+    # @apiDescription Create a quest activity
+    # @apiPermission admin
+    # 
+    # 
+    # @apiParam  {number} id Quest ID
+    # @apiParam  {Object} activity Container for the quest activity fields
+    # @apiParam  {String} description A description of the requirements for the activity
+    # @apiParam  {String} [hint] Optional hint text
+    # @apiParam  {Number} step Used to order the activities. Multiple activities can share the same step
+    # 
+    # @apiSuccess (200) {curl} quest_activity Returns the create quest activity
+    # 
+    # curl -X POST \
+    # http://localhost:3000/quests/1/activities \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Accept-Language: en' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: multipart/form-data' \
+    # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+    # -F 'quest_activity[description]=Escape to Boston' \
+    # -F 'quest_activity[hint]=Find the glasses' \
+    # -F 'quest_activity[picture]=undefined'
+    # 
+    # 
+    # @apiSuccessExample {Object} Success-Response:
+    # {
+    #     "activity": {
+    #         "id": "1",
+    #         "quest_id": "1",
+    #         "step_id": 1,
+    #         "description": "Escape to Boston",
+    #         "hint": "Find the glasses",
+    #         "picture_url": null,
+    #         "picture_width": null,
+    #         "picture_height": null,
+    #         "completed": false,
+    #         "requirements": [
+    #             {
+    #                 "id": 1,
+    #                 "activity_id": 1,
+    #                 "type": "beacon",
+    #                 "value": {
+    #                     "id": "1",
+    #                     "product_id": "1",
+    #                     "beacon_pid": "A12FC4-12912",
+    #                     "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #                     "lower": "25",
+    #                     "upper": "75",
+    #                     "created_at": "2018-05-18T12:53:35.949Z"
+    #                 }
+    #             },
+    #             {
+    #                 "id": 2,
+    #                 "activity_id": 1,
+    #                 "type": "activity_code",
+    #                 "value": {
+    #                     "id": "14245154"
+    #                 }
+    #             }
+    #         ],
+    #         "deleted": false,
+    #         "step": {
+    #             "id": "1",
+    #             "quest_id": "1",
+    #             "unlocks": null,
+    #             "display": "Step 1",
+    #             "status": "unlocked"
+    #         },
+    #         "created_at": "2018-05-18T12:59:09.734Z"
+    #     }
+    # }
+    # 
+    # 
+    #*
+
+    def create
+        @quest_activity = @step.quest_activities.create(activity_params.merge(quest_id: @step.quest_id))
+        if @quest_activity.valid?
+            return_the @quest_activity
+        else
+            render json: { errors: @quest_activity.errors.messages }, status: :unprocessable_entity
+        end
+    end
+
+    #**
+    # 
+    # @api {patch} /activities/:id Update a quest activity
+    # @apiName QuestActivityUpdate
+    # @apiGroup Quest Activities
+    # @apiVersion  2.0.0
+    # @apiDescription Update a quest activity with optional fields
+    # @apiPermission admin
+    # 
+    # 
+    # @apiParam  {Number} id ID of activity to update
+    # @apiParam  {Object} activity Container for the quest activity fields
+    # @apiParam  {String} [description] A description of the requirements for the activity
+    # @apiParam  {String} [hint] Optional hint text
+    # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
+    # 
+    # @apiSuccess (200) {Object} quest_activity Returns the updated quest activity
+    # 
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X PATCH \
+    # http://localhost:3000/activities/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+    # 
+    # @apiSuccessExample {Object} Success-Response:
+    # HTTP/1.1 200 OK
+    # {
+    #     "activity": {
+    #         "id": "1",
+    #         "quest_id": "1",
+    #         "step_id": 1,
+    #         "description": "Escape to Boston",
+    #         "hint": "Find the glasses",
+    #         "picture_url": null,
+    #         "picture_width": null,
+    #         "picture_height": null,
+    #         "completed": false,
+    #         "requirements": [
+    #             {
+    #                 "id": 1,
+    #                 "activity_id": 1,
+    #                 "type": "beacon",
+    #                 "value": {
+    #                     "id": "1",
+    #                     "product_id": "1",
+    #                     "beacon_pid": "A12FC4-12912",
+    #                     "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #                     "lower": "25",
+    #                     "upper": "75",
+    #                     "created_at": "2018-05-18T12:53:35.949Z"
+    #                 }
+    #             },
+    #             {
+    #                 "id": 2,
+    #                 "activity_id": 1,
+    #                 "type": "activity_code",
+    #                 "value": {
+    #                     "id": "14245154"
+    #                 }
+    #             }
+    #         ],
+    #         "deleted": false,
+    #         "step": {
+    #             "id": "1",
+    #             "quest_id": "1",
+    #             "unlocks": null,
+    #             "display": "Step 1",
+    #             "status": "unlocked"
+    #         },
+    #         "created_at": "2018-05-18T12:59:09.734Z"
+    #     }
+    # }
+    # 
+    # 
+    #*
+
+    def update
+        @quest_activity.update_attributes(activity_params)
+        return_the @quest_activity
+    end
+
+    #**
+    # 
+    # @api {get} /quests/:id/activities Get Quest Activities
+    # @apiName GetQuestActivities
+    # @apiGroup Quest Activities
+    # @apiVersion  2.0.0
+    # @apiDescription Retrieve all activities for a given quest
+    # @apiPermission user
+    # 
+    # 
+    # @apiParam  {Number} id Quest ID
+    # 
+    # @apiSuccess (200) {Object[]} quest_activities An array of activity objects
+    # 
+    # @apiParamExample  {curl} Request-Example:
+    #curl -X GET \
+    # http://localhost:3000/quests/1/activities \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
+    #
+    # @apiSuccessExample {Object[]} Success-Response:
+    # HTTP/1.1 200 OK
+    # {
+    #     "activities": [
+    #         {
+    #             "id": "1",
+    #             "quest_id": "1",
+    #             "step_id": 1,
+    #             "description": "Escape to Boston",
+    #             "hint": "Find the glasses",
+    #             "picture_url": null,
+    #             "picture_width": null,
+    #             "picture_height": null,
+    #             "completed": false,
+    #             "requirements": [
+    #                 {
+    #                     "id": 1,
+    #                     "activity_id": 1,
+    #                     "type": "beacon",
+    #                     "value": {
+    #                         "id": "1",
+    #                         "product_id": "1",
+    #                         "beacon_pid": "A12FC4-12912",
+    #                         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #                         "lower": "25",
+    #                         "upper": "75",
+    #                         "created_at": "2018-05-18T12:53:35.949Z"
+    #                     }
+    #                 },
+    #                 {
+    #                     "id": 2,
+    #                     "activity_id": 1,
+    #                     "type": "activity_code",
+    #                     "value": {
+    #                         "id": "14245154"
+    #                     }
+    #                 }
+    #             ],
+    #             "activity_code": "2451313213",
+    #             "deleted": false,
+    #             "step": {
+    #                 "id": "1",
+    #                 "quest_id": "1",
+    #                 "unlocks": null,
+    #                 "display": "Step 1",
+    #                 "status": "unlocked"
+    #             },
+    #             "created_at": "2018-05-18T12:59:09.734Z"
+    #         }
+    #     ]
+    # }
+    # 
+    # 
+    #*
+
+    def index
+        @quest_activities = @step.quest_activities.with_completion(current_user).where(deleted: false).order(created_at: :desc)
+        return_the @quest_activities
+    end
+
+    #**
+    # 
+    # @api {get} /activities/:id Get a quest activity
+    # @apiName GetQuestActivity
+    # @apiGroup Quest Activities
+    # @apiVersion  2.0.0
+    # @apiDescription Retrieve a single quest activity from the database
+    # @apiPermission user
+    # 
+    # 
+    # @apiParam  {Number} id Activity ID
+    # 
+    # @apiSuccess (200) {Object} activity Activity Object   
+    # 
+    # @apiParamExample  {Url} Request-Example:
+    # curl -X GET \
+    # http://localhost:3000/activities/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
+    # 
+    # @apiSuccessExample {Object} Success-Response:
+    # HTTP/1.1 200 OK
+    # {
+    #     "activity": {
+    #         "id": "1",
+    #         "quest_id": "1",
+    #         "step_id": 1,
+    #         "description": "Escape to Boston",
+    #         "hint": "Find the glasses",
+    #         "picture_url": null,
+    #         "picture_width": null,
+    #         "picture_height": null,
+    #         "completed": false,
+    #         "requirements": [
+    #             {
+    #                 "id": 1,
+    #                 "activity_id": 1,
+    #                 "type": "beacon",
+    #                 "value": {
+    #                     "id": "1",
+    #                     "product_id": "1",
+    #                     "beacon_pid": "A12FC4-12912",
+    #                     "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
+    #                     "lower": "25",
+    #                     "upper": "75",
+    #                     "created_at": "2018-05-18T12:53:35.949Z"
+    #                 }
+    #             },
+    #             {
+    #                 "id": 2,
+    #                 "activity_id": 1,
+    #                 "type": "activity_code",
+    #                 "value": {
+    #                     "id": "14245154"
+    #                 }
+    #             }
+    #         ],
+    #         "deleted": false,
+    #         "step": {
+    #             "id": "1",
+    #             "quest_id": "1",
+    #             "unlocks": null,
+    #             "display": "Step 1",
+    #             "status": "unlocked"
+    #         },
+    #         "created_at": "2018-05-18T12:59:09.734Z"
+    #     }
+    # }
+    # 
+    # 
+    #*
+
+    def show
+        @quest_activity = QuestActivity.find(params[:id])
+        return_the @quest_activity
+    end
+
+    #**
+    # 
+    # @api {delete} /activities/:id Destroy a quest activity
+    # @apiName QuestActivityDestroy
+    # @apiGroup Quest Activities
+    # @apiVersion  2.0.0
+    # 
+    # 
+    # @apiParam  {Number} id Activity id
+    # 
+    # @apiSuccess (200) {Header} header 200 OK header response
+    # 
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X DELETE \
+    # http://localhost:3000/activities/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
+    # @apiSuccessExample {Header} Success-Response:
+    # HTTP/1.1 200 OK
+    # 
+    # 
+    #*
+
+    def destroy
+        quest_activity = QuestActivity.find(params[:id])
+        if current_user.some_admin?
+            quest_activity.deleted = true
+            quest_activity.save
+            head :ok
+        else
+          render_not_found
+        end    
+    end
+
+private
+    def activity_params
+        params.require(:quest_activity).permit( :description, :hint, :activity_code, :picture)
+    end
 end

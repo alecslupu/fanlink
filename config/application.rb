@@ -50,7 +50,7 @@ module Fanlink
         origins do |source, env|
           CorsGuard.allow_from?(source)
         end
-        resource "*", headers: :any, methods: :any, credentials: true
+        resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
       end
     end
     config.i18n.default_locale = :en

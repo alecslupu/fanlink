@@ -1,6 +1,5 @@
 class ProductBeacon < ApplicationRecord
     belongs_to :product
-    has_one :quest_activity, :foreign_key => "beacon"
 
     acts_as_tenant(:product)
 

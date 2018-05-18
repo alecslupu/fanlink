@@ -10,10 +10,10 @@ class Quest < ApplicationRecord
     #TODO Add translation support
     has_manual_translated :description, :name
     
-    has_many :quest_activities, dependent: :destroy
+    has_many :steps, dependent: :destroy
     has_many :quest_completions, dependent: :destroy
 
-    accepts_nested_attributes_for :quest_activities
+    #accepts_nested_attributes_for :quest_activities
 
     acts_as_tenant(:product)
 
