@@ -21,3 +21,8 @@ if step.quest_completions.exists?
 else
     json.status step.initial_status
 end
+if step.quest_activities.count > 0
+    json.activities step.quest_activities
+else
+    json.activities nil
+end
