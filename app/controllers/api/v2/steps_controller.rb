@@ -178,8 +178,8 @@ class Api::V2::StepsController < ApiController
     # 
     # @apiParam  {Number} id The ID of the step
     # 
-    # @apiParamExample  {type} Request-Example:
-    # 
+    # @apiParamExample  {curl} Request-Example:
+    # TODO
     # 
     # @apiUse Success
     # 
@@ -203,8 +203,8 @@ class Api::V2::StepsController < ApiController
     # 
     # @apiSuccess (Header) {200} 200 Returns a 200
     # 
-    # @apiParamExample  {type} Request-Example:
-    # 
+    # @apiParamExample  {curl} Request-Example:
+    # TODO
     # 
     # @apiSuccessExample {Header} Success-Response:
     #     # HTTP/1.1 200 OK
