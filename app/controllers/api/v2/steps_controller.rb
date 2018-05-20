@@ -13,6 +13,7 @@ class Api::V2::StepsController < ApiController
     # @apiSuccess (200) {String} status Current users step status. If a user hahsn't completed any steps, it will return the initial status set in the portal
     #
     # @apiSuccessExample {Object} Success-Response:
+    # HTTP/1.1 200 OK
     # {
     #     "step": {
     #         "id": "22",
@@ -37,6 +38,7 @@ class Api::V2::StepsController < ApiController
     # @apiSuccess (200) {String} steps.display Optional display name. Returns Step {step_id} if null
     #
     # @apiSuccessExample {Object[]} Success-Response:
+    # HTTP/1.1 200 OK
     # {
     #     "steps": [
     #         {
@@ -101,7 +103,7 @@ class Api::V2::StepsController < ApiController
     # 
     # @api {post} /quests/:id/steps Create a step for a quest
     # @apiName CreateStep
-    # @apiGroup Quest Step
+    # @apiGroup Quest Steps
     # @apiVersion  2.0.0
     # 
     # 
@@ -164,6 +166,50 @@ class Api::V2::StepsController < ApiController
         @step.update_attributes(step_params)
         return_the @step
     end
+
+    #**
+    # 
+    # @api {get} /steps/:id Get a step
+    # @apiName GetQuestStep
+    # @apiGroup Quest Steps
+    # @apiVersion  2.0.0
+    # 
+    # 
+    # @apiParam  {Number} id The ID of the step
+    # 
+    # @apiParamExample  {type} Request-Example:
+    # 
+    # 
+    # @apiUse Success
+    # 
+    #*
+
+    def show
+        @step = @quest.steps.find(params[:id])
+        return_the @step
+
+    end
+
+    #**
+    # 
+    # @api {DELETE} /steps/:id Delete a step
+    # @apiName DeleteQuestStep
+    # @apiGroup QuestSteps
+    # @apiVersion  2.0.0
+    # 
+    # 
+    # @apiParam  {Number} id Step ID
+    # 
+    # @apiSuccess (Header) {200} 200 Returns a 200
+    # 
+    # @apiParamExample  {type} Request-Example:
+    # 
+    # 
+    # @apiSuccessExample {Header} Success-Response:
+    #     # HTTP/1.1 200 OK
+    # 
+    # 
+    #*
 
     def delete
         if current_user.some_admin?
