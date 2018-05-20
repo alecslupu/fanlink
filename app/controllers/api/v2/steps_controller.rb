@@ -195,7 +195,7 @@ class Api::V2::StepsController < ApiController
     # 
     # @api {DELETE} /steps/:id Delete a step
     # @apiName DeleteQuestStep
-    # @apiGroup QuestSteps
+    # @apiGroup Quest Steps
     # @apiVersion  2.0.0
     # 
     # 
