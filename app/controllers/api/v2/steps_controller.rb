@@ -214,7 +214,7 @@ class Api::V2::StepsController < ApiController
     # 
     #*
 
-    def delete
+    def destroy
         if current_user.some_admin?
           @step.deleted = true
           @step.save
