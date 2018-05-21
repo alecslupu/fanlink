@@ -62,6 +62,7 @@ Rails.application.routes.draw do
 
       resources :quests do
         resources :steps, only: %i[ create index ]
+        resources :completions, :controller => "quest_completions", only: %i[ create index ]
         collection do
           get "list" => "quests#list"
         end
