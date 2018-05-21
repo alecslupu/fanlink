@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180521160405) do
+ActiveRecord::Schema.define(version: 20180521213131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20180521160405) do
     t.integer "activity_id", null: false
     t.text "atype", null: false
     t.jsonb "value", default: {}, null: false
+    t.boolean "deleted", default: false, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
 
