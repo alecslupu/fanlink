@@ -22,7 +22,7 @@ else
     json.status step.initial_status
 end
 if step.quest_activities.count > 0
-    json.activities step.quest_activities
+    json.activities step.quest_activities,  partial: "api/v2/quest_activities/activity", as: :activity
 else
     json.activities nil
 end

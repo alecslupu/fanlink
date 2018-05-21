@@ -10,4 +10,4 @@ else
     json.value atype.value
 end
 
-# json.orig_value atype.value['id']
+json.orig_value atype.value
