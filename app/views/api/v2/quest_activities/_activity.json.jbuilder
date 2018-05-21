@@ -7,7 +7,7 @@ json.picture_url activity.picture_url
 json.picture_width activity.picture.width
 json.picture_height activity.picture.height
 if defined?(activity.quest_completions) && !activity.quest_completions.empty?
-    json.status true
+    json.completed true
 else 
     json.completed false
 end
@@ -17,7 +17,5 @@ else
     json.requirements nil
 end
 json.deleted activity.deleted
-json.step do 
-    json.partial! "api/v2/steps/step", locals: { step: activity.step }
-end
+json.step activity.step
 json.created_at activity.created_at
