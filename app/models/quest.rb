@@ -11,7 +11,7 @@ class Quest < ApplicationRecord
     has_manual_translated :description, :name
     
     has_many :steps, dependent: :destroy
-    #has_many :quest_completions, dependent: :destroy
+    #   has_many :quest_completions, dependent: :destroy
 
     accepts_nested_attributes_for :steps
 
