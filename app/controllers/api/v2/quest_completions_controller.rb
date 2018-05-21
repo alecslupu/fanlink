@@ -112,10 +112,9 @@ class Api::V2::QuestCompletionsController < ApiController
 
     def create
         step_id = params[:step_id]
-        if !params[:step_id].exists?
+        if !params.has_key?(:step_id)
             quest_activity = QuestActivity.find(params[:activity_id])
             step_id = quest_activity.step.id
-            quest_id = quest_activity.step.quest
         end
 
         @completion = QuestCompletion.create(completion_params.merge(person_id: current_user.id, step_id: step_id))
