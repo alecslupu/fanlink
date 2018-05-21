@@ -11,25 +11,27 @@ class Api::V1::PostCommentsController < ApiController
   # @apiDescription
   #   This creates a post comment. It is automatically attributed to the logged in user.
   #
-  # @apiParam {Object} post_comment
+  # @apiParam (path) {Integer} id Post ID
+  #
+  # @apiParam (body) {Object} post_comment
   #   The post_comment object container for the post_comment parameters.
   #
-  # @apiParam {String} post_comment.body
+  # @apiParam (body) {String} post_comment.body
   #   The body of the comment.
   #
-  # @apiParam {Array} [mentions]
+  # @apiParam (body) {Array} [mentions]
   #   Mentions in the comment.
   #
-  # @apiParam {Integer} mention.person_id
+  # @apiParam (body) {Integer} mention.person_id
   #   The id of the person mentioned.
   #
-  # @apiParam {Integer} mention.location
+  # @apiParam (body) {Integer} mention.location
   #   Where the mention text starts in the comment.
   #
-  # @apiParam {Integer} mention.length
+  # @apiParam (body) {Integer} mention.length
   #   The length of the mention text.
   #
-  # @apiParam {Integer} mention.person_id
+  # @apiParam (body) {Integer} mention.person_id
   #   The id of the person mentioned.
   #
   # @apiSuccessExample Success-Response:
@@ -67,10 +69,10 @@ class Api::V1::PostCommentsController < ApiController
   # @apiDescription
   #   This deletes a comment on a post. Can be performed by admin or creator of comment.
   #
-  # @apiParam {Integer} post_id
+  # @apiParam (path) {Integer} post_id
   #   The id of the post to which the comment relates
   #
-  # @apiParam {Integer} id
+  # @apiParam (path) {Integer} id
   #   The id of the post comment you are deleting
   #
   # @apiSuccessExample Success-Response:
@@ -98,10 +100,12 @@ class Api::V1::PostCommentsController < ApiController
   # @apiDescription
   #   This gets all the non-hidden comments on a post with pagination.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (path) {Integer} id Post ID
+  #
+  # @apiParam (body) {Integer} [page]
   #   The page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -129,16 +133,16 @@ class Api::V1::PostCommentsController < ApiController
   # @apiDescription
   #   This gets a list of post comments with optional filters and pagination.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   The page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
-  # @apiParam {String} [body_filter]
+  # @apiParam (body) {String} [body_filter]
   #   Full or partial match on comment body.
   #
-  # @apiParam {String} [person_filter]
+  # @apiParam (body) {String} [person_filter]
   #   Full or partial match on person username or email.
   #
   # @apiSuccessExample {json} Success-Response:

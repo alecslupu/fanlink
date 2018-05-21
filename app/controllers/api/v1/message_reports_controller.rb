@@ -14,16 +14,16 @@ class Api::V1::MessageReportsController < ApiController
   # @apiDescription
   #   This reports a message that was posted to a public room.
   #
-  # @apiParam {room_id} room_id
+  # @apiParam (path) {room_id} room_id
   #   Id of the room in which the message was created.
   #
-  # @apiParam {Object} message_report
+  # @apiParam (body) {Object} message_report
   #   The message report object container.
   #
-  # @apiParam {Integer} message_report.message_id
+  # @apiParam (body) {Integer} message_report.message_id
   #   The id of the message being reported.
   #
-  # @apiParam {String} [message_report.reason]
+  # @apiParam (body) {String} [message_report.reason]
   #   The reason given by the user for reporting the message.
   #
   # @apiSuccessExample Success-Response:
@@ -59,7 +59,7 @@ class Api::V1::MessageReportsController < ApiController
   # @apiDescription
   #   This gets a list of message reports with optional filter.
   #
-  # @apiParam {String} [status_filter]
+  # @apiParam (body) {String} [status_filter]
   #   If provided, valid values are "message_hidden", "no_action_needed", and "pending"
   #
   #
@@ -96,13 +96,13 @@ class Api::V1::MessageReportsController < ApiController
   #   This updates a message report. The only value that can be
   #   changed is the status.
   #
-  # @apiParam {id} id
+  # @apiParam (path) {id} id
   #   URL parameter. id of the message report you want to update.
   #
-  # @apiParam {Object} message_report
+  # @apiParam (body) {Object} message_report
   #   The message report object container.
   #
-  # @apiParam {status} message_report.status
+  # @apiParam (body) {status} message_report.status
   #   The new status. Valid statuses are "message_hidden",
   #   "no_action_needed", and "pending".
   #

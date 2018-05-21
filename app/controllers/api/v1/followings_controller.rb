@@ -11,7 +11,7 @@ class Api::V1::FollowingsController < ApiController
   # @apiDescription
   #   This is used to follow a person.
   #
-  # @apiParam {Integer} followed_id
+  # @apiParam (body) {Integer} followed_id
   #   Person to follow
   #
   # @apiSuccessExample {json} Success-Response:
@@ -37,7 +37,7 @@ class Api::V1::FollowingsController < ApiController
   # @apiDescription
   #   This is used to unfollow a person.
   #
-  # @apiParam {Integer} id
+  # @apiParam (path) {Integer} id
   #   id of the underlying following
   #
   # @apiSuccessExample {json} Success-Response:
@@ -60,10 +60,10 @@ class Api::V1::FollowingsController < ApiController
   #   it will get the people that person is following. If nothing is supplied, it will
   #   get the people the current user is following.
   #
-  # @apiParam {Integer} followed_id
+  # @apiParam (body) {Integer} followed_id
   #   Person to who's followers to get
   #
-  # @apiParam {Integer} follower_id
+  # @apiParam (body) {Integer} follower_id
   #   Id of person who is following the people in the list we are getting.
   #
   # @apiSuccessExample {json} Success-Response:

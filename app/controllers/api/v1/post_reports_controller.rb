@@ -12,13 +12,13 @@ class Api::V1::PostReportsController < ApiController
   # @apiDescription
   #   This reports a post that was posted to a feed.
   #
-  # @apiParam {Object} post_report
+  # @apiParam (body) {Object} post_report
   #   The post report object container.
   #
-  # @apiParam {Integer} post_report.post_id
+  # @apiParam (body) {Integer} post_report.post_id
   #   The id of the post being reported.
   #
-  # @apiParam {String} [post_report.reason]
+  # @apiParam (body) {String} [post_report.reason]
   #   The reason given by the user for reporting the post.
   #
   # @apiSuccessExample Success-Response:
@@ -53,13 +53,13 @@ class Api::V1::PostReportsController < ApiController
   # @apiDescription
   #   This gets a list of post reports with optional filter.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Page division. Default is 25.
   #
-  # @apiParam {String} [status_filter]
+  # @apiParam (body) {String} [status_filter]
   #   If provided, valid values are "pending", "no_action_needed", and "post_hidden"
   #
   # @apiSuccessExample {json} Success-Response:
@@ -94,13 +94,13 @@ class Api::V1::PostReportsController < ApiController
   #   This updates a post report. The only value that can be
   #   changed is the status.
   #
-  # @apiParam {id} id
+  # @apiParam (path) {id} id
   #   URL parameter. id of the post report you want to update.
   #
-  # @apiParam {Object} post_report
+  # @apiParam (body) {Object} post_report
   #   The post report object container.
   #
-  # @apiParam {status} post_report.status
+  # @apiParam (body) {status} post_report.status
   #   The new status. Valid statuses are "pending", "no_action_needed", "post_hidden"
   #
   # @apiSuccessExample Success-Response:

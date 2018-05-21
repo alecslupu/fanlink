@@ -14,13 +14,13 @@ class Api::V1::PeopleController < ApiController
   # @apiDescription
   #   This is used to change the logged in user's password.
   #
-  # @apiParam {ObjectId} id
+  # @apiParam (path) {Object} id
   #   The person id.
-  # @apiParam {Object} person
+  # @apiParam (body) {Object} person
   #   The person's information.
-  # @apiParam {String} person.current_password
+  # @apiParam (body) {String} person.current_password
   #   Current password.
-  # @apiParam {String} [person.new_password]
+  # @apiParam (body) {String} [person.new_password]
   #   New password.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -55,40 +55,40 @@ class Api::V1::PeopleController < ApiController
   #   If the account creation is successful, they will be logged in and we will send an onboarding
   #   email (if we have an email address for them).
   #
-  # @apiParam {String} product
+  # @apiParam (body) {String} product
   #   Internal name of product
   #
-  # @apiParam {Object} person
+  # @apiParam (body) {Object} person
   #   The person's information.
   #
-  # @apiParam {String} person.email
+  # @apiParam (body) {String} person.email
   #   Email address (required unless using FB auth token).
   #
-  # @apiParam {String} facebook_auth_token
+  # @apiParam (body) {String} facebook_auth_token
   #   Auth token from Facebook
   #
-  # @apiParam {String} [person.name]
+  # @apiParam (body) {String} [person.name]
   #   Name.
   #
-  # @apiParam {String} person.username
+  # @apiParam (body) {String} person.username
   #   Username. This needs to be unique within product scope.
   #
-  # @apiParam {String} person.password
+  # @apiParam (body) {String} person.password
   #   Password.
   #
-  # @apiParam {Attachment } [person.picture]
+  # @apiParam (body) {Attachment} [person.picture]
   #   Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
-  # @apiParam {String} [person.gender]
+  # @apiParam (body) {String} [person.gender]
   #   Gender. Valid options: unspecified (default), male, female
   #
-  # @apiParam {String} [person.birthdate]
+  # @apiParam (body) {String} [person.birthdate]
   #   Birth dateTo date in format "YYYY-MM-DD".
   #
-  # @apiParam {String} [person.city]
+  # @apiParam (body) {String} [person.city]
   #   Person's supplied city.
   #
-  # @apiParam {String} [person.country_code]
+  # @apiParam (body) {String} [person.country_code]
   #   Alpha2 code (two letters) from ISO 3166 list.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -131,16 +131,16 @@ class Api::V1::PeopleController < ApiController
   # @apiDescription
   #   This is used to get a list of people.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Page division. Default is 25.
   #
-  # @apiParam {String} [username_filter]
+  # @apiParam (body) {String} [username_filter]
   #   A username or username fragment to filter on.
   #
-  # @apiParam {String} [email_filter]
+  # @apiParam (body) {String} [email_filter]
   #   An email or email fragment to filter on.
 
   # @apiSuccessExample {json} Success-Response:
@@ -163,7 +163,7 @@ class Api::V1::PeopleController < ApiController
   # @apiDescription
   #   This is used to get a person.
   #
-  # @apiParam {ObjectId} id
+  # @apiParam (path) {Number} id
   #   The id of the person you want.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -212,34 +212,34 @@ class Api::V1::PeopleController < ApiController
   #   This is used to update a person. Anything not mentioned is left
   #   alone.
   #
-  # @apiParam {ObjectId} id
+  # @apiParam (path) {Number} id
   #   The person id.
-  # @apiParam {Object} person
+  # @apiParam (body) {Object} person
   #   The person's information.
-  # @apiParam {String} [person.email]
+  # @apiParam (body) {String} [person.email]
   #   Email address.
-  # @apiParam {String} [person.name]
+  # @apiParam (body) {String} [person.name]
   #   Full name.
   #
-  # @apiParam {String} [person.username]
+  # @apiParam (body) {String} [person.username]
   #   Username. This needs to be unique.
-  # @apiParam {Attachment} [person.picture]
+  # @apiParam (body) {Attachment} [person.picture]
   #   Profile picture, this should be `image/gif`, `image/png`, or
   #   `image/jpeg`.
   #
-  # @apiParam {String} [person.gender]
+  # @apiParam (body) {String} [person.gender]
   #   Gender. Valid options: unspecified (default), male, female
   #
-  # @apiParam {String} [person.birthdate]
+  # @apiParam (body) {String} [person.birthdate]
   #   Birth dateTo date in format "YYYY-MM-DD".
   #
-  # @apiParam {String} [person.city]
+  # @apiParam (body) {String} [person.city]
   #   Person's supplied city.
   #
-  # @apiParam {String} [person.country_code]
+  # @apiParam (body) {String} [person.country_code]
   #   Alpha2 code (two letters) from ISO 3166 list.
   #
-  # @apiParam {Boolean} [recommended]
+  # @apiParam (body) {Boolean} [recommended]
   #   Whether this is a recommended persion. (Admin or product account only)
   #
   # @apiSuccessExample {json} Success-Response:

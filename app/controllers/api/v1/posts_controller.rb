@@ -15,57 +15,58 @@ class Api::V1::PostsController < ApiController
   #   This creates a post and puts in on the feed of the author's followers. It also sends a push notification
   #   to poster's followers if the notify_followers flag is set to true.
   #
-  # @apiParam {Object} post
+  # @apiParam (body) {Object} post
   #   The post object container for the post parameters.
   #
-  # @apiParam {String} [post.body]
+  # @apiParam (body) {String} [post.body]
   #   The body of the message.
   #
-  # @apiParam {Attachment} [post.picture]
+  # @apiParam (body) {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
-  # @apiParam {Boolean} [post.global]
+  # @apiParam (body) {Boolean} [post.global]
   #   Whether the post is global (seen by all users).
   #
-  # @apiParam {String} [post.starts_at]
+  # @apiParam (body) {String} [post.starts_at]
   #   When the post should start being visible (same format as in responses).
   #
-  # @apiParam {String} [post.ends_at]
+  # @apiParam (body) {String} [post.ends_at]
   #   When the post should stop being visible (same format as in responses).
   #
-  # @apiParam {Integer} [post.repost_interval]
+  # @apiParam (body) {Integer} [post.repost_interval]
   #   How often this post should be republished.
   #
-  # @apiParam {String} [post.status]
+  # @apiParam (body) {String} [post.status]
   #   Valid values: "pending", "published", "deleted", "rejected"
   #
-  # @apiParam {Integer} [post.priority]
+  # @apiParam (body) {Integer} [post.priority]
   #   Priority value for post.
   #
-  # @apiParam {Boolean} [post.recommended] (Admin or product account)
+  # @apiParam (body) {Boolean} [post.recommended] (Admin or product account)
   #   Whether the post is recommended.
   #
-  # @apiParam {Boolean} [post.global]
+  # @apiParam (body) {Boolean} [post.global]
   #   Whether the post is global (seen by all users).
   #
-  # @apiParam {String} [post.starts_at]
+  # @apiParam (body) {String} [post.starts_at]
   #   When the post should start being visible (same format as in responses).
   #
-  # @apiParam {String} [post.ends_at]
+  # @apiParam (body) {String} [post.ends_at]
   #   When the post should stop being visible (same format as in responses).
   #
-  # @apiParam {Integer} [post.repost_interval]
+  # @apiParam (body) {Integer} [post.repost_interval]
   #   How often this post should be republished.
   #
-  # @apiParam {String} [post.status]
+  # @apiParam (body) {String} [post.status]
   #   Valid values: "pending", "published", "deleted", "rejected"
   #
-  # @apiParam {Integer} [post.priority]
+  # @apiParam (body) {Integer} [post.priority]
   #   Priority value for post.
   #
-  # @apiParam {Boolean} [post.recommended] (Admin)
+  # @apiParam (body) {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
-  # @apiParam {Boolean} [post.notify_followers]
+  #
+  # @apiParam (body) {Boolean} [post.notify_followers]
   #   Whether a push notification should be sent to the posters followers.
   #
   # @apiSuccessExample Success-Response:
@@ -97,6 +98,8 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This deletes a single post by marking as deleted. Can only be called by the creator.
   #
+  # @apiParam (path) {Integer} id The id of the post you want to delete
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #
@@ -126,17 +129,17 @@ class Api::V1::PostsController < ApiController
   #   Posts included are posts from the passed in person or, if none, the current
   #   user along with those of the users the current user is following.
   #
-  # @apiParam {Integer} [person_id]
+  # @apiParam (body) {Integer} [person_id]
   #   The person whose posts to get. If not supplied, posts from current user plus those from
   #   people the current user is following will be returned.
   #
-  # @apiParam {String} from_date
+  # @apiParam (body) {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
-  # @apiParam {String} to_date
+  # @apiParam (body) {String} to_date
   #   To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
-  # @apiParam {Integer} [limit]
+  # @apiParam (body) {Integer} [limit]
   #   Limit results to count of limit.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -180,31 +183,31 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This gets a list of posts with optional filters and pagination.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   The page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
-  # @apiParam {Integer} [id_filter]
+  # @apiParam (body) {Integer} [id_filter]
   #   Full match on post.id. Will return either a one element array or an empty array.
   #
-  # @apiParam {Integer} [person_id_filter]
+  # @apiParam (body) {Integer} [person_id_filter]
   #   Full match on person id.
   #
-  # @apiParam {String} [person_filter]
+  # @apiParam (body) {String} [person_filter]
   #   Full or partial match on person username or email.
   #
-  # @apiParam {String} [body_filter]
+  # @apiParam (body) {String} [body_filter]
   #   Full or partial match on post body.
   #
-  # @apiParam {Datetime} [posted_after_filter]
+  # @apiParam (body) {Datetime} [posted_after_filter]
   #   Posted at or after timestamp. Format: "2018-01-08T12:13:42Z"
   #
-  # @apiParam {Datetime} [posted_before_filter]
+  # @apiParam (body) {Datetime} [posted_before_filter]
   #   Posted at or before timestamp. Format: "2018-01-08T12:13:42Z"
   #
-  # @apiParam {String} [status_filter]
+  # @apiParam (body) {String} [status_filter]
   #   Post status. Valid values: pending published deleted rejected errored
   #
   # @apiSuccessExample {json} Success-Response:
@@ -244,6 +247,8 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This gets a single post for a post id.
   #
+  # @apiParam (path) {Integer} id The id of the post
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "post": {
@@ -282,7 +287,9 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This gets a single post for a post id without authentication.
   #
-  # @apiParam {String} product
+  # @apiParam (path) {Integer} id The id of the post you want to share
+  #
+  # @apiParam (body) {String} product
   #   Product internal name.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -310,7 +317,7 @@ class Api::V1::PostsController < ApiController
   end
 
   #**
-  # @api {patch} /posts/{id} Update a post
+  # @api {patch} /posts/:id Update a post
   # @apiName UpdatePost
   # @apiGroup Posts
   # @apiVersion 1.0.0

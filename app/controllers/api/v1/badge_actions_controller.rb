@@ -13,13 +13,13 @@ class Api::V1::BadgeActionsController < ApiController
   #   either an array of earned badges or an object called pending_badge with the points earned so far and the badge info.
   #   If more than one badge has been partially earned, the badge with the highest percentage earned is returned.
   #
-  # @apiParam {Object} badge_action
+  # @apiParam (body) {Object} badge_action
   #   The badge_action object container.
   #
-  # @apiParam {String} badge_action.action_type
+  # @apiParam (body) {String} badge_action.action_type
   #   The internal name of the badge action.
   #
-  # @apiParam {String} [badge_action.identifier]
+  # @apiParam (body) {String} [badge_action.identifier]
   #   The identifier for this badge action.
   #
   # @apiSuccessExample Success-Response:

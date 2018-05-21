@@ -31,6 +31,8 @@ class Api::V1::MerchandiseController < ApiController
   # @apiDescription
   #   This gets a single piece of merchandise for a merchandise id.
   #
+  # @apiParam (path) {Number} id Merchandise ID
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "merchandise": [

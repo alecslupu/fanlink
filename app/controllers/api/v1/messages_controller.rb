@@ -8,7 +8,7 @@ class Api::V1::MessagesController < ApiController
 
 
   #**
-  # @api {post} /rooms/{room_id}/messages Create a message in a room.
+  # @api {post} /rooms/:room_id/messages Create a message in a room.
   # @apiName CreateMessage
   # @apiGroup Messages
   # @apiVersion 1.0.0
@@ -16,16 +16,17 @@ class Api::V1::MessagesController < ApiController
   # @apiDescription
   #   This creates a message in a room and posts it to Firebase as appropriate.
   #
-  # @apiParam {Object} message
+  # @apiParam (path) {Number} room_id ID of the room the message belongs to
+  # @apiParam (body) {Object} message
   #   The message object container for the message parameters.
   #
-  # @apiParam {String} [message.body]
+  # @apiParam (body) {String} [message.body]
   #   The body of the message.
   #
-  # @apiParam {Attachment} [message.picture]
+  # @apiParam (body) {Attachment} [message.picture]
   #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
-  # @apiParam {Array} [mentions]
+  # @apiParam (body) {Array} [mentions]
   #   Array of mentions each consisting of required person_id (integer), location (integer) and length (integer)
   #
   # @apiSuccessExample Success-Response:
@@ -67,6 +68,8 @@ class Api::V1::MessagesController < ApiController
   # @apiDescription
   #   This deletes a single message by marking as hidden. Can only be called by the creator.
   #
+  # @apiParam (path) {Number} room_id Room ID
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #
@@ -87,7 +90,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {get} /rooms/{room_id}/messages Get messages.
+  # @api {get} /rooms/:room_id/messages Get messages.
   # @apiName GetMessages
   # @apiGroup Messages
   # @apiVersion 1.0.0
@@ -96,13 +99,15 @@ class Api::V1::MessagesController < ApiController
   #   This gets a list of message for a from date, to date, with an optional
   #   limit. Messages are returned newest first, and the limit is applied to that ordering.
   #
-  # @apiParam {String} from_date
+  # @apiParam (path) {Number} room_id Room ID
+  #
+  # @apiParam (body) {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
-  # @apiParam {String} to_date
+  # @apiParam (body) {String} to_date
   #   To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
-  # @apiParam {Integer} [limit]
+  # @apiParam (body) {Integer} [limit]
   #   Limit results to count of limit.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -141,25 +146,25 @@ class Api::V1::MessagesController < ApiController
   # @apiDescription
   #   This gets a list of messages without regard to room (with possible exception of room filter).
   #
-  # @apiParam {Integer} [id_filter]
+  # @apiParam (body) {Integer} [id_filter]
   #   Full match on Message id.
   #
-  # @apiParam {String} [person_filter]
+  # @apiParam (body) {String} [person_filter]
   #   Full or partial match on person username.
   #
-  # @apiParam {Integer} [room_id_filter]
+  # @apiParam (body) {Integer} [room_id_filter]
   #   Full match on Room id.
   #
-  # @apiParam {String} [body_filter]
+  # @apiParam  (body){String} [body_filter]
   #   Full or partial match on message body.
   #
-  # @apiParam {Boolean} [reported_filter]
+  # @apiParam (body) {Boolean} [reported_filter]
   #   Filter on whether the message has been reported.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   Page number. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Messages per page. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -186,7 +191,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {get} /rooms/{room_id}/messages/id Get a single message.
+  # @api {get} /rooms/:room_id/messages/id Get a single message.
   # @apiName GetMessage
   # @apiGroup Messages
   # @apiVersion 1.0.0
@@ -194,6 +199,8 @@ class Api::V1::MessagesController < ApiController
   # @apiDescription
   #   This gets a single message for a message id. Only works for messages in private rooms. If the message author
   #   has been blocked by the current user, this will return 404 Not Found.
+  #
+  # @apiParam (path) {Number} room_id Room ID
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -224,7 +231,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {patch} /messages/{id} Update a message
+  # @api {patch} /messages/:id Update a message
   # @apiName UpdateMessage
   # @apiGroup Messages
   # @apiVersion 1.0.0
@@ -233,10 +240,12 @@ class Api::V1::MessagesController < ApiController
   #   This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is
   #   hidden, Firebase will be updated to inform the app that the message has been hidden.
   #
-  # @apiParam {Object} message
+  # @apiParam (path) {Number} id Message ID
+  #
+  # @apiParam (body) {Object} message
   #   The message object container for the message parameters.
   #
-  # @apiParam {Boolean} message.hidden
+  # @apiParam (body) {Boolean} message.hidden
   #   Whether or not the item is hidden.
   #
   # @apiSuccessExample Success-Response:

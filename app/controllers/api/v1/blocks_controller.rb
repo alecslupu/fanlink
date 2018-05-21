@@ -9,10 +9,10 @@ class Api::V1::BlocksController < ApiController
   #   This is used to block a person. When a person is blocked, any followings and relationships are immediately
   #   removed between the users.
   #
-  # @apiParam {Object} block
+  # @apiParam (body) {Object} block
   #   Block object.
   #
-  # @apiParam {Integer} block.blocked_id
+  # @apiParam (body) {Integer} block.blocked_id
   #   Person current user wants to block
   #
   # @apiSuccessExample {json} Success-Response:
@@ -48,7 +48,7 @@ class Api::V1::BlocksController < ApiController
   # @apiDescription
   #   This is used to unblock a person.
   #
-  # @apiParam {Integer} id
+  # @apiParam (path) {Integer} id
   #   id of the underlying block
   #
   # @apiSuccessExample {json} Success-Response:

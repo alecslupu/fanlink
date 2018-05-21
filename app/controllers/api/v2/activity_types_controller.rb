@@ -76,10 +76,10 @@ class Api::V2::ActivityTypesController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id Activity ID
-    # @apiParam  {Object} activity_type Container for the form data
-    # @apiParam  {String} activity_type.atype Activity Type. Valid types are beacon, post, image, audio, activity_code
-    # @apiParam  {Object} activity_type.value Object for type values. Currently supports id and description
+    # @apiParam (path) {Number} id Activity ID
+    # @apiParam (body) {Object} activity_type Container for the form data
+    # @apiParam (body) {String} activity_type.atype Activity Type. Valid types are beacon, post, image, audio, activity_code
+    # @apiParam (body) {Object} activity_type.value Object for type values. Currently supports id and description
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
@@ -132,16 +132,16 @@ class Api::V2::ActivityTypesController < ApiController
 
     #**
     # 
-    # @api {PATCH} /types/:id title
+    # @api {PATCH} /types/:id Update a type
     # @apiName UpdateActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id Activity type ID
-    # @apiParam  {Object} activity_type Container for the form data
-    # @apiParam  {String} [activity_type.atype] Activity Type. Valid types are beacon, post, image, audio, activity_code
-    # @apiParam  {Object} [activity_type.value] Object for type values. Currently supports id and description. Pass entire object to update.
+    # @apiParam (path)  {Number} id Activity type ID
+    # @apiParam (body) {Object} activity_type Container for the form data
+    # @apiParam (body)  {String} [activity_type.atype] Activity Type. Valid types are beacon, post, image, audio, activity_code
+    # @apiParam (body)  {Object} [activity_type.value] Object for type values. Currently supports id and description. Pass entire object to update.
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
@@ -165,13 +165,13 @@ class Api::V2::ActivityTypesController < ApiController
 
     #**
     # 
-    # @api {delete} /path Delete a type from an activity
+    # @api {delete} /activity_type/:id Delete a type from an activity
     # @apiName DeleteActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam (path) {Number} id Activity type ID
     # 
     # @apiSuccess (200) {Header} OK 200 OK response
     # 

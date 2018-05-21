@@ -11,9 +11,9 @@ class Api::V1::PasswordResetsController < ApiController
   #   This is used to initiate a password reset. Product and email or username required. If email or username
   # is not found, password reset will fail silently.
   #
-  # @apiParam {String} product
+  # @apiParam (body) {String} product
   #   Internal name of product
-  # @apiParam {String} email_or_username
+  # @apiParam (body) {String} email_or_username
   #   The person's email or username.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -56,9 +56,9 @@ class Api::V1::PasswordResetsController < ApiController
   # @apiDescription
   #   This is used to complete a password reset. It takes a form submitted from fan.link
   #
-  # @apiParam {String} token
+  # @apiParam (body) {String} token
   #   Token from email link
-  # @apiParam {String} password
+  # @apiParam (body) {String} password
   #   The new password.
   #
   # @apiSuccessExample {json} Success-Response:

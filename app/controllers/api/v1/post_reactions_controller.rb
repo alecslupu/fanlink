@@ -11,13 +11,13 @@ class Api::V1::PostReactionsController < ApiController
   # @apiDescription
   #   This reacts to a post.
   #
-  # @apiParam {Integer} post_id
+  # @apiParam (path) {Integer} post_id
   #   The id of the post to which you are reacting
   #
-  # @apiParam {Object} post_reaction
+  # @apiParam (body) {Object} post_reaction
   #   The post reaction object container.
   #
-  # @apiParam {String} post_reaction.reaction
+  # @apiParam (body) {String} post_reaction.reaction
   #   The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.
   #
   # @apiSuccessExample Success-Response:
@@ -53,10 +53,10 @@ class Api::V1::PostReactionsController < ApiController
   # @apiDescription
   #   This deletes a reaction to a post.
   #
-  # @apiParam {Integer} post_id
+  # @apiParam (path) {Integer} post_id
   #   The id of the post to which you are reacting
   #
-  # @apiParam {Integer} id
+  # @apiParam (path) {Integer} id
   #   The id of the post reaction you are updating
   #
   # @apiSuccessExample Success-Response:
@@ -83,16 +83,16 @@ class Api::V1::PostReactionsController < ApiController
   # @apiDescription
   #   This updates a reaction to a post.
   #
-  # @apiParam {Integer} post_id
+  # @apiParam (path) {Integer} post_id
   #   The id of the post to which you are reacting
   #
-  # @apiParam {Integer} id
+  # @apiParam (path) {Integer} id
   #   The id of the post reaction you are updating
   #
-  # @apiParam {Object} post_reaction
+  # @apiParam (body) {Object} post_reaction
   #   The post reaction object container.
   #
-  # @apiParam {String} post_reaction.reaction
+  # @apiParam (body) {String} post_reaction.reaction
   #   The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.
   #
   # @apiSuccessExample Success-Response:

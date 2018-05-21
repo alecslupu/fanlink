@@ -8,10 +8,10 @@ class Api::V1::EventsController < ApiController
   # @apiDescription
   #   This gets a list of events, in starts_at order.
   #
-  # @apiParam {String} [from_date]
+  # @apiParam (body) {String} [from_date]
   #   Only include events starting on or after date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
   #
-  # @apiParam {String} [to_date]
+  # @apiParam (body) {String} [to_date]
   #   Only include events starting on or before date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
 
   # @apiSuccessExample {json} Success-Response:
@@ -42,6 +42,8 @@ class Api::V1::EventsController < ApiController
   #
   # @apiDescription
   #   This gets a single event for an event id.
+  #
+  # @apiParam (path)  {Number} id Event ID
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok

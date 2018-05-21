@@ -80,7 +80,7 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  1.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the quest
+    # @apiParam (path) {Number} id ID of the quest
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
@@ -108,9 +108,9 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} quest_id The quest id used in the url
-    # @apiParam  {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
-    # @apiParam  {String} [display] Sets the display name for the step. 
+    # @apiParam (path) {Number} quest_id The quest id used in the url
+    # @apiParam (body) {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
+    # @apiParam (body) {String} [display] Sets the display name for the step. 
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
@@ -145,9 +145,9 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the step to update
-    # @apiParam  {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
-    # @apiParam  {String} [display] The display friendly name for select boxes.
+    # @apiParam (path) {Number} id ID of the step to update
+    # @apiParam (body) {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
+    # @apiParam (body) {String} [display] The display friendly name for select boxes.
     # 
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
@@ -176,7 +176,7 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id The ID of the step
+    # @apiParam (path) {Number} id The ID of the step
     # 
     # @apiParamExample  {curl} Request-Example:
     # TODO
@@ -186,7 +186,7 @@ class Api::V2::StepsController < ApiController
     #*
 
     def show
-        @step = @quest.steps.find(params[:id])
+        @step = Step.find(params[:id])
         return_the @step
 
     end
@@ -199,7 +199,7 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id Step ID
+    # @apiParam (path) {Number} id Step ID
     # 
     # @apiSuccess (Header) {200} 200 Returns a 200
     # 

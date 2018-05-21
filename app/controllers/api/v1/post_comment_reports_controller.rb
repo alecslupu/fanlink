@@ -11,13 +11,13 @@ class Api::V1::PostCommentReportsController < ApiController
   # @apiDescription
   #   This reports a post comment.
   #
-  # @apiParam {Object} post_comment_report
+  # @apiParam (body) {Object} post_comment_report
   #   The post report object container.
   #
-  # @apiParam {Integer} post_comment_report.post_comment_id
+  # @apiParam (body) {Integer} post_comment_report.post_comment_id
   #   The id of the post comment being reported.
   #
-  # @apiParam {String} [post_comment_report.reason]
+  # @apiParam (body) {String} [post_comment_report.reason]
   #   The reason given by the user for reporting the post comment.
   #
   # @apiSuccessExample Success-Response:
@@ -52,13 +52,13 @@ class Api::V1::PostCommentReportsController < ApiController
   # @apiDescription
   #   This gets a list of post comment reports with optional filter.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Page division. Default is 25.
   #
-  # @apiParam {String} [status_filter]
+  # @apiParam (body) {String} [status_filter]
   #   If provided, valid values are "pending", "no_action_needed", and "comment_hidden"
   #
   # @apiSuccessExample {json} Success-Response:
@@ -93,13 +93,13 @@ class Api::V1::PostCommentReportsController < ApiController
   #   This updates a post comment report. The only value that can be
   #   changed is the status.
   #
-  # @apiParam {id} id
+  # @apiParam (path) {id} id
   #   URL parameter. id of the post comment report you want to update.
   #
-  # @apiParam {Object} post_comment_report
+  # @apiParam (body) {Object} post_comment_report
   #   The post report object container.
   #
-  # @apiParam {status} post_comment_report.status
+  # @apiParam (body) {status} post_comment_report.status
   #   The new status. Valid statuses are "pending", "no_action_needed", "comment_hidden"
   #
   # @apiSuccessExample Success-Response:

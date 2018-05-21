@@ -9,7 +9,7 @@ class Api::V1::NotificationDeviceIdsController < ApiController
   #   This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have
   #   any number of device ids.
   #
-  # @apiParam {String} device_id
+  # @apiParam (body) {String} device_id
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -41,7 +41,7 @@ class Api::V1::NotificationDeviceIdsController < ApiController
   # @apiDescription
   #   This deletes a single device id. Can only be called by the owner.
   #
-  # @apiParam {String} device_id
+  # @apiParam (body) {String} device_id
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
