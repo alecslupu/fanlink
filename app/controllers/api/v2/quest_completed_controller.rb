@@ -41,6 +41,6 @@ class Api::V2::QuestCompletedController < ApiController
     end
 private 
     def completed_params
-        params.require(:completed).permit()
+        params.require(:completed).permit(:person_id, :quest_id)
     end
 end

@@ -368,6 +368,6 @@ class Api::V2::QuestActivitiesController < ApiController
 
 private
     def activity_params
-        params.require(:quest_activity).permit( :description, :hint, :activity_code, :picture)
+        params.require(:quest_activity).permit( :description, :hint, :picture)
     end
 end

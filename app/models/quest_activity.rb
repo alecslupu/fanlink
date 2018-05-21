@@ -12,7 +12,7 @@ class QuestActivity < ApplicationRecord
     scope :with_completion, -> (person) { where("quest_completions.person_id = ?", person.id) }
 
     def product
-        quest.product
+        step.quest.product
     end
 
 end
