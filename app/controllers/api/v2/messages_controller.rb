@@ -1,6 +1,6 @@
 class Api::V2::MessagesController < Api::V1::MessagesController
   #**
-  # @api {get} /rooms/{room_id}/messages Get messages.
+  # @api {get} /rooms/:room_id/messages Get messages.
   # @apiName GetMessages
   # @apiGroup Messages
   # @apiVersion 2.0.0
@@ -8,14 +8,16 @@ class Api::V2::MessagesController < Api::V1::MessagesController
   # @apiDescription
   #   This gets a list of messages for a page number and a per page parameter.
   #
-  # @apiParam {Integer} page
+  # @apiParam (path) {Integer} room_id ID of the room
+  #
+  # @apiParam (body) {Integer} page
   #
   #   Page number to get.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Number of messages in a page. Default is 25.
   #
-  # @apiParam {String} [pinned]
+  # @apiParam (body) {String} [pinned]
   #   "Yes" to provide only pinned messages, "No" to provide only non-pinned messages. "All" (default) for all
   #   regardless of pinned status.
   #

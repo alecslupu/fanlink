@@ -44,15 +44,15 @@ class Api::V1::SessionController < ApiController
   # @apiDescription
   #   This is used to log someone in.
   #
-  # @apiParam {String} product
+  # @apiParam (body) {String} product
   #  Internal name of product logging into.
-  # @apiParam {String} email_or_username
+  # @apiParam (body) {String} email_or_username
   #   The person's email address or username. Required unless using Facebook ID.
-  # @apiParam {String} [facebook_auth_token]
+  # @apiParam (body) {String} [facebook_auth_token]
   #   The facebook auth token. Required unless using username/password.
-  # @apiParam {String} password
+  # @apiParam (body) {String} password
   #   The person's password. Required unless using facebook_auth_token
-  # @apiParam {Boolean} [keep] NOT YET SUPPORTED
+  # @apiParam (body) {Boolean} [keep] NOT YET SUPPORTED
   #   True if you want to keep them signed in, otherwise this will be a
   #   non-persistent session.
   #

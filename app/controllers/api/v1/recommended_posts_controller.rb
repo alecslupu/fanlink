@@ -9,10 +9,10 @@ class Api::V1::RecommendedPostsController < ApiController
   # @apiDescription
   #   This is used to get a list of published posts flagged as 'recommended'.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Page division. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:

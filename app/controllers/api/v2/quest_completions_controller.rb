@@ -10,10 +10,10 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiDefine SuccessObject Success Response
     #    The success response for a single completion
     # @apiSuccess (200) {Object} completion Container for the completion data
-    # @apiSuccess (200) {Number} completion.id ID of the created completion
-    # @apiSuccess (200) {Number} completion.person_id The ID of the user who completed the activity
-    # @apiSuccess (200) {Number} completion.quest_id ID of the quest
-    # @apiSuccess (200) {Number} completion.activity_id ID of the activity that was completed
+    # @apiSuccess (200) {Integer} completion.id ID of the created completion
+    # @apiSuccess (200) {Integer} completion.person_id The ID of the user who completed the activity
+    # @apiSuccess (200) {Integer} completion.quest_id ID of the quest
+    # @apiSuccess (200) {Integer} completion.activity_id ID of the activity that was completed
     # @apiSuccess (200) {DateTime} completion.created_at The date and time the completion was created.
     #
     # @apiSuccessExample {Object} Success-Response:
@@ -35,10 +35,10 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiDefine SuccessArray Array of success responses
     #    Returns an array as a response
     # @apiSuccess (200) {Object} completions Container for the completion data
-    # @apiSuccess (200) {Number} completions.id ID of the created completion
-    # @apiSuccess (200) {Number} completions.person_id The ID of the user who completed the activity
-    # @apiSuccess (200) {Number} completions.quest_id ID of the quest
-    # @apiSuccess (200) {Number} completions.activity_id ID of the activity that was completed
+    # @apiSuccess (200) {Integer} completions.id ID of the created completion
+    # @apiSuccess (200) {Integer} completions.person_id The ID of the user who completed the activity
+    # @apiSuccess (200) {Integer} completions.quest_id ID of the quest
+    # @apiSuccess (200) {Integer} completions.activity_id ID of the activity that was completed
     # @apiSuccess (200) {DateTime} completions.created_at The date and time the completion was created.
     #
     # @apiSuccessExample {Object[]} Success-Response:
@@ -69,8 +69,8 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
     #
-    # @apiParam {Number} [quest_id_filter] Full match on quest id.
-    # @apiParam {Number} [activity_id_filter] Full match on activity id.
+    # @apiParam (body) {Integer} [quest_id_filter] Full match on quest id.
+    # @apiParam (body) {Integer} [activity_id_filter] Full match on activity id.
     # 
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
@@ -97,8 +97,8 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiVersion  2.0.0
     # @apiHeader (200) {String} field description
     # 
-    # @apiParam  {Number} quest_id The id of the quest the completion is associated with
-    # @apiParam  {Number} activity_id The id of the completed activity
+    # @apiParam (path) {Integer} quest_id The id of the quest the completion is associated with
+    # @apiParam (body) {Integer} activity_id The id of the completed activity
     # 
     # @apiUse SuccessObject
     # 
@@ -126,7 +126,7 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
     # 
-    # @apiParam  {Number} id ID of the completion
+    # @apiParam (path) {Integer} id ID of the completion
     # 
     # @apiUse SuccessObject
     # 
@@ -150,16 +150,16 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
     # 
-    # @apiParam {Number} [page] The page number to get. Default is 1.
+    # @apiParam (body) {Integer} [page] The page number to get. Default is 1.
     #
-    # @apiParam {Number} [per_page] The pagination division. Default is 25.
+    # @apiParam (body) {Integer} [per_page] The pagination division. Default is 25.
     #
-    # @apiParam {Number} [person_id_filter] Full match on person id.
-    # @apiParam {String} [person_filter] Full match name or email of person.
-    # @apiParam {Number} [quest_id_filter] Full match on quest id.
-    # @apiParam {String} [quest_filter] Full match name of quest.
-    # @apiParam {Number} [activity_id_filter] Full match on activity id.
-    # @apiParam {String} [activity_filter] Full match name of activity.
+    # @apiParam (body) {Integer} [person_id_filter] Full match on person id.
+    # @apiParam (body) {String} [person_filter] Full match name or email of person.
+    # @apiParam (body) {Integer} [quest_id_filter] Full match on quest id.
+    # @apiParam (body) {String} [quest_filter] Full match name of quest.
+    # @apiParam (body) {Integer} [activity_id_filter] Full match on activity id.
+    # @apiParam (body) {String} [activity_filter] Full match name of activity.
     # 
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
@@ -186,8 +186,8 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the completion being updated
-    # @apiParam  {Number} activity_id The id of the completed activity
+    # @apiParam (path) {Integer} id ID of the completion being updated
+    # @apiParam (body) {Integer} activity_id The id of the completed activity
     # 
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
@@ -219,7 +219,7 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the completion that is being deleted
+    # @apiParam (path) {Integer} id ID of the completion that is being deleted
     # 
     # @apiSuccess (200) {Header} OK Returns a 200 OK status if successful
     # 

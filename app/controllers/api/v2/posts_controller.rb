@@ -11,14 +11,14 @@ class Api::V2::PostsController < Api::V1::PostsController
   #   Posts included are posts from the passed in person or, if none, the current
   #   user along with those of the users the current user is following.
   #
-  # @apiParam {Integer} [person_id]
+  # @apiParam (body) {Integer} [person_id]
   #   The person whose posts to get. If not supplied, posts from current user plus those from
   #   people the current user is following will be returned.
   #
-  # @apiParam {Integer} [page]
+  # @apiParam (body) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam {Integer} [per_page]
+  # @apiParam (body) {Integer} [per_page]
   #   Number of posts in a page. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:

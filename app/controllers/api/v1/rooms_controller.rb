@@ -8,19 +8,19 @@ class Api::V1::RoomsController < ApiController
   # @apiDescription
   #   The creates a private room and makes it active.
   #
-  # @apiParam {Object} room
+  # @apiParam (body) {Object} room
   #   The room object container for the room parameters.
   #
-  # @apiParam {String} room.name
+  # @apiParam (body) {String} room.name
   #   The name of the room. Must be between 3 and 26 characters, inclusive.
   #
-  # @apiParam {String} [room.description]
+  # @apiParam (body) {String} [room.description]
   #   The description of the room.
   #
-  # @apiParam {Attachment} [room.picture]
+  # @apiParam (body) {Attachment} [room.picture]
   #   Picture for the room.
   #
-  # @apiParam {Array} [room.member_ids]
+  # @apiParam (body) {Array} [room.member_ids]
   #   Ids of persons to add as members.  Users who are blocked by or who are blocking the current user will
   #   be silently excluded. You do not need to include the current user, who will be made a member
   #   automatically.
@@ -65,7 +65,7 @@ class Api::V1::RoomsController < ApiController
   end
 
   #**
-  # @api {delete} /rooms/id Delete a private room.
+  # @api {delete} /rooms/:id Delete a private room.
   # @apiName DeleteRoom
   # @apiGroup Rooms
   # @apiVersion 1.0.0
@@ -73,6 +73,8 @@ class Api::V1::RoomsController < ApiController
   # @apiDescription
   #   The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the
   #   status to deleted.
+  #
+  # @apiParam (path) {Integer} id ID of the room to delete
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
@@ -104,7 +106,7 @@ class Api::V1::RoomsController < ApiController
   # @apiDescription
   #   This gets a list of active rooms (public or private, as specified by the "private" parameter).
   #
-  # @apiParam {Boolean} [private]
+  # @apiParam (body) {Boolean} [private]
   #   Which type of room you want. With true you will get just active private rooms of which the current user is
   #   a member. With false (the default), you will get just all active public rooms.
   #
@@ -125,7 +127,7 @@ class Api::V1::RoomsController < ApiController
   end
 
   #**
-  # @api {patch} /rooms/id Update a private room (name).
+  # @api {patch} /rooms/:id Update a private room (name).
   # @apiName UpdateRoom
   # @apiGroup Rooms
   # @apiVersion 1.0.0
@@ -133,13 +135,14 @@ class Api::V1::RoomsController < ApiController
   # @apiDescription
   #   The updates a private room. Only the name can by updated, and only by the owner.
   #
-  # @apiParam {Object} room
+  # @apiParam (path) {Integer} id ID of the room being updated
+  # @apiParam (body) {Object} room
   #   The room object container for the room parameters.
   #
-  # @apiParam {String} room.name
+  # @apiParam (body) {String} room.name
   #   The name of the room. Must be between 3 and 26 characters, inclusive.
   #
-  # @apiParam {Attachment} [room.picture]
+  # @apiParam (body) {Attachment} [room.picture]
   #   NOT YET IMPLEMENTED
   #
   # @apiSuccessExample {json} Success-Response:

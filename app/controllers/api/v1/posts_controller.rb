@@ -325,37 +325,38 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This updates a post.
   #
-  # @apiParam {Object} post
+  # @apiParam (path) {Integer} id ID of the post being updated
+  # @apiParam (body) {Object} post
   #   The post object container for the post parameters.
   #
-  # @apiParam {String} [post.body]
+  # @apiParam (body) {String} [post.body]
   #   The body of the post.
   #
-  # @apiParam {Attachment} [post.picture]
+  # @apiParam (body) {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
-  # @apiParam {Boolean} [post.global]
+  # @apiParam (body) {Boolean} [post.global]
   #   Whether the post is global (seen by all users).
   #
-  # @apiParam {String} [post.starts_at]
+  # @apiParam (body) {String} [post.starts_at]
   #   When the post should start being visible (same format as in responses).
   #
-  # @apiParam {String} [post.ends_at]
+  # @apiParam (body) {String} [post.ends_at]
   #   When the post should stop being visible (same format as in responses).
   #
-  # @apiParam {Integer} [post.repost_interval]
+  # @apiParam (body) {Integer} [post.repost_interval]
   #   How often this post should be republished.
   #
-  # @apiParam {String} [post.status]
+  # @apiParam (body) {String} [post.status]
   #   Valid values: "pending", "published", "deleted", "rejected"
   #
-  # @apiParam {Integer} [post.priority]
+  # @apiParam (body) {Integer} [post.priority]
   #   Priority value for post.
   #
-  # @apiParam {Boolean} [post.notify_followers]
+  # @apiParam (body) {Boolean} [post.notify_followers]
   #   Whether a push notification should be sent to the posters followers.
   #
-  # @apiParam {Boolean} [post.recommended] (Admin)
+  # @apiParam (body) {Boolean} [post.recommended] (Admin)
   #   Whether the post is recommended.
   #
   # @apiSuccessExample Success-Response:

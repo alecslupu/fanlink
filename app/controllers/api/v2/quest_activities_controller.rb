@@ -14,11 +14,11 @@ class Api::V2::QuestActivitiesController < ApiController
     # @apiPermission admin
     # 
     # 
-    # @apiParam  {number} id Quest ID
-    # @apiParam  {Object} activity Container for the quest activity fields
-    # @apiParam  {String} description A description of the requirements for the activity
-    # @apiParam  {String} [hint] Optional hint text
-    # @apiParam  {Number} step Used to order the activities. Multiple activities can share the same step
+    # @apiParam (path) {number} id Quest ID
+    # @apiParam (body) {Object} activity Container for the quest activity fields
+    # @apiParam (body) {String} description A description of the requirements for the activity
+    # @apiParam (body) {String} [hint] Optional hint text
+    # @apiParam (body) {Object} step Step Object
     # 
     # @apiSuccess (200) {curl} quest_activity Returns the create quest activity
     # 
@@ -104,11 +104,10 @@ class Api::V2::QuestActivitiesController < ApiController
     # @apiPermission admin
     # 
     # 
-    # @apiParam  {Number} id ID of activity to update
-    # @apiParam  {Object} activity Container for the quest activity fields
-    # @apiParam  {String} [description] A description of the requirements for the activity
-    # @apiParam  {String} [hint] Optional hint text
-    # @apiParam  {int} step Used to order the activities. Multiple activities can share the same step
+    # @apiParam (path) {Integer} id ID of activity to update
+    # @apiParam (body) {Object} activity Container for the quest activity fields
+    # @apiParam (body) {String} [description] A description of the requirements for the activity
+    # @apiParam (body) {String} [hint] Optional hint text
     # 
     # @apiSuccess (200) {Object} quest_activity Returns the updated quest activity
     # 
@@ -186,7 +185,7 @@ class Api::V2::QuestActivitiesController < ApiController
     # @apiPermission user
     # 
     # 
-    # @apiParam  {Number} id Quest ID
+    # @apiParam (path) {Integer} id Quest ID
     # 
     # @apiSuccess (200) {Object[]} quest_activities An array of activity objects
     # 
@@ -266,7 +265,7 @@ class Api::V2::QuestActivitiesController < ApiController
     # @apiPermission user
     # 
     # 
-    # @apiParam  {Number} id Activity ID
+    # @apiParam (path) {Integer} id Activity ID
     # 
     # @apiSuccess (200) {Object} activity Activity Object   
     # 
@@ -341,7 +340,7 @@ class Api::V2::QuestActivitiesController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id Activity id
+    # @apiParam (path) {Integer} id Activity id
     # 
     # @apiSuccess (200) {Header} header 200 OK header response
     # 

@@ -10,7 +10,7 @@ class Api::V2::QuestCompletedController < ApiController
     # @apiVersion  1.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the quest
+    # @apiParam (path) {Integer} id ID of the quest
     # 
     # 
     # @apiParamExample  {type} Request-Example:

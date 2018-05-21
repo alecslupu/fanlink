@@ -16,9 +16,9 @@ class Api::V2::QuestsController < ApiController
     # @apiParam  {String} [product] Product name. Uses current_user if not passed.
     # 
     # @apiSuccess (200) {Object[]} quests List of quests for product
-    # @apiSuccess (200) {Number} quests.id ID of quest
-    # @apiSuccess (200) {Number} quests.product_id Product id the quest is attached to
-    # @apiSuccess (200) {Number} quests.event_id Optional event id the quest is attached to
+    # @apiSuccess (200) {Integer} quests.id ID of quest
+    # @apiSuccess (200) {Integer} quests.product_id Product id the quest is attached to
+    # @apiSuccess (200) {Integer} quests.event_id Optional event id the quest is attached to
     # @apiSuccess (200) {String} quests.name Name of the quest
     # @apiSuccess (200) {String} quests.description Description of the quest
     # @apiSuccess (200) {String} quests.picture_url The url for the attached picture
@@ -26,14 +26,14 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {DateTime} quests.starts_at When the quest should be active.
     # @apiSuccess (200) {DateTime} quests.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quests.activities The activities associated with the quest
-    # @apiSuccess (200) {Number} quests.activities.id ID of the activity
+    # @apiSuccess (200) {Integer} quests.activities.id ID of the activity
     # @apiSuccess (200) {String} quests.activities.description The description of the activity
     # @apiSuccess (200) {String} quests.activities.hint Hint associated with the activity
     # @apiSuccess (200) {Boolean} quests.activities.post Whether or not the activity requires a post to be created.
     # @apiSuccess (200) {Boolean} quests.activities.image Whether or not the activity requires an image to be taken.
     # @apiSuccess (200) {Boolean} quests.activities.audio Whether or not the activity requires an audio clip.
     # @apiSuccess (200) {String} quests.activities.beacon The beacon associated with the activity
-    # @apiSuccess (200) {Number} quests.activities.step The step number for quest progression
+    # @apiSuccess (200) {Integer} quests.activities.step The step number for quest progression
     # 
     # @apiParamExample  {json} Request-Example:
     # {
@@ -91,12 +91,12 @@ class Api::V2::QuestsController < ApiController
     # @apiDescription Returns a single quest for a product
     # 
     # 
-    # @apiParam  {Number} id ID of the activity
+    # @apiParam (path) {Integer} id ID of the activity
     # 
     # @apiSuccess (200) {Object} Quest Single quest returned from id
-    # @apiSuccess (200) {Number} quest.id ID of quest
-    # @apiSuccess (200) {Number} quest.product_id Product id the quest is attached to
-    # @apiSuccess (200) {Number} quest.event_id Optional event id the quest is attached to
+    # @apiSuccess (200) {Integer} quest.id ID of quest
+    # @apiSuccess (200) {Integer} quest.product_id Product id the quest is attached to
+    # @apiSuccess (200) {Integer} quest.event_id Optional event id the quest is attached to
     # @apiSuccess (200) {String} quest.name Name of the quest
     # @apiSuccess (200) {String} quest.description Description of the quest
     # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
@@ -104,14 +104,14 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {DateTime} quest.starts_at When the quest should be active.
     # @apiSuccess (200) {DateTime} quest.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quest.activities The activities associated with the quest
-    # @apiSuccess (200) {Number} quest.activities.id ID of the activity
+    # @apiSuccess (200) {Integer} quest.activities.id ID of the activity
     # @apiSuccess (200) {String} quest.activities.description The description of the activity
     # @apiSuccess (200) {String} quest.activities.hint Hint associated with the activity
     # @apiSuccess (200) {Boolean} quest.activities.post Whether or not the activity requires a post to be created.
     # @apiSuccess (200) {Boolean} quest.activities.image Whether or not the activity requires an image to be taken.
     # @apiSuccess (200) {Boolean} quest.activities.audio Whether or not the activity requires an audio clip.
     # @apiSuccess (200) {String} quest.activities.beacon The beacon associated with the activity
-    # @apiSuccess (200) {Number} quest.activities.step The step number for quest progression
+    # @apiSuccess (200) {Integer} quest.activities.step The step number for quest progression
     # 
     # @apiParamExample  {json} Request-Example:
     # {
@@ -155,22 +155,22 @@ class Api::V2::QuestsController < ApiController
     # @apiDescription Creates a quest for the product.
     # @apiPermission admin
     # 
-    # @apiParam  {String} [product] Product name. Uses current_user if not passed.
-    # @apiParam  {Object} quest Quest container for form data
-    # @apiParam  {Number} [quest.event_id] Optional event id to attach a quest to an event
-    # @apiParam  {String} quest.name Name of the quest
-    # @apiParam  {String} quest.internal_name Internal name for the quest
-    # @apiParam  {String} quest.description Desciption of the quest.
-    # @apiParam  {Object} [quest.picture] Image attached to the quest
-    # @apiParam  {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
-    # @apiParam  {Datetime} quest.starts_at Datetime String for when the quest starts.
-    # @apiParam  {Datetime} [quest.ends_at] Datetime String for when the quest is over.
+    # @apiParam (body) {String} [product] Product name. Uses current_user if not passed.
+    # @apiParam (body) {Object} quest Quest container for form data
+    # @apiParam (body) {Integer} [quest.event_id] Optional event id to attach a quest to an event
+    # @apiParam (body) {String} quest.name Name of the quest
+    # @apiParam (body) {String} quest.internal_name Internal name for the quest
+    # @apiParam (body) {String} quest.description Desciption of the quest.
+    # @apiParam (body) {Object} [quest.picture] Image attached to the quest
+    # @apiParam (body) {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
+    # @apiParam (body) {Datetime} quest.starts_at Datetime String for when the quest starts.
+    # @apiParam (body) {Datetime} [quest.ends_at] Datetime String for when the quest is over.
     # 
     #
     # @apiSuccess (200) {Object} quest Quest object that was saved to the database
-    # @apiSuccess (200) {Number} quest.id ID of quest
-    # @apiSuccess (200) {Number} quest.product_id Product id the quest is attached to
-    # @apiSuccess (200) {Number} quest.event_id Optional event id the quest is attached to
+    # @apiSuccess (200) {Integer} quest.id ID of quest
+    # @apiSuccess (200) {Integer} quest.product_id Product id the quest is attached to
+    # @apiSuccess (200) {Integer} quest.event_id Optional event id the quest is attached to
     # @apiSuccess (200) {String} quest.name Name of the quest
     # @apiSuccess (200) {String} quest.description Description of the quest
     # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
@@ -220,23 +220,24 @@ class Api::V2::QuestsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the quest to update
-    # @apiParam  {String} [product] Product name. Uses current_user if not passed.
-    # @apiParam  {Object} quest Quest container for form data
-    # @apiParam  {Number} [quest.event_id] Optional event id to attach a quest to an event
-    # @apiParam  {String} [quest.name] Name of the quest
-    # @apiParam  {String} [quest.internal_name] Internal name for the quest
-    # @apiParam  {String} [quest.description] Desciption of the quest.
-    # @apiParam  {Object} [quest.picture] Image attached to the quest
-    # @apiParam  {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
-    # @apiParam  {Datetime} [quest.starts_at] Datetime String for when the quest starts.
-    # @apiParam  {Datetime} [quest.ends_at] Datetime String for when the quest is over.
+    # @apiParam (path) {Integer} id ID of the quest to update
+    #
+    # @apiParam (body) {String} [product] Product name. Uses current_user if not passed.
+    # @apiParam (body) {Object} quest Quest container for form data
+    # @apiParam (body) {Integer} [quest.event_id] Optional event id to attach a quest to an event
+    # @apiParam (body) {String} [quest.name] Name of the quest
+    # @apiParam (body) {String} [quest.internal_name] Internal name for the quest
+    # @apiParam (body) {String} [quest.description] Desciption of the quest.
+    # @apiParam (body) {Object} [quest.picture] Image attached to the quest
+    # @apiParam (body) {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
+    # @apiParam (body) {Datetime} [quest.starts_at] Datetime String for when the quest starts.
+    # @apiParam (body) {Datetime} [quest.ends_at] Datetime String for when the quest is over.
     # 
     #
     # @apiSuccess (200) {Object} quest Quest object that was saved to the database
-    # @apiSuccess (200) {Number} quest.id ID of quest
-    # @apiSuccess (200) {Number} quest.product_id Product id the quest is attached to
-    # @apiSuccess (200) {Number} quest.event_id Optional event id the quest is attached to
+    # @apiSuccess (200) {Integer} quest.id ID of quest
+    # @apiSuccess (200) {Integer} quest.product_id Product id the quest is attached to
+    # @apiSuccess (200) {Integer} quest.event_id Optional event id the quest is attached to
     # @apiSuccess (200) {String} quest.name Name of the quest
     # @apiSuccess (200) {String} quest.description Description of the quest
     # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
@@ -283,37 +284,37 @@ class Api::V2::QuestsController < ApiController
     # @apiDescription Returns a list of all quests regardless of status.
     # @apiPermission admin
     # 
-    # @apiParam {Integer} [page]
+    # @apiParam (body) {Integer} [page]
     #   The page number to get. Default is 1.
     #
-    # @apiParam {Integer} [per_page]
+    # @apiParam (body) {Integer} [per_page]
     #   The pagination division. Default is 25.
     #
-    # @apiParam {Integer} [product_id_filter]
+    # @apiParam (body) {Integer} [product_id_filter]
     #   Full match on product id.
     #
-    # @apiParam {String} [name_filter]
+    # @apiParam (body) {String} [name_filter]
     #   Full or partial match on quest name.
     #
-    # @apiParam {String} [internal_name_filter]
+    # @apiParam (body) {String} [internal_name_filter]
     #   Full or partial match on quest's internal name.
     #
-    # @apiParam {String} [description_filter]
+    # @apiParam (body) {String} [description_filter]
     #   Full or partial match on the quest description.
     #
     # @apiParam {Datetime} [starts_at_filter]
     #   Quest starts at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
     #
-    # @apiParam {Datetime} [ends_at_filter]
+    # @apiParam (body) {Datetime} [ends_at_filter]
     #   Quest ends at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
     #
-    # @apiParam {String} [status_filter]
+    # @apiParam (body) {String} [status_filter]
     #   Quest status. Valid values: active enabled disabled deleted
     #
     # @apiSuccess (200) {Object[]} quests List of quests for product
-    # @apiSuccess (200) {Number} quests.id ID of quest
-    # @apiSuccess (200) {Number} quests.product_id Product id the quest is attached to
-    # @apiSuccess (200) {Number} quests.event_id Optional event id the quest is attached to
+    # @apiSuccess (200) {Integer} quests.id ID of quest
+    # @apiSuccess (200) {Integer} quests.product_id Product id the quest is attached to
+    # @apiSuccess (200) {Integer} quests.event_id Optional event id the quest is attached to
     # @apiSuccess (200) {String} quests.name Name of the quest
     # @apiSuccess (200) {String} quests.description Description of the quest
     # @apiSuccess (200) {String} quests.picture_url The url for the attached picture
@@ -321,14 +322,14 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {DateTime} quests.starts_at When the quest should be active.
     # @apiSuccess (200) {DateTime} quests.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quests.activities The activities associated with the quest
-    # @apiSuccess (200) {Number} quests.activities.id ID of the activity
+    # @apiSuccess (200) {Integer} quests.activities.id ID of the activity
     # @apiSuccess (200) {String} quests.activities.description The description of the activity
     # @apiSuccess (200) {String} quests.activities.hint Hint associated with the activity
     # @apiSuccess (200) {Boolean} quests.activities.post Whether or not the activity requires a post to be created.
     # @apiSuccess (200) {Boolean} quests.activities.image Whether or not the activity requires an image to be taken.
     # @apiSuccess (200) {Boolean} quests.activities.audio Whether or not the activity requires an audio clip.
     # @apiSuccess (200) {String} quests.activities.beacon The beacon associated with the activity
-    # @apiSuccess (200) {Number} quests.activities.step The step number for quest progression
+    # @apiSuccess (200) {Integer} quests.activities.step The step number for quest progression
     # 
     # @apiSuccessExample {200} Success-Response:
     #   HTTP/1.1 200 OK
@@ -378,7 +379,7 @@ class Api::V2::QuestsController < ApiController
     # @apiPermission admin, superadmin
     # 
     # 
-    # @apiParam  {Number} id ID of quest to delete
+    # @apiParam (path) {Integer} id ID of quest to delete
     # 
     # @apiSuccess (200) {Header} ok Returns a 200 OK response
     # 

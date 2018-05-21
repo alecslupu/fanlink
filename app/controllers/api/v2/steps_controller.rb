@@ -7,8 +7,8 @@ class Api::V2::StepsController < ApiController
     # @apiDefine Success
     #    description 
     # @apiSuccess (200) {Object} Step Step container
-    # @apiSuccess (200) {Number} step.id ID of the step
-    # @apiSuccess (200) {Number} step.quest_id The ID of the quest the step is attached to
+    # @apiSuccess (200) {Integer} step.id ID of the step
+    # @apiSuccess (200) {Integer} step.quest_id The ID of the quest the step is attached to
     # @apiSuccess (200) {Number[]} step.unlocks An array of numbers completing this step will unlock. If the step doesn't unlock anything, returns null. Pass as {1,2,3} for multiple steps.
     # @apiSuccess (200) {String} step.display Optional display name. Returns Step {step_id} if null
     # @apiSuccess (200) {String} status Current users step status. If a user hahsn't completed any steps, it will return the initial status set in the portal
@@ -33,8 +33,8 @@ class Api::V2::StepsController < ApiController
     # @apiDefine Successes
     #    Array of success objects 
     # @apiSuccess (200) {Object[]} Steps Steps container
-    # @apiSuccess (200) {Number} steps.id ID of the step
-    # @apiSuccess (200) {Number} steps.quest_id The ID of the quest the step is attached to
+    # @apiSuccess (200) {Integer} steps.id ID of the step
+    # @apiSuccess (200) {Integer} steps.quest_id The ID of the quest the step is attached to
     # @apiSuccess (200) {Number[]} steps.unlocks An array of numbers completing this step will unlock. If the step doesn't unlock anything, returns null. Pass as {1,2,3} for multiple steps.
     # @apiSuccess (200) {String} steps.display Optional display name. Returns Step {step_id} if null
     #
@@ -80,7 +80,7 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  1.0.0
     # 
     # 
-    # @apiParam (path) {Number} id ID of the quest
+    # @apiParam (path) {Integer} id ID of the quest
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
@@ -108,7 +108,8 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam (path) {Number} quest_id The quest id used in the url
+    # @apiParam (path) {Integer} quest_id The quest id used in the url
+    #
     # @apiParam (body) {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
     # @apiParam (body) {String} [display] Sets the display name for the step. 
     # 
@@ -145,7 +146,8 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam (path) {Number} id ID of the step to update
+    # @apiParam (path) {Integer} id ID of the step to update
+    #
     # @apiParam (body) {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
     # @apiParam (body) {String} [display] The display friendly name for select boxes.
     # 
@@ -176,7 +178,7 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam (path) {Number} id The ID of the step
+    # @apiParam (path) {Integer} id The ID of the step
     # 
     # @apiParamExample  {curl} Request-Example:
     # TODO
@@ -199,7 +201,7 @@ class Api::V2::StepsController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam (path) {Number} id Step ID
+    # @apiParam (path) {Integer} id Step ID
     # 
     # @apiSuccess (Header) {200} 200 Returns a 200
     # 

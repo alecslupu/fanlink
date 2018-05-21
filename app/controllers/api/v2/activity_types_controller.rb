@@ -112,7 +112,7 @@ class Api::V2::ActivityTypesController < ApiController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id Activity type ID
+    # @apiParam (path) {Number} id Activity type ID
     # 
     # 
     # @apiParamExample  {curl} Request-Example:

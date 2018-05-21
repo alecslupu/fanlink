@@ -16,10 +16,10 @@ class Api::V1::RelationshipsController < ApiController
   #   If the person sending the request already has a pending request (or friendship) from the requested_to_id, then no additional
   #   records will be created. The original relationship will be changed to friended (if not already) and returned.
   #
-  # @apiParam {Object} relationship
+  # @apiParam (body) {Object} relationship
   #   Relationship object.
   #
-  # @apiParam {Integer} relationship.requested_to_id
+  # @apiParam (body) {Integer} relationship.requested_to_id
   #   Person for whom the request is intended
   #
   # @apiSuccessExample {json} Success-Response:
@@ -67,7 +67,7 @@ class Api::V1::RelationshipsController < ApiController
   # @apiDescription
   #   This is used to unfriend a person.
   #
-  # @apiParam {Integer} id
+  # @apiParam (path) {Integer} id
   #   id of the underlying relationship
   #
   # @apiSuccessExample {json} Success-Response:
@@ -96,7 +96,7 @@ class Api::V1::RelationshipsController < ApiController
   #   the logged in user, 'requested' status is included for requests TO the current
   #   user. Otherwise, only 'friended' status is included.
   #
-  # @apiParam {Integer} [person_id]
+  # @apiParam (body) {Integer} [person_id]
   #   Person whose friends to get
   #
   # @apiSuccessExample {json} Success-Response:
@@ -127,6 +127,8 @@ class Api::V1::RelationshipsController < ApiController
   # @apiDescription
   #   This gets a single relationship for a relationship id. Only available to a participating user.
   #
+  # @apiParam (path) {Integer} id The relationship ID
+  #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #     "relationship": {
@@ -156,10 +158,10 @@ class Api::V1::RelationshipsController < ApiController
   # @apiDescription
   #   This is used to accept, deny or unfriend a relationship (friend request).
   #
-  # @apiParam {Object} relationship
+  # @apiParam (body) {Object} relationship
   #   Relationship object.
   #
-  # @apiParam {Integer} relationship.status
+  # @apiParam (body) {Integer} relationship.status
   #   New status. Valid values are "friended", "denied" or "withdrawn". However each one is only
   #   valid in the state and/or from the person that you would expect (e.g. the relationship
   #   requester cannot update with "friended").
