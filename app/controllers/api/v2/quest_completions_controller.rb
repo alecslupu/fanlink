@@ -111,7 +111,7 @@ class Api::V2::QuestCompletionsController < ApiController
     #*
 
     def create
-        @completion = QuestCompletion.create(completion_params.merge(person_id: current_user.id, quest_id: params[:quest_id]))
+        @completion = QuestCompletion.create(completion_params.merge(person_id: current_user.id, step_id: params[:step_id]))
         if @completion.valid?
             return_the @completion
         else
