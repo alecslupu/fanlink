@@ -47,14 +47,14 @@ class Api::V2::QuestCompletionsController < ApiController
     #         {
     #             "id": "1",
     #             "person_id": "1",
-    #             "quest_id": "1",
+    #             "step_id": "1",
     #             "activity_id": "1",
     #             "create_time": "2018-05-09T17:14:07Z"
     #         },
     #         {
     #             "id": "2",
     #             "person_id": "1",
-    #             "quest_id": "1",
+    #             "step_id": "1",
     #             "activity_id": "2",
     #             "create_time": "2018-05-09T17:14:13Z"
     #         }
@@ -91,7 +91,7 @@ class Api::V2::QuestCompletionsController < ApiController
 
     #**
     # 
-    # @api {post} /quests/:id/completions Register an activity for quest as complete
+    # @api {post} /steps/:id/completions Register an activity for quest as complete
     # @apiName CreateCompletion
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
@@ -118,6 +118,7 @@ class Api::V2::QuestCompletionsController < ApiController
         end
         @completion = QuestCompletion.create(completion_params.merge(person_id: current_user.id, step_id: step_id)
         if @completion.valid?
+            broadcast(:completion_created, current_user, @completion)
             return_the @completion
         else
             render json: { errors: @completion.errors.messages }, status: :unprocessable_entity
