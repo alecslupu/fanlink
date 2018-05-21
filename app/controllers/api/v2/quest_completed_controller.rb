@@ -13,7 +13,7 @@ class Api::V2::QuestCompletedController < ApiController
     # @apiParam (path) {Integer} id ID of the quest
     # 
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {json} Request-Example:
     # {
     #     property : value
     # }

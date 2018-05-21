@@ -3,7 +3,7 @@ class Api::V2::QuestCompletionsController < ApiController
     include Wisper::Publisher
     before_action :admin_only, only: %i[ list update delete ]
     before_action :load_person, only: %i[ for_person for_activity for_quest index ]
-    load_up_the Quest, from: :quest_id, only: %i[ create list ]
+    load_up_the Step, from: :step_id, only: %i[ create list ]
 
     #**
     #
@@ -14,7 +14,7 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiSuccess (200) {Integer} completion.person_id The ID of the user who completed the activity
     # @apiSuccess (200) {Integer} completion.quest_id ID of the quest
     # @apiSuccess (200) {Integer} completion.activity_id ID of the activity that was completed
-    # @apiSuccess (200) {DateTime} completion.created_at The date and time the completion was created.
+    # @apiSuccess (200) {String} completion.created_at The date and time the completion was created.
     #
     # @apiSuccessExample {Object} Success-Response:
     # HTTP/1.1 200 OK
@@ -39,7 +39,7 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiSuccess (200) {Integer} completions.person_id The ID of the user who completed the activity
     # @apiSuccess (200) {Integer} completions.quest_id ID of the quest
     # @apiSuccess (200) {Integer} completions.activity_id ID of the activity that was completed
-    # @apiSuccess (200) {DateTime} completions.created_at The date and time the completion was created.
+    # @apiSuccess (200) {String} completions.created_at The date and time the completion was created.
     #
     # @apiSuccessExample {Object[]} Success-Response:
     # {
@@ -150,16 +150,16 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
     # 
-    # @apiParam (body) {Integer} [page] The page number to get. Default is 1.
+    # @apiParam (query) {Integer} [page] The page number to get. Default is 1.
     #
-    # @apiParam (body) {Integer} [per_page] The pagination division. Default is 25.
+    # @apiParam (query) {Integer} [per_page] The pagination division. Default is 25.
     #
-    # @apiParam (body) {Integer} [person_id_filter] Full match on person id.
-    # @apiParam (body) {String} [person_filter] Full match name or email of person.
-    # @apiParam (body) {Integer} [quest_id_filter] Full match on quest id.
-    # @apiParam (body) {String} [quest_filter] Full match name of quest.
-    # @apiParam (body) {Integer} [activity_id_filter] Full match on activity id.
-    # @apiParam (body) {String} [activity_filter] Full match name of activity.
+    # @apiParam (query) {Integer} [person_id_filter] Full match on person id.
+    # @apiParam (query) {String} [person_filter] Full match name or email of person.
+    # @apiParam (query) {Integer} [quest_id_filter] Full match on quest id.
+    # @apiParam (query) {String} [quest_filter] Full match name of quest.
+    # @apiParam (query) {Integer} [activity_id_filter] Full match on activity id.
+    # @apiParam (query) {String} [activity_filter] Full match name of activity.
     # 
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \

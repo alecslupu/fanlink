@@ -183,31 +183,31 @@ class Api::V1::PostsController < ApiController
   # @apiDescription
   #   This gets a list of posts with optional filters and pagination.
   #
-  # @apiParam (body) {Integer} [page]
+  # @apiParam (query) {Integer} [page]
   #   The page number to get. Default is 1.
   #
-  # @apiParam (body) {Integer} [per_page]
+  # @apiParam (query) {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
-  # @apiParam (body) {Integer} [id_filter]
+  # @apiParam (query) {Integer} [id_filter]
   #   Full match on post.id. Will return either a one element array or an empty array.
   #
-  # @apiParam (body) {Integer} [person_id_filter]
+  # @apiParam (query) {Integer} [person_id_filter]
   #   Full match on person id.
   #
-  # @apiParam (body) {String} [person_filter]
+  # @apiParam (query) {String} [person_filter]
   #   Full or partial match on person username or email.
   #
-  # @apiParam (body) {String} [body_filter]
+  # @apiParam (query) {String} [body_filter]
   #   Full or partial match on post body.
   #
-  # @apiParam (body) {Datetime} [posted_after_filter]
+  # @apiParam (query) {String} [posted_after_filter]
   #   Posted at or after timestamp. Format: "2018-01-08T12:13:42Z"
   #
-  # @apiParam (body) {Datetime} [posted_before_filter]
+  # @apiParam (query) {String} [posted_before_filter]
   #   Posted at or before timestamp. Format: "2018-01-08T12:13:42Z"
   #
-  # @apiParam (body) {String} [status_filter]
+  # @apiParam (query) {String} [status_filter]
   #   Post status. Valid values: pending published deleted rejected errored
   #
   # @apiSuccessExample {json} Success-Response:

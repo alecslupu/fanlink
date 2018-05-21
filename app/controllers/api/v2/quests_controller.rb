@@ -23,8 +23,8 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {String} quests.description Description of the quest
     # @apiSuccess (200) {String} quests.picture_url The url for the attached picture
     # @apiSuccess (200) {String} quests.status The current status of the quest. Can be Active, Enabled, Disabled.
-    # @apiSuccess (200) {DateTime} quests.starts_at When the quest should be active.
-    # @apiSuccess (200) {DateTime} quests.ends_at Optional end time for when the quest should be disabled.
+    # @apiSuccess (200) {String} quests.starts_at When the quest should be active.
+    # @apiSuccess (200) {String} quests.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quests.activities The activities associated with the quest
     # @apiSuccess (200) {Integer} quests.activities.id ID of the activity
     # @apiSuccess (200) {String} quests.activities.description The description of the activity
@@ -101,8 +101,8 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {String} quest.description Description of the quest
     # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
     # @apiSuccess (200) {String} quest.status The current status of the quest. Can be Active, Enabled, Disabled.
-    # @apiSuccess (200) {DateTime} quest.starts_at When the quest should be active.
-    # @apiSuccess (200) {DateTime} quest.ends_at Optional end time for when the quest should be disabled.
+    # @apiSuccess (200) {String} quest.starts_at When the quest should be active.
+    # @apiSuccess (200) {String} quest.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quest.activities The activities associated with the quest
     # @apiSuccess (200) {Integer} quest.activities.id ID of the activity
     # @apiSuccess (200) {String} quest.activities.description The description of the activity
@@ -163,8 +163,8 @@ class Api::V2::QuestsController < ApiController
     # @apiParam (body) {String} quest.description Desciption of the quest.
     # @apiParam (body) {Object} [quest.picture] Image attached to the quest
     # @apiParam (body) {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
-    # @apiParam (body) {Datetime} quest.starts_at Datetime String for when the quest starts.
-    # @apiParam (body) {Datetime} [quest.ends_at] Datetime String for when the quest is over.
+    # @apiParam (body) {String} quest.starts_at Datetime String for when the quest starts.
+    # @apiParam (body) {String} [quest.ends_at] Datetime String for when the quest is over.
     # 
     #
     # @apiSuccess (200) {Object} quest Quest object that was saved to the database
@@ -175,8 +175,8 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {String} quest.description Description of the quest
     # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
     # @apiSuccess (200) {String} quest.status The current status of the quest. Can be Active, Enabled, Disabled.
-    # @apiSuccess (200) {DateTime} quest.starts_at When the quest should be active.
-    # @apiSuccess (200) {DateTime} quest.ends_at Optional end time for when the quest should be disabled.
+    # @apiSuccess (200) {String} quest.starts_at When the quest should be active.
+    # @apiSuccess (200) {String} quest.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quest.activities The activities associated with the quest
     # 
     # 
@@ -230,8 +230,8 @@ class Api::V2::QuestsController < ApiController
     # @apiParam (body) {String} [quest.description] Desciption of the quest.
     # @apiParam (body) {Object} [quest.picture] Image attached to the quest
     # @apiParam (body) {String} [quest.status] Current quest status. Can be Active, Enabled, Disabled or Deleted
-    # @apiParam (body) {Datetime} [quest.starts_at] Datetime String for when the quest starts.
-    # @apiParam (body) {Datetime} [quest.ends_at] Datetime String for when the quest is over.
+    # @apiParam (body) {String} [quest.starts_at] Datetime String for when the quest starts.
+    # @apiParam (body) {String} [quest.ends_at] Datetime String for when the quest is over.
     # 
     #
     # @apiSuccess (200) {Object} quest Quest object that was saved to the database
@@ -242,8 +242,8 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {String} quest.description Description of the quest
     # @apiSuccess (200) {String} quest.picture_url The url for the attached picture
     # @apiSuccess (200) {String} quest.status The current status of the quest. Can be Active, Enabled, Disabled.
-    # @apiSuccess (200) {DateTime} quest.starts_at When the quest should be active.
-    # @apiSuccess (200) {DateTime} quest.ends_at Optional end time for when the quest should be disabled.
+    # @apiSuccess (200) {String} quest.starts_at When the quest should be active.
+    # @apiSuccess (200) {String} quest.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quest.activities The activities associated with the quest
     # 
     # 
@@ -284,31 +284,31 @@ class Api::V2::QuestsController < ApiController
     # @apiDescription Returns a list of all quests regardless of status.
     # @apiPermission admin
     # 
-    # @apiParam (body) {Integer} [page]
+    # @apiParam (query) {Integer} [page]
     #   The page number to get. Default is 1.
     #
-    # @apiParam (body) {Integer} [per_page]
+    # @apiParam (query) {Integer} [per_page]
     #   The pagination division. Default is 25.
     #
-    # @apiParam (body) {Integer} [product_id_filter]
+    # @apiParam (query) {Integer} [product_id_filter]
     #   Full match on product id.
     #
-    # @apiParam (body) {String} [name_filter]
+    # @apiParam (query) {String} [name_filter]
     #   Full or partial match on quest name.
     #
-    # @apiParam (body) {String} [internal_name_filter]
+    # @apiParam (query) {String} [internal_name_filter]
     #   Full or partial match on quest's internal name.
     #
-    # @apiParam (body) {String} [description_filter]
+    # @apiParam (query) {String} [description_filter]
     #   Full or partial match on the quest description.
     #
-    # @apiParam {Datetime} [starts_at_filter]
+    # @apiParam (query) {String} [starts_at_filter]
     #   Quest starts at or after timestamp. Format: "2018-01-08'T'12:13:42'Z'"
     #
-    # @apiParam (body) {Datetime} [ends_at_filter]
+    # @apiParam (query) {String} [ends_at_filter]
     #   Quest ends at or before timestamp. Format: "2018-01-08'T'12:13:42'Z'"
     #
-    # @apiParam (body) {String} [status_filter]
+    # @apiParam (query) {String} [status_filter]
     #   Quest status. Valid values: active enabled disabled deleted
     #
     # @apiSuccess (200) {Object[]} quests List of quests for product
@@ -319,8 +319,8 @@ class Api::V2::QuestsController < ApiController
     # @apiSuccess (200) {String} quests.description Description of the quest
     # @apiSuccess (200) {String} quests.picture_url The url for the attached picture
     # @apiSuccess (200) {String} quests.status The current status of the quest. Can be Active, Enabled, Disabled.
-    # @apiSuccess (200) {DateTime} quests.starts_at When the quest should be active.
-    # @apiSuccess (200) {DateTime} quests.ends_at Optional end time for when the quest should be disabled.
+    # @apiSuccess (200) {String} quests.starts_at When the quest should be active.
+    # @apiSuccess (200) {String} quests.ends_at Optional end time for when the quest should be disabled.
     # @apiSuccess (200) {Object[]} quests.activities The activities associated with the quest
     # @apiSuccess (200) {Integer} quests.activities.id ID of the activity
     # @apiSuccess (200) {String} quests.activities.description The description of the activity
@@ -381,11 +381,11 @@ class Api::V2::QuestsController < ApiController
     # 
     # @apiParam (path) {Integer} id ID of quest to delete
     # 
-    # @apiSuccess (200) {Header} ok Returns a 200 OK response
+    # @apiSuccess (200) {Header} 200 Returns a 200 OK response
     # 
     # 
     # 
-    # @apiSuccessExample {Header} Success-Response:
+    # @apiSuccessExample {200} Success-Response:
     # HTTP/1.1 200 OK
     # 
     # 

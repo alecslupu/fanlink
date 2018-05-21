@@ -146,25 +146,25 @@ class Api::V1::MessagesController < ApiController
   # @apiDescription
   #   This gets a list of messages without regard to room (with possible exception of room filter).
   #
-  # @apiParam (body) {Integer} [id_filter]
+  # @apiParam (query) {Integer} [id_filter]
   #   Full match on Message id.
   #
-  # @apiParam (body) {String} [person_filter]
+  # @apiParam (query) {String} [person_filter]
   #   Full or partial match on person username.
   #
-  # @apiParam (body) {Integer} [room_id_filter]
+  # @apiParam (query) {Integer} [room_id_filter]
   #   Full match on Room id.
   #
-  # @apiParam  (body){String} [body_filter]
+  # @apiParam  (query){String} [body_filter]
   #   Full or partial match on message body.
   #
-  # @apiParam (body) {Boolean} [reported_filter]
+  # @apiParam (query) {Boolean} [reported_filter]
   #   Filter on whether the message has been reported.
   #
-  # @apiParam (body) {Integer} [page]
+  # @apiParam (query) {Integer} [page]
   #   Page number. Default is 1.
   #
-  # @apiParam (body) {Integer} [per_page]
+  # @apiParam (query) {Integer} [per_page]
   #   Messages per page. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:

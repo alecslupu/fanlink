@@ -131,16 +131,16 @@ class Api::V1::PeopleController < ApiController
   # @apiDescription
   #   This is used to get a list of people.
   #
-  # @apiParam (body) {Integer} [page]
+  # @apiParam (query) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam (body) {Integer} [per_page]
+  # @apiParam (query) {Integer} [per_page]
   #   Page division. Default is 25.
   #
-  # @apiParam (body) {String} [username_filter]
+  # @apiParam (query) {String} [username_filter]
   #   A username or username fragment to filter on.
   #
-  # @apiParam (body) {String} [email_filter]
+  # @apiParam (query) {String} [email_filter]
   #   An email or email fragment to filter on.
 
   # @apiSuccessExample {json} Success-Response:

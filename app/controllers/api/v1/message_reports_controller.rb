@@ -59,7 +59,7 @@ class Api::V1::MessageReportsController < ApiController
   # @apiDescription
   #   This gets a list of message reports with optional filter.
   #
-  # @apiParam (body) {String} [status_filter]
+  # @apiParam (query) {String} [status_filter]
   #   If provided, valid values are "message_hidden", "no_action_needed", and "pending"
   #
   #

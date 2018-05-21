@@ -9,9 +9,9 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiGroup Beacons
     # @apiVersion  1.0.0
     # 
-    # @apiParam (body) {Integer} [page]  The page number to get. Default is 1.
+    # @apiParam (query) {Integer} [page]  The page number to get. Default is 1.
     #
-    # @apiParam (body) {Integer} [per_page] The pagination division. Default is 25.
+    # @apiParam (query) {Integer} [per_page] The pagination division. Default is 25.
     # 
     # @apiSuccess (200) {Object} beacons Beacons container
     # @apiSuccess (200) {Integer} beacons.id Beacon ID
@@ -21,7 +21,7 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Integer} beacons.lower Lower
     # @apiSuccess (200) {Integer} beacons.upper Upper
     # @apiSuccess (200) {Integer} beacons.attached_to The activity the beacon is attached to. Can be null.
-    # @apiSuccess (200) {Datetime} beacons.created_at The date and time the beacon was added to the database.
+    # @apiSuccess (200) {String} beacons.created_at The date and time the beacon was added to the database.
     #
     # @apiParamExample  {url} Request-Example:
     # {
@@ -31,7 +31,8 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccessExample {json} Success-Response:
     # {
     #     "beacons": [
-    #       "id": "1",
+    #      {
+    #         "id": "1",
     #         "product_id": "1",
     #         "beacon_pid": "A12FC4-12912",
     #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
@@ -39,6 +40,7 @@ class Api::V2::ProductBeaconsController < ApiController
     #         "upper": "75",
     #         "attached_to": null,
     #         "created_at": "2018-05-09T21:52:48.653Z"
+    #        }
     #    ]
     # }
     # 
@@ -57,9 +59,9 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiGroup Beacons
     # @apiVersion  1.0.0
     #
-    # @apiParam (body) {Integer} [page]  The page number to get. Default is 1.
+    # @apiParam (query) {Integer} [page]  The page number to get. Default is 1.
     #
-    # @apiParam (body) {Integer} [per_page] The pagination division. Default is 25.
+    # @apiParam (query) {Integer} [per_page] The pagination division. Default is 25.
     # 
     # @apiSuccess (200) {Object} beacons A list of all the beacons
     # @apiSuccess (200) {Integer} beacons.id Beacon ID
@@ -70,7 +72,7 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Integer} beacons.upper Upper
     # @apiSuccess (200) {Boolean} beacons.deleted Is set to true if a beacon has been soft deleted.
     # @apiSuccess (200) {Integer} beacons.attached_to The activity the beacon is attached to. Can be null.
-    # @apiSuccess (200) {Datetime} beacons.created_at The date and time the beacon was added to the database.
+    # @apiSuccess (200) {String} beacons.created_at The date and time the beacon was added to the database.
     #
     # @apiParamExample  {url} Request-Example:
     # {
@@ -80,7 +82,8 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccessExample {json} Success-Response:
     # {
     #     "beacons": [
-    #       "id": "1",
+    #      {
+    #         "id": "1",
     #         "product_id": "1",
     #         "beacon_pid": "A12FC4-12912",
     #         "uuid": "eae4c812-bcfb-40e8-9414-b5b42826dcfb",
@@ -88,6 +91,7 @@ class Api::V2::ProductBeaconsController < ApiController
     #         "upper": "75",
     #         "attached_to": null,
     #         "created_at": "2018-05-09T21:52:48.653Z"
+    #        }
     #    ]
     # }
     # 
@@ -115,7 +119,7 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Integer} beacon.lower Lower
     # @apiSuccess (200) {Integer} beacon.upper Upper
     # @apiSuccess (200) {Integer} beacon.attached_to The activity the beacon is attached to. Can be null.
-    # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
+    # @apiSuccess (200) {String} beacon.created_at The date and time the beacon was added to the database.
     # 
     # @apiParamExample  {Url} Request-Example:
     # {
@@ -168,7 +172,7 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Integer} beacon.lower Lower
     # @apiSuccess (200) {Integer} beacon.upper Upper
     # @apiSuccess (200) {Integer} beacon.attached_to The activity the beacon is attached to. Can be null.
-    # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
+    # @apiSuccess (200) {String} beacon.created_at The date and time the beacon was added to the database.
     # 
     # @apiParamExample  {Url} Request-Example:
     # {
@@ -225,9 +229,9 @@ class Api::V2::ProductBeaconsController < ApiController
     # @apiSuccess (200) {Integer} lower Lower
     # @apiSuccess (200) {Integer} upper Upper
     # @apiSuccess (200) {Integer} beacon.attached_to The activity the beacon is attached to. Can be null.
-    # @apiSuccess (200) {Datetime} beacon.created_at The date and time the beacon was added to the database.
+    # @apiSuccess (200) {String} beacon.created_at The date and time the beacon was added to the database.
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {json} Request-Example:
     # {
     #     "product_beacon": {
     #         "attached_to": 1
@@ -235,7 +239,7 @@ class Api::V2::ProductBeaconsController < ApiController
     # }
     # 
     # 
-    # @apiSuccessExample {type} Success-Response:
+    # @apiSuccessExample {json} Success-Response:
     # HTTP/1.1 200 OK
     # {
     #     "beacon": {
@@ -269,7 +273,7 @@ class Api::V2::ProductBeaconsController < ApiController
     # 
     # @apiSuccess (200) {Header} header Returns a 200 response if successful
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {json} Request-Example:
     # {
     #     "id" : "https://api.example.com/product_beacons/1",
     #     "pid": "https://api.example.com/product_beacons/abcdef-123456"

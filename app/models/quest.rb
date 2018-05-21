@@ -13,7 +13,7 @@ class Quest < ApplicationRecord
     has_many :steps, dependent: :destroy
     has_many :quest_completions, dependent: :destroy
 
-    #accepts_nested_attributes_for :quest_activities
+    accepts_nested_attributes_for :steps
 
     acts_as_tenant(:product)
 

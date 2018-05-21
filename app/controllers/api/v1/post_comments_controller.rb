@@ -102,10 +102,10 @@ class Api::V1::PostCommentsController < ApiController
   #
   # @apiParam (path) {Integer} id Post ID
   #
-  # @apiParam (body) {Integer} [page]
+  # @apiParam (query) {Integer} [page]
   #   The page number to get. Default is 1.
   #
-  # @apiParam (body) {Integer} [per_page]
+  # @apiParam (query) {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
   # @apiSuccessExample {json} Success-Response:
@@ -133,16 +133,16 @@ class Api::V1::PostCommentsController < ApiController
   # @apiDescription
   #   This gets a list of post comments with optional filters and pagination.
   #
-  # @apiParam (body) {Integer} [page]
+  # @apiParam (query) {Integer} [page]
   #   The page number to get. Default is 1.
   #
-  # @apiParam (body) {Integer} [per_page]
+  # @apiParam (query) {Integer} [per_page]
   #   The pagination division. Default is 25.
   #
-  # @apiParam (body) {String} [body_filter]
+  # @apiParam (query) {String} [body_filter]
   #   Full or partial match on comment body.
   #
-  # @apiParam (body) {String} [person_filter]
+  # @apiParam (query) {String} [person_filter]
   #   Full or partial match on person username or email.
   #
   # @apiSuccessExample {json} Success-Response:

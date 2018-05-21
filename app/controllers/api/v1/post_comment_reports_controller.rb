@@ -52,13 +52,13 @@ class Api::V1::PostCommentReportsController < ApiController
   # @apiDescription
   #   This gets a list of post comment reports with optional filter.
   #
-  # @apiParam (body) {Integer} [page]
+  # @apiParam (query) {Integer} [page]
   #   Page number to get. Default is 1.
   #
-  # @apiParam (body) {Integer} [per_page]
+  # @apiParam (query) {Integer} [per_page]
   #   Page division. Default is 25.
   #
-  # @apiParam (body) {String} [status_filter]
+  # @apiParam (query) {String} [status_filter]
   #   If provided, valid values are "pending", "no_action_needed", and "comment_hidden"
   #
   # @apiSuccessExample {json} Success-Response:
