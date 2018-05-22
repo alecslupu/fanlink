@@ -9,6 +9,7 @@ class Step < ApplicationRecord
 
     attr_accessor :status
 
+    default_scope { order(created_at: :desc) }
     scope :get_requirement, -> (requirement) { where('step.id = ?', requirement) }
     scope :get_children, -> (step) { where('unlocks = ?', step.id) }
     

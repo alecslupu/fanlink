@@ -132,7 +132,7 @@ class Api::V2::ActivityTypesController < ApiController
 
     #**
     # 
-    # @api {PATCH} /types/:id Update a type
+    # @api {PATCH} /activity_types/:id Update a type
     # @apiName UpdateActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
@@ -165,7 +165,7 @@ class Api::V2::ActivityTypesController < ApiController
 
     #**
     # 
-    # @api {delete} /activity_type/:id Delete a type from an activity
+    # @api {delete} /activity_types/:id Delete a type from an activity
     # @apiName DeleteActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0

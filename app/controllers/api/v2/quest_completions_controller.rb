@@ -263,7 +263,7 @@ private
     end
 
     def apply_filters
-        completions = QuestCompletion.order(created_at: :desc)
+        completions = QuestCompletion.all
         params.each do |p, v|
             if p.end_with?("_filter") && QuestCompletion.respond_to?(p)
               completions = completions.send(p, v)
