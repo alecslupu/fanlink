@@ -175,9 +175,12 @@ class Api::V2::ActivityTypesController < ApiController
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
-    # {
-    #     property : value
-    # }
+    # curl -X PATCH \
+    # http://localhost:3000/activity_types/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/x-www-form-urlencoded' \
+    # -d 'activity_type%5Batype%5D=activity_code&activity_type%5Bvalue%5D%5Bid%5D=2313-4231A'
     # 
     # 
     # @apiUse Success
@@ -202,9 +205,10 @@ class Api::V2::ActivityTypesController < ApiController
     # @apiSuccess (200) {Header} OK 200 OK response
     # 
     # @apiParamExample  {curl} Request-Example:
-    # {
-    #     property : value
-    # }
+    # curl -X DELETE \
+    # http://localhost:3000/activity_types/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache'
     # 
     # 
     # @apiSuccessExample {Header} Success-Response:

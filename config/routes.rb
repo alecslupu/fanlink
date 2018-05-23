@@ -44,21 +44,29 @@ Rails.application.routes.draw do
         resources :message_reports, only: %i[ create ]
         resources :room_memberships, only: %i[ create destroy ]
       end
-      resources :beacons, :controller => "product_beacons" do
-        collection do
-          get "list" => "product_beacons#list"
-        end
-      end
       resources :session, only: %i[ create index ] do
         collection do
           delete "" => "session#destroy"
         end
       end
+
+    end
+    version 2 do
+      resources :events, only: %i[ create update destroy ]
+
+      resources :merchandise, only: %i[ create update destroy ]
+
       resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
         resources :types, :controller => "activity_types", only: %i[ create index ]
       end
 
       resources :activity_types, only: %i[ show update destroy ] 
+
+      resources :beacons, :controller => "product_beacons" do
+        collection do
+          get "list" => "product_beacons#list"
+        end
+      end
 
       resources :quests do
         resources :steps, only: %i[ create index ]
@@ -78,7 +86,6 @@ Rails.application.routes.draw do
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
       end
     end
-    version 2
   end
 
   #temporary hack to get around need for Accept header with api stuff
