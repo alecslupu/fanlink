@@ -412,7 +412,7 @@ private
     end
 
     def load_quest
-        @quest = Quest.where(product_id: ActsAsTenant.current_tenant.id).find(params[:id])
+        @quest = Quest.where(product_id: ActsAsTenant.current_tenant.id).find(params[:id]).order(created_at: :desc)
     end
 
     def quest_params

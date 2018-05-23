@@ -96,7 +96,7 @@ class Api::V2::StepsController < ApiController
     #*
 
     def index
-        @steps = @quest.steps
+        @steps = @quest.steps.order(created_at: :desc)
         return_the @steps
     end
 

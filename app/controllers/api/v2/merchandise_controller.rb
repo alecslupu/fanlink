@@ -58,13 +58,13 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # 
     # @api {patch} /merchandise Update a merchandise item
     # @apiName UpdateMerchandise
-    # @apiGroup group
+    # @apiGroup Merchandise
     # @apiVersion  2.0.0
     # 
     # 
     # @apiUse Params
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {curl} Request-Example:
     # {
     #     property : value
     # }
@@ -89,14 +89,14 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # 
     # @api {destroy} /merchandise/:id Destroy merchandise
     # @apiName DestroyMerchandsie
-    # @apiGroup group
+    # @apiGroup Merchandise
     # @apiVersion  2.0.0
     # 
     # 
     # @apiParam  {Number} id ID of the merchandise to be deleted
     # 
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {curl} Request-Example:
     # {
     #     property : value
     # }

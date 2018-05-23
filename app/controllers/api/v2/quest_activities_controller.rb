@@ -217,7 +217,7 @@ class Api::V2::QuestActivitiesController < ApiController
     #*
 
     def index
-        @quest_activities = @step.quest_activities.with_completion(current_user).where(deleted: false)
+        @quest_activities = @step.quest_activities.with_completion(current_user).order(created_at: :desc)
         return_the @quest_activities
     end
 

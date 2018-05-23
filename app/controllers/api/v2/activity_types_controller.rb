@@ -1,6 +1,6 @@
 class Api::V2::ActivityTypesController < ApiController
     load_up_the QuestActivity, from: :activity_id, only: %i[ create index ]
-    load_up_the ActivityType, only: %i[ update destroy ]
+    load_up_the ActivityType, only: %i[ show update destroy ]
     #**
     # @apiDefine Success
     #    Single record success response
@@ -126,7 +126,7 @@ class Api::V2::ActivityTypesController < ApiController
     #*
 
     def index
-        @activity_types = @quest_activity.activity_types
+        @activity_types = @quest_activity.activity_types.order(created_at: :desc)
         return_the @activity_types
     end
 
@@ -160,6 +160,32 @@ class Api::V2::ActivityTypesController < ApiController
 
     def update
         @activity_type.update_attributes(type_params)
+        return_the @activity_type
+    end
+
+    #**
+    # 
+    # @api {get} /activity_types/:id Get a type
+    # @apiName GetActivityType
+    # @apiGroup Quest Activity Type
+    # @apiVersion  2.0.0
+    # 
+    # 
+    # @apiParam  {Number} id The ID of the activity type
+    # 
+    # 
+    # @apiParamExample  {curl} Request-Example:
+    # {
+    #     property : value
+    # }
+    # 
+    # 
+    # @apiUse Success
+    # 
+    # 
+    #*
+
+    def show
         return_the @activity_type
     end
 

@@ -35,7 +35,7 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiUse Params
     # 
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {curl} Request-Example:
     # {
     #     property : value
     # }
@@ -57,13 +57,13 @@ class Api::V2::EventsController < Api::V1::EventsController
     # 
     # @api {patch} /events Update a events item
     # @apiName UpdateEvents
-    # @apiGroup group
+    # @apiGroup Events
     # @apiVersion  2.0.0
     # 
     # 
     # @apiUse Params
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {curl} Request-Example:
     # {
     #     property : value
     # }
@@ -88,14 +88,14 @@ class Api::V2::EventsController < Api::V1::EventsController
     # 
     # @api {destroy} /events/:id Destroy events
     # @apiName DestroyMerchandsie
-    # @apiGroup group
+    # @apiGroup Events
     # @apiVersion  2.0.0
     # 
     # 
     # @apiParam  {Number} id ID of the event being deleted
     # 
     # 
-    # @apiParamExample  {type} Request-Example:
+    # @apiParamExample  {curl} Request-Example:
     # {
     #     property : value
     # }
