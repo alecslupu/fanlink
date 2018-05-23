@@ -19,4 +19,3 @@ json.status post.status
 json.priority post.priority
 json.recommended post.recommended
 json.notify_followers post.notify_followers
-json.comment_count post.post_comment.count
