@@ -51,8 +51,8 @@ class Api::V2::EventsController < Api::V1::EventsController
     #    The params the events accept
     #
     # @apiParam (body) {Object} event Event container
-    # @apiParam (body) {Object|String} event.name String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
-    # @apiParam (body) {Object|String} [event.description] String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
+    # @apiParam (body) {String} event.name String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
+    # @apiParam (body) {String} [event.description] String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
     # @apiParam (body) {DateTime} event.starts_at The date and time the event starts at
     # @apiParam (body) {DateTime} [event.ends_at] The date and time the event ends at.
     # @apiParam (body) {String} [event.ticket_url] The url used for purchasing tickets to the event

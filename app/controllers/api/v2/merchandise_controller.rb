@@ -16,8 +16,8 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     #    Parameters that are accepted for Merchandise
     #
     # @apiParam (body) {Object} merchandise Object container
-    # @apiParam (body) {Object|String} merchandise.name Name of the item.
-    # @apiParam (body) {Object|String} merchandise.description Description of the item.
+    # @apiParam (body) {String} merchandise.name Name of the item.
+    # @apiParam (body) {String} merchandise.description Description of the item.
     # @apiParam (body) {String} [merchandise.price] Price of the item
     # @apiParam (body) {File} [merchandise.picture] Image associated with the item
     # @apiParam (body) {Boolean} merchandise.available Is the item currently available? True/false
