@@ -119,7 +119,7 @@ class Api::V2::ActivityTypesController < ApiController
     #   curl -X GET \
     #   http://localhost:3000/activities/1/types \
     #   -H 'Accept: application/vnd.api.v2+json' \
-    #   -H 'Cache-Control: no-cache' \
+    #   -H 'Cache-Control: no-cache'
     # 
     # @apiUse Successess
     # 
