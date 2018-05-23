@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522223247) do
+ActiveRecord::Schema.define(version: 20180523225146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20180522223247) do
     t.text "place_identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
     t.index ["ends_at"], name: "ind_events_ends_at"
     t.index ["product_id"], name: "ind_events_products"
     t.index ["starts_at"], name: "ind_events_starts_at"
@@ -165,6 +166,7 @@ ActiveRecord::Schema.define(version: 20180522223247) do
     t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
   end

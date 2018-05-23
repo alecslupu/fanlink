@@ -1,6 +1,6 @@
 class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     include Wisper::Publisher
-    load_up_the Merchandise, only: %i[ update delete ]
+    load_up_the Merchandise, only: %i[ update show delete ]
     #**
     # @apiDefine Success
     #    Success object 
@@ -35,10 +35,20 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # 
     # @apiUse Params
     # 
-    # @apiParamExample  {type} Request-Example:
-    # {
-    #     property : value
-    # }
+    # @apiParamExample  {curl} Request-Example:
+    # curl -X POST \
+    # http://localhost:3000/merchandise \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/x-www-form-urlencoded' \
+    # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+    # -F 'merchandise[name]=Sample Merch' \
+    # -F 'merchandise[description]=This is a test. This is only a test' \
+    # -F 'merchandise[price]=3.99' \
+    # -F 'merchandise[available]=Yes' \
+    # -F 'merchandise[priority]=1' \
+    # -F 'merchandise[purchase_url]=http://example.com/sample' \
+    # -F 'merchandise[picture]=@D:\Media\Pictures\turing_test.png'
     # 
     # 
     # @apiUse Success
@@ -66,9 +76,13 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiUse Params
     # 
     # @apiParamExample  {curl} Request-Example:
-    # {
-    #     property : value
-    # }
+    # curl -X PATCH \
+    # http://localhost:3000/merchandise/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/x-www-form-urlencoded' \
+    # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+    # -F 'merchandise[price]=39.99'
     # 
     # 
     # @apiUse Success
@@ -77,8 +91,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     #*
 
     def update
-        @merchandise.update_attributes(merchandise_params)
-        if @merchandise.valid?
+        if @merchandise.update_attributes(merchandise_params)
             broadcast(:merchandise_updated, current_user, @merchandise)
             return_the @merchandise
         else
@@ -98,9 +111,11 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
-    # {
-    #     property : value
-    # }
+    # curl -X DELETE \
+    # http://localhost:3000/merchandise/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/x-www-form-urlencoded'
     # 
     # 
     # @apiUse Success
@@ -120,6 +135,6 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
 private
     def merchandise_params
-        params.require(:merchandise).permit(%i[ price, picture, available, priority, name, description, purchase_url ])
+        params.require(:merchandise).permit(:price, :picture, :available, :priority, :name, :description, :purchase_url)
     end
 end

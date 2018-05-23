@@ -4,11 +4,46 @@ class Api::V2::EventsController < Api::V1::EventsController
     #**
     # @apiDefine Success
     #    Success object 
+    # @apiSuccessExample {json} Success-Response:
+    # {
+    #     "event": {
+    #         "id": "1",
+    #         "name": "Spectacular Event",
+    #         "description": "THE event of the moment",
+    #         "starts_at": "2018-02-24T00:25:11Z",
+    #         "ends_at": "2018-08-23T23:25:11Z",
+    #         "ticket_url": "http://example.com/buy_now",
+    #         "place_identifier": "Sazuki"
+    #     }
+    # }
     #*
 
     #**
     # @apiDefine Successess
-    #    Success Array 
+    #    Success Array
+    # @apiSuccessExample {json} Success-Response:
+    # {
+    #     "events": [
+    #         {
+    #             "id": "1",
+    #             "name": "Spectacular Event",
+    #             "description": "THE event of the moment",
+    #             "starts_at": "2018-02-24T00:30:56Z",
+    #             "ends_at": "2018-08-23T23:30:56Z",
+    #             "ticket_url": "http://example.com/buy_now",
+    #             "place_identifier": "Montreal"
+    #         },
+    #         {
+    #             "id": "2",
+    #             "name": "Spectacular Event 2",
+    #             "description": "THE event of the moment 2",
+    #             "starts_at": "2018-02-24T00:31:15Z",
+    #             "ends_at": "2018-08-23T23:31:15Z",
+    #             "ticket_url": "http://example.com/buy_now",
+    #             "place_identifier": "Sazuki"
+    #         }
+    #     ]
+    # }
     #*
 
     #**
@@ -36,9 +71,12 @@ class Api::V2::EventsController < Api::V1::EventsController
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
-    # {
-    #     property : value
-    # }
+    # curl -X POST \
+    # http://localhost:3000/events \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/x-www-form-urlencoded' \
+    # -d 'event%5Bname%5D=Spectacular%20Event&event%5Bdescription%5D=THE%20event%20of%20the%20moment&event%5Bstarts_at%5D=2018-02-24T00%3A25%3A11.539Z&event%5Bends_at%5D=2018-08-23T23%3A25%3A11.539Z&event%5Bticket_url%5D=http%3A%2F%2Fexample.com%2Fbuy_now&event%5Bplace_identifier%5D=Sazuki'
     # 
     # @apiUse Success
     # 
@@ -65,10 +103,12 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiUse Params
     # 
     # @apiParamExample  {curl} Request-Example:
-    # {
-    #     property : value
-    # }
-    # 
+    # curl -X PATCH \
+    # http://localhost:3000/events/1 \
+    # -H 'Accept: application/vnd.api.v2+json' \
+    # -H 'Cache-Control: no-cache' \
+    # -H 'Content-Type: application/x-www-form-urlencoded' \
+    # -d event%5Bplace_identifier%5D=Montreal
     # 
     # @apiUse Success
     # 
@@ -76,8 +116,7 @@ class Api::V2::EventsController < Api::V1::EventsController
     #*
 
     def update
-        @event.update_attributes(event_params)
-        if @event.valid?
+        if @event.update_attributes(event_params)
             broadcast(:event_updated, current_user, @event)
             return_the @event
         else
@@ -118,8 +157,8 @@ class Api::V2::EventsController < Api::V1::EventsController
     end
 
 private
-    def events_params
-        params.require(:event).permit(%i[ name description starts_at ends_at ticket_url place_identifier ])
+    def event_params
+        params.require(:event).permit( :name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier )
     end
     
 end
