@@ -13,3 +13,4 @@ json.priority post.priority
 json.recommended post.recommended
 json.created_at post.created_at.to_s
 json.updated_at post.updated_at.to_s
+json.comment_count post.comments.count
