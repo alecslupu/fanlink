@@ -15,13 +15,13 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiDefine Params Form Params
     #    The params the events accept
     #
-    # @apiParam  {Object} event Event container
-    # @apiParam  {Object|String} event.name String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
-    # @apiParam  {Object|String} [event.description] String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
-    # @apiParam  {DateTime} event.starts_at The date and time the event starts at
-    # @apiParam  {DateTime} [event.ends_at] The date and time the event ends at.
-    # @apiParam  {String} [event.ticket_url] The url used for purchasing tickets to the event
-    # @apiParam  {String} [event.place_identifier] Used for google maps API 
+    # @apiParam (body) {Object} event Event container
+    # @apiParam (body) {Object|String} event.name String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
+    # @apiParam (body) {Object|String} [event.description] String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
+    # @apiParam (body) {DateTime} event.starts_at The date and time the event starts at
+    # @apiParam (body) {DateTime} [event.ends_at] The date and time the event ends at.
+    # @apiParam (body) {String} [event.ticket_url] The url used for purchasing tickets to the event
+    # @apiParam (body) {String} [event.place_identifier] Used for google maps API 
     #*
 
     #**
@@ -55,11 +55,12 @@ class Api::V2::EventsController < Api::V1::EventsController
 
     #**
     # 
-    # @api {patch} /events Update a events item
+    # @api {patch} /events/:id Update a events item
     # @apiName UpdateEvents
     # @apiGroup Events
     # @apiVersion  2.0.0
     # 
+    # @apiParam (path) {Number} id ID of the event to updated
     # 
     # @apiUse Params
     # 
@@ -92,7 +93,7 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the event being deleted
+    # @apiParam (path) {Number} id ID of the event being deleted
     # 
     # 
     # @apiParamExample  {curl} Request-Example:

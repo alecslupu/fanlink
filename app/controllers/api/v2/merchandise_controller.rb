@@ -15,14 +15,14 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiDefine Params Form Parameters
     #    Parameters that are accepted for Merchandise
     #
-    # @apiParam  {Object} merchandise Object container
-    # @apiParam  {Object|String} merchandise.name Name of the item.
-    # @apiParam  {Object|String} merchandise.description Description of the item.
-    # @apiParam  {String} [merchandise.price] Price of the item
-    # @apiParam  {File} [merchandise.picture] Image associated with the item
-    # @apiParam  {Boolean} merchandise.available Is the item currently available? True/false
-    # @apiParam  {Number} merchandise.priority Importance? 
-    # @apiParam  {String} [merchandise.purchase_url] The URL to purchase the item
+    # @apiParam (body) {Object} merchandise Object container
+    # @apiParam (body) {Object|String} merchandise.name Name of the item.
+    # @apiParam (body) {Object|String} merchandise.description Description of the item.
+    # @apiParam (body) {String} [merchandise.price] Price of the item
+    # @apiParam (body) {File} [merchandise.picture] Image associated with the item
+    # @apiParam (body) {Boolean} merchandise.available Is the item currently available? True/false
+    # @apiParam (body) {Number} merchandise.priority Importance? 
+    # @apiParam (body) {String} [merchandise.purchase_url] The URL to purchase the item
     #*
 
     #**
@@ -56,11 +56,12 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
     #**
     # 
-    # @api {patch} /merchandise Update a merchandise item
+    # @api {patch} /merchandise/:id Update a merchandise item
     # @apiName UpdateMerchandise
     # @apiGroup Merchandise
     # @apiVersion  2.0.0
     # 
+    # @apiParam (path) {Number} id ID of the item you're updating
     # 
     # @apiUse Params
     # 
@@ -93,7 +94,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Number} id ID of the merchandise to be deleted
+    # @apiParam (path) {Number} id ID of the merchandise to be deleted
     # 
     # 
     # @apiParamExample  {curl} Request-Example:
@@ -119,6 +120,6 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
 private
     def merchandise_params
-        params.require(:marchandise).permit(%i[ price, picture, available, priority, name, description, purchase_url ])
+        params.require(:merchandise).permit(%i[ price, picture, available, priority, name, description, purchase_url ])
     end
 end
