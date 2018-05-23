@@ -1,0 +1,12 @@
+#!/bin/sh
+# bin/entrypoint_queue
+
+echo "Running start up script..."
+
+echo "Checking installed gems..."
+/usr/src/app/bin/bundle check || /usr/src/app/bin/bundle install
+
+rm /usr/src/app/tmp/pids/delayed*.pid
+
+echo "Starting server."
+bundle exec rails jobs:work

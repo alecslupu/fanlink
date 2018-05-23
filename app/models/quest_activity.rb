@@ -8,7 +8,7 @@ class QuestActivity < ApplicationRecord
     belongs_to :step
     has_image_called :picture
     
-    default_scope { order(created_at: :desc) }
+    #default_scope { order(created_at: :desc) }
 
 
     scope :with_completion, -> (person) { where("quest_completions.person_id = ?", person.id) }

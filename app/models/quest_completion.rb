@@ -10,7 +10,7 @@ class QuestCompletion < ApplicationRecord
     validates :person_id, presence: { message: "Person ID is not being automatically set." }
     validates :activity_id, presence: { message: "Activity ID is required." }
 
-    default_scope { order(created_at: :desc) }
+    #default_scope { order(created_at: :desc) }
     scope :count_activity, -> (step_id) { where(step_id: step_id).count }
 
 private

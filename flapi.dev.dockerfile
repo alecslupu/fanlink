@@ -13,7 +13,7 @@ RUN apk add --no-cache \
           imagemagick \
           file
 
-RUN npm install -g apidoc https://github.com/zshaw-brightcove/apidoc-swagger
+RUN npm install -g apidoc newman
 
 RUN cat ${FIREBASE_JSON_FILE_PATH}/fanlink-${BUILD_ENV}.json > ./fanlink-${BUILD_ENV}.json
 COPY ./fanlink-${BUILD_ENV}.json /tmp/
@@ -21,8 +21,10 @@ COPY ./fanlink-${BUILD_ENV}.json /tmp/
 ENV BUNDLE_PATH /gems
 
 COPY ./bin/entrypoint /entrypoint
+COPY ./bin/entrypoint_queue /entrypoint_queue
 
 RUN chmod +x /entrypoint
+RUN chmod +x /entrypoint_queue
 
 EXPOSE 3000
 

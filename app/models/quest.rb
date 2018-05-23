@@ -24,7 +24,7 @@ class Quest < ApplicationRecord
     validates :description, presence: { message: "A description is required." }
     validates :starts_at, presence: { message: "Starting date and time is required." }
 
-    default_scope { order(created_at: :desc) }
+    #default_scope { order(created_at: :desc) }
 
     scope :in_date_range, -> (start_date, end_date) {
         where("quests.starts_at >= ? and quests.ends_at <= ?",

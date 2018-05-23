@@ -6,7 +6,7 @@ services:
     # volumes: #Uncomment this to use persistant storage for postgres
     #   - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
-  flapi:
+  flapi: &flapi
     container_name: flapi
     build:
       context: ./
@@ -19,10 +19,12 @@ services:
       - postgres
     depends_on:
       - postgres
+      - mail
     restart: unless-stopped
-    environment:
+    environment: &flapi-environment
       RAILS_ENV: ${RAILS_ENV}
       FANLINK_PG_USER: ${FANLINK_PG_USER}
+      FANLINK_PG_PASSWORD: ${FANLINK_PG_PASSWORD}
       FANLINK_PG_HOST: ${FANLINK_PG_HOST}
       FIREBASE_CM_KEY: ${FIREBASE_CM_KEY}
       FIREBASE_URL: ${FIREBASE_URL}
@@ -39,6 +41,39 @@ services:
     volumes:
       - $PWD/:/usr/src/app
       - gems:/gems
+  flapi-jobs:
+    image: flapi:dev
+    container_name: flapi-jobs
+    command: '/entrypoint_queue'
+    ports: []
+    links:
+      - postgres
+    depends_on:
+      - postgres
+      - flapi
+    environment:
+      <<: *flapi-environment
+      QUEUE: default
+    volumes:
+      - $PWD/:/usr/src/app
+      - gems:/gems
+    restart: unless-stopped
+    
+  mail:
+    image: hinshun/mailcatcher
+    container_name: flapi-mail
+    restart: unless-stopped
+    ports:
+      - 1080:1080 # open browser here to warch mails sent by rails, use smtp to 1025 as config
+  logs:
+    image: mthenw/frontail
+    container_name: flapi-logs
+    command: /log/development.log
+    restart: unless-stopped
+    volumes:
+    - $PWD/log:/log
+    ports:
+      - 9001:9001
 
 volumes:
   gems:

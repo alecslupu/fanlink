@@ -100,7 +100,7 @@ class Api::V2::ActivityTypesController < ApiController
         if @activity_type.valid?
             return_the @activity_type
         else
-            render json: { errors: @activity_type.errors.messages }, status: :unprocessable_entity
+            render json: { errors: @activity_type.errors.messages.flatten }, status: :unprocessable_entity
         end
     end
 

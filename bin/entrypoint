@@ -1,13 +1,14 @@
 #!/bin/sh
+# bin/entrypoint 
 
 echo "Running start up script..."
 
 echo "$(git rev-parse --abbrev-ref HEAD)"
-if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
-  echo "Generating Postman import"
+# if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
+#   echo "Generating Postman import"
   
-  cd /usr/src/app/config && apidoc-swagger -c /usr/src/app/config -i /usr/src/app/app/controllers/api -o /usr/src/app/public/swagger && cd -
-fi
+#   cd /usr/src/app/config && apidoc-swagger -c /usr/src/app/config -i /usr/src/app/app/controllers/api -o /usr/src/app/public/swagger && cd -
+# fi
 
 echo "Checking installed gems..."
 /usr/src/app/bin/bundle check || /usr/src/app/bin/bundle install
@@ -33,5 +34,5 @@ else
     rm /usr/src/app/tmp/pids/server.pid
   fi
   echo "Starting server."
-  /usr/src/app/bin/rails s
+  bundle exec rails s -p 3000 -b 0.0.0.0
 fi

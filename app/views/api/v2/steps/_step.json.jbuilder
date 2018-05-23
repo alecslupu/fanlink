@@ -14,11 +14,9 @@ if !step.deleted
     if step.quest_completions.exists?
         if step.quest_completions.count == step.quest_activities.count
             json.status "completed"
-        elsif step.step_completed.exists?
-            json.status step.step_completed.status
-        else
-            json.status step.initial_status
         end
+    elsif !step.step_completed.blank?
+        json.status step.step_completed.status
     else
         json.status step.initial_status
     end

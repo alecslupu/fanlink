@@ -31,7 +31,7 @@ class Person < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :quest_completions, dependent: :destroy
   has_many :step_completed, dependent: :destroy
-  has_many :quest_completed, dependent: :destroy
+  has_many :quest_completeds, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
 

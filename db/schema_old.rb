@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522223247) do
+ActiveRecord::Schema.define(version: 20180522223231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -392,9 +392,8 @@ ActiveRecord::Schema.define(version: 20180522223247) do
     t.integer "activity_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "status_old", default: "0", null: false
+    t.text "status", default: "0", null: false
     t.integer "step_id", null: false
-    t.integer "status", default: 0, null: false
     t.index ["person_id"], name: "ind_quest_person_completions"
     t.index ["step_id"], name: "idx_completions_step"
   end
@@ -465,7 +464,6 @@ ActiveRecord::Schema.define(version: 20180522223247) do
   create_table "step_completed", force: :cascade do |t|
     t.integer "step_id", null: false
     t.integer "person_id", null: false
-    t.text "status_old", default: "0", null: false
     t.integer "quest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
