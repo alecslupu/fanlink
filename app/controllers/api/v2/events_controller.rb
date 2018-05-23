@@ -19,7 +19,7 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam  {Object} event Event container
     # 
     # @apiSuccess (200) {type} name description
     # 
@@ -27,7 +27,6 @@ class Api::V2::EventsController < Api::V1::EventsController
     # {
     #     property : value
     # }
-    # 
     # 
     # @apiUse Success
     # 
@@ -109,7 +108,7 @@ class Api::V2::EventsController < Api::V1::EventsController
 
 private
     def events_params
-        params.require(:event).permit()
+        params.require(:event).permit(%i[ name description starts_at ends_at ticket_url place_identifier ])
     end
     
 end

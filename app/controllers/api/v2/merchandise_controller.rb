@@ -107,6 +107,6 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
 private
     def merchandise_params
-        params.require(:marchandise).permit()
+        params.require(:marchandise).permit(%i[ price, picture, available, priority, name, description, purchase_url ])
     end
 end
