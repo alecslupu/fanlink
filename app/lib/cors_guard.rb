@@ -1,7 +1,9 @@
 class CorsGuard
   #TODO use redis or something for better thread safety
-  ALWAYS_ALLOW = %w[ https://www.fan.link https://staging.fan.link https://portal.dev.fanlinkmusic.com https://portal.fanlinkmusic.com localhost:3000 ]
+  ALWAYS_ALLOW = %w[ https://www.fan.link https://staging.fan.link https://portal.dev.fanlinkmusic.com https://portal.fanlinkmusic.com ]
   CORS_KEY = "cors_allowed"
+
+  ALWAYS_ALLOW << ENV['CORS_URL']
 
   def self.allow_from?(source)
     Rails.cache.fetch(CORS_KEY, expires_in: 5.minutes) do
