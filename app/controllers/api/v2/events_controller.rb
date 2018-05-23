@@ -12,6 +12,19 @@ class Api::V2::EventsController < Api::V1::EventsController
     #*
 
     #**
+    # @apiDefine Params Form Params
+    #    The params the events accept
+    #
+    # @apiParam  {Object} event Event container
+    # @apiParam  {Object|String} event.name String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
+    # @apiParam  {Object|String} [event.description] String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
+    # @apiParam  {DateTime} event.starts_at The date and time the event starts at
+    # @apiParam  {DateTime} [event.ends_at] The date and time the event ends at.
+    # @apiParam  {String} [event.ticket_url] The url used for purchasing tickets to the event
+    # @apiParam  {String} [event.place_identifier] Used for google maps API 
+    #*
+
+    #**
     # 
     # @api {post} /events Create a events item
     # @apiName CreateEvents
@@ -19,9 +32,8 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {Object} event Event container
+    # @apiUse Params
     # 
-    # @apiSuccess (200) {type} name description
     # 
     # @apiParamExample  {type} Request-Example:
     # {
@@ -49,9 +61,7 @@ class Api::V2::EventsController < Api::V1::EventsController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
-    # 
-    # @apiSuccess (200) {type} name description
+    # @apiUse Params
     # 
     # @apiParamExample  {type} Request-Example:
     # {
@@ -76,13 +86,13 @@ class Api::V2::EventsController < Api::V1::EventsController
 
     #**
     # 
-    # @api {destroy} /events Destroy events
+    # @api {destroy} /events/:id Destroy events
     # @apiName DestroyMerchandsie
     # @apiGroup group
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam  {Number} id ID of the event being deleted
     # 
     # 
     # @apiParamExample  {type} Request-Example:

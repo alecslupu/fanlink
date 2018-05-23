@@ -12,6 +12,20 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     #*
 
     #**
+    # @apiDefine Params Form Parameters
+    #    Parameters that are accepted for Merchandise
+    #
+    # @apiParam  {Object} merchandise Object container
+    # @apiParam  {Object|String} merchandise.name Name of the item.
+    # @apiParam  {Object|String} merchandise.description Description of the item.
+    # @apiParam  {String} [merchandise.price] Price of the item
+    # @apiParam  {File} [merchandise.picture] Image associated with the item
+    # @apiParam  {Boolean} merchandise.available Is the item currently available? True/false
+    # @apiParam  {Number} merchandise.priority Importance? 
+    # @apiParam  {String} [merchandise.purchase_url] The URL to purchase the item
+    #*
+
+    #**
     # 
     # @api {post} /merchandise Create a merchandise item
     # @apiName CreateMerchandise
@@ -19,9 +33,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
-    # 
-    # @apiSuccess (200) {type} name description
+    # @apiUse Params
     # 
     # @apiParamExample  {type} Request-Example:
     # {
@@ -50,7 +62,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiUse Params
     # 
     # @apiParamExample  {type} Request-Example:
     # {
@@ -75,13 +87,13 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
     #**
     # 
-    # @api {destroy} /merchandise Destroy merchandise
+    # @api {destroy} /merchandise/:id Destroy merchandise
     # @apiName DestroyMerchandsie
     # @apiGroup group
     # @apiVersion  2.0.0
     # 
     # 
-    # @apiParam  {String} paramName description
+    # @apiParam  {Number} id ID of the merchandise to be deleted
     # 
     # 
     # @apiParamExample  {type} Request-Example:
