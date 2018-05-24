@@ -1,6 +1,6 @@
 class Step < ApplicationRecord
     belongs_to :quest
-    has_many :quest_activities
+    has_many :quest_activities, -> { order(created_at: :desc) }
     has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, class_name: "QuestCompletion"
     has_one :step_completed, -> { where(person_id: Person.current_user.id) }, class_name: "StepCompleted"
 

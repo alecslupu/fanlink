@@ -10,7 +10,7 @@ class Quest < ApplicationRecord
     #TODO Add translation support
     has_manual_translated :description, :name
     
-    has_many :steps, dependent: :destroy
+    has_many :steps, -> { order(created_at: :desc) }, dependent: :destroy
     #   has_many :quest_completions, dependent: :destroy
 
     accepts_nested_attributes_for :steps
@@ -31,7 +31,8 @@ class Quest < ApplicationRecord
           start_date.beginning_of_day, end_date.end_of_day)
       }
     
-    scope :for_product, -> (product) { includes(:product).where(roduct: product) } 
+    scope :for_product, -> (product) { includes(:product).where(product: product) }
+    scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }
 
 
 private
