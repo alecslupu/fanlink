@@ -10,7 +10,7 @@ class Quest < ApplicationRecord
     #TODO Add translation support
     has_manual_translated :description, :name
     
-    has_many :steps, -> { order(created_at: :desc) }, dependent: :destroy
+    has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy
     #   has_many :quest_completions, dependent: :destroy
 
     accepts_nested_attributes_for :steps
