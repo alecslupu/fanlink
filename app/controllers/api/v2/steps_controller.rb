@@ -9,7 +9,7 @@ class Api::V2::StepsController < ApiController
     # @apiSuccess (200) {Object} Step Step container
     # @apiSuccess (200) {Integer} step.id ID of the step
     # @apiSuccess (200) {Integer} step.quest_id The ID of the quest the step is attached to
-    # @apiSuccess (200) {Number[]} step.unlocks An array of numbers completing this step will unlock. If the step doesn't unlock anything, returns null. Pass as {1,2,3} for multiple steps.
+    # @apiSuccess (200) {Number[]} step.unlocks An array of ids completing this step will unlock. If the step doesn't unlock anything, returns null. Pass as {1,2,3} for multiple steps.
     # @apiSuccess (200) {String} step.display Optional display name. Returns Step {step_id} if null
     # @apiSuccess (200) {String} status Current users step status. If a user hahsn't completed any steps, it will return the initial status set in the portal
     #
@@ -17,11 +17,11 @@ class Api::V2::StepsController < ApiController
     # HTTP/1.1 200 OK
     # {
     #     "step": {
-    #         "id": "22",
+    #         "id": "2",
     #         "quest_id": "1",
     #         "unlocks": [
-    #             1,
-    #             2
+    #             3,
+    #             4
     #         ],
     #         "display": "Step 22",
     #         "status": "unlocked"
@@ -35,7 +35,7 @@ class Api::V2::StepsController < ApiController
     # @apiSuccess (200) {Object[]} Steps Steps container
     # @apiSuccess (200) {Integer} steps.id ID of the step
     # @apiSuccess (200) {Integer} steps.quest_id The ID of the quest the step is attached to
-    # @apiSuccess (200) {Number[]} steps.unlocks An array of numbers completing this step will unlock. If the step doesn't unlock anything, returns null. Pass as {1,2,3} for multiple steps.
+    # @apiSuccess (200) {Number[]} steps.unlocks An array of ids completing this step will unlock. If the step doesn't unlock anything, returns null. Pass as {1,2,3} for multiple steps.
     # @apiSuccess (200) {String} steps.display Optional display name. Returns Step {step_id} if null
     #
     # @apiSuccessExample {Object[]} Success-Response:
@@ -49,7 +49,7 @@ class Api::V2::StepsController < ApiController
     #                 2
     #             ],
     #             "display": "Step 1",
-    #             "status": "unlocked"
+    #             "status": "completed"
     #         },
     #         {
     #             "id": "2",
@@ -96,7 +96,7 @@ class Api::V2::StepsController < ApiController
     #*
 
     def index
-        @steps = @quest.steps.order(created_at: :desc)
+        @steps = @quest.steps.order(created_at: :asc)
         return_the @steps
     end
 
@@ -167,7 +167,7 @@ class Api::V2::StepsController < ApiController
 
     def update
         @step.update_attributes(step_params)
-        return_the @step
+        return_the @step.with_completions(current_user).is_completed(current_user)
     end
 
     #**
@@ -188,7 +188,7 @@ class Api::V2::StepsController < ApiController
     #*
 
     def show
-        @step = Step.find(params[:id])
+        @step = Step.find(params[:id]).with_completions(current_user).is_completed(current_user)
         return_the @step
 
     end

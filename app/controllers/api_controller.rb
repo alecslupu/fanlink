@@ -5,6 +5,7 @@ class ApiController < ApplicationController
   set_current_tenant_through_filter
 
   before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person
+  after_action :unset_person
 
   #
   # Respond to an API request with an object. If the object is invalid
@@ -100,5 +101,9 @@ protected
 
   def set_person
     Person.current_user = current_user
+  end
+
+  def unset_person
+    Person.current_user = nil
   end
 end

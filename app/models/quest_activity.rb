@@ -3,7 +3,7 @@ class QuestActivity < ApplicationRecord
     include TranslationThings
 
     has_manual_translated :description, :name
-    has_many :quest_completions, :foreign_key => "activity_id"
+    has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, :foreign_key => "activity_id"
     has_many :activity_types, -> { order(created_at: :asc) }, :foreign_key => "activity_id"
     belongs_to :step
     has_image_called :picture

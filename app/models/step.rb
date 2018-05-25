@@ -12,6 +12,7 @@ class Step < ApplicationRecord
     default_scope { order(created_at: :asc) }
     scope :get_requirement, -> (requirement) { where('step.id = ?', requirement) }
     scope :get_children, -> (step) { where('unlocks = ?', step.id) }
+    scope :with_completions, -> (user) {includes(:quest_completions).where("quest_completions.person_id =?", user.id)}
     
 private
     
