@@ -403,7 +403,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority notify_followers ] +
+    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers ] +
                                      ((current_user.admin? || current_user.product_account?) ? [:recommended] : []))
   end
 end

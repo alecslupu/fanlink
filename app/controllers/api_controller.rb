@@ -101,12 +101,9 @@ protected
 
   def set_person
     Person.current_user = current_user
-    puts "Person.current_user is #{Person.current_user.inspect}"
-    puts "Rails current_user is #{current_user.inspect}"
   end
 
   def unset_person
     Person.current_user = nil
-    puts "Person.current_user is #{Person.current_user.inspect}"
   end
 end

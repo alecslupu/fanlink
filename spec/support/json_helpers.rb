@@ -69,6 +69,9 @@ module JsonHelpers
       "body"      => msg.body,
       "create_time" => msg.created_at.to_s,
       "picture_url" => msg.picture_url,
+      "audio_url" => msg.audio_url,
+      "audio_size" => msg.audio_file_size,
+      "audio_content_type" => msg.audio_content_type,
       "person" => person_json(msg.person),
       "mentions" => message_mentions_json(msg)
     }
@@ -228,6 +231,9 @@ module JsonHelpers
       "create_time" => post.created_at.to_s,
       "body"        => (lang.present?) ? post.body(lang) : post.body,
       "picture_url" => post.picture_url,
+      "audio_url" => post.audio_url,
+      "audio_size" => post.audio_file_size,
+      "audio_content_type" => post.audio_content_type,
       "person" => person_json(post.person),
       "post_reaction_counts" => post.reaction_breakdown.to_json,
       "post_reaction"     => (reaction.nil?) ? nil : post_reaction_json(reaction),

@@ -30,7 +30,6 @@ module Fanlink
 
     config.paperclip_defaults = {
         storage: :s3,
-        styles: { thumbnail: "100x100#" },
         url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
         s3_region: ENV["AWS_REGION"],
         bucket:    ENV["AWS_BUCKET"],
