@@ -167,7 +167,7 @@ class Api::V2::StepsController < ApiController
 
     def update
         @step.update_attributes(step_params)
-        return_the @step.with_completions(current_user).is_completed(current_user)
+        return_the @step
     end
 
     #**
@@ -188,7 +188,7 @@ class Api::V2::StepsController < ApiController
     #*
 
     def show
-        @step = Step.find(params[:id]).with_completions(current_user).is_completed(current_user)
+        @step = Step.find(params[:id])
         return_the @step
 
     end
