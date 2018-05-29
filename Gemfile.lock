@@ -100,6 +100,7 @@ GEM
     attribute_normalizer (1.2.0)
     autoprefixer-rails (8.4.1)
       execjs
+    awesome_print (1.8.0)
     aws-partitions (1.84.0)
     aws-sdk (3.0.1)
       aws-sdk-resources (~> 3)
@@ -1002,6 +1003,7 @@ DEPENDENCIES
   administrate-field-paperclip!
   api-pagination
   attribute_normalizer
+  awesome_print
   aws-sdk
   better_errors
   binding_of_caller

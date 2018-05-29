@@ -24,6 +24,9 @@ class Api::V1::PostsController < ApiController
   # @apiParam (body) {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam (body) {Attachment} [post.audio]
+  #   Post audio, this should be `audio/acc`.
+  #
   # @apiParam (body) {Boolean} [post.global]
   #   Whether the post is global (seen by all users).
   #
@@ -256,6 +259,9 @@ class Api::V1::PostsController < ApiController
   #       "create_time":"2018-02-18T06:32:24Z",
   #       "body":"post body",
   #       "picture_url": "www.example.com/pic.jpg",
+  #       "audio_url": "www.example.com/audio.aac",
+  #       "audio_size": "the size of the file",
+  #       "audio_content_type": "mime type of the content",
   #       "person": ....public person json...,
   #       "post_reaction_counts":{"1F389":1},
   #       "post_reaction":...see post reaction create json....(or null if current user has not reacted)
@@ -403,7 +409,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body picture global starts_at ends_at repost_interval status priority notify_followers ] +
+    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers ] +
                                      ((current_user.admin? || current_user.product_account?) ? [:recommended] : []))
   end
 end

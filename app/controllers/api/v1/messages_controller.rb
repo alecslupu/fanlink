@@ -26,6 +26,9 @@ class Api::V1::MessagesController < ApiController
   # @apiParam (body) {Attachment} [message.picture]
   #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam (body) {Attachment} [message.audio]
+  #   Message audio, this should be `audio/aac`.
+  #
   # @apiParam (body) {Array} [mentions]
   #   Array of mentions each consisting of required person_id (integer), location (integer) and length (integer)
   #
@@ -293,7 +296,7 @@ private
   end
 
   def message_params
-    params.require(:message).permit(:body, :picture, mentions: %i[ person_id location length ])
+    params.require(:message).permit(:body, :picture, :audio, mentions: %i[ person_id location length ])
   end
 
   def message_update_params
