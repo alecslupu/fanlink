@@ -11,6 +11,7 @@ class Post < ApplicationRecord
   has_manual_translated :body
 
   has_image_called :picture
+  has_audio_called :audio
   has_paper_trail
 
   has_many :post_comments, dependent: :destroy

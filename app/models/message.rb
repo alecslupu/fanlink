@@ -10,6 +10,7 @@ class Message < ApplicationRecord
   belongs_to :room
 
   has_image_called :picture
+  has_audio_called :audio
 
   has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy
