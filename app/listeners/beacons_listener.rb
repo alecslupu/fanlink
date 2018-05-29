@@ -10,8 +10,10 @@ class BeaconsListener
         puts "#{step.inspect}"
         if step.quest_completions.count === step.quest_activities.count
             puts "Step completed."
-            completed = StepCompleted.create({quest_id: step.quest_id, step_id: completion.step_id, person_id: user.id, status: StepCompleted.statuses[:completed]})
+            completed = StepCompleted.find_or_initialize_by({quest_id: step.quest_id, step_id: completion.step_id, person_id: user.id})
+            completed.status = StepCompleted.statuses[:completed]
             if completed.valid?
+                completed.save
                 puts "Step Completed Created."
                 puts "#{completed.inspect}"
                 if step.unlocks.present?
