@@ -70,8 +70,8 @@ protected
     render json: { errors: error }, status: :unprocessable_entity
   end
 
-  def render_not_found
-    render json: { errors: { base: [ "Not found" ] } }, status: :not_found
+  def render_not_found(error)
+    render json: { errors: { base: [ error.message ] } }, status: :not_found
   end
 
   def set_language
