@@ -10,12 +10,9 @@ class QuestDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     steps: Field::HasMany,
-    quest_completions: Field::HasMany,
     id: Field::Number,
     event_id: Field::Number,
-    name_text_old: Field::Text,
     internal_name: Field::Text,
-    description_text_old: Field::Text,
     status: Field::Enum,
     starts_at: Field::DateTime,
     ends_at: Field::DateTime,
@@ -35,7 +32,6 @@ class QuestDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :product,
     :steps,
-    :quest_completions,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -43,7 +39,6 @@ class QuestDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :product,
     :steps,
-    :quest_completions,
     :id,
     :event_id,
     :internal_name,

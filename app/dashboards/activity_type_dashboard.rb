@@ -11,7 +11,7 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
     quest_activity: Field::BelongsTo.with_options(foreign_key: "activity_id", ),
     id: Field::Number,
     activity_id: Field::Number,
-    type: Field::Enum,
+    atype: Field::Enum,
     value: Field::Text,
   }.freeze
 
@@ -23,8 +23,8 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :quest_activity,
     :id,
-    :activity_id,
-    :type,
+    :atype,
+    :value,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -32,8 +32,7 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :quest_activity,
     :id,
-    :activity_id,
-    :type,
+    :atype,
     :value,
   ].freeze
 
@@ -42,8 +41,7 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :quest_activity,
-    :activity_id,
-    :type,
+    :atype,
     :value,
   ].freeze
 

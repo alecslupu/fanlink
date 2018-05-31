@@ -10,9 +10,8 @@ class QuestCompletionDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     step: Field::BelongsTo,
     person: Field::BelongsTo,
-    quest_activity: Field::BelongsTo,
+    quest_activity: Field::BelongsTo.with_options(foreign_key: "activity_id", ),
     id: Field::Number,
-    activity_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -36,7 +35,6 @@ class QuestCompletionDashboard < Administrate::BaseDashboard
     :person,
     :quest_activity,
     :id,
-    :activity_id,
     :created_at,
     :updated_at,
   ].freeze
@@ -48,7 +46,6 @@ class QuestCompletionDashboard < Administrate::BaseDashboard
     :step,
     :person,
     :quest_activity,
-    :activity_id,
   ].freeze
 
   # Overwrite this method to customize how quest completions are displayed

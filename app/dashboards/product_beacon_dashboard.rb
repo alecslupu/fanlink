@@ -9,7 +9,6 @@ class ProductBeaconDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
-    quest_activity: Field::HasOne,
     id: Field::Number,
     beacon_pid: Field::Text,
     attached_to: Field::Number,
@@ -28,8 +27,7 @@ class ProductBeaconDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :product,
-    :quest_activity,
-    :versions,
+    :uuid,
     :id,
   ].freeze
 
@@ -37,7 +35,6 @@ class ProductBeaconDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :product,
-    :quest_activity,
     :id,
     :beacon_pid,
     :attached_to,

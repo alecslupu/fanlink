@@ -9,13 +9,10 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     quest: Field::BelongsTo,
-    quest_completions: Field::HasMany.with_options(foreign_key: "activity_id", ),
     activity_types: Field::HasMany.with_options(foreign_key: "activity_id", ),
-    product_beacon: Field::BelongsTo.with_options(foreign_key: "beacon", ),
     step: Field::BelongsTo,
     id: Field::Number,
     deleted: Field::Boolean,
-    activity_code: Field::String,
     picture: Field::Paperclip.with_options(blank_text: ""),
     hint: Field::String.with_options(searchable: false),
     description: Field::String.with_options(searchable: false),
@@ -30,9 +27,7 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :quest,
-    :quest_completions,
     :activity_types,
-    :product_beacon,
     :step,
   ].freeze
 
@@ -40,15 +35,11 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :quest,
-    :quest_completions,
     :activity_types,
-    :product_beacon,
     :step,
     :id,
     :deleted,
-    :activity_code,
     :picture,
-    :picture_meta,
     :hint,
     :description,
     :created_at,
@@ -60,12 +51,9 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :quest,
-    :quest_completions,
     :activity_types,
-    :product_beacon,
     :step,
     :deleted,
-    :activity_code,
     :picture,
     :hint,
     :description,

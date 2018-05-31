@@ -2,7 +2,7 @@ class QuestActivity < ApplicationRecord
     include AttachmentSupport
     include TranslationThings
 
-    has_manual_translated :description, :name
+    has_manual_translated :description, :name, :hint
     has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, :foreign_key => "activity_id"
     has_many :activity_types, -> { order(created_at: :asc) }, :foreign_key => "activity_id"
     belongs_to :step

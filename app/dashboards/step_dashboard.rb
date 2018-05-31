@@ -11,7 +11,7 @@ class StepDashboard < Administrate::BaseDashboard
     quest: Field::BelongsTo,
     quest_activities: Field::HasMany.with_options(foreign_key: "activity_id", ),
     id: Field::Number,
-    prereq_step: Field::Number,
+    unlocks: Field::Text,
     display: Field::Text,
     deleted: Field::Boolean,
   }.freeze
@@ -25,7 +25,7 @@ class StepDashboard < Administrate::BaseDashboard
     :quest,
     :quest_activities,
     :id,
-    :prereq_step,
+    :unlocks,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -34,7 +34,7 @@ class StepDashboard < Administrate::BaseDashboard
     :quest,
     :quest_activities,
     :id,
-    :prereq_step,
+    :unlocks,
     :display,
     :deleted,
   ].freeze
@@ -44,7 +44,7 @@ class StepDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :quest,
-    :prereq_step,
+    :unlocks,
     :display,
     :deleted,
   ].freeze

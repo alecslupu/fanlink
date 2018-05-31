@@ -11,11 +11,10 @@ class StepCompletedDashboard < Administrate::BaseDashboard
     step: Field::BelongsTo,
     person: Field::BelongsTo,
     id: Field::Number,
-    status_old: Field::Text,
     quest_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    status: Field::String.with_options(searchable: false),
+    status: Field::Enum,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +26,6 @@ class StepCompletedDashboard < Administrate::BaseDashboard
     :step,
     :person,
     :id,
-    :status_old,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +34,6 @@ class StepCompletedDashboard < Administrate::BaseDashboard
     :step,
     :person,
     :id,
-    :status_old,
     :quest_id,
     :created_at,
     :updated_at,
@@ -49,7 +46,6 @@ class StepCompletedDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :step,
     :person,
-    :status_old,
     :quest_id,
     :status,
   ].freeze
