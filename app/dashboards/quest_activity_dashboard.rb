@@ -8,7 +8,6 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    quest: Field::BelongsTo,
     activity_types: Field::HasMany.with_options(foreign_key: "activity_id", ),
     step: Field::BelongsTo,
     id: Field::Number,
@@ -26,15 +25,15 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :quest,
-    :activity_types,
     :step,
+    :activity_types,
+    :description,
+    :hint,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :quest,
     :activity_types,
     :step,
     :id,
@@ -50,7 +49,6 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :quest,
     :activity_types,
     :step,
     :deleted,
