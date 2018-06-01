@@ -13,6 +13,8 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
     activity_id: Field::Number,
     atype: Field::Enum,
     value: Field::Text,
+    created_at: Field::DateTime,
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
