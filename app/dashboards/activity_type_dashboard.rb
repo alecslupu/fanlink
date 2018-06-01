@@ -27,6 +27,8 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
     :atype,
     :value,
     :quest_activity,
+    :created_at,
+    :updated_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
