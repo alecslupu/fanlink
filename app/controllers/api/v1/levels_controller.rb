@@ -1,4 +1,6 @@
 class Api::V1::LevelsController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   #**
   # @api {get} /levels Get all available levels.
   # @apiName GetLevels

@@ -1,4 +1,6 @@
 class Api::V1::MerchandiseController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   #**
   # @api {get} /merchandise Get available merchandise.
   # @apiName GetMerchandise

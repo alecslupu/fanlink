@@ -1,4 +1,6 @@
 class Api::V1::BlocksController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   #**
   # @api {post} /blocks Block a person.
   # @apiName CreateBlock

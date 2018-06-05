@@ -52,6 +52,10 @@ protected
     head :unauthorized unless current_user.some_admin?
   end
 
+  def super_admin_only
+    head :unauthorized unless current_user.role == "super_admin"
+  end
+
   def check_dates(required = false)
     if params[:from_date].present?
       return false unless DateUtil.valid_date_string?(params[:from_date])
@@ -87,7 +91,7 @@ protected
   end
 
   def set_product
-    product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+    product = Product.find_by(internal_name: params[:product]) || current_user.try(:product)
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else

@@ -1,7 +1,7 @@
 class Api::V2::QuestsController < ApiController
+    include Rails::Pagination
     include Wisper::Publisher
     before_action :admin_only, except: %i[ index show ]
-    include Rails::Pagination
     load_up_the Quest, only: %i[ update ]
 
     #**

@@ -1,4 +1,5 @@
 class Api::V2::EventsController < Api::V1::EventsController
+    include Rails::Pagination
     include Wisper::Publisher
     load_up_the Event, only: %i[ update delete ]
     #**

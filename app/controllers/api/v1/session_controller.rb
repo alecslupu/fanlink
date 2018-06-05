@@ -1,4 +1,6 @@
 class Api::V1::SessionController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   prepend_before_action :logout, only: :create
   skip_before_action :require_login
   skip_before_action :set_product, except: %i[ create ]

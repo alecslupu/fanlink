@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       resources :beacons, :controller => "product_beacons" do
         collection do
           get "list" => "product_beacons#list"
+          get "select" => "product_beacons#index"
         end
       end
 
@@ -84,6 +85,12 @@ Rails.application.routes.draw do
       resources :steps, only: %i[ show update destroy ] do
         resources :activities, :controller => "quest_activities", only: %i[ create index ]
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
+      end
+
+      resources :products do
+        collection do
+          get "select" => "products#index"
+        end
       end
     end
   end
@@ -111,7 +118,7 @@ Rails.application.routes.draw do
     resources :products do
       collection do
         get "select_form" => "products#select_form"
-        post "select_product" => "products#select"
+        post "select_product" => "products#index"
       end
     end
     resources :product_beacons

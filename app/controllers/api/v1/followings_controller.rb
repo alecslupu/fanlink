@@ -1,4 +1,6 @@
 class Api::V1::FollowingsController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
   load_up_the Following, except: %i[ create index ]
 

@@ -1,5 +1,6 @@
 class Api::V1::PostReportsController < ApiController
   include Rails::Pagination
+  include Wisper::Publisher
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update
 

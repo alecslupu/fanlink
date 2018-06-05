@@ -1,4 +1,6 @@
 class Api::V1::BadgeActionsController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   before_action :load_action_type
 
   #**

@@ -1,4 +1,6 @@
 class Api::V1::BadgesController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   load_up_the Person, from: :person_id
 
   #**

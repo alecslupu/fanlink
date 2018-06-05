@@ -1,5 +1,6 @@
 class Api::V1::PostCommentsController < ApiController
   include Rails::Pagination
+  include Wisper::Publisher
   before_action :load_post, except: %i[ list ]
 
   #**

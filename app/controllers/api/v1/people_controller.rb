@@ -1,5 +1,6 @@
 class Api::V1::PeopleController < ApiController
   include Rails::Pagination
+  include Wisper::Publisher
   prepend_before_action :logout, only: :create
 
   load_up_the Person, except: %i[ index ]

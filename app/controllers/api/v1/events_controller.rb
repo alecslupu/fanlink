@@ -1,4 +1,6 @@
 class Api::V1::EventsController < ApiController
+  include Rails::Pagination
+  include Wisper::Publisher
   #**
   # @api {get} /events Get available events.
   # @apiName GetEvents
