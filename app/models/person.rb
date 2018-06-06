@@ -12,6 +12,8 @@ class Person < ApplicationRecord
   include TranslationThings
   authenticates_with_sorcery!
 
+  attr_accessor :app
+
   has_manual_translated :designation
 
   has_paper_trail
@@ -138,6 +140,7 @@ class Person < ApplicationRecord
   def to_s
     name || username
   end
+
 
   private
 

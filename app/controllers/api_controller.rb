@@ -4,8 +4,8 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person
-  after_action :unset_person
+  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app
+  after_action :unset_person, :unset_app
 
   #
   # Respond to an API request with an object. If the object is invalid
@@ -109,5 +109,21 @@ protected
 
   def unset_person
     Person.current_user = nil
+  end
+
+  def set_app
+    if params[:app]
+      current_user.app = params[:app]
+    elsif cookies[:app]
+      current_user.app = cookies[:app]
+    else
+      if current_user
+        current_user.app = false
+      end
+    end
+  end
+
+  def unset_app
+    current_user.app = false
   end
 end
