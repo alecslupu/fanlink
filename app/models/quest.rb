@@ -1,6 +1,7 @@
 class Quest < ApplicationRecord
     include AttachmentSupport
     include TranslationThings
+    include Quest::PortalFilters
 
     enum status: %i[ disabled enabled active deleted ]
 
