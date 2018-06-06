@@ -4,7 +4,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person
+  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_chewy_filter
   after_action :unset_person
 
   #
@@ -105,5 +105,14 @@ protected
 
   def unset_person
     Person.current_user = nil
+  end
+  
+  def set_chewy_filter
+    product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+    if product.nil?
+      render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
+    else
+      Chewy.settings = {prefix: product.internal_name}
+    end
   end
 end

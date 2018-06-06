@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531025534) do
+ActiveRecord::Schema.define(version: 20180605192723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,17 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.datetime "created_at", null: false
     t.index ["blocker_id", "blocked_id"], name: "unq_blocks_blocker_blocked", unique: true
     t.index ["blocker_id"], name: "ind_blocks_blocker"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.text "name", null: false
+    t.integer "product_id", null: false
+    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
+    t.index ["name"], name: "idx_category_names"
+    t.index ["role"], name: "idx_category_roles"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -347,6 +358,13 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
   end
 
+  create_table "posts_tags", id: false, force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id"
+    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id"
+  end
+
   create_table "product_beacons", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "beacon_pid", null: false
@@ -495,6 +513,16 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.integer "unlocks", default: [], null: false, array: true
     t.integer "initial_status", default: 0, null: false
     t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.text "name", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
+    t.index ["name"], name: "idx_tag_names"
+    t.index ["product_id"], name: "idx_tag_products"
   end
 
   create_table "versions", force: :cascade do |t|
