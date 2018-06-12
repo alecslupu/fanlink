@@ -69,6 +69,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :categories do
+        collection do
+          get "select" => "category#index"
+        end
+      end
+
       resources :quests do
         resources :steps, only: %i[ create index ]
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
@@ -87,12 +93,9 @@ Rails.application.routes.draw do
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
       end
 
-      resources :products do
-        collection do
-          get "select" => "products#index"
-        end
-      end
+      resources :tags, only: %i[ show ]
     end
+
   end
 
   #temporary hack to get around need for Accept header with api stuff
@@ -100,40 +103,40 @@ Rails.application.routes.draw do
   post "/people/password_reset" => "api/v1/password_resets#update"
 
   namespace :admin do
-    resources :action_types
-    resources :activity_types
-    resources :badges
-    resources :events
-    resources :levels
-    resources :merchandise
-    resources :messages do
-      get "hide" => "messages#hide"
-      get "unhide" => "messages#unhide"
-    end
-    resources :message_reports, only: %i[ index update ]
-    resources :people
-    resources :portal_notifications
-    resources :posts
-    resources :post_reports, only: %i[ index update ]
-    resources :products do
-      collection do
-        get "select_form" => "products#select_form"
-        post "select_product" => "products#index"
-      end
-    end
-    resources :product_beacons
-    resources :rooms
+    # resources :action_types
+    # resources :activity_types
+    # resources :badges
+    # resources :events
+    # resources :levels
+    # resources :merchandise
+    # resources :messages do
+    #   get "hide" => "messages#hide"
+    #   get "unhide" => "messages#unhide"
+    # end
+    # resources :message_reports, only: %i[ index update ]
+    # resources :people
+    # resources :portal_notifications
+    # resources :posts
+    # resources :post_reports, only: %i[ index update ]
+    # resources :products do
+    #   collection do
+    #     get "select_form" => "products#select_form"
+    #     post "select_product" => "products#select"
+    #   end
+    # end
+    # resources :product_beacons
+    # resources :rooms
 
-    resources :quests
-    resources :quest_activities
-    resources :quest_completions
-    resources :steps
+    # resources :quests
+    # resources :quest_activities
+    # resources :quest_completions
+    # resources :steps
 
 
-    get ":product_internal_name/login" => "sessions#new"
-    post "login" => "sessions#create"
-    get "logout" => "sessions#destroy"
-    get ":product_internal_name" => "sessions#login_redirect"
+    # get ":product_internal_name/login" => "sessions#new"
+    # post "login" => "sessions#create"
+    # get "logout" => "sessions#destroy"
+    # get ":product_internal_name" => "sessions#login_redirect"
 
     # get ":product_internal_name/beacons" => "productbeacons#index"
     # get ":product_internal_name/beacons/:id" => "productbeacons#show"

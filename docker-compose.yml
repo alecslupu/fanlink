@@ -17,9 +17,11 @@ services:
     image: flapi:dev
     links:
       - postgres
+      - elasticsearch
     depends_on:
       - postgres
       - mail
+      - elasticsearch
     restart: unless-stopped
     environment: &flapi-environment
       RAILS_ENV: ${RAILS_ENV}
@@ -66,16 +68,42 @@ services:
     restart: unless-stopped
     ports:
       - 1080:1080 # open browser here to warch mails sent by rails, use smtp to 1025 as config
-  logs:
-    image: mthenw/frontail
-    container_name: flapi-logs
-    command: /log/development.log
-    restart: unless-stopped
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    container_name: flapi-es1
+    environment:
+      - cluster.name=flapi-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-    - $PWD/log:/log
+      - esdata1:/usr/share/elasticsearch/data
     ports:
-      - 9001:9001
+      - 9200:9200
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+    container_name: flapi-es2
+    environment:
+      - cluster.name=flapi-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
 
 volumes:
   gems:
+    driver: local
   #pgdata: #Uncomment this to use persistant storage for postgres
+  #  driver: local
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local

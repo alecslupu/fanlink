@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531025534) do
+ActiveRecord::Schema.define(version: 20180612154216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,18 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.datetime "created_at", null: false
     t.index ["blocker_id", "blocked_id"], name: "unq_blocks_blocker_blocked", unique: true
     t.index ["blocker_id"], name: "ind_blocks_blocker"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.text "name", null: false
+    t.integer "product_id", null: false
+    t.integer "role", default: 0, null: false
+    t.text "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
+    t.index ["name"], name: "idx_category_names"
+    t.index ["role"], name: "idx_category_roles"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -319,6 +331,13 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.index ["post_id"], name: "idx_post_reports_post"
   end
 
+  create_table "post_tags", id: false, force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
+    t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
     t.text "body_text_old"
@@ -341,6 +360,7 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
+    t.integer "category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
@@ -497,6 +517,16 @@ ActiveRecord::Schema.define(version: 20180531025534) do
     t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.text "name", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
+    t.index ["name"], name: "idx_tag_names"
+    t.index ["product_id"], name: "idx_tag_products"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.text "item_type", null: false
     t.integer "item_id", null: false
@@ -514,6 +544,7 @@ ActiveRecord::Schema.define(version: 20180531025534) do
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
   add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade

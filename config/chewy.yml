@@ -1,0 +1,11 @@
+# config/chewy.yml
+# separate environment configs
+test:
+  host: <%= ENV.fetch("FANLINK_ES_HOST", "localhost:9200") %>
+  prefix: 'test'
+development:
+  host: <%= ENV.fetch("FANLINK_ES_HOST", "localhost:9200") %>
+staging:
+  host:
+production:
+  host:

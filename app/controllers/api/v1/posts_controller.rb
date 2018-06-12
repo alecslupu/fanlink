@@ -2,7 +2,6 @@ class Api::V1::PostsController < ApiController
   include Rails::Pagination
   include Wisper::Publisher
   before_action :load_post, only: %i[ update ]
-  before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
 
@@ -89,8 +88,12 @@ class Api::V1::PostsController < ApiController
         @post.published!
       end
       @post.post if @post.published?
+      broadcast(:post_created, current_user, @post)
+      return_the @post
+    else
+      render json: { errors: @post.errors.messages }, status: :unprocessable_entity
     end
-    return_the @post
+    
   end
 
   #**
@@ -410,7 +413,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers ] +
-                                     ((current_user.admin? || current_user.product_account?) ? [:recommended] : []))
+    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+                                     ((current_user.admin? || current_user.product_account? || current_user.super_admin? ) ? [:recommended] : []))
   end
 end

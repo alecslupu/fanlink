@@ -14,3 +14,14 @@ json.recommended post.recommended
 json.created_at post.created_at.to_s
 json.updated_at post.updated_at.to_s
 json.comment_count post.comments.count
+if !post.category.nil?
+  json.category post.category, partial: "api/v2/categories/category", as: :category
+else
+  json.category "Uncategorized"
+end
+
+if post.tags.count > 0
+  json.tags post.tags, partial: "api/v2/tags/tag", as: :tag
+else
+  json.tag nil
+end
