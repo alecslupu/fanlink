@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605192723) do
+ActiveRecord::Schema.define(version: 20180612154216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20180605192723) do
     t.text "name", null: false
     t.integer "product_id", null: false
     t.integer "role", default: 0, null: false
+    t.text "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false, null: false
@@ -330,6 +331,13 @@ ActiveRecord::Schema.define(version: 20180605192723) do
     t.index ["post_id"], name: "idx_post_reports_post"
   end
 
+  create_table "post_tags", id: false, force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
+    t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
     t.text "body_text_old"
@@ -352,17 +360,11 @@ ActiveRecord::Schema.define(version: 20180605192723) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
+    t.integer "category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
-  end
-
-  create_table "posts_tags", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id"
-    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id"
   end
 
   create_table "product_beacons", force: :cascade do |t|
@@ -542,6 +544,7 @@ ActiveRecord::Schema.define(version: 20180605192723) do
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
   add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade

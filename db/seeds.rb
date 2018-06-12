@@ -41,3 +41,11 @@ if ActionType.count == 0
     ActionType.create(name: "Some Cool Act", internal_name: "some_cool_act")
   end
 end
+
+if Category.count == 0
+  unless Rails.env.production?
+    Product.all.each do |p|
+      Category.create(name: "Uncategorized", color: "#ffffff", role: :normal, product_id: p.id)
+    end
+  end
+end

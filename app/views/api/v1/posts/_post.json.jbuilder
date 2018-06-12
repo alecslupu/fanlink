@@ -23,3 +23,20 @@ json.priority post.priority
 json.recommended post.recommended
 json.notify_followers post.notify_followers
 json.comment_count post.comments.count
+if !post.category.nil?
+  json.category do
+    json.id post.category.id
+    json.name post.category.name
+    json.color post.category.color
+    json.role post.category.role
+  end
+else
+  json.category do 
+    json.name "Uncategorized"
+  end 
+end
+if post.tags.count > 0
+  json.tags post.tags, partial: "api/v2/tags/tag", as: :tag
+else
+  json.tag nil
+end

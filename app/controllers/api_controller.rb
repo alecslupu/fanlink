@@ -67,7 +67,7 @@ protected
   end
 
   def render_error(error)
-    render json: { errors: error }, status: :unprocessable_entity
+    render json: { errors: error.message }, status: :unprocessable_entity
   end
 
   def render_not_found(error)
@@ -87,7 +87,21 @@ protected
   end
 
   def set_product
-    product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+    product = nil
+    if current_user
+      if current_user.super_admin?
+        if cookies[:product_id].to_i > 0
+          product = Product.find_by(id: cookies[:product_id].to_i)
+        else
+          if params[:product]
+            product = Product.find_by(internal_name: params[:product])
+          end
+          product = current_user.try(:product) if product.nil?
+        end
+      end
+    else
+      product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+    end
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else
