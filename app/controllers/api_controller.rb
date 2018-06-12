@@ -146,7 +146,7 @@ protected
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else
-      Chewy.settings = {prefix: product.internal_name}
+      Chewy.settings = {prefix: ActAsTenant.current_tenant.internal_name}
     end
   end
 end
