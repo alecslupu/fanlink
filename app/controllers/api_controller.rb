@@ -102,10 +102,9 @@ protected
           end
           product = current_user.try(:product) if product.nil?
         end
-      end
-    else
-      product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
+      end 
     end
+    product = current_user.try(:product) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else
