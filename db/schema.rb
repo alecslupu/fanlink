@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180612154216) do
+=======
+ActiveRecord::Schema.define(version: 20180612193726) do
+>>>>>>> 55232428ccde3d4c3a09e2837ad5e4da8f395cca
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +267,7 @@ ActiveRecord::Schema.define(version: 20180612154216) do
     t.date "birthdate"
     t.text "city"
     t.text "country_code"
+    t.text "biography"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
