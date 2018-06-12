@@ -2,7 +2,7 @@ module Admin
   class SessionsController < Admin::ApplicationController
     set_current_tenant_through_filter
 
-    skip_before_action :require_login, :check_admin, :set_tenant, :set_chewy_filter
+    skip_before_action :require_login, :check_admin, :set_tenant
 
     def create
       product = nil
