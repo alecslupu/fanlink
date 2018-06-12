@@ -142,11 +142,6 @@ protected
   end
   
   def set_chewy_filter
-    product = current_user.try(:product) || Product.find_by(internal_name: params[:product])
-    if product.nil?
-      render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
-    else
-      Chewy.settings = {prefix: ActAsTenant.current_tenant.internal_name}
-    end
+    Chewy.settings = {prefix: ActsAsTenant.current_tenant.internal_name}
   end
 end
