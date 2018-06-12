@@ -17,7 +17,7 @@ json.comment_count post.comments.count
 if !post.category.nil?
   json.category post.category, partial: "api/v2/categories/category", as: :category
 else
-  json.category "Uncategorized"
+  json.category nil
 end
 
 if post.tags.count > 0

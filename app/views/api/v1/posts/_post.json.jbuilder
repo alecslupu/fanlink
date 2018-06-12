@@ -32,7 +32,7 @@ if !post.category.nil?
   end
 else
   json.category do 
-    json.name "Uncategorized"
+    json.name nil
   end 
 end
 if post.tags.count > 0
