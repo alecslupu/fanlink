@@ -3,7 +3,8 @@ class Api::V1::SessionController < ApiController
   include Wisper::Publisher
   prepend_before_action :logout, only: :create
   skip_before_action :require_login
-  skip_before_action :set_product, :set_chewy_filter, :unset_app, except: %i[ create ]
+  skip_before_action :set_product, :set_chewy_filter, except: %i[ create ]
+  skip_after_action :unset_app, only: %i[ destroy ]
 
   #**
   # @api {get} /session Check a session.
