@@ -69,6 +69,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :products do
+        collection do
+          get "select" => "products#index"
+        end
+      end
+
       resources :categories do
         collection do
           get "select" => "category#index"
