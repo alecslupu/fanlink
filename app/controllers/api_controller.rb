@@ -109,6 +109,7 @@ protected
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else
       set_current_tenant(product)
+      cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
     end
   end
 
