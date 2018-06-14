@@ -94,7 +94,7 @@ protected
     product = nil
     if current_user
       if current_user.super_admin?
-        if cookies[:product]
+        if cookies[:product].present?
           product = Product.find_by(internal_name: params[:product])
         else
           if params[:product]
