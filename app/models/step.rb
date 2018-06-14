@@ -3,6 +3,9 @@ class Step < ApplicationRecord
     has_many :quest_activities, -> { order(created_at: :desc) }
     has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, class_name: "QuestCompletion"
     has_one :step_completed, -> { where(person_id: Person.current_user.id) }, class_name: "StepCompleted"
+    has_many :assigned_rewards
+
+    has_many :rewards, through: :assigned_rewards
 
     enum initial_status: %i[ locked unlocked ]
 

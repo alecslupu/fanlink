@@ -9,6 +9,10 @@ class Quest < ApplicationRecord
     has_image_called :picture
     #TODO Add translation support
     has_manual_translated :description, :name
+
+    has_many :assigned_rewards
+
+    has_many :rewards, through: :assigned_rewards
     
     has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy
     #   has_many :quest_completions, dependent: :destroy

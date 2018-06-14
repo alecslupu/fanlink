@@ -786,6 +786,10 @@ GEM
     logging (2.2.2)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
+    lol_dba (2.1.5)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      railties (>= 3.0)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -1028,6 +1032,7 @@ DEPENDENCIES
   kaminari
   koala
   listen (>= 3.0.5, < 3.2)
+  lol_dba
   mandrill-api!
   mandrill_mailer (~> 1.6)
   oauth2

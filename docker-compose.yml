@@ -69,7 +69,7 @@ services:
   logs:
     image: mthenw/frontail
     container_name: flapi-logs
-    command: /log/development.log
+    command: /log/development.logdocker
     restart: unless-stopped
     volumes:
     - $PWD/log:/log
