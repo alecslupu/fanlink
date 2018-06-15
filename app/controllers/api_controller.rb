@@ -94,8 +94,8 @@ protected
     product = nil
     if current_user
       if current_user.super_admin?
-        if cookies[:product].present?
-          product = Product.find_by(internal_name: cookies[:product])
+        if headers['X-Current-Product'].present?
+          product = Product.find_by(internal_name: headers['X-Current-Product'])
         else
           if params[:product]
             product = Product.find_by(internal_name: params[:product])
@@ -126,10 +126,10 @@ protected
   end
 
   def set_app
-    if params[:app]
+    if headers['X-App'].present?
+      current_user.app = headers['X-App']
+    elsif params[:app].present?
       current_user.app = params[:app]
-    elsif cookies[:app]
-      current_user.app = cookies[:app]
     else
       if current_user
         current_user.app = false
