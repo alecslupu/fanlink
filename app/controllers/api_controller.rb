@@ -94,7 +94,6 @@ protected
     product = nil
     if current_user
       if current_user.super_admin?
-        puts request.headers['X-Current-Product'].inspect
         if request.headers['X-Current-Product'].present?
           product = Product.find_by(internal_name: request.headers['X-Current-Product'])
         else
@@ -127,8 +126,8 @@ protected
   end
 
   def set_app
-    if headers['X-App'].present?
-      current_user.app = headers['X-App']
+    if request.headers['X-App'].present?
+      current_user.app = reuqest.headers['X-App']
     elsif params[:app].present?
       current_user.app = params[:app]
     else
