@@ -3,11 +3,19 @@ module AttachmentSupport
 
   module ClassMethods
     def has_image_called(name)
-      has_attached_file name , :default_url => nil
+      has_attached_file name,
+        :default_url => nil,
+        :styles =>  {
+          optimal: "1000x",
+          thumbnail: "100x100#"
+        },
+        :convert_options => {
+              :optimal => "-quality 75 -strip" 
+        }
+
       validates_attachment name,
                            content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
-                           styles: { thumbnail: "100x100#"},
-                           size: { in: 0..10.megabytes }
+                           size: { in: 0..5.megabytes }
 
       class_eval <<-EOE
         def #{name}_url
