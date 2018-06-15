@@ -127,6 +127,7 @@ protected
 
   def set_app
     if request.headers['X-App'].present?
+      puts "Got header #{request.headers['X-App']}"
       current_user.app = request.headers['X-App']
     elsif params[:app].present?
       current_user.app = params[:app]
