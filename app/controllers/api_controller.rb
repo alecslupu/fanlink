@@ -94,9 +94,9 @@ protected
     product = nil
     if current_user
       if current_user.super_admin?
-        puts headers['X-Current-Product'].inspect
-        if headers['X-Current-Product'].present?
-          product = Product.find_by(internal_name: headers['X-Current-Product'])
+        puts request.headers['X-Current-Product'].inspect
+        if request.headers['X-Current-Product'].present?
+          product = Product.find_by(internal_name: request.headers['X-Current-Product'])
         else
           if params[:product]
             product = Product.find_by(internal_name: params[:product])
