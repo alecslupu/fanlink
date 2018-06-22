@@ -30,6 +30,7 @@ class Api::V1::SessionController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def index
     if @person = current_user
       return_the @person
@@ -66,6 +67,7 @@ class Api::V1::SessionController < ApiController
   #       ...see person get for the rest of the fields...
   #     }
   #*
+
   def create
     @person = nil
     if params["facebook_auth_token"].present?
@@ -95,6 +97,7 @@ class Api::V1::SessionController < ApiController
   # @apiDescription
   #   This is used to log someone out.
   #*
+
   def destroy
     logout
     cookies.delete :_fanlink_session

@@ -71,19 +71,19 @@ class Api::V2::ActivityTypesController < ApiController
     #*
 
     #**
-    # 
+    #
     # @api {post} /activities/:id/types Create Type for Activity
     # @apiName CreateActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Number} id Activity ID
     # @apiParam (body) {Object} activity_type Container for the form data
     # @apiParam (body) {String} activity_type.atype Activity Type. Valid types are beacon, post, image, audio, activity_code
     # @apiParam (body) {Object} activity_type.value Object for type values. Currently supports id and description
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X POST \
     # http://localhost:3000/activities/1/types \
@@ -91,12 +91,13 @@ class Api::V2::ActivityTypesController < ApiController
     # -H 'Cache-Control: no-cache' \
     # -H 'Content-Type: application/x-www-form-urlencoded' \
     # -d 'activity_type%5Batype%5D=beacon&activity_type%5Bvalue%5D%5Bid%5D=1'
-    # 
-    # 
+    #
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
+
     def create
         @activity_type = @quest_activity.activity_types.create(type_params)
         if @activity_type.valid?
@@ -107,24 +108,24 @@ class Api::V2::ActivityTypesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /activities/:id/types Get Activities' types
     # @apiName GetActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Number} id Activity type ID
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     #   curl -X GET \
     #   http://localhost:3000/activities/1/types \
     #   -H 'Accept: application/vnd.api.v2+json' \
     #   -H 'Cache-Control: no-cache'
-    # 
+    #
     # @apiUse Successess
-    # 
+    #
     #*
 
     def index
@@ -133,19 +134,19 @@ class Api::V2::ActivityTypesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {PATCH} /activity_types/:id Update a type
     # @apiName UpdateActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path)  {Number} id Activity type ID
     # @apiParam (body) {Object} activity_type Container for the form data
     # @apiParam (body)  {String} [activity_type.atype] Activity Type. Valid types are beacon, post, image, audio, activity_code
     # @apiParam (body)  {Object} [activity_type.value] Object for type values. Currently supports id and description. Pass entire object to update.
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
     # http://localhost:3000/activities/1/types \
@@ -153,11 +154,11 @@ class Api::V2::ActivityTypesController < ApiController
     # -H 'Cache-Control: no-cache' \
     # -H 'Content-Type: application/x-www-form-urlencoded' \
     # -d 'activity_type%5Batype%5D=beacon&activity_type%5Bvalue%5D%5Bid%5D=1'
-    # 
-    # 
+    #
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
 
     def update
@@ -166,16 +167,16 @@ class Api::V2::ActivityTypesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /activity_types/:id Get a type
     # @apiName GetActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam  {Number} id The ID of the activity type
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
     # http://localhost:3000/activity_types/1 \
@@ -183,11 +184,11 @@ class Api::V2::ActivityTypesController < ApiController
     # -H 'Cache-Control: no-cache' \
     # -H 'Content-Type: application/x-www-form-urlencoded' \
     # -d 'activity_type%5Batype%5D=activity_code&activity_type%5Bvalue%5D%5Bid%5D=2313-4231A'
-    # 
-    # 
+    #
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
 
     def show
@@ -195,27 +196,27 @@ class Api::V2::ActivityTypesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {delete} /activity_types/:id Delete a type from an activity
     # @apiName DeleteActivityType
     # @apiGroup Quest Activity Type
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Number} id Activity type ID
-    # 
+    #
     # @apiSuccess (200) {Header} OK 200 OK response
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X DELETE \
     # http://localhost:3000/activity_types/1 \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
-    # 
+    #
+    #
     # @apiSuccessExample {Header} Success-Response:
     # HTTP/1.1 200 OK
-    # 
+    #
     #*
 
     def destroy
@@ -225,7 +226,7 @@ class Api::V2::ActivityTypesController < ApiController
             head :ok
           else
             render_not_found
-          end  
+          end
     end
 private
     def type_params

@@ -30,6 +30,7 @@ class Api::V1::BlocksController < ApiController
   #     "errors" :
   #       { "You already blocked that person, blah blah blah" }
   #*
+
   def create
     blocked = Person.find(block_params[:blocked_id])
     @block = current_user.block(blocked)
@@ -60,6 +61,7 @@ class Api::V1::BlocksController < ApiController
   #     HTTP/1.1 404 if block not found
   #*
   #*
+
   def destroy
     @block = current_user.blocks_by.find(params[:id])
     @block.destroy

@@ -5,6 +5,8 @@ class Badge < ApplicationRecord
   has_manual_translated :description, :name
 
   has_many :badge_awards, dependent: :restrict_with_error
+  has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types['badge']) }, :foreign_key => "reward_type_id"
+  has_many :assigned_rewards, through: :reward
 
   has_paper_trail
   acts_as_tenant(:product)

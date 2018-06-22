@@ -26,6 +26,7 @@ class Api::V1::LevelsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     @levels = Level.order(:points)
     return_the @levels

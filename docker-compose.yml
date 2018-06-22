@@ -61,7 +61,7 @@ services:
       - $PWD/:/usr/src/app
       - gems:/gems
     restart: unless-stopped
-    
+
   mail:
     image: hinshun/mailcatcher
     container_name: flapi-mail

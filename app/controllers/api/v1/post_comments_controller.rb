@@ -2,7 +2,6 @@ class Api::V1::PostCommentsController < ApiController
   include Rails::Pagination
   include Wisper::Publisher
   before_action :load_post, except: %i[ list ]
-
   #**
   # @api {post} /posts/:id/comments Create a comment on a post.
   # @apiName CreatePostComment
@@ -55,6 +54,7 @@ class Api::V1::PostCommentsController < ApiController
   #     "errors" :
   #       { "Body is required, blah blah blah" }
   #*
+
   def create
     @post_comment = @post.post_comments.create(post_comment_params)
     @post_comment.post_me if @post_comment.valid?
@@ -82,6 +82,7 @@ class Api::V1::PostCommentsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404
   #*
+
   def destroy
     comment = @post.comments.find(params[:id])
     if current_user.admin? || comment.person == current_user
@@ -120,6 +121,7 @@ class Api::V1::PostCommentsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     @post_comments = paginate @post.comments.visible.order(created_at: :desc)
     return_the @post_comments
@@ -170,6 +172,7 @@ class Api::V1::PostCommentsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
   #*
+
   def list
     @post_comments = paginate apply_filters
     return_the @post_comments

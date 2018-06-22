@@ -1,6 +1,6 @@
 if !activity.deleted
     json.id activity.id.to_s
-    json.quest_id activity.quest_id.to_s
+    json.quest_id activity.step.quest_id
     json.step_id activity.step_id
     json.description activity.description
     json.hint activity.hint
@@ -9,7 +9,7 @@ if !activity.deleted
     json.picture_height activity.picture.height
     if defined?(activity.quest_completions) && !activity.quest_completions.empty?
         json.completed true
-    else 
+    else
         json.completed false
     end
     if activity.activity_types.count > 0

@@ -29,6 +29,7 @@ class Api::V1::PostCommentReportsController < ApiController
   #     "errors" :
   #       { "I don't like your reason, etc." }
   #*
+
   def create
     parms = post_comment_report_params
     post_comment = PostComment.find(parms["post_comment_id"])
@@ -79,6 +80,7 @@ class Api::V1::PostCommentReportsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     @post_comment_reports = paginate apply_filters
     return_the @post_comment_reports
@@ -111,6 +113,7 @@ class Api::V1::PostCommentReportsController < ApiController
   #     "errors" :
   #       { "Invalid or missing status." }
   #*
+
   def update
     parms = post_comment_report_update_params
     if PostCommentReport.valid_status?(parms[:status])

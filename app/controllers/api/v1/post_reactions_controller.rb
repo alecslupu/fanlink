@@ -34,6 +34,7 @@ class Api::V1::PostReactionsController < ApiController
   #     "errors" :
   #       { "I don't like your reaction, etc." }
   #*
+
   def create
     parms = post_reaction_params
     if @post.person.try(:product) == current_user.product
@@ -65,6 +66,7 @@ class Api::V1::PostReactionsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404
   #*
+
   def destroy
     if @post_reaction.person == current_user
       @post_reaction.destroy
@@ -109,6 +111,7 @@ class Api::V1::PostReactionsController < ApiController
   #     "errors" :
   #       { "I don't like your new reaction either, etc." }
   #*
+
   def update
     if @post_reaction.person == current_user
       @post_reaction.update_attributes(post_reaction_params)

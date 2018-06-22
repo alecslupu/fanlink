@@ -35,6 +35,7 @@ class Api::V1::MessageReportsController < ApiController
   #     "errors" :
   #       { "I don't like your reason, etc." }
   #*
+
   def create
     #room id is involved primarily so AaT can do its thing
     parms = message_report_params
@@ -82,6 +83,7 @@ class Api::V1::MessageReportsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     @message_reports = paginate apply_filters
     return_the @message_reports
@@ -115,6 +117,7 @@ class Api::V1::MessageReportsController < ApiController
   #     "errors" :
   #       { "Invalid or missing status." }
   #*
+
   def update
     parms = message_report_update_params
     if MessageReport.valid_status?(parms[:status])

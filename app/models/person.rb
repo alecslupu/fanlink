@@ -33,9 +33,15 @@ class Person < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :quest_completions, dependent: :destroy
   has_many :step_completed, dependent: :destroy
-  has_many :quest_completeds, dependent: :destroy
+  has_many :quest_completed, dependent: :destroy
+  has_many :person_rewards, dependent: :destroy
+  has_many :level_progresses, dependent: :destroy
+  has_many :reward_progresses, dependent: :destroy
+
 
   has_many :private_rooms, through: :room_memberships
+
+  has_many :rewards, through: :person_rewards
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?

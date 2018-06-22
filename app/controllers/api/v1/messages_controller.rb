@@ -42,6 +42,7 @@ class Api::V1::MessagesController < ApiController
   #     "errors" :
   #       { "Body is required, blah blah blah" }
   #*
+
   def create
     room = Room.find(params[:room_id])
     if room.active?
@@ -64,7 +65,7 @@ class Api::V1::MessagesController < ApiController
   end
 
   #**
-  # @api {delete} /rooms/{room_id}/messages/id Delete (hide) a single message.
+  # @api {delete} /rooms/:room_id/messages/:id Delete (hide) a single message.
   # @apiName DeleteMessage
   # @apiGroup Messages
   # @apiVersion 1.0.0
@@ -80,6 +81,7 @@ class Api::V1::MessagesController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
   #*
+
   def destroy
     room = Room.find(params[:room_id])
     msg = room.messages.find(params[:id])
@@ -124,6 +126,7 @@ class Api::V1::MessagesController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     room = Room.find(params[:room_id])
     if !check_access(room)
@@ -189,6 +192,7 @@ class Api::V1::MessagesController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unautorized
   #*
+
   def list
     @messages = paginate apply_filters
     return_the @messages
@@ -220,6 +224,7 @@ class Api::V1::MessagesController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def show
     room = Room.find(params[:room_id])
     if room.public || !check_access(room)
@@ -259,6 +264,7 @@ class Api::V1::MessagesController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
   #*
+
   def update
     @message.update_attributes(message_update_params)
     if @message.hidden

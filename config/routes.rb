@@ -58,9 +58,27 @@ Rails.application.routes.draw do
 
       resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
         resources :types, :controller => "activity_types", only: %i[ create index ]
+        collection do
+          post "complete" => "reward_progresses#create"
+        end
       end
 
-      resources :activity_types, only: %i[ show update destroy ] 
+      resources :action_types do
+        collection do
+          get "select" => "action_types#index"
+          post "complete" => "reward_progresses#create"
+        end
+      end
+
+      resources :activity_types, only: %i[ show update destroy ] do
+        collection do
+          get "select" => "activity_types#index"
+        end
+      end
+
+      resources :people, except: %i[ create index show update ] do
+        get "badges" => "badges#index"
+      end
 
       resources :beacons, :controller => "product_beacons" do
         collection do
@@ -86,6 +104,14 @@ Rails.application.routes.draw do
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
         collection do
           get "list" => "quests#list"
+          get "select" => "quests#index"
+          post "complete" => "reward_progresses#create"
+        end
+      end
+
+      resources :rewards do
+        collection do
+          get "select" => "rewards#index"
         end
       end
 
@@ -97,6 +123,9 @@ Rails.application.routes.draw do
       resources :steps, only: %i[ show update destroy ] do
         resources :activities, :controller => "quest_activities", only: %i[ create index ]
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
+        collection do
+          post "complete" => "reward_progresses#create"
+        end
       end
 
       resources :tags, only: %i[ show ]

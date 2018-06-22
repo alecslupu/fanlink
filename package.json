@@ -1,5 +1,29 @@
 {
-  "name": "fanlink",
-  "private": true,
-  "dependencies": {}
+    "name": "fanlink",
+    "version": "2.1.0",
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {
+        "auto-changelog": "^1.7.1",
+        "replace": "^1.0.0",
+        "standard-version": "^4.4.0"
+    },
+    "scripts": {
+        "fix-history": "replace 'https://flink/' 'https://bitbucket.org/' HISTORY.md"
+    },
+    "standard-version": {
+        "scripts": {
+            "postchangelog": "replace 'https://flink/' 'https://bitbucket.org/' CHANGELOG.md"
+        }
+    },
+    "auto-changelog": {
+        "issueUrl": "https://totallyobsessed.atlassian.net/browse/{id}",
+        "template": "keepachangelog",
+        "issuePattern": "#[A-Z]+-\\d+",
+        "commitLimit": false,
+        "replaceText": {
+            "https://flink/(.+)*": "https://bitbucket.org/$1",
+            "([A-Z]+-\\d+)": "[`$1`](https://totallyobsessed.atlassian.net/browse/$1)"
+        }
+    }
 }

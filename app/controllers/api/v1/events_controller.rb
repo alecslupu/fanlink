@@ -26,6 +26,7 @@ class Api::V1::EventsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
   #*
+
   def index
     if !check_dates
       render json: { errors: "Invalid date(s)" }, status: :unprocessable_entity
@@ -64,6 +65,7 @@ class Api::V1::EventsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def show
     @event = Event.find(params[:id])
     return_the @event
