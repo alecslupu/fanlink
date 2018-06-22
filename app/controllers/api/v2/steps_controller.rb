@@ -227,9 +227,11 @@ class Api::V2::StepsController < ApiController
 
 private
     def step_params
-        params.requires(:step).permit(:unlocks, :display, :initial_status,
-          :quest_activities_attributes => [ :description, :hint, :picture,
-              :activity_types_attributes => [ :atype, { value: [ :id, :description ] }]
-            ])
+        params.require(:step).permit(:unlocks, :display, :initial_status,
+          :quest_activities_attributes => [ :id, :description, :hint, :picture,
+            :activity_types_attributes => [ :id, :atype, { value: [ :id, :description ] }
+            ]
+          ]
+        )
     end
 end
