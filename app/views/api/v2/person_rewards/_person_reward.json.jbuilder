@@ -1,3 +1,2 @@
-json.(reward, :id, :value, :source, :deleted)
-json.person reward.person
-json.reward reward.reward
+json.(reward, :id, :source, :deleted)
+json.awarded reward.reward

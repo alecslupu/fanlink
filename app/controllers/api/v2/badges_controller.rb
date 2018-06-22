@@ -5,8 +5,8 @@ class Api::V2::BadgesController < Api::V1::BadgesController
 
   def index
     @badges = Badge.all
-    if param[:person_id]
-      @badges_awarded = PersonReward.where(person_id: param[:person_id], reward_type: Reward.reward_types['badge'])
+    if params.has_key?(:person_id)
+      @badges_awarded = PersonReward.where(person_id: params[:person_id], reward_type: Reward.reward_types['badge'])
     end
     return_the @badges
   end
