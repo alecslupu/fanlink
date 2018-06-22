@@ -6,6 +6,8 @@ This is to help with the changes that went in regarding the badges, levels, ques
 
 #### Changes
 
+##### Badges
+
 Biggest changes are with badges. They return more data and accept fewer fields in the table. I tried to keep the original data how it was, but the return data for badges is now:
 
 ```json
@@ -64,7 +66,88 @@ The other new object is assigned_rewards. These are what contribute to the actio
 
 badges_awarded has been changed to return the rewards a person has aquired with the type of badge.
 
-## API end points
+##### Users
+
+The returned data for users has also changed.
+
+Snippet:
+
+```json
+{
+    "person": {
+        "id": "1",
+        "username": "admin",
+        "name": "Admin User",
+        "gender": "unspecified",
+        "city": null,
+        "country_code": null,
+        "birthdate": null,
+        "picture_url": null,
+        "product_account": false,
+        "recommended": false,
+        "chat_banned": false,
+        "designation": null,
+        "following_id": null,
+        "badge_points": 2520,
+        "role": "super_admin",
+        "level": null,
+        "do_not_message_me": false,
+        "pin_messages_from": false,
+        "auto_follow": false,
+        "num_followers": 0,
+        "num_following": 0,
+        "facebookid": null,
+        "facebook_picture_url": null,
+        "created_at": "2018-06-22T15:31:54Z",
+        "updated_at": "2018-06-22T15:31:54Z",
+        "email": "admin@example.com",
+        "product": {
+            "internal_name": "admin",
+            "id": 1,
+            "name": "Admin"
+        },
+        "level_progress": [
+            {
+                "id": 1,
+                "points": {
+                    "badge": 25
+                },
+                "total": 25
+            }
+        ],
+        "rewards": [
+            {
+                "id": 1,
+                "source": "reward",
+                "deleted": false,
+                "awarded": {
+                    "id": 1,
+                    "product_id": 1,
+                    "name": "Chat for 60 Minutes",
+                    "internal_name": "chat_60",
+                    "reward_type": "badge",
+                    "reward_type_id": 1,
+                    "series": null,
+                    "completion_requirement": 10,
+                    "points": 1000,
+                    "status": "active",
+                    "deleted": false,
+                    "created_at": "2018-06-22T15:32:34.930Z",
+                    "updated_at": "2018-06-22T15:32:34.930Z"
+                }
+            }
+        ]
+    }
+}
+```
+
+The person json returns all the rewards they have been awarded as well as their current level progress. The points object contains all the sources that points were recieved from.
+
+The source field on rewards can be reward, migration or the email address of the user that awarded the reward.
+
+## **API end points**
+
+### **App**
 
 -   GET /badges[?person_id=1]
 
@@ -75,3 +158,34 @@ badges_awarded has been changed to return the rewards a person has aquired with 
 -   POST /[quests, quest_activities, steps, action_types]/complete
     -   Requires reward_complete[reward_id] value to be sent.
     -   The multiple end points are used to determine where the reward is coming from for tracking the source.
+
+### **Portal**
+
+-   Crud for action types
+    -   This is locked to super admins. Currently untested
+-   Crud for badges
+    -   This is locked to admins. Currently untested
+-   Crud for rewards
+    -   This is locked to admins.
+    -   Endpoints are available. GET/POST/UPDATE/DELETE /rewards/[:id]
+    -   Available Fields
+        -   reward[name]: **required**
+        -   reward[internal_name]: Alphanumeric and underscores **required**
+        -   reward[reward_type]:[badge, url, coupon] **required**
+        -   reward[reward_type_id]: id of the type. **required**
+        -   reward[series]: _optional_
+        -   reward[completion_requirement]:Defaults to 1 _optional_
+        -   reward[points]: Defaults to 0 _optional_
+        -   reward[status]: active, inactive. Defaults to active _optional_
+-   Assigned Rewards
+
+    -   Nothing for this yet. Still trying to figure out how to best handle this
+    -   Will be most likely passed with each respective type. So with quests, steps, quest activties, action types
+
+## Reward System
+
+System is designed to be expandable. Supports attaching multiple sources of reward completion. It also supports having different reward types.
+
+It adds level and reward progress tracking with sources as well as a limit on how many times a source can apply to a reward.
+
+This system replaces the current badge action and badge award tables.
