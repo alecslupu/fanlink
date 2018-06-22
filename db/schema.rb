@@ -614,7 +614,6 @@ ActiveRecord::Schema.define(version: 20180621214726) do
     t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin
   end
 
-<<<<<<< HEAD
   create_table "tags", force: :cascade do |t|
     t.text "name", null: false
     t.integer "product_id", null: false
@@ -623,13 +622,13 @@ ActiveRecord::Schema.define(version: 20180621214726) do
     t.boolean "deleted", default: false, null: false
     t.index ["name"], name: "idx_tag_names"
     t.index ["product_id"], name: "idx_tag_products"
-=======
+  end
+
   create_table "urls", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "displayed_url", null: false
     t.boolean "protected", default: false
     t.boolean "deleted", default: false
->>>>>>> e44df446ce82d45adbc5f955ea6b91674a035a95
   end
 
   create_table "versions", force: :cascade do |t|
