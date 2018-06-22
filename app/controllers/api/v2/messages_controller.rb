@@ -31,6 +31,7 @@ class Api::V2::MessagesController < Api::V1::MessagesController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     room = Room.find(params[:room_id])
     if !check_access(room)

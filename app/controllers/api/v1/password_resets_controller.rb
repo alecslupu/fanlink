@@ -1,6 +1,5 @@
 class Api::V1::PasswordResetsController < ApiController
   skip_before_action :require_login, :set_product
-
   #**
   # @api {post} /people/password_forgot Initiate a password reset.
   # @apiName CreatePasswordReset
@@ -26,6 +25,7 @@ class Api::V1::PasswordResetsController < ApiController
   #       "Required parameter missing."
   #     }
   #*
+
   def create
     logout
     product = person = nil
@@ -68,6 +68,7 @@ class Api::V1::PasswordResetsController < ApiController
   #       "...be better blah blah...."
   #     }
   #*
+
   def update
     grab_password_reset_stuff_and do |person, password|
       if person.reset_password_to(password)

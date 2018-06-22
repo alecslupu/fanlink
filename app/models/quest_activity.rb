@@ -3,15 +3,18 @@ class QuestActivity < ApplicationRecord
     include TranslationThings
 
     has_manual_translated :description, :name, :hint
-    has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, :foreign_key => "activity_id"
-    has_many :activity_types, -> { order(created_at: :asc) }, :foreign_key => "activity_id"
-    has_many :assigned_rewards
+    belongs_to :step, inverse_of: :quest_activities
+
+    has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, :foreign_key => "activity_id", inverse_of: :quest_activity
+    has_many :activity_types, -> { order(created_at: :asc) }, :foreign_key => "activity_id", inverse_of: :quest_activity
+    has_many :assigned_rewards, inverse_of: :quest_activity
 
     has_many :rewards, through: :assigned_rewards
-    
-    belongs_to :step
+
     has_image_called :picture
-    
+
+    accepts_nested_attributes_for :activity_types
+
     #default_scope { order(created_at: :desc) }
 
 

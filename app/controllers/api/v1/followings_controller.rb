@@ -1,7 +1,6 @@
 class Api::V1::FollowingsController < ApiController
   load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
   load_up_the Following, except: %i[ create index ]
-
   #**
   # @api {post} /followings Follow a person.
   # @apiName CreateFollowing
@@ -23,6 +22,7 @@ class Api::V1::FollowingsController < ApiController
   #     }
   #
   #*
+
   def create
     @following = current_user.follow(@followed)
     return_the @following
@@ -43,6 +43,7 @@ class Api::V1::FollowingsController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #*
+
   def destroy
     @following.destroy
     head :ok
@@ -73,6 +74,7 @@ class Api::V1::FollowingsController < ApiController
   #     ....
   #   }
   #*
+
   def index
     followed_id = params[:followed_id].to_i
     if followed_id > 0

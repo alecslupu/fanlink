@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613142600) do
+ActiveRecord::Schema.define(version: 20180621214726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20180613142600) do
     t.integer "reward_id", null: false
     t.integer "assigned_id", null: false
     t.text "assigned_type", null: false
+    t.integer "max_times", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assigned_id", "assigned_type"], name: "index_assigned_rewards_on_assigned_id_and_assigned_type"
@@ -106,6 +107,27 @@ ActiveRecord::Schema.define(version: 20180613142600) do
     t.index ["blocker_id"], name: "ind_blocks_blocker"
   end
 
+  create_table "contests", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.text "internal_name"
+    t.text "description", null: false
+    t.text "rules_url"
+    t.text "contest_url"
+    t.integer "status", default: 0
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "coupons", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "code", null: false
+    t.text "description", null: false
+    t.text "url"
+    t.boolean "deleted", default: false
+  end
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
@@ -144,6 +166,12 @@ ActiveRecord::Schema.define(version: 20180613142600) do
     t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "idx_followings_followed"
     t.index ["follower_id", "followed_id"], name: "unq_followings_follower_followed", unique: true
+  end
+
+  create_table "level_progresses", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.jsonb "points", default: {}, null: false
+    t.integer "total", default: 0, null: false
   end
 
   create_table "levels", force: :cascade do |t|
@@ -277,9 +305,10 @@ ActiveRecord::Schema.define(version: 20180613142600) do
   create_table "person_rewards", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "reward_id", null: false
-    t.text "value", null: false
+    t.text "source", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false
   end
 
   create_table "portal_notifications", force: :cascade do |t|
@@ -401,7 +430,6 @@ ActiveRecord::Schema.define(version: 20180613142600) do
   end
 
   create_table "quest_activities", force: :cascade do |t|
-    t.integer "quest_id", null: false
     t.text "description_text_old"
     t.text "hint_text_old"
     t.boolean "deleted", default: false
@@ -417,7 +445,6 @@ ActiveRecord::Schema.define(version: 20180613142600) do
     t.datetime "updated_at", null: false
     t.integer "step_id", null: false
     t.integer "reward_id"
-    t.index ["quest_id"], name: "ind_activity_quest"
     t.index ["reward_id"], name: "idx_quest_activities_rewards"
     t.index ["step_id"], name: "index_quest_activities_on_step_id"
   end
@@ -466,6 +493,7 @@ ActiveRecord::Schema.define(version: 20180613142600) do
     t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
     t.index ["internal_name"], name: "ind_quests_internal_name"
     t.index ["product_id"], name: "ind_quests_products"
+    t.index ["reward_id"], name: "idx_quests_rewards"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -481,20 +509,33 @@ ActiveRecord::Schema.define(version: 20180613142600) do
 
   add_check "relationships", "(requested_by_id <> requested_to_id)", name: "chk_relationships_not_with_self"
 
+  create_table "reward_progresses", force: :cascade do |t|
+    t.integer "reward_id", null: false
+    t.integer "person_id", null: false
+    t.text "series"
+    t.jsonb "actions", default: {}, null: false
+    t.integer "total", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "rewards", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.text "name", null: false
+    t.jsonb "name", default: {}, null: false
     t.text "internal_name", null: false
-    t.text "reward_type", null: false
-    t.jsonb "type_data", null: false
+    t.integer "reward_type", default: 0, null: false
+    t.integer "reward_type_id", null: false
+    t.text "series"
+    t.integer "completion_requirement", default: 1, null: false
+    t.integer "points", default: 0
     t.integer "status", default: 0, null: false
-    t.datetime "starts_at", null: false
-    t.datetime "ends_at"
+    t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_rewards_product_internal_name", unique: true
     t.index ["product_id", "name"], name: "unq_rewards_product_name", unique: true
     t.index ["product_id"], name: "idx_rewards_product"
+    t.index ["reward_type", "reward_type_id"], name: "unq_rewards_type_reward_type_id", unique: true
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -552,6 +593,13 @@ ActiveRecord::Schema.define(version: 20180613142600) do
     t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin
   end
 
+  create_table "urls", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "displayed_url", null: false
+    t.boolean "protected", default: false
+    t.boolean "deleted", default: false
+  end
+
   create_table "versions", force: :cascade do |t|
     t.text "item_type", null: false
     t.integer "item_id", null: false
@@ -604,6 +652,7 @@ ActiveRecord::Schema.define(version: 20180613142600) do
   add_foreign_key "quest_completed", "quests", name: "fk_quest_completeds_quests"
   add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
   add_foreign_key "quests", "products", name: "fk_quests_products"
+  add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade

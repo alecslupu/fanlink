@@ -1,0 +1,2 @@
+class RewardsListener
+end

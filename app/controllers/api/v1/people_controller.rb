@@ -26,6 +26,7 @@ class Api::V1::PeopleController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok or 422
   #*
+
   def change_password
     if @person == current_user
       if @person.valid_password?(person_params[:current_password])
@@ -98,6 +99,7 @@ class Api::V1::PeopleController < ApiController
   #       "email" : "foo@example.com"
   #     }
   #*
+
   def create
     if !check_gender
       render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
@@ -149,6 +151,7 @@ class Api::V1::PeopleController < ApiController
   #         {...see show action for person json....},....
   #      ]
   #*
+
   def index
     @people = paginate apply_filters
     return_the @people
@@ -197,6 +200,7 @@ class Api::V1::PeopleController < ApiController
   #       "updated_at": "2018-03-12T18:55:30Z"
   #     }
   #*
+
   def show
     @person = Person.find(params[:id])
     return_the @person
@@ -248,6 +252,7 @@ class Api::V1::PeopleController < ApiController
   #       ...see create action....
   #     }
   #*
+
   def update
     if !check_gender
       render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")

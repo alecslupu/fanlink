@@ -16,6 +16,7 @@ class Api::V1::RecommendedPeopleController < ApiController
   #     ....
   #   }
   #*
+
   def index
     @people = Person.where(recommended: true).where.not(id: current_user).where.not(id: current_user.following)
     return_the @people

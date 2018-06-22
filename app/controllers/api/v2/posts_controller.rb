@@ -31,6 +31,7 @@ class Api::V2::PostsController < Api::V1::PostsController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     if params[:person_id].present?
       pid = params[:person_id].to_i

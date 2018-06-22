@@ -18,6 +18,7 @@ class Api::V1::MerchandiseController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
   #*
+
   def index
     @merchandise = Merchandise.listable.order(:priority)
   end
@@ -49,6 +50,7 @@ class Api::V1::MerchandiseController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def show
     @merchandise = Merchandise.listable.find(params[:id])
     return_the @merchandise

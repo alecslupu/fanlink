@@ -1,6 +1,5 @@
 class Api::V1::BadgesController < ApiController
   load_up_the Person, from: :person_id
-
   #**
   # @api {get} /badges Get badges for a passed in user.
   # @apiName GetBadges

@@ -4,17 +4,17 @@ class Quest < ApplicationRecord
 
     enum status: %i[ disabled enabled active deleted ]
 
-    belongs_to :product
-    
+    belongs_to :product, inverse_of: :quests
+
     has_image_called :picture
     #TODO Add translation support
     has_manual_translated :description, :name
 
-    has_many :assigned_rewards
+    has_many :assigned_rewards, inverse_of: :quest
 
-    has_many :rewards, through: :assigned_rewards
-    
-    has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy
+    has_many :rewards, through: :assigned_rewards, inverse_of: :quest
+
+    has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :quest
     #   has_many :quest_completions, dependent: :destroy
 
     accepts_nested_attributes_for :steps
@@ -34,7 +34,7 @@ class Quest < ApplicationRecord
         where("quests.starts_at >= ? and quests.ends_at <= ?",
           start_date.beginning_of_day, end_date.end_of_day)
       }
-    
+
     scope :for_product, -> (product) { includes(:product).where(product: product) }
     scope :ordered, -> { includes(:quest_activities).order('quest_activities.created_at DESC') }
 

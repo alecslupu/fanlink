@@ -1,8 +1,5 @@
 class BeaconsListener
     include RealTimeHelpers
-    def self.add_points(user, quest)
-
-    end
 
     def self.completion_created(user, completion)
         puts "Completion detected."

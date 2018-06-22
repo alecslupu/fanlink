@@ -5,7 +5,7 @@ class Api::V2::StepsController < ApiController
 
     #**
     # @apiDefine Success
-    #    description 
+    #    description
     # @apiSuccess (200) {Object} Step Step container
     # @apiSuccess (200) {Integer} step.id ID of the step
     # @apiSuccess (200) {Integer} step.quest_id The ID of the quest the step is attached to
@@ -31,7 +31,7 @@ class Api::V2::StepsController < ApiController
 
     #**
     # @apiDefine Successes
-    #    Array of success objects 
+    #    Array of success objects
     # @apiSuccess (200) {Object[]} Steps Steps container
     # @apiSuccess (200) {Integer} steps.id ID of the step
     # @apiSuccess (200) {Integer} steps.quest_id The ID of the quest the step is attached to
@@ -73,26 +73,26 @@ class Api::V2::StepsController < ApiController
 
 
     #**
-    # 
+    #
     # @api {get} /quests/:id/steps Get Steps for a quest
     # @apiName GetSteps
     # @apiGroup Quest Steps
     # @apiVersion  1.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id ID of the quest
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
     # http://localhost:3000/quests/1/steps \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
-    # 
+    #
+    #
     # @apiUse Successes
-    # 
-    # 
+    #
+    #
     #*
 
     def index
@@ -101,19 +101,19 @@ class Api::V2::StepsController < ApiController
     end
 
     #**
-    # 
-    # @api {post} /quests/:id/steps Create a step for a quest
+    #
+    # @api {post} /quests/:quest_id/steps Create a step for a quest
     # @apiName CreateStep
     # @apiGroup Quest Steps
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} quest_id The quest id used in the url
     #
     # @apiParam (body) {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
-    # @apiParam (body) {String} [display] Sets the display name for the step. 
-    # 
-    # 
+    # @apiParam (body) {String} [display] Sets the display name for the step.
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     #   curl -X POST \
     #   http://localhost:3000/quests/1/steps \
@@ -121,11 +121,11 @@ class Api::V2::StepsController < ApiController
     #   -H 'Cache-Control: no-cache' \
     #   -H 'Content-Type: application/x-www-form-urlencoded' \
     #   -d step%5Bprereq_step%5D=2
-    # 
-    # 
+    #
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
 
     def create
@@ -133,24 +133,24 @@ class Api::V2::StepsController < ApiController
         if @step.valid?
             broadcast(:step_created, current_user, @step)
             return_the @step
-        else 
+        else
             render json: { errors: @step.errors.messages }, status: :unprocessable_entity
         end
     end
 
     #**
-    # 
+    #
     # @api {patch} /steps/:id Update a step
     # @apiName StepUpdate
     # @apiGroup Quest Steps
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id ID of the step to update
     #
     # @apiParam (body) {Number[]} [unlocks] The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps.
     # @apiParam (body) {String} [display] The display friendly name for select boxes.
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
     # http://localhost:3000/steps/1 \
@@ -158,11 +158,11 @@ class Api::V2::StepsController < ApiController
     # -H 'Cache-Control: no-cache' \
     # -H 'Content-Type: application/x-www-form-urlencoded' \
     # -d 'step%5Bprereq_step%5D=1&step%5Bdisplay%5D='
-    # 
-    # 
+    #
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
 
     def update
@@ -171,20 +171,20 @@ class Api::V2::StepsController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /steps/:id Get a step
     # @apiName GetQuestStep
     # @apiGroup Quest Steps
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id The ID of the step
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # TODO
-    # 
+    #
     # @apiUse Success
-    # 
+    #
     #*
 
     def show
@@ -194,24 +194,24 @@ class Api::V2::StepsController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {DELETE} /steps/:id Delete a step
     # @apiName DeleteQuestStep
     # @apiGroup Quest Steps
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id Step ID
-    # 
+    #
     # @apiSuccess (Header) {200} 200 Returns a 200
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # TODO
-    # 
+    #
     # @apiSuccessExample {Header} Success-Response:
     #     # HTTP/1.1 200 OK
-    # 
-    # 
+    #
+    #
     #*
 
     def destroy
@@ -221,11 +221,14 @@ class Api::V2::StepsController < ApiController
           head :ok
         else
           render_not_found
-        end  
+        end
     end
 
 private
     def step_params
-        params.permit(:unlocks, :display, :initial_status)
+        params.requires(:step).permit(:unlocks, :display, :initial_status,
+          :quest_activities_attributes => [ :description, :hint, :picture,
+              :activity_types_attributes => [ :atype, { value: [ :id, :description ] }]
+            ])
     end
 end

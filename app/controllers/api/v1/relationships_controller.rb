@@ -35,6 +35,7 @@ class Api::V1::RelationshipsController < ApiController
   #     "errors" :
   #       { "You already spammed that person, blah blah blah" }
   #*
+
   def create
     requested_to = Person.find(relationship_params[:requested_to_id])
     if check_blocked(requested_to)
@@ -73,6 +74,7 @@ class Api::V1::RelationshipsController < ApiController
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
   #*
+
   def destroy
     if @relationship.person_involved?(current_user) && @relationship.friended?
       if @relationship.destroy
@@ -106,6 +108,7 @@ class Api::V1::RelationshipsController < ApiController
   #     ....
   #   }
   #*
+
   def index
     person = (params[:person_id].present?) ? Person.find(params[:person_id]) : current_user
     if person == current_user
@@ -144,6 +147,7 @@ class Api::V1::RelationshipsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def show
     @relationship = current_user.relationships.find(params[:id])
     return_the @relationship
@@ -182,6 +186,7 @@ class Api::V1::RelationshipsController < ApiController
   #     "errors" :
   #       { "You can't friend your own request, blah blah blah" }
   #*
+
   def update
     if check_status
       if current_user.relationships.include?(@relationship)

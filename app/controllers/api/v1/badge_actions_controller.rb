@@ -1,6 +1,5 @@
 class Api::V1::BadgeActionsController < ApiController
   before_action :load_action_type
-
   #**
   # @api {post} /badge_actions Create a badge action.
   # @apiName CreateBadgeAction

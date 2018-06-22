@@ -1,4 +1,5 @@
 class Api::V1::NotificationDeviceIdsController < ApiController
+
   #**
   # @api {post} /notification_device_ids Add a new device id for a person.
   # @apiName CreateNotificationDeviceId
@@ -19,6 +20,7 @@ class Api::V1::NotificationDeviceIdsController < ApiController
   #     "errors" :
   #       { "Device ID already registered" }
   #*
+
   def create
     if params[:device_id].present?
       ndi = current_user.notification_device_ids.create(device_identifier: params[:device_id])
@@ -49,6 +51,7 @@ class Api::V1::NotificationDeviceIdsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def destroy
     if params[:device_id].present?
       ndi = NotificationDeviceId.find_by(person_id: current_user.id, device_identifier: params[:device_id])

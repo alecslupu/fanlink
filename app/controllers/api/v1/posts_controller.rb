@@ -4,7 +4,6 @@ class Api::V1::PostsController < ApiController
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
-
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -81,6 +80,7 @@ class Api::V1::PostsController < ApiController
   #     "errors" :
   #       { "Body is required, blah blah blah" }
   #*
+
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
@@ -109,6 +109,7 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
   #*
+
   def destroy
     post = Post.visible.find(params[:id])
     if post.person == current_user
@@ -155,6 +156,7 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+
   def index
     if !check_dates(true)
       render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
@@ -236,6 +238,7 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
   #*
+
   def list
     @posts = paginate apply_filters
     return_the @posts
@@ -278,6 +281,7 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def show
     @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
     @post_reaction = @post.reactions.find_by(person: current_user)
@@ -312,6 +316,7 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+
   def share
     product = get_product
     if product.nil?
@@ -372,6 +377,7 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
   #*
+
   def update
     @post.update_attributes(post_params)
   end

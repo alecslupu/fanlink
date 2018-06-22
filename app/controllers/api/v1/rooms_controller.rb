@@ -157,6 +157,7 @@ class Api::V1::RoomsController < ApiController
   #     "errors" :
   #       { "That name is too short, blah blah blah" }
   #*
+
   def update
     @room = Room.find(params[:id])
     if @room.created_by != current_user

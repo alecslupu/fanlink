@@ -6,7 +6,7 @@ class Api::V2::QuestActivitiesController < ApiController
 
     #**
     # @apiDefine Success
-    #    Success Object 
+    #    Success Object
     #
     # @apiSuccess (200) {Object} quest_activity Returns the updated quest activity
     #
@@ -62,7 +62,7 @@ class Api::V2::QuestActivitiesController < ApiController
     #**
     # @apiDefine Successes
     #    Success Array
-    # 
+    #
     # @apiSuccess (200) {Object[]} quest_activities An array of activity objects
     #
     # @apiSuccessExample {Object[]} Success-Response:
@@ -119,21 +119,19 @@ class Api::V2::QuestActivitiesController < ApiController
     #*
 
     #**
-    # 
-    # @api {post} /quests/:id/activities Create quest activity
+    #
+    # @api {post} /steps/:id/activities Create an activity for a step
     # @apiName CreateQuestActivity
     # @apiGroup Quest Activities
     # @apiVersion  2.0.0
     # @apiDescription Create a quest activity
     # @apiPermission admin
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {number} id Quest ID
     # @apiParam (body) {Object} activity Container for the quest activity fields
     # @apiParam (body) {String} description A description of the requirements for the activity
     # @apiParam (body) {String} [hint] Optional hint text
-    # @apiParam (body) {Object} step Step Object
-    # 
     # @apiParamExample  {curl} Request-Example:
     # curl -X POST \
     # http://localhost:3000/quests/1/activities \
@@ -145,14 +143,13 @@ class Api::V2::QuestActivitiesController < ApiController
     # -F 'quest_activity[description]=Escape to Boston' \
     # -F 'quest_activity[hint]=Find the glasses' \
     # -F 'quest_activity[picture]=undefined'
-    # 
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
-
     def create
-        @quest_activity = @step.quest_activities.create(activity_params.merge(quest_id: @step.quest_id))
+        @quest_activity = @step.quest_activities.create(activity_params)
         if @quest_activity.valid?
             return_the @quest_activity
         else
@@ -161,31 +158,31 @@ class Api::V2::QuestActivitiesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {patch} /activities/:id Update a quest activity
     # @apiName QuestActivityUpdate
     # @apiGroup Quest Activities
     # @apiVersion  2.0.0
     # @apiDescription Update a quest activity with optional fields
     # @apiPermission admin
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id ID of activity to update
     # @apiParam (body) {Object} activity Container for the quest activity fields
     # @apiParam (body) {String} [description] A description of the requirements for the activity
     # @apiParam (body) {String} [hint] Optional hint text
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
     # http://localhost:3000/activities/1 \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache' \
     # -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
-    # 
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
 
     def update
@@ -194,17 +191,17 @@ class Api::V2::QuestActivitiesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /quests/:id/activities Get Quest Activities
     # @apiName GetQuestActivities
     # @apiGroup Quest Activities
     # @apiVersion  2.0.0
     # @apiDescription Retrieve all activities for a given quest
     # @apiPermission user
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id Quest ID
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     #curl -X GET \
     # http://localhost:3000/quests/1/activities \
@@ -212,8 +209,8 @@ class Api::V2::QuestActivitiesController < ApiController
     # -H 'Cache-Control: no-cache'
     #
     # @apiUse Successes
-    # 
-    # 
+    #
+    #
     #*
 
     def index
@@ -222,26 +219,26 @@ class Api::V2::QuestActivitiesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /activities/:id Get a quest activity
     # @apiName GetQuestActivity
     # @apiGroup Quest Activities
     # @apiVersion  2.0.0
     # @apiDescription Retrieve a single quest activity from the database
     # @apiPermission user
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id Activity ID
-    # 
+    #
     # @apiParamExample  {Url} Request-Example:
     # curl -X GET \
     # http://localhost:3000/activities/1 \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
+    #
     # @apiUse Success
-    # 
-    # 
+    #
+    #
     #*
 
     def show
@@ -250,17 +247,17 @@ class Api::V2::QuestActivitiesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {delete} /activities/:id Destroy a quest activity
     # @apiName QuestActivityDestroy
     # @apiGroup Quest Activities
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id Activity id
-    # 
+    #
     # @apiSuccess (200) {Header} header 200 OK header response
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X DELETE \
     # http://localhost:3000/activities/1 \
@@ -268,8 +265,8 @@ class Api::V2::QuestActivitiesController < ApiController
     # -H 'Cache-Control: no-cache'
     # @apiSuccessExample {Header} Success-Response:
     # HTTP/1.1 200 OK
-    # 
-    # 
+    #
+    #
     #*
 
     def destroy
@@ -279,11 +276,13 @@ class Api::V2::QuestActivitiesController < ApiController
             head :ok
         else
           render_not_found
-        end    
+        end
     end
 
 private
     def activity_params
-        params.require(:quest_activity).permit( :description, :hint, :picture)
+        params.require(:quest_activity).permit( :description, :hint, :picture,
+          :activity_types_attributes => [ :atype, { value: [ :id, :description ] } ]
+        )
     end
 end
