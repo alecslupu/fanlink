@@ -1,6 +1,7 @@
 class Api::V2::QuestCompletionsController < ApiController
     include Rails::Pagination
     include Wisper::Publisher
+    include Swagger::Blocks
     before_action :admin_only, only: %i[ list update delete ]
     before_action :load_person, only: %i[ for_person for_activity for_quest index ]
     load_up_the Step, from: :step_id, only: %i[ create list ]
@@ -22,7 +23,7 @@ class Api::V2::QuestCompletionsController < ApiController
     #     "completion": {
     #         "id": "1",
     #         "person_id": "1",
-    #         "quest_id": "1",    
+    #         "quest_id": "1",
     #         "activity_id": "1",
     #         "create_time": "2018-05-08T23:24:48Z"
     #     }
@@ -63,7 +64,7 @@ class Api::V2::QuestCompletionsController < ApiController
     #**
 
     #**
-    #   
+    #
     # @api {get} /completions Get the completions for the current user. Filterable
     # @apiName CurrentUserCompletions
     # @apiGroup Quest Activity Completion
@@ -71,17 +72,17 @@ class Api::V2::QuestCompletionsController < ApiController
     #
     # @apiParam (body) {Integer} [quest_id_filter] Full match on quest id.
     # @apiParam (body) {Integer} [activity_id_filter] Full match on activity id.
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
     # 'http://localhost:3000/completions?activity_id_filter=1' \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
-    # 
+    #
+    #
     # @apiUse SuccessArray
-    # 
-    # 
+    #
+    #
     #*
 
     def index
@@ -90,24 +91,24 @@ class Api::V2::QuestCompletionsController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {post} /steps/:id/completions Register an activity for quest as complete
     # @apiName CreateCompletion
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
     # @apiHeader (200) {String} field description
-    # 
+    #
     # @apiParam (path) {Integer} quest_id The id of the quest the completion is associated with
     # @apiParam (body) {Integer} activity_id The id of the completed activity
-    # 
+    #
     # @apiUse SuccessObject
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
     # http://localhost:3000/quest_activities/1/completions \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
+    #
     #*
 
     def create
@@ -128,22 +129,22 @@ class Api::V2::QuestCompletionsController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /completions/:id Get a quest by completion id
     # @apiName GetCompletion
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
-    # 
+    #
     # @apiParam (path) {Integer} id ID of the completion
-    # 
+    #
     # @apiUse SuccessObject
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
     # http://localhost:3000/completions/1 \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
+    #
     #*
 
     def show
@@ -152,12 +153,12 @@ class Api::V2::QuestCompletionsController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /completions/list Get the list of completions (ADMIN ONLY)
     # @apiName QuestCompletionList
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
-    # 
+    #
     # @apiParam (query) {Integer} [page] The page number to get. Default is 1.
     #
     # @apiParam (query) {Integer} [per_page] The pagination division. Default is 25.
@@ -168,17 +169,17 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiParam (query) {String} [quest_filter] Full match name of quest.
     # @apiParam (query) {Integer} [activity_id_filter] Full match on activity id.
     # @apiParam (query) {String} [activity_filter] Full match name of activity.
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X GET \
     # 'http://localhost:3000/completions/list?person__id_filter=1' \
     # -H 'Accept: application/vnd.api.v2+json' \
     # -H 'Cache-Control: no-cache'
-    # 
-    # 
+    #
+    #
     # @apiUse SuccessArray
-    # 
-    # 
+    #
+    #
     #*
 
     def list
@@ -187,16 +188,16 @@ class Api::V2::QuestCompletionsController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {patch} /completions/:id Update a tracked completion
     # @apiName CompletionUpdate
     # @apiGroup Quest Activity Completion
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id ID of the completion being updated
     # @apiParam (body) {Integer} activity_id The id of the completed activity
-    # 
+    #
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
     # http://localhost:3000/completions/1 \
@@ -208,11 +209,11 @@ class Api::V2::QuestCompletionsController < ApiController
     #         "activity_id": 2
     #     }
     # }'
-    # 
-    # 
+    #
+    #
     # @apiUse SuccessObject
-    # 
-    # 
+    #
+    #
     #*
     def update
         @completion.update_attributes(completion_params)
@@ -225,22 +226,22 @@ class Api::V2::QuestCompletionsController < ApiController
     # @apiName CompletionDelete
     # @apiGroup QuestActivityCompletion
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam (path) {Integer} id ID of the completion that is being deleted
-    # 
+    #
     # @apiSuccess (200) {Header} OK Returns a 200 OK status if successful
-    # 
+    #
     # @apiParamExample  {type} Request-Example:
     # {
     #     property : value
     # }
-    # 
-    # 
+    #
+    #
     # @apiSuccessExample {Header} Success-Response:
     # HTTP/1.1 200 OK
-    # 
-    # 
+    #
+    #
     #*
 
     # def destroy
@@ -250,7 +251,7 @@ class Api::V2::QuestCompletionsController < ApiController
     #       head :ok
     #     else
     #       render_not_found
-    #     end  
+    #     end
     # end
 
 private
@@ -271,7 +272,7 @@ private
         end
         completions
     end
-    
+
     def apply_filters_for_user
         completions = QuestCompletion.where(person_id: current_user.id).order(created_at: :desc)
         params.each do |p, v|
@@ -282,4 +283,3 @@ private
         completions
     end
 end
-  

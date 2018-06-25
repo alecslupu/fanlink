@@ -106,3 +106,5 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'chewy'
+gem 'swagger-blocks'
+gem 'versionist'

@@ -24,7 +24,7 @@ reward.assigned_rewards.each do |assigned|
         quests = true
         json.quests do
             json.child! do
-                json.partial! "api/v2/action_types/action_type", locals: { quest: assigned.assigned, lang: nil }
+                json.partial! "api/v2/action_types/quest", locals: { quest: assigned.assigned, lang: nil }
                 json.set! :max_times, assigned.max_times
             end
         end

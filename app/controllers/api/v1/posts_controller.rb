@@ -1,6 +1,7 @@
-class Api::V1::PostsController < ApiController
+class Api::V1::PostsController < Api::V1::BaseController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
@@ -93,7 +94,7 @@ class Api::V1::PostsController < ApiController
     else
       render json: { errors: @post.errors.messages }, status: :unprocessable_entity
     end
-    
+
   end
 
   #**

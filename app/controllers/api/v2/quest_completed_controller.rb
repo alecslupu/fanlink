@@ -1,6 +1,7 @@
 class Api::V2::QuestCompletedController < ApiController
     include Rails::Pagination
     include Wisper::Publisher
+    include Swagger::Blocks
 
     #**
     # @apiIgnore Not Finished
@@ -23,24 +24,12 @@ class Api::V2::QuestCompletedController < ApiController
     #
     #*
     def index
-    end
-
-    def for_user
+      @quests_complete = QuestCompleted.where(person_id: current_user.id)
+      return_the @quests_completed
     end
 
     def show
-    end
-
-    def create
-        @completed = QuestCompleted.create(completed_params)
-        if @completed.valid?
-            return_the @completed
-        else
-            render json: { errors: @completed.errors.messages }, status: :unprocessable_entity
-        end
+      @quest_complete = QuestCompleted.find(params[:id])
     end
 private
-    def completed_params
-        params.require(:completed).permit(:person_id, :quest_id)
-    end
 end

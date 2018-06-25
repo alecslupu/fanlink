@@ -1,6 +1,7 @@
-class Api::V1::RoomsController < ApiController
+class Api::V1::RoomsController < Api::V1::BaseController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
   #**
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom

@@ -1,6 +1,7 @@
 class Api::V2::ProductBeaconsController < ApiController
     include Rails::Pagination
     include Wisper::Publisher
+    include Swagger::Blocks
     before_action :admin_only
     #**
     # @api {get} /beacons Beacons for a product

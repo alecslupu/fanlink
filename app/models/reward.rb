@@ -6,9 +6,9 @@ class Reward < ApplicationRecord
     acts_as_tenant(:product)
 
     belongs_to :product
-    belongs_to :badge, -> { joins(:rewards).where("rewards.reward_type = ?", Reward.reward_types['badge']) }, :foreign_key => "reward_type_id", optional: true
-    belongs_to :url, -> { joins(:rewards).where("rewards.reward_type = ?", Reward.reward_types['url']) }, :foreign_key => "reward_type_id", optional: true
-    belongs_to :coupon, -> { joins(:rewards).where("rewards.reward_type = ?", Reward.reward_types['coupon']) }, :foreign_key => "reward_type_id", optional: true
+    belongs_to :badge, :foreign_key => "reward_type_id", :foreign_type => "reward_type", optional: true
+    belongs_to :url, :foreign_key => "reward_type_id", :foreign_type => "reward_type", optional: true
+    belongs_to :coupon, :foreign_key => "reward_type_id", :foreign_type => "reward_type", optional: true
     has_many :assigned_rewards
     has_many :person_rewards
 

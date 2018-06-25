@@ -1,6 +1,7 @@
-class Api::V1::BadgeActionsController < ApiController
+class Api::V1::BadgeActionsController < Api::V1::BaseController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
   before_action :load_action_type
   #**
   # @api {post} /badge_actions Create a badge action.

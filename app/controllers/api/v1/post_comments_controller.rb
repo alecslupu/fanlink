@@ -1,6 +1,7 @@
-class Api::V1::PostCommentsController < ApiController
+class Api::V1::PostCommentsController < Api::V1::BaseController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
   before_action :load_post, except: %i[ list ]
   #**
   # @api {post} /posts/:id/comments Create a comment on a post.

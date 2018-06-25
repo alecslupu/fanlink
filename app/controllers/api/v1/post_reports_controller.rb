@@ -1,6 +1,7 @@
-class Api::V1::PostReportsController < ApiController
+class Api::V1::PostReportsController < Api::V1::BaseController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update
   #**

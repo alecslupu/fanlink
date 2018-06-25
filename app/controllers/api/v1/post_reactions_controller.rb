@@ -1,4 +1,5 @@
-class Api::V1::PostReactionsController < ApiController
+class Api::V1::PostReactionsController < Api::V1::BaseController
+  include Swagger::Blocks
   load_up_the Post, from: :post_id
   load_up_the PostReaction, only: %i[ destroy update ]
 

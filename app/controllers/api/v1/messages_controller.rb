@@ -1,6 +1,7 @@
-class Api::V1::MessagesController < ApiController
+class Api::V1::MessagesController < Api::V1::BaseController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
 
   before_action :admin_only, only: %i[ list update ]
 

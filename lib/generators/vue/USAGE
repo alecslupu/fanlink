@@ -1,0 +1,10 @@
+Description:
+    Create Vue files corresponding to the Rails views
+
+Example:
+    rails generate vue [namespace]/[controller]/action
+
+    This will create:
+        app/javascript/packs/[namespace]/[controller]/action.js
+        app/javascript/views/[namespace]/[controller]/action.vue
+        app/views/[namespace]/[controller]/action.html.erb

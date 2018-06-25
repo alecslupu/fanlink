@@ -1,36 +1,37 @@
 class Api::V2::CategoriesController < ApiController
     include Wisper::Publisher
+    include Swagger::Blocks
     load_up_the Category, only: %i[ update ]
     #**
     # @apiDefine V2CategoryObject
-    #    description 
+    #    description
     #*
 
     #**
     # @apiDefine V2CategoryArray
-    #    description 
+    #    description
     #*
 
     #**
-    # 
+    #
     # @api {get} /categories Get Categories for Product
     # @apiName GetCategories
     # @apiGroup Categories
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam  {String} [product] The product to get the categories for.
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {type} Request-Example:
     # {
     #     property : value
     # }
-    # 
-    # 
+    #
+    #
     # @apiUse V2CategoryArray
-    # 
-    # 
+    #
+    #
     #*
     def index
         @categories = Category.all
@@ -43,26 +44,26 @@ class Api::V2::CategoriesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {get} /categories/:id title
     # @apiName apiName
     # @apiGroup group
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam  {Number} id ID of the category
-    # 
+    #
     # @apiSuccess (200) {object} Category Category Object
-    # 
+    #
     # @apiParamExample  {type} Request-Example:
     # {
     #     property : value
     # }
-    # 
-    # 
+    #
+    #
     # @apiUse V2CategoryObject
-    # 
-    # 
+    #
+    #
     #*
 
     def show
@@ -71,70 +72,70 @@ class Api::V2::CategoriesController < ApiController
     end
 
     #**
-    # 
+    #
     # @api {post} /categories Create Category
     # @apiName CreateCategory
     # @apiGroup Categories
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam  {Object} Category Category Container
     # @apiParam  {String} name Category Name
     # @apiParam  {String} color Color code hex
     # @apiParam  {String} role Minimum allowed role to access the category
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {type} Request-Example:
     # {
     #     property : value
     # }
-    # 
-    # 
+    #
+    #
     # @apiUse V2CategoryObject
-    # 
-    # 
+    #
+    #
     #*
 
     def create
         @category = Category.create(category_params)
         if @category.valid?
             return_the @category
-        else 
+        else
             render json: { errors: @category.errors.messages }, status: :unprocessable_entity
         end
     end
 
     #**
-    # 
+    #
     # @api {patch} /category/:id Update a category
     # @apiName UpdateCategory
     # @apiGroup Categories
     # @apiVersion  2.0.0
-    # 
-    # 
+    #
+    #
     # @apiParam  {Object} category Category container
     # @apiParam  {String} name Category Name
     # @apiParam  {String} color Color code hex
     # @apiParam  {String} role Minimum allowed role to access the category
-    # 
-    # 
+    #
+    #
     # @apiParamExample  {type} Request-Example:
     # {
     #     property : value
     # }
-    # 
-    # 
+    #
+    #
     # @apiUse V2CategoryObject
-    # 
-    # 
+    #
+    #
     #*
 
     def update
-        
+
         if @category.update_attributes(category_params)
             broadcast(:category_updated, current_user, @category)
             return_the @category
-        else 
+        else
             render json: { errors: @category.errors.messages }, status: :unprocessable_entity
         end
     end

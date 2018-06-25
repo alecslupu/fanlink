@@ -5,15 +5,15 @@ class Quest < ApplicationRecord
 
     enum status: %i[ disabled enabled active deleted ]
 
-    belongs_to :product, inverse_of: :quests
+    belongs_to :product
 
     has_image_called :picture
     #TODO Add translation support
     has_manual_translated :description, :name
 
-    has_many :assigned_rewards, inverse_of: :quest
+    has_many :assigned_rewards, as: :assigned
 
-    has_many :rewards, through: :assigned_rewards, inverse_of: :quest
+    has_many :rewards, through: :assigned_rewards
 
     has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :quest
     #   has_many :quest_completions, dependent: :destroy

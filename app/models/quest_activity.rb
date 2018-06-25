@@ -7,7 +7,7 @@ class QuestActivity < ApplicationRecord
 
     has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, :foreign_key => "activity_id", inverse_of: :quest_activity
     has_many :activity_types, -> { order(created_at: :asc) }, :foreign_key => "activity_id", inverse_of: :quest_activity
-    has_many :assigned_rewards, inverse_of: :quest_activity
+    has_many :assigned_rewards, as: :assigned, inverse_of: :quest_activity
 
     has_many :rewards, through: :assigned_rewards
 

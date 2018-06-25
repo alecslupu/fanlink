@@ -1,6 +1,7 @@
 class Api::V2::QuestActivitiesController < ApiController
     include Rails::Pagination
     include Wisper::Publisher
+    include Swagger::Blocks
     before_action :admin_only, except: %i[ index show ]
     load_up_the Step, from: :step_id, except: %i[ update show delete ]
     load_up_the QuestActivity, only: %i[ update show delete ]

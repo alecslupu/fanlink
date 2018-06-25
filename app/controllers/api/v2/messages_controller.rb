@@ -1,4 +1,5 @@
 class Api::V2::MessagesController < Api::V1::MessagesController
+  include Swagger::Blocks
   #**
   # @api {get} /rooms/:room_id/messages Get messages.
   # @apiName GetMessages

@@ -1,6 +1,7 @@
 class Api::V2::PostsController < Api::V1::PostsController
   include Rails::Pagination
   include Wisper::Publisher
+  include Swagger::Blocks
   #**
   # @api {get} /posts Get paginated posts.
   # @apiName GetPosts

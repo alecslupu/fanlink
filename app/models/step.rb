@@ -3,7 +3,7 @@ class Step < ApplicationRecord
     has_many :quest_activities, -> { order(created_at: :desc) }, inverse_of: :step
     has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, class_name: "QuestCompletion", inverse_of: :step
     has_one :step_completed, -> { where(person_id: Person.current_user.id) }, class_name: "StepCompleted", inverse_of: :step
-    has_many :assigned_rewards, inverse_of: :step
+    has_many :assigned_rewards, as: :assigned, inverse_of: :step
 
     has_many :rewards, through: :assigned_rewards
 
