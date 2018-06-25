@@ -19,6 +19,9 @@ module AttachmentSupport
 
       class_eval <<-EOE
         def #{name}_url
+          #{name}.file? ? #{name}.url : nil
+        end
+        def #{name}_optimal_url
           #{name}.file? ? #{name}.url(:optimal) : nil
         end
         Paperclip.interpolates :product do |attachment, style|
