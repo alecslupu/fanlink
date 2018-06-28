@@ -130,6 +130,8 @@ Rails.application.routes.draw do
 
       resources :assigned_rewards, only: %i[ create ]
 
+      resources :badges, except: %i[ destroy ]
+
       resources :quests, except: %i[ create index show update ] do
         collection do
           post "complete" => "reward_progresses#create"
