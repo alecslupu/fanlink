@@ -1,6 +1,6 @@
 class TagsListener
     def self.post_created(user, post)
-      if post.body.exists?
+      if post.body.present?
         tags = post.body.scan(/(?:\s|^)(?:#(?!\d+(?:\s|$)))(\w+)(?=\s|$)/i)
         if !tags.empty?
             tags.each do |tag|
