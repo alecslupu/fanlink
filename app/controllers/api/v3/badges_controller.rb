@@ -34,6 +34,6 @@ class Api::V3::BadgesController < Api::V3::BaseController
 
 private
   def badge_params
-    params.require(:badge).permit(:name, :internal_name, :description, :picture, :issued_from, :issued_to)
+    params.require(:badge).permit(:name, :internal_name, :description, :picture, :assigned_type_id, :issued_from, :issued_to)
   end
 end
