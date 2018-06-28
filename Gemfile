@@ -106,5 +106,6 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'chewy'
-gem 'swagger-blocks'
+gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+gem 'generators', github: 'ikkiuchi/generators'
 gem 'versionist'

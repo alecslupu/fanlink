@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Fanlink API",
+    "description": "API documentation of Rails Application. <br/>Optional multiline or single-line Markdown-formatted description in [CommonMark](http://spec.commonmark.org/) or `HTML`.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.fan.link",
+      "description": "Production server"
+    },
+    {
+      "url": "http://staging.fan.link",
+      "description": "Staging server"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "security": [
+    {
+      "SessionCookie": [
+
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Badge Action",
+      "description": "Badge Actions"
+    }
+  ],
+  "paths": {
+    "/badge_actions": {
+      "post": {
+        "summary": "POST create a badge action",
+        "operationId": "Badge Action_create",
+        "tags": [
+          "BadgeActions"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "badge_action": {
+                    "type": "object",
+                    "properties": {
+                      "action_type": {
+                        "type": "string",
+                        "description": "Internal name of the action type."
+                      },
+                      "indentifier": {
+                        "type": "string",
+                        "description": "The indentifier for this badge action."
+                      }
+                    },
+                    "required": [
+                      "action_type"
+                    ]
+                  }
+                },
+                "required": [
+                  "badge_action"
+                ]
+              },
+              "examples": [
+                {
+                  "right_input": {
+                    "value": [
+                      "test_action",
+                      "badge_1_test_action"
+                    ]
+                  }
+                },
+                {
+                  "wrong_input": {
+                    "value": [
+                      "Test Action",
+                      "Badge1 TestAction"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "SessionCookie": {
+        "type": "apiKey",
+        "name": "_fanlink_session",
+        "in": "cookie"
+      }
+    }
+  }
+}

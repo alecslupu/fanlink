@@ -1,20 +1,17 @@
-class Api::V2::MerchandiseController < Api::V1::MerchandiseController
-    include Rails::Pagination
-    include Wisper::Publisher
-    include Swagger::Blocks
+class Api::V2::MerchandiseController < Api::V2::BaseController
     load_up_the Merchandise, only: %i[ update show delete ]
     #**
-    # @apiDefine Success
+    # @apiDefine MerchandiseSuccess
     #    Success object
     #*
 
     #**
-    # @apiDefine Successess
+    # @apiDefine MerchandiseSuccessess
     #    Success Array
     #*
 
     #**
-    # @apiDefine Params Form Parameters
+    # @apiDefine MerchandiseParams Form Parameters
     #    Parameters that are accepted for Merchandise
     #
     # @apiParam (body) {Object} merchandise Object container
@@ -27,6 +24,63 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiParam (body) {String} [merchandise.purchase_url] The URL to purchase the item
     #*
 
+      #**
+  # @api {get} /merchandise Get available merchandise.
+  # @apiName GetMerchandise
+  # @apiGroup Merchandise
+  # @apiVersion 1.0.0
+  #
+  # @apiDescription
+  #   This gets a list of merchandise, in priority order.
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "merchandise": [
+  #       { ....merchandise json..see get single merchandise action ....
+  #       },....
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 401 Unauthorized
+  #*
+
+  def index
+    @merchandise = Merchandise.listable.order(:priority)
+  end
+
+  #**
+  # @api {get} /merchandise/:id Get a single piece of merchandise.
+  # @apiName GetMerchandise
+  # @apiGroup Merchandise
+  # @apiVersion 1.0.0
+  #
+  # @apiDescription
+  #   This gets a single piece of merchandise for a merchandise id.
+  #
+  # @apiParam (path) {Number} id Merchandise ID
+  #
+  # @apiSuccessExample {json} Success-Response:
+  #     HTTP/1.1 200 Ok
+  #     "merchandise": [
+  #       {
+  #         "id": "5016",
+  #         "name": "Something well worth the money",
+  #         "description": "Bigger than a breadbox"
+  #         "price": "$4.99",
+  #         "purchase_url": "https://amazon.com/3455455",
+  #         "picture_url": "https://example.com/hot.jpg"
+  #       },....
+  #     ]
+  #
+  # @apiErrorExample {json} Error-Response:
+  #     HTTP/1.1 404 Not Found
+  #*
+
+  def show
+    @merchandise = Merchandise.listable.find(params[:id])
+    return_the @merchandise
+  end
+
     #**
     #
     # @api {post} /merchandise Create a merchandise item
@@ -35,7 +89,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # @apiVersion  2.0.0
     #
     #
-    # @apiUse Params
+    # @apiUse MerchandiseParams
     #
     # @apiParamExample  {curl} Request-Example:
     # curl -X POST \
@@ -53,7 +107,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # -F 'merchandise[picture]=@D:\Media\Pictures\turing_test.png'
     #
     #
-    # @apiUse Success
+    # @apiUse MerchandiseSuccess
     #
     #*
 
@@ -76,7 +130,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     #
     # @apiParam (path) {Number} id ID of the item you're updating
     #
-    # @apiUse Params
+    # @apiUse MerchandiseParams
     #
     # @apiParamExample  {curl} Request-Example:
     # curl -X PATCH \
@@ -88,7 +142,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # -F 'merchandise[price]=39.99'
     #
     #
-    # @apiUse Success
+    # @apiUse MerchandiseSuccess
     #
     #
     #*
@@ -121,7 +175,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     # -H 'Content-Type: application/x-www-form-urlencoded'
     #
     #
-    # @apiUse Success
+    # @apiUse MerchandiseSuccess
     #
     #
     #*

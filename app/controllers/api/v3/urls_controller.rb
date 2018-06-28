@@ -1,7 +1,4 @@
-class Api::V3::UrlsController < ApiController
-  include Wisper::Publisher
-  include Rails::Pagination
-  include Swagger::Blocks
+class Api::V3::UrlsController < Api::V3::BaseController
   def index
 
   end

@@ -1,5 +1,4 @@
-class Api::V2::TagsController < ApiController
-  include Swagger::Blocks
+class Api::V2::TagsController < Api::V2::BaseController
     #**
     #
     # @api {get} /tags/:tag_name Get Posts by Tag Name

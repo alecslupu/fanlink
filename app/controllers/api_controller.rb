@@ -1,5 +1,7 @@
 class ApiController < ApplicationController
   include FloadUp
+  include Rails::Pagination
+  include Wisper::Publisher
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   set_current_tenant_through_filter
@@ -102,7 +104,7 @@ protected
           end
           product = current_user.try(:product) if product.nil?
         end
-      end 
+      end
     end
     product = current_user.try(:product) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
@@ -140,7 +142,7 @@ protected
   def unset_app
     current_user.app = false
   end
-  
+
   def set_chewy_filter
     Chewy.settings = {prefix: ActsAsTenant.current_tenant.internal_name}
   end

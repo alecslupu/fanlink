@@ -1,8 +1,6 @@
 class Api::V1::PasswordResetsController < Api::V1::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
-  include Swagger::Blocks
   skip_before_action :require_login, :set_product
+
   #**
   # @api {post} /people/password_forgot Initiate a password reset.
   # @apiName CreatePasswordReset

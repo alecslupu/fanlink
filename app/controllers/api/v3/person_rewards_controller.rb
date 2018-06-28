@@ -1,7 +1,4 @@
-class Api::V3::PersonRewardsController < ApiController
-  include Wisper::Publisher
-  include Rails::Pagination
-  include Swagger::Blocks
+class Api::V3::PersonRewardsController < Api::V3::BaseController
   def index
 
   end

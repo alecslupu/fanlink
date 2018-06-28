@@ -1,7 +1,4 @@
-class Api::V2::ActivityTypesController < ApiController
-    include Rails::Pagination
-    include Wisper::Publisher
-    include Swagger::Blocks
+class Api::V2::ActivityTypesController < Api::V2::BaseController
     load_up_the QuestActivity, from: :activity_id, only: %i[ create index ]
     load_up_the ActivityType, only: %i[ show update destroy ]
     #**

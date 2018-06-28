@@ -1,7 +1,4 @@
-class Api::V3::ActionTypesController < ApiController
-  include Wisper::Publisher
-  include Rails::Pagination
-  include Swagger::Blocks
+class Api::V3::ActionTypesController < Api::V3::BaseController
   def index
     @action_types = ActionType.all
     return_the @action_types

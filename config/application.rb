@@ -27,7 +27,7 @@ module Fanlink
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-
+    Dir['app/controllers/api/v*/docs/*'].each { |p| config.eager_load_paths << p }
     config.paperclip_defaults = {
         storage: :s3,
         url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",

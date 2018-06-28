@@ -156,7 +156,7 @@ Rails.application.routes.draw do
   # TODO: move the password reset controller update out of the api
   post "/people/password_reset" => "api/v1/password_resets#update"
 
-  namespace :admin do
+  #namespace :admin do
     # api_version(:module => "Api::V1::Admin", :path => {:value => "v1"}, :header => {:name => "Accept", :value => "application/vnd.api.v1+json"}, :defaults => {:format => :json}) do
 
     # end
@@ -210,6 +210,6 @@ Rails.application.routes.draw do
     # post ":product_internal_name/beacons/:id" => "productbeacons#update"
 
     # root to: "people#index"
-  end
+  #end
 
 end

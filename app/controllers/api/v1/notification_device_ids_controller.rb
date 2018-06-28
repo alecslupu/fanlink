@@ -1,7 +1,4 @@
 class Api::V1::NotificationDeviceIdsController < Api::V1::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
-  include Swagger::Blocks
   #**
   # @api {post} /notification_device_ids Add a new device id for a person.
   # @apiName CreateNotificationDeviceId

@@ -1,6 +1,4 @@
-class Api::V2::CategoriesController < ApiController
-    include Wisper::Publisher
-    include Swagger::Blocks
+class Api::V2::CategoriesController < Api::V2::BaseController
     load_up_the Category, only: %i[ update ]
     #**
     # @apiDefine V2CategoryObject

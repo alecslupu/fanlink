@@ -1,11 +1,9 @@
 class Api::V1::PeopleController < Api::V1::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
-  include Swagger::Blocks
   prepend_before_action :logout, only: :create
 
   load_up_the Person, except: %i[ index ]
   skip_before_action :require_login, only: %i[ create ]
+
 
   #**
   # @api {patch} /people/:id/change_password Change your password.

@@ -1,7 +1,4 @@
-class Api::V2::ProductsController < ApiController
-    include Rails::Pagination
-    include Wisper::Publisher
-    include Swagger::Blocks
+class Api::V2::ProductsController < Api::V2::BaseController
     before_action :super_admin_only
 
     def select

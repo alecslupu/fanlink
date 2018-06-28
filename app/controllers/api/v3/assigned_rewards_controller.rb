@@ -1,7 +1,6 @@
-class Api::V3::AssignedRewardsController < ApiController
+class Api::V3::AssignedRewardsController < Api::V3::BaseController
   include Wisper::Publisher
   include Rails::Pagination
-  include Swagger::Blocks
 
   def index
     @assigned = AssignedReward.all.order(created_at: :asc)

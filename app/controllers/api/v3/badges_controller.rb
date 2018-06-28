@@ -1,7 +1,4 @@
-class Api::V3::BadgesController < Api::V2::BadgesController
-  include Wisper::Publisher
-  include Rails::Pagination
-  include Swagger::Blocks
+class Api::V3::BadgesController < Api::V3::BaseController
   before_action :admin_only, only: %i[ create update destroy ]
   load_up_the Badge, only: %i[ update show ]
 
@@ -18,7 +15,7 @@ class Api::V3::BadgesController < Api::V2::BadgesController
     if @badge.valid?
       return_the @badge
     else
-
+      render json: { errors: @badge.errors.messages }, status: :unprocessable_entity
     end
   end
 
@@ -37,6 +34,6 @@ class Api::V3::BadgesController < Api::V2::BadgesController
 
 private
   def badge_params
-    params.require(:badge).permit(:name, :internal_name, :status)
+    params.require(:badge).permit(:name, :internal_name, :description, :picture, :issued_from, :issued_to)
   end
 end
