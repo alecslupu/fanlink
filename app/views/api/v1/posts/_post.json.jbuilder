@@ -1,7 +1,7 @@
 json.id post.id.to_s
 json.create_time post.created_at.to_s
 json.body post.body(@lang)
-json.picture_url post.picture_url
+json.picture_url post.picture_optimal_url
 json.audio_url post.audio_url
 json.audio_size post.audio_file_size
 json.audio_content_type post.audio_content_type

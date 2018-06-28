@@ -3,7 +3,7 @@ json.person do
   json.partial! "api/v1/people/person", locals: { person: post.person }
 end
 json.body post.body(@lang)
-json.picture_url post.picture_url
+json.picture_url post.picture_optimal_url
 json.global post.global
 json.starts_at post.starts_at.to_s
 json.ends_at post.ends_at.to_s
