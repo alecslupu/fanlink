@@ -24,8 +24,8 @@ class QuestsListener
   end
 
   def self.step_completed(user, step)
-    total_steps = Quest.find(step.id).steps.count
-    completed_steps = StepCompleted.where(quest_id: step.id, person_id: user.id).count
+    total_steps = Quest.find(step.quest_id).steps.count
+    completed_steps = StepCompleted.where(quest_id: step.quest_id, person_id: user.id).count
     if total_steps == completed_steps
       completed = QuestCompleted.find_or_initialize_by(person_id: user.id, quest_id: step.quest_id)
       if completed.valid?
