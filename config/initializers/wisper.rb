@@ -7,4 +7,5 @@ Rails.application.config.to_prepare do
   Wisper.subscribe(QuestsListener)
   Wisper.subscribe(RewardsListener)
   Wisper.subscribe(LevelsListener)
+  Wisper.subscribe(TagsListener)
 end
