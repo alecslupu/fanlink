@@ -1,4 +1,4 @@
-class TagListener
+class TagsListener
     def self.post_created(user, post)
         tags = post.body.scan(/(?:\s|^)(?:#(?!\d+(?:\s|$)))(\w+)(?=\s|$)/i)
         if !tags.empty?
