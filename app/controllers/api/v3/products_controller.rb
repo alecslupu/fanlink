@@ -1,4 +1,6 @@
 class Api::V3::ProductsController < Api::V3::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
     before_action :super_admin_only
 
     def select

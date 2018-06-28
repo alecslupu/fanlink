@@ -1,4 +1,6 @@
 class Api::V2::PostCommentReportsController < Api::V2::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostCommentReport, only: :update
 

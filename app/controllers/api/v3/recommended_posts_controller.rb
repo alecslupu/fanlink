@@ -1,4 +1,6 @@
 class Api::V3::RecommendedPostsController < Api::V3::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
   #**
   # @api {get} /posts/recommended Get recommended posts.
   # @apiName GetRecommendedPosts

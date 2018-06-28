@@ -1,4 +1,6 @@
 class Api::V2::RoomMembershipsController < Api::V2::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
   #**
   # @api {post} /room/:id/room_memberships Add a room member.
   # @apiName CreateRoomMembership

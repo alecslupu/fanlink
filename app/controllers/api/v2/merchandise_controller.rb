@@ -1,4 +1,6 @@
 class Api::V2::MerchandiseController < Api::V2::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
     load_up_the Merchandise, only: %i[ update show delete ]
     #**
     # @apiDefine MerchandiseSuccess

@@ -1,4 +1,6 @@
 class Api::V3::QuestCompletedController < Api::V3::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
     #**
     # @apiIgnore Not Finished
     # @api {get} /quests/:id/completed Get users who completed the quest

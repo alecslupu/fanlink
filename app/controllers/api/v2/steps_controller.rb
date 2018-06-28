@@ -1,4 +1,6 @@
 class Api::V2::StepsController < Api::V2::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
     load_up_the Quest, from: :quest_id, only: %i[ create index ]
     load_up_the Step, from: :id, only: %i[ update delete ]
 

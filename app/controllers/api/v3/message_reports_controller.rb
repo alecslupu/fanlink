@@ -1,4 +1,6 @@
 class Api::V3::MessageReportsController < Api::V3::BaseController
+  include Rails::Pagination
+  include Wisper::Publisher
   before_action :admin_only, only: %i[ index update ]
 
   load_up_the Room, from: :room_id
