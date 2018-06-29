@@ -134,13 +134,15 @@ protected
       current_user.app = params[:app]
     else
       if current_user
-        current_user.app = false
+        current_user.app = "mobile"
       end
     end
   end
 
   def unset_app
-    current_user.app = false
+    if current_user
+      current_user.app = false
+    end
   end
 
   def set_chewy_filter
