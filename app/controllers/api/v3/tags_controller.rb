@@ -1,6 +1,4 @@
 class Api::V3::TagsController < Api::V3::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
     #**
     #
     # @api {get} /tags/:tag_name Get Posts by Tag Name

@@ -7,6 +7,8 @@ class ProductBeacon < ApplicationRecord
 
     validates :beacon_pid, presence: { message: "Beacon PID is required." }
 
+    normalize_attributes :attached_to, :uuid
+
     #default_scope { order(created_at: :desc) }
     def self.for_id_or_pid(id)
         id = id.to_s

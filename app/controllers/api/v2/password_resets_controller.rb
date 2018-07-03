@@ -1,6 +1,4 @@
 class Api::V2::PasswordResetsController < Api::V2::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   skip_before_action :require_login, :set_product
 
   #**

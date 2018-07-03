@@ -1,6 +1,4 @@
 class Api::V2::MessagesController < Api::V2::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   before_action :admin_only, only: %i[ list update ]
 
   load_up_the Message, only: %i[ update ]

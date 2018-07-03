@@ -28,17 +28,115 @@
   ],
   "tags": [
     {
-      "name": "Badge Action",
+      "name": "BadgeActions",
       "description": "Badge Actions"
+    },
+    {
+      "name": "Badges",
+      "description": "Badges"
+    },
+    {
+      "name": "Base"
+    },
+    {
+      "name": "Blocks",
+      "description": "Block a person"
+    },
+    {
+      "name": "Events",
+      "description": "Events"
+    },
+    {
+      "name": "Followings",
+      "description": "Followers and following"
+    },
+    {
+      "name": "Levels",
+      "description": "Levels"
+    },
+    {
+      "name": "Merchandise",
+      "description": "Product Merchandise"
+    },
+    {
+      "name": "MessageReports",
+      "description": "Message Reports"
+    },
+    {
+      "name": "Messages",
+      "description": "Messages"
+    },
+    {
+      "name": "NotificationDeviceIds",
+      "description": "Notification Device IDs"
+    },
+    {
+      "name": "People",
+      "description": "Users"
+    },
+    {
+      "name": "PostCommentReports",
+      "description": "Reported comments on posts"
+    },
+    {
+      "name": "PostComments",
+      "description": "Comments on a post"
+    },
+    {
+      "name": "PostReactions",
+      "description": "User reactions to a post"
+    },
+    {
+      "name": "PostReports",
+      "description": "Posts reported by a user"
+    },
+    {
+      "name": "Posts",
+      "description": "User/product posts"
+    },
+    {
+      "name": "RecommendedPeople",
+      "description": "Recommended People"
+    },
+    {
+      "name": "RecommendedPosts",
+      "description": "Recommended posts"
+    },
+    {
+      "name": "Relationships",
+      "description": "User's relationships"
+    },
+    {
+      "name": "RoomMemberships",
+      "description": "What rooms a user belongs to."
+    },
+    {
+      "name": "Rooms",
+      "description": "Chat rooms"
+    },
+    {
+      "name": "Session",
+      "description": "User session management."
     }
   ],
   "paths": {
     "/badge_actions": {
       "post": {
         "summary": "POST create a badge action",
-        "operationId": "Badge Action_create",
+        "operationId": "BadgeActions_create",
         "tags": [
           "BadgeActions"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "requestBody": {
           "required": true,
@@ -68,26 +166,243 @@
                 "required": [
                   "badge_action"
                 ]
-              },
-              "examples": [
-                {
-                  "right_input": {
-                    "value": [
-                      "test_action",
-                      "badge_1_test_action"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BadgeActionAwarded"
+          },
+          "422": {
+            "description": "Action type invalid, cannot do that action again, blah blah blah"
+          },
+          "429": {
+            "description": "Not enough time since last submission of this action type or duplicate action type, person, identifier combination"
+          }
+        }
+      }
+    },
+    "/badges": {
+      "get": {
+        "summary": "Get badges",
+        "operationId": "Badges_index",
+        "tags": [
+          "Badges"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "description": ""
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BadgesArray"
+          }
+        }
+      }
+    },
+    "/blocks": {
+      "post": {
+        "description": "This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users.",
+        "summary": "POST Block a person",
+        "operationId": "Blocks_create",
+        "tags": [
+          "Blocks"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "block": {
+                    "type": "object",
+                    "properties": {
+                      "blocked_id": {
+                        "type": "integer",
+                        "description": "Internal name of the action type."
+                      }
+                    },
+                    "required": [
+                      "blocked_id"
                     ]
                   }
                 },
-                {
-                  "wrong_input": {
-                    "value": [
-                      "Test Action",
-                      "Badge1 TestAction"
-                    ]
-                  }
-                }
-              ]
+                "required": [
+                  "block"
+                ]
+              }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BlockObject"
+          }
+        }
+      }
+    },
+    "/blocks/{id}": {
+      "delete": {
+        "summary": "POST Unblock a person",
+        "operationId": "Blocks_destroy",
+        "tags": [
+          "Blocks"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Delete"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "Get all events for a product",
+        "operationId": "Events_index",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "description": ""
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventsArray"
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "summary": "Get a single event by id",
+        "operationId": "Events_show",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
           }
         }
       }
@@ -99,6 +414,1349 @@
         "type": "apiKey",
         "name": "_fanlink_session",
         "in": "cookie"
+      }
+    },
+    "schemas": {
+      "Badge": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "action_requirement": {
+            "type": "integer"
+          },
+          "point_value": {
+            "type": "integer"
+          }
+        },
+        "description": "Badge Object"
+      },
+      "Block": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "blocker_id": {
+            "type": "integer"
+          },
+          "blocked_id": {
+            "type": "integer"
+          }
+        },
+        "description": "Block object"
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ticket_url": {
+            "type": "string"
+          },
+          "place_identifier": {
+            "type": "string"
+          }
+        },
+        "description": "Event Object"
+      },
+      "Following": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "follower": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "followed": {
+            "$ref": "#/components/schemas/Person"
+          }
+        },
+        "description": "Following Object"
+      },
+      "Level": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "points": {
+            "type": "integer"
+          },
+          "picture_url": {
+            "type": "string"
+          }
+        },
+        "description": "Level Object"
+      },
+      "Merchandise": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "integer"
+          },
+          "purchase_url": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "priority": {
+            "type": "integer"
+          }
+        },
+        "description": "Merchandise Object"
+      },
+      "MessageReport": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "message_id": {
+            "type": "integer"
+          },
+          "poster": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "Message Report Object"
+      },
+      "Mention": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "location": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          }
+        },
+        "description": "Notification Type ID Object"
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "body": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "audio_url": {
+            "type": "string"
+          },
+          "audio_size": {
+            "type": "string"
+          },
+          "audio_content_type": {
+            "type": "string"
+          },
+          "person": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "mentions": {
+            "$ref": "#/components/schemas/Mention"
+          }
+        },
+        "description": "Message Object"
+      },
+      "MessageList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "room_id": {
+            "type": "integer"
+          },
+          "body": {
+            "type": "string"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Message Object"
+      },
+      "NotificationDeviceId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "description": "Notification Type ID Object"
+      },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "biography": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "birthdate": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "product_account": {
+            "type": "boolean"
+          },
+          "recommended": {
+            "type": "boolean"
+          },
+          "chat_banned": {
+            "type": "boolean"
+          },
+          "designation": {
+            "type": "string"
+          },
+          "following_id": {
+            "type": "integer"
+          },
+          "relationships": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/Relationship"
+                }
+              }
+            }
+          },
+          "badge_points": {
+            "type": "integer"
+          },
+          "role": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "do_not_message_me": {
+            "type": "boolean"
+          },
+          "pin_messages_from": {
+            "type": "boolean"
+          },
+          "auto_follow": {
+            "type": "boolean"
+          },
+          "num_followers": {
+            "type": "integer"
+          },
+          "num_following": {
+            "type": "integer"
+          },
+          "facebookid": {
+            "type": "integer"
+          },
+          "facebook_picture_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Person Object"
+      },
+      "PersonPrivate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "biography": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "birthdate": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "product_account": {
+            "type": "boolean"
+          },
+          "recommended": {
+            "type": "boolean"
+          },
+          "chat_banned": {
+            "type": "boolean"
+          },
+          "designation": {
+            "type": "string"
+          },
+          "following_id": {
+            "type": "integer"
+          },
+          "relationships": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/Relationship"
+                }
+              }
+            }
+          },
+          "badge_points": {
+            "type": "integer"
+          },
+          "role": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "do_not_message_me": {
+            "type": "boolean"
+          },
+          "pin_messages_from": {
+            "type": "boolean"
+          },
+          "auto_follow": {
+            "type": "boolean"
+          },
+          "num_followers": {
+            "type": "integer"
+          },
+          "num_following": {
+            "type": "integer"
+          },
+          "facebookid": {
+            "type": "integer"
+          },
+          "facebook_picture_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "email": {
+            "type": "string"
+          },
+          "product": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "internal_name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": "Private Person Object"
+      },
+      "PostCommentReport": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "post_comment_id": {
+            "type": "integer"
+          },
+          "commenter": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "Post Comment Report Object"
+      },
+      "PostComment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "body": {
+            "type": "string"
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "mention": {
+                  "$ref": "#/components/schemas/Mention"
+                }
+              }
+            }
+          },
+          "person": {
+            "$ref": "#/components/schemas/Person"
+          }
+        },
+        "description": "Post Comment Object"
+      },
+      "PostCommentList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "post_id": {
+            "type": "integer"
+          },
+          "body": {
+            "type": "string"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "mention": {
+                  "$ref": "#/components/schemas/Mention"
+                }
+              }
+            }
+          }
+        },
+        "description": "Post Comment Object"
+      },
+      "PostReaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "post_id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "reaction": {
+            "type": "string"
+          }
+        },
+        "description": "Post Reaction Object"
+      },
+      "PostReport": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "post_id": {
+            "type": "integer"
+          },
+          "poster": {
+            "type": "string"
+          },
+          "reporter": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "Post Report Object"
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "body": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "audio_url": {
+            "type": "string"
+          },
+          "audio_size": {
+            "type": "integer"
+          },
+          "audio_content_type": {
+            "type": "string"
+          },
+          "person": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "post_reaction_counts": {
+            "type": "integer"
+          },
+          "post_reaction": {
+            "$ref": "#/components/schemas/PostReaction"
+          },
+          "global": {
+            "type": "boolean"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "repost_interval": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "recommended": {
+            "type": "boolean"
+          },
+          "notify_followers": {
+            "type": "boolean"
+          },
+          "comment_count": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tag": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            }
+          }
+        },
+        "description": "Post Object"
+      },
+      "PostList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "person": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "body": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "global": {
+            "type": "boolean"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "repost_interval": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "recommended": {
+            "type": "boolean"
+          },
+          "notify_followers": {
+            "type": "boolean"
+          },
+          "comment_count": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tag": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              }
+            }
+          }
+        },
+        "description": "List Post Object"
+      },
+      "Relationship": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "update_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requested_by": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "requested_to": {
+            "$ref": "#/components/schemas/Person"
+          }
+        },
+        "description": "Relationship Object"
+      },
+      "RoomMembership": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "description": "Room Membership Object"
+      },
+      "Room": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "description": "Room Object"
+      }
+    },
+    "responses": {
+      "NotificationDeviceIds200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PasswordResets200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReport"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PostCommentsListArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PostReactions200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PostReports200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Posts200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RecommendedPeople200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RecommendedPosts200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Relationships200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RoomMemberships200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Rooms200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Session200": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Delete": {
+        "description": "HTTP/1.1 200 Ok"
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsAwarded": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/Badge"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/Block"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowersArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

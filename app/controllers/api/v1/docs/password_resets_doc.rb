@@ -47,5 +47,6 @@ class Api::V1::Docs::PasswordResetsDoc < ApiDoc
   #     }
   #*
 
-
+  doc_tag name: 'PasswordResets', desc: "Password Reset"
+  route_base 'api/v1/password_resets'
 end

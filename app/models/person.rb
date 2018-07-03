@@ -20,6 +20,8 @@ class Person < ApplicationRecord
 
   enum role: %i[ normal staff admin super_admin ]
 
+  normalize_attributes :name, :birthdate, :city, :country_code, :biography
+
   acts_as_tenant(:product)
 
   belongs_to :product

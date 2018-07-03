@@ -11,6 +11,8 @@ class PostReport < ApplicationRecord
   scope :for_product, -> (product) { joins([post: :person]).where("people.product_id = ?", product.id) }
 
   validates :reason, length: { maximum: 500 }
+
+  normalize_attributes :reason
   def create_time
     created_at.to_s
   end

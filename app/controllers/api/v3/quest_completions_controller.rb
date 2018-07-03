@@ -1,6 +1,4 @@
 class Api::V3::QuestCompletionsController < Api::V3::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
     before_action :admin_only, only: %i[ list update delete ]
     before_action :load_person, only: %i[ for_person for_activity for_quest index ]
     load_up_the Step, from: :step_id, only: %i[ create list ]

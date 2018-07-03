@@ -37,4 +37,6 @@ class Api::V1::Docs::NotificationDeviceIdsDoc < Api::V1::Docs::BaseDoc
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+  doc_tag name: 'NotificationDeviceIds', desc: "Notification Device IDs"
+  route_base 'api/v1/notification_device_ids'
 end

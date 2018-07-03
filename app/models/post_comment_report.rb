@@ -11,6 +11,8 @@ class PostCommentReport < ApplicationRecord
 
   validates :reason, length: { maximum: 500 }
 
+  normalize_attributes :reason
+
   def create_time
     created_at.to_s
   end

@@ -1,6 +1,4 @@
 class Api::V2::PostReactionsController < Api::V2::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   load_up_the Post, from: :post_id
   load_up_the PostReaction, only: %i[ destroy update ]
 

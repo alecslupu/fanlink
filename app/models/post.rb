@@ -24,6 +24,8 @@ class Post < ApplicationRecord
   belongs_to :person
   belongs_to :category, optional: true
 
+  normalize_attributes :starts_at, :ends_at
+
   validate :sensible_dates
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }

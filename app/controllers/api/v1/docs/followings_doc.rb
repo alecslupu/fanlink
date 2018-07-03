@@ -62,6 +62,20 @@ class Api::V1::Docs::FollowingsDoc < Api::V1::Docs::BaseDoc
   #     ....
   #   }
   #*
+  doc_tag name: 'Followings', desc: "Followers and following"
+  route_base 'api/v1/followings'
 
+  components do
+    resp :FollowingsArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :followings => [
+        :following => :Following
+      ]
+    }]
+    resp :FollowersArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :followers => [
+        :follower => :Following
+      ]
+    }]
+  end
 
 end

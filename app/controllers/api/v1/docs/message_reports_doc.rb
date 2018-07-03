@@ -89,4 +89,14 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
   #     "errors" :
   #       { "Invalid or missing status." }
   #*
+  doc_tag name: 'MessageReports', desc: "Message Reports"
+  route_base 'api/v1/message_reports'
+
+  components do
+    resp :MessageReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :message_reports => [
+        :message_report => :MessageReport
+      ]
+    }]
+  end
 end

@@ -20,6 +20,8 @@ class Quest < ApplicationRecord
 
     accepts_nested_attributes_for :steps
 
+    normalize_attributes :event_id, :ends_at
+
     acts_as_tenant(:product)
 
     has_paper_trail

@@ -24,5 +24,14 @@ class Api::V1::Docs::LevelsDoc < Api::V1::Docs::BaseDoc
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   #*
+  doc_tag name: 'Levels', desc: "Levels"
+  route_base 'api/v1/levels'
 
+  components do
+    resp :LevelsArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :levels => [
+        :level => :Level
+      ]
+    }]
+  end
 end

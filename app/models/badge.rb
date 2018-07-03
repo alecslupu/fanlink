@@ -17,6 +17,8 @@ class Badge < ApplicationRecord
 
   validate :issued_time_sanity
 
+  normalize_attributes :issued_from, :issued_to
+
   validates :internal_name,
             presence: true,
             format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },

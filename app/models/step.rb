@@ -11,6 +11,8 @@ class Step < ApplicationRecord
 
     accepts_nested_attributes_for :quest_activities
 
+    normalize_attributes :reward_id, :display
+
     attr_accessor :status
 
     default_scope { order(created_at: :asc) }

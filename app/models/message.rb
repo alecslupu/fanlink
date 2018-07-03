@@ -6,6 +6,8 @@ class Message < ApplicationRecord
 
   enum status: %i[ pending posted ]
 
+  normalize_attributes :body
+
   belongs_to :person
   belongs_to :room
 

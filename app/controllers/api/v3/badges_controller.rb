@@ -1,6 +1,4 @@
 class Api::V3::BadgesController < Api::V3::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   before_action :admin_only, only: %i[ create update destroy ]
   load_up_the Badge, only: %i[ update show ]
 

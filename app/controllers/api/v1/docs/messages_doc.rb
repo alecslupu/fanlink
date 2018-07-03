@@ -186,4 +186,17 @@ class Api::V1::Docs::MessagesDoc < Api::V1::Docs::BaseDoc
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
   #*
+  doc_tag name: 'Messages', desc: "Messages"
+  route_base 'api/v1/messages'
+
+  components do
+    resp :MessagesArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :messages => [
+        :message => :Message
+      ]
+    }]
+    resp :MessagesObject => ['HTTP/1.1 200 Ok', :json, data:{
+      :message => :Message
+    }]
+  end
 end

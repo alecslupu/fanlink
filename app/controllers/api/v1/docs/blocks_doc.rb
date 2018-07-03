@@ -6,8 +6,7 @@ class Api::V1::Docs::BlocksDoc < Api::V1::Docs::BaseDoc
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This is used to block a person. When a person is blocked, any followings and relationships are immediately
-  #   removed between the users.
+  #   This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users.
   #
   # @apiParam (body) {Object} block
   #   Block object.
@@ -47,5 +46,26 @@ class Api::V1::Docs::BlocksDoc < Api::V1::Docs::BaseDoc
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 if block not found
   #*
-  #*
+  doc_tag name: 'Blocks', desc: "Block a person"
+  route_base 'api/v1/blocks'
+
+  components do
+    resp :BlocksObject => ['HTTP/1.1 200 Ok', :json, data:{
+      :block => :Block
+    }]
+  end
+
+  api :create, 'POST Block a person' do
+    desc "This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users."
+    form! data: {
+      :block! => {
+        :blocked_id! => { type: Integer,  desc: 'Internal name of the action type.' },
+      }
+    }
+    response_ref 200 => :BlockObject
+  end
+
+  api :destroy, 'POST Unblock a person' do
+    response_ref 200 => :Delete
+  end
 end

@@ -195,4 +195,6 @@ class Api::V1::Docs::PeopleDoc < Api::V1::Docs::BaseDoc
   #       ...see create action....
   #     }
   #*
+  doc_tag name: 'People', desc: "Users"
+  route_base 'api/v1/people'
 end

@@ -1,6 +1,4 @@
 class Api::V2::RoomsController < Api::V2::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   #**
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom

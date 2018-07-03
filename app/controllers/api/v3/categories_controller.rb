@@ -1,6 +1,4 @@
 class Api::V3::CategoriesController < Api::V3::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
     load_up_the Category, only: %i[ update ]
     #**
     # @apiDefine V2CategoryObject

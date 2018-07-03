@@ -10,6 +10,8 @@ class MessageReport < ApplicationRecord
 
   validates :reason, length: { maximum: 500 }
 
+  normalize_attributes :reason
+
   scope :for_product, -> (product) { joins(message: :room).where("rooms.product_id = ?", product.id) }
 
   def create_time

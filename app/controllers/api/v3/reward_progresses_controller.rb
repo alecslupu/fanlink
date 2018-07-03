@@ -1,6 +1,4 @@
 class Api::V3::RewardProgressesController < Api::V3::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   def create
     if params.has_key?(:reward_complete)
       controller = request.fullpath.remove("/").remove("complete").singularize

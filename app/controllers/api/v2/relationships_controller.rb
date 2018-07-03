@@ -1,6 +1,4 @@
 class Api::V2::RelationshipsController < Api::V2::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   include Messaging
   load_up_the Relationship, except: %i[ create index ]
 

@@ -46,4 +46,17 @@ class Api::V1::Docs::MerchandiseDoc < Api::V1::Docs::BaseDoc
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   #*
+  doc_tag name: 'Merchandise', desc: "Product Merchandise"
+  route_base 'api/v1/merchandise'
+
+  components do
+    resp :MerchandiseArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :merchandise => [
+        :merchandise => :Merchandise
+      ]
+    }]
+    resp :MerchandiseObject => ['HTTP/1.1 200 Ok', :json, data:{
+      :merchandise => :Merchandise
+    }]
+  end
 end

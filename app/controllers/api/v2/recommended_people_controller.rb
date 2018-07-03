@@ -1,6 +1,4 @@
 class Api::V2::RecommendedPeopleController < Api::V2::BaseController
-  include Rails::Pagination
-  include Wisper::Publisher
   #**
   # @api {get} /people/recommended Get recommended people.
   # @apiName GetRecommendedPeople

@@ -89,4 +89,6 @@ class Api::V1::Docs::PostCommentReportsDoc < Api::V1::Docs::BaseDoc
   #     "errors" :
   #       { "Invalid or missing status." }
   #*
+  doc_tag name: 'PostCommentReports', desc: "Reported comments on posts"
+  route_base 'api/v1/post_comment_reports'
 end
