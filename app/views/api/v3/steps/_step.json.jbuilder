@@ -25,7 +25,7 @@ if !step.deleted
     else
         json.activities nil
     end
-    if step.delay_unlock.exists?
+    if step.delay_unlock > 0
         json.delay_unlock step.delay_unlock
         json.unlocks_at step.delay_unlock.minute.from_now.utc.iso8601
     else
