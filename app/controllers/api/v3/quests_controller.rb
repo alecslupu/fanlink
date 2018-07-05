@@ -414,7 +414,7 @@ private
 
     def quest_params
         params.require(:quest).permit(:event_id, :name, :internal_name, :description, :picture, :status, :starts_at, :ends_at,
-          :steps_attributes => [ :id, :unlocks, :display, :initial_status,
+          :steps_attributes => [ :id, :unlocks, :display, :initial_status, :delay_unlock,
             :quest_activities_attributes => [ :id, :description, :hint, :picture,
               :activity_types_attributes => [ :id, :atype, { value: [ :id, :description ] } ]
             ]

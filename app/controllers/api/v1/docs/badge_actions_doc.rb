@@ -23,9 +23,8 @@ class Api::V1::Docs::BadgeActionsDoc < Api::V1::Docs::BaseDoc
             :indentifier => { type: String,  desc: 'The indentifier for this badge action.' },
             }
           }
-    response_ref 200 => :BadgeActionPending
-    response_ref 200 => :BadgeActionAwarded
-    response '422', 'Action type invalid, cannot do that action again, blah blah blah'
+    response_ref 200 => :BadgeActionsPending
+    response_ref 200 => :BadgeActionsAwarded
     response '429', 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination'
   end
 end

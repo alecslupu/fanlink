@@ -199,4 +199,23 @@ class Api::V1::Docs::MessagesDoc < Api::V1::Docs::BaseDoc
       :message => :Message
     }]
   end
+
+  # api :index, '' do
+  # end
+
+  # api :create, '' do
+
+  # end
+
+  # api :show, '' do
+
+  # end
+
+  # api :update, '' do
+
+  # end
+
+  # api :destroy, '' do
+  #   response_ref 200 => :Delete
+  # end
 end

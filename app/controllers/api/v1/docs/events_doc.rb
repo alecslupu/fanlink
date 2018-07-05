@@ -67,10 +67,8 @@ class Api::V1::Docs::EventsDoc < Api::V1::Docs::BaseDoc
   end
 
   api :index, "Get all events for a product" do
-    body data: {
-      :from_date => { type: Date, desc: 'Only include events starting on or after date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'},
-      :to_date => { type: Date, desc: 'Only include events starting on or before date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'}
-    }
+    query :from_date, Date, desc: 'Only include events starting on or after date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'
+    query :to_date, Date, desc: 'Only include events starting on or before date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'
     response_ref 200 => :EventsArray
   end
 

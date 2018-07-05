@@ -197,4 +197,37 @@ class Api::V1::Docs::PeopleDoc < Api::V1::Docs::BaseDoc
   #*
   doc_tag name: 'People', desc: "Users"
   route_base 'api/v1/people'
+
+  components do
+    resp :PeopleArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :people => [
+        :person => :Person
+      ]
+    }]
+    resp :PersonObject => ['HTTP/1.1 200 Ok', :json, data:{
+      :person => :Person
+    }]
+    resp :PersonPrivateObject => ['HTTP/1.1 200 Ok', :json, data:{
+      :person => :PersonPrivate
+    }]
+  end
+
+  # api :index, '' do
+  # end
+
+  # api :create, '' do
+
+  # end
+
+  # api :show, '' do
+
+  # end
+
+  # api :update, '' do
+
+  # end
+
+  # api :destroy, '' do
+  #   response_ref 200 => :Delete
+  # end
 end

@@ -99,4 +99,23 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
       ]
     }]
   end
+
+  api :index, '' do
+  end
+
+  api :create, 'Report a message in a public room.' do
+    desc 'This reports a message that was posted to a public room.'
+  end
+
+  # api :show, '' do
+
+  # end
+
+  api :update, '' do
+
+  end
+
+  # api :destroy, '' do
+  #   response_ref 200 => :Delete
+  # end
 end

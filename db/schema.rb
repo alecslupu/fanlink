@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180621214726) do
+ActiveRecord::Schema.define(version: 20180705202051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -609,6 +609,7 @@ ActiveRecord::Schema.define(version: 20180621214726) do
     t.integer "unlocks", default: [], null: false, array: true
     t.integer "initial_status", default: 0, null: false
     t.integer "reward_id"
+    t.integer "delay_unlock", default: 0
     t.index ["quest_id"], name: "index_steps_on_quest_id"
     t.index ["reward_id"], name: "idx_steps_rewards"
     t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin

@@ -9,9 +9,7 @@ class Api::V1::Docs::BadgesDoc < Api::V1::Docs::BaseDoc
     }]
   end
   api :index, 'Get badges' do
-    body data: {
-      :person_id => { type: Integer, desc: 'The id of the person whose badges you want.' }
-    }
+    query :person_id, Integer, desc: 'The id of the person whose badges you want.'
     response_ref 200 => :BadgesArray
   end
 end

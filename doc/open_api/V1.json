@@ -171,11 +171,17 @@
           }
         },
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/BadgeActionAwarded"
-          },
           "422": {
-            "description": "Action type invalid, cannot do that action again, blah blah blah"
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/BadgeActionsAwarded"
           },
           "429": {
             "description": "Not enough time since last submission of this action type or duplicate action type, person, identifier combination"
@@ -221,13 +227,24 @@
               "minimum": 1,
               "default": 25
             }
+          },
+          {
+            "name": "person_id",
+            "in": "query",
+            "required": false,
+            "description": "The id of the person whose badges you want.",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
-        "requestBody": {
-          "required": false,
-          "description": ""
-        },
         "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/BadgesArray"
           }
@@ -282,8 +299,17 @@
           }
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
-            "$ref": "#/components/responses/BlockObject"
+            "$ref": "#/components/responses/BlocksObject"
           }
         }
       }
@@ -316,8 +342,17 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
           "200": {
             "$ref": "#/components/responses/Delete"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         }
       }
@@ -360,13 +395,33 @@
               "minimum": 1,
               "default": 25
             }
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "required": false,
+            "description": "Only include events starting on or after date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "required": false,
+            "description": "Only include events starting on or before date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "schema": {
+              "type": "date"
+            }
           }
         ],
-        "requestBody": {
-          "required": false,
-          "description": ""
-        },
         "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/EventsArray"
           }
@@ -401,8 +456,433 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/EventsObject"
+          }
+        }
+      }
+    },
+    "/followings": {
+      "get": {
+        "description": "This is used to get a list of someone's followers or followed. If followed_id parameter is supplied, it will get the follower's of that user. If follower_id is supplied, it will get the people that person is following. If nothing is supplied it will get the people the current user is following.",
+        "summary": "Get followers or followings of a user.",
+        "operationId": "Followings_index",
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "followed_id",
+            "in": "query",
+            "required": false,
+            "description": "Person to who's followers to get.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "follower_id",
+            "in": "query",
+            "required": false,
+            "description": "Id of person who is following the people in the list we are getting.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/FollowersArray"
+          }
+        }
+      },
+      "post": {
+        "description": "This is used to follow a person.",
+        "summary": "Follow a person.",
+        "operationId": "Followings_create",
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followed_id": {
+                    "type": "integer",
+                    "description": "Person to follow."
+                  }
+                },
+                "required": [
+                  "followed_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/FollowingObject"
+          }
+        }
+      }
+    },
+    "/followings/{id}": {
+      "delete": {
+        "description": "This is used to unfollow a person.",
+        "summary": "Unfollow a person.",
+        "operationId": "Followings_destroy",
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "200": {
+            "$ref": "#/components/responses/Delete"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/levels": {
+      "get": {
+        "description": "This gets a list of all levels available to be obtained.",
+        "summary": "Get all available levels.",
+        "operationId": "Levels_index",
+        "tags": [
+          "Levels"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/LevelsArray"
+          }
+        }
+      }
+    },
+    "/merchandise": {
+      "get": {
+        "description": " This gets a list of merchandise, in priority order.",
+        "summary": "Get available merchandise.",
+        "operationId": "Merchandise_index",
+        "tags": [
+          "Merchandise"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MerchandiseArray"
+          }
+        }
+      }
+    },
+    "/merchandise/{id}": {
+      "get": {
+        "description": "This gets a single piece of merchandise for a merchandise id.",
+        "summary": "Get a single piece of merchandise.",
+        "operationId": "Merchandise_show",
+        "tags": [
+          "Merchandise"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MerchandiseObject"
+          }
+        }
+      }
+    },
+    "/message_reports": {
+      "get": {
+        "operationId": "MessageReports_index",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/message_reports/{id}": {
+      "patch": {
+        "operationId": "MessageReports_update",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      },
+      "put": {
+        "operationId": "MessageReports_update",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/message_reports": {
+      "post": {
+        "description": "This reports a message that was posted to a public room.",
+        "summary": "Report a message in a public room.",
+        "operationId": "MessageReports_create",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         }
       }
@@ -1246,9 +1726,52 @@
         "properties": {
           "id": {
             "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "owned": {
+            "type": "boolean"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "public": {
+            "type": "boolean"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "member": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
           }
         },
         "description": "Room Object"
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "$ref": "#/components/schemas/PersonPrivate"
+          }
+        },
+        "description": "Session Object"
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
       }
     },
     "responses": {
@@ -1268,59 +1791,6 @@
           "application/json": {
             "schema": {
               "type": "object"
-            }
-          }
-        }
-      },
-      "PeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonPrivateObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivate"
-                }
-              }
             }
           }
         }
@@ -1636,6 +2106,21 @@
           }
         }
       },
+      "FollowingObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+                }
+              }
+            }
+          }
+        }
+      },
       "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -1752,6 +2237,59 @@
               "properties": {
                 "message": {
                   "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
                 }
               }
             }
