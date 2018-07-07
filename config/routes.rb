@@ -132,6 +132,10 @@ Rails.application.routes.draw do
 
       resources :badges, except: %i[ destroy ]
 
+      resources :people, only: %i[ create index show update destroy]
+
+      resources :portal_notifications
+
       resources :quests, except: %i[ create index show update ] do
         collection do
           post "complete" => "reward_progresses#create"

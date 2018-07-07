@@ -1,4 +1,5 @@
 class Api::V3::EventsController < Api::V3::BaseController
+    before_action :super_admin_only, only: %i[ create update destroy ]
     load_up_the Event, only: %i[ update delete ]
 
     #**
@@ -158,7 +159,7 @@ class Api::V3::EventsController < Api::V3::BaseController
             broadcast(:event_created, current_user, @event)
             return_the @event
         else
-            render json: { errors: @event.errors.messages.flatten }, status: :unprocessable_entity
+            render json: { errors: [@event.errors.messages] }, status: :unprocessable_entity
         end
     end
 

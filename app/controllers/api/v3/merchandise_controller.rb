@@ -1,4 +1,5 @@
 class Api::V3::MerchandiseController < Api::V3::BaseController
+    before_action :admin_only, only: %i[ create update destroy ]
     load_up_the Merchandise, only: %i[ update show delete ]
     #**
     # @apiDefine MerchandiseSuccess
@@ -45,7 +46,7 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
   #*
 
   def index
-    @merchandise = Merchandise.listable.order(:priority)
+    @merchandise = paginate(Merchandise.listable.order(:priority))
   end
 
   #**

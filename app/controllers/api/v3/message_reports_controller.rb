@@ -1,4 +1,5 @@
 class Api::V3::MessageReportsController < Api::V3::BaseController
+  include Messaging
   before_action :admin_only, only: %i[ index update ]
 
   load_up_the Room, from: :room_id
@@ -45,7 +46,7 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
       if message_report.valid?
         head :ok
       else
-        render_error(message_report.errors)
+        render json: { errors: [message_report.errors.messages] }, status: :unprocessable_entity
       end
     end
   end
@@ -118,9 +119,19 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
 
   def update
     parms = message_report_update_params
+    @message = @message_report.message
     if MessageReport.valid_status?(parms[:status])
       @message_report.update(parms)
-      head :ok
+      if parms[:status] == "message_hidden"
+        @message.hidden = true
+        if @message.save && delete_message(message)
+          head :ok
+        end
+      else
+        @message.hidden = false
+        @message.save
+        render_error("Invalid or missing status.")
+      end
     else
       render_error("Invalid or missing status.")
     end

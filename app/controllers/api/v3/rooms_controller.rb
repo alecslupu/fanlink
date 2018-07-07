@@ -84,10 +84,12 @@ class Api::V3::RoomsController < Api::V3::BaseController
   #*
   def destroy
     @room = Room.find(params[:id])
-    if @room.created_by != current_user
+    if @room.created_by != current_user || !current_user.some_admin?
       head :unauthorized
     else
       if @room.messages.empty?
+        @room.destroy
+      elsif current_user.super_admin? && param[:force] == "1"
         @room.destroy
       else
         @room.deleted!

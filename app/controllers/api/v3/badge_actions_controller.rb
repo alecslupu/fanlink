@@ -1,4 +1,5 @@
 class Api::V3::BadgeActionsController < Api::V3::BaseController
+  before_action :super_admin_only, only: %i[ index show update destroy ]
   before_action :load_action_type
   #**
   # @api {post} /badge_actions Create a badge action.
@@ -61,6 +62,18 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
         render_error(badge_action.errors.full_messages)
       end
     end
+  end
+
+  def index
+
+  end
+
+  def update
+
+  end
+
+  def destroy
+
   end
 
 private

@@ -1,6 +1,6 @@
 class Api::V3::PeopleController < Api::V3::BaseController
   prepend_before_action :logout, only: :create
-
+  before_action :super_admin_only, only: %i[ destroy ]
   load_up_the Person, except: %i[ index ]
   skip_before_action :require_login, only: %i[ create ]
 
@@ -266,6 +266,16 @@ class Api::V3::PeopleController < Api::V3::BaseController
     end
   end
 
+  def destroy
+    if current_user.super_admin?
+      @person = Person.find(params[:id])
+      @person.destroy
+      head :ok
+    else
+      render_not_found
+    end
+  end
+
 private
 
   def apply_filters
@@ -285,6 +295,7 @@ private
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password ] +
-                                   ( (current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []))
+                                   ( (current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : [])) +
+                                   (current_user.some_admin? ? %i[ chat_banned role ] : [])
   end
 end
