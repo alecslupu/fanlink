@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180705202051) do
+ActiveRecord::Schema.define(version: 20180612193726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -93,10 +93,8 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "issued_to"
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
-    t.index ["product_id"], name: "index_badges_on_product_id"
   end
 
   create_table "blocks", force: :cascade do |t|
@@ -230,7 +228,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.integer "location", default: 0, null: false
     t.integer "length", default: 0, null: false
     t.index ["message_id"], name: "ind_message_mentions_people"
-    t.index ["person_id"], name: "index_message_mentions_on_person_id"
   end
 
   create_table "message_reports", force: :cascade do |t|
@@ -241,8 +238,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_message_reports_on_created_at"
-    t.index ["message_id"], name: "index_message_reports_on_message_id"
-    t.index ["person_id"], name: "index_message_reports_on_person_id"
     t.index ["status"], name: "index_message_reports_on_status"
   end
 
@@ -263,7 +258,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.index ["created_at"], name: "index_messages_on_created_at"
-    t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
   end
 
@@ -341,7 +335,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.integer "person_id", null: false
     t.integer "location", default: 0, null: false
     t.integer "length", default: 0, null: false
-    t.index ["person_id"], name: "index_post_comment_mentions_on_person_id"
     t.index ["post_comment_id"], name: "ind_post_comment_mentions_post_comments"
   end
 
@@ -353,7 +346,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_post_comment_reports_on_created_at"
-    t.index ["person_id"], name: "index_post_comment_reports_on_person_id"
     t.index ["post_comment_id"], name: "idx_post_comment_reports_post_comment"
   end
 
@@ -365,7 +357,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_post_comments_on_created_at"
-    t.index ["person_id"], name: "index_post_comments_on_person_id"
     t.index ["post_id"], name: "idx_post_comments_post"
   end
 
@@ -385,7 +376,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_post_reports_on_created_at"
-    t.index ["person_id"], name: "index_post_reports_on_person_id"
     t.index ["post_id"], name: "idx_post_reports_post"
   end
 
@@ -451,6 +441,7 @@ ActiveRecord::Schema.define(version: 20180705202051) do
   end
 
   create_table "quest_activities", force: :cascade do |t|
+    t.integer "quest_id", null: false
     t.text "description_text_old"
     t.text "hint_text_old"
     t.boolean "deleted", default: false
@@ -465,9 +456,7 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "step_id", null: false
-    t.integer "reward_id"
-    t.index ["reward_id"], name: "idx_quest_activities_rewards"
-    t.index ["step_id"], name: "index_quest_activities_on_step_id"
+    t.index ["quest_id"], name: "ind_activity_quest"
   end
 
   create_table "quest_completed", force: :cascade do |t|
@@ -479,6 +468,13 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.index ["quest_id"], name: "index_quest_completed_on_quest_id"
   end
 
+  create_table "quest_completeds", force: :cascade do |t|
+    t.integer "quest_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "quest_completions", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "activity_id", null: false
@@ -487,7 +483,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.text "status_old", default: "0", null: false
     t.integer "step_id", null: false
     t.integer "status", default: 0, null: false
-    t.index ["activity_id"], name: "index_quest_completions_on_activity_id"
     t.index ["person_id"], name: "ind_quest_person_completions"
     t.index ["step_id"], name: "idx_completions_step"
   end
@@ -583,7 +578,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "picture_updated_at"
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 
@@ -608,10 +602,6 @@ ActiveRecord::Schema.define(version: 20180705202051) do
     t.datetime "updated_at", null: false
     t.integer "unlocks", default: [], null: false, array: true
     t.integer "initial_status", default: 0, null: false
-    t.integer "reward_id"
-    t.integer "delay_unlock", default: 0
-    t.index ["quest_id"], name: "index_steps_on_quest_id"
-    t.index ["reward_id"], name: "idx_steps_rewards"
     t.index ["unlocks"], name: "index_steps_on_unlocks", using: :gin
   end
 
@@ -645,56 +635,27 @@ ActiveRecord::Schema.define(version: 20180705202051) do
   add_foreign_key "activity_types", "quest_activities", column: "activity_id", name: "fk_activity_types_quest_activities"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
-  add_foreign_key "badge_actions", "people", name: "fk_badge_actions_people", on_delete: :cascade
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
-  add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
-  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
-  add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
-  add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
-  add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
-  add_foreign_key "events", "products", name: "fk_events_products"
-  add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
-  add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
-  add_foreign_key "levels", "products", name: "fk_levels_products"
-  add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
   add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
-  add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people", on_delete: :cascade
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
-  add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
-  add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
-  add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
-  add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
-  add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
-  add_foreign_key "post_comment_reports", "people", name: "fk_post__comment_reports_people", on_delete: :cascade
   add_foreign_key "post_comment_reports", "post_comments", name: "fk_post_comment_reports_post_comments", on_delete: :cascade
-  add_foreign_key "post_comments", "people", name: "fk_post_comments_people", on_delete: :cascade
   add_foreign_key "post_comments", "posts", name: "fk_post_comments_post", on_delete: :cascade
-  add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
-  add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade
   add_foreign_key "post_reports", "posts", name: "fk_post_reports_post", on_delete: :cascade
-  add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
-  add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
-  add_foreign_key "quest_activities", "rewards", name: "fk_quest_activities_rewards"
   add_foreign_key "quest_activities", "steps", name: "fk_activities_steps"
   add_foreign_key "quest_completed", "people", name: "fk_quest_completeds_people"
   add_foreign_key "quest_completed", "quests", name: "fk_quest_completeds_quests"
+  add_foreign_key "quest_completeds", "people", name: "fk_quest_completeds_people"
+  add_foreign_key "quest_completeds", "quests", name: "fk_quest_completeds_quests"
   add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
-  add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
-  add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
-  add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
-  add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
-  add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
-  add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
-  add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
 end

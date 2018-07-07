@@ -3,7 +3,7 @@ module JSONErrors
 
   included do
     rescue_from StandardError,                      with: :render_500
-    rescue_from ActiveRecord::RecordNotFound,       with: :render_404   # Mongoid::Errors::DocumentNotFound
+    rescue_from ActiveRecord::RecordNotFound,       with: :render_404
     rescue_from ActionController::ParameterMissing, with: :render_400
 
 
@@ -30,8 +30,9 @@ module JSONErrors
 
     def render_errors(errors, status = 400)
       data = {
-        status: 'failed',
-        errors: Array.wrap(errors)
+        errors:  {
+          base: Array.wrap(errors)
+        }
       }
 
       render json: data , status: status

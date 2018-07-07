@@ -101,7 +101,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :completions, :controller => "quest_completions", only: %i[ update show ] do
+      resources :completions, :controller => "quest_completions", only: %i[ index update show ] do
         collection do
           get "list" => "quest_completions#list"
         end

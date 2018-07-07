@@ -9,3 +9,4 @@ else
 end
 json.ticket_url event.ticket_url
 json.place_identifier event.place_identifier
+json.deleted event.deleted

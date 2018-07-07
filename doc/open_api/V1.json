@@ -1941,6 +1941,29 @@
       "Delete": {
         "description": "HTTP/1.1 200 Ok"
       },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/Badge"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -1984,29 +2007,6 @@
           }
         }
       },
-      "BadgesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badges": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/Badge"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -2016,6 +2016,44 @@
               "properties": {
                 "block": {
                   "$ref": "#/components/schemas/Block"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -2167,20 +2205,20 @@
           }
         }
       },
-      "EventsArray": {
+      "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "events": {
+                "messages": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/Event"
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
                       }
                     }
                   }
@@ -2190,15 +2228,15 @@
           }
         }
       },
-      "EventsObject": {
+      "MessagesObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/Event"
+                "message": {
+                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
@@ -2252,44 +2290,6 @@
               "properties": {
                 "person": {
                   "$ref": "#/components/schemas/PersonPrivate"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/Message"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
