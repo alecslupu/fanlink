@@ -3,7 +3,7 @@ json.badges do
     json.badge do
         json.partial! "api/v3/badges/badge", locals: { badge: b, lang: nil }
         json.reward b.reward
-        if @badges_awarded
+        if !@badges_awarded.nil?
             @badges_awarded.each do |awarded|
                 if awarded.reward.reward_type_id == b.id
                     json.badge_awarded  true
