@@ -1,0 +1,43 @@
+json ={
+    id: person.id.to_s,
+    username: person.username,
+    name: person.name,
+    gender: person.gender,
+    city: person.city,
+    country_code: person.country_code,
+    birthdate: person.birthdate,
+    biography: person.biography,
+    picture_url: person.picture_url,
+    product_account: person.product_account,
+    recommended: person.recommended,
+    chat_banned: person.chat_banned,
+    designation: person.designation(@lang),
+    role: person.role,
+    do_not_message_me: person.do_not_message_me,
+    pin_messages_from: person.pin_messages_from,
+    auto_follow: person.auto_follow,
+    num_followers: person.followers.count,
+    num_following: person.following.count,
+    facebookid: person.facebookid,
+    facebook_picture_url: person.facebook_picture_url,
+    created_at: person.created_at.to_s,
+    updated_at: person.updated_at.to_s
+}
+if fol = current_user && current_user.following_for_person(person)
+    json[:following_id] = fol.id
+else
+    json[:following_id] = nil
+end
+
+# lev = person.level_earned
+# if lev.nil?
+#     level: nil,
+# else
+#     level: lev, renderpartial: "api/v3/levels/level", as: :level,
+# end
+
+# if defined?(relationships) && !relationships.empty?
+#     relationships relationships, partial: "api/v3/relationships/relationship", as: :relationship,
+# end
+
+json

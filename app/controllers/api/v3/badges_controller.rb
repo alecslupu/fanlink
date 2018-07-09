@@ -7,6 +7,8 @@ class Api::V3::BadgesController < Api::V3::BaseController
     @badges = paginate(Badge.all)
     if params.has_key?(:person_id)
       @badges_awarded = PersonReward.where(person_id: params[:person_id]).joins(:reward).where("rewards.reward_type =?", Reward.reward_types['badge'])
+    else
+      @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types['badge'])
     end
     return_the @badges
   end
