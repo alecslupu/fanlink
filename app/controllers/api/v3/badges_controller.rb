@@ -1,5 +1,5 @@
 class Api::V3::BadgesController < Api::V3::BaseController
-  before_action :super_admin_only, only: %i[ create update destroy ]
+  before_action :admin_only, only: %i[ create update destroy ]
   load_up_the Badge, only: %i[ update show destroy ]
 
   #TODO: Fix nil class error when super admin attempts to get badges
