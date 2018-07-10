@@ -105,7 +105,7 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
 
   api :create, 'Report a message in a public room.' do
     desc 'This reports a message that was posted to a public room.'
-    query :room_id!
+    query :room_id!, Integer, desc: 'Id of the room in which the message was created.'
     form! data: {
       :message_report! => {
         :message_id! => { type: Integer,  desc: 'The id of the message being reported.' },
