@@ -31,6 +31,14 @@ gem "jbuilder", "~> 2.5"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
+<<<<<<< Updated upstream
+=======
+#
+
+group :production, :staging do
+  gem 'newrelic_rpm'
+end
+>>>>>>> Stashed changes
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
