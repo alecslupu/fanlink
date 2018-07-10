@@ -5,6 +5,7 @@ class Level < ApplicationRecord
   has_paper_trail
 
   acts_as_tenant(:product)
+  belongs_to :product
 
   has_image_called :picture
   has_manual_translated :description, :name

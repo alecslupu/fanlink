@@ -28,6 +28,7 @@ services:
       FANLINK_PG_USER: ${FANLINK_PG_USER}
       FANLINK_PG_PASSWORD: ${FANLINK_PG_PASSWORD}
       FANLINK_PG_HOST: ${FANLINK_PG_HOST}
+      FANLINK_ES_HOST: ${FANLINK_ES_HOST}
       FIREBASE_CM_KEY: ${FIREBASE_CM_KEY}
       FIREBASE_URL: ${FIREBASE_URL}
       FIREBASE_KEY: ${FIREBASE_KEY}
@@ -97,6 +98,15 @@ services:
         hard: -1
     volumes:
       - esdata2:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.3.1
+    container_name: flapi-kibana
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: ${FANLINK_ES_HOST}
 
 volumes:
   gems:

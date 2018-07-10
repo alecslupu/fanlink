@@ -296,6 +296,6 @@ private
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password ] +
                                    ( (current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : [])) +
-                                   (current_user.some_admin? ? %i[ chat_banned role ] : [])
+                                   (current_user.present? && current_user.some_admin? ? %i[ chat_banned role ] : [])
   end
 end

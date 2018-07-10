@@ -39,6 +39,7 @@ class Person < ApplicationRecord
   has_many :person_rewards, dependent: :destroy
   has_many :level_progresses, dependent: :destroy
   has_many :reward_progresses, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
 
   has_many :private_rooms, through: :room_memberships

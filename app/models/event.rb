@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   has_paper_trail
 
   acts_as_tenant(:product)
+  belongs_to :product
 
   normalize_attributes :place_identifier
 

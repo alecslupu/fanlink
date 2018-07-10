@@ -86,5 +86,5 @@ OpenApi::Config.tap do |c|
   }
 end
 
-Object.const_set('Boolean', 'boolean')
+# Object.const_set('Boolean', 'boolean')
 OpenApi.write_docs generate_files: Rails.env.development?
