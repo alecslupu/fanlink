@@ -1,52 +1,4 @@
 class Api::V1::Docs::PasswordResetsDoc < ApiDoc
-  #**
-  # @api {post} /people/password_forgot Initiate a password reset.
-  # @apiName CreatePasswordReset
-  # @apiGroup People
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to initiate a password reset. Product and email or username required. If email or username
-  # is not found, password reset will fail silently.
-  #
-  # @apiParam (body) {String} product
-  #   Internal name of product
-  # @apiParam (body) {String} email_or_username
-  #   The person's email or username.
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok
-  #     "message": {
-  #       "Reset password instructions have been sent to your email, if it exists in our system"
-  #     }, or
-  #     HTTP/1.1 422 Unprocessable
-  #     "errors": { //if product not found
-  #       "Required parameter missing."
-  #     }
-  #*
-
-  #**
-  # @api {post} /people/password_reset Completes a password reset.
-  # @apiName UpdatePasswordReset
-  # @apiGroup People
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to complete a password reset. It takes a form submitted from fan.link
-  #
-  # @apiParam (body) {String} token
-  #   Token from email link
-  # @apiParam (body) {String} password
-  #   The new password.
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok; or
-  #     HTTP/1.1 422 Unprocessable
-  #     "errors": { //if token/person not found or password bad
-  #       "...be better blah blah...."
-  #     }
-  #*
-
   doc_tag name: 'PasswordResets', desc: "Password Reset"
   route_base 'api/v1/password_resets'
 
@@ -54,22 +6,47 @@ class Api::V1::Docs::PasswordResetsDoc < ApiDoc
   end
 
   # api :index, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
   # end
 
-  # api :create, '' do
+  api :create, 'Initiate a password reset.' do
+    desc 'This is used to initiate a password reset. Product and email or username required. If email or username is not found, password reset will fail silently.'
+    form! data: {
+      :product! => { type: String, desc: 'Internal name of product.' },
+      :email_or_username! => { type: String, desc: 'The person\'s email or username.' }
+    }
+    response 200, 'HTTP/1.1 200 Ok', :json, data: { message: 'Reset password instructions have been sent to your email, if it exists in our system' }
+  end
 
+  # api :list, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
   # end
 
   # api :show, '' do
-
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
   # end
 
   # api :update, '' do
+  #   desc ''
+  #   form! data: {
+  #     :! => {
 
+  #     }
+  #   }
+  #   response_ref 200 => :
   # end
 
   # api :destroy, '' do
-  #   response_ref 200 => :Delete
+  #   desc ''
+  #   response_ref 200 => :OK
   # end
+
+
 
 end

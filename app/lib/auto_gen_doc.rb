@@ -53,7 +53,7 @@ module AutoGenDoc
 
           # Common :destroy parameters
           if action == 'destroy'
-            response_ref 200 => :Delete
+            response_ref 200 => :OK
           end
 
           # Common :update parameters

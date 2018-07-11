@@ -100,7 +100,9 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
     }]
   end
 
-  api :index, '' do
+  api :index, 'Get list of messages reports (ADMIN).' do
+    query :status_filter, String, desc: 'If provided, valid values are "message_hidden", "no_action_needed", and "pending"'
+    response_ref 200 => :MessageReportsArray
   end
 
   api :create, 'Report a message in a public room.' do
@@ -112,14 +114,21 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
         :reason => { type: String, desc: 'The reason given by the user for reporting the message.'}
       }
     }
+    response_ref 200 => :OK
   end
 
   # api :show, '' do
 
   # end
 
-  api :update, '' do
-
+  api :update, 'Update a Message Report. (Admin)' do
+    desc 'This updates a message report. The only value that can be changed is the status.'
+    form! data: {
+      :message_report! => {
+        :status! => { type: String,  desc: 'The new status. Valid statuses are "message_hidden", "no_action_needed", and "pending".' }
+      }
+    }
+    response_ref 200 => :OK
   end
 
   # api :destroy, '' do

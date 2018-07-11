@@ -1,6 +1,7 @@
 if !step.deleted
     json.id step.id.to_s
     json.quest_id step.quest_id.to_s
+    json.uuid step.uuid
     if !step.unlocks.empty?
         json.unlocks step.unlocks
     else
@@ -21,7 +22,7 @@ if !step.deleted
         json.status step.initial_status
     end
     if step.quest_activities.count > 0
-        json.activities step.quest_activities,  partial: "api/v2/quest_activities/activity", as: :activity
+        json.activities step.quest_activities,  partial: "api/v3/quest_activities/activity", as: :activity
     else
         json.activities nil
     end

@@ -366,32 +366,54 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     #   desc: ''
     # ]
 
-    # Crud Template
+# Crud Template
 
-    # components do
+  # components do
 
-    # end
+  # end
 
-    # api :index, '' do
+  # api :index, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
 
-    # end
+  # api :create, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   form! data: {
+  #     :! => {
+  #     }
+  #   }
+  #   response_ref 200 => :
+  # end
 
-    # api :create, '' do
+  # api :list, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
 
-    # end
+  # api :show, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
 
-    # api :show, '' do
+  # api :update, '' do
+  #   desc ''
+  #   form! data: {
+  #     :! => {
 
-    # end
+  #     }
+  #   }
+  #   response_ref 200 => :
+  # end
 
-    # api :update, '' do
-
-    # end
-
-    # api :destroy, '' do
-    #   response_ref 200 => :Delete
-    # end
-
+  # api :destroy, '' do
+  #   desc ''
+  #   response_ref 200 => :OK
+  # end
 
 
 
@@ -446,6 +468,6 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     resp :Session200 => ['HTTP/1.1 200 Ok', :json, data:{
 
     }]
-    resp :Delete => ['HTTP/1.1 200 Ok']
+    resp :OK => ['HTTP/1.1 200 Ok']
   end
 end
