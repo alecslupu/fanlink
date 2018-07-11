@@ -1,9 +1,11 @@
 if !step.deleted
+    unlocks ||= []
+    unlocks << step.unlocks
     json.id step.id.to_s
     json.quest_id step.quest_id.to_s
     json.uuid step.uuid
-    if !step.unlocks.empty?
-        json.unlocks step.unlocks
+    if !step.unlocks.blank?
+        json.unlocks unlocks
     else
         json.unlocks nil
     end
