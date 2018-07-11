@@ -111,7 +111,7 @@ Rails.application.routes.draw do
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
       end
 
-      resources :tags, only: %i[ show ]
+      resources :tags, only: %i[ index ]
     end
 
     version 3 do
