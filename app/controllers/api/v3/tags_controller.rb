@@ -26,7 +26,7 @@ class Api::V3::TagsController < Api::V3::BaseController
     #*
     def index
       if params[:tag_name].present?
-        @posts = Posts.includes(:tags).where("tags.name = ?", params[:tag_name])
+        @posts = Post.includes(:tags).where("tags.name = ?", params[:tag_name])
         return_the @posts
       else
         render json: { errors: "Parameter tag_name is required." }, status: :unprocessable_entity
