@@ -36,7 +36,7 @@ class QuestsListener
 
   def self.step_created(user, step)
     if step.unlocks.present?
-      StepUnlock.create(step_id: Step.find(unlock).uuid, unlock_id: s.uuid)
+      StepUnlock.create(step_id: Step.find(step.unlocks).uuid, unlock_id: s.uuid)
     end
   end
 
