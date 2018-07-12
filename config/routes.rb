@@ -110,7 +110,6 @@ Rails.application.routes.draw do
         resources :activities, :controller => "quest_activities", only: %i[ create index ]
         resources :completions, :controller => "quest_completions", only: %i[ create index ]
       end
-
       resources :tags, only: %i[ index ]
     end
 
@@ -135,6 +134,14 @@ Rails.application.routes.draw do
       resources :people, only: %i[ create index show update destroy]
 
       resources :portal_notifications
+
+      resources :posts, except: %i[ new edit ] do
+        collection do
+          get "list" => "posts#list"
+          get "recommended" => "recommended_posts#index"
+          get "tags" => "tags#index"
+        end
+      end
 
       resources :quests, except: %i[ create index show update ] do
         collection do

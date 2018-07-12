@@ -74,7 +74,7 @@ protected
   end
 
   def render_error(error)
-    render json: { errors: error.message }, status: :unprocessable_entity
+    render json: { errors: error }, status: :unprocessable_entity
   end
 
   def render_not_found
