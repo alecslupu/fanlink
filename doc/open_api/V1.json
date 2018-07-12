@@ -2833,6 +2833,44 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+      "MessagesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
       "PeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -3084,29 +3122,6 @@
           }
         }
       },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -3150,38 +3165,23 @@
           }
         }
       },
-      "MessagesArray": {
+      "MessageReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "messages": {
+                "message_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/Message"
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/Message"
                 }
               }
             }
