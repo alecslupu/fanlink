@@ -1,6 +1,4 @@
 if !step.deleted
-    unlocks ||= []
-    unlocks << step.unlocks
     json.id step.id.to_s
     json.quest_id step.quest_id.to_s
     json.uuid step.uuid
