@@ -3,7 +3,7 @@ if !step.deleted
     json.quest_id step.quest_id.to_s
     json.uuid step.uuid
     if !step.unlocks.blank?
-        json.unlocks unlocks
+        json.unlocks json.unlocks
     else
         json.unlocks nil
     end
