@@ -18,10 +18,12 @@ services:
     links:
       - postgres
       - elasticsearch
+      - redis
     depends_on:
       - postgres
       - mail
       - elasticsearch
+      - redis
     restart: unless-stopped
     environment: &flapi-environment
       RAILS_ENV: ${RAILS_ENV}
@@ -107,6 +109,11 @@ services:
       - elasticsearch
     environment:
       ELASTICSEARCH_URL: ${FANLINK_ES_HOST}
+  redis:
+    image: redis:alpine
+    container_name: flapi-redis
+    ports:
+      - "6379:6379"
 
 volumes:
   gems:
