@@ -43,8 +43,8 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
     if @rewards.any?
       @rewards.each do |reward|
         if @action_type.seconds_lag > 0 && current_user.reward_progresses.where(reward_id: reward.id).where("updated_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?
-        head :too_many_requests
-        break
+          head :too_many_requests
+          break
         else
           next if PersonReward.exists?(person_id: current_user.id, reward_id: reward.id)
           @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
