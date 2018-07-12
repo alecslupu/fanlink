@@ -9,7 +9,8 @@
         "standard-version": "^4.4.0"
     },
     "scripts": {
-        "fix-history": "replace 'https://flink/' 'https://bitbucket.org/' HISTORY.md"
+        "fix-history": "replace 'https://flink/' 'https://bitbucket.org/' HISTORY.md",
+        "generate-changelog": "./node_modules/.bin/auto-changelog && replace 'https://flink/' 'https://bitbucket.org/' CHANGELOG.md"
     },
     "standard-version": {
         "scripts": {
@@ -18,7 +19,7 @@
     },
     "auto-changelog": {
         "issueUrl": "https://totallyobsessed.atlassian.net/browse/{id}",
-        "template": "keepachangelog",
+        "template": "./doc/changelog.hbs",
         "issuePattern": "#[A-Z]+-\\d+",
         "commitLimit": false,
         "replaceText": {

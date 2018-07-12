@@ -11,6 +11,8 @@ class Product < ApplicationRecord
   has_many :people, dependent: :restrict_with_error
   has_many :quests, dependent: :restrict_with_error
   has_many :product_beacons, dependent: :restrict_with_error
+  has_many :events, dependent: :restrict_with_error
+  has_many :levels, dependent: :restrict_with_error
 
   scope :enabled, -> { where(enabled: true) }
 

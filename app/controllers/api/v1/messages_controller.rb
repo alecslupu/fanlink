@@ -25,7 +25,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
   #   Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
   # @apiParam (body) {Attachment} [message.audio]
-  #   Message audio, this should be `audio/aac`.
+  #   'Message audio, this should be `audio/aac`.'
   #
   # @apiParam (body) {Array} [mentions]
   #   Array of mentions each consisting of required person_id (integer), location (integer) and length (integer)

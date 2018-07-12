@@ -4,7 +4,6 @@ class StepCompleted < ApplicationRecord
 
     belongs_to :step
     belongs_to :person
-    belongs_to :step
 
 
 private

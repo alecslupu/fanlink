@@ -1,0 +1,28 @@
+{{#each releases}}
+  ### [{{title}}]({{href}})
+
+    {{#if merges}}
+    ### Merged
+
+        {{#each merges}}
+        - {{{message}}} {{#if href}}[`#{{id}}`]({{href}}){{/if}}
+        {{/each}}
+    {{/if}}
+
+    {{#commit-list commits heading='### Breaking Changes' message='Breaking change: '}}
+        - {{subject}} [`{{shorthash}}`]({{href}})
+    {{/commit-list}}
+
+    {{! List commits that add new features, but not those already listed above }}
+    {{#commit-list commits heading="### Added" pattern="\s?[Ff]eat:\s?" exclude='\s?[[Cc]hore\(.+\):\s?|\s?Breaking change:\s?|\s?[Ff]ix(es|ed):\s?]'}}
+        - {{subject}} [`{{shorthash}}`]({{href}})
+    {{/commit-list}}
+
+    {{#commit-list commits heading="### Changed" pattern="\s?[Cc]hore\(.+\):\s?" exclude='\s?[Ff]eat:\s?|\s?Breaking change:\s?|\s?[Ff]ix(es|ed):\s?]'}}
+    - {{subject}} [`{{shorthash}}`]({{href}})
+    {{/commit-list}}
+
+  {{#commit-list commits heading='### Fixes' message='\s?[Ff]ix(es|ed):\s?' exclude='Breaking change: '}}
+    - {{subject}} [`{{shorthash}}`]({{href}})
+  {{/commit-list}}
+{{/each}}

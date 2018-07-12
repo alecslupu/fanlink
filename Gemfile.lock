@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/ikkiuchi/generators.git
-  revision: 6284543784c5c8dc6fba697bf094a11158732724
-  specs:
-    generators (0.1.0)
-
-GIT
   remote: https://github.com/mark100net/administrate-field-paperclip.git
   revision: 00f63fbbb049b5fae37606c02d345069b5736a3b
   branch: blank-attachment-text
@@ -779,6 +773,8 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jbuilder_cache_multi (0.1.0)
+      jbuilder (>= 1.5.0, < 3)
     jko_api (0.2.7.0)
       rails (>= 4.2.7, <= 5.1.4)
       responders (= 2.4.0)
@@ -845,6 +841,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    newrelic_rpm (5.2.0.345)
     nio4r (2.3.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -1062,11 +1059,11 @@ DEPENDENCIES
   fcm
   filterrific
   firebase!
-  generators!
   gettext (>= 3.0.2)
   gettext_i18n_rails
   google_places
   jbuilder (~> 2.5)
+  jbuilder_cache_multi
   jko_api
   kaminari
   koala
@@ -1074,6 +1071,7 @@ DEPENDENCIES
   lol_dba
   mandrill-api!
   mandrill_mailer (~> 1.6)
+  newrelic_rpm
   oauth2
   oj
   paper_trail

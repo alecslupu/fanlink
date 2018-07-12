@@ -2,6 +2,8 @@ class Api::V3::PostReportsController < Api::V3::BaseController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update
 
+  include Messaging
+
   #**
   # @api {post} /post_reports Report a post.
   # @apiName CreatePostReport
@@ -117,7 +119,18 @@ class Api::V3::PostReportsController < Api::V3::BaseController
     parms = post_report_update_params
     if PostReport.valid_status?(parms[:status])
       @post_report.update(parms)
-      head :ok
+      post = @post_report.post
+      if parms[:status] == "post_hidden"
+        post.status = :deleted
+        if post.save && delete_post(post, post.person.followers)
+          head :ok
+        else
+          render_error("Invalid or missing status.")
+        end
+      else
+        post.status = :published
+        render_error("Invalid or missing status.")
+      end
     else
       render_error("Invalid or missing status.")
     end

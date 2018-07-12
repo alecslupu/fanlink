@@ -25,4 +25,6 @@ if !step.deleted
     else
         json.activities nil
     end
+    json.delay_unlock step.delay_unlock
+    json.unlocks_at step.delay_unlock.minute.from_now.utc.iso8601
 end

@@ -18,16 +18,19 @@ services:
     links:
       - postgres
       - elasticsearch
+      - redis
     depends_on:
       - postgres
       - mail
       - elasticsearch
+      - redis
     restart: unless-stopped
     environment: &flapi-environment
       RAILS_ENV: ${RAILS_ENV}
       FANLINK_PG_USER: ${FANLINK_PG_USER}
       FANLINK_PG_PASSWORD: ${FANLINK_PG_PASSWORD}
       FANLINK_PG_HOST: ${FANLINK_PG_HOST}
+      FANLINK_ES_HOST: ${FANLINK_ES_HOST}
       FIREBASE_CM_KEY: ${FIREBASE_CM_KEY}
       FIREBASE_URL: ${FIREBASE_URL}
       FIREBASE_KEY: ${FIREBASE_KEY}
@@ -97,6 +100,20 @@ services:
         hard: -1
     volumes:
       - esdata2:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.3.1
+    container_name: flapi-kibana
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: ${FANLINK_ES_HOST}
+  redis:
+    image: redis:alpine
+    container_name: flapi-redis
+    ports:
+      - "6379:6379"
 
 volumes:
   gems:

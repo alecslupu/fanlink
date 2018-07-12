@@ -220,7 +220,7 @@ class Api::V3::MessagesController < Api::V3::BaseController
 
   def show
     room = Room.find(params[:room_id])
-    if room.public || !check_access(room)
+    if !check_access(room)
       render_not_found
     else
       @message = room.messages.unblocked(current_user.blocked_people).find(params[:id])
@@ -279,7 +279,7 @@ private
   end
 
   def check_access(room)
-    room.active? && (room.public || room.members.include?(current_user))
+    (room.active? && (room.public || room.members.include?(current_user))) || current_user.role == 'super_admin'
   end
 
   def check_dates

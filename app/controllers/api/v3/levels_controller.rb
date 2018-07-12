@@ -1,4 +1,5 @@
 class Api::V3::LevelsController < Api::V3::BaseController
+  before_action :super_admin_only, only: %i[ create update destroy ]
   #**
   # @api {get} /levels Get all available levels.
   # @apiName GetLevels
@@ -26,7 +27,19 @@ class Api::V3::LevelsController < Api::V3::BaseController
   #*
 
   def index
-    @levels = Level.order(:points)
+    @levels = paginate(Level.order(:points))
     return_the @levels
+  end
+
+  def create
+
+  end
+
+  def update
+
+  end
+
+  def destroy
+
   end
 end

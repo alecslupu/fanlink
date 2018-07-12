@@ -40,15 +40,20 @@ module AutoGenDoc
 
           if action.in?(%w[ show destroy update ])
             path! :id, Integer, desc: 'id'
+            response '404', 'Not Found. The database doesn\'t contain a record for that id.'
           end
 
           if action.in?(%w[ create update show ])
             @type = load_schema(model)
           end
 
+          if action.in?(%w[ create update ])
+            response '422', 'Unprocessable Entity. Usually occurs when a field is invalid or missing.'
+          end
+
           # Common :destroy parameters
           if action == 'destroy'
-            #path! :id, Integer, desc: 'id'
+            response_ref 200 => :OK
           end
 
           # Common :update parameters
@@ -85,6 +90,8 @@ module AutoGenDoc
           #   info = error_class.send(error, :info)
           #   response info[:code], info[:msg]
           # end
+          response '401', 'Unauthorized. '
+          response '500', 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
         end
       end
     end

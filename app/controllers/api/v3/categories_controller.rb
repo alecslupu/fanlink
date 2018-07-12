@@ -99,7 +99,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
         if @category.valid?
             return_the @category
         else
-            render json: { errors: @category.errors.messages }, status: :unprocessable_entity
+            render json: { errors: [@category.errors.messages] }, status: :unprocessable_entity
         end
     end
 
@@ -134,7 +134,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
             broadcast(:category_updated, current_user, @category)
             return_the @category
         else
-            render json: { errors: @category.errors.messages }, status: :unprocessable_entity
+            render json: { errors: [@category.errors.messages] }, status: :unprocessable_entity
         end
     end
 

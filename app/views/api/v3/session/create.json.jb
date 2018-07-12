@@ -1,0 +1,3 @@
+Rails.cache.fetch ['v3', @person] do
+    render "api/v3/people/person_private", person: @person
+end

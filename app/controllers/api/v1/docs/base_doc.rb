@@ -336,8 +336,28 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     schema :Room => [
       {
         :id => { type: Integer },
+        :name => { type: String },
+        :description => { type: String },
+        :owned => { type: Boolean },
+        :picture_url => { type: String },
+        :public => { type: Boolean },
+        :members => [
+          :member => :Person
+        ]
       },
       desc: 'Room Object'
+    ]
+    schema :Session => [
+      {
+        :person => :PersonPrivate
+      },
+      desc: 'Session Object'
+    ]
+    schema :Tag => [
+      {
+        :name => { type: String },
+      },
+      desc: ''
     ]
     # schema :Template => [
     #   {
@@ -346,7 +366,54 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     #   desc: ''
     # ]
 
+# Crud Template
 
+  # components do
+
+  # end
+
+  # api :index, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
+
+  # api :create, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   form! data: {
+  #     :! => {
+  #     }
+  #   }
+  #   response_ref 200 => :
+  # end
+
+  # api :list, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
+
+  # api :show, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
+
+  # api :update, '' do
+  #   desc ''
+  #   form! data: {
+  #     :! => {
+
+  #     }
+  #   }
+  #   response_ref 200 => :
+  # end
+
+  # api :destroy, '' do
+  #   desc ''
+  #   response_ref 200 => :OK
+  # end
 
 
 
@@ -358,17 +425,8 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     resp :PasswordResets200 => ['HTTP/1.1 200 Ok', :json, data:{
 
     }]
-    resp :PeopleArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :people => [
-        :person => :Person
-      ]
-    }]
-    resp :PersonObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :person => :Person
-    }]
-    resp :PersonPrivateObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :person => :PersonPrivate
-    }]
+
+
     resp :PostCommentReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_comment_reports => [
         :post_comment_report => :PostCommentReport
@@ -410,6 +468,6 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     resp :Session200 => ['HTTP/1.1 200 Ok', :json, data:{
 
     }]
-    resp :Delete => ['HTTP/1.1 200 Ok']
+    resp :OK => ['HTTP/1.1 200 Ok']
   end
 end

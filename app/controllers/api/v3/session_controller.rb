@@ -84,6 +84,7 @@ class Api::V3::SessionController < Api::V3::BaseController
       return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
     end
     return_the @person
+    #render 'create', formats: 'json', handlers: 'jb'
   end
 
   #**

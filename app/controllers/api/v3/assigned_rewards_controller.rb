@@ -10,6 +10,12 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
   end
 
   def create
+    if params[:assign][:assigned_type] == 'ActionType'
+      action_type = ActionType.find(params[:assign][:assigned_id])
+      reward = Reward.find(params[:assign][:reward_id])
+      reward.series = action_type.internal_name unless reward.series.present?
+      reward.save
+    end
     @assigned = AssignedReward.create(assigned_reward_params)
     if @assigned.valid?
       broadcast(:assigned_reward_created, current_user, @assigned)

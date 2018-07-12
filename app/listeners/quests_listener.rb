@@ -33,4 +33,29 @@ class QuestsListener
       end
     end
   end
+
+  def self.step_created(user, step)
+    if step.unlocks.any?
+      step.unlocks.each do |s|
+        StepUnlock.create(step_id: Step.find(unlock).uuid, unlock_id: s.uuid)
+      end
+    end
+  end
+
+  def self.unlocks_updated(user, step)
+    if !step.unlocks.empty?
+        su = StepUnlock.find_or_initialize_by(unlock_id: step.uuid)
+        su.step_id = step.unlocks
+        if su.save
+          Rails.logger.tagged("Unlock Update") { Rails.logger.info "Updated unlock for Step: #{step.id} to be unlocked by #{step.unlocks}"}
+        else
+          Rails.logger.tagged("Unlock Update") { Rails.logger.error "Failed to update previous unlock for Step: #{step.id} to be unlocked by #{step.unlocks}"}
+        end
+      else
+        if StepUnlock.exists?(unlock_id: step.uuid)
+          StepUnlock.find_by(unlock_id: step.uuid).delete
+          Rails.logger.tagged("Unlock Update") { Rails.logger.error "Deleting unlock for Step: #{step.id}"}
+        end
+      end
+  end
 end

@@ -22,3 +22,8 @@ indent_size = 2
 
 [{*[Mm]akefile*,*.mak,*.mk,depend}]
 indent_style = tab
+
+[*.hbs]
+insert_final_newline = false
+indent_style = space
+indent_size = 2

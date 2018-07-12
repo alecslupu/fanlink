@@ -2,7 +2,8 @@ class ApiController < ApplicationController
   include FloadUp
   include Rails::Pagination
   include Wisper::Publisher
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  include JSONErrors
+  # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   set_current_tenant_through_filter
 
@@ -73,11 +74,11 @@ protected
   end
 
   def render_error(error)
-    render json: { errors: error.message }, status: :unprocessable_entity
+    render json: { errors: error }, status: :unprocessable_entity
   end
 
-  def render_not_found(error)
-    render json: { errors: { base: [ error.message ] } }, status: :not_found
+  def render_not_found
+    render json: { errors: { base: "Not found" } }, status: :not_found
   end
 
   def set_language

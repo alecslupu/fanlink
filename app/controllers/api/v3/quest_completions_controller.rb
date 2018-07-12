@@ -81,7 +81,7 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
     #
     #
     #*
-
+    #TODO: Use quest_id param
     def index
         @completions = apply_filters_for_user
         return_the @completions
@@ -107,6 +107,7 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
     # -H 'Cache-Control: no-cache'
     #
     #*
+
 
     def create
         step_id = params[:step_id]
@@ -143,7 +144,6 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
     # -H 'Cache-Control: no-cache'
     #
     #*
-
     def show
         @completion = QuestCompletion.find(params[:id])
         return_the @completion

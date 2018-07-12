@@ -33,7 +33,7 @@ gem "jbuilder", "~> 2.5"
 # gem "capistrano-rails", group: :development
 #
 
-group :production do
+group :production, :staging do
   gem 'newrelic_rpm'
 end
 
@@ -112,5 +112,5 @@ gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'chewy'
 gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-gem 'generators', github: 'ikkiuchi/generators'
 gem 'versionist'
+gem 'jbuilder_cache_multi'

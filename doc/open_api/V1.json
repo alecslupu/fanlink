@@ -171,11 +171,17 @@
           }
         },
         "responses": {
-          "200": {
-            "$ref": "#/components/responses/BadgeActionAwarded"
-          },
           "422": {
-            "description": "Action type invalid, cannot do that action again, blah blah blah"
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/BadgeActionsAwarded"
           },
           "429": {
             "description": "Not enough time since last submission of this action type or duplicate action type, person, identifier combination"
@@ -221,13 +227,24 @@
               "minimum": 1,
               "default": 25
             }
+          },
+          {
+            "name": "person_id",
+            "in": "query",
+            "required": false,
+            "description": "The id of the person whose badges you want.",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
-        "requestBody": {
-          "required": false,
-          "description": ""
-        },
         "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/BadgesArray"
           }
@@ -282,8 +299,17 @@
           }
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
-            "$ref": "#/components/responses/BlockObject"
+            "$ref": "#/components/responses/BlocksObject"
           }
         }
       }
@@ -316,8 +342,17 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
           "200": {
-            "$ref": "#/components/responses/Delete"
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         }
       }
@@ -360,13 +395,33 @@
               "minimum": 1,
               "default": 25
             }
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "required": false,
+            "description": "Only include events starting on or after date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "required": false,
+            "description": "Only include events starting on or before date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "schema": {
+              "type": "date"
+            }
           }
         ],
-        "requestBody": {
-          "required": false,
-          "description": ""
-        },
         "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/EventsArray"
           }
@@ -401,8 +456,1325 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/EventsObject"
+          }
+        }
+      }
+    },
+    "/followings": {
+      "get": {
+        "description": "This is used to get a list of someone's followers or followed. If followed_id parameter is supplied, it will get the follower's of that user. If follower_id is supplied, it will get the people that person is following. If nothing is supplied it will get the people the current user is following.",
+        "summary": "Get followers or followings of a user.",
+        "operationId": "Followings_index",
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "followed_id",
+            "in": "query",
+            "required": false,
+            "description": "Person to who's followers to get.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "follower_id",
+            "in": "query",
+            "required": false,
+            "description": "Id of person who is following the people in the list we are getting.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/FollowersArray"
+          }
+        }
+      },
+      "post": {
+        "description": "This is used to follow a person.",
+        "summary": "Follow a person.",
+        "operationId": "Followings_create",
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followed_id": {
+                    "type": "integer",
+                    "description": "Person to follow."
+                  }
+                },
+                "required": [
+                  "followed_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/FollowingObject"
+          }
+        }
+      }
+    },
+    "/followings/{id}": {
+      "delete": {
+        "description": "This is used to unfollow a person.",
+        "summary": "Unfollow a person.",
+        "operationId": "Followings_destroy",
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "200": {
+            "$ref": "#/components/responses/Delete"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/levels": {
+      "get": {
+        "description": "This gets a list of all levels available to be obtained.",
+        "summary": "Get all available levels.",
+        "operationId": "Levels_index",
+        "tags": [
+          "Levels"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/LevelsArray"
+          }
+        }
+      }
+    },
+    "/merchandise": {
+      "get": {
+        "description": " This gets a list of merchandise, in priority order.",
+        "summary": "Get available merchandise.",
+        "operationId": "Merchandise_index",
+        "tags": [
+          "Merchandise"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MerchandiseArray"
+          }
+        }
+      }
+    },
+    "/merchandise/{id}": {
+      "get": {
+        "description": "This gets a single piece of merchandise for a merchandise id.",
+        "summary": "Get a single piece of merchandise.",
+        "operationId": "Merchandise_show",
+        "tags": [
+          "Merchandise"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MerchandiseObject"
+          }
+        }
+      }
+    },
+    "/message_reports": {
+      "get": {
+        "summary": "Get list of messages reports (ADMIN).",
+        "operationId": "MessageReports_index",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "status_filter",
+            "in": "query",
+            "required": false,
+            "description": "If provided, valid values are \"message_hidden\", \"no_action_needed\", and \"pending\"",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessageReportsArray"
+          }
+        }
+      }
+    },
+    "/message_reports/{id}": {
+      "patch": {
+        "description": "This updates a message report. The only value that can be changed is the status.",
+        "summary": "Update a Message Report. (Admin)",
+        "operationId": "MessageReports_update",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message_report": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  }
+                },
+                "required": [
+                  "message_report"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        }
+      },
+      "put": {
+        "description": "This updates a message report. The only value that can be changed is the status.",
+        "summary": "Update a Message Report. (Admin)",
+        "operationId": "MessageReports_update",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message_report": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  }
+                },
+                "required": [
+                  "message_report"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "get": {
+        "description": " This gets a list of messages without regard to room (with possible exception of room filter).",
+        "summary": "Get a list of messages without regard to room (ADMIN ONLY).",
+        "operationId": "Messages_list",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "id_filter",
+            "in": "query",
+            "required": false,
+            "description": "Full match on Message id.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "person_filter",
+            "in": "query",
+            "required": false,
+            "description": "Full or partial match on person username.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "room_id_filter",
+            "in": "query",
+            "required": false,
+            "description": "Full match on Room id.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "body_filter",
+            "in": "query",
+            "required": false,
+            "description": "Full or partial match on message body.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reported_filter",
+            "in": "query",
+            "required": false,
+            "description": "Filter on whether the message has been reported.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesArray"
+          }
+        }
+      }
+    },
+    "/messages/{id}": {
+      "patch": {
+        "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
+        "summary": "Update a message",
+        "operationId": "Messages_update",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "properties": {
+                      "hidden": {
+                        "type": "boolean",
+                        "description": "Whether or not the item is hidden."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesObject"
+          }
+        }
+      },
+      "put": {
+        "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
+        "summary": "Update a message",
+        "operationId": "Messages_update",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "properties": {
+                      "hidden": {
+                        "type": "boolean",
+                        "description": "Whether or not the item is hidden."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesObject"
+          }
+        }
+      }
+    },
+    "/notification_device_ids": {
+      "post": {
+        "description": "This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have any number of device ids.",
+        "summary": "Add a new device id for a person.",
+        "operationId": "NotificationDeviceIds_create",
+        "tags": [
+          "NotificationDeviceIds"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "device_id": {
+                    "type": "string",
+                    "description": "ID of the device"
+                  }
+                },
+                "required": [
+                  "device_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "This deletes a single device id. Can only be called by the owner.",
+        "summary": "Delete a device id",
+        "operationId": "NotificationDeviceIds_destroy",
+        "tags": [
+          "NotificationDeviceIds"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/message_reports": {
+      "post": {
+        "description": "This reports a message that was posted to a public room.",
+        "summary": "Report a message in a public room.",
+        "operationId": "MessageReports_create",
+        "tags": [
+          "MessageReports"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "room_id!",
+            "in": "query",
+            "required": false,
+            "description": "Id of the room in which the message was created.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message_report": {
+                    "type": "object",
+                    "properties": {
+                      "message_id": {
+                        "type": "integer",
+                        "description": "The id of the message being reported."
+                      },
+                      "reason": {
+                        "type": "string",
+                        "description": "The reason given by the user for reporting the message."
+                      }
+                    },
+                    "required": [
+                      "message_id"
+                    ]
+                  }
+                },
+                "required": [
+                  "message_report"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/messages": {
+      "get": {
+        "description": "This gets a list of message for a from date, to date, with an optional limit. Messages are returned newest first, and the limit is applied to that ordering.",
+        "summary": "Get messages.",
+        "operationId": "Messages_index",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "room_id!",
+            "in": "query",
+            "required": false,
+            "description": "ID of the room the messages belongs to.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "required": false,
+            "description": "From date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "required": false,
+            "description": "To date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "schema": {
+              "type": "date"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Limit results to count of limit.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesArray"
+          }
+        }
+      },
+      "post": {
+        "description": "This creates a message in a room and posts it to Firebase as appropriate.",
+        "summary": "Create a message in a room.",
+        "operationId": "Messages_create",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "room_id!",
+            "in": "query",
+            "required": false,
+            "description": "ID of the room the message belongs to.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "properties": {
+                      "body": {
+                        "type": "string",
+                        "description": "The body of the message."
+                      },
+                      "picture": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                      },
+                      "audio": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Message audio, this should be `audio/aac`."
+                      },
+                      "mentions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "person_id": {
+                              "type": "integer",
+                              "description": "ID of user mentioned"
+                            },
+                            "location": {
+                              "type": "integer",
+                              "description": "The location in the message body that the mention is at."
+                            },
+                            "length": {
+                              "type": "integer",
+                              "description": "The length of the users name in the mention"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesObject"
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/messages/{id}": {
+      "get": {
+        "description": "This gets a single message for a message id. Only works for messages in private rooms. If the message author has been blocked by the current user, this will return 404 Not Found.",
+        "summary": "Get a single message.",
+        "operationId": "Messages_show",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "room_id!",
+            "in": "query",
+            "required": false,
+            "description": "ID of the room the message belongs to.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesObject"
+          }
+        }
+      },
+      "patch": {
+        "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
+        "summary": "Update a message",
+        "operationId": "Messages_update",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "properties": {
+                      "hidden": {
+                        "type": "boolean",
+                        "description": "Whether or not the item is hidden."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesObject"
+          }
+        }
+      },
+      "put": {
+        "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
+        "summary": "Update a message",
+        "operationId": "Messages_update",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "object",
+                    "properties": {
+                      "hidden": {
+                        "type": "boolean",
+                        "description": "Whether or not the item is hidden."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/MessagesObject"
+          }
+        }
+      },
+      "delete": {
+        "description": "This deletes a single message by marking as hidden. Can only be called by the creator.",
+        "summary": "Delete (hide) a single message.",
+        "operationId": "Messages_destroy",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v1+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "room_id!",
+            "in": "query",
+            "required": false,
+            "description": "ID of the room the message belongs to.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         }
       }
@@ -1246,9 +2618,52 @@
         "properties": {
           "id": {
             "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "owned": {
+            "type": "boolean"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "public": {
+            "type": "boolean"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "member": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
           }
         },
         "description": "Room Object"
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "person": {
+            "$ref": "#/components/schemas/PersonPrivate"
+          }
+        },
+        "description": "Session Object"
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
       }
     },
     "responses": {
@@ -1268,59 +2683,6 @@
           "application/json": {
             "schema": {
               "type": "object"
-            }
-          }
-        }
-      },
-      "PeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonPrivateObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivate"
-                }
-              }
             }
           }
         }
@@ -1468,7 +2830,7 @@
           }
         }
       },
-      "Delete": {
+      "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
       "BadgeActionsPending": {
@@ -1636,6 +2998,21 @@
           }
         }
       },
+      "FollowingObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+                }
+              }
+            }
+          }
+        }
+      },
       "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -1752,6 +3129,59 @@
               "properties": {
                 "message": {
                   "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
                 }
               }
             }
