@@ -13,6 +13,7 @@ class Person
             Rails.logger.warn("Message: #{e.fb_error_message}")
             return nil
           end
+          Rails.logger.error(results.inspect)
           if results && results["id"].present?
             person = Person.create(facebookid: results["id"],
                                 username: username,
