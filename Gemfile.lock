@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/ikkiuchi/generators.git
-  revision: 6284543784c5c8dc6fba697bf094a11158732724
-  specs:
-    generators (0.1.0)
-
-GIT
   remote: https://github.com/mark100net/administrate-field-paperclip.git
   revision: 00f63fbbb049b5fae37606c02d345069b5736a3b
   branch: blank-attachment-text
@@ -776,11 +770,11 @@ GEM
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
-    jb (0.5.0)
-      multi_json
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jbuilder_cache_multi (0.1.0)
+      jbuilder (>= 1.5.0, < 3)
     jko_api (0.2.7.0)
       rails (>= 4.2.7, <= 5.1.4)
       responders (= 2.4.0)
@@ -1065,12 +1059,11 @@ DEPENDENCIES
   fcm
   filterrific
   firebase!
-  generators!
   gettext (>= 3.0.2)
   gettext_i18n_rails
   google_places
-  jb
   jbuilder (~> 2.5)
+  jbuilder_cache_multi
   jko_api
   kaminari
   koala

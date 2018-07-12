@@ -141,6 +141,7 @@ Rails.application.routes.draw do
           get "recommended" => "recommended_posts#index"
           get "tags" => "tags#index"
         end
+        get "share" => "posts#share"
       end
 
       resources :quests, except: %i[ create index show update ] do

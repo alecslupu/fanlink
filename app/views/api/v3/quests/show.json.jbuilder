@@ -1,3 +1,5 @@
 json.quest do
-    json.partial! "quest", locals: { quest: @quest, lang: nil }
+    json.cache! ['v3', @quest], expires_in: 10.minutes do
+        json.partial! "quest", locals: { quest: @quest, lang: nil }
+    end
 end
