@@ -21,7 +21,6 @@ module AutoGenDoc
 
     def open_api_dry
       route_base = try(:controller_path) || instance_variable_get('@route_base')
-      puts instance_variable_get('@route_base')
       ::OpenApi::Generator.get_actions_by_route_base(route_base)&.each do |action|
         api_dry action do
           version = route_base.split('/')[1]
@@ -91,7 +90,6 @@ module AutoGenDoc
           #   info = error_class.send(error, :info)
           #   response info[:code], info[:msg]
           # end
-          puts "#{action_path}"
           if !%w[ share forgot_password ].include?(action) || !route_base.split('/').include?('session') || (route_base.split('/').include?('people') && action != 'create')
             response '401', 'Unauthorized. '
           end
