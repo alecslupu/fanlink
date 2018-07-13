@@ -218,15 +218,25 @@ class Api::V1::Docs::PeopleDoc < Api::V1::Docs::BaseDoc
   #   response_ref 200 => :
   # end
 
-  # api :create, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   form! data: {
-  #     :! => {
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
+  api :create, 'Create person.' do
+    desc 'This is used to create a new person.'
+    form! data: {
+      :product! => { type: String, desc: 'Internal name of the product.'},
+      :person! => {
+        :email! => {},
+        :facebook_auth_token! => {},
+        :name => {},
+        :username! => {},
+        :password! => {},
+        :picture => {},
+        :gender => {},
+        :birthdate => {},
+        :city => {},
+        :country_code => {}
+      }
+    }
+    response_ref 200 => :PersonObject
+  end
 
   # api :list, '' do
   #   desc ''
@@ -249,6 +259,18 @@ class Api::V1::Docs::PeopleDoc < Api::V1::Docs::BaseDoc
   #   }
   #   response_ref 200 => :
   # end
+
+  api :change_password, 'Change your password.' do
+    desc 'This is used to change the logged in user\'s password.'
+    path :id, Integer, desc: 'The person id.'
+    form! data: {
+      :person! => {
+        :current_password! => { type: String, desc: 'Current password.' },
+        :new_password => { type: String, desc: 'New password.' }
+      }
+    }
+    response_ref 200 => :OK
+  end
 
   # api :destroy, '' do
   #   desc ''

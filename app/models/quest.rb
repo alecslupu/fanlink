@@ -3,7 +3,7 @@ class Quest < ApplicationRecord
     include TranslationThings
     include Quest::PortalFilters
 
-    enum status: %i[ disabled enabled active deleted ]
+    enum status: %i[ in_development in_testing published deleted ]
 
     belongs_to :product
 

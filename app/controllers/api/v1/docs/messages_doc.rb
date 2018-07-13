@@ -13,15 +13,6 @@ class Api::V1::Docs::MessagesDoc < Api::V1::Docs::BaseDoc
     }]
   end
 
-  api :index, 'Get messages.' do
-    desc 'This gets a list of message for a from date, to date, with an optional limit. Messages are returned newest first, and the limit is applied to that ordering.'
-    query :room_id!, Integer, desc: 'ID of the room the messages belongs to.'
-    query :from_date, Date, desc: 'From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'
-    query :to_date, Date, desc: 'To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'
-    query :limit, Integer, desc: 'Limit results to count of limit.'
-    response_ref 200 => :MessagesArray
-  end
-
   api :create, 'Create a message in a room.' do
     desc 'This creates a message in a room and posts it to Firebase as appropriate.'
     query :room_id!, Integer, desc: 'ID of the room the message belongs to.'

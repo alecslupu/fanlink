@@ -268,8 +268,9 @@ class Api::V3::QuestsController < Api::V3::BaseController
     #*
 
     def update
-        @quest.update_attributes(quest_params)
-        return_the @quest
+        if @quest.update_attributes(quest_params)
+          return_the @quest
+        end
     end
 
     #**
