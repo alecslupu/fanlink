@@ -1,4 +1,5 @@
 class Api::V1::PeopleController < Api::V1::BaseController
+  #TODO: Lock down GET /people to admin only or something.
   prepend_before_action :logout, only: :create
 
   load_up_the Person, except: %i[ index ]

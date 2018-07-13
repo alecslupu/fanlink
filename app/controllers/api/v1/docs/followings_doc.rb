@@ -42,6 +42,7 @@ class Api::V1::Docs::FollowingsDoc < Api::V1::Docs::BaseDoc
   end
 
   api :index, 'Get followers or followings of a user.' do
+    need_auth :SessionCookie
     desc "This is used to get a list of someone's followers or followed. If followed_id parameter is supplied, it will get the follower's of that user. If follower_id is supplied, it will get the people that person is following. If nothing is supplied it will get the people the current user is following."
 
     query :followed_id, Integer, desc: "Person to who's followers to get."
@@ -52,6 +53,7 @@ class Api::V1::Docs::FollowingsDoc < Api::V1::Docs::BaseDoc
   end
 
   api :create, 'Follow a person.' do
+    need_auth :SessionCookie
     desc "This is used to follow a person."
     form! data: {
       :followed_id! => { type: Integer,  desc: 'Person to follow.' }
@@ -65,6 +67,6 @@ class Api::V1::Docs::FollowingsDoc < Api::V1::Docs::BaseDoc
 
   api :destroy, 'Unfollow a person.' do
     desc "This is used to unfollow a person."
-    response_ref 200 => :Delete
+    response_ref 200 => :OK
   end
 end

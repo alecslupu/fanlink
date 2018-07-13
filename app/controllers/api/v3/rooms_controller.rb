@@ -171,7 +171,7 @@ class Api::V3::RoomsController < Api::V3::BaseController
   end
 
 private
-
+  #TODO: Add description field for admins
   def room_params
     params.require(:room).permit(:name, :picture, member_ids: [])
   end

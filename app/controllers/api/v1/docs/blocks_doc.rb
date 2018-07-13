@@ -9,6 +9,7 @@ class Api::V1::Docs::BlocksDoc < Api::V1::Docs::BaseDoc
   end
 
   api :create, 'POST Block a person' do
+    need_auth :SessionCookie
     form! data: {
       :block! => {
         :blocked_id! => { type: Integer,  desc: 'Internal name of the action type.' }

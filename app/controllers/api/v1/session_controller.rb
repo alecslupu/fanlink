@@ -11,9 +11,9 @@ class Api::V1::SessionController < Api::V1::BaseController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This is used to see if your current session is valid. We return the
-  #   currently logged-in person if the session is still good and a 404
-  #   otherwise.
+    # This is used to see if your current session is valid. We return the
+    # currently logged-in person if the session is still good and a 404
+    # otherwise.
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok

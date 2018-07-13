@@ -1,21 +1,19 @@
 {
     "name": "fanlink",
-    "version": "2.1.0",
+    "version": "3.1.0",
     "private": true,
     "dependencies": {},
     "devDependencies": {
+        "api2html": "0.1.0",
         "auto-changelog": "^1.7.1",
+        "redoc-cli": "^0.5.0",
         "replace": "^1.0.0",
         "standard-version": "^4.4.0"
     },
     "scripts": {
         "fix-history": "replace 'https://flink/' 'https://bitbucket.org/' HISTORY.md",
-        "generate-changelog": "./node_modules/.bin/auto-changelog && replace 'https://flink/' 'https://bitbucket.org/' CHANGELOG.md"
-    },
-    "standard-version": {
-        "scripts": {
-            "postchangelog": "replace 'https://flink/' 'https://bitbucket.org/' CHANGELOG.md"
-        }
+        "generate-changelog": "./node_modules/.bin/auto-changelog && replace 'https://flink/' 'https://bitbucket.org/' CHANGELOG.md",
+        "todo": "leasot -x --reporter markdown 'app/controllers/api/**/*.rb' > TODO.md"
     },
     "auto-changelog": {
         "issueUrl": "https://totallyobsessed.atlassian.net/browse/{id}",

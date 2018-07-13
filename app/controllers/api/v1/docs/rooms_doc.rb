@@ -3,40 +3,38 @@ class Api::V1::Docs::RoomsDoc < Api::V1::Docs::BaseDoc
   route_base 'api/v1/rooms'
 
   components do
-    resp :MessagesArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :messages => [
-        :message => :Message
+    resp :RoomsObject => ['HTTP/1.1 200 Ok', :json, data:{
+      :room => :Room
+    }]
+    resp :RoomsArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :rooms => [
+        :room => :Room
       ]
     }]
-    resp :MessagesObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :message => :Message
-    }]
   end
 
-  api :messages, 'Get messages.' do
-    desc 'This gets a list of message for a from date, to date, with an optional limit. Messages are returned newest first, and the limit is applied to that ordering.'
-    query :room_id!, Integer, desc: 'ID of the room the messages belongs to.'
-    query :from_date, String, format: DateTime, desc: 'From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'
-    query :to_date, String, format: DateTime, desc: 'To date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.'
-    query :limit, Integer, desc: 'Limit results to count of limit.'
-    response_ref 200 => :MessagesArray
+  api :index, 'Get a list of rooms.' do
+    need_auth :SessionCookie
+    desc 'This gets a list of active rooms (public or private, as specified by the "private" parameter).'
+    query :private, Boolean, desc: 'Which type of room you want. With true you will get just active private rooms of which the current user is a member. With false (the default), you will get just all active public rooms.'
+    response_ref 200 => :RoomsArray
   end
 
-  # api :index, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
-
-  # api :create, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   form! data: {
-  #     :! => {
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
+  api :create, 'Create a private room.' do
+    need_auth :SessionCookie
+    desc 'The creates a private room and makes it active.'
+    form! data: {
+      :room! => {
+        :name! => { type: String, desc: 'The name of the room. Must be between 3 and 26 characters, inclusive.' },
+        :description => { type: String, desc: 'The description of the room.'},
+        :picture => { type: File, desc: 'Picture for the room.' },
+        :member_ids => [
+          :ids => { type: Integer, desc: 'Ids of persons to add as members. Users who are blocked by or who are blocking the current user will be silently excluded. You do not need to include the current user, who will be made a member automatically.'}
+        ]
+      }
+    }
+    response_ref 200 => :RoomsObject
+  end
 
   # api :list, '' do
   #   desc ''
@@ -50,19 +48,22 @@ class Api::V1::Docs::RoomsDoc < Api::V1::Docs::BaseDoc
   #   response_ref 200 => :
   # end
 
-  # api :update, '' do
-  #   desc ''
-  #   form! data: {
-  #     :! => {
+  api :update, 'Update a private room (name).' do
+    need_auth :SessionCookie
+    desc 'The updates a private room. Only the name can by updated, and only by the owner.'
+    form! data: {
+      :room! => {
+        :name! => { type: String, desc: 'The name of the room. Must be between 3 and 26 characters, inclusive.' },
+        :picture => { type: File, desc: 'Picture for the room.' },
+      }
+    }
+    response_ref 200 => :RoomsObject
+  end
 
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
-
-  # api :destroy, '' do
-  #   desc ''
-  #   response_ref 200 => :OK
-  # end
+  api :destroy, 'Delete a private room.' do
+    need_auth :SessionCookie
+    desc 'The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the status to deleted.'
+    response_ref 200 => :OK
+  end
 
 end

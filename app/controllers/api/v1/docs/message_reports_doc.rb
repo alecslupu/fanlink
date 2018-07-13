@@ -101,13 +101,15 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
   end
 
   api :index, 'Get list of messages reports (ADMIN).' do
+    need_auth :SessionCookie
     query :status_filter, String, desc: 'If provided, valid values are "message_hidden", "no_action_needed", and "pending"'
     response_ref 200 => :MessageReportsArray
   end
 
   api :create, 'Report a message in a public room.' do
+    need_auth :SessionCookie
     desc 'This reports a message that was posted to a public room.'
-    query :room_id!, Integer, desc: 'Id of the room in which the message was created.'
+    path! :room_id, Integer, desc: 'Id of the room in which the message was created.'
     form! data: {
       :message_report! => {
         :message_id! => { type: Integer,  desc: 'The id of the message being reported.' },
@@ -122,6 +124,7 @@ class Api::V1::Docs::MessageReportsDoc < Api::V1::Docs::BaseDoc
   # end
 
   api :update, 'Update a Message Report. (Admin)' do
+    need_auth :SessionCookie
     desc 'This updates a message report. The only value that can be changed is the status.'
     form! data: {
       :message_report! => {

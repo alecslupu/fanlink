@@ -3,6 +3,7 @@ require 'open_api'
 OpenApi::Config.tap do |c|
   c.file_output_path = 'doc/open_api'
   #c.doc_location = ['./app/controllers/api/v*/docs/**'],
+  c.rails_routes_file = 'config/routes.txt'
 
   c.open_api_docs = {
       V1: {
@@ -29,7 +30,7 @@ OpenApi::Config.tap do |c|
           securitySchemes: {
               SessionCookie: { type: 'apiKey', name: '_fanlink_session', in: 'cookie' },
           },
-          global_security: [{ SessionCookie: [] }],
+          # global_security: [{ SessionCookie: [] }],
       },
       V2: {
           base_doc_class: Api::V2::Docs::BaseDoc,

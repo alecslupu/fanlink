@@ -3,13 +3,18 @@ class Api::V1::Docs::RecommendedPostsDoc < Api::V1::Docs::BaseDoc
   route_base 'api/v1/recommended_posts'
 
   components do
+    resp :RecommendedPostsArray => ['HTTP/1.1 200 Ok', :json, data:{
+      :posts => [
+        :post => :Post
+      ]
+    }]
   end
 
-  # api :index, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+  api :index, 'Get recommended posts.' do
+    need_auth :SessionCookie
+    desc 'This is used to get a list of published posts flagged as "recommended".'
+    response_ref 200 => :RecommendedPostsArray
+  end
 
   # api :create, '' do
   #   desc ''

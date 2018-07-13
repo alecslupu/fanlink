@@ -14,7 +14,10 @@ class Api::V1::Docs::MerchandiseDoc < Api::V1::Docs::BaseDoc
   end
 
   api :index, 'Get available merchandise.' do
+    need_auth :SessionCookie
     desc ' This gets a list of merchandise, in priority order.'
+    query :page, Integer, desc: 'page, greater than 1', range: { ge: 1 }, dft: 1
+    query :per_page, Integer, desc: 'data count per page',  range: { ge: 1 }, dft: 25
     response_ref 200 => :MerchandiseArray
   end
 
@@ -23,7 +26,10 @@ class Api::V1::Docs::MerchandiseDoc < Api::V1::Docs::BaseDoc
   # end
 
   api :show, 'Get a single piece of merchandise.' do
+    need_auth :SessionCookie
     desc 'This gets a single piece of merchandise for a merchandise id.'
+    path! :id, Integer, desc: 'id'
+    response '404', 'Not Found. The database doesn\'t contain a record for that id.'
     response_ref 200 => :MerchandiseObject
   end
 

@@ -21,10 +21,10 @@ module AutoGenDoc
 
     def open_api_dry
       route_base = try(:controller_path) || instance_variable_get('@route_base')
+      puts instance_variable_get('@route_base')
       ::OpenApi::Generator.get_actions_by_route_base(route_base)&.each do |action|
         api_dry action do
           version = route_base.split('/')[1]
-
           model = Object.const_get(action_path.split('#').first.split('/').last[0..-2].camelize) rescue nil
           model.connection if !model.nil?
           #puts model.inspect
@@ -32,22 +32,23 @@ module AutoGenDoc
 
           header! 'Accept', String, desc: "application/vnd.api.#{version}+json"
 
-          if action.in?(%w[ index list ])
+          if %w[ index list ].include?(action)
             query :page, Integer, desc: 'page, greater than 1', range: { ge: 1 }, dft: 1
             query :per_page, Integer, desc: 'data count per page',  range: { ge: 1 }, dft: 25
             @type = Array[load_schema(model)]
+            response '404', 'Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header.'
           end
 
-          if action.in?(%w[ show destroy update ])
+          if %w[ show destroy update ].include?(action)
             path! :id, Integer, desc: 'id'
-            response '404', 'Not Found. The database doesn\'t contain a record for that id.'
+            response '404', 'Not Found. The database doesn\'t contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header.'
           end
 
-          if action.in?(%w[ create update show ])
+          if %w[ create update show ].include?(action)
             @type = load_schema(model)
           end
 
-          if action.in?(%w[ create update ])
+          if %w[ create update ].include?(action)
             response '422', 'Unprocessable Entity. Usually occurs when a field is invalid or missing.'
           end
 
@@ -90,7 +91,10 @@ module AutoGenDoc
           #   info = error_class.send(error, :info)
           #   response info[:code], info[:msg]
           # end
-          response '401', 'Unauthorized. '
+          puts "#{action_path}"
+          if !%w[ share forgot_password ].include?(action) || !route_base.split('/').include?('session') || (route_base.split('/').include?('people') && action != 'create')
+            response '401', 'Unauthorized. '
+          end
           response '500', 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
         end
       end

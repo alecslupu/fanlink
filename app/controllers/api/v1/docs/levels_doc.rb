@@ -10,6 +10,7 @@ class Api::V1::Docs::LevelsDoc < Api::V1::Docs::BaseDoc
     }]
   end
   api :index, 'Get all available levels.' do
+    need_auth :SessionCookie
     desc 'This gets a list of all levels available to be obtained.'
     response_ref 200 => :LevelsArray
   end

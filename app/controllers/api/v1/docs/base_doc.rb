@@ -1,6 +1,7 @@
 class Api::V1::Docs::BaseDoc < ApiDoc
   route_base 'api/v1/base'
   components do
+    api_key :SessionCookie, type: 'apiKey', field: '_fanlink_session', in: 'cookie'
     # schema :BadgeAction => [{}]
     schema :Badge => [
       {
@@ -289,6 +290,17 @@ class Api::V1::Docs::BaseDoc < ApiDoc
       },
       desc: 'Post Object'
     ]
+    schema :PostShare => [
+      {
+        :body => {  type: String },
+        :picture_url => { type: String },
+        :person => {
+          :username => { type: String },
+          :picture_url => { type: String}
+        }
+      },
+      desc: 'Shared Post Object'
+    ]
     schema :PostList => [
       {
         :id => { type: Integer },
@@ -316,6 +328,7 @@ class Api::V1::Docs::BaseDoc < ApiDoc
       },
       desc: 'List Post Object'
     ]
+    schema :RecommendedPeople => :Person
     schema :Relationship => [
       {
         :id => { type: Integer },
@@ -415,59 +428,12 @@ class Api::V1::Docs::BaseDoc < ApiDoc
   #   response_ref 200 => :OK
   # end
 
+  # resp :NotificationDeviceIds200 => ['HTTP/1.1 200 Ok', :json, data:{
 
+  # }]
+  # resp :PasswordResets200 => ['HTTP/1.1 200 Ok', :json, data:{
 
-
-
-    resp :NotificationDeviceIds200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :PasswordResets200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-
-
-    resp :PostCommentReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_comment_reports => [
-        :post_comment_report => :PostCommentReport
-      ]
-    }]
-    resp :PostCommentsArray => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :PostCommentsListArray => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :PostCommentsObject => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :PostReactions200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :PostReports200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :Posts200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :RecommendedPeople200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :RecommendedPosts200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :Relationships200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :RoomMemberships200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :Rooms200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
-    resp :Session200 => ['HTTP/1.1 200 Ok', :json, data:{
-
-    }]
+  # }]
     resp :OK => ['HTTP/1.1 200 Ok']
   end
 end

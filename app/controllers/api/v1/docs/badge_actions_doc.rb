@@ -7,9 +7,7 @@ class Api::V1::Docs::BadgeActionsDoc < Api::V1::Docs::BaseDoc
       :pending_badge => {
         :badge_action_count => {type: Integer},
         :badge => :Badge
-      }
-    }]
-    resp :BadgeActionsAwarded => ['HTTP/1.1 200 Ok', :json, data:{
+      },
       :badges_awarded => {
         :badge => :Badge
       }
@@ -17,6 +15,7 @@ class Api::V1::Docs::BadgeActionsDoc < Api::V1::Docs::BaseDoc
   end
 
   api :create, 'POST create a badge action' do
+    need_auth :SessionCookie
     form! data: {
           :badge_action! => {
             :action_type! => { type: String,  desc: 'Internal name of the action type.' },
@@ -24,7 +23,6 @@ class Api::V1::Docs::BadgeActionsDoc < Api::V1::Docs::BaseDoc
             }
           }
     response_ref 200 => :BadgeActionsPending
-    response_ref 200 => :BadgeActionsAwarded
     response '429', 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination'
   end
 end

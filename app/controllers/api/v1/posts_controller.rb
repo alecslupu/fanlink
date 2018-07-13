@@ -9,8 +9,8 @@ class Api::V1::PostsController < Api::V1::BaseController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This creates a post and puts in on the feed of the author's followers. It also sends a push notification
-  #   to poster's followers if the notify_followers flag is set to true.
+    # This creates a post and puts in on the feed of the author's followers. It also sends a push notification
+    # to poster's followers if the notify_followers flag is set to true.
   #
   # @apiParam (body) {Object} post
   #   The post object container for the post parameters.
@@ -130,14 +130,14 @@ class Api::V1::PostsController < Api::V1::BaseController
   # @apiVersion 1.0.0
   #
   # @apiDescription
-  #   This gets a list of posts for a from date, to date, with an optional
-  #   limit and person. Posts are returned newest first, and the limit is applied to that ordering.
-  #   Posts included are posts from the passed in person or, if none, the current
-  #   user along with those of the users the current user is following.
+    # This gets a list of posts for a from date, to date, with an optional
+    # limit and person. Posts are returned newest first, and the limit is applied to that ordering.
+    # Posts included are posts from the passed in person or, if none, the current
+    # user along with those of the users the current user is following.
   #
   # @apiParam (body) {Integer} [person_id]
-  #   The person whose posts to get. If not supplied, posts from current user plus those from
-  #   people the current user is following will be returned.
+    # The person whose posts to get. If not supplied, posts from current user plus those from
+    # people the current user is following will be returned.
   #
   # @apiParam (body) {String} from_date
   #   From date in format "YYYY-MM-DD". Note valid dates start from 2017-01-01.
