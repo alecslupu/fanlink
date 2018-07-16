@@ -64,6 +64,7 @@ group :test do
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
+  gem 'wisper-rspec', require: false
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
@@ -110,6 +111,7 @@ gem "unicode_utils"
 gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
+gem 'wisper-activerecord'
 gem 'chewy'
 gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 gem 'versionist'

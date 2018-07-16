@@ -241,15 +241,18 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
     #
     #*
 
-    # def destroy
-    #     quest_completion = QuestCompletion.find(params[:id])
-    #     if current_user.some_admin?
-    #       quest_completion.deleted!
-    #       head :ok
-    #     else
-    #       render_not_found
-    #     end
-    # end
+    def destroy
+        quest_completion = QuestCompletion.find(params[:id])
+        if current_user.some_admin?
+          if quest_completion.update(deleted: true)
+            head :ok
+          else
+            render_error("Failed to delete the quest completion.")
+          end
+        else
+          render_not_found
+        end
+    end
 
 private
     def completion_params

@@ -220,9 +220,11 @@ class Api::V3::EventsController < Api::V3::BaseController
 
     def destroy
         if current_user.some_admin?
-            @event.deleted = true
-            @event.save
+          if @event.update(deleted: true)
             head :ok
+          else
+            render_error("Failed to delete the event.")
+          end
         else
           render_not_found
         end

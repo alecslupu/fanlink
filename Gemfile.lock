@@ -1029,6 +1029,10 @@ GEM
     wisper-activejob (1.0.0)
       activejob (>= 4.0.0)
       wisper
+    wisper-activerecord (1.0.0)
+      activerecord (>= 3.0.0)
+      wisper (~> 2.0)
+    wisper-rspec (1.1.0)
     yard (0.9.14)
 
 PLATFORMS
@@ -1100,6 +1104,8 @@ DEPENDENCIES
   webmock
   wisper (= 2.0.0)
   wisper-activejob
+  wisper-activerecord
+  wisper-rspec
   zero-rails_openapi!
 
 RUBY VERSION

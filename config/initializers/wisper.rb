@@ -4,6 +4,7 @@ Rails.application.config.to_prepare do
     # config.broadcaster :async,   Wisper::Broadcasters::LoggerBroadcaster.new(Rails.logger,  Wisper::Broadcasters::SidekiqBroadcaster.new) # if using async
   end
   Wisper.clear if Rails.env.development?
+  Wisper::ActiveRecord.extend_all
   Wisper.subscribe(QuestsListener)
   Wisper.subscribe(RewardsListener)
   Wisper.subscribe(LevelsListener)

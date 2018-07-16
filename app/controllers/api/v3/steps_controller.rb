@@ -222,9 +222,11 @@ class Api::V3::StepsController < Api::V3::BaseController
 
     def destroy
         if current_user.some_admin?
-          @step.deleted = true
-          @step.save
-          head :ok
+          if @step.update(deleted: true)
+            head :ok
+          else
+            render_error("Failed to delete the step.")
+          end
         else
           render_not_found
         end
