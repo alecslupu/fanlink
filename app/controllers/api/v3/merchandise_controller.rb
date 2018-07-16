@@ -183,9 +183,11 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
 
     def destroy
         if current_user.some_admin?
-            @merchandise.deleted = true
-            @merchandise.save
+          if @merchandise.update(deleted: true)
             head :ok
+          else
+            render_error("Failed to delete the merchandise.")
+          end
         else
           render_not_found
         end

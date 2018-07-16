@@ -285,8 +285,11 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
     def destroy
         beacon = ProductBeacon.for_id_or_pid(params[:id])
         if current_user.some_admin?
-          beacon.deleted = true
-          head :ok
+          if beacon.update(deleted: true)
+            head :ok
+          else
+            render_error("Failed to delete the beacon.")
+          end
         else
           render_not_found
         end

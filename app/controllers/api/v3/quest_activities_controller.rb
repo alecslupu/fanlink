@@ -270,9 +270,11 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
 
     def destroy
         if current_user.some_admin?
-            @quest_activity.deleted = true
-            @quest_activity.save
-            head :ok
+            if @quest_activity.update(deleted: true)
+              head :ok
+            else
+              render_error("Failed to delete the quest activity.")
+            end
         else
           render_not_found
         end

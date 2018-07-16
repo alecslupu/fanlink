@@ -36,7 +36,16 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
   end
 
   def destroy
-    @assigned = AssignedReward.find(params[:id])
+    if current_user.some_admin?
+      @assigned = AssignedReward.find(params[:id])
+      if @assigned.update(deleted: true)
+        head :ok
+      else
+        render_error("Failed to delete the assigned reward.")
+      end
+    else
+      render_not_found
+    end
   end
 
 private

@@ -219,12 +219,14 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
 
     def destroy
         if current_user.some_admin?
-            @activity_type.deleted = true
-            @activity_type.save
+          if @activity_type.update(deleted: true)
             head :ok
           else
-            render_not_found
+            render_error("Failed to delete the activity type.")
           end
+        else
+          render_not_found
+        end
     end
 private
     def type_params

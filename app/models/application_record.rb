@@ -1,4 +1,5 @@
 class ApplicationRecord < ActiveRecord::Base
+  include Wisper::Publisher
   self.abstract_class = true
 
   DATETIME_FORMAT = "%m/%d/%Y %H:%M:%S"

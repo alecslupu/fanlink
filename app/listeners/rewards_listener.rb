@@ -16,4 +16,31 @@ class RewardsListener
       end
     end
   end
+
+  def self.create_quest_completed_successful(completed)
+    if completed.quest.rewards.present?
+      completed.quest.rewards.each do |reward|
+        reward = PersonReward.find_or_initialize_by(person_id: completed.person_id, reward_id: reward.id, source: "quest_reward")
+        if reward.valid?
+          reward.save
+          Rails.logger.tagged("[Rewards Quest Completed") { Rails.logger.info "Awarded reward for Quest: #{completed.quest_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+        else
+          Rails.logger.tagged("[Rewards Quest Completed") { Rails.logger.error "Failed to save awarded reward for Quest: #{completed.quest_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+        end
+      end
+    end
+  end
+  def self.create_step_completed_successful(completed)
+    if completed.step.rewards.present?
+      completed.step.rewards.each do |reward|
+        reward = PersonReward.find_or_initialize_by(person_id: completed.person_id, reward_id: reward.id, source: "step_reward")
+        if reward.valid?
+          reward.save
+          Rails.logger.tagged("[Rewards Step Completed") { Rails.logger.info "Awarded reward for Quest: #{completed.quest_id} Step: #{completed.step_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+        else
+          Rails.logger.tagged("[Rewards Step Completed") { Rails.logger.error "Failed to save awarded reward for Quest: #{completed.quest_id} Step: #{completed.step_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+        end
+      end
+    end
+  end
 end

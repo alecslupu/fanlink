@@ -29,8 +29,11 @@ class Api::V3::RewardsController < Api::V3::BaseController
     def destroy
         reward = Reward.find(params[:id])
         if current_user.some_admin?
-          reward.deleted!
-          head :ok
+          if reward.update(deleted: true)
+            head :ok
+          else
+            render_error("Failed to delete the reward.")
+          end
         else
           render_not_found
         end
