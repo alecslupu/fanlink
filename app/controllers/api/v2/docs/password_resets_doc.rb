@@ -17,7 +17,7 @@ class Api::V2::Docs::PasswordResetsDoc < Api::V2::Docs::BaseDoc
       :product! => { type: String, desc: 'Internal name of product.' },
       :email_or_username! => { type: String, desc: 'The person\'s email or username.' }
     }
-    response 200, 'HTTP/1.1 200 Ok', :json, data: { message: 'Reset password instructions have been sent to your email, if it exists in our system' }
+    response 200, 'HTTP/1.1 200 Ok', :json, data: { message: { type: String, dft: 'Reset password instructions have been sent to your email, if it exists in our system.'} }
   end
 
   # api :list, '' do

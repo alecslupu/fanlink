@@ -7,7 +7,7 @@ class Api::V1::Docs::BaseDoc < ApiDoc
       {
         :id => {type: Integer},
         :name => {type: String},
-        :internal_name => {type: String},
+        :internal_name => {type: String, x-faker: "helpers.slugify(random.words)"},
         :description => {type: String},
         :picture_url => {type: String},
         :action_requirement => {type: Integer},
