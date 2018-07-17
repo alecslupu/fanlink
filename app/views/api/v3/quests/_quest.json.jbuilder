@@ -5,7 +5,7 @@ json.event_id quest.event_id.to_s
 json.name quest.name(@lang)
 json.internal_name quest.internal_name
 json.description quest.description(@lang)
-json.picture_url quest.picture_url
+json.picture_url quest.picture_optimal_url
 json.picture_width quest.picture.width
 json.picture_height quest.picture.height
 json.status quest.status.to_s
