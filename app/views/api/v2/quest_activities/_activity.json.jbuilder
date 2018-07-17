@@ -4,7 +4,7 @@ if !activity.deleted
     json.step_id activity.step_id
     json.description activity.description
     json.hint activity.hint
-    json.picture_url activity.picture_url
+    json.picture_url activity.picture_optimal_url
     json.picture_width activity.picture.width
     json.picture_height activity.picture.height
     if defined?(activity.quest_completions) && !activity.quest_completions.empty?

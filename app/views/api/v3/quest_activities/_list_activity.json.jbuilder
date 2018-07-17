@@ -3,7 +3,7 @@ json.quest_id activity.quest_id.to_s
 json.description activity.description
 json.deleted activity.deleted
 json.hint activity.hint
-json.picture_url activity.picture_url
+json.picture_url activity.picture_optimal_url
 json.picture_width activity.picture.width
 json.picture_height activity.picture.height
 json.post activity.post
