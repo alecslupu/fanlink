@@ -13,6 +13,8 @@ class Step < ApplicationRecord
 
   has_many :rewards, through: :assigned_rewards
 
+  has_many :step_unlocks, primary_key: :uuid, foreign_key: :step_id
+
   enum initial_status: %i[ locked unlocked ]
 
   accepts_nested_attributes_for :quest_activities

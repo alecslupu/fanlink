@@ -47,7 +47,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "awesome_print"
   gem "better_errors"
   gem "binding_of_caller"
   gem "daemons"
@@ -57,6 +56,7 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "lol_dba"
   gem "seed_dump"
+  gem "awesome_print", require:"ap"
 end
 
 group :test do

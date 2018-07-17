@@ -5,18 +5,24 @@ class QuestsListener
   def self.completion_created(user, completion)
         puts "Completion detected."
         step = Step.find(completion.step_id)
-        puts "#{step.inspect}"
-        if step.quest_completions.count === step.quest_activities.count
+        if step.quest_completions.count >= step.quest_activities.count
           Rails.logger.tagged("[Step Completed]") { Rails.logger.info "Step #{step.id} for #{user.id} completed."} unless Rails.env.production?
             completed = StepCompleted.find_or_initialize_by({quest_id: step.quest_id, step_id: completion.step_id, person_id: user.id})
             completed.status = StepCompleted.statuses[:completed]
             if completed.valid?
               self.step_completed(user, completed)
               completed.save
-              if step.unlocks.present?
+              if step.step_unlocks.present?
                 Rails.logger.tagged("[Completion Created]") { Rails.logger.info "Step has unlocks. Generating completed statuses for unlocks"} unless Rails.env.production?
-                  step.unlocks.each do |unlock|
-                      unlocked = StepCompleted.create({quest_id: step.quest_id, step_id: unlock, person_id: user.id, status: StepCompleted.statuses[:unlocked]})
+                  step.step_unlocks.each do |unlock|
+                      unlocked = StepCompleted.find_or_initialize_by({quest_id: step.quest_id, step_id: unlock.unlock.id, person_id: user.id})
+                      unlocked.status = StepCompleted.statuses[:unlocked]
+                      if unlocked.valid?
+                        unlocked.save
+                        unlock.step.touch
+                      else
+                        Rails.logger.tagged("[Completion Created]") { Rails.logger.error "Step: #{unlock.step.id} failed to save for User: #{user.id}"} unless Rails.env.production?
+                      end
                   end
               end
           end

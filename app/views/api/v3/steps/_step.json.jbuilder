@@ -12,11 +12,11 @@ if !step.deleted
     else
         json.display "Step #{step.id.to_s}"
     end
-    if step.quest_completions.exists?
-        if step.quest_completions.count == step.quest_activities.count
+    if step.quest_completions.present?
+        if step.quest_completions.count >= step.quest_activities.count
             json.status "completed"
         end
-    elsif !step.step_completed.blank?
+    elsif step.step_completed.present?
         json.status step.step_completed.status
     else
         json.status step.initial_status
