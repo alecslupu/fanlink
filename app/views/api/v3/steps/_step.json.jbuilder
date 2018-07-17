@@ -1,5 +1,5 @@
 if !step.deleted
-    unlocks_at = Time.now.utc.iso8601
+    unlocks_at = nil
     json.id step.id.to_s
     json.quest_id step.quest_id.to_s
     json.uuid step.uuid
@@ -13,13 +13,14 @@ if !step.deleted
     else
         json.display "Step #{step.id.to_s}"
     end
+    #json.completed_present step.step_completed.present?
     if step.quest_completions.present?
         if step.quest_completions.count >= step.quest_activities.count
             json.status "completed"
         end
     elsif step.step_completed.present?
         json.status step.step_completed.status
-        unlocks_at = step.step_completed.created_at.to_time + step.delay_unlock.minute
+        unlocks_at = step.step_completed.created_at.to_datetime.utc + step.delay_unlock.minute
     else
         json.status step.initial_status
     end
@@ -28,6 +29,7 @@ if !step.deleted
     else
         json.activities nil
     end
+    unlocks_at ||= Time.now.to_s
     json.delay_unlock step.delay_unlock || 0
-    json.unlocks_at unlocks_at.to_time(:utc).iso8601
+    json.unlocks_at unlocks_at.to_datetime().utc.iso8601
 end
