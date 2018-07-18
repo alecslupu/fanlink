@@ -8,6 +8,19 @@ class Api::V2::Docs::MessageReportsDoc < Api::V2::Docs::BaseDoc
         :message_report => :MessageReportJson
       ]
     }]
+
+    body! :MessageReportCreateForm, :form, data: {
+      :message_report! => {
+        :message_id! => { type: Integer,  desc: 'The id of the message being reported.' },
+        :reason => { type: String, desc: 'The reason given by the user for reporting the message.'}
+      }
+    }
+
+    body! :MessageReportUpdateForm, :form, data: {
+      :message_report! => {
+        :status! => { type: String,  desc: 'The new status. Valid statuses are "message_hidden", "no_action_needed", and "pending".' }
+      }
+    }
   end
 
   api :index, 'Get list of messages reports (ADMIN).' do
@@ -20,12 +33,7 @@ class Api::V2::Docs::MessageReportsDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This reports a message that was posted to a public room.'
     path! :room_id, Integer, desc: 'Id of the room in which the message was created.'
-    form! data: {
-      :message_report! => {
-        :message_id! => { type: Integer,  desc: 'The id of the message being reported.' },
-        :reason => { type: String, desc: 'The reason given by the user for reporting the message.'}
-      }
-    }
+    body_ref :MessageReportCreateForm
     response_ref 200 => :OK
   end
 
@@ -36,11 +44,7 @@ class Api::V2::Docs::MessageReportsDoc < Api::V2::Docs::BaseDoc
   api :update, 'Update a Message Report. (Admin)' do
     need_auth :SessionCookie
     desc 'This updates a message report. The only value that can be changed is the status.'
-    form! data: {
-      :message_report! => {
-        :status! => { type: String,  desc: 'The new status. Valid statuses are "message_hidden", "no_action_needed", and "pending".' }
-      }
-    }
+    body_ref :MessageReportUpdateForm
     response_ref 200 => :OK
   end
 

@@ -16,6 +16,17 @@ class Api::V2::Docs::PostCommentsDoc < Api::V2::Docs::BaseDoc
     resp :PostCommentsObject => ['HTTP/1.1 200 Ok', :json, data:{
       :post_comment => :PostCommentJson
     }]
+
+    body! :PostCommentCreateForm, :form, data: {
+      :post_comment! => {
+        :body! => { type: String, desc: 'The body of the comment.' },
+      },
+      :mentions => [
+        :person_id! => { type: Integer, desc: 'The id of the person mentioned.' },
+        :location! => { type: Integer, desc: 'Where the mention text starts in the comment.'},
+        :length! => { type: Integer, desc: 'The length of the mention text.'}
+      ]
+    }
   end
 
   api :index, 'Get the comments on a post.' do
@@ -29,16 +40,7 @@ class Api::V2::Docs::PostCommentsDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This creates a post comment. It is automatically attributed to the logged in user.'
     path! :post_id, Integer, desc: 'Post ID'
-    form! data: {
-      :post_comment! => {
-        :body! => { type: String, desc: 'The body of the comment.' },
-      },
-      :mentions => [
-        :person_id! => { type: Integer, desc: 'The id of the person mentioned.' },
-        :location! => { type: Integer, desc: 'Where the mention text starts in the comment.'},
-        :length! => { type: Integer, desc: 'The length of the mention text.'}
-      ]
-    }
+    body_ref :PostCommentCreateForm
     response_ref 200 => :PostCommentsObject
   end
 

@@ -1,50 +1,70 @@
 class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
-  # doc_tag name: 'BadgeActions', desc: "Badge Actions"
-  # route_base 'api/v2/badge_actions'
-  # components do
+doc_tag name: 'Products', desc: "Products"
+  route_base 'api/v2/products'
+  components do
+    resp :ProductObject  => ['HTTP/1.1 200 Ok', :json, data:{
+      :product => :ProductJson
+    }]
 
-  # end
+    resp :ProductArray  => ['HTTP/1.1 200 Ok', :json, data:{
+      :products => [
+        :product => :ProductJson
+      ]
+    }]
 
-  # api :index, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+    resp :ProductSelect => ['HTTP/1.1 200 Ok', :json, data: {
+      :products => [
+        :name => { type: String },
+        :internal_name => { type: String },
+        :id => { type: Integer }
+      ]
+    }]
 
-  # api :create, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   form! data: {
-  #     :! => {
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
+    body! :ProductCreateForm, :form, data: {
+      :product! => {
+        :name! => { type: String, desc: 'Product display name.' },
+        :internal_name! => { type: String, desc: 'Product internal name.' },
+        :enabled => { type: Boolean, desc: 'Whether or not the product is enabled.', dft: false }
+      }
+    }
 
-  # api :list, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+    body! :ProductUpdateForm, :form, data: {
+      :product! => {
+        :name => { type: String, desc: 'Product display name.' },
+        :internal_name => { type: String, desc: 'Product internal name.' },
+        :enabled => { type: Boolean, desc: 'Whether or not the product is enabled.', dft: false }
+      }
+    }
+  end
 
-  # api :show, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+  api :index, 'Get Products' do
+    need_auth :SessionCookie
+    desc 'Get all products (Super Admin Only)'
+    response_ref 200 => :ProductArray
+  end
 
-  # api :update, '' do
-  #   desc ''
-  #   form! data: {
-  #     :! => {
+  api :select, 'Product Select list' do
+    need_auth :SessionCookie
+    desc 'Returns a select list for products (Super Admin Only)'
+    response_ref 200 => :ProductSelect
+  end
+  api :create, 'Create Product' do
+    need_auth :SessionCookie
+    desc 'Create a product (Super Admin Only)'
+    body_ref :ProductCreateForm
+    response_ref 200 => :ProductObject
+  end
 
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
+  api :show, 'Get Product' do
+    need_auth :SessionCookie
+    desc 'Get a product for provided ID. (Super Admin Only)'
+    response_ref 200 => :ProductObject
+  end
 
-  # api :destroy, '' do
-  #   desc ''
-  #   response_ref 200 => :OK
-  # end
+  api :update, 'Update Product' do
+    need_auth :SessionCookie
+    desc 'Update a product (Super Admin Only)'
+    body_ref :ProductUpdateForm
+    response_ref 200 => :ProductObject
+  end
 end

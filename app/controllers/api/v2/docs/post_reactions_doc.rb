@@ -11,6 +11,17 @@ class Api::V2::Docs::PostReactionsDoc < Api::V2::Docs::BaseDoc
     resp :PostReactionsObject => ['HTTP/1.1 200 Ok', :json, data:{
       :post_reaction => :PostReactionJson
     }]
+
+    body! :PostReactionCreateForm, :form, data: {
+      :post_reaction! => {
+        :reaction! => { type: String, desc: 'The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.'}
+      }
+    }
+    body! :PostReactionUpdateForm, :form, data: {
+      :post_reaction! => {
+        :reaction => { type: String, desc: 'The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.'}
+      }
+    }
   end
 
   # api :index, '' do
@@ -23,11 +34,7 @@ class Api::V2::Docs::PostReactionsDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This reacts to a post.'
     path! :post_id, Integer, desc: 'The id of the post to which you are reacting.'
-    form! data: {
-      :post_reaction! => {
-        :reaction! => { type: String, desc: 'The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.'}
-      }
-    }
+    body_ref :PostReactionCreateForm
     response_ref 200 => :PostReactionsObject
   end
 
@@ -47,11 +54,7 @@ class Api::V2::Docs::PostReactionsDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This updates a reaction on a post.'
     path! :post_id, Integer, desc: 'The id of the post to which you are reacting.'
-    form! data: {
-      :post_reaction! => {
-        :reaction! => { type: String, desc: 'The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive.'}
-      }
-    }
+    body_ref :PostReactionUpdateForm
     response_ref 200 => :PostReactionsObject
   end
 

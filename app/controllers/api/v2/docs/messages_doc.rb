@@ -11,6 +11,25 @@ class Api::V2::Docs::MessagesDoc < Api::V2::Docs::BaseDoc
     resp :MessagesObject => ['HTTP/1.1 200 Ok', :json, data:{
       :message => :MessageJson
     }]
+
+    body! :MessageCreateForm, :form, data: {
+      :message! => {
+        :body => { type: String,  desc: 'The body of the message.' },
+        :picture => { type: File, desc: 'Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.' },
+        :audio => { type: File, desc: 'Message audio, this should be `audio/aac`.' },
+        :mentions => [
+          :person_id => { type: Integer, desc: 'ID of user mentioned' },
+          :location => { type: Integer, desc: 'The location in the message body that the mention is at.' },
+          :length => { type: Integer, desc: 'The length of the users name in the mention' }
+        ]
+      }
+    }
+
+    body! :MessageUpdateForm, :form, data: {
+      :message! => {
+        :hidden => { type: Boolean,  desc: 'Whether or not the item is hidden.' }
+      }
+    }
   end
 
   api :index, 'Get messages.' do
@@ -27,18 +46,7 @@ class Api::V2::Docs::MessagesDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This creates a message in a room and posts it to Firebase as appropriate.'
     path! :room_id, Integer, desc: 'ID of the room the message belongs to.'
-    form! data: {
-      :message! => {
-        :body => { type: String,  desc: 'The body of the message.' },
-        :picture => { type: File, desc: 'Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`.' },
-        :audio => { type: File, desc: 'Message audio, this should be `audio/aac`.' },
-        :mentions => [
-          :person_id => { type: Integer, desc: 'ID of user mentioned' },
-          :location => { type: Integer, desc: 'The location in the message body that the mention is at.' },
-          :length => { type: Integer, desc: 'The length of the users name in the mention' }
-        ]
-      }
-    }
+    body_ref :MessageCreateForm
     response_ref 200 => :MessagesObject
   end
 
@@ -64,11 +72,7 @@ class Api::V2::Docs::MessagesDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.'
     path! :room_id, Integer, desc: 'ID of the room the message belongs to.'
-    form! data: {
-      :message! => {
-        :hidden => { type: Boolean,  desc: 'Whether or not the item is hidden.' }
-      }
-    }
+    body_ref :MessageUpdateForm
     response_ref 200 => :MessagesObject
   end
 

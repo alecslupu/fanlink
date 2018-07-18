@@ -14,6 +14,42 @@ class Api::V2::Docs::PeopleDoc < Api::V2::Docs::BaseDoc
     resp :PersonPrivateObject => ['HTTP/1.1 200 Ok', :json, data:{
       :person => :PersonPrivateJson
     }]
+    #TODO: Copy this form and remove biography field.
+    body! :PersonCreateForm, :form, data: {
+      :product! => { type: String, desc: 'Internal name of the product.' },
+      :person! => {
+        :email! => { type: String, format: 'email', desc: 'Email address (required unless using FB auth token).' },
+        :facebook_auth_token! => { type: String, desc: 'Auth token from Facebook' },
+        :name => { type: String, desc: "User's name." },
+        :username! => { type: String, desc: 'Username. This needs to be unique within product scope.' },
+        :password! => { type: String, format: 'password', desc: 'User\s password.' },
+        :picture => { type: File, desc: 'Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.' },
+        :gender => { type: String, desc: 'Gender. Valid options: unspecified (default), male, female.' },
+        :birthdate => { type: String, formate: 'date', desc: 'Birth dateTo date in format "YYYY-MM-DD".' },
+        :biography => { type: String, desc: 'A paragraph a user can submit about themselves.' },
+        :city => { type: String, desc: 'Person\'s supplied city.' },
+        :country_code => { type: String, desc: 'Alpha2 code (two letters) from ISO 3166 list.' },
+        :recommended => { type: Boolean, desc: 'Sets the post to recommended. Available only to admins and product accounts.' }
+      }
+    }
+
+    body! :PersonUpdateForm, :form, data: {
+      :product! => { type: String, desc: 'Internal name of the product.' },
+      :person! => {
+        :email => { type: String, format: 'email', desc: 'Email address (required unless using FB auth token).' },
+        :facebook_auth_token => { type: String, desc: 'Auth token from Facebook' },
+        :name => { type: String, desc: "User's name." },
+        :username => { type: String, desc: 'Username. This needs to be unique within product scope.' },
+        :password => { type: String, format: 'password', desc: 'User\s password.' },
+        :picture => { type: File, desc: 'Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.' },
+        :gender => { type: String, desc: 'Gender. Valid options: unspecified (default), male, female.' },
+        :birthdate => { type: String, formate: 'date', desc: 'Birth dateTo date in format "YYYY-MM-DD".' },
+        :biography => { type: String, desc: 'A paragraph a user can submit about themselves.' },
+        :city => { type: String, desc: 'Person\'s supplied city.' },
+        :country_code => { type: String, desc: 'Alpha2 code (two letters) from ISO 3166 list.' },
+        :recommended => { type: Boolean, desc: 'Sets the post to recommended. Available only to admins and product accounts.' }
+      }
+    }
   end
 
   api :index, 'Get a list of people.' do
@@ -26,21 +62,7 @@ class Api::V2::Docs::PeopleDoc < Api::V2::Docs::BaseDoc
 
   api :create, 'Create person.' do
     desc 'This is used to create a new person.\nIf the account creation is successful, they will be logged in and we will send an onboarding email (if we have an email address for them).'
-    form! data: {
-      :product! => { type: String, desc: 'Internal name of the product.' },
-      :person! => {
-        :email! => { type: String, format: 'email', desc: 'Email address (required unless using FB auth token).' },
-        :facebook_auth_token! => { type: String, desc: 'Auth token from Facebook' },
-        :name => { type: String, desc: "User's name." },
-        :username! => { type: String, desc: 'Username. This needs to be unique within product scope.' },
-        :password! => { type: String, format: 'password', desc: 'User\s password.' },
-        :picture => { type: File, desc: 'Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.' },
-        :gender => { type: String, desc: 'Gender. Valid options: unspecified (default), male, female.' },
-        :birthdate => { type: String, formate: 'date', desc: 'Birth dateTo date in format "YYYY-MM-DD".' },
-        :city => { type: String, desc: 'Person\'s supplied city.' },
-        :country_code => { type: String, desc: 'Alpha2 code (two letters) from ISO 3166 list.' }
-      }
-    }
+    body_ref :PersonCreateForm
     response_ref 200 => :PersonObject
   end
 
@@ -61,19 +83,7 @@ class Api::V2::Docs::PeopleDoc < Api::V2::Docs::BaseDoc
     need_auth :SessionCookie
     desc 'This is used to update a person. Anything not mentioned is left alone.'
     path! :id, Integer, desc: 'ID'
-    form! data: {
-      :recommended => { type: Boolean, desc: 'Whether this is a recommended persion. (Admin or product account only)' },
-      :person! => {
-        :email => { type: String, format: 'email', desc: 'Email address (required unless using FB auth token).' },
-        :name => { type: String, desc: "User's name." },
-        :username => { type: String, desc: 'Username. This needs to be unique within product scope.' },
-        :picture => { type: File, desc: 'Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`.' },
-        :gender => { type: String, desc: 'Gender. Valid options: unspecified (default), male, female.' },
-        :birthdate => { type: String, formate: 'date', desc: 'Birth dateTo date in format "YYYY-MM-DD".' },
-        :city => { type: String, desc: 'Person\'s supplied city.' },
-        :country_code => { type: String, desc: 'Alpha2 code (two letters) from ISO 3166 list.' }
-      },
-    }
+    body_ref :PersonUpdateForm
     response_ref 200 => :PersonObject
   end
 

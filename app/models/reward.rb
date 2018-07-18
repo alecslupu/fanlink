@@ -11,6 +11,7 @@ class Reward < ApplicationRecord
     belongs_to :coupon, :foreign_key => "reward_type_id", :foreign_type => "reward_type", optional: true
     has_many :assigned_rewards
     has_many :person_rewards
+    has_many :reward_progresses
 
     has_many :quests, through: :assigned_rewards, source: :assigned, source_type: 'Quest'
     has_many :steps, through: :assigned_rewards, source: :assigned, source_type: 'Step'
