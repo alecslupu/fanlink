@@ -107,7 +107,7 @@ protected
         end
       end
     end
-    product = current_user.try(:product) || Product.find_by(internal_name: params[:product]) if product.nil?
+    product = (current_user.present? && current_user.try(:product)) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else
@@ -141,7 +141,7 @@ protected
   end
 
   def unset_app
-    if current_user
+    if current_user.present?
       current_user.app = false
     end
   end
