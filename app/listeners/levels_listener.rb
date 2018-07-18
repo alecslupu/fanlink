@@ -9,5 +9,6 @@ class LevelsListener
     @progress.total ||= 0
     @progress.total += payload["points"]
     @progress.save
+    user.touch
   end
 end
