@@ -1,5 +1,4 @@
 class LevelsListener
-  include Wisper::Publisher
   include RealTimeHelpers
 
   def self.award_points(user, payload)
