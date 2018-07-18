@@ -121,7 +121,9 @@ protected
   end
 
   def set_person
-    Person.current_user = current_user
+    if current_user.present?
+      Person.current_user = current_user
+    end
   end
 
   def unset_person
@@ -130,12 +132,12 @@ protected
 
   def set_app
     if request.headers['X-App'].present?
-      current_user.app = request.headers['X-App']
-    elsif params[:app].present?
-      current_user.app = params[:app]
-    else
-      if current_user
-        current_user.app = "mobile"
+      if current_user.present?
+        current_user.app = request.headers['X-App']
+      elsif params[:app].present?
+          current_user.app = params[:app]
+      else
+          current_user.app = "mobile"
       end
     end
   end
