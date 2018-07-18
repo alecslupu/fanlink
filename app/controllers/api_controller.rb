@@ -95,7 +95,7 @@ protected
 
   def set_product
     product = nil
-    if current_user
+    if current_user.present?
       if current_user.super_admin?
         if request.headers['X-Current-Product'].present?
           product = Product.find_by(internal_name: request.headers['X-Current-Product'])
