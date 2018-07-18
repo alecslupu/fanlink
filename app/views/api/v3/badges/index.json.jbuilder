@@ -1,5 +1,6 @@
 json.badges do
   json.array! @badges.each do |b|
+    reward_progress = b.reward.reward_progresses.where(person_id: current_user.id).first
     if b.reward.series
         json.badge_action_count RewardProgress.where(person_id: current_user.id, series: b.reward.series).sum(:total)
     else
@@ -10,7 +11,6 @@ json.badges do
         end
     end
     json.badge do
-        reward_progress = b.reward.reward_progresses.where(person_id: current_user.id).first
         json.partial! "api/v3/badges/badge", locals: { badge: b, lang: nil }
         json.reward b.reward
         if !@badges_awarded.nil?
