@@ -5,19 +5,19 @@ class Api::V2::Docs::PostsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :PostsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :posts => [
-        :post => :Post
+        :post => :PostJson
       ]
     }]
     resp :PostsListsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :posts => [
-        :post => :PostList
+        :post => :PostListJson
       ]
     }]
     resp :PostsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post => :Post
+      :post => :PostJson
     }]
     resp :PostsShareObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post => :PostShare
+      :post => :PostShareJson
     }]
   end
 

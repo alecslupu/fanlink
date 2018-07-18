@@ -5,14 +5,14 @@ class Api::V2::Docs::PeopleDoc < Api::V2::Docs::BaseDoc
   components do
     resp :PeopleArray => ['HTTP/1.1 200 Ok', :json, data:{
       :people => [
-        :person => :Person
+        :person => :PersonJson
       ]
     }]
     resp :PersonObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :person => :Person
+      :person => :PersonJson
     }]
     resp :PersonPrivateObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :person => :PersonPrivate
+      :person => :PersonPrivateJson
     }]
   end
 

@@ -5,16 +5,16 @@ class Api::V2::Docs::PostCommentsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :PostCommentsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_comments => [
-        :post_comment => :PostComment
+        :post_comment => :PostCommentJson
       ]
     }]
     resp :PostCommentsListArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_comments => [
-        :post_comment => :PostCommentList
+        :post_comment => :PostCommentListJson
       ]
     }]
     resp :PostCommentsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_comment => :PostComment
+      :post_comment => :PostCommentJson
     }]
   end
 

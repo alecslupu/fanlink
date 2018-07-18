@@ -3,7 +3,20 @@ class Api::V2::Docs::BaseDoc < ApiDoc
   components do
     api_key :SessionCookie, type: 'apiKey', field: '_fanlink_session', in: 'cookie'
     # schema :BadgeAction => [{}]
-    schema :Badge => [
+    schema :ActivityTypeJson => [
+      {
+        :id => { type: Integer },
+        :atype => { type: String },
+        :activity_id => { type: Integer },
+        :value => {
+          :id => { type: String },
+          :description => { type: String }
+        }
+      },
+
+      desc: "Activity Type Object"
+    ]
+    schema :BadgeJson => [
       {
         :id => {type: Integer},
         :name => {type: String},
@@ -13,17 +26,33 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :action_requirement => {type: Integer},
         :point_value => {type: Integer}
       },
-      desc: 'Badge Object'
+
+      desc: 'Badge Response'
     ]
-    schema :Block => [
+    schema :BlockJson => [
       {
         :id => { type: Integer },
         :blocker_id => { type: Integer },
         :blocked_id => { type: Integer }
       },
+
       desc: "Block object"
     ]
-    schema :Event => [
+    schema :CategoryJson => [
+      {
+        :id => { type: Integer },
+        :name => { type: String },
+        :product_id => { type: Integer },
+        :color => { type: String },
+        :role => { type: String },
+        :posts => [
+          :post => :Post
+        ]
+      },
+
+      desc: ''
+    ]
+    schema :EventJson => [
       {
         :id => { type: Integer },
         :name => { type: String },
@@ -33,17 +62,19 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :ticket_url => { type: String },
         :place_identifier => { type: String }
       },
-      desc: 'Event Object'
+
+      desc: 'Event Response'
     ]
-    schema :Following => [
+    schema :FollowingJson => [
       {
         :id => { type: Integer },
         :follower => :Person,
         :followed => :Person
       },
-      desc: 'Following Object'
+
+      desc: 'Following Response'
     ]
-    schema :Level => [
+    schema :LevelJson => [
       {
         :id => { type: Integer },
         :name => { type: String },
@@ -52,9 +83,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :points => { type: Integer },
         :picture_url => { type: String }
       },
-      desc: 'Level Object'
+
+      desc: 'Level Response'
     ]
-    schema :Merchandise => [
+    schema :MerchandiseJson => [
       {
         :id => { type: Integer },
         :name => { type: String },
@@ -65,9 +97,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :available => { type: Boolean },
         :priority => { type: Integer}
       },
-      desc: 'Merchandise Object'
+
+      desc: 'Merchandise Response'
     ]
-    schema :MessageReport => [
+    schema :MessageReportJson => [
       {
         :id => { type: Integer },
         :created_at => { type: DateTime },
@@ -78,18 +111,20 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :reason => { type: String },
         :status => { type: String }
       },
-      desc: 'Message Report Object'
+
+      desc: 'Message Report Response'
     ]
-    schema :Mention => [
+    schema :MentionJson => [
       {
         :id => { type: Integer },
         :person_id => { type: Integer },
         :location => { type: Integer },
         :length => { type: Integer }
       },
-      desc: 'Notification Type ID Object'
+
+      desc: 'Notification Type ID Response'
     ]
-    schema :Message => [
+    schema :MessageJson => [
       {
         :id => { type: Integer },
         :create_time => { type: DateTime },
@@ -101,9 +136,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :person => :Person,
         :mentions => :Mention
       },
-      desc: 'Message Object'
+
+      desc: 'Message Response'
     ]
-    schema :MessageList => [
+    schema :MessageListJson => [
       {
         :id => { type: Integer },
         :person_id => { type: Integer },
@@ -114,15 +150,17 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :created_at => { type: DateTime},
         :updated_at => { type: DateTime},
       },
-      desc: 'Message Object'
+
+      desc: 'Message Response'
     ]
-    schema :NotificationDeviceId => [
+    schema :NotificationDeviceIdJson => [
       {
         :id => { type: Integer },
       },
-      desc: 'Notification Type ID Object'
+
+      desc: 'Notification Type ID Response'
     ]
-    schema :Person => [
+    schema :PersonJson => [
       {
         :id => { type: Integer },
         :username => { type: String },
@@ -154,9 +192,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :created_at => { type: DateTime},
         :updated_at => { type: DateTime}
       },
-      desc: 'Person Object'
+
+      desc: 'Person Response'
     ]
-    schema :PersonPrivate => [
+    schema :PersonPrivateJson => [
       {
         :id => { type: Integer },
         :username => { type: String },
@@ -194,9 +233,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
           :internal_name => { type: String }
         }
       },
-      desc: 'Private Person Object'
+
+      desc: 'Private Person Response'
     ]
-    schema :PostCommentReport => [
+    schema :PostCommentReportJson => [
       {
         :id => { type: Integer },
         :created_at => { type: DateTime },
@@ -206,9 +246,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :reason => { type: String },
         :status => { type: String }
       },
-      desc: 'Post Comment Report Object'
+
+      desc: 'Post Comment Report Response'
     ]
-    schema :PostComment => [
+    schema :PostCommentJson => [
       {
         :id => { type: Integer },
         :create_time => { type: DateTime },
@@ -218,9 +259,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         ],
         :person => :Person
       },
-      desc: 'Post Comment Object'
+
+      desc: 'Post Comment Response'
     ]
-    schema :PostCommentList => [
+    schema :PostCommentListJson => [
       {
         :id => { type: Integer },
         :person_id => { type: Integer },
@@ -233,18 +275,20 @@ class Api::V2::Docs::BaseDoc < ApiDoc
           :mention => :Mention
         ]
       },
-      desc: 'Post Comment Object'
+
+      desc: 'Post Comment Response'
     ]
-    schema :PostReaction => [
+    schema :PostReactionJson => [
       {
         :id => { type: Integer },
         :post_id => { type: Integer },
         :person_id => { type: Integer },
         :reaction => { type: String }
       },
-      desc: 'Post Reaction Object'
+
+      desc: 'Post Reaction Response'
     ]
-    schema :PostReport => [
+    schema :PostReportJson => [
       {
         :id => { type: Integer },
         :created_at => { type: DateTime },
@@ -254,9 +298,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :reason =>  { type: String },
         :status => { type: String }
       },
-      desc: 'Post Report Object'
+
+      desc: 'Post Report Response'
     ]
-    schema :Post => [
+    schema :PostJson => [
       {
         :id => { type: Integer },
         :create_time => { type: DateTime },
@@ -288,9 +333,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         ]
 
       },
-      desc: 'Post Object'
+
+      desc: 'Post Response'
     ]
-    schema :PostShare => [
+    schema :PostShareJson => [
       {
         :body => {  type: String },
         :picture_url => { type: String },
@@ -299,9 +345,10 @@ class Api::V2::Docs::BaseDoc < ApiDoc
           :picture_url => { type: String}
         }
       },
-      desc: 'Shared Post Object'
+
+      desc: 'Shared Post Response'
     ]
-    schema :PostList => [
+    schema :PostListJson => [
       {
         :id => { type: Integer },
         :person => :Person,
@@ -326,10 +373,89 @@ class Api::V2::Docs::BaseDoc < ApiDoc
           :tag => :Tag
         ]
       },
-      desc: 'List Post Object'
+
+      desc: 'List Post Response'
     ]
-    schema :RecommendedPeople => :Person
-    schema :Relationship => [
+    schema :ProductBeaconJson => [
+      {
+        :id => { type: Integer },
+        :product_id => { type: Integer },
+        :beacon_pid => { type: String },
+        :uuid => { type: String },
+        :lower => { type: Integer },
+        :upper => { type: Integer },
+        :created_at => { type: String, format: "date-time"}
+      },
+
+      desc: 'Product Beacon Response'
+    ]
+    schema :ProductJson => [
+      {
+        :id => { type: Integer },
+        :name => { type: String },
+        :internal_name => { type: String },
+        :enabled => { type: Boolean }
+      },
+
+      desc: 'Product Response'
+    ]
+    schema :QuestActivityJson => [
+      {
+        :id => { type: Integer },
+        :quest_id => { type: Integer },
+        :step_id => { type: Integer },
+        :description => { type: String },
+        :hint => { type: String },
+        :picture_url => { type: String },
+        :picture_width => { type: Integer },
+        :picture_height => { type: Integer },
+        :completed => { type: Boolean },
+        :requirements => [:ActivityType],
+        :deleted => { type: Boolean },
+        :step => :Step,
+        :created_at => { type: String, format: "date-time" }
+      },
+      desc: 'Quest Activity Response'
+    ]
+    # schema :QuestCompleted => [
+    #   {
+    #     :id => { type: Integer },
+    #   },
+
+    #   desc: ''
+    # ]
+    schema :QuestCompletionJson => [
+      {
+        :id => { type: Integer },
+        :person_id => { type: Integer},
+        :step_id => { type: Integer },
+        :activity_id => { type: Integer },
+        :status => { type: String },
+        :create_time => { type: String, format: 'date-time'}
+      },
+      desc: ''
+    ]
+    schema :QuestJson => [
+      {
+        :id => { type: Integer },
+        :product_id => { type: Integer },
+        :event_id => { type: Integer, nullable: true },
+        :name => { type: String },
+        :internal_name => { type: String},
+        :description => { type: String },
+        :picture_url => { type: String },
+        :picture_width => { type: Integer },
+        :picture_height => { type: Integer},
+        :status => { type: String },
+        :starts_at => { type: String, format: 'date-time'},
+        :ends_at => { type: String, format: 'date-time'},
+        :create_time => { type: String, format: 'date-time'},
+        :steps => [:Step]
+      },
+      desc: 'Step Response'
+    ]
+    schema :RecommendedPeopleJson => :Person
+    schema :RelationshipJson => [
       {
         :id => { type: Integer },
         :status => { type: String },
@@ -338,15 +464,17 @@ class Api::V2::Docs::BaseDoc < ApiDoc
         :requested_by => :Person,
         :requested_to => :Person
       },
-      desc: 'Relationship Object'
+
+      desc: 'Relationship Response'
     ]
-    schema :RoomMembership => [
+    schema :RoomMembershipJson => [
       {
         :id => { type: Integer },
       },
-      desc: 'Room Membership Object'
+
+      desc: 'Room Membership Response'
     ]
-    schema :Room => [
+    schema :RoomJson => [
       {
         :id => { type: Integer },
         :name => { type: String },
@@ -358,24 +486,41 @@ class Api::V2::Docs::BaseDoc < ApiDoc
           :member => :Person
         ]
       },
-      desc: 'Room Object'
+
+      desc: 'Room Response'
     ]
-    schema :Session => [
+    schema :SessionJson => [
       {
         :person => :PersonPrivate
       },
-      desc: 'Session Object'
+      desc: 'Session Response'
     ]
-    schema :Tag => [
+    schema :StepJson => [
+      {
+        :id => { type: Integer },
+        :quest_id => { type: Integer },
+        :unlocks => [Integer],
+        :display => { type: String },
+        :status => { type: String },
+        :quest_activities => [:QuestActivity],
+        :delay_unlock => { type: Integer },
+        :unlocks_at => { type: String, format: 'date-time' }
+      },
+
+      desc: 'Step Response'
+    ]
+    schema :TagJson => [
       {
         :name => { type: String },
       },
-      desc: ''
+
+      desc: 'Tag Response'
     ]
-    # schema :Template => [
+    # schema :TemplateJson => [
     #   {
     #     :id => { type: Integer },
     #   },
+    #
     #   desc: ''
     # ]
 
@@ -386,12 +531,14 @@ class Api::V2::Docs::BaseDoc < ApiDoc
   # end
 
   # api :index, '' do
+  # need_auth :SessionCookie
   #   desc ''
   #   query :, , desc: ''
   #   response_ref 200 => :
   # end
 
   # api :create, '' do
+  # need_auth :SessionCookie
   #   desc ''
   #   query :, , desc: ''
   #   form! data: {
@@ -402,18 +549,21 @@ class Api::V2::Docs::BaseDoc < ApiDoc
   # end
 
   # api :list, '' do
+  # need_auth :SessionCookie
   #   desc ''
   #   query :, , desc: ''
   #   response_ref 200 => :
   # end
 
   # api :show, '' do
+  # need_auth :SessionCookie
   #   desc ''
   #   query :, , desc: ''
   #   response_ref 200 => :
   # end
 
   # api :update, '' do
+  # need_auth :SessionCookie
   #   desc ''
   #   form! data: {
   #     :! => {
@@ -424,6 +574,7 @@ class Api::V2::Docs::BaseDoc < ApiDoc
   # end
 
   # api :destroy, '' do
+  # need_auth :SessionCookie
   #   desc ''
   #   response_ref 200 => :OK
   # end

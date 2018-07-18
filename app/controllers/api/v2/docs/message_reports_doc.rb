@@ -5,7 +5,7 @@ class Api::V2::Docs::MessageReportsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :MessageReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :message_reports => [
-        :message_report => :MessageReport
+        :message_report => :MessageReportJson
       ]
     }]
   end

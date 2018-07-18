@@ -28,6 +28,10 @@
   ],
   "tags": [
     {
+      "name": "ActivityTypes",
+      "description": "Activity Types"
+    },
+    {
       "name": "BadgeActions",
       "description": "Badge Actions"
     },
@@ -41,6 +45,10 @@
     {
       "name": "Blocks",
       "description": "Block a person"
+    },
+    {
+      "name": "Categories",
+      "description": "Categories"
     },
     {
       "name": "Events",
@@ -124,6 +132,194 @@
     }
   ],
   "paths": {
+    "/activities/{activity_id}/types": {
+      "get": {
+        "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
+        "summary": "Get Activity types",
+        "operationId": "ActivityTypes_index",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "description": "Activity ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Creates an activity type to be used with the quest activity.",
+        "summary": "Create Type for Activity",
+        "operationId": "ActivityTypes_create",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "description": "Quest Activity ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TypeBodyCreate"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/activity_types/select": {
+      "get": {
+        "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
+        "summary": "Get Activity types",
+        "operationId": "ActivityTypes_index",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "description": "Activity ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/activity_types/{id}": {
+      "get": {
+        "description": "Gets activity type by ID",
+        "summary": "Get an activity type",
+        "operationId": "ActivityTypes_show",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "description": "Updates an activity type",
+        "summary": "Update a type",
+        "operationId": "ActivityTypes_update",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TypeBodyUpdate"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates an activity type",
+        "summary": "Update a type",
+        "operationId": "ActivityTypes_update",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TypeBodyUpdate"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Deletes the activity type for given ID, removing it from the Quest Activities.",
+        "summary": "Delete a type from an activity",
+        "operationId": "ActivityTypes_destroy",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
     "/badge_actions": {
       "post": {
         "summary": "POST create a badge action",
@@ -143,36 +339,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "badge_action": {
-                    "type": "object",
-                    "properties": {
-                      "action_type": {
-                        "type": "string",
-                        "description": "Internal name of the action type."
-                      },
-                      "indentifier": {
-                        "type": "string",
-                        "description": "The indentifier for this badge action."
-                      }
-                    },
-                    "required": [
-                      "action_type"
-                    ]
-                  }
-                },
-                "required": [
-                  "badge_action"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/BadgeActionCreate"
         },
         "responses": {
           "422": {
@@ -292,32 +459,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "block": {
-                    "type": "object",
-                    "properties": {
-                      "blocked_id": {
-                        "type": "integer",
-                        "description": "Internal name of the action type."
-                      }
-                    },
-                    "required": [
-                      "blocked_id"
-                    ]
-                  }
-                },
-                "required": [
-                  "block"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/BlockCreate"
         },
         "responses": {
           "422": {
@@ -385,6 +527,283 @@
         }
       }
     },
+    "/categories": {
+      "get": {
+        "description": "Returns categories for product based on current users role.",
+        "summary": "Get Categories for Product",
+        "operationId": "Categories_index",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "description": "Internal name of product to get categories for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Creates a category for current user's associated product.",
+        "summary": "Create a category",
+        "operationId": "Categories_create",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryJson"
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "description": "Gets a category by ID.",
+        "summary": "Get a category",
+        "operationId": "Categories_show",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "description": "Updates a category with the passed in ID.",
+        "summary": "Update a category",
+        "operationId": "Categories_update",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates a category with the passed in ID.",
+        "summary": "Update a category",
+        "operationId": "Categories_update",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
     "/events": {
       "get": {
         "summary": "Get all events for a product",
@@ -431,7 +850,7 @@
             "description": "Only include events starting on or after date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date"
             }
           },
           {
@@ -441,7 +860,7 @@
             "description": "Only include events starting on or before date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date"
             }
           }
         ],
@@ -457,6 +876,49 @@
           },
           "200": {
             "$ref": "#/components/responses/EventsArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Creates an event for current user's product",
+        "summary": "Create an event",
+        "operationId": "Events_create",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventForm"
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
           }
         },
         "security": [
@@ -509,6 +971,165 @@
             "$ref": "#/components/responses/EventsObject"
           }
         }
+      },
+      "patch": {
+        "description": "Updates the event for given ID.",
+        "summary": "Update an event.",
+        "operationId": "Events_update",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates the event for given ID.",
+        "summary": "Update an event.",
+        "operationId": "Events_update",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Soft deletes an event by setting deleted to true.",
+        "summary": "Delete an event.",
+        "operationId": "Events_destroy",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
       }
     },
     "/followings": {
@@ -611,24 +1232,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "followed_id": {
-                    "type": "integer",
-                    "description": "Person to follow."
-                  }
-                },
-                "required": [
-                  "followed_id"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/FollowingForm"
         },
         "responses": {
           "422": {
@@ -763,7 +1367,7 @@
     },
     "/merchandise": {
       "get": {
-        "description": " This gets a list of merchandise, in priority order.",
+        "description": "This gets a list of merchandise, in priority order.",
         "summary": "Get available merchandise.",
         "operationId": "Merchandise_index",
         "tags": [
@@ -805,6 +1409,29 @@
             ]
           }
         ]
+      },
+      "post": {
+        "description": "Create a merchandise item for the user's current product",
+        "summary": "Create a merchandise item",
+        "operationId": "Merchandise_create",
+        "tags": [
+          "Merchandise"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/MerchandiseForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MerchandiseObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
       }
     },
     "/merchandise/{id}": {
@@ -832,6 +1459,26 @@
           },
           "200": {
             "$ref": "#/components/responses/MerchandiseObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Soft deletes a merchandise item.",
+        "summary": "Delete a merchandise item.",
+        "operationId": "Merchandise_destroy",
+        "tags": [
+          "Merchandise"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Delete"
           }
         },
         "security": [
@@ -5577,7 +6224,33 @@
       }
     },
     "schemas": {
-      "Badge": {
+      "ActivityTypeJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "atype": {
+            "type": "string"
+          },
+          "activity_id": {
+            "type": "integer"
+          },
+          "value": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": "Activity Type Object"
+      },
+      "BadgeJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5602,9 +6275,9 @@
             "type": "integer"
           }
         },
-        "description": "Badge Object"
+        "description": "Badge Response"
       },
-      "Block": {
+      "BlockJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5619,7 +6292,38 @@
         },
         "description": "Block object"
       },
-      "Event": {
+      "CategoryJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "color": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5646,9 +6350,9 @@
             "type": "string"
           }
         },
-        "description": "Event Object"
+        "description": "Event Response"
       },
-      "Following": {
+      "FollowingJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5661,9 +6365,9 @@
             "$ref": "#/components/schemas/Person"
           }
         },
-        "description": "Following Object"
+        "description": "Following Response"
       },
-      "Level": {
+      "LevelJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5685,9 +6389,9 @@
             "type": "string"
           }
         },
-        "description": "Level Object"
+        "description": "Level Response"
       },
-      "Merchandise": {
+      "MerchandiseJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5715,9 +6419,9 @@
             "type": "integer"
           }
         },
-        "description": "Merchandise Object"
+        "description": "Merchandise Response"
       },
-      "MessageReport": {
+      "MessageReportJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5747,9 +6451,9 @@
             "type": "string"
           }
         },
-        "description": "Message Report Object"
+        "description": "Message Report Response"
       },
-      "Mention": {
+      "MentionJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5765,9 +6469,9 @@
             "type": "integer"
           }
         },
-        "description": "Notification Type ID Object"
+        "description": "Notification Type ID Response"
       },
-      "Message": {
+      "MessageJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5799,9 +6503,9 @@
             "$ref": "#/components/schemas/Mention"
           }
         },
-        "description": "Message Object"
+        "description": "Message Response"
       },
-      "MessageList": {
+      "MessageListJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5831,18 +6535,18 @@
             "format": "date-time"
           }
         },
-        "description": "Message Object"
+        "description": "Message Response"
       },
-      "NotificationDeviceId": {
+      "NotificationDeviceIdJson": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer"
           }
         },
-        "description": "Notification Type ID Object"
+        "description": "Notification Type ID Response"
       },
-      "Person": {
+      "PersonJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5937,9 +6641,9 @@
             "format": "date-time"
           }
         },
-        "description": "Person Object"
+        "description": "Person Response"
       },
-      "PersonPrivate": {
+      "PersonPrivateJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6051,9 +6755,9 @@
             }
           }
         },
-        "description": "Private Person Object"
+        "description": "Private Person Response"
       },
-      "PostCommentReport": {
+      "PostCommentReportJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6079,9 +6783,9 @@
             "type": "string"
           }
         },
-        "description": "Post Comment Report Object"
+        "description": "Post Comment Report Response"
       },
-      "PostComment": {
+      "PostCommentJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6109,9 +6813,9 @@
             "$ref": "#/components/schemas/Person"
           }
         },
-        "description": "Post Comment Object"
+        "description": "Post Comment Response"
       },
-      "PostCommentList": {
+      "PostCommentListJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6149,9 +6853,9 @@
             }
           }
         },
-        "description": "Post Comment Object"
+        "description": "Post Comment Response"
       },
-      "PostReaction": {
+      "PostReactionJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6167,9 +6871,9 @@
             "type": "string"
           }
         },
-        "description": "Post Reaction Object"
+        "description": "Post Reaction Response"
       },
-      "PostReport": {
+      "PostReportJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6195,9 +6899,9 @@
             "type": "string"
           }
         },
-        "description": "Post Report Object"
+        "description": "Post Report Response"
       },
-      "Post": {
+      "PostJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6289,9 +6993,9 @@
             }
           }
         },
-        "description": "Post Object"
+        "description": "Post Response"
       },
-      "PostShare": {
+      "PostShareJson": {
         "type": "object",
         "properties": {
           "body": {
@@ -6312,9 +7016,9 @@
             }
           }
         },
-        "description": "Shared Post Object"
+        "description": "Shared Post Response"
       },
-      "PostList": {
+      "PostListJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6387,12 +7091,185 @@
             }
           }
         },
-        "description": "List Post Object"
+        "description": "List Post Response"
       },
-      "RecommendedPeople": {
+      "ProductBeaconJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "beacon_pid": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "lower": {
+            "type": "integer"
+          },
+          "upper": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Product Beacon Response"
+      },
+      "ProductJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "description": "Product Response"
+      },
+      "QuestActivityJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "quest_id": {
+            "type": "integer"
+          },
+          "step_id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "hint": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "picture_width": {
+            "type": "integer"
+          },
+          "picture_height": {
+            "type": "integer"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "requirements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActivityType"
+            }
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "step": {
+            "$ref": "#/components/schemas/Step"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Quest Activity Response"
+      },
+      "QuestCompletionJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "step_id": {
+            "type": "integer"
+          },
+          "activity_id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "QuestJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "picture_width": {
+            "type": "integer"
+          },
+          "picture_height": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Step"
+            }
+          }
+        },
+        "description": "Step Response"
+      },
+      "RecommendedPeopleJson": {
         "$ref": "#/components/schemas/Person"
       },
-      "Relationship": {
+      "RelationshipJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6416,18 +7293,18 @@
             "$ref": "#/components/schemas/Person"
           }
         },
-        "description": "Relationship Object"
+        "description": "Relationship Response"
       },
-      "RoomMembership": {
+      "RoomMembershipJson": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer"
           }
         },
-        "description": "Room Membership Object"
+        "description": "Room Membership Response"
       },
-      "Room": {
+      "RoomJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6460,22 +7337,424 @@
             }
           }
         },
-        "description": "Room Object"
+        "description": "Room Response"
       },
-      "Session": {
+      "SessionJson": {
         "type": "object",
         "properties": {
           "person": {
             "$ref": "#/components/schemas/PersonPrivate"
           }
         },
-        "description": "Session Object"
+        "description": "Session Response"
       },
-      "Tag": {
+      "StepJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "quest_id": {
+            "type": "integer"
+          },
+          "unlocks": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "display": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "quest_activities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestActivity"
+            }
+          },
+          "delay_unlock": {
+            "type": "integer"
+          },
+          "unlocks_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Step Response"
+      },
+      "TagJson": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
+          }
+        },
+        "description": "Tag Response"
+      }
+    },
+    "requestBodies": {
+      "TypeBodyCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "atype",
+                    "value"
+                  ]
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "TypeBodyUpdate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "available",
+                    "priority"
+                  ]
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeActionCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
           }
         }
       }
@@ -6484,35 +7763,48 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
-      "RelationshipsObject": {
+      "ActivityTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActivityTypeJson"
+            }
+          }
+        }
+      },
+      "ActivityTypeArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "relationship": {
-                  "$ref": "#/components/schemas/Relationship"
+                "types": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityTypeJson"
+                  }
                 }
               }
             }
           }
         }
       },
-      "RelationshipsArray": {
+      "EventsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "relationships": {
+                "events": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/Relationship"
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
                       }
                     }
                   }
@@ -6522,305 +7814,15 @@
           }
         }
       },
-      "RecommendedPostsArray": {
+      "EventsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/Post"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/Post"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsListsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostList"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/Post"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostShare"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReport"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReport"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostComment"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsListArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentList"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostComment"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReport"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/Merchandise"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/Merchandise"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/Level"
-                      }
-                    }
-                  }
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
                 }
               }
             }
@@ -6840,7 +7842,7 @@
                     "type": "object",
                     "properties": {
                       "following": {
-                        "$ref": "#/components/schemas/Following"
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -6863,7 +7865,7 @@
                     "type": "object",
                     "properties": {
                       "follower": {
-                        "$ref": "#/components/schemas/Following"
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -6881,27 +7883,27 @@
               "type": "object",
               "properties": {
                 "following": {
-                  "$ref": "#/components/schemas/Following"
+                  "$ref": "#/components/schemas/FollowingJson"
                 }
               }
             }
           }
         }
       },
-      "EventsArray": {
+      "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "events": {
+                "levels": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/Event"
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
                       }
                     }
                   }
@@ -6911,35 +7913,20 @@
           }
         }
       },
-      "EventsObject": {
+      "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badges": {
+                "merchandise": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/Badge"
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
                       }
                     }
                   }
@@ -6949,46 +7936,15 @@
           }
         }
       },
-      "BadgeActionsPending": {
+      "MerchandiseObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/Badge"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/Badge"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/Block"
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
                 }
               }
             }
@@ -7008,7 +7964,7 @@
                     "type": "object",
                     "properties": {
                       "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
+                        "$ref": "#/components/schemas/MessageReportJson"
                       }
                     }
                   }
@@ -7031,7 +7987,7 @@
                     "type": "object",
                     "properties": {
                       "message": {
-                        "$ref": "#/components/schemas/Message"
+                        "$ref": "#/components/schemas/MessageJson"
                       }
                     }
                   }
@@ -7049,27 +8005,27 @@
               "type": "object",
               "properties": {
                 "message": {
-                  "$ref": "#/components/schemas/Message"
+                  "$ref": "#/components/schemas/MessageJson"
                 }
               }
             }
           }
         }
       },
-      "PeopleArray": {
+      "PostCommentReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "people": {
+                "post_comment_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
                       }
                     }
                   }
@@ -7079,30 +8035,61 @@
           }
         }
       },
-      "PersonObject": {
+      "PostCommentsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         }
       },
-      "PersonPrivateObject": {
+      "PostCommentsListArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivate"
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
                 }
               }
             }
@@ -7122,7 +8109,7 @@
                     "type": "object",
                     "properties": {
                       "post_reaction": {
-                        "$ref": "#/components/schemas/PostReaction"
+                        "$ref": "#/components/schemas/PostReactionJson"
                       }
                     }
                   }
@@ -7140,7 +8127,258 @@
               "type": "object",
               "properties": {
                 "post_reaction": {
-                  "$ref": "#/components/schemas/PostReaction"
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsListsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -7155,7 +8393,7 @@
               "type": "object",
               "properties": {
                 "room": {
-                  "$ref": "#/components/schemas/Room"
+                  "$ref": "#/components/schemas/RoomJson"
                 }
               }
             }
@@ -7175,7 +8413,7 @@
                     "type": "object",
                     "properties": {
                       "room": {
-                        "$ref": "#/components/schemas/Room"
+                        "$ref": "#/components/schemas/RoomJson"
                       }
                     }
                   }
@@ -7193,7 +8431,114 @@
               "type": "object",
               "properties": {
                 "person": {
-                  "$ref": "#/components/schemas/Person"
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
                 }
               }
             }

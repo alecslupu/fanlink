@@ -5,11 +5,11 @@ class Api::V2::Docs::MessagesDoc < Api::V2::Docs::BaseDoc
   components do
     resp :MessagesArray => ['HTTP/1.1 200 Ok', :json, data:{
       :messages => [
-        :message => :Message
+        :message => :MessageJson
       ]
     }]
     resp :MessagesObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :message => :Message
+      :message => :MessageJson
     }]
   end
 

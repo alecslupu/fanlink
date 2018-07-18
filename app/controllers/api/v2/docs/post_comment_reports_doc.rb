@@ -5,7 +5,7 @@ class Api::V2::Docs::PostCommentReportsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :PostCommentReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_comment_reports => [
-        :post_comment_report => :PostCommentReport
+        :post_comment_report => :PostCommentReportJson
       ]
     }]
   end

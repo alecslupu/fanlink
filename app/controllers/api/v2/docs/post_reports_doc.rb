@@ -4,11 +4,11 @@ class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
 
   components do
     resp :PostReportsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_report => :PostReport
+      :post_report => :PostReportJson
     }]
     resp :PostReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_reports => [
-        :post_report => :PostReport
+        :post_report => :PostReportJson
       ]
     }]
   end

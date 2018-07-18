@@ -1,20 +1,15 @@
-class Api::V2::Docs::RecommendedPostsDoc < Api::V2::Docs::BaseDoc
-  doc_tag name: 'RecommendedPosts', desc: "Recommended posts"
-  route_base 'api/v2/recommended_posts'
+class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
+  # doc_tag name: 'BadgeActions', desc: "Badge Actions"
+  # route_base 'api/v2/badge_actions'
+  # components do
 
-  components do
-    resp :RecommendedPostsArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :posts => [
-        :post => :PostJson
-      ]
-    }]
-  end
+  # end
 
-  api :index, 'Get recommended posts.' do
-    need_auth :SessionCookie
-    desc 'This is used to get a list of published posts flagged as "recommended".'
-    response_ref 200 => :RecommendedPostsArray
-  end
+  # api :index, '' do
+  #   desc ''
+  #   query :, , desc: ''
+  #   response_ref 200 => :
+  # end
 
   # api :create, '' do
   #   desc ''
@@ -52,5 +47,4 @@ class Api::V2::Docs::RecommendedPostsDoc < Api::V2::Docs::BaseDoc
   #   desc ''
   #   response_ref 200 => :OK
   # end
-
 end

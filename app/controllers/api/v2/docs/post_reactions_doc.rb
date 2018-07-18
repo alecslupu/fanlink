@@ -5,11 +5,11 @@ class Api::V2::Docs::PostReactionsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :PostReactionsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_reactions => [
-        :post_reaction => :PostReaction
+        :post_reaction => :PostReactionJson
       ]
     }]
     resp :PostReactionsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_reaction => :PostReaction
+      :post_reaction => :PostReactionJson
     }]
   end
 
