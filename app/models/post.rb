@@ -21,7 +21,7 @@ class Post < ApplicationRecord
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
 
-  belongs_to :person
+  belongs_to :person, touch: true
   belongs_to :category, optional: true
 
   normalize_attributes :starts_at, :ends_at
@@ -33,13 +33,19 @@ class Post < ApplicationRecord
   scope :for_person, -> (person) { includes(:person).where(person: person) }
   scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
   scope :in_date_range, -> (start_date, end_date) {
-                              where("posts.created_at >= ? and posts.created_at <= ?",
-                                start_date.beginning_of_day, end_date.end_of_day)
-                            }
+          where("posts.created_at >= ? and posts.created_at <= ?",
+                start_date.beginning_of_day, end_date.end_of_day)
+        }
   scope :for_tag, -> (tag) { joins(:tags).where("tags.name = ?", tag) }
   scope :for_category, -> (category) { joins(:category).where("categories.name = ?", category) }
-  scope :visible, -> { published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
-                                               Time.zone.now, Time.zone.now) }
+  scope :visible, -> {
+          published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
+                          Time.zone.now, Time.zone.now)
+        }
+
+  def cache_key
+    [super, person.cache_key].join("/")
+  end
 
   def comments
     post_comments
@@ -61,7 +67,7 @@ class Post < ApplicationRecord
     (post_reports.size > 0) ? "Yes" : "No"
   end
 
-private
+  private
 
   def adjust_priorities
     if priority > 0 && saved_change_to_attribute?(:priority)

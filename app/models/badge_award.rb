@@ -1,6 +1,6 @@
 class BadgeAward < ApplicationRecord
   belongs_to :badge
-  belongs_to :person
+  belongs_to :person, touch: true
 
   validate :product_match
 
@@ -31,7 +31,7 @@ class BadgeAward < ApplicationRecord
     (badge_awards.empty?) ? badge_pending : badge_awards
   end
 
-private
+  private
 
   def product_match
     if badge.product_id != person.product_id

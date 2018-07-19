@@ -1,14 +1,14 @@
 class PostReaction < ApplicationRecord
-  belongs_to :post
-  belongs_to :person
+  belongs_to :post, touch: true
+  belongs_to :person, touch: true
 
   has_paper_trail
 
   validate :check_emoji
-  validates :person, uniqueness: { scope: :post, message: "You have already reacted to this post." }
-  validates :reaction, presence: { message: "Reaction is required." }
+  validates :person, uniqueness: {scope: :post, message: "You have already reacted to this post."}
+  validates :reaction, presence: {message: "Reaction is required."}
 
-private
+  private
 
   def check_emoji
     bottom = 0x0
