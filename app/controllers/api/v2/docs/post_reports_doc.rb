@@ -4,13 +4,26 @@ class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
 
   components do
     resp :PostReportsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_report => :PostReport
+      :post_report => :PostReportJson
     }]
     resp :PostReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_reports => [
-        :post_report => :PostReport
+        :post_report => :PostReportJson
       ]
     }]
+
+    body! :PostReportsCreateForm, :form, data: {
+      :post_report! => {
+        :post_id! => { type: Integer, desc: 'The id of the post being reported.' },
+        :reason => { type: String, desc: 'The reason given by the user for reporting the post.' }
+      }
+    }
+
+    body! :PostReportsUpdateForm, :form, data: {
+      :post_report! => {
+        :status! => { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "post_hidden"' }
+      }
+    }
   end
 
   api :index, 'Get list of post reports (ADMIN).' do
@@ -23,12 +36,7 @@ class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
   api :create, 'Report a post.' do
     need_auth :SessionCookie
     desc 'This reports a post that was posted to a feed.'
-    form! data: {
-      :post_report! => {
-        :post_id! => { type: Integer, desc: 'The id of the post being reported.' },
-        :reason => { type: String, desc: 'The reason given by the user for reporting the post.' }
-      }
-    }
+    body_ref :PostReportsCreateForm
     response_ref 200 => :OK
   end
 
@@ -47,11 +55,7 @@ class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
   api :update, 'Update a Post Report.' do
     need_auth :SessionCookie
     desc 'This updates a post report. The only value that can be changed is the status.'
-    form! data: {
-      :post_report! => {
-        :status! => { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "post_hidden"' }
-      }
-    }
+    body_ref :PostReportsUpdateForm
     response_ref 200 => :OK
   end
 

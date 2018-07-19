@@ -4,7 +4,7 @@ class Api::V2::Docs::BadgesDoc < Api::V2::Docs::BaseDoc
   components do
     resp :BadgesArray => ['HTTP/1.1 200 Ok', :json, data:{
       :badges => [
-          :badge => :Badge
+          :badge => :BadgeJson
       ]
     }]
   end

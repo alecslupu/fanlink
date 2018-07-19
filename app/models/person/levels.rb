@@ -1,7 +1,11 @@
 class Person
   module Levels
     def level_earned
-      points = badges.sum(:point_value)
+      if rewards.present?
+        points = rewards.sum(:points)
+      else
+        points = 0
+      end
       if points == 0
         nil
       else

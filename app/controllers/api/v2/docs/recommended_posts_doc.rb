@@ -5,7 +5,7 @@ class Api::V2::Docs::RecommendedPostsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :RecommendedPostsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :posts => [
-        :post => :Post
+        :post => :PostJson
       ]
     }]
   end

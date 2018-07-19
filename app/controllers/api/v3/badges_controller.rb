@@ -10,6 +10,7 @@ class Api::V3::BadgesController < Api::V3::BaseController
     else
       @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types['badge'])
     end
+    @series_total = current_user.reward_progresses
     return_the @badges
   end
 

@@ -5,7 +5,7 @@ class Api::V2::Docs::LevelsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :LevelsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :levels => [
-        :level => :Level
+        :level => :LevelJson
       ]
     }]
   end

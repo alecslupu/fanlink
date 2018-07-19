@@ -5,9 +5,22 @@ class Api::V2::Docs::PostCommentReportsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :PostCommentReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :post_comment_reports => [
-        :post_comment_report => :PostCommentReport
+        :post_comment_report => :PostCommentReportJson
       ]
     }]
+
+    body! :PostCommentReportCreateForm, :form, data: {
+      :post_comment_report! => {
+        :post_comment_id! => { type: Integer, desc: 'The id of the post comment being reported.' },
+        :reason => { type: String, desc: 'The reason given by the user for reporting the post comment.' }
+      }
+    }
+
+    body! :PostCommentReportUpdateForm, :form, data: {
+      :post_comment_report! => {
+        :status! => { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "comment_hidden"' }
+      }
+    }
   end
 
   api :index, 'Get list of post comment reports (ADMIN).' do
@@ -20,12 +33,7 @@ class Api::V2::Docs::PostCommentReportsDoc < Api::V2::Docs::BaseDoc
   api :create, 'Report a post comment.' do
     need_auth :SessionCookie
     desc 'This reports a post comment.'
-    form! data: {
-      :post_comment_report! => {
-        :post_comment_id! => { type: Integer, desc: 'The id of the post comment being reported.' },
-        :reason => { type: String, desc: 'The reason given by the user for reporting the post comment.' }
-      }
-    }
+    body_ref :PostCommentReportCreateForm
     response_ref 200 => :OK
   end
 
@@ -44,11 +52,7 @@ class Api::V2::Docs::PostCommentReportsDoc < Api::V2::Docs::BaseDoc
   api :update, 'Update a Post Comment Report (Admin)' do
     need_auth :SessionCookie
     desc 'This updates a post comment report. The only value that can be changed is the status.'
-    form! data: {
-      :post_comment_report! => {
-        :status! => { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "comment_hidden"' }
-      }
-    }
+    body_ref :PostCommentReportUpdateForm
     response_ref 200 => :OK
   end
 

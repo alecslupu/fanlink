@@ -4,11 +4,11 @@ class Api::V2::Docs::RelationshipsDoc < Api::V2::Docs::BaseDoc
 
   components do
     resp :RelationshipsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :relationship => :Relationship
+      :relationship => :RelationshipJson
     }]
     resp :RelationshipsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :relationships => [
-        :relationship => :Relationship
+        :relationship => :RelationshipJson
       ]
     }]
   end

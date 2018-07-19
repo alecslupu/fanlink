@@ -4,11 +4,11 @@ class Api::V2::Docs::RoomsDoc < Api::V2::Docs::BaseDoc
 
   components do
     resp :RoomsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :room => :Room
+      :room => :RoomJson
     }]
     resp :RoomsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :rooms => [
-        :room => :Room
+        :room => :RoomJson
       ]
     }]
   end

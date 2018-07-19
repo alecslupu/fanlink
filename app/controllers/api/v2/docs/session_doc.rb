@@ -4,7 +4,7 @@ class Api::V2::Docs::SessionDoc < Api::V2::Docs::BaseDoc
 
   components do
     resp :SessionObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :person => :Person
+      :person => :PersonJson
     }]
   end
 

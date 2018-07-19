@@ -15,6 +15,7 @@ class RewardsListener
         end
       end
     end
+    user.touch
   end
 
   def self.create_quest_completed_successful(completed)

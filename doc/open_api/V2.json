@@ -43,6 +43,10 @@
       "description": "Block a person"
     },
     {
+      "name": "Categories",
+      "description": "Categories"
+    },
+    {
       "name": "Events",
       "description": "Events"
     },
@@ -99,6 +103,10 @@
       "description": "User/product posts"
     },
     {
+      "name": "QuestActivities",
+      "description": "Quest Activities"
+    },
+    {
       "name": "RecommendedPeople",
       "description": "Recommended People"
     },
@@ -124,6 +132,194 @@
     }
   ],
   "paths": {
+    "/activities/{activity_id}/types": {
+      "get": {
+        "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
+        "summary": "Get Activity types",
+        "operationId": "ActivityTypes_index",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "description": "Activity ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Creates an activity type to be used with the quest activity.",
+        "summary": "Create Type for Activity",
+        "operationId": "ActivityTypes_create",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "description": "Quest Activity ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TypeBodyCreate"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/activity_types/select": {
+      "get": {
+        "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
+        "summary": "Get Activity types",
+        "operationId": "ActivityTypes_index",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "required": true,
+            "description": "Activity ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/activity_types/{id}": {
+      "get": {
+        "description": "Gets activity type by ID",
+        "summary": "Get an activity type",
+        "operationId": "ActivityTypes_show",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "description": "Updates an activity type",
+        "summary": "Update a type",
+        "operationId": "ActivityTypes_update",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TypeBodyUpdate"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates an activity type",
+        "summary": "Update a type",
+        "operationId": "ActivityTypes_update",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TypeBodyUpdate"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ActivityTypeObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Deletes the activity type for given ID, removing it from the Quest Activities.",
+        "summary": "Delete a type from an activity",
+        "operationId": "ActivityTypes_destroy",
+        "tags": [
+          "ActivityTypes"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
     "/badge_actions": {
       "post": {
         "summary": "POST create a badge action",
@@ -143,36 +339,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "badge_action": {
-                    "type": "object",
-                    "properties": {
-                      "action_type": {
-                        "type": "string",
-                        "description": "Internal name of the action type."
-                      },
-                      "indentifier": {
-                        "type": "string",
-                        "description": "The indentifier for this badge action."
-                      }
-                    },
-                    "required": [
-                      "action_type"
-                    ]
-                  }
-                },
-                "required": [
-                  "badge_action"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/BadgeActionCreate"
         },
         "responses": {
           "422": {
@@ -272,6 +439,127 @@
         ]
       }
     },
+    "/beacons": {
+      "get": {
+        "description": "Get beacons for a product.",
+        "summary": "Get Product Beacons",
+        "operationId": "ProductBeacons_index",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconArray"
+          }
+        }
+      },
+      "post": {
+        "description": "Add a beacon to the current user's product.",
+        "summary": "Create a beacon",
+        "operationId": "ProductBeacons_create",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BeaconCreateForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconObject"
+          }
+        }
+      }
+    },
+    "/beacons/list": {
+      "get": {
+        "description": "This returns all beacons, regardless of deleted status.",
+        "summary": "Get all beacons",
+        "operationId": "ProductBeacons_list",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconArray"
+          }
+        }
+      }
+    },
+    "/beacons/select": {
+      "get": {
+        "description": "Get beacons for a product.",
+        "summary": "Get Product Beacons",
+        "operationId": "ProductBeacons_index",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconArray"
+          }
+        }
+      }
+    },
+    "/beacons/{id}": {
+      "get": {
+        "description": "Returns the product beacon for the passed in ID.",
+        "summary": "Get Product Beacon",
+        "operationId": "ProductBeacons_show",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconObject"
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates a product beacon.",
+        "summary": "Update a beacon",
+        "operationId": "ProductBeacons_update",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BeaconUpdateForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconObject"
+          }
+        }
+      },
+      "put": {
+        "description": "Updates a product beacon.",
+        "summary": "Update a beacon",
+        "operationId": "ProductBeacons_update",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BeaconUpdateForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductBeaconObject"
+          }
+        }
+      },
+      "delete": {
+        "description": "Soft deletes a product beacon",
+        "summary": "Destroy Product Beacon",
+        "operationId": "ProductBeacons_destroy",
+        "tags": [
+          "ProductBeacons"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          }
+        }
+      }
+    },
     "/blocks": {
       "post": {
         "description": "This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users.",
@@ -292,32 +580,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "block": {
-                    "type": "object",
-                    "properties": {
-                      "blocked_id": {
-                        "type": "integer",
-                        "description": "Internal name of the action type."
-                      }
-                    },
-                    "required": [
-                      "blocked_id"
-                    ]
-                  }
-                },
-                "required": [
-                  "block"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/BlockCreate"
         },
         "responses": {
           "422": {
@@ -385,6 +648,283 @@
         }
       }
     },
+    "/categories": {
+      "get": {
+        "description": "Returns categories for product based on current users role.",
+        "summary": "Get Categories for Product",
+        "operationId": "Categories_index",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "description": "Internal name of product to get categories for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Creates a category for current user's associated product.",
+        "summary": "Create a category",
+        "operationId": "Categories_create",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryJson"
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "description": "Gets a category by ID.",
+        "summary": "Get a category",
+        "operationId": "Categories_show",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "description": "Updates a category with the passed in ID.",
+        "summary": "Update a category",
+        "operationId": "Categories_update",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates a category with the passed in ID.",
+        "summary": "Update a category",
+        "operationId": "Categories_update",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/CategoryObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
     "/events": {
       "get": {
         "summary": "Get all events for a product",
@@ -431,7 +971,7 @@
             "description": "Only include events starting on or after date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date"
             }
           },
           {
@@ -441,7 +981,7 @@
             "description": "Only include events starting on or before date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date"
             }
           }
         ],
@@ -457,6 +997,42 @@
           },
           "200": {
             "$ref": "#/components/responses/EventsArray"
+          }
+        }
+      },
+      "post": {
+        "description": "Creates an event for current user's product",
+        "summary": "Create an event",
+        "operationId": "Events_create",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventForm"
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
           }
         },
         "security": [
@@ -509,6 +1085,165 @@
             "$ref": "#/components/responses/EventsObject"
           }
         }
+      },
+      "patch": {
+        "description": "Updates the event for given ID.",
+        "summary": "Update an event.",
+        "operationId": "Events_update",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates the event for given ID.",
+        "summary": "Update an event.",
+        "operationId": "Events_update",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/EventsObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Soft deletes an event by setting deleted to true.",
+        "summary": "Delete an event.",
+        "operationId": "Events_destroy",
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v2+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
       }
     },
     "/followings": {
@@ -611,24 +1346,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "followed_id": {
-                    "type": "integer",
-                    "description": "Person to follow."
-                  }
-                },
-                "required": [
-                  "followed_id"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/FollowingForm"
         },
         "responses": {
           "422": {
@@ -763,7 +1481,7 @@
     },
     "/merchandise": {
       "get": {
-        "description": " This gets a list of merchandise, in priority order.",
+        "description": "This gets a list of merchandise, in priority order.",
         "summary": "Get available merchandise.",
         "operationId": "Merchandise_index",
         "tags": [
@@ -805,6 +1523,29 @@
             ]
           }
         ]
+      },
+      "post": {
+        "description": "Create a merchandise item for the user's current product",
+        "summary": "Create a merchandise item",
+        "operationId": "Merchandise_create",
+        "tags": [
+          "Merchandise"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/MerchandiseForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MerchandiseObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
       }
     },
     "/merchandise/{id}": {
@@ -832,6 +1573,26 @@
           },
           "200": {
             "$ref": "#/components/responses/MerchandiseObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Soft deletes a merchandise item.",
+        "summary": "Delete a merchandise item.",
+        "operationId": "Merchandise_destroy",
+        "tags": [
+          "Merchandise"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Delete"
           }
         },
         "security": [
@@ -944,32 +1705,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message_report": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
-                      }
-                    },
-                    "required": [
-                      "status"
-                    ]
-                  }
-                },
-                "required": [
-                  "message_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageReportUpdateForm"
         },
         "responses": {
           "404": {
@@ -1024,32 +1760,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message_report": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
-                      }
-                    },
-                    "required": [
-                      "status"
-                    ]
-                  }
-                },
-                "required": [
-                  "message_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageReportUpdateForm"
         },
         "responses": {
           "404": {
@@ -1224,29 +1935,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "object",
-                    "properties": {
-                      "hidden": {
-                        "type": "boolean",
-                        "description": "Whether or not the item is hidden."
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "message"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageUpdateForm"
         },
         "responses": {
           "404": {
@@ -1310,29 +1999,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "object",
-                    "properties": {
-                      "hidden": {
-                        "type": "boolean",
-                        "description": "Whether or not the item is hidden."
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "message"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageUpdateForm"
         },
         "responses": {
           "404": {
@@ -1380,24 +2047,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "device_id": {
-                    "type": "string",
-                    "description": "ID of the device"
-                  }
-                },
-                "required": [
-                  "device_id"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/NotificationDeviceIdsForm"
         },
         "responses": {
           "422": {
@@ -1513,79 +2163,7 @@
           "People"
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "product": {
-                    "type": "string",
-                    "description": "Internal name of the product."
-                  },
-                  "person": {
-                    "type": "object",
-                    "properties": {
-                      "email": {
-                        "type": "string",
-                        "format": "email",
-                        "description": "Email address (required unless using FB auth token)."
-                      },
-                      "facebook_auth_token": {
-                        "type": "string",
-                        "description": "Auth token from Facebook"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "User's name."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username. This needs to be unique within product scope."
-                      },
-                      "password": {
-                        "type": "string",
-                        "format": "password",
-                        "description": "User\\s password."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "gender": {
-                        "type": "string",
-                        "description": "Gender. Valid options: unspecified (default), male, female."
-                      },
-                      "birthdate": {
-                        "type": "string",
-                        "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                      },
-                      "city": {
-                        "type": "string",
-                        "description": "Person's supplied city."
-                      },
-                      "country_code": {
-                        "type": "string",
-                        "description": "Alpha2 code (two letters) from ISO 3166 list."
-                      }
-                    },
-                    "required": [
-                      "email",
-                      "facebook_auth_token",
-                      "username",
-                      "password"
-                    ]
-                  }
-                },
-                "required": [
-                  "product",
-                  "person"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PersonCreateForm"
         },
         "responses": {
           "200": {
@@ -1614,29 +2192,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "product": {
-                    "type": "string",
-                    "description": "Internal name of product."
-                  },
-                  "email_or_username": {
-                    "type": "string",
-                    "description": "The person's email or username."
-                  }
-                },
-                "required": [
-                  "product",
-                  "email_or_username"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PasswordResetForm"
         },
         "responses": {
           "422": {
@@ -1740,63 +2296,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "recommended": {
-                    "type": "boolean",
-                    "description": "Whether this is a recommended persion. (Admin or product account only)"
-                  },
-                  "person": {
-                    "type": "object",
-                    "properties": {
-                      "email": {
-                        "type": "string",
-                        "format": "email",
-                        "description": "Email address (required unless using FB auth token)."
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "User's name."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username. This needs to be unique within product scope."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "gender": {
-                        "type": "string",
-                        "description": "Gender. Valid options: unspecified (default), male, female."
-                      },
-                      "birthdate": {
-                        "type": "string",
-                        "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                      },
-                      "city": {
-                        "type": "string",
-                        "description": "Person's supplied city."
-                      },
-                      "country_code": {
-                        "type": "string",
-                        "description": "Alpha2 code (two letters) from ISO 3166 list."
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "person"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PersonUpdateForm"
         },
         "responses": {
           "200": {
@@ -1830,63 +2330,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "recommended": {
-                    "type": "boolean",
-                    "description": "Whether this is a recommended persion. (Admin or product account only)"
-                  },
-                  "person": {
-                    "type": "object",
-                    "properties": {
-                      "email": {
-                        "type": "string",
-                        "format": "email",
-                        "description": "Email address (required unless using FB auth token)."
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "User's name."
-                      },
-                      "username": {
-                        "type": "string",
-                        "description": "Username. This needs to be unique within product scope."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "gender": {
-                        "type": "string",
-                        "description": "Gender. Valid options: unspecified (default), male, female."
-                      },
-                      "birthdate": {
-                        "type": "string",
-                        "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                      },
-                      "city": {
-                        "type": "string",
-                        "description": "Person's supplied city."
-                      },
-                      "country_code": {
-                        "type": "string",
-                        "description": "Alpha2 code (two letters) from ISO 3166 list."
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "person"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PersonUpdateForm"
         },
         "responses": {
           "200": {
@@ -2123,36 +2567,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_comment_report": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_id": {
-                        "type": "integer",
-                        "description": "The id of the post comment being reported."
-                      },
-                      "reason": {
-                        "type": "string",
-                        "description": "The reason given by the user for reporting the post comment."
-                      }
-                    },
-                    "required": [
-                      "post_comment_id"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_comment_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostCommentReportCreateForm"
         },
         "responses": {
           "422": {
@@ -2206,32 +2621,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_comment_report": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                      }
-                    },
-                    "required": [
-                      "status"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_comment_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostCommentReportUpdateForm"
         },
         "responses": {
           "404": {
@@ -2286,32 +2676,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_comment_report": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                      }
-                    },
-                    "required": [
-                      "status"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_comment_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostCommentReportUpdateForm"
         },
         "responses": {
           "404": {
@@ -2512,36 +2877,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_report": {
-                    "type": "object",
-                    "properties": {
-                      "post_id": {
-                        "type": "integer",
-                        "description": "The id of the post being reported."
-                      },
-                      "reason": {
-                        "type": "string",
-                        "description": "The reason given by the user for reporting the post."
-                      }
-                    },
-                    "required": [
-                      "post_id"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostReportsCreateForm"
         },
         "responses": {
           "422": {
@@ -2595,32 +2931,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_report": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
-                      }
-                    },
-                    "required": [
-                      "status"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostReportsUpdateForm"
         },
         "responses": {
           "404": {
@@ -2675,32 +2986,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_report": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
-                      }
-                    },
-                    "required": [
-                      "status"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostReportsUpdateForm"
         },
         "responses": {
           "404": {
@@ -2778,23 +3064,21 @@
             }
           },
           {
-            "name": "from_date",
+            "name": "tag",
             "in": "query",
             "required": false,
-            "description": "From date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "description": "Returns posts with the tag specified from the user and the user's that they are following",
             "schema": {
-              "type": "string",
-              "format": "date"
+              "type": "string"
             }
           },
           {
-            "name": "to_date",
+            "name": "category",
             "in": "query",
             "required": false,
-            "description": "To date in format \"YYYY-MM-DD\". Note valid dates start from 2017-01-01.",
+            "description": "Returns posts with the category specified from the user and the user's that they are following",
             "schema": {
-              "type": "string",
-              "format": "date"
+              "type": "string"
             }
           }
         ],
@@ -2839,69 +3123,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "string",
-                        "description": "The body of the message."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "audio": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Post audio, this should be `audio/acc`."
-                      },
-                      "global": {
-                        "type": "boolean",
-                        "description": "Whether the post is global (seen by all users)."
-                      },
-                      "starts_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "When the post should start being visible (same format as in responses)."
-                      },
-                      "ends_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": " When the post should stop being visible (same format as in responses)."
-                      },
-                      "repost_interval": {
-                        "type": "integer",
-                        "description": "How often this post should be republished."
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                      },
-                      "priority": {
-                        "type": "integer",
-                        "description": "Priority value for post."
-                      },
-                      "recommended": {
-                        "type": "boolean",
-                        "description": "Whether the post is recommended.(Admin or product account)"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "post"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostCreateForm"
         },
         "responses": {
           "422": {
@@ -3195,69 +3417,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "string",
-                        "description": "The body of the message."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "audio": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Post audio, this should be `audio/acc`."
-                      },
-                      "global": {
-                        "type": "boolean",
-                        "description": "Whether the post is global (seen by all users)."
-                      },
-                      "starts_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "When the post should start being visible (same format as in responses)."
-                      },
-                      "ends_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": " When the post should stop being visible (same format as in responses)."
-                      },
-                      "repost_interval": {
-                        "type": "integer",
-                        "description": "How often this post should be republished."
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                      },
-                      "priority": {
-                        "type": "integer",
-                        "description": "Priority value for post."
-                      },
-                      "recommended": {
-                        "type": "boolean",
-                        "description": "Whether the post is recommended.(Admin or product account)"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "post"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostUpdateForm"
         },
         "responses": {
           "404": {
@@ -3312,69 +3472,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "string",
-                        "description": "The body of the message."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "audio": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Post audio, this should be `audio/acc`."
-                      },
-                      "global": {
-                        "type": "boolean",
-                        "description": "Whether the post is global (seen by all users)."
-                      },
-                      "starts_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "When the post should start being visible (same format as in responses)."
-                      },
-                      "ends_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": " When the post should stop being visible (same format as in responses)."
-                      },
-                      "repost_interval": {
-                        "type": "integer",
-                        "description": "How often this post should be republished."
-                      },
-                      "status": {
-                        "type": "string",
-                        "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                      },
-                      "priority": {
-                        "type": "integer",
-                        "description": "Priority value for post."
-                      },
-                      "recommended": {
-                        "type": "boolean",
-                        "description": "Whether the post is recommended.(Admin or product account)"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "post"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostUpdateForm"
         },
         "responses": {
           "404": {
@@ -3592,57 +3690,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_comment": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "string",
-                        "description": "The body of the comment."
-                      }
-                    },
-                    "required": [
-                      "body"
-                    ]
-                  },
-                  "mentions": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "person_id": {
-                          "type": "integer",
-                          "description": "The id of the person mentioned."
-                        },
-                        "location": {
-                          "type": "integer",
-                          "description": "Where the mention text starts in the comment."
-                        },
-                        "length": {
-                          "type": "integer",
-                          "description": "The length of the mention text."
-                        }
-                      },
-                      "required": [
-                        "person_id",
-                        "location",
-                        "length"
-                      ]
-                    }
-                  }
-                },
-                "required": [
-                  "post_comment"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostCommentCreateForm"
         },
         "responses": {
           "422": {
@@ -3756,32 +3804,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_reaction": {
-                    "type": "object",
-                    "properties": {
-                      "reaction": {
-                        "type": "string",
-                        "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                      }
-                    },
-                    "required": [
-                      "reaction"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_reaction"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostReactionCreateForm"
         },
         "responses": {
           "422": {
@@ -3844,32 +3867,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_reaction": {
-                    "type": "object",
-                    "properties": {
-                      "reaction": {
-                        "type": "string",
-                        "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                      }
-                    },
-                    "required": [
-                      "reaction"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_reaction"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostReactionUpdateForm"
         },
         "responses": {
           "404": {
@@ -3933,32 +3931,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "post_reaction": {
-                    "type": "object",
-                    "properties": {
-                      "reaction": {
-                        "type": "string",
-                        "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                      }
-                    },
-                    "required": [
-                      "reaction"
-                    ]
-                  }
-                },
-                "required": [
-                  "post_reaction"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/PostReactionUpdateForm"
         },
         "responses": {
           "404": {
@@ -4033,6 +4006,141 @@
           },
           "500": {
             "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "Get all products (Super Admin Only)",
+        "summary": "Get Products",
+        "operationId": "Products_index",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Create a product (Super Admin Only)",
+        "summary": "Create Product",
+        "operationId": "Products_create",
+        "tags": [
+          "Products"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProductCreateForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/products/select": {
+      "get": {
+        "description": "Get all products (Super Admin Only)",
+        "summary": "Get Products",
+        "operationId": "Products_index",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "description": "Get a product for provided ID. (Super Admin Only)",
+        "summary": "Get Product",
+        "operationId": "Products_show",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "description": "Update a product (Super Admin Only)",
+        "summary": "Update Product",
+        "operationId": "Products_update",
+        "tags": [
+          "Products"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProductUpdateForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Update a product (Super Admin Only)",
+        "summary": "Update Product",
+        "operationId": "Products_update",
+        "tags": [
+          "Products"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProductUpdateForm"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ProductObject"
           }
         },
         "security": [
@@ -4857,36 +4965,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message_report": {
-                    "type": "object",
-                    "properties": {
-                      "message_id": {
-                        "type": "integer",
-                        "description": "The id of the message being reported."
-                      },
-                      "reason": {
-                        "type": "string",
-                        "description": "The reason given by the user for reporting the message."
-                      }
-                    },
-                    "required": [
-                      "message_id"
-                    ]
-                  }
-                },
-                "required": [
-                  "message_report"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageReportCreateForm"
         },
         "responses": {
           "422": {
@@ -5040,59 +5119,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "object",
-                    "properties": {
-                      "body": {
-                        "type": "string",
-                        "description": "The body of the message."
-                      },
-                      "picture": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                      },
-                      "audio": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Message audio, this should be `audio/aac`."
-                      },
-                      "mentions": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "person_id": {
-                              "type": "integer",
-                              "description": "ID of user mentioned"
-                            },
-                            "location": {
-                              "type": "integer",
-                              "description": "The location in the message body that the mention is at."
-                            },
-                            "length": {
-                              "type": "integer",
-                              "description": "The length of the users name in the mention"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "message"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageCreateForm"
         },
         "responses": {
           "422": {
@@ -5213,29 +5240,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "object",
-                    "properties": {
-                      "hidden": {
-                        "type": "boolean",
-                        "description": "Whether or not the item is hidden."
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "message"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageUpdateForm"
         },
         "responses": {
           "404": {
@@ -5299,29 +5304,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "object",
-                    "properties": {
-                      "hidden": {
-                        "type": "boolean",
-                        "description": "Whether or not the item is hidden."
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "message"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/MessageUpdateForm"
         },
         "responses": {
           "404": {
@@ -5577,7 +5560,33 @@
       }
     },
     "schemas": {
-      "Badge": {
+      "ActivityTypeJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "atype": {
+            "type": "string"
+          },
+          "activity_id": {
+            "type": "integer"
+          },
+          "value": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": "Activity Type Object"
+      },
+      "BadgeJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5602,9 +5611,9 @@
             "type": "integer"
           }
         },
-        "description": "Badge Object"
+        "description": "Badge Response"
       },
-      "Block": {
+      "BlockJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5619,7 +5628,38 @@
         },
         "description": "Block object"
       },
-      "Event": {
+      "CategoryJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "color": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5646,9 +5686,9 @@
             "type": "string"
           }
         },
-        "description": "Event Object"
+        "description": "Event Response"
       },
-      "Following": {
+      "FollowingJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5661,9 +5701,9 @@
             "$ref": "#/components/schemas/Person"
           }
         },
-        "description": "Following Object"
+        "description": "Following Response"
       },
-      "Level": {
+      "LevelJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5685,9 +5725,9 @@
             "type": "string"
           }
         },
-        "description": "Level Object"
+        "description": "Level Response"
       },
-      "Merchandise": {
+      "MerchandiseJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5715,9 +5755,9 @@
             "type": "integer"
           }
         },
-        "description": "Merchandise Object"
+        "description": "Merchandise Response"
       },
-      "MessageReport": {
+      "MessageReportJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5747,9 +5787,9 @@
             "type": "string"
           }
         },
-        "description": "Message Report Object"
+        "description": "Message Report Response"
       },
-      "Mention": {
+      "MentionJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5765,9 +5805,9 @@
             "type": "integer"
           }
         },
-        "description": "Notification Type ID Object"
+        "description": "Notification Type ID Response"
       },
-      "Message": {
+      "MessageJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5799,9 +5839,9 @@
             "$ref": "#/components/schemas/Mention"
           }
         },
-        "description": "Message Object"
+        "description": "Message Response"
       },
-      "MessageList": {
+      "MessageListJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5831,18 +5871,18 @@
             "format": "date-time"
           }
         },
-        "description": "Message Object"
+        "description": "Message Response"
       },
-      "NotificationDeviceId": {
+      "NotificationDeviceIdJson": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer"
           }
         },
-        "description": "Notification Type ID Object"
+        "description": "Notification Type ID Response"
       },
-      "Person": {
+      "PersonJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -5937,9 +5977,9 @@
             "format": "date-time"
           }
         },
-        "description": "Person Object"
+        "description": "Person Response"
       },
-      "PersonPrivate": {
+      "PersonPrivateJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6051,9 +6091,9 @@
             }
           }
         },
-        "description": "Private Person Object"
+        "description": "Private Person Response"
       },
-      "PostCommentReport": {
+      "PostCommentReportJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6079,9 +6119,9 @@
             "type": "string"
           }
         },
-        "description": "Post Comment Report Object"
+        "description": "Post Comment Report Response"
       },
-      "PostComment": {
+      "PostCommentJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6109,9 +6149,9 @@
             "$ref": "#/components/schemas/Person"
           }
         },
-        "description": "Post Comment Object"
+        "description": "Post Comment Response"
       },
-      "PostCommentList": {
+      "PostCommentListJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6149,9 +6189,9 @@
             }
           }
         },
-        "description": "Post Comment Object"
+        "description": "Post Comment Response"
       },
-      "PostReaction": {
+      "PostReactionJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6167,9 +6207,9 @@
             "type": "string"
           }
         },
-        "description": "Post Reaction Object"
+        "description": "Post Reaction Response"
       },
-      "PostReport": {
+      "PostReportJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6195,9 +6235,9 @@
             "type": "string"
           }
         },
-        "description": "Post Report Object"
+        "description": "Post Report Response"
       },
-      "Post": {
+      "PostJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6289,9 +6329,9 @@
             }
           }
         },
-        "description": "Post Object"
+        "description": "Post Response"
       },
-      "PostShare": {
+      "PostShareJson": {
         "type": "object",
         "properties": {
           "body": {
@@ -6312,9 +6352,9 @@
             }
           }
         },
-        "description": "Shared Post Object"
+        "description": "Shared Post Response"
       },
-      "PostList": {
+      "PostListJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6387,12 +6427,185 @@
             }
           }
         },
-        "description": "List Post Object"
+        "description": "List Post Response"
       },
-      "RecommendedPeople": {
+      "ProductBeaconJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "beacon_pid": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "lower": {
+            "type": "integer"
+          },
+          "upper": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Product Beacon Response"
+      },
+      "ProductJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "description": "Product Response"
+      },
+      "QuestActivityJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "quest_id": {
+            "type": "integer"
+          },
+          "step_id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "hint": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "picture_width": {
+            "type": "integer"
+          },
+          "picture_height": {
+            "type": "integer"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "requirements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActivityType"
+            }
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "step": {
+            "$ref": "#/components/schemas/Step"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Quest Activity Response"
+      },
+      "QuestCompletionJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "person_id": {
+            "type": "integer"
+          },
+          "step_id": {
+            "type": "integer"
+          },
+          "activity_id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "QuestJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "picture_url": {
+            "type": "string"
+          },
+          "picture_width": {
+            "type": "integer"
+          },
+          "picture_height": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "create_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Step"
+            }
+          }
+        },
+        "description": "Step Response"
+      },
+      "RecommendedPeopleJson": {
         "$ref": "#/components/schemas/Person"
       },
-      "Relationship": {
+      "RelationshipJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6416,18 +6629,18 @@
             "$ref": "#/components/schemas/Person"
           }
         },
-        "description": "Relationship Object"
+        "description": "Relationship Response"
       },
-      "RoomMembership": {
+      "RoomMembershipJson": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer"
           }
         },
-        "description": "Room Membership Object"
+        "description": "Room Membership Response"
       },
-      "Room": {
+      "RoomJson": {
         "type": "object",
         "properties": {
           "id": {
@@ -6460,22 +6673,1045 @@
             }
           }
         },
-        "description": "Room Object"
+        "description": "Room Response"
       },
-      "Session": {
+      "SessionJson": {
         "type": "object",
         "properties": {
           "person": {
             "$ref": "#/components/schemas/PersonPrivate"
           }
         },
-        "description": "Session Object"
+        "description": "Session Response"
       },
-      "Tag": {
+      "StepJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "quest_id": {
+            "type": "integer"
+          },
+          "unlocks": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "display": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "quest_activities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestActivity"
+            }
+          },
+          "delay_unlock": {
+            "type": "integer"
+          },
+          "unlocks_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Step Response"
+      },
+      "TagJson": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
+          }
+        },
+        "description": "Tag Response"
+      }
+    },
+    "requestBodies": {
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "available",
+                    "priority"
+                  ]
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "NotificationDeviceIdsForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
+                }
+              },
+              "required": [
+                "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
+              ]
+            }
+          }
+        }
+      },
+      "PersonCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "facebook_auth_token",
+                    "username",
+                    "password"
+                  ]
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
+      },
+      "PersonUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post comment."
+                    }
+                  },
+                  "required": [
+                    "post_comment_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the comment."
+                    }
+                  },
+                  "required": [
+                    "body"
+                  ]
+                },
+                "mentions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person_id": {
+                        "type": "integer",
+                        "description": "The id of the person mentioned."
+                      },
+                      "location": {
+                        "type": "integer",
+                        "description": "Where the mention text starts in the comment."
+                      },
+                      "length": {
+                        "type": "integer",
+                        "description": "The length of the mention text."
+                      }
+                    },
+                    "required": [
+                      "person_id",
+                      "location",
+                      "length"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "post_comment"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+                    }
+                  },
+                  "required": [
+                    "post_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+              ]
+            }
+          }
+        }
+      },
+      "PostUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeActionCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "message_id": {
+                      "type": "integer",
+                      "description": "The id of the message being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the message."
+                    }
+                  },
+                  "required": [
+                    "message_id"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message audio, this should be `audio/aac`."
+                    },
+                    "mentions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "person_id": {
+                            "type": "integer",
+                            "description": "ID of user mentioned"
+                          },
+                          "location": {
+                            "type": "integer",
+                            "description": "The location in the message body that the mention is at."
+                          },
+                          "length": {
+                            "type": "integer",
+                            "description": "The length of the users name in the mention"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "MessageUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Whether or not the item is hidden."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  },
+                  "required": [
+                    "reaction"
+                  ]
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
           }
         }
       }
@@ -6483,158 +7719,6 @@
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
-      },
-      "MessagesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/Message"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReaction"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReaction"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/Post"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsListsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostList"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/Post"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostShare"
-                }
-              }
-            }
-          }
-        }
       },
       "RecommendedPeopleArray": {
         "description": "HTTP/1.1 200 Ok",
@@ -6649,10 +7733,48 @@
                     "type": "object",
                     "properties": {
                       "person": {
-                        "$ref": "#/components/schemas/Person"
+                        "$ref": "#/components/schemas/PersonJson"
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
                 }
               }
             }
@@ -6672,7 +7794,7 @@
                     "type": "object",
                     "properties": {
                       "post": {
-                        "$ref": "#/components/schemas/Post"
+                        "$ref": "#/components/schemas/PostJson"
                       }
                     }
                   }
@@ -6690,7 +7812,7 @@
               "type": "object",
               "properties": {
                 "relationship": {
-                  "$ref": "#/components/schemas/Relationship"
+                  "$ref": "#/components/schemas/RelationshipJson"
                 }
               }
             }
@@ -6710,39 +7832,8 @@
                     "type": "object",
                     "properties": {
                       "relationship": {
-                        "$ref": "#/components/schemas/Relationship"
+                        "$ref": "#/components/schemas/RelationshipJson"
                       }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgeActionsPending": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/Badge"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/Badge"
                     }
                   }
                 }
@@ -6759,7 +7850,7 @@
               "type": "object",
               "properties": {
                 "room": {
-                  "$ref": "#/components/schemas/Room"
+                  "$ref": "#/components/schemas/RoomJson"
                 }
               }
             }
@@ -6779,48 +7870,10 @@
                     "type": "object",
                     "properties": {
                       "room": {
-                        "$ref": "#/components/schemas/Room"
+                        "$ref": "#/components/schemas/RoomJson"
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badges": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/Badge"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/Block"
                 }
               }
             }
@@ -6840,7 +7893,7 @@
                     "type": "object",
                     "properties": {
                       "following": {
-                        "$ref": "#/components/schemas/Following"
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -6863,7 +7916,7 @@
                     "type": "object",
                     "properties": {
                       "follower": {
-                        "$ref": "#/components/schemas/Following"
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -6881,7 +7934,30 @@
               "type": "object",
               "properties": {
                 "following": {
-                  "$ref": "#/components/schemas/Following"
+                  "$ref": "#/components/schemas/FollowingJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -6901,7 +7977,7 @@
                     "type": "object",
                     "properties": {
                       "merchandise": {
-                        "$ref": "#/components/schemas/Merchandise"
+                        "$ref": "#/components/schemas/MerchandiseJson"
                       }
                     }
                   }
@@ -6919,27 +7995,80 @@
               "type": "object",
               "properties": {
                 "merchandise": {
-                  "$ref": "#/components/schemas/Merchandise"
+                  "$ref": "#/components/schemas/MerchandiseJson"
                 }
               }
             }
           }
         }
       },
-      "MessageReportsArray": {
+      "PeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "message_reports": {
+                "people": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
                       }
                     }
                   }
@@ -6962,7 +8091,7 @@
                     "type": "object",
                     "properties": {
                       "post_comment": {
-                        "$ref": "#/components/schemas/PostComment"
+                        "$ref": "#/components/schemas/PostCommentJson"
                       }
                     }
                   }
@@ -6985,7 +8114,7 @@
                     "type": "object",
                     "properties": {
                       "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentList"
+                        "$ref": "#/components/schemas/PostCommentListJson"
                       }
                     }
                   }
@@ -7003,83 +8132,7 @@
               "type": "object",
               "properties": {
                 "post_comment": {
-                  "$ref": "#/components/schemas/PostComment"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonPrivateObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivate"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReport"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/PostCommentJson"
                 }
               }
             }
@@ -7094,7 +8147,7 @@
               "type": "object",
               "properties": {
                 "post_report": {
-                  "$ref": "#/components/schemas/PostReport"
+                  "$ref": "#/components/schemas/PostReportJson"
                 }
               }
             }
@@ -7114,10 +8167,155 @@
                     "type": "object",
                     "properties": {
                       "post_report": {
-                        "$ref": "#/components/schemas/PostReport"
+                        "$ref": "#/components/schemas/PostReportJson"
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsListsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
                 }
               }
             }
@@ -7132,27 +8330,27 @@
               "type": "object",
               "properties": {
                 "person": {
-                  "$ref": "#/components/schemas/Person"
+                  "$ref": "#/components/schemas/PersonJson"
                 }
               }
             }
           }
         }
       },
-      "EventsArray": {
+      "MessageReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "events": {
+                "message_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/Event"
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
                       }
                     }
                   }
@@ -7162,38 +8360,114 @@
           }
         }
       },
-      "EventsObject": {
+      "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/Event"
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/MessageJson"
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         }
       },
-      "LevelsArray": {
+      "MessagesObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "levels": {
+                "message": {
+                  "$ref": "#/components/schemas/MessageJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/Level"
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
                 }
               }
             }

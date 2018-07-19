@@ -95,7 +95,7 @@ protected
 
   def set_product
     product = nil
-    if current_user
+    if current_user.present?
       if current_user.super_admin?
         if request.headers['X-Current-Product'].present?
           product = Product.find_by(internal_name: request.headers['X-Current-Product'])
@@ -107,7 +107,7 @@ protected
         end
       end
     end
-    product = current_user.try(:product) || Product.find_by(internal_name: params[:product]) if product.nil?
+    product = (current_user.present? && current_user.try(:product)) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
       render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
     else
@@ -121,7 +121,9 @@ protected
   end
 
   def set_person
-    Person.current_user = current_user
+    if current_user.present?
+      Person.current_user = current_user
+    end
   end
 
   def unset_person
@@ -130,18 +132,18 @@ protected
 
   def set_app
     if request.headers['X-App'].present?
-      current_user.app = request.headers['X-App']
-    elsif params[:app].present?
-      current_user.app = params[:app]
-    else
-      if current_user
-        current_user.app = "mobile"
+      if current_user.present?
+        current_user.app = request.headers['X-App']
+      elsif params[:app].present?
+          current_user.app = params[:app]
+      else
+          current_user.app = "mobile"
       end
     end
   end
 
   def unset_app
-    if current_user
+    if current_user.present?
       current_user.app = false
     end
   end

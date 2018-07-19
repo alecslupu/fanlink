@@ -1,5 +1,4 @@
 class LevelsListener
-  include Wisper::Publisher
   include RealTimeHelpers
 
   def self.award_points(user, payload)
@@ -10,5 +9,6 @@ class LevelsListener
     @progress.total ||= 0
     @progress.total += payload["points"]
     @progress.save
+    user.touch
   end
 end

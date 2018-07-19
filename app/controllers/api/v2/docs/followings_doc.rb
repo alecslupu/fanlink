@@ -5,18 +5,22 @@ class Api::V2::Docs::FollowingsDoc < Api::V2::Docs::BaseDoc
   components do
     resp :FollowingsArray => ['HTTP/1.1 200 Ok', :json, data:{
       :followings => [
-        :following => :Following
+        :following => :FollowingJson
       ]
     }]
     resp :FollowersArray => ['HTTP/1.1 200 Ok', :json, data:{
       :followers => [
-        :follower => :Following
+        :follower => :FollowingJson
       ]
     }]
 
     resp :FollowingObject => ['HTTP/1.1 200 Ok', :json, data: {
-      :following => :Following
+      :following => :FollowingJson
     }]
+
+    body! :FollowingForm, :form, data: {
+      :followed_id! => { type: Integer,  desc: 'Person to follow.' }
+      }
   end
 
   api :index, 'Get followers or followings of a user.' do
@@ -33,9 +37,7 @@ class Api::V2::Docs::FollowingsDoc < Api::V2::Docs::BaseDoc
   api :create, 'Follow a person.' do
     need_auth :SessionCookie
     desc "This is used to follow a person."
-    form! data: {
-      :followed_id! => { type: Integer,  desc: 'Person to follow.' }
-      }
+    body_ref :FollowingForm
     response_ref 200 => :FollowingObject
   end
 
