@@ -549,14 +549,13 @@ class Api::V2::Docs::BaseDoc < ApiDoc
   #   }
   # end
 
-  # api :index, '' do
+  # api :index, 'Get all ' do
   #   need_auth :SessionCookie
   #   desc ''
-  #   query :, , desc: ''
   #   response_ref 200 => :
   # end
 
-  # api :create, '' do
+  # api :create, 'Create a ' do
   #   need_auth :SessionCookie
   #   desc ''
   #   query :, , desc: ''
@@ -564,28 +563,20 @@ class Api::V2::Docs::BaseDoc < ApiDoc
   #   response_ref 200 => :
   # end
 
-  # api :list, '' do
+  # api :show, 'Find a ' do
   #   need_auth :SessionCookie
   #   desc ''
-  #   query :, , desc: ''
   #   response_ref 200 => :
   # end
 
-  # api :show, '' do
-  #   need_auth :SessionCookie
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
-
-  # api :update, '' do
+  # api :update, 'Update a ' do
   #   need_auth :SessionCookie
   #   desc ''
   #   body_ref :
   #   response_ref 200 => :
   # end
 
-  # api :destroy, '' do
+  # api :destroy, 'Destroy a ' do
   #   need_auth :SessionCookie
   #   desc ''
   #   response_ref 200 => :OK

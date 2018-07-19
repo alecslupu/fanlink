@@ -126,7 +126,7 @@ JkoApi.routes self do
       end
     end
 
-    resources :assigned_rewards, only: %i[ create ]
+    resources :assigned_rewards, only: %i[ create update destroy ]
 
     resources :badges, except: %i[ destroy ]
 
@@ -153,6 +153,7 @@ JkoApi.routes self do
       collection do
         get "select" => "rewards#index"
       end
+      get "assigned" => "assigned_rewards#index"
     end
 
     resources :steps, except: %i[ create index show update ] do

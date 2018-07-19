@@ -1,7 +1,7 @@
 class Api::V3::AssignedRewardsController < Api::V3::BaseController
   def index
-    @assigned = AssignedReward.all.order(created_at: :asc)
-    return_the @assigned
+    @assignees = paginate(AssignedReward.where(reward_id: params[:reward_id]).order(created_at: :asc))
+    return_the @assignees
   end
 
   def show
@@ -21,17 +21,17 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
       broadcast(:assigned_reward_created, current_user, @assigned)
       return_the @assigned
     else
-      render json: { errors: @assigned.errors.messages }, status: :unprocessable_entity
+      render json: { errors: @assigned.errors.messages.flatten }, status: :unprocessable_entity
     end
   end
 
   def update
     @assigned = AssignedReward.find(params[:id])
-    if @assigned.update_attributes(assigned_reward_params)
+    if @assigned.update_attributes(assigned_reward_update_params)
       broadcast(:assigned_reward_updated, current_user, @assigned)
       return_the @assigned
     else
-      render json: { errors: @assigned.errors.messages }, status: :unprocessable_entity
+      render json: { errors: @assigned.errors.messages.flatten }, status: :unprocessable_entity
     end
   end
 
@@ -51,6 +51,10 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
 private
   def assigned_reward_params
     params.require(:assign).permit(:reward_id, :assigned_type, :assigned_id, :max_times)
+  end
+
+  def assigned_reward_update_params
+    params.require(:assign).permit(:max_times)
   end
 
   def load_assigned

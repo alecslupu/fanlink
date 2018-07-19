@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180718233458) do
+ActiveRecord::Schema.define(version: 20180719193820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20180718233458) do
     t.integer "product_id", null: false
     t.text "name_text_old"
     t.text "internal_name", null: false
-    t.integer "action_type_id", null: false
+    t.integer "action_type_id"
     t.integer "action_requirement", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

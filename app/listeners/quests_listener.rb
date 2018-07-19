@@ -19,8 +19,8 @@ class QuestsListener
                       unlocked.status = StepCompleted.statuses[:unlocked]
                       if unlocked.valid?
                         unlocked.save
-                        unlock.step.touch
-                        unlock.step.quest.touch
+                        # unlock.step.touch
+                        # unlock.step.quest.touch
                       else
                         Rails.logger.tagged("[Completion Created]") { Rails.logger.error "Step: #{unlock.step.id} failed to save for User: #{user.id}"} unless Rails.env.production?
                       end

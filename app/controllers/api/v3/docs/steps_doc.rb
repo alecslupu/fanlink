@@ -1,6 +1,6 @@
-class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
+class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
   doc_tag name: 'Steps', desc: 'Steps for a quest'
-  route_base 'api/v2/steps'
+  route_base 'api/v3/steps'
   components do
     resp :StepObject  => ['HTTP/1.1 200 Ok', :json, data:{
       :step => :StepJson

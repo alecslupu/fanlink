@@ -1,6 +1,6 @@
-class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
+class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
 doc_tag name: 'Products', desc: "Products"
-  route_base 'api/v2/products'
+  route_base 'api/v3/products'
   components do
     resp :ProductObject  => ['HTTP/1.1 200 Ok', :json, data:{
       :product => :ProductJson

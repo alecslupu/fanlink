@@ -1,6 +1,6 @@
-class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
+class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
   doc_tag name: 'QuestCompletions', desc: 'This is used to register an activity as completed.'
-  route_base 'api/v2/quest_completions'
+  route_base 'api/v3/quest_completions'
   components do
     resp :QuestCompletionObject  => ['HTTP/1.1 200 Ok', :json, data:{
       :completion => :QuestCompletionJson

@@ -1,6 +1,6 @@
-class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
+class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
   doc_tag name: 'Quests', desc: "Quests"
-  route_base 'api/v2/quests'
+  route_base 'api/v3/quests'
   components do
     resp :QuestObject  => ['HTTP/1.1 200 Ok', :json, data:{
       :quest => :QuestJson

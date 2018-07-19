@@ -20,4 +20,3 @@ if current_user.app == 'portal'
     json.issued_to badge.issued_to
     json.issued_from badge.issued_from
 end
-#TODO Return issued_to and from

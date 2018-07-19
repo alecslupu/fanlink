@@ -1,6 +1,6 @@
-class Api::V2::Docs::ActivtyTypesDoc < Api::V2::Docs::BaseDoc
+class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
   doc_tag name: 'Tags', desc: 'Tags'
-  route_base 'api/v2/tags'
+  route_base 'api/v3/tags'
   components do
     resp :TagArray  => ['HTTP/1.1 200 Ok', :json, data:{
       :posts => [

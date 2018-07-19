@@ -57,6 +57,7 @@ group :development do
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require:"ap"
+  gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 end
 
 group :test do
@@ -113,6 +114,5 @@ gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'wisper-activerecord'
 gem 'chewy'
-gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 gem 'versionist'
 gem 'jbuilder_cache_multi'
