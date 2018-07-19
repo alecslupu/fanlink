@@ -3,7 +3,7 @@ class QuestsListener
   include RealTimeHelpers
 
   def self.completion_created(user, completion)
-        puts "Completion detected. #{current_user.id}"
+        puts "Completion detected. #{Person.current_user.id}"
         step = Step.find(completion.step_id)
         if step.quest_completions.count >= step.quest_activities.count
           Rails.logger.tagged("[Step Completed]") { Rails.logger.info "Step #{step.id} for #{user.id} completed."} unless Rails.env.production?
@@ -41,25 +41,26 @@ class QuestsListener
     end
   end
 
-  def self.step_created(user, step)
+  def self.create_step_successful(step)
+    Rails.logger.tagged("Step Created Listener") { Rails.logger.info "New step created with Step: #{step.id} with Unlocks: #{step.unlocks}"} unless Rails.env.production?
     if step.unlocks.present?
       StepUnlock.create(step_id: step.unlocks, unlock_id: step.uuid)
     end
   end
 
-  def self.unlocks_updated(user, step)
+  def self.update_step_successful(step)
     if !step.unlocks.empty?
       su = StepUnlock.find_or_initialize_by(unlock_id: step.uuid)
       su.step_id = step.unlocks
       if su.save
-        Rails.logger.tagged("Unlock Update") { Rails.logger.info "Updated unlock for Step: #{step.id} to be unlocked by #{step.unlocks}"} unless Rails.env.production?
+        Rails.logger.tagged("Step Updated Listener") { Rails.logger.info "Updated unlock for Step: #{step.id} to be unlocked by #{step.unlocks}"} unless Rails.env.production?
       else
-        Rails.logger.tagged("Unlock Update") { Rails.logger.error "Failed to update previous unlock for Step: #{step.id} to be unlocked by #{step.unlocks}"} unless Rails.env.production?
+        Rails.logger.tagged("Step Updated Listener") { Rails.logger.error "Failed to update previous unlock for Step: #{step.id} to be unlocked by #{step.unlocks}"} unless Rails.env.production?
       end
     else
       if StepUnlock.exists?(unlock_id: step.uuid)
         StepUnlock.find_by(unlock_id: step.uuid).delete
-        Rails.logger.tagged("Unlock Update") { Rails.logger.error "Deleting unlock for Step: #{step.id}"} unless Rails.env.production?
+        Rails.logger.tagged("Step Updated Listener") { Rails.logger.error "Deleting unlock for Step: #{step.id}"} unless Rails.env.production?
       end
     end
   end
