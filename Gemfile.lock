@@ -675,10 +675,6 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (10.0.2)
-    chewy (5.0.0)
-      activesupport (>= 4.0)
-      elasticsearch (>= 2.0.0)
-      elasticsearch-dsl
     climate_control (0.2.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -716,15 +712,6 @@ GEM
     dotenv-rails (2.4.0)
       dotenv (= 2.4.0)
       railties (>= 3.2, < 6.0)
-    elasticsearch (6.0.2)
-      elasticsearch-api (= 6.0.2)
-      elasticsearch-transport (= 6.0.2)
-    elasticsearch-api (6.0.2)
-      multi_json
-    elasticsearch-dsl (0.1.5)
-    elasticsearch-transport (6.0.2)
-      faraday
-      multi_json
     email_validator (1.6.0)
       activemodel
     erubi (1.7.1)
@@ -1050,7 +1037,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
-  chewy
   coffee-rails (~> 4.2)
   countries
   daemons
