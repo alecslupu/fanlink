@@ -112,7 +112,7 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'wisper-activerecord'
-#gem 'chewy'
+#gem 'chewy'#testTest
 gem 'versionist'
 gem 'jbuilder_cache_multi'
 gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'

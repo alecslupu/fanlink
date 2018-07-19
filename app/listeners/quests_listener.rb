@@ -3,7 +3,7 @@ class QuestsListener
   include RealTimeHelpers
 
   def self.completion_created(user, completion)
-        puts "Completion detected."
+        puts "Completion detected. #{current_user.id}"
         step = Step.find(completion.step_id)
         if step.quest_completions.count >= step.quest_activities.count
           Rails.logger.tagged("[Step Completed]") { Rails.logger.info "Step #{step.id} for #{user.id} completed."} unless Rails.env.production?
