@@ -12,6 +12,7 @@ elsif current_user.tester
           next if quest.ends_at && quest.ends_at < DateTime.now
           json.partial! "quest", locals: { quest: quest, lang: @lang }
         end
+    end
 else
     json.quests do
         json.array!(@quests) do |quest|
