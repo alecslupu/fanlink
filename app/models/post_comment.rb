@@ -1,9 +1,9 @@
 class PostComment < ApplicationRecord
   include PostComment::PortalFilters
   include PostComment::RealTime
-  
-  belongs_to :person
-  belongs_to :post
+
+  belongs_to :person, touch: true
+  belongs_to :post, touch: true
   validates :body, presence: true
 
   has_many :post_comment_mentions, dependent: :destroy

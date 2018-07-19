@@ -48,7 +48,7 @@ class Api::V3::Docs::RewardsDoc < Api::V3::Docs::BaseDoc
   api :create, 'Create a reward' do
     need_auth :SessionCookie
     desc 'Creates a reward'
-    body_ref : :RewardCreateForm
+    body_ref :RewardCreateForm
     response_ref 200 => :RewardObject
   end
 

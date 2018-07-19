@@ -123,6 +123,10 @@
       "description": "User's relationships"
     },
     {
+      "name": "Rewards",
+      "description": "Reward system. Handles linking rewards to various things."
+    },
+    {
       "name": "RoomMemberships",
       "description": "What rooms a user belongs to."
     },
@@ -5871,6 +5875,387 @@
         ]
       }
     },
+    "/rewards": {
+      "get": {
+        "description": "Returns all rewards for the current user's product",
+        "summary": "Get all rewards",
+        "operationId": "Rewards_index",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/RewardArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "post": {
+        "description": "Creates a reward",
+        "summary": "Create a reward",
+        "operationId": "Rewards_create",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RewardCreateForm"
+        },
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/RewardObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/rewards/select": {
+      "get": {
+        "description": "Returns all rewards for the current user's product",
+        "summary": "Get all rewards",
+        "operationId": "Rewards_index",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/RewardArray"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/rewards/{id}": {
+      "get": {
+        "description": "Returns the reward for the provided id.",
+        "summary": "Find a reward",
+        "operationId": "Rewards_show",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/RewardObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "description": "Updates a reward",
+        "summary": "Update a reward",
+        "operationId": "Rewards_update",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RewardUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/RewardObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "put": {
+        "description": "Updates a reward",
+        "summary": "Update a reward",
+        "operationId": "Rewards_update",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RewardUpdateForm"
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
+          "200": {
+            "$ref": "#/components/responses/RewardObject"
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "description": "Soft deletes a reward",
+        "summary": "Destroy a reward",
+        "operationId": "Rewards_destroy",
+        "tags": [
+          "Rewards"
+        ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        },
+        "security": [
+          {
+            "SessionCookie": [
+
+            ]
+          }
+        ]
+      }
+    },
     "/rewards/{reward_id}/assigned": {
       "get": {
         "description": "Returns all assigned rewards for the provided reward id.",
@@ -7131,6 +7516,32 @@
       }
     },
     "schemas": {
+      "ActionTypeJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "internal_name": {
+            "type": "string"
+          },
+          "seconds_lag": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Action Type Response"
+      },
       "ActivityTypeJson": {
         "type": "object",
         "properties": {
@@ -7155,7 +7566,16 @@
             }
           }
         },
-        "description": "Activity Type Object"
+        "description": "Activity Type Reponse"
+      },
+      "AssignedRewardJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "description": "Activity Type Response"
       },
       "BadgeJson": {
         "type": "object",
@@ -7197,7 +7617,7 @@
             "type": "integer"
           }
         },
-        "description": "Block object"
+        "description": "Block Reponse"
       },
       "CategoryJson": {
         "type": "object",
@@ -7228,7 +7648,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Category Reponse"
       },
       "EventJson": {
         "type": "object",
@@ -7663,6 +8084,15 @@
           }
         },
         "description": "Private Person Response"
+      },
+      "PersonRewardJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "description": "Person Reward Response"
       },
       "PostCommentReportJson": {
         "type": "object",
@@ -8117,7 +8547,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Quest Completion Response"
       },
       "QuestJson": {
         "type": "object",
@@ -8171,7 +8602,7 @@
             }
           }
         },
-        "description": "Step Response"
+        "description": "Quest Response"
       },
       "RecommendedPeopleJson": {
         "$ref": "#/components/schemas/Person"
@@ -8201,6 +8632,15 @@
           }
         },
         "description": "Relationship Response"
+      },
+      "RewardJson": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        },
+        "description": "Reward Response"
       },
       "RoomMembershipJson": {
         "type": "object",
@@ -9151,6 +9591,124 @@
               },
               "required": [
                 "post"
+              ]
+            }
+          }
+        }
+      },
+      "RewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
+      },
+      "RewardUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
               ]
             }
           }
@@ -10138,6 +10696,44 @@
           }
         }
       },
+      "RewardObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "$ref": "#/components/schemas/RewardJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rewards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "reward": {
+                        "$ref": "#/components/schemas/RewardJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "RoomsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10176,21 +10772,6 @@
           }
         }
       },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
       "ActionTypeObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10223,6 +10804,21 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
                 }
               }
             }

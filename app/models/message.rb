@@ -8,7 +8,7 @@ class Message < ApplicationRecord
 
   normalize_attributes :body
 
-  belongs_to :person
+  belongs_to :person, touch: true
   belongs_to :room
 
   has_image_called :picture
@@ -18,8 +18,10 @@ class Message < ApplicationRecord
   has_many :message_reports, dependent: :destroy
   has_paper_trail
 
-  scope :for_date_range, -> (room, from, to, limit = nil) { where(room: room).where("created_at >= ?", from.beginning_of_day).
-                                                        where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit) }
+  scope :for_date_range, -> (room, from, to, limit = nil) {
+          where(room: room).where("created_at >= ?", from.beginning_of_day).
+            where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit)
+        }
   scope :for_product, -> (product) { joins(:room).where("rooms.product_id = ?", product.id) }
   scope :pinned, -> (param) { joins(:person).where("people.pin_messages_from = ?", (param.downcase == "yes") ? true : false) }
   scope :publics, -> { joins(:room).where("rooms.public = ?", true) }
@@ -29,10 +31,9 @@ class Message < ApplicationRecord
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
-          include: { message_mentions: { except: %i[ message_id ] },
-                      person: { only: %i[ id username name designation product_account chat_banned badge_points
-                                        level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] },
-          })
+          include: {message_mentions: {except: %i[ message_id ]},
+                    person: {only: %i[ id username name designation product_account chat_banned badge_points
+                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ]}})
   end
 
   def create_time
