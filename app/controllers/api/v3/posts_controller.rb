@@ -1,7 +1,7 @@
 class Api::V3::PostsController < Api::V3::BaseController
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
-  skip_before_action :require_login, :set_product, :set_chewy_filter, only: %i[ share ]
+  skip_before_action :require_login, :set_product, only: %i[ share ]
   #**
   # @api {post} /posts Create a post.
   # @apiName CreatePost
