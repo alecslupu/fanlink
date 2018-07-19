@@ -53,4 +53,10 @@ Rails.application.configure do
 
   config.web_console.whitelisted_ips = '172.16.0.0/12'
 
+
+      #load openapi files
+  Dir['app/controllers/api/v*/docs/*'].each {
+    |p| config.eager_load_paths << p
+  }
+
 end

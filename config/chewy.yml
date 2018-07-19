@@ -1,11 +1,11 @@
-# config/chewy.yml
-# separate environment configs
-test:
-  host: <%= ENV.fetch("FANLINK_ES_HOST", "localhost:9200") %>
-  prefix: 'test'
-development:
-  host: <%= ENV.fetch("FANLINK_ES_HOST", "localhost:9200") %>
-staging:
-  host: https://gb0wvruxt8:qpm13smbdo@cherry-1648771.us-east-1.bonsaisearch.net
-production:
-  host:
+# # config/chewy.yml
+# # separate environment configs
+# test:
+#   host: <%= ENV.fetch("FANLINK_ES_HOST", "localhost:9200") %>
+#   prefix: 'test'
+# development:
+#   host: <%= ENV.fetch("FANLINK_ES_HOST", "localhost:9200") %>
+# staging:
+#   host: https://gb0wvruxt8:qpm13smbdo@cherry-1648771.us-east-1.bonsaisearch.net
+# production:
+#   host:
