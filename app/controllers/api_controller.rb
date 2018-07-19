@@ -7,7 +7,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app, :set_chewy_filter
+  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app
   after_action :unset_person, :unset_app
 
   #
@@ -148,7 +148,7 @@ protected
     end
   end
 
-  def set_chewy_filter
-    Chewy.settings = {prefix: ActsAsTenant.current_tenant.internal_name}
-  end
+  # def set_chewy_filter
+  #   Chewy.settings = {prefix: ActsAsTenant.current_tenant.internal_name}
+  # end
 end
