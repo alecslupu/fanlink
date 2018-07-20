@@ -80,8 +80,8 @@ class Api::V3::Docs::BaseDoc < ApiDoc
     schema :FollowingJson => [
       {
         :id => { type: Integer },
-        :follower => :Person,
-        :followed => :Person
+        :follower => :PersonJson,
+        :followed => :PersonJson
       },
       desc: 'Following Response'
     ]
@@ -140,7 +140,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         :audio_url => { type: String },
         :audio_size => { type: String },
         :audio_content_type => { type: String },
-        :person => :Person,
+        :person => :PersonJson,
         :mentions => :Mention
       },
       desc: 'Message Response'
@@ -265,7 +265,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         :mentions => [
           :mention => :Mention
         ],
-        :person => :Person
+        :person => :PersonJson
       },
       desc: 'Post Comment Response'
     ]
@@ -314,7 +314,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         :audio_url => { type: String },
         :audio_size => { type: Integer},
         :audio_content_type => { type: String },
-        :person => :Person,
+        :person => :PersonJson,
         :post_reaction_counts => { type: Integer },
         :post_reaction => :PostReaction,
         :global => { type: Boolean },
@@ -352,7 +352,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
     schema :PostListJson => [
       {
         :id => { type: Integer },
-        :person => :Person,
+        :person => :PersonJson,
         :body => {  type: String },
         :picture_url => { type: String },
         :global => { type: Boolean },
@@ -452,15 +452,15 @@ class Api::V3::Docs::BaseDoc < ApiDoc
       },
       desc: 'Quest Response'
     ]
-    schema :RecommendedPeopleJson => :Person
+    schema :RecommendedPeopleJson => :PersonJson
     schema :RelationshipJson => [
       {
         :id => { type: Integer },
         :status => { type: String },
         :create_time => { type: DateTime },
         :update_time => { type: DateTime },
-        :requested_by => :Person,
-        :requested_to => :Person
+        :requested_by => :PersonJson,
+        :requested_to => :PersonJson
       },
       desc: 'Relationship Response'
     ]
@@ -485,14 +485,14 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         :picture_url => { type: String },
         :public => { type: Boolean },
         :members => [
-          :member => :Person
+          :member => :PersonJson
         ]
       },
       desc: 'Room Response'
     ]
     schema :SessionJson => [
       {
-        :person => :PersonPrivate
+        :person => :PersonPrivateJson
       },
       desc: 'Session Response'
     ]
