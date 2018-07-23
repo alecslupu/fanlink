@@ -57,6 +57,7 @@ group :development do
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require:"ap"
+  gem "apigen", :path => 'lib/gems/apigen'
 end
 
 group :test do

@@ -43,6 +43,11 @@ GIT
       excon (>= 0.16.0, < 1.0)
       json (>= 1.7.7, <= 2.1)
 
+PATH
+  remote: lib/gems/apigen
+  specs:
+    apigen (0.0.11)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -1031,6 +1036,7 @@ DEPENDENCIES
   administrate-field-enum!
   administrate-field-paperclip!
   api-pagination
+  apigen!
   attribute_normalizer
   awesome_print
   aws-sdk
