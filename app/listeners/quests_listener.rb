@@ -49,7 +49,7 @@ class QuestsListener
   end
 
   def self.update_step_successful(step)
-    if !step.unlocks.empty?
+    if step&.unlocks != nil
       su = StepUnlock.find_or_initialize_by(unlock_id: step.uuid)
       su.step_id = step.unlocks
       if su.save

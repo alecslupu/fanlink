@@ -14,10 +14,6 @@ module Fanlink
       controller_class_path.map!(&:camelize).join("::")
     end
 
-    def show_action?
-      !options['skip_show']
-    end
-
     def model_exists?
       File.exist?("#{Rails.root}/app/models/#{singular_name}.rb")
     end
