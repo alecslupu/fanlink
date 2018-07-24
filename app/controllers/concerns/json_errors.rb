@@ -34,7 +34,7 @@ module JSONErrors
           base: Array.wrap(errors)
         }
       }
-
+      Rollbar.e(data)
       render json: data , status: status
     end
 
