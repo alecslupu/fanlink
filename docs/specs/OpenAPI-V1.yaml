@@ -10579,26 +10579,12 @@ components:
             id:
               type: integer
               format: int32
-            product_id:
-              type: integer
-              format: int32
             internal_name:
               type: string
             points:
               type: integer
               format: int32
-            created_at:
-              type: string
-            updated_at:
-              type: string
-            picture_file_name:
-              type: string
-            picture_content_type:
-              type: string
-            picture_file_size:
-              type: integer
-              format: int32
-            picture_updated_at:
+            picture_url:
               type: string
             description:
               type: string
@@ -10606,15 +10592,9 @@ components:
               type: string
           required:
           - id
-          - product_id
           - internal_name
           - points
-          - created_at
-          - updated_at
-          - picture_file_name
-          - picture_content_type
-          - picture_file_size
-          - picture_updated_at
+          - picture_url
           - description
           - name
       required:
@@ -10635,18 +10615,7 @@ components:
               type: string
             purchase_url:
               type: string
-            picture_file_name:
-              type: string
-            picture_content_type:
-              type: string
-            picture_file_size:
-              type: integer
-              format: int32
-            picture_updated_at:
-              type: string
-            created_at:
-              type: string
-            updated_at:
+            picture_url:
               type: string
             available:
               type: boolean
@@ -10664,12 +10633,7 @@ components:
           - product_id
           - price
           - purchase_url
-          - picture_file_name
-          - picture_content_type
-          - picture_file_size
-          - picture_updated_at
-          - created_at
-          - updated_at
+          - picture_url
           - available
           - name
           - description
@@ -10762,8 +10726,10 @@ components:
               format: int32
             created_at:
               type: string
+              format: date-time
             updated_at:
               type: string
+              format: date-time
           required:
           - id
           - message_id

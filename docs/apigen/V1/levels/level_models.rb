@@ -1,4 +1,4 @@
-FanlinkApi::API.model :level_json do
+FanlinkApi::API.model :level_app_json do
   type :object do
     level :object do
       id :int32

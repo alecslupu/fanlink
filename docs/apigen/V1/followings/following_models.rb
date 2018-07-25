@@ -1,4 +1,4 @@
-FanlinkApi::API.model :following_json do
+FanlinkApi::API.model :following_app_json do
   type :object do
     following :object do
       id :int32

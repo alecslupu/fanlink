@@ -1,4 +1,4 @@
-FanlinkApi::API.model :merchandise_json do
+FanlinkApi::API.model :merchandise_app_json do
   type :object do
     merchandise :object do
       id :int32

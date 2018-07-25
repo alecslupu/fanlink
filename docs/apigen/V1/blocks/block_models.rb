@@ -1,4 +1,4 @@
-FanlinkApi::API.model :block_json do
+FanlinkApi::API.model :block_app_json do
   type :object do
     block :object do
       id :int32

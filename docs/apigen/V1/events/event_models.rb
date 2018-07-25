@@ -1,4 +1,4 @@
-FanlinkApi::API.model :event_json do
+FanlinkApi::API.model :event_app_json do
   type :object do
     event :object do
       id :int32

@@ -1,4 +1,4 @@
-FanlinkApi::API.model :badge_json do
+FanlinkApi::API.model :badge_app_json do
   type :object do
     badge :object do
       id :int32

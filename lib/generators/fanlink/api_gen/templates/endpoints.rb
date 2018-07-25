@@ -7,7 +7,13 @@ FanlinkApi::API.endpoint <%= ":get_#{plural_name}" %> do
     status 200
     type :object do
       <%= plural_name %> :array do
-        type :<%= singular_name %>_json
+        type :oneof do
+          discriminator :type
+          map(
+            <%= singular_name %>_app_json: <%= singular_name %>,
+            <%= singular_name %>_portal_json: <%= singular_name %>
+          )
+        end
       end
     end
   end
@@ -47,7 +53,7 @@ FanlinkApi::API.endpoint <%= ":get_a_#{singular_name}" %> do
   output :success do
     status 200
     type :object do
-      type :<%= singular_name %>_json
+      type :<%= singular_name %>_app_json
     end
   end
 
@@ -127,7 +133,7 @@ FanlinkApi::API.endpoint <%= ":create_a_#{singular_name}" %> do
   output :success do
     status 200
     type :object do
-      type :<%= singular_name %>_json
+      type :<%= singular_name %>_app_json
     end
   end
 
@@ -241,7 +247,7 @@ FanlinkApi::API.endpoint <%= ":update_a_#{singular_name}" %> do
   output :success do
     status 200
     type :object do
-      type :<%= singular_name %>_json
+      type :<%= singular_name %>_app_json
     end
   end
 
