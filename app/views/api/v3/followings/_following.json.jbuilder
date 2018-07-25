@@ -1,3 +1,11 @@
 json.id following.id.to_s
-json.follower following.follower, partial: "api/v1/people/person", as: :person
-json.followed following.followed, partial: "api/v1/people/person", as: :person
+json.follower do
+    json.cache ['v3', following.follower] do
+        json.partial! 'api/v3/people/person', locals: { person: following.follower }
+    end
+end
+json.followed do
+    json.cache! ['v3', following.followed] do
+        json.partial! 'api/v3/people/person', locals: { person: following.followed}
+    end
+end

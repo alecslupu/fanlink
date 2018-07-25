@@ -10474,13 +10474,10 @@ components:
             blocked_id:
               type: integer
               format: int32
-            created_at:
-              type: string
           required:
           - id
           - blocker_id
           - blocked_id
-          - created_at
       required:
       - block
     event_json:
@@ -10492,7 +10489,35 @@ components:
             id:
               type: integer
               format: int32
-            product_id:
+            name:
+              type: string
+            description:
+              type: string
+            starts_at:
+              type: string
+            ends_at:
+              type: string
+            ticket_url:
+              type: string
+            place_identifier:
+              type: string
+          required:
+          - id
+          - name
+          - description
+          - starts_at
+          - ends_at
+          - ticket_url
+          - place_identifier
+      required:
+      - event
+    event_portal_json:
+      type: object
+      properties:
+        event:
+          type: object
+          properties:
+            id:
               type: integer
               format: int32
             name:
@@ -10515,7 +10540,6 @@ components:
               type: boolean
           required:
           - id
-          - product_id
           - name
           - description
           - starts_at
@@ -10536,22 +10560,14 @@ components:
             id:
               type: integer
               format: int32
-            follower_id:
-              type: integer
-              format: int32
-            followed_id:
-              type: integer
-              format: int32
-            created_at:
-              type: string
-            updated_at:
-              type: string
+            follower:
+              "$ref": "#/components/schemas/person_json"
+            following:
+              "$ref": "#/components/schemas/person_json"
           required:
           - id
-          - follower_id
-          - followed_id
-          - created_at
-          - updated_at
+          - follower
+          - following
       required:
       - following
     level_json:
