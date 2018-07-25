@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # draw :v3
   draw :jko
 
+  get '/status' => 'application#status'
   #temporary hack to get around need for Accept header with api stuff
   # TODO: move the password reset controller update out of the api
   post "/people/password_reset" => "api/v1/password_resets#update"
