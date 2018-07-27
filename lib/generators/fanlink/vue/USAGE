@@ -1,8 +1,10 @@
 Description:
-    Explain the generator
+    Create Vue files corresponding to the Rails views
 
 Example:
-    rails generate fanlink Thing
+    rails generate vue [namespace]/[controller]/action
 
     This will create:
-        what/will/it/create
+        app/javascript/packs/[namespace]/[controller]/action.js
+        app/javascript/views/[namespace]/[controller]/action.vue
+        app/views/[namespace]/[controller]/action.html.erb
