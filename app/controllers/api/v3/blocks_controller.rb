@@ -1,5 +1,5 @@
 class Api::V3::BlocksController < Api::V3::BaseController
-  #**
+  # **
   # @api {post} /blocks Block a person.
   # @apiName CreateBlock
   # @apiGroup Blocks
@@ -27,7 +27,7 @@ class Api::V3::BlocksController < Api::V3::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "You already blocked that person, blah blah blah" }
-  #*
+  # *
 
   def create
     blocked = Person.find(block_params[:blocked_id])
@@ -42,7 +42,7 @@ class Api::V3::BlocksController < Api::V3::BaseController
     end
   end
 
-  #**
+  # **
   # @api {delete} /blocks/:id Unblock a person.
   # @apiName DeleteBlock
   # @apiGroup Blocks
@@ -59,8 +59,8 @@ class Api::V3::BlocksController < Api::V3::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 if block not found
-  #*
-  #*
+  # *
+  # *
 
   def destroy
     @block = current_user.blocks_by.find(params[:id])

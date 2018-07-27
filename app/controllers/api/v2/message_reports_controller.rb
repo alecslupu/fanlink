@@ -4,7 +4,7 @@ class Api::V2::MessageReportsController < Api::V2::BaseController
   load_up_the Room, from: :room_id
   load_up_the MessageReport, only: :update
 
-  #**
+  # **
   # @api {post} /rooms/:room_id/message_reports Report a message in a public room.
   # @apiName CreateMessageReport
   # @apiGroup Messages
@@ -32,10 +32,10 @@ class Api::V2::MessageReportsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "I don't like your reason, etc." }
-  #*
+  # *
 
   def create
-    #room id is involved primarily so AaT can do its thing
+    # room id is involved primarily so AaT can do its thing
     parms = message_report_params
     message = Message.find(parms[:message_id])
     if message.room.private?
@@ -50,7 +50,7 @@ class Api::V2::MessageReportsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /message_reports Get list of messages reports (ADMIN).
   # @apiName GetMessageReports
   # @apiGroup Messages
@@ -80,14 +80,14 @@ class Api::V2::MessageReportsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     @message_reports = paginate apply_filters
     return_the @message_reports
   end
 
-  #**
+  # **
   # @api {patch} /message_reports/:id Update a Message Report. (Admin)
   # @apiName UpdateMessageReport
   # @apiGroup Messages
@@ -114,7 +114,7 @@ class Api::V2::MessageReportsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Invalid or missing status." }
-  #*
+  # *
 
   def update
     parms = message_report_update_params

@@ -1,15 +1,15 @@
 class Api::V1::Docs::EventsDoc < Api::V1::Docs::BaseDoc
-  doc_tag name: 'Events', desc: "Events"
-  route_base 'api/v1/events'
+  doc_tag name: "Events", desc: "Events"
+  route_base "api/v1/events"
 
   components do
-    resp :EventsArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :events => [
-        :event => :Event
+    resp EventsArray: ["HTTP/1.1 200 Ok", :json, data: {
+      events: [
+        event: :Event
       ]
     }]
-    resp :EventsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :event => :Event
+    resp EventsObject: ["HTTP/1.1 200 Ok", :json, data: {
+      event: :Event
     }]
   end
 

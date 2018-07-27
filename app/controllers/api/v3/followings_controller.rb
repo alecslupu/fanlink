@@ -2,7 +2,7 @@ class Api::V3::FollowingsController < Api::V3::BaseController
   load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
   load_up_the Following, except: %i[ create index ]
 
-  #**
+  # **
   # @api {post} /followings Follow a person.
   # @apiName CreateFollowing
   # @apiGroup Following
@@ -22,7 +22,7 @@ class Api::V3::FollowingsController < Api::V3::BaseController
   #       "followed" : { ...public json of the person followed }
   #     }
   #
-  #*
+  # *
 
   def create
     @following = current_user.follow(@followed)
@@ -33,7 +33,7 @@ class Api::V3::FollowingsController < Api::V3::BaseController
     end
   end
 
-  #**
+  # **
   # @api {delete} /followings/:id Unfollow a person.
   # @apiName DeleteFollowing
   # @apiGroup Following
@@ -47,14 +47,14 @@ class Api::V3::FollowingsController < Api::V3::BaseController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #*
+  # *
 
   def destroy
     @following.destroy
     head :ok
   end
 
-  #**
+  # **
   # @api {get} /followings Get followers or followings of a user.
   # @apiName GetFollowings
   # @apiGroup Following
@@ -78,7 +78,7 @@ class Api::V3::FollowingsController < Api::V3::BaseController
   #     [ ... person json of follower/followed....],
   #     ....
   #   }
-  #*
+  # *
 
   def index
     followed_id = params[:followed_id].to_i

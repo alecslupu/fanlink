@@ -1,5 +1,5 @@
 class Api::V1::RoomMembershipsController < Api::V1::BaseController
-  #**
+  # **
   # @api {post} /room/:id/room_memberships Add a room member.
   # @apiName CreateRoomMembership
   # @apiGroup Rooms
@@ -18,7 +18,7 @@ class Api::V1::RoomMembershipsController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 or 422 Unprocessable - Room not active (404), current user not room owner (404), person is unwanted or illigitimate (422), etc.
-  #*
+  # *
 
   def create
     room = Room.active.privates.find_by(created_by_id: current_user.id, id: params[:room_id].to_i)

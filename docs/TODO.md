@@ -26,3 +26,49 @@
 - App/Portal Separation
   * Show hidden messages for the portal
   * ~~Show future posts for portal~~
+- Get user block list
+
+
+####JSON Cleanup
+- Badge Actions
+    * Return badge name and ID instead of entire badge object
+- Badges
+    * Reduce index json data.
+- Blocks
+    * Return ID and username instead of entire person object
+- Events
+    * Reduce index json data.
+- Followings
+    * Return ID and username instead of entire person object
+- Levels
+    * Reduce index json data.
+- Merchandise
+    * Reduce index json data.
+- Message Reports
+    * Reduce index json data.
+- Messages
+    * Reduce index json data.
+- Password Resets
+    *
+- People
+    * Reduce index json data.
+- Post Comment Reports
+    *
+- Post Comments
+    *
+- Post Reactions
+    *
+- Posts
+    * Reduce index json data.
+- Recommended People
+    *
+- Recommended Posts
+    * Reduce index json data.
+- Relationships
+    *
+- Room Memberships
+    *
+- Rooms
+    *
+- Sessions
+    *

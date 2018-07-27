@@ -1,5 +1,5 @@
 class Api::V1::MerchandiseController < Api::V1::BaseController
-  #**
+  # **
   # @api {get} /merchandise Get available merchandise.
   # @apiName GetMerchandise
   # @apiGroup Merchandise
@@ -17,13 +17,13 @@ class Api::V1::MerchandiseController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
-  #*
+  # *
 
   def index
     @merchandise = Merchandise.listable.order(:priority)
   end
 
-  #**
+  # **
   # @api {get} /merchandise/:id Get a single piece of merchandise.
   # @apiName GetMerchandise
   # @apiGroup Merchandise
@@ -49,7 +49,7 @@ class Api::V1::MerchandiseController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def show
     @merchandise = Merchandise.listable.find(params[:id])

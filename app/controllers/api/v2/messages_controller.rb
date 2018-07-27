@@ -5,7 +5,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   load_up_the Room, from: :room_id, except: %i[ update ]
 
 
-  #**
+  # **
   # @api {get} /rooms/:room_id/messages Get messages.
   # @apiName GetMessages
   # @apiGroup Messages
@@ -36,7 +36,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     room = Room.find(params[:room_id])
@@ -51,7 +51,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   end
 
 
-  #**
+  # **
   # @api {post} /rooms/:room_id/messages Create a message in a room.
   # @apiName CreateMessage
   # @apiGroup Messages
@@ -84,7 +84,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Body is required, blah blah blah" }
-  #*
+  # *
 
   def create
     room = Room.find(params[:room_id])
@@ -107,7 +107,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {delete} /rooms/:room_id/messages/:id Delete (hide) a single message.
   # @apiName DeleteMessage
   # @apiGroup Messages
@@ -123,7 +123,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
-  #*
+  # *
 
   def destroy
     room = Room.find(params[:room_id])
@@ -137,7 +137,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
       head :unauthorized
     end
   end
-  #**
+  # **
   # @api {get} /messages Get a list of messages without regard to room (ADMIN ONLY).
   # @apiName ListMessages
   # @apiGroup Messages
@@ -184,14 +184,14 @@ class Api::V2::MessagesController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unautorized
-  #*
+  # *
 
   def list
     @messages = paginate apply_filters
     return_the @messages
   end
 
-  #**
+  # **
   # @api {get} /rooms/:room_id/messages/id Get a single message.
   # @apiName GetMessage
   # @apiGroup Messages
@@ -216,7 +216,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def show
     room = Room.find(params[:room_id])
@@ -232,7 +232,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {patch} /messages/:id Update a message
   # @apiName UpdateMessage
   # @apiGroup Messages
@@ -256,7 +256,7 @@ class Api::V2::MessagesController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
-  #*
+  # *
 
   def update
     @message.update_attributes(message_update_params)

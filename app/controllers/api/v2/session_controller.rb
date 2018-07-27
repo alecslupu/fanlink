@@ -4,7 +4,7 @@ class Api::V2::SessionController < Api::V2::BaseController
   skip_before_action :set_product, except: %i[ create ]
   skip_after_action :unset_app, only: %i[ create destroy ]
 
-  #**
+  # **
   # @api {get} /session Check a session.
   # @apiName GetSession
   # @apiGroup Sessions
@@ -27,7 +27,7 @@ class Api::V2::SessionController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def index
     if @person = current_user
@@ -37,7 +37,7 @@ class Api::V2::SessionController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {post} /session Log someone in.
   # @apiName CreateSession
   # @apiGroup Sessions
@@ -64,7 +64,7 @@ class Api::V2::SessionController < Api::V2::BaseController
   #       "email": "addr@example.com",
   #       ...see person get for the rest of the fields...
   #     }
-  #*
+  # *
 
   def create
     @person = nil
@@ -86,7 +86,7 @@ class Api::V2::SessionController < Api::V2::BaseController
     return_the @person
   end
 
-  #**
+  # **
   # @api {delete} /session Log someone out.
   # @apiName DestroySession
   # @apiGroup Sessions
@@ -94,7 +94,7 @@ class Api::V2::SessionController < Api::V2::BaseController
   #
   # @apiDescription
   #   This is used to log someone out.
-  #*
+  # *
 
   def destroy
     logout

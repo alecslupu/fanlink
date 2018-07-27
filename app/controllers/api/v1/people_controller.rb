@@ -1,12 +1,12 @@
 class Api::V1::PeopleController < Api::V1::BaseController
-  #TODO: Lock down GET /people to admin only or something.
+  # TODO: Lock down GET /people to admin only or something.
   prepend_before_action :logout, only: :create
 
   load_up_the Person, except: %i[ index ]
   skip_before_action :require_login, only: %i[ create ]
 
 
-  #**
+  # **
   # @api {patch} /people/:id/change_password Change your password.
   # @apiName ChangePassword
   # @apiGroup People
@@ -26,7 +26,7 @@ class Api::V1::PeopleController < Api::V1::BaseController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok or 422
-  #*
+  # *
 
   def change_password
     if @person == current_user
@@ -45,7 +45,7 @@ class Api::V1::PeopleController < Api::V1::BaseController
     end
   end
 
-  #**
+  # **
   # @api {post} /people Create person.
   # @apiName CreatePerson
   # @apiGroup People
@@ -99,7 +99,7 @@ class Api::V1::PeopleController < Api::V1::BaseController
   #       ....see show action for person json...,
   #       "email" : "foo@example.com"
   #     }
-  #*
+  # *
 
   def create
     if !check_gender
@@ -125,7 +125,7 @@ class Api::V1::PeopleController < Api::V1::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /people Get a list of people.
   # @apiName GetPeople
   # @apiGroup People
@@ -151,14 +151,14 @@ class Api::V1::PeopleController < Api::V1::BaseController
   #     "people": [
   #         {...see show action for person json....},....
   #      ]
-  #*
+  # *
 
   def index
     @people = paginate apply_filters
     return_the @people
   end
 
-  #**
+  # **
   # @api {get} /people/:id Get a person.
   # @apiName GetPerson
   # @apiGroup People
@@ -200,14 +200,14 @@ class Api::V1::PeopleController < Api::V1::BaseController
   #       "created_at": "2018-03-12T18:55:30Z",
   #       "updated_at": "2018-03-12T18:55:30Z"
   #     }
-  #*
+  # *
 
   def show
     @person = Person.find(params[:id])
     return_the @person
   end
 
-  #**
+  # **
   # @api {put | patch} /people/:id Update person.
   # @apiName UpdatePerson
   # @apiGroup People
@@ -252,7 +252,7 @@ class Api::V1::PeopleController < Api::V1::BaseController
   #     "person": { // The full private version of the person.
   #       ...see create action....
   #     }
-  #*
+  # *
 
   def update
     if !check_gender
@@ -286,6 +286,6 @@ private
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password ] +
-                                   ( (current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []))
+                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []))
   end
 end

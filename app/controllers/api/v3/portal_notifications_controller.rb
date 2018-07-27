@@ -28,7 +28,6 @@ class Api::V3::PortalNotificationsController < Api::V3::BaseController
   end
 
   def destroy
-
   end
 
 private

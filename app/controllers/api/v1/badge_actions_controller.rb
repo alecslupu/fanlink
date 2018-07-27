@@ -1,7 +1,7 @@
 class Api::V1::BadgeActionsController < Api::V1::BaseController
   before_action :load_action_type
 
-  #**
+  # **
   # @api {post} /badge_actions Create a badge action.
   # @apiName CreateBadgeAction
   # @apiGroup Badges
@@ -36,7 +36,7 @@ class Api::V1::BadgeActionsController < Api::V1::BaseController
   #       { "Action type invalid, cannot do that action again, blah blah blah" }
   #     HTTP/1.1 429 - Not enough time since last submission of this action type
   #           or duplicate action type, person, identifier combination
-  #*
+  # *
   def create
     if @action_type.seconds_lag > 0 && current_user.badge_actions.where(action_type: @action_type).
         where("created_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?

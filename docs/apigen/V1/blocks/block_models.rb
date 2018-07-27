@@ -7,3 +7,13 @@ FanlinkApi::API.model :block_app_json do
     end
   end
 end
+
+FanlinkApi::API.model :block_portal_json do
+  type :object do
+    block :object do
+      id :int32
+      blocker_id :int32
+      blocked_id :int32
+    end
+  end
+end

@@ -1,5 +1,5 @@
 class Api::V3::NotificationDeviceIdsController < Api::V3::BaseController
-  #**
+  # **
   # @api {post} /notification_device_ids Add a new device id for a person.
   # @apiName CreateNotificationDeviceId
   # @apiGroup People
@@ -18,7 +18,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V3::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Device ID already registered" }
-  #*
+  # *
 
   def create
     if params[:device_id].present?
@@ -33,7 +33,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V3::BaseController
     end
   end
 
-  #**
+  # **
   # @api {delete} /notification_device_ids Delete a device id
   # @apiName DeleteNotificationDeviceId
   # @apiGroup People
@@ -49,7 +49,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V3::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def destroy
     if params[:device_id].present?

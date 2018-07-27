@@ -1,5 +1,5 @@
 class Api::V3::RecommendedPeopleController < Api::V3::BaseController
-  #**
+  # **
   # @api {get} /people/recommended Get recommended people.
   # @apiName GetRecommendedPeople
   # @apiGroup People
@@ -15,7 +15,7 @@ class Api::V3::RecommendedPeopleController < Api::V3::BaseController
   #     [ ... person json ...],
   #     ....
   #   }
-  #*
+  # *
 
   def index
     @people = Person.where(recommended: true).where.not(id: current_user).where.not(id: current_user.following)

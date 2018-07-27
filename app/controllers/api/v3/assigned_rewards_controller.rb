@@ -10,7 +10,7 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
   end
 
   def create
-    if params[:assign][:assigned_type] == 'ActionType'
+    if params[:assign][:assigned_type] == "ActionType"
       action_type = ActionType.find(params[:assign][:assigned_id])
       reward = Reward.find(params[:assign][:reward_id])
       reward.series = action_type.internal_name unless reward.series.present?
@@ -58,7 +58,7 @@ private
   end
 
   def load_assigned
-    resource, id = request.path.split('/')[1,2]
+    resource, id = request.path.split("/")[1, 2]
     @assigned = resource.singularize.classify.constantize.find(id)
   end
 end

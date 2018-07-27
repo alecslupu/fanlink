@@ -1,7 +1,7 @@
 class Api::V2::PostCommentsController < Api::V2::BaseController
   before_action :load_post, except: %i[ list ]
 
-  #**
+  # **
   # @api {post} /posts/:id/comments Create a comment on a post.
   # @apiName CreatePostComment
   # @apiGroup Posts
@@ -52,7 +52,7 @@ class Api::V2::PostCommentsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Body is required, blah blah blah" }
-  #*
+  # *
 
   def create
     @post_comment = @post.post_comments.create(post_comment_params)
@@ -60,7 +60,7 @@ class Api::V2::PostCommentsController < Api::V2::BaseController
     return_the @post_comment
   end
 
-  #**
+  # **
   # @api {delete} /posts/:post_id/comments/:id Delete a comment on a post.
   # @apiName DeletePostComment
   # @apiGroup Posts
@@ -80,7 +80,7 @@ class Api::V2::PostCommentsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404
-  #*
+  # *
 
   def destroy
     comment = @post.comments.find(params[:id])
@@ -92,7 +92,7 @@ class Api::V2::PostCommentsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /posts/:id/comments Get the comments on a post.
   # @apiName GetPostComments
   # @apiGroup Posts
@@ -119,14 +119,14 @@ class Api::V2::PostCommentsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     @post_comments = paginate @post.comments.visible.order(created_at: :desc)
     return_the @post_comments
   end
 
-  #**
+  # **
   # @api {get} /post_comments/list Get a list of post comments (ADMIN).
   # @apiName ListPostComments
   # @apiGroup Posts
@@ -170,7 +170,7 @@ class Api::V2::PostCommentsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
-  #*
+  # *
 
   def list
     @post_comments = paginate apply_filters

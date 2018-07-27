@@ -2,7 +2,7 @@ class Api::V2::PostReactionsController < Api::V2::BaseController
   load_up_the Post, from: :post_id
   load_up_the PostReaction, only: %i[ destroy update ]
 
-  #**
+  # **
   # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction
   # @apiGroup Posts
@@ -33,7 +33,7 @@ class Api::V2::PostReactionsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "I don't like your reaction, etc." }
-  #*
+  # *
 
   def create
     parms = post_reaction_params
@@ -45,7 +45,7 @@ class Api::V2::PostReactionsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {delete} /posts/:post_id/reactions/:id Delete a reaction to a post.
   # @apiName DeletePostReaction
   # @apiGroup Posts
@@ -65,7 +65,7 @@ class Api::V2::PostReactionsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404
-  #*
+  # *
 
   def destroy
     if @post_reaction.person == current_user
@@ -76,7 +76,7 @@ class Api::V2::PostReactionsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {post} /posts/:post_id/reactions/:id Update a reaction to a post.
   # @apiName UpdatePostReaction
   # @apiGroup Posts
@@ -110,7 +110,7 @@ class Api::V2::PostReactionsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "I don't like your new reaction either, etc." }
-  #*
+  # *
 
   def update
     if @post_reaction.person == current_user

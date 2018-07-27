@@ -1,376 +1,376 @@
 class Api::V1::Docs::BaseDoc < ApiDoc
-  route_base 'api/v1/base'
+  route_base "api/v1/base"
   components do
-    api_key :SessionCookie, type: 'apiKey', field: '_fanlink_session', in: 'cookie'
+    api_key :SessionCookie, type: "apiKey", field: "_fanlink_session", in: "cookie"
     # schema :BadgeAction => [{}]
-    schema :Badge => [
+    schema Badge: [
       {
-        :id => {type: Integer},
-        :name => {type: String},
-        :internal_name => {type: String},
-        :description => {type: String},
-        :picture_url => {type: String},
-        :action_requirement => {type: Integer},
-        :point_value => {type: Integer}
+        id: { type: Integer },
+        name: { type: String },
+        internal_name: { type: String },
+        description: { type: String },
+        picture_url: { type: String },
+        action_requirement: { type: Integer },
+        point_value: { type: Integer }
       },
-      desc: 'Badge Object'
+      desc: "Badge Object"
     ]
-    schema :Block => [
+    schema Block: [
       {
-        :id => { type: Integer },
-        :blocker_id => { type: Integer },
-        :blocked_id => { type: Integer }
+        id: { type: Integer },
+        blocker_id: { type: Integer },
+        blocked_id: { type: Integer }
       },
       desc: "Block object"
     ]
-    schema :Event => [
+    schema Event: [
       {
-        :id => { type: Integer },
-        :name => { type: String },
-        :description => { type: String },
-        :starts_at => { type: DateTime},
-        :ends_at => { type: DateTime },
-        :ticket_url => { type: String },
-        :place_identifier => { type: String }
+        id: { type: Integer },
+        name: { type: String },
+        description: { type: String },
+        starts_at: { type: DateTime },
+        ends_at: { type: DateTime },
+        ticket_url: { type: String },
+        place_identifier: { type: String }
       },
-      desc: 'Event Object'
+      desc: "Event Object"
     ]
-    schema :Following => [
+    schema Following: [
       {
-        :id => { type: Integer },
-        :follower => :Person,
-        :followed => :Person
+        id: { type: Integer },
+        follower: :Person,
+        followed: :Person
       },
-      desc: 'Following Object'
+      desc: "Following Object"
     ]
-    schema :Level => [
+    schema Level: [
       {
-        :id => { type: Integer },
-        :name => { type: String },
-        :internal_name => { type: String },
-        :description => { type: String },
-        :points => { type: Integer },
-        :picture_url => { type: String }
+        id: { type: Integer },
+        name: { type: String },
+        internal_name: { type: String },
+        description: { type: String },
+        points: { type: Integer },
+        picture_url: { type: String }
       },
-      desc: 'Level Object'
+      desc: "Level Object"
     ]
-    schema :Merchandise => [
+    schema Merchandise: [
       {
-        :id => { type: Integer },
-        :name => { type: String },
-        :description => { type: String },
-        :price => { type: Integer },
-        :purchase_url => { type: String },
-        :picture_url => { type: String },
-        :available => { type: Boolean },
-        :priority => { type: Integer}
+        id: { type: Integer },
+        name: { type: String },
+        description: { type: String },
+        price: { type: Integer },
+        purchase_url: { type: String },
+        picture_url: { type: String },
+        available: { type: Boolean },
+        priority: { type: Integer }
       },
-      desc: 'Merchandise Object'
+      desc: "Merchandise Object"
     ]
-    schema :MessageReport => [
+    schema MessageReport: [
       {
-        :id => { type: Integer },
-        :created_at => { type: DateTime },
-        :updated_at => { type: DateTime },
-        :message_id => { type: Integer },
-        :poster => { type: String },
-        :reporter => { type: String },
-        :reason => { type: String },
-        :status => { type: String }
+        id: { type: Integer },
+        created_at: { type: DateTime },
+        updated_at: { type: DateTime },
+        message_id: { type: Integer },
+        poster: { type: String },
+        reporter: { type: String },
+        reason: { type: String },
+        status: { type: String }
       },
-      desc: 'Message Report Object'
+      desc: "Message Report Object"
     ]
-    schema :Mention => [
+    schema Mention: [
       {
-        :id => { type: Integer },
-        :person_id => { type: Integer },
-        :location => { type: Integer },
-        :length => { type: Integer }
+        id: { type: Integer },
+        person_id: { type: Integer },
+        location: { type: Integer },
+        length: { type: Integer }
       },
-      desc: 'Notification Type ID Object'
+      desc: "Notification Type ID Object"
     ]
-    schema :Message => [
+    schema Message: [
       {
-        :id => { type: Integer },
-        :create_time => { type: DateTime },
-        :body => { type: String },
-        :picture_url => { type: String },
-        :audio_url => { type: String },
-        :audio_size => { type: String },
-        :audio_content_type => { type: String },
-        :person => :Person,
-        :mentions => :Mention
+        id: { type: Integer },
+        create_time: { type: DateTime },
+        body: { type: String },
+        picture_url: { type: String },
+        audio_url: { type: String },
+        audio_size: { type: String },
+        audio_content_type: { type: String },
+        person: :Person,
+        mentions: :Mention
       },
-      desc: 'Message Object'
+      desc: "Message Object"
     ]
-    schema :MessageList => [
+    schema MessageList: [
       {
-        :id => { type: Integer },
-        :person_id => { type: Integer },
-        :room_id => { type: Integer },
-        :body => { type: String },
-        :hidden => { type: Boolean },
-        :picture_url => { type: String },
-        :created_at => { type: DateTime},
-        :updated_at => { type: DateTime},
+        id: { type: Integer },
+        person_id: { type: Integer },
+        room_id: { type: Integer },
+        body: { type: String },
+        hidden: { type: Boolean },
+        picture_url: { type: String },
+        created_at: { type: DateTime },
+        updated_at: { type: DateTime },
       },
-      desc: 'Message Object'
+      desc: "Message Object"
     ]
-    schema :NotificationDeviceId => [
+    schema NotificationDeviceId: [
       {
-        :id => { type: Integer },
+        id: { type: Integer },
       },
-      desc: 'Notification Type ID Object'
+      desc: "Notification Type ID Object"
     ]
-    schema :Person => [
+    schema Person: [
       {
-        :id => { type: Integer },
-        :username => { type: String },
-        :name => { type: String },
-        :gender => { type: String },
-        :city => { type: String },
-        :biography => { type: String },
-        :country_code => { type: String },
-        :birthdate => { type: String },
-        :picture_url => { type: String },
-        :product_account => { type: Boolean },
-        :recommended => { type: Boolean },
-        :chat_banned => { type: Boolean },
-        :designation => { type: String },
-        :following_id => { type: Integer },
-        :relationships => [
-          :relationship => :Relationship
+        id: { type: Integer },
+        username: { type: String },
+        name: { type: String },
+        gender: { type: String },
+        city: { type: String },
+        biography: { type: String },
+        country_code: { type: String },
+        birthdate: { type: String },
+        picture_url: { type: String },
+        product_account: { type: Boolean },
+        recommended: { type: Boolean },
+        chat_banned: { type: Boolean },
+        designation: { type: String },
+        following_id: { type: Integer },
+        relationships: [
+          relationship: :Relationship
         ],
-        :badge_points => { type: Integer },
-        :role => { type: String },
-        :level => { type: String },
-        :do_not_message_me => { type: Boolean },
-        :pin_messages_from => { type: Boolean },
-        :auto_follow => { type: Boolean },
-        :num_followers => { type: Integer },
-        :num_following => { type: Integer },
-        :facebookid => { type: Integer },
-        :facebook_picture_url => { type: String },
-        :created_at => { type: DateTime},
-        :updated_at => { type: DateTime}
+        badge_points: { type: Integer },
+        role: { type: String },
+        level: { type: String },
+        do_not_message_me: { type: Boolean },
+        pin_messages_from: { type: Boolean },
+        auto_follow: { type: Boolean },
+        num_followers: { type: Integer },
+        num_following: { type: Integer },
+        facebookid: { type: Integer },
+        facebook_picture_url: { type: String },
+        created_at: { type: DateTime },
+        updated_at: { type: DateTime }
       },
-      desc: 'Person Object'
+      desc: "Person Object"
     ]
-    schema :PersonPrivate => [
+    schema PersonPrivate: [
       {
-        :id => { type: Integer },
-        :username => { type: String },
-        :name => { type: String },
-        :gender => { type: String },
-        :city => { type: String },
-        :biography => { type: String },
-        :country_code => { type: String },
-        :birthdate => { type: String },
-        :picture_url => { type: String },
-        :product_account => { type: Boolean },
-        :recommended => { type: Boolean },
-        :chat_banned => { type: Boolean },
-        :designation => { type: String },
-        :following_id => { type: Integer },
-        :relationships => [
-          :relationship => :Relationship
+        id: { type: Integer },
+        username: { type: String },
+        name: { type: String },
+        gender: { type: String },
+        city: { type: String },
+        biography: { type: String },
+        country_code: { type: String },
+        birthdate: { type: String },
+        picture_url: { type: String },
+        product_account: { type: Boolean },
+        recommended: { type: Boolean },
+        chat_banned: { type: Boolean },
+        designation: { type: String },
+        following_id: { type: Integer },
+        relationships: [
+          relationship: :Relationship
         ],
-        :badge_points => { type: Integer },
-        :role => { type: String },
-        :level => { type: String },
-        :do_not_message_me => { type: Boolean },
-        :pin_messages_from => { type: Boolean },
-        :auto_follow => { type: Boolean },
-        :num_followers => { type: Integer },
-        :num_following => { type: Integer },
-        :facebookid => { type: Integer },
-        :facebook_picture_url => { type: String },
-        :created_at => { type: DateTime},
-        :updated_at => { type: DateTime},
-        :email => { type: String },
-        :product => {
-          :id => { type: Integer },
-          :name => { type: String },
-          :internal_name => { type: String }
+        badge_points: { type: Integer },
+        role: { type: String },
+        level: { type: String },
+        do_not_message_me: { type: Boolean },
+        pin_messages_from: { type: Boolean },
+        auto_follow: { type: Boolean },
+        num_followers: { type: Integer },
+        num_following: { type: Integer },
+        facebookid: { type: Integer },
+        facebook_picture_url: { type: String },
+        created_at: { type: DateTime },
+        updated_at: { type: DateTime },
+        email: { type: String },
+        product: {
+          id: { type: Integer },
+          name: { type: String },
+          internal_name: { type: String }
         }
       },
-      desc: 'Private Person Object'
+      desc: "Private Person Object"
     ]
-    schema :PostCommentReport => [
+    schema PostCommentReport: [
       {
-        :id => { type: Integer },
-        :created_at => { type: DateTime },
-        :post_comment_id => { type: Integer },
-        :commenter => { type: String },
-        :reporter => { type: String},
-        :reason => { type: String },
-        :status => { type: String }
+        id: { type: Integer },
+        created_at: { type: DateTime },
+        post_comment_id: { type: Integer },
+        commenter: { type: String },
+        reporter: { type: String },
+        reason: { type: String },
+        status: { type: String }
       },
-      desc: 'Post Comment Report Object'
+      desc: "Post Comment Report Object"
     ]
-    schema :PostComment => [
+    schema PostComment: [
       {
-        :id => { type: Integer },
-        :create_time => { type: DateTime },
-        :body => { type: String },
-        :mentions => [
-          :mention => :Mention
+        id: { type: Integer },
+        create_time: { type: DateTime },
+        body: { type: String },
+        mentions: [
+          mention: :Mention
         ],
-        :person => :Person
+        person: :Person
       },
-      desc: 'Post Comment Object'
+      desc: "Post Comment Object"
     ]
-    schema :PostCommentList => [
+    schema PostCommentList: [
       {
-        :id => { type: Integer },
-        :person_id => { type: Integer },
-        :post_id => { type: Integer },
-        :body => { type: String },
-        :hidden => { type: Boolean },
-        :created_at => { type: DateTime },
-        :updated_at => { type: DateTime },
-        :mentions => [
-          :mention => :Mention
+        id: { type: Integer },
+        person_id: { type: Integer },
+        post_id: { type: Integer },
+        body: { type: String },
+        hidden: { type: Boolean },
+        created_at: { type: DateTime },
+        updated_at: { type: DateTime },
+        mentions: [
+          mention: :Mention
         ]
       },
-      desc: 'Post Comment Object'
+      desc: "Post Comment Object"
     ]
-    schema :PostReaction => [
+    schema PostReaction: [
       {
-        :id => { type: Integer },
-        :post_id => { type: Integer },
-        :person_id => { type: Integer },
-        :reaction => { type: String }
+        id: { type: Integer },
+        post_id: { type: Integer },
+        person_id: { type: Integer },
+        reaction: { type: String }
       },
-      desc: 'Post Reaction Object'
+      desc: "Post Reaction Object"
     ]
-    schema :PostReport => [
+    schema PostReport: [
       {
-        :id => { type: Integer },
-        :created_at => { type: DateTime },
-        :post_id => { type: Integer },
-        :poster => { type: String },
-        :reporter => { type: String },
-        :reason =>  { type: String },
-        :status => { type: String }
+        id: { type: Integer },
+        created_at: { type: DateTime },
+        post_id: { type: Integer },
+        poster: { type: String },
+        reporter: { type: String },
+        reason: { type: String },
+        status: { type: String }
       },
-      desc: 'Post Report Object'
+      desc: "Post Report Object"
     ]
-    schema :Post => [
+    schema Post: [
       {
-        :id => { type: Integer },
-        :create_time => { type: DateTime },
-        :body => {  type: String },
-        :picture_url => { type: String },
-        :audio_url => { type: String },
-        :audio_size => { type: Integer},
-        :audio_content_type => { type: String },
-        :person => :Person,
-        :post_reaction_counts => { type: Integer },
-        :post_reaction => :PostReaction,
-        :global => { type: Boolean },
-        :starts_at => { type: DateTime },
-        :ends_at => { type: DateTime },
-        :repost_interval => { type: Integer },
-        :status => { type: String },
-        :priority => { type: Integer },
-        :recommended => { type: Boolean },
-        :notify_followers => { type: Boolean },
-        :comment_count => { type: Integer },
-        :category => {
-          :id => { type: Integer },
-          :name => { type: String },
-          :color => { type: String },
-          :role => { type: String }
+        id: { type: Integer },
+        create_time: { type: DateTime },
+        body: {  type: String },
+        picture_url: { type: String },
+        audio_url: { type: String },
+        audio_size: { type: Integer },
+        audio_content_type: { type: String },
+        person: :Person,
+        post_reaction_counts: { type: Integer },
+        post_reaction: :PostReaction,
+        global: { type: Boolean },
+        starts_at: { type: DateTime },
+        ends_at: { type: DateTime },
+        repost_interval: { type: Integer },
+        status: { type: String },
+        priority: { type: Integer },
+        recommended: { type: Boolean },
+        notify_followers: { type: Boolean },
+        comment_count: { type: Integer },
+        category: {
+          id: { type: Integer },
+          name: { type: String },
+          color: { type: String },
+          role: { type: String }
         },
-        :tags => [
-          :tag => :Tag
+        tags: [
+          tag: :Tag
         ]
 
       },
-      desc: 'Post Object'
+      desc: "Post Object"
     ]
-    schema :PostShare => [
+    schema PostShare: [
       {
-        :body => {  type: String },
-        :picture_url => { type: String },
-        :person => {
-          :username => { type: String },
-          :picture_url => { type: String}
+        body: {  type: String },
+        picture_url: { type: String },
+        person: {
+          username: { type: String },
+          picture_url: { type: String }
         }
       },
-      desc: 'Shared Post Object'
+      desc: "Shared Post Object"
     ]
-    schema :PostList => [
+    schema PostList: [
       {
-        :id => { type: Integer },
-        :person => :Person,
-        :body => {  type: String },
-        :picture_url => { type: String },
-        :global => { type: Boolean },
-        :starts_at => { type: DateTime },
-        :ends_at => { type: DateTime },
-        :repost_interval => { type: Integer },
-        :status => { type: String },
-        :priority => { type: Integer },
-        :recommended => { type: Boolean },
-        :notify_followers => { type: Boolean },
-        :comment_count => { type: Integer },
-        :category => {
-          :id => { type: Integer },
-          :name => { type: String },
-          :color => { type: String },
-          :role => { type: String }
+        id: { type: Integer },
+        person: :Person,
+        body: {  type: String },
+        picture_url: { type: String },
+        global: { type: Boolean },
+        starts_at: { type: DateTime },
+        ends_at: { type: DateTime },
+        repost_interval: { type: Integer },
+        status: { type: String },
+        priority: { type: Integer },
+        recommended: { type: Boolean },
+        notify_followers: { type: Boolean },
+        comment_count: { type: Integer },
+        category: {
+          id: { type: Integer },
+          name: { type: String },
+          color: { type: String },
+          role: { type: String }
         },
-        :tags => [
-          :tag => :Tag
+        tags: [
+          tag: :Tag
         ]
       },
-      desc: 'List Post Object'
+      desc: "List Post Object"
     ]
-    schema :RecommendedPeople => :Person
-    schema :Relationship => [
+    schema RecommendedPeople: :Person
+    schema Relationship: [
       {
-        :id => { type: Integer },
-        :status => { type: String },
-        :create_time => { type: DateTime },
-        :update_time => { type: DateTime },
-        :requested_by => :Person,
-        :requested_to => :Person
+        id: { type: Integer },
+        status: { type: String },
+        create_time: { type: DateTime },
+        update_time: { type: DateTime },
+        requested_by: :Person,
+        requested_to: :Person
       },
-      desc: 'Relationship Object'
+      desc: "Relationship Object"
     ]
-    schema :RoomMembership => [
+    schema RoomMembership: [
       {
-        :id => { type: Integer },
+        id: { type: Integer },
       },
-      desc: 'Room Membership Object'
+      desc: "Room Membership Object"
     ]
-    schema :Room => [
+    schema Room: [
       {
-        :id => { type: Integer },
-        :name => { type: String },
-        :description => { type: String },
-        :owned => { type: Boolean },
-        :picture_url => { type: String },
-        :public => { type: Boolean },
-        :members => [
-          :member => :Person
+        id: { type: Integer },
+        name: { type: String },
+        description: { type: String },
+        owned: { type: Boolean },
+        picture_url: { type: String },
+        public: { type: Boolean },
+        members: [
+          member: :Person
         ]
       },
-      desc: 'Room Object'
+      desc: "Room Object"
     ]
-    schema :Session => [
+    schema Session: [
       {
-        :person => :PersonPrivate
+        person: :PersonPrivate
       },
-      desc: 'Session Object'
+      desc: "Session Object"
     ]
-    schema :Tag => [
+    schema Tag: [
       {
-        :name => { type: String },
+        name: { type: String },
       },
-      desc: ''
+      desc: ""
     ]
     # schema :Template => [
     #   {
@@ -379,61 +379,61 @@ class Api::V1::Docs::BaseDoc < ApiDoc
     #   desc: ''
     # ]
 
-# Crud Template
+    # Crud Template
 
-  # components do
+    # components do
 
-  # end
+    # end
 
-  # api :index, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+    # api :index, '' do
+    #   desc ''
+    #   query :, , desc: ''
+    #   response_ref 200 => :
+    # end
 
-  # api :create, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   form! data: {
-  #     :! => {
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
+    # api :create, '' do
+    #   desc ''
+    #   query :, , desc: ''
+    #   form! data: {
+    #     :! => {
+    #     }
+    #   }
+    #   response_ref 200 => :
+    # end
 
-  # api :list, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+    # api :list, '' do
+    #   desc ''
+    #   query :, , desc: ''
+    #   response_ref 200 => :
+    # end
 
-  # api :show, '' do
-  #   desc ''
-  #   query :, , desc: ''
-  #   response_ref 200 => :
-  # end
+    # api :show, '' do
+    #   desc ''
+    #   query :, , desc: ''
+    #   response_ref 200 => :
+    # end
 
-  # api :update, '' do
-  #   desc ''
-  #   form! data: {
-  #     :! => {
+    # api :update, '' do
+    #   desc ''
+    #   form! data: {
+    #     :! => {
 
-  #     }
-  #   }
-  #   response_ref 200 => :
-  # end
+    #     }
+    #   }
+    #   response_ref 200 => :
+    # end
 
-  # api :destroy, '' do
-  #   desc ''
-  #   response_ref 200 => :OK
-  # end
+    # api :destroy, '' do
+    #   desc ''
+    #   response_ref 200 => :OK
+    # end
 
-  # resp :NotificationDeviceIds200 => ['HTTP/1.1 200 Ok', :json, data:{
+    # resp :NotificationDeviceIds200 => ['HTTP/1.1 200 Ok', :json, data:{
 
-  # }]
-  # resp :PasswordResets200 => ['HTTP/1.1 200 Ok', :json, data:{
+    # }]
+    # resp :PasswordResets200 => ['HTTP/1.1 200 Ok', :json, data:{
 
-  # }]
-    resp :OK => ['HTTP/1.1 200 Ok']
+    # }]
+    resp OK: ["HTTP/1.1 200 Ok"]
   end
 end

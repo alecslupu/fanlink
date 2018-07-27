@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719193820) do
+ActiveRecord::Schema.define(version: 20180726171334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -312,6 +312,8 @@ ActiveRecord::Schema.define(version: 20180719193820) do
     t.text "country_code"
     t.text "biography"
     t.boolean "tester", default: false
+    t.boolean "terminated", default: false
+    t.text "terminated_reason"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -621,6 +623,7 @@ ActiveRecord::Schema.define(version: 20180719193820) do
     t.integer "delay_unlock", default: 0
     t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.text "unlocks"
+    t.datetime "unlocks_at"
     t.index ["int_unlocks"], name: "index_steps_on_int_unlocks", using: :gin
     t.index ["quest_id"], name: "index_steps_on_quest_id"
     t.index ["reward_id"], name: "idx_steps_rewards"

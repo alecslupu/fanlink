@@ -2,7 +2,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
   include Messaging
   load_up_the Relationship, except: %i[ create index ]
 
-  #**
+  # **
   # @api {post} /relationships Send a friend request to a person.
   # @apiName CreateRelationship
   # @apiGroup Relationships
@@ -33,14 +33,14 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "You already spammed that person, blah blah blah" }
-  #*
+  # *
 
   def create
     requested_to = Person.find(relationship_params[:requested_to_id])
     if check_blocked(requested_to)
       @relationship = Relationship.for_people(current_user, requested_to).first
       if @relationship
-        if @relationship.requested? && @relationship.requested_by == requested_to #there was request o/s from this user to us
+        if @relationship.requested? && @relationship.requested_by == requested_to # there was request o/s from this user to us
           @relationship.friended!
           update_relationship_count(current_user)
           @relationship.friend_request_accepted_push
@@ -58,7 +58,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {delete} /relationships/:id Unfriend a person.
   # @apiName DeleteRelationship
   # @apiGroup Relationship
@@ -72,7 +72,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
   #
   # @apiSuccessExample {json} Success-Response:
   #     HTTP/1.1 200 Ok
-  #*
+  # *
 
   def destroy
     if @relationship.person_involved?(current_user) && @relationship.friended?
@@ -86,7 +86,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /relationships Get current relationships of a person.
   # @apiName GetRelationships
   # @apiGroup Relationships
@@ -106,12 +106,12 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
   #     [ ... relationship json ...],
   #     ....
   #   }
-  #*
+  # *
 
   def index
     person = (params[:person_id].present?) ? Person.find(params[:person_id]) : current_user
     if person == current_user
-      update_relationship_count(current_user) #FLAPI-89
+      update_relationship_count(current_user) # FLAPI-89
     end
     @relationships = Relationship.friended.for_person(person)
     if person == current_user
@@ -120,7 +120,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
     return_the @relationships
   end
 
-  #**
+  # **
   # @api {get} /relationships/:id Get a single relationship.
   # @apiName GetRelationship
   # @apiGroup Relationships
@@ -145,14 +145,14 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def show
     @relationship = current_user.relationships.find(params[:id])
     return_the @relationship
   end
 
-  #**
+  # **
   # @api {patch} /relationships Update a relationship.
   # @apiName UpdateRelationship
   # @apiGroup Relationships
@@ -184,7 +184,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "You can't friend your own request, blah blah blah" }
-  #*
+  # *
 
   def update
     if check_status
@@ -192,7 +192,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
         old_status = @relationship.status
         new_status = relationship_params[:status]
         can_status = true
-        #TODO: simplify this mess
+        # TODO: simplify this mess
         if new_status == "friended"
           if old_status == "requested" && @relationship.requested_to == current_user
             @relationship.friended!
@@ -208,7 +208,7 @@ class Api::V2::RelationshipsController < Api::V2::BaseController
           else
             can_status = false
           end
-        else #withdrawn
+        else # withdrawn
           if old_status == "requested" && @relationship.requested_by == current_user
             @relationship.destroy
             update_relationship_count(@relationship.requested_to)

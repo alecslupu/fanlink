@@ -1,6 +1,6 @@
 class Api::V3::LevelsController < Api::V3::BaseController
   before_action :super_admin_only, only: %i[ create update destroy ]
-  #**
+  # **
   # @api {get} /levels Get all available levels.
   # @apiName GetLevels
   # @apiGroup Level
@@ -24,7 +24,7 @@ class Api::V3::LevelsController < Api::V3::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     @levels = paginate(Level.order(:points))
@@ -32,14 +32,11 @@ class Api::V3::LevelsController < Api::V3::BaseController
   end
 
   def create
-
   end
 
   def update
-
   end
 
   def destroy
-
   end
 end

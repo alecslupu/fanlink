@@ -1,6 +1,6 @@
 class Api::V1::Docs::RoomMembershipsDoc < Api::V1::Docs::BaseDoc
-  doc_tag name: 'RoomMemberships', desc: "What rooms a user belongs to."
-  route_base 'api/v1/room_memberships'
+  doc_tag name: "RoomMemberships", desc: "What rooms a user belongs to."
+  route_base "api/v1/room_memberships"
 
   components do
     # resp :RoomMembershipsObject => ['HTTP/1.1 200 Ok', :json, data:{
@@ -14,13 +14,13 @@ class Api::V1::Docs::RoomMembershipsDoc < Api::V1::Docs::BaseDoc
   #   response_ref 200 => :
   # end
 
-  api :create, 'Add a room member.' do
+  api :create, "Add a room member." do
     need_auth :SessionCookie
-    desc 'This adds a person to a private room. On success (person added), just returns 200.'
-    path! :room_id, Integer, desc: 'ID of the room to add the person to.'
+    desc "This adds a person to a private room. On success (person added), just returns 200."
+    path! :room_id, Integer, desc: "ID of the room to add the person to."
     form! data: {
-      :person! => {
-        :id! => { type: Integer, desc: 'The id of the person.' }
+      person!: {
+        id!: { type: Integer, desc: "The id of the person." }
       }
     }
     response_ref 200 => :OK
@@ -52,5 +52,4 @@ class Api::V1::Docs::RoomMembershipsDoc < Api::V1::Docs::BaseDoc
   #   desc ''
   #   response_ref 200 => :OK
   # end
-
 end

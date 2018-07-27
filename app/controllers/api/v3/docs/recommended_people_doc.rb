@@ -1,16 +1,16 @@
 class Api::V3::Docs::RecommendedPeopleDoc < Api::V3::Docs::BaseDoc
-  doc_tag name: 'RecommendedPeople', desc: "Recommended People"
-  route_base 'api/v3/recommended_people'
+  doc_tag name: "RecommendedPeople", desc: "Recommended People"
+  route_base "api/v3/recommended_people"
 
   components do
-    resp :RecommendedPeopleArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :people => [
-        :person => :PersonJson
+    resp RecommendedPeopleArray: ["HTTP/1.1 200 Ok", :json, data: {
+      people: [
+        person: :PersonJson
       ]
     }]
   end
 
-  api :index, 'Get recommended people.' do
+  api :index, "Get recommended people." do
     need_auth :SessionCookie
     desc 'This is used to get a list of people flagged as "recommended". It excludes the current user and anyone the current user is following.'
     response_ref 200 => :RecommendedPeopleArray
@@ -52,5 +52,4 @@ class Api::V3::Docs::RecommendedPeopleDoc < Api::V3::Docs::BaseDoc
   #   desc ''
   #   response_ref 200 => :OK
   # end
-
 end

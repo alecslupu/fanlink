@@ -1,7 +1,7 @@
 class Api::V3::BadgeActionsController < Api::V3::BaseController
   before_action :super_admin_only, only: %i[ index show update destroy ]
   before_action :load_action_type
-  #**
+  # **
   # @api {post} /badge_actions Create a badge action.
   # @apiName CreateBadgeAction
   # @apiGroup Badges
@@ -36,7 +36,7 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
   #       { "Action type invalid, cannot do that action again, blah blah blah" }
   #     HTTP/1.1 429 - Not enough time since last submission of this action type
   #           or duplicate action type, person, identifier combination
-  #*
+  # *
 
 
   def create
@@ -49,8 +49,8 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
           next if PersonReward.exists?(person_id: current_user.id, reward_id: reward.id)
           @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
           @progress.series = @action_type.internal_name || nil
-          @progress.actions['badge_action'] ||= 0
-          @progress.actions['badge_action'] += 1
+          @progress.actions["badge_action"] ||= 0
+          @progress.actions["badge_action"] += 1
           @progress.total ||= 0
           @progress.total += 1
           if @progress.present? && @progress.save
@@ -61,9 +61,9 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
             return_the @badges_awarded
           else
             if @progress.blank?
-              render json: { errors: { base: "Reward does not exist for that action type." }}, status: :not_found
+              render json: { errors: { base: "Reward does not exist for that action type." } }, status: :not_found
             else
-              render json: { errors: { base:@progress.errors.messages.flatten }}, status: :unprocessable_entity
+              render json: { errors: { base: @progress.errors.messages.flatten } }, status: :unprocessable_entity
             end
           end
           break
@@ -72,17 +72,17 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
     end
   end
 
-  # def index
+# def index
 
-  # end
+# end
 
-  # def update
+# def update
 
-  # end
+# end
 
-  # def destroy
+# def destroy
 
-  # end
+# end
 
 private
 
@@ -91,8 +91,8 @@ private
       render_error("You must supply a badge action type.")
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
-      @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(:assigned_rewards => { :assigned_type => 'ActionType', :assigned_id => @action_type.id }).order(completion_requirement:  :asc)
-      @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types['badge'])
+      @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
+      @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
       render_422("Action type is invalid.") unless @action_type.present?
     end
   end

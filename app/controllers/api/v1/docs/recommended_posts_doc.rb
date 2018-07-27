@@ -1,16 +1,16 @@
 class Api::V1::Docs::RecommendedPostsDoc < Api::V1::Docs::BaseDoc
-  doc_tag name: 'RecommendedPosts', desc: "Recommended posts"
-  route_base 'api/v1/recommended_posts'
+  doc_tag name: "RecommendedPosts", desc: "Recommended posts"
+  route_base "api/v1/recommended_posts"
 
   components do
-    resp :RecommendedPostsArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :posts => [
-        :post => :Post
+    resp RecommendedPostsArray: ["HTTP/1.1 200 Ok", :json, data: {
+      posts: [
+        post: :Post
       ]
     }]
   end
 
-  api :index, 'Get recommended posts.' do
+  api :index, "Get recommended posts." do
     need_auth :SessionCookie
     desc 'This is used to get a list of published posts flagged as "recommended".'
     response_ref 200 => :RecommendedPostsArray
@@ -52,5 +52,4 @@ class Api::V1::Docs::RecommendedPostsDoc < Api::V1::Docs::BaseDoc
   #   desc ''
   #   response_ref 200 => :OK
   # end
-
 end

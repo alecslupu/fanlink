@@ -6,7 +6,7 @@ class Api::V3::RewardProgressesController < Api::V3::BaseController
       if PersonReward.exists?(person_id: current_user.id, reward_id: params[:reward_complete][:reward_id])
         return_the @progress
       else
-        if controller == 'action_type'
+        if controller == "action_type"
           action_type = @progress.reward.action_types.first
           @progress.series = action_type.internal_name
           @series_total = RewardProgress.where(person_id: current_user.id, series: action_type.internal_name).sum(:total) || nil

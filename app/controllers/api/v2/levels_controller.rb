@@ -1,5 +1,5 @@
 class Api::V2::LevelsController < Api::V2::BaseController
-  #**
+  # **
   # @api {get} /levels Get all available levels.
   # @apiName GetLevels
   # @apiGroup Level
@@ -23,7 +23,7 @@ class Api::V2::LevelsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     @levels = Level.order(:points)

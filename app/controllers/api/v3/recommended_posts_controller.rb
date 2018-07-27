@@ -1,5 +1,5 @@
 class Api::V3::RecommendedPostsController < Api::V3::BaseController
-  #**
+  # **
   # @api {get} /posts/recommended Get recommended posts.
   # @apiName GetRecommendedPosts
   # @apiGroup Posts
@@ -20,7 +20,7 @@ class Api::V3::RecommendedPostsController < Api::V3::BaseController
   #     [ ... post json ...],
   #     ....
   #   }
-  #*
+  # *
 
   def index
     @posts = paginate Post.for_product(ActsAsTenant.current_tenant).published.where(recommended: true).order(created_at: :desc)

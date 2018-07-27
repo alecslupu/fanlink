@@ -1,7 +1,7 @@
 class Api::V1::BadgesController < Api::V1::BaseController
   load_up_the Person, from: :person_id
 
-  #**
+  # **
   # @api {get} /badges Get badges for a passed in user.
   # @apiName GetBadges
   # @apiGroup Badges
@@ -34,7 +34,7 @@ class Api::V1::BadgesController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
   def index
     @badges = Badge.all
     @badges_awarded = @person.badge_awards.map { |ba| ba.badge }

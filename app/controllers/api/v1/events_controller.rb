@@ -1,5 +1,5 @@
 class Api::V1::EventsController < Api::V1::BaseController
-  #**
+  # **
   # @api {get} /events Get available events.
   # @apiName GetEvents
   # @apiGroup Events
@@ -23,7 +23,7 @@ class Api::V1::EventsController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
-  #*
+  # *
 
   def index
     if !check_dates
@@ -35,7 +35,7 @@ class Api::V1::EventsController < Api::V1::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /events/:id Get a single event.
   # @apiName GetEvent
   # @apiGroup Events
@@ -62,7 +62,7 @@ class Api::V1::EventsController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def show
     @event = Event.find(params[:id])

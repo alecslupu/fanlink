@@ -29,7 +29,7 @@ class Api::V3::ActionTypesController < Api::V3::BaseController
     if current_user.super_admin?
       @action_type = ActionType.find(params[:id])
       if @action_type.in_use?
-        render_422 'Action is in use and cannot be deleted.'
+        render_422 "Action is in use and cannot be deleted."
       else
         @action_type.destroy
         head :ok

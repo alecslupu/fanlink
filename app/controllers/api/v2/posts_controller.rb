@@ -2,7 +2,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]
-  #**
+  # **
   # @api {post} /posts Create a post.
   # @apiName CreatePost
   # @apiGroup Posts
@@ -77,7 +77,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Body is required, blah blah blah" }
-  #*
+  # *
 
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
@@ -91,10 +91,9 @@ class Api::V2::PostsController < Api::V2::BaseController
     else
       render json: { errors: @post.errors.messages }, status: :unprocessable_entity
     end
-
   end
 
-  #**
+  # **
   # @api {delete} /posts/:id Delete (hide) a single post.
   # @apiName DeletePost
   # @apiGroup Posts
@@ -110,7 +109,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
-  #*
+  # *
 
   def destroy
     post = Post.visible.find(params[:id])
@@ -122,7 +121,7 @@ class Api::V2::PostsController < Api::V2::BaseController
       render_not_found
     end
   end
-  #**
+  # **
   # @api {get} /posts Get paginated posts.
   # @apiName GetPosts
   # @apiGroup Posts
@@ -152,7 +151,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     if params[:person_id].present?
@@ -171,7 +170,7 @@ class Api::V2::PostsController < Api::V2::BaseController
     @posts = @posts.for_category(params[:category]) if params[:category]
     return_the @posts
   end
-  #**
+  # **
   # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
   # @apiName ListPosts
   # @apiGroup Posts
@@ -229,7 +228,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
-  #*
+  # *
 
   def list
     @posts = paginate apply_filters
@@ -238,7 +237,7 @@ class Api::V2::PostsController < Api::V2::BaseController
     return_the @posts
   end
 
-  #**
+  # **
   # @api {get} /posts/:id Get a single post.
   # @apiName GetPost
   # @apiGroup Posts
@@ -274,7 +273,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def show
     @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
@@ -282,7 +281,7 @@ class Api::V2::PostsController < Api::V2::BaseController
     return_the @post
   end
 
-  #**
+  # **
   # @api {get} /posts/:id/share Get a single, shareable post.
   # @apiName GetShareablePost
   # @apiGroup Posts
@@ -309,7 +308,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
 
   def share
     product = get_product
@@ -321,7 +320,7 @@ class Api::V2::PostsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {patch} /posts/:id Update a post
   # @apiName UpdatePost
   # @apiGroup Posts
@@ -370,7 +369,7 @@ class Api::V2::PostsController < Api::V2::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
-  #*
+  # *
 
   def update
     @post.update_attributes(post_params)
@@ -410,7 +409,6 @@ private
 
   def post_params
     params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
-                                     ((current_user.admin? || current_user.product_account? || current_user.super_admin? ) ? [:recommended] : []))
+                                     ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
   end
-
 end

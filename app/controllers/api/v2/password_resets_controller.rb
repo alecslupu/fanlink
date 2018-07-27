@@ -1,7 +1,7 @@
 class Api::V2::PasswordResetsController < Api::V2::BaseController
   skip_before_action :require_login, :set_product
 
-  #**
+  # **
   # @api {post} /people/password_forgot Initiate a password reset.
   # @apiName CreatePasswordReset
   # @apiGroup People
@@ -25,7 +25,7 @@ class Api::V2::PasswordResetsController < Api::V2::BaseController
   #     "errors": { //if product not found
   #       "Required parameter missing."
   #     }
-  #*
+  # *
 
   def create
     logout
@@ -48,7 +48,7 @@ class Api::V2::PasswordResetsController < Api::V2::BaseController
     end
   end
 
-  #**
+  # **
   # @api {post} /people/password_reset Completes a password reset.
   # @apiName UpdatePasswordReset
   # @apiGroup People
@@ -68,7 +68,7 @@ class Api::V2::PasswordResetsController < Api::V2::BaseController
   #     "errors": { //if token/person not found or password bad
   #       "...be better blah blah...."
   #     }
-  #*
+  # *
 
   def update
     grab_password_reset_stuff_and do |person, password|

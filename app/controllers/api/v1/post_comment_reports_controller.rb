@@ -2,7 +2,7 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostCommentReport, only: :update
 
-  #**
+  # **
   # @api {post} /post_comment_reports Report a post comment.
   # @apiName CreatePostReportComment
   # @apiGroup Posts
@@ -27,7 +27,7 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "I don't like your reason, etc." }
-  #*
+  # *
 
   def create
     parms = post_comment_report_params
@@ -44,7 +44,7 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /post_comment_reports Get list of post comment reports (ADMIN).
   # @apiName GetPostCommentReports
   # @apiGroup Posts
@@ -78,14 +78,14 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
-  #*
+  # *
 
   def index
     @post_comment_reports = paginate apply_filters
     return_the @post_comment_reports
   end
 
-  #**
+  # **
   # @api {patch} /post_comment_reports/:id Update a Post Comment Report (Admin).
   # @apiName UpdatePostCommentReport
   # @apiGroup Posts
@@ -111,7 +111,7 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "Invalid or missing status." }
-  #*
+  # *
 
   def update
     parms = post_comment_report_update_params

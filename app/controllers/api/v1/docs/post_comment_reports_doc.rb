@@ -1,29 +1,29 @@
 class Api::V1::Docs::PostCommentReportsDoc < Api::V1::Docs::BaseDoc
-  doc_tag name: 'PostCommentReports', desc: "Reported comments on posts"
-  route_base 'api/v1/post_comment_reports'
+  doc_tag name: "PostCommentReports", desc: "Reported comments on posts"
+  route_base "api/v1/post_comment_reports"
 
   components do
-    resp :PostCommentReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_comment_reports => [
-        :post_comment_report => :PostCommentReport
+    resp PostCommentReportsArray: ["HTTP/1.1 200 Ok", :json, data: {
+      post_comment_reports: [
+        post_comment_report: :PostCommentReport
       ]
     }]
   end
 
-  api :index, 'Get list of post comment reports (ADMIN).' do
+  api :index, "Get list of post comment reports (ADMIN)." do
     need_auth :SessionCookie
-    desc 'This gets a list of post comment reports with optional filter.'
+    desc "This gets a list of post comment reports with optional filter."
     query :status_filter, String, desc: 'If provided, valid values are "pending", "no_action_needed", and "comment_hidden"'
     response_ref 200 => :PostCommentReportsArray
   end
 
-  api :create, 'Report a post comment.' do
+  api :create, "Report a post comment." do
     need_auth :SessionCookie
-    desc 'This reports a post comment.'
+    desc "This reports a post comment."
     form! data: {
-      :post_comment_report! => {
-        :post_comment_id! => { type: Integer, desc: 'The id of the post comment being reported.' },
-        :reason => { type: String, desc: 'The reason given by the user for reporting the post comment.' }
+      post_comment_report!: {
+        post_comment_id!: { type: Integer, desc: "The id of the post comment being reported." },
+        reason: { type: String, desc: "The reason given by the user for reporting the post comment." }
       }
     }
     response_ref 200 => :OK
@@ -41,12 +41,12 @@ class Api::V1::Docs::PostCommentReportsDoc < Api::V1::Docs::BaseDoc
   #   response_ref 200 => :
   # end
 
-  api :update, 'Update a Post Comment Report (Admin)' do
+  api :update, "Update a Post Comment Report (Admin)" do
     need_auth :SessionCookie
-    desc 'This updates a post comment report. The only value that can be changed is the status.'
+    desc "This updates a post comment report. The only value that can be changed is the status."
     form! data: {
-      :post_comment_report! => {
-        :status! => { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "comment_hidden"' }
+      post_comment_report!: {
+        status!: { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "comment_hidden"' }
       }
     }
     response_ref 200 => :OK
@@ -56,5 +56,4 @@ class Api::V1::Docs::PostCommentReportsDoc < Api::V1::Docs::BaseDoc
   #   desc ''
   #   response_ref 200 => :OK
   # end
-
 end

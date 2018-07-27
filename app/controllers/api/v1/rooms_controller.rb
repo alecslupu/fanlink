@@ -1,5 +1,5 @@
 class Api::V1::RoomsController < Api::V1::BaseController
-  #**
+  # **
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom
   # @apiGroup Rooms
@@ -46,7 +46,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "That name is too short, blah blah blah" }
-  #*
+  # *
   def create
     @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
@@ -64,7 +64,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
     return_the @room
   end
 
-  #**
+  # **
   # @api {delete} /rooms/:id Delete a private room.
   # @apiName DeleteRoom
   # @apiGroup Rooms
@@ -81,7 +81,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
-  #*
+  # *
   def destroy
     @room = Room.find(params[:id])
     if @room.created_by != current_user
@@ -97,7 +97,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
     end
   end
 
-  #**
+  # **
   # @api {get} /rooms Get a list of rooms.
   # @apiName GetRooms
   # @apiGroup Rooms
@@ -120,13 +120,13 @@ class Api::V1::RoomsController < Api::V1::BaseController
   #
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
-  #*
+  # *
   def index
     @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics
     return_the @rooms
   end
 
-  #**
+  # **
   # @api {patch} /rooms/:id Update a private room (name).
   # @apiName UpdateRoom
   # @apiGroup Rooms
@@ -156,7 +156,7 @@ class Api::V1::RoomsController < Api::V1::BaseController
   #     HTTP/1.1 422
   #     "errors" :
   #       { "That name is too short, blah blah blah" }
-  #*
+  # *
 
   def update
     @room = Room.find(params[:id])

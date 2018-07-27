@@ -1,6 +1,6 @@
 class Api::V2::BadgeActionsController < Api::V2::BaseController
   before_action :load_action_type
-  #**
+  # **
   # @api {post} /badge_actions Create a badge action.
   # @apiName CreateBadgeAction
   # @apiGroup Badges
@@ -35,7 +35,7 @@ class Api::V2::BadgeActionsController < Api::V2::BaseController
   #       { "Action type invalid, cannot do that action again, blah blah blah" }
   #     HTTP/1.1 429 - Not enough time since last submission of this action type
   #           or duplicate action type, person, identifier combination
-  #*
+  # *
   # api :create, 'POST create a good', use: 'Token' do
   #   form! badge_action: {
   #           :action_type! => { type: String,  desc: 'Internal name of the action type.' },

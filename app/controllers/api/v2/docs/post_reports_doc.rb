@@ -1,41 +1,41 @@
 class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
-  doc_tag name: 'PostReports', desc: "Posts reported by a user"
-  route_base 'api/v2/post_reports'
+  doc_tag name: "PostReports", desc: "Posts reported by a user"
+  route_base "api/v2/post_reports"
 
   components do
-    resp :PostReportsObject => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_report => :PostReportJson
+    resp PostReportsObject: ["HTTP/1.1 200 Ok", :json, data: {
+      post_report: :PostReportJson
     }]
-    resp :PostReportsArray => ['HTTP/1.1 200 Ok', :json, data:{
-      :post_reports => [
-        :post_report => :PostReportJson
+    resp PostReportsArray: ["HTTP/1.1 200 Ok", :json, data: {
+      post_reports: [
+        post_report: :PostReportJson
       ]
     }]
 
     body! :PostReportsCreateForm, :form, data: {
-      :post_report! => {
-        :post_id! => { type: Integer, desc: 'The id of the post being reported.' },
-        :reason => { type: String, desc: 'The reason given by the user for reporting the post.' }
+      post_report!: {
+        post_id!: { type: Integer, desc: "The id of the post being reported." },
+        reason: { type: String, desc: "The reason given by the user for reporting the post." }
       }
     }
 
     body! :PostReportsUpdateForm, :form, data: {
-      :post_report! => {
-        :status! => { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "post_hidden"' }
+      post_report!: {
+        status!: { type: String, desc: 'The new status. Valid statuses are "pending", "no_action_needed", "post_hidden"' }
       }
     }
   end
 
-  api :index, 'Get list of post reports (ADMIN).' do
+  api :index, "Get list of post reports (ADMIN)." do
     need_auth :SessionCookie
-    desc 'This gets a list of post reports with optional filter.'
+    desc "This gets a list of post reports with optional filter."
     query :status_filter, String, desc: 'If provided, valid values are "pending", "no_action_needed", and "post_hidden"'
     response_ref 200 => :PostReportsArray
   end
 
-  api :create, 'Report a post.' do
+  api :create, "Report a post." do
     need_auth :SessionCookie
-    desc 'This reports a post that was posted to a feed.'
+    desc "This reports a post that was posted to a feed."
     body_ref :PostReportsCreateForm
     response_ref 200 => :OK
   end
@@ -52,9 +52,9 @@ class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
   #   response_ref 200 => :
   # end
 
-  api :update, 'Update a Post Report.' do
+  api :update, "Update a Post Report." do
     need_auth :SessionCookie
-    desc 'This updates a post report. The only value that can be changed is the status.'
+    desc "This updates a post report. The only value that can be changed is the status."
     body_ref :PostReportsUpdateForm
     response_ref 200 => :OK
   end
@@ -63,5 +63,4 @@ class Api::V2::Docs::PostReportsDoc < Api::V2::Docs::BaseDoc
   #   desc ''
   #   response_ref 200 => :OK
   # end
-
 end

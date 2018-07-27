@@ -2,7 +2,7 @@ FanlinkApi::API.endpoint <%= ":get_#{plural_name}" %> do
   method :get
   tag <%= singular_name %>
   path <%= "'/#{plural_name}'" %>
-  description <%= "'Get #{plural_name.split('_').map(&:capitalize).join(' ')}'"
+  description <%= "'Get #{plural_name.split('_').map(&:capitalize).join(' ')}'" %>
   output :success do
     status 200
     type :object do
@@ -49,11 +49,17 @@ FanlinkApi::API.endpoint <%= ":get_a_#{singular_name}" %> do
   path <%= "'/#{plural_name}/{id}'" %> do
     id :int32
   end
-  description <%= "'Get a #{singular_name.split('_').map(&:capitalize).join(' ')}'"
+  description <%= "'Get a #{singular_name.split('_').map(&:capitalize).join(' ')}'" %>
   output :success do
     status 200
     type :object do
-      type :<%= singular_name %>_app_json
+      type :oneof do
+        discriminator :type
+        map(
+          <%= singular_name %>_app_json: <%= singular_name %>,
+          <%= singular_name %>_portal_json: <%= singular_name %>
+        )
+      end
     end
   end
 
@@ -99,7 +105,7 @@ FanlinkApi::API.endpoint <%= ":create_a_#{singular_name}" %> do
   method :post
   tag <%= singular_name %>
   path <%= "'/#{plural_name}'" %>
-  description <%= "'Create a #{singular_name.split('_').map(&:capitalize).join(' ')}'"
+  description <%= "'Create a #{singular_name.split('_').map(&:capitalize).join(' ')}'" %>
   input do
     type :object do
       <%= singular_name %> :object do
@@ -198,7 +204,7 @@ FanlinkApi::API.endpoint <%= ":update_a_#{singular_name}" %> do
   path <%= "'/#{plural_name}/{id}'" %> do
     id :int32
   end
-  description <%= "'Update a #{singular_name.split('_').map(&:capitalize).join(' ')}'"
+  description <%= "'Update a #{singular_name.split('_').map(&:capitalize).join(' ')}'" %>
   input do
     type :object do
       <%= singular_name %> :object do
@@ -306,7 +312,7 @@ FanlinkApi::API.endpoint <%= ":destroy_a_#{singular_name}" %> do
   path <%= "'/#{plural_name}/{id}'" %> do
     id :int32
   end
-  description <%= "'Destroy a #{singular_name.split('_').map(&:capitalize).join(' ')}'"
+  description <%= "'Destroy a #{singular_name.split('_').map(&:capitalize).join(' ')}'" %>
   output :success do
     status 200
     type :string
