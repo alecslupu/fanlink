@@ -39,7 +39,11 @@ class Api::V3::PostReactionsController < Api::V3::BaseController
     parms = post_reaction_params
     if @post.person.try(:product) == current_user.product
       @post_reaction = @post.reactions.create(parms)
-      return_the @post_reaction
+      if @post_reaction.valid?
+        return_the @post_reaction
+      else
+        render_422 @post_reaction.errors.full_messages
+      end
     else
       render_not_found
     end
@@ -114,8 +118,11 @@ class Api::V3::PostReactionsController < Api::V3::BaseController
 
   def update
     if @post_reaction.person == current_user
-      @post_reaction.update_attributes(post_reaction_params)
-      return_the @post_reaction
+      if @post_reaction.update_attributes(post_reaction_params)
+        return_the @post_reaction
+      else
+        render_422 @post_reaction.errors.full_messages
+      end
     else
       render_not_found
     end

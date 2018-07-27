@@ -89,7 +89,7 @@ class Api::V3::PostsController < Api::V3::BaseController
       broadcast(:post_created, current_user, @post)
       return_the @post
     else
-      render json: { errors: @post.errors.messages }, status: :unprocessable_entity
+      render_422 @post.errors.full_messages
     end
 
   end
@@ -161,7 +161,7 @@ class Api::V3::PostsController < Api::V3::BaseController
       if person
         @posts = paginate(Post.visible.for_person(person).order(created_at: :desc))
       else
-        render_error("Cannot find that person.") && return
+        render_422("Cannot find that person.") && return
       end
     else
       @posts = paginate(Post.visible.following_and_own(current_user).order(created_at: :desc))
@@ -277,7 +277,11 @@ class Api::V3::PostsController < Api::V3::BaseController
   #*
 
   def show
-    @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
+    if current_user&.some_admin? && current_user&.app == 'portal'
+      @post = Post.for_product(ActAsTenant.current_tenant).find(params[:id])
+    else
+      @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
+    end
     @post_reaction = @post.reactions.find_by(person: current_user)
     return_the @post
   end
@@ -314,7 +318,7 @@ class Api::V3::PostsController < Api::V3::BaseController
   def share
     product = get_product
     if product.nil?
-      render_error("Missing or invalid product.")
+      render_422("Missing or invalid product.")
     else
       @post = Post.for_product(product).visible.find(params[:post_id])
       return_the @post
@@ -373,7 +377,11 @@ class Api::V3::PostsController < Api::V3::BaseController
   #*
 
   def update
-    @post.update_attributes(post_params)
+    if @post.update_attributes(post_params)
+      return_the @post
+    else
+      render_422 @post.errors.full_messages
+    end
   end
 
 private

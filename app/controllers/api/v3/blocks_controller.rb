@@ -36,8 +36,10 @@ class Api::V3::BlocksController < Api::V3::BaseController
       Relationship.for_people(current_user, blocked).destroy_all
       current_user.unfollow(blocked)
       blocked.unfollow(current_user)
+      return_the @block
+    else
+      render_422 @block.errors.full_messages
     end
-    return_the @block
   end
 
   #**

@@ -113,13 +113,13 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
     #*
 
     def create
-        @merchandise = Merchandise.create(merchandise_params)
-        if @merchandise.valid?
-            broadcast(:merchandise_created, current_user, @merchandise)
-            return_the @merchandise
-        else
-            render json: { errors: @merchandise.errors.messages.flatten }, status: :unprocessable_entity
-        end
+      @merchandise = Merchandise.create(merchandise_params)
+      if @merchandise.valid?
+          broadcast(:merchandise_created, current_user, @merchandise)
+          return_the @merchandise
+      else
+        render_422 @merchandise.errors.full_messages
+      end
     end
 
     #**
@@ -149,12 +149,12 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
     #*
 
     def update
-        if @merchandise.update_attributes(merchandise_params)
-            broadcast(:merchandise_updated, current_user, @merchandise)
-            return_the @merchandise
-        else
-            render json: { errors: @merchandise.errors.messages }, status: :unprocessable_entity
-        end
+      if @merchandise.update_attributes(merchandise_params)
+        broadcast(:merchandise_updated, current_user, @merchandise)
+        return_the @merchandise
+      else
+        render_422 @merchandise.errors.full_messages
+      end
     end
 
     #**
@@ -186,7 +186,7 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
           if @merchandise.update(deleted: true)
             head :ok
           else
-            render_error("Failed to delete the merchandise.")
+            render_422("Failed to delete the merchandise.")
           end
         else
           render_not_found

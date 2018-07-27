@@ -99,11 +99,13 @@ class Api::V3::MessagesController < Api::V3::BaseController
             room.increment_message_counters(current_user.id)
             @message.private_message_push
           end
+          return_the @message
+        else
+          render_422 @message.errors.full_messages
         end
-        return_the @message
       end
     else
-      render json: { errors: "This room is no longer active." }, status: :unprocessable_entity
+      render_422 'This room is no longer active.'
     end
   end
 
@@ -259,11 +261,14 @@ class Api::V3::MessagesController < Api::V3::BaseController
   #*
 
   def update
-    @message.update_attributes(message_update_params)
-    if @message.hidden
-      @message.delete_real_time
+    if @message.update_attributes(message_update_params)
+      if @message.hidden
+        @message.delete_real_time
+      end
+      return_the @message
+    else
+      render_422 @message.errors.full_messages
     end
-    return_the @message
   end
 
 private

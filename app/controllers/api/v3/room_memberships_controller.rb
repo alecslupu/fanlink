@@ -27,7 +27,7 @@ class Api::V3::RoomMembershipsController < Api::V3::BaseController
       if mem.valid?
         render body: nil, status: :ok
       else
-        render json: { errors: mem.errors }, status: :unprocessable_entity
+        render_422 mem.errors.full_messages
       end
     else
       render_not_found

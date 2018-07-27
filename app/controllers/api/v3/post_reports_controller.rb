@@ -39,7 +39,7 @@ class Api::V3::PostReportsController < Api::V3::BaseController
       if post_report.valid?
         head :ok
       else
-        render_error(post_report.errors)
+        render_422 post_report.errors.full_messages
       end
     else
       render_not_found
@@ -125,14 +125,14 @@ class Api::V3::PostReportsController < Api::V3::BaseController
         if post.save && delete_post(post, post.person.followers)
           head :ok
         else
-          render_error("Invalid or missing status.")
+          render_422("Invalid or missing status.")
         end
       else
         post.status = :published
-        render_error("Invalid or missing status.")
+        render_422("Invalid or missing status.")
       end
     else
-      render_error("Invalid or missing status.")
+      render_422("Invalid or missing status.")
     end
   end
 

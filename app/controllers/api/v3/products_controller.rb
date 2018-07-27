@@ -16,31 +16,27 @@ class Api::V3::ProductsController < Api::V3::BaseController
         if @product.valid?
             return_the @product
         else
-            render json: { errors: @product.errors.messages }, status: :unprocessable_entity
+          render_422 @product.errors.full_messages
         end
     end
 
     def show
         @product = Product.find(params[:id])
-        if @product.valid?
-            return_the @product
-        else
-            render json: { errors: @product.errors.messages }, status: :unprocessable_entity
-        end
+        return_the @product
     end
 
     def update
-        @product = Product.find(params[:id])
-        if @product.update_attributes(product_params)
-            return_the @product
-        else
-            render json: { errors: @product.errors.messages }, status: :unprocessable_entity
-        end
+      @product = Product.find(params[:id])
+      if @product.update_attributes(product_params)
+        return_the @product
+      else
+        render_422 @product.errors.full_messages
+      end
     end
 
-    def destroy
+    # def destroy
 
-    end
+    # end
 
 private
     def product_params

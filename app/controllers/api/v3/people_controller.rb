@@ -34,10 +34,10 @@ class Api::V3::PeopleController < Api::V3::BaseController
         if @person.save
           head :ok
         else
-          render_error(@person.errors.full_messages)
+          render_422 @person.errors.full_messages
         end
       else
-        render_error("The password is incorrect")
+        render_422("The password is incorrect")
       end
     else
       render_not_found
@@ -119,8 +119,10 @@ class Api::V3::PeopleController < Api::V3::BaseController
         if @person.email.present?
           @person.send_onboarding_email
         end
+        return_the @person
+      else
+        render_422 @person.errors.full_messages
       end
-      return_the @person
     end
   end
 
@@ -255,7 +257,7 @@ class Api::V3::PeopleController < Api::V3::BaseController
 
   def update
     if !check_gender
-      render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
+      render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
     else
       if @person == current_user || current_user.admin? || current_user.product_account
         @person.update(person_params)
@@ -296,6 +298,6 @@ private
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password ] +
                                    ( (current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []) +
-                                   ((current_user.present? && current_user.some_admin?) ? %i[ chat_banned role tester ] : []))
+                                   ((current_user.present? && current_user.some_admin?) ? %i[ chat_banned role tester terminated terminated_reason ] : []))
   end
 end

@@ -38,7 +38,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
         @categories = @categories.for_staff if current_user.staff?
         @categories = @categories.for_user if current_user.normal?
         @categories = @categories.for_product_account if current_user.product_account?
-        return_the @categories
+        return_the paginate(@categories)
     end
 
     #**
@@ -99,7 +99,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
         if @category.valid?
             return_the @category
         else
-            render json: { errors: [@category.errors.messages] }, status: :unprocessable_entity
+          render_422 @category.errors.full_messages
         end
     end
 
@@ -129,22 +129,33 @@ class Api::V3::CategoriesController < Api::V3::BaseController
     #*
 
     def update
-
-        if @category.update_attributes(category_params)
-            broadcast(:category_updated, current_user, @category)
-            return_the @category
-        else
-            render json: { errors: [@category.errors.messages] }, status: :unprocessable_entity
-        end
+      if @category.update_attributes(category_params)
+          broadcast(:category_updated, current_user, @category)
+          return_the @category
+      else
+        render_422 @category.errors.full_messages
+      end
     end
 
     def destroy
-
+      if current_user.some_admin?
+        if current_user.super_admin? && param[:force] == "1"
+          @category.destroy
+          head :ok
+        else
+          if @category.update(deleted: true)
+            head :ok
+          else
+            render_422 @category.errors.full_messages
+        end
+      else
+        render_not_found
+      end
     end
 
-    def search
+    # def search
 
-    end
+    # end
 
 private
     def category_params

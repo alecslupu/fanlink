@@ -133,7 +133,7 @@ class Api::V3::StepsController < Api::V3::BaseController
             broadcast(:step_created, current_user, @step)
             return_the @step
         else
-            render json: { errors: @step.errors.messages }, status: :unprocessable_entity
+          render_422 @step.errors.full_messages
         end
     end
 
@@ -172,7 +172,7 @@ class Api::V3::StepsController < Api::V3::BaseController
         end
         return_the @step
       else
-        render json: { errors: @step.errors.full_messages }, status: :unprocessable_entity
+        render_422 @step.errors.full_messages
       end
     end
 
@@ -225,7 +225,7 @@ class Api::V3::StepsController < Api::V3::BaseController
           if @step.update(deleted: true)
             head :ok
           else
-            render_error("Failed to delete the step.")
+            render_422("Failed to delete the step.")
           end
         else
           render_not_found

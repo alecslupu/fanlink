@@ -1,5 +1,5 @@
 class Api::V3::QuestActivitiesController < Api::V3::BaseController
-    before_action :admin_only, except: %i[ index show ]
+  before_action :admin_only, except: %i[ index show ]
     load_up_the Step, from: :step_id, except: %i[ update show delete ]
     load_up_the QuestActivity, only: %i[ update show delete ]
 
@@ -148,12 +148,12 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
     #
     #*
     def create
-        @quest_activity = @step.quest_activities.create(activity_params)
-        if @quest_activity.valid?
-            return_the @quest_activity
-        else
-            render json: { errors: @quest_activity.errors.messages }, status: :unprocessable_entity
-        end
+      @quest_activity = @step.quest_activities.create(activity_params)
+      if @quest_activity.valid?
+        return_the @quest_activity
+      else
+        render_422 @quest_activity.errors.full_messages
+      end
     end
 
     #**
@@ -185,8 +185,11 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
     #*
 
     def update
-        @quest_activity.update_attributes(activity_params)
-        return_the @quest_activity
+        if @quest_activity.update_attributes(activity_params)
+          return_the @quest_activity
+        else
+          render_422 @message.errors.full_messages
+        end
     end
 
     #**
@@ -273,7 +276,7 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
             if @quest_activity.update(deleted: true)
               head :ok
             else
-              render_error("Failed to delete the quest activity.")
+              render_422("Failed to delete the quest activity.")
             end
         else
           render_not_found

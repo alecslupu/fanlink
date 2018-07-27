@@ -123,7 +123,7 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
             broadcast(:completion_created, current_user, @completion)
             return_the @completion
         else
-            render json: { errors: @completion.errors.messages }, status: :unprocessable_entity
+          render_422 @completion.errors.full_messages
         end
     end
 
@@ -214,8 +214,11 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
     #
     #*
     def update
-        @completion.update_attributes(completion_params)
-        return_the @completion
+        if @completion.update_attributes(completion_params)
+          return_the @completion
+        else
+          render_422 @completion.errors.full_messages
+        end
     end
 
     #**
@@ -248,7 +251,7 @@ class Api::V3::QuestCompletionsController < Api::V3::BaseController
           if quest_completion.update(deleted: true)
             head :ok
           else
-            render_error("Failed to delete the quest completion.")
+            render_422("Failed to delete the quest completion.")
           end
         else
           render_not_found

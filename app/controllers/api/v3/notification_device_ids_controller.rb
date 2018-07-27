@@ -26,10 +26,10 @@ class Api::V3::NotificationDeviceIdsController < Api::V3::BaseController
       if ndi.valid?
         head :ok
       else
-        render_error(ndi.errors.full_messages)
+        render_422(ndi.errors.full_messages)
       end
     else
-      render_error("Missing device_id")
+      render_422("Missing device_id")
     end
   end
 

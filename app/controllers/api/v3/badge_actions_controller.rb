@@ -93,7 +93,7 @@ private
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(:assigned_rewards => { :assigned_type => 'ActionType', :assigned_id => @action_type.id }).order(completion_requirement:  :asc)
       @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types['badge'])
-      render_error("Action type is invalid.") unless @action_type.present?
+      render_422("Action type is invalid.") unless @action_type.present?
     end
   end
 end

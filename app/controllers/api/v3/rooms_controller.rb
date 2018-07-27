@@ -60,8 +60,10 @@ class Api::V3::RoomsController < Api::V3::BaseController
       end
       @room.reload
       @room.new_room
+      return_the @room
+    else
+      render_422 @room.errors.full_messages
     end
-    return_the @room
   end
 
   #**
@@ -165,8 +167,11 @@ class Api::V3::RoomsController < Api::V3::BaseController
     if @room.created_by != current_user
       head :unauthorized
     else
-      @room.update_attribute(:name, room_params[:name])
-      return_the @room
+      if @room.update_attribute(:name, room_params[:name])
+        return_the @room
+      else
+        render_422 @room.errors.full_messages
+      end
     end
   end
 

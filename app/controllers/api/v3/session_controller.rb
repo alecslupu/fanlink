@@ -33,7 +33,7 @@ class Api::V3::SessionController < Api::V3::BaseController
     if @person = current_user
       return_the @person
     else
-      render body: nil, status: :not_found
+      render_not_found
     end
   end
 
@@ -70,7 +70,7 @@ class Api::V3::SessionController < Api::V3::BaseController
     @person = nil
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
-      return render json: { errors: [ "Unable to find user from token. Likely a problem contacting Facebook."] }, status: :service_unavailable if @person.nil?
+      return render_422 "Unable to find user from token. Likely a problem contacting Facebook." if @person.nil?
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
@@ -81,10 +81,9 @@ class Api::V3::SessionController < Api::V3::BaseController
           @person = login(@person.email, params[:password]) if @person
         end
       end
-      return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
+      return render_422 "Invalid login." if @person.nil?
     end
     return_the @person
-    #render 'create', formats: 'json', handlers: 'jb'
   end
 
   #**

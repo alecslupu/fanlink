@@ -101,7 +101,7 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
         if @activity_type.valid?
             return_the @activity_type
         else
-            render json: { errors: @activity_type.errors.messages.flatten }, status: :unprocessable_entity
+          render_422 @activity_type.errors.messages.flatten
         end
     end
 
@@ -160,8 +160,10 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
     #*
 
     def update
-        @activity_type.update_attributes(type_params)
-        return_the @activity_type
+        if @activity_type.update_attributes(type_params)
+          return_the @activity_type
+        else
+          render_422 @activity_type.errors.full_messages
     end
 
     #**
@@ -222,7 +224,7 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
           if @activity_type.update(deleted: true)
             head :ok
           else
-            render_error("Failed to delete the activity type.")
+            render_422("Failed to delete the activity type.")
           end
         else
           render_not_found

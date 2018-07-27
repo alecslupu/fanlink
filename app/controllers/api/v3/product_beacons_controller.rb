@@ -199,7 +199,7 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
         if @product_beacon.valid?
             return_the @product_beacon
         else
-            render json: { errors: @product_beacon.errors.messages }, status: :unprocessable_entity
+          render_422 @product_beacon.errors.full_messages
         end
     end
 
@@ -254,8 +254,11 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
     #*
 
     def update
-        @product_beacon.update_attributes(beacon_update_params)
-        return_the @product_beacon
+        if @product_beacon.update_attributes(beacon_update_params)
+          return_the @product_beacon
+        else
+          render_422 @product_beacon.errors.full_messages
+        end
     end
 
     #**
@@ -288,7 +291,7 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
           if beacon.update(deleted: true)
             head :ok
           else
-            render_error("Failed to delete the beacon.")
+            render_422("Failed to delete the beacon.")
           end
         else
           render_not_found

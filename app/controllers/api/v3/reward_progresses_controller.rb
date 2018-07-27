@@ -22,11 +22,11 @@ class Api::V3::RewardProgressesController < Api::V3::BaseController
           broadcast(:reward_progress_created, current_user, @progress, @series_total)
           return_the @progress
         else
-          render json: { errors: @progress.errors.messages.flatten }, status: :unprocessable_entity
+          render_422 @progress.errors.full_messages
         end
       end
     else
-      render json: { errors: "Missing reward_id parameter." }, status: :unprocessable_entity
+      render_422 "Missing reward_id parameter."
     end
   end
 

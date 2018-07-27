@@ -44,7 +44,7 @@ class Api::V3::PasswordResetsController < Api::V3::BaseController
       # This is to not leak information about which emails exist in the system.
       render json: { message: "Reset password instructions have been sent to your email, if it exists in our system" }, status: :ok
     else
-      render json: { errors: "Required parameter missing." }, status: :unprocessable_entity
+      render_422 "Required parameter missing."
     end
   end
 
@@ -75,7 +75,7 @@ class Api::V3::PasswordResetsController < Api::V3::BaseController
       if person.reset_password_to(password)
         head :ok
       else
-        render_error(person.errors)
+        render_422 @person.errors.full_messages
       end
     end
   end
@@ -95,7 +95,7 @@ private
     if errors.empty?
       yield person, password
     else
-      render json: { errors: errors }, status: :unprocessable_entity
+      render_422 errors
     end
   end
 end

@@ -19,13 +19,16 @@ class Api::V3::BadgesController < Api::V3::BaseController
     if @badge.valid?
       return_the @badge
     else
-      render json: { errors: [@badge.errors.messages] }, status: :unprocessable_entity
+      render_422 @badge.errors.full_messages
     end
   end
 
   def update
-    @badge.update_attributes(badge_params)
-    return_the @badge
+    if @badge.update_attributes(badge_params)
+      return_the @badge
+    else
+      render_422 @badge.errors.full_messages
+    end
   end
 
   def show
@@ -34,7 +37,7 @@ class Api::V3::BadgesController < Api::V3::BaseController
 
   def destroy
     if current_user.some_admin?
-      if current_user.super_admin? # && param[:force] == "1"
+      if current_user.super_admin? && param[:force] == "1"
         @badge.destroy
         head :ok
       end

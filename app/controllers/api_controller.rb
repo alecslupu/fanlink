@@ -74,11 +74,11 @@ protected
   end
 
   def render_error(error)
-    render json: { errors: error }, status: :unprocessable_entity
+    render_422(error)
   end
 
   def render_not_found
-    render json: { errors: { base: "Not found" } }, status: :not_found
+    render_404("Not found.")
   end
 
   def set_language
