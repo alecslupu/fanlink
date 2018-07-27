@@ -19,7 +19,7 @@
   * Create a level endpoint with pagination
   * Edit a level endpoint
   * Destroy a level endpoint
-- Use Rollbar for http status errors
+- ~~Use Rollbar for http status errors~~
 - Server side vue
 - Redis for caching
 - Review database indexes
