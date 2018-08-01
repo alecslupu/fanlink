@@ -155,8 +155,8 @@ class Api::V3::PostsController < Api::V3::BaseController
 
   def index
     if params[:tag].present? || params[:categories].present?
-      @posts = Post.for_tag(params[:tag]) if params[:tag]
-      @posts = Post.for_category(params[:categories]) if params[:categories]
+      @posts = Post.for_tag(params[:tag]).order(created_at: :desc) if params[:tag]
+      @posts = Post.for_category(params[:categories]).order(created_at: :desc) if params[:categories]
     elsif params[:person_id].present?
       pid = params[:person_id].to_i
       person = Person.find_by(id: pid)
