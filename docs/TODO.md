@@ -44,6 +44,8 @@
     * Reduce index json data.
 - Merchandise
     * Reduce index json data.
+- Mentions
+    * Get a mention list for current user since last log in
 - Message Reports
     * Reduce index json data.
 - Messages
@@ -52,6 +54,9 @@
     *
 - People
     * Reduce index json data.
+    * Track last login
+    * Track IP? (Security feature. Similar to Googles verification)
+    * 2FA with authenticator?
 - Post Comment Reports
     *
 - Post Comments

@@ -1,7 +1,10 @@
 FanlinkApi::API.endpoint :get_post_comments do
+  description "This gets all the non-hidden comments on a post with pagination."
   method :get
-  tag 'Post Comments'
-  path '/post_comments'
+  tag "Post Comments"
+  path "/post/{post_id}/comments" do
+    post_id :int32
+  end
   output :success do
     status 200
     type :object do
@@ -20,7 +23,7 @@ FanlinkApi::API.endpoint :get_post_comments do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :server_error do
@@ -32,20 +35,33 @@ FanlinkApi::API.endpoint :get_post_comments do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
-FanlinkApi::API.endpoint :get_a_post_comment do
+FanlinkApi::API.endpoint :list_post_comments do
+  description "This gets a list of post comments with optional filters and pagination. (Admin Only)"
   method :get
-  tag 'Post Comments'
-  path '/post_comments/{id}' do
-    id :int32
+  tag "Post Comments"
+  path "/post/{post_id}/comments" do
+    post_id :int32
   end
+
+  query do
+    body_filter(:string).explain do
+      description "Full or partial match on comment body."
+    end
+    person_filter(:string).explain do
+      description "Full or partial match on person username or email."
+    end
+  end
+
   output :success do
     status 200
     type :object do
-      type :post_comment_json
+      post_comments :array do
+        type :post_comment_json
+      end
     end
   end
 
@@ -58,19 +74,7 @@ FanlinkApi::API.endpoint :get_a_post_comment do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
-  end
-
-  output :not_found do
-    status 404
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'The record was not found.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :server_error do
@@ -82,33 +86,88 @@ FanlinkApi::API.endpoint :get_a_post_comment do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
+
+# FanlinkApi::API.endpoint :get_a_post_comment do
+#   method :get
+#   tag "Post Comments"
+#   path "/post_comments/{id}" do
+#     id :int32
+#   end
+#   output :success do
+#     status 200
+#     type :object do
+#       type :post_comment_json
+#     end
+#   end
+
+#   output :unauthorized do
+#     status 401
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "User is not authorized to access this endpoint."
+#   end
+
+#   output :not_found do
+#     status 404
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "The record was not found."
+#   end
+
+#   output :server_error do
+#     status 500
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+#   end
+# end
 
 
 FanlinkApi::API.endpoint :create_post_comment do
+  description "This creates a post comment. It is automatically attributed to the logged in user."
   method :post
-  tag 'Post Comments'
-  path '/post_comments'
+  tag "Post Comments"
+  path "/posts/{post_id}/comments" do
+    post_id :int32
+  end
   input do
     type :object do
       post_comment :object do
-        post_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        person_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
         body(:string).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
-        hidden(:bool).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+      end
+      mentions? :object do
+        person_id(:int32).explain do
+          description "The id of the person mentioned."
+          #Sexample
+        end
+        location(:int32).explain do
+          description "Where the mention text starts in the comment."
+          #example
+        end
+        length(:int32).explain do
+          description "The length of the mention text."
+          #example
         end
       end
     end
@@ -129,7 +188,7 @@ FanlinkApi::API.endpoint :create_post_comment do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -141,7 +200,7 @@ FanlinkApi::API.endpoint :create_post_comment do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -153,13 +212,7 @@ FanlinkApi::API.endpoint :create_post_comment do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
-  end
-
-  output :rate_limit do
-    status 429
-    type :string
-    description 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :server_error do
@@ -171,98 +224,99 @@ FanlinkApi::API.endpoint :create_post_comment do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
-FanlinkApi::API.endpoint :update_post_comment do
-  method :put
-  tag 'Post Comments'
-  path '/post_comments/{id}' do
-    id :int32
-  end
-  input do
-    type :object do
-      post_comment :object do
-        post_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        person_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        body(:string).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        hidden(:bool).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-      end
-    end
-  end
-  output :success do
-    status 200
-    type :object do
-      type :post_comment_json
-    end
-  end
+# FanlinkApi::API.endpoint :update_post_comment do
+#   method :put
+#   tag "Post Comments"
+#   path "/post_comments/{id}" do
+#     id :int32
+#   end
+#   input do
+#     type :object do
+#       post_comment :object do
+#         post_id(:int32).explain do
+#           description "TODO: Description"
+#           example "TODO: Example"
+#         end
+#         person_id(:int32).explain do
+#           description "TODO: Description"
+#           example "TODO: Example"
+#         end
+#         body(:string).explain do
+#           description "TODO: Description"
+#           example "TODO: Example"
+#         end
+#         hidden(:bool).explain do
+#           description "TODO: Description"
+#           example "TODO: Example"
+#         end
+#       end
+#     end
+#   end
+#   output :success do
+#     status 200
+#     type :object do
+#       type :post_comment_json
+#     end
+#   end
 
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'User is not authorized to access this endpoint.'
-  end
+#   output :unauthorized do
+#     status 401
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "User is not authorized to access this endpoint."
+#   end
 
-  output :not_found do
-    status 404
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'The record was not found.'
-  end
+#   output :not_found do
+#     status 404
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "The record was not found."
+#   end
 
-  output :unprocessible do
-    status 422
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'One or more fields were invalid. Check response for reasons.'
-  end
+#   output :unprocessible do
+#     status 422
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "One or more fields were invalid. Check response for reasons."
+#   end
 
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
-  end
-end
+#   output :server_error do
+#     status 500
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+#   end
+# end
 
 FanlinkApi::API.endpoint :destroy_post_comment do
   method :delete
-  tag 'Post Comments'
-  path '/post_comments/{id}' do
+  tag "Post Comments"
+  path "/posts/{post_id}/comments/{id}" do
+    post_id :int32
     id :int32
   end
   output :success do
@@ -279,7 +333,7 @@ FanlinkApi::API.endpoint :destroy_post_comment do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -291,7 +345,7 @@ FanlinkApi::API.endpoint :destroy_post_comment do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -303,7 +357,7 @@ FanlinkApi::API.endpoint :destroy_post_comment do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :server_error do
@@ -315,6 +369,6 @@ FanlinkApi::API.endpoint :destroy_post_comment do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end

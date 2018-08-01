@@ -7,23 +7,23 @@ module JSONErrors
     rescue_from ActionController::ParameterMissing, with: :render_400
 
 
-    def render_400(errors = 'required parameters invalid')
+    def render_400(errors = "required parameters invalid")
       render_errors(errors, 400)
     end
 
-    def render_401(errors = 'unauthorized access')
+    def render_401(errors = "unauthorized access")
       render_errors(errors, 401)
     end
 
-    def render_404(errors = 'not found')
+    def render_404(errors = "not found")
       render_errors(errors, 404)
     end
 
-    def render_422(errors = 'could not save data')
+    def render_422(errors = "could not save data")
       render_errors(errors, 422)
     end
 
-    def render_500(errors = 'internal server error')
+    def render_500(errors = "internal server error")
       render_errors(errors, 500)
     end
 
@@ -36,7 +36,7 @@ module JSONErrors
         }
       }
       Rollbar.error(data) unless Rails.env.development?
-      render json: data , status: status
+      render json: data, status: status
     end
 
 

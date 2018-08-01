@@ -1,7 +1,7 @@
 FanlinkApi::API.endpoint :get_relationships do
   method :get
-  tag 'Relationships'
-  path '/relationships'
+  tag "Relationships"
+  path "/relationships"
   output :success do
     status 200
     type :object do
@@ -20,7 +20,7 @@ FanlinkApi::API.endpoint :get_relationships do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :server_error do
@@ -32,14 +32,14 @@ FanlinkApi::API.endpoint :get_relationships do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
 FanlinkApi::API.endpoint :get_a_relationship do
   method :get
-  tag 'Relationships'
-  path '/relationships/{id}' do
+  tag "Relationships"
+  path "/relationships/{id}" do
     id :int32
   end
   output :success do
@@ -58,7 +58,7 @@ FanlinkApi::API.endpoint :get_a_relationship do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -70,7 +70,7 @@ FanlinkApi::API.endpoint :get_a_relationship do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :server_error do
@@ -82,29 +82,29 @@ FanlinkApi::API.endpoint :get_a_relationship do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
 
 FanlinkApi::API.endpoint :create_relationship do
   method :post
-  tag 'Relationships'
-  path '/relationships'
+  tag "Relationships"
+  path "/relationships"
   input do
     type :object do
       relationship :object do
         requested_by_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
         requested_to_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
         status(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
       end
     end
@@ -125,7 +125,7 @@ FanlinkApi::API.endpoint :create_relationship do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -137,7 +137,7 @@ FanlinkApi::API.endpoint :create_relationship do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -149,13 +149,13 @@ FanlinkApi::API.endpoint :create_relationship do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :rate_limit do
     status 429
     type :string
-    description 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination.'
+    description "Not enough time since last submission of this action type or duplicate action type, person, identifier combination."
   end
 
   output :server_error do
@@ -167,30 +167,30 @@ FanlinkApi::API.endpoint :create_relationship do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
 FanlinkApi::API.endpoint :update_relationship do
   method :put
-  tag 'Relationships'
-  path '/relationships/{id}' do
+  tag "Relationships"
+  path "/relationships/{id}" do
     id :int32
   end
   input do
     type :object do
       relationship :object do
         requested_by_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
         requested_to_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
         status(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "TODO: Description"
+          example "TODO: Example"
         end
       end
     end
@@ -211,7 +211,7 @@ FanlinkApi::API.endpoint :update_relationship do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -223,7 +223,7 @@ FanlinkApi::API.endpoint :update_relationship do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -235,7 +235,7 @@ FanlinkApi::API.endpoint :update_relationship do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :server_error do
@@ -247,14 +247,14 @@ FanlinkApi::API.endpoint :update_relationship do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
 FanlinkApi::API.endpoint :destroy_relationship do
   method :delete
-  tag 'Relationships'
-  path '/relationships/{id}' do
+  tag "Relationships"
+  path "/relationships/{id}" do
     id :int32
   end
   output :success do
@@ -271,7 +271,7 @@ FanlinkApi::API.endpoint :destroy_relationship do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -283,7 +283,7 @@ FanlinkApi::API.endpoint :destroy_relationship do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -295,7 +295,7 @@ FanlinkApi::API.endpoint :destroy_relationship do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :server_error do
@@ -307,6 +307,6 @@ FanlinkApi::API.endpoint :destroy_relationship do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end

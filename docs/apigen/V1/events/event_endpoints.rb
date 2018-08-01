@@ -1,7 +1,8 @@
 FanlinkApi::API.endpoint :get_events do
+  description "Returns all events associated with the current user's product."
   method :get
-  tag 'Events'
-  path '/events'
+  tag "Events"
+  path "/events"
   output :success do
     status 200
     type :object do
@@ -20,7 +21,7 @@ FanlinkApi::API.endpoint :get_events do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :server_error do
@@ -32,14 +33,15 @@ FanlinkApi::API.endpoint :get_events do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
 FanlinkApi::API.endpoint :get_an_event do
+  description "Returns a single event."
   method :get
-  tag 'Events'
-  path '/events/{id}' do
+  tag "Events"
+  path "/events/{id}" do
     id :int32
   end
   output :success do
@@ -58,7 +60,7 @@ FanlinkApi::API.endpoint :get_an_event do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -70,7 +72,7 @@ FanlinkApi::API.endpoint :get_an_event do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :server_error do
@@ -82,7 +84,7 @@ FanlinkApi::API.endpoint :get_an_event do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 

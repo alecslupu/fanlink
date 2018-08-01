@@ -1,12 +1,17 @@
 FanlinkApi::API.endpoint :get_message_reports do
+  description "Get list of messages reports (ADMIN)."
   method :get
-  tag 'Message Reports'
-  path '/message_reports'
+  tag "Message Reports"
+  path "/message_reports"
+  query do
+    status_filter(:string).explain do
+      description "If provided, valid values are 'message_hidden', 'no_action_needed', and 'pending'"
+    end
   output :success do
     status 200
     type :object do
       message_reports :array do
-        type :message_report_json
+        type :message_report_app_json
       end
     end
   end
@@ -20,7 +25,7 @@ FanlinkApi::API.endpoint :get_message_reports do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :server_error do
@@ -32,83 +37,78 @@ FanlinkApi::API.endpoint :get_message_reports do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
-FanlinkApi::API.endpoint :get_a_message_report do
-  method :get
-  tag 'Message Reports'
-  path '/message_reports/{id}' do
-    id :int32
-  end
-  output :success do
-    status 200
-    type :object do
-      type :message_report_json
-    end
-  end
+# FanlinkApi::API.endpoint :get_a_message_report do
+#   method :get
+#   tag 'Message Reports'
+#   path '/message_reports/{id}' do
+#     id :int32
+#   end
+#   output :success do
+#     status 200
+#     type :object do
+#       type :message_report_json
+#     end
+#   end
 
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'User is not authorized to access this endpoint.'
-  end
+#   output :unauthorized do
+#     status 401
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'User is not authorized to access this endpoint.'
+#   end
 
-  output :not_found do
-    status 404
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'The record was not found.'
-  end
+#   output :not_found do
+#     status 404
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'The record was not found.'
+#   end
 
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
-  end
-end
+#   output :server_error do
+#     status 500
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+#   end
+# end
 
 
 FanlinkApi::API.endpoint :create_message_report do
+  description "This reports a message that was posted to a public room."
   method :post
-  tag 'Message Reports'
-  path '/message_reports'
+  tag "Message Reports"
+  path "/room/{room_id}/message_reports" do
+    room_id :int32
+  end
   input do
     type :object do
       message_report :object do
         message_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        person_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "The id of the message being reported."
+          example 1
         end
         reason?(:string).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        status(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "The reason given by the user for reporting the message."
+          example "Harrassment"
         end
       end
     end
@@ -116,7 +116,7 @@ FanlinkApi::API.endpoint :create_message_report do
   output :success do
     status 200
     type :object do
-      type :message_report_json
+      type :message_report_app_json
     end
   end
 
@@ -129,7 +129,7 @@ FanlinkApi::API.endpoint :create_message_report do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -141,7 +141,7 @@ FanlinkApi::API.endpoint :create_message_report do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -153,13 +153,13 @@ FanlinkApi::API.endpoint :create_message_report do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :rate_limit do
     status 429
     type :string
-    description 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination.'
+    description "Not enough time since last submission of this action type or duplicate action type, person, identifier combination."
   end
 
   output :server_error do
@@ -171,34 +171,23 @@ FanlinkApi::API.endpoint :create_message_report do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
 FanlinkApi::API.endpoint :update_message_report do
+  description "This updates a message report. The only value that can be changed is the status."
   method :put
-  tag 'Message Reports'
-  path '/message_reports/{id}' do
+  tag "Message Reports"
+  path "/message_reports/{id}" do
     id :int32
   end
   input do
     type :object do
       message_report :object do
-        message_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        person_id(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
-        reason?(:string).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
-        end
         status(:int32).explain do
-          description 'TODO: Description'
-          example 'TODO: Example'
+          description "The new status. Valid statuses are 'message_hidden', 'no_action_needed', and 'pending'."
+          example "no_action_needed"
         end
       end
     end
@@ -219,7 +208,7 @@ FanlinkApi::API.endpoint :update_message_report do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -231,7 +220,7 @@ FanlinkApi::API.endpoint :update_message_report do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -243,7 +232,7 @@ FanlinkApi::API.endpoint :update_message_report do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :server_error do
@@ -255,66 +244,66 @@ FanlinkApi::API.endpoint :update_message_report do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
-FanlinkApi::API.endpoint :destroy_message_report do
-  method :delete
-  tag 'Message Reports'
-  path '/message_reports/{id}' do
-    id :int32
-  end
-  output :success do
-    status 200
-    type :string
-  end
+# FanlinkApi::API.endpoint :destroy_message_report do
+#   method :delete
+#   tag 'Message Reports'
+#   path '/message_reports/{id}' do
+#     id :int32
+#   end
+#   output :success do
+#     status 200
+#     type :string
+#   end
 
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'User is not authorized to access this endpoint.'
-  end
+#   output :unauthorized do
+#     status 401
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'User is not authorized to access this endpoint.'
+#   end
 
-  output :not_found do
-    status 404
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'The record was not found.'
-  end
+#   output :not_found do
+#     status 404
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'The record was not found.'
+#   end
 
-  output :unprocessible do
-    status 422
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'One or more fields were invalid. Check response for reasons.'
-  end
+#   output :unprocessible do
+#     status 422
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'One or more fields were invalid. Check response for reasons.'
+#   end
 
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
-  end
-end
+#   output :server_error do
+#     status 500
+#     type :object do
+#       errors :object do
+#         base :array do
+#           type :string
+#         end
+#       end
+#     end
+#     description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we\'re trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+#   end
+# end

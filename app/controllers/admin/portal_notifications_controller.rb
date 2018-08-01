@@ -1,6 +1,5 @@
 module Admin
   class PortalNotificationsController < Admin::ApplicationController
-
     def create
       params[:portal_notification] = params[:portal_notification].merge(product_id: ActsAsTenant.current_tenant.id)
       resource = resource_class.new(resource_params)
@@ -8,7 +7,7 @@ module Admin
       if resource.save
         resource.enqueue_push
         redirect_to(
-            [namespace, resource],
+          [namespace, resource],
             notice: translate_with_resource("create.success"),
             )
       else
@@ -16,7 +15,6 @@ module Admin
             page: Administrate::Page::Form.new(dashboard, resource),
         }
       end
-
     end
 
     def new
@@ -31,7 +29,7 @@ module Admin
       if requested_resource.update(resource_params)
         requested_resource.update_push if requested_resource.previous_changes.keys.include?("send_me_at")
         redirect_to(
-            [namespace, requested_resource],
+          [namespace, requested_resource],
             notice: translate_with_resource("update.success"),
             )
       else

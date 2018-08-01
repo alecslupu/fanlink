@@ -1,18 +1,18 @@
 FanlinkApi::API.endpoint :create_badge_action do
   method :post
-  tag 'Badge Actions'
-  description 'Create a badge action.'
-  path '/badge_actions'
+  tag "Badge Actions"
+  description "Create a badge action."
+  path "/badge_actions"
   input do
     type :object do
       badge_action :object do
         action_type(:string).explain do
-          description 'The internal name of the action type to trigger.'
-          example 'create_post'
+          description "The internal name of the action type to trigger."
+          example "create_post"
         end
         identifier?(:string).explain do
-          description 'An identifier for the badge action.'
-          example 'create_post_view'
+          description "An identifier for the badge action."
+          example "create_post_view"
         end
       end
     end
@@ -23,8 +23,8 @@ FanlinkApi::API.endpoint :create_badge_action do
       type :oneof do
         discriminator :type
         map(
-          pending_badge_json: 'Pending Badge',
-          badges_awarded_json: 'Badges Awarded'
+          pending_badge_json: "Pending Badge",
+          badges_awarded_json: "Badges Awarded"
         )
       end
     end
@@ -39,7 +39,7 @@ FanlinkApi::API.endpoint :create_badge_action do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :not_found do
@@ -51,7 +51,7 @@ FanlinkApi::API.endpoint :create_badge_action do
         end
       end
     end
-    description 'The record was not found.'
+    description "The record was not found."
   end
 
   output :unprocessible do
@@ -63,13 +63,13 @@ FanlinkApi::API.endpoint :create_badge_action do
         end
       end
     end
-    description 'One or more fields were invalid. Check response for reasons.'
+    description "One or more fields were invalid. Check response for reasons."
   end
 
   output :rate_limit do
     status 429
     type :string
-    description 'Not enough time since last submission of this action type or duplicate action type, person, identifier combination.'
+    description "Not enough time since last submission of this action type or duplicate action type, person, identifier combination."
   end
 
   output :server_error do
@@ -81,6 +81,6 @@ FanlinkApi::API.endpoint :create_badge_action do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end

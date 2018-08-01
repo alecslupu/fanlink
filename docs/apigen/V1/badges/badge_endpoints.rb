@@ -1,7 +1,14 @@
 FanlinkApi::API.endpoint :get_badges do
+  descriptions "This gets a list of all badges earned for a passed in user. Will include points earned towards each badge and whether badge has been awarded to the user."
   method :get
-  tag 'Badges'
-  path '/badges'
+  tag "Badges"
+  path "/badges"
+  query do
+    person_id(:int32).explain do
+      description "The id of the person whose badges you want."
+      example 1
+    end
+  end
   output :success do
     status 200
     type :object do
@@ -20,7 +27,7 @@ FanlinkApi::API.endpoint :get_badges do
         end
       end
     end
-    description 'User is not authorized to access this endpoint.'
+    description "User is not authorized to access this endpoint."
   end
 
   output :server_error do
@@ -32,7 +39,7 @@ FanlinkApi::API.endpoint :get_badges do
         end
       end
     end
-    description 'Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated.'
+    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 

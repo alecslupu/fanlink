@@ -31,5 +31,6 @@ FanlinkApi::API.model :message_portal_json do
       status :int32
       picture_url :string
       audio_url :string
+    end
   end
 end
