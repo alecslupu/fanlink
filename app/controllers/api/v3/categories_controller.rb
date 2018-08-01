@@ -41,6 +41,12 @@ class Api::V3::CategoriesController < Api::V3::BaseController
     return_the paginate(@categories)
   end
 
+  def posts
+    @posts = Post.for_category(params[:category_name])
+    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    return_the @posts
+  end
+
   # **
   #
   # @api {get} /categories/:id title

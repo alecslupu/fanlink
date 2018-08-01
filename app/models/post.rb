@@ -37,7 +37,7 @@ class Post < ApplicationRecord
                 start_date.beginning_of_day, end_date.end_of_day)
         }
   scope :for_tag, -> (tag) { joins(:tags).where("tags.name = ?", tag) }
-  scope :for_category, -> (category) { joins(:category).where("categories.name = ?", category) }
+  scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
   scope :visible, -> {
           published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
                           Time.zone.now, Time.zone.now)

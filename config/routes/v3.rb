@@ -62,6 +62,7 @@ api_version(:module => "Api::V3", :header => {:name => "Accept", :value => "appl
       get "list" => "posts#list"
       get "recommended" => "recommended_posts#index"
       get "tags" => "tags#index"
+      get "category/:category_name" => "categories#posts"
     end
     resources :post_comments, only: %i[ create destroy index ], path: :comments
     resources :post_reactions, only: %i[ create destroy index update ], path: :reactions

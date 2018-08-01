@@ -139,6 +139,7 @@ JkoApi.routes self do
         get "list" => "posts#list"
         get "recommended" => "recommended_posts#index"
         get "tags" => "tags#index"
+        get "category/:category_name" => "categories#posts"
       end
       get "share" => "posts#share"
     end

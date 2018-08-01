@@ -154,7 +154,10 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def index
-    if params[:person_id].present?
+    if params[:tag].present? || params[:categories].present?
+      @posts = Post.for_tag(params[:tag]) if params[:tag]
+      @posts = Post.for_category(params[:categories]) if params[:categories]
+    elsif params[:person_id].present?
       pid = params[:person_id].to_i
       person = Person.find_by(id: pid)
       if person
@@ -166,8 +169,6 @@ class Api::V3::PostsController < Api::V3::BaseController
       @posts = paginate(Post.visible.following_and_own(current_user).order(created_at: :desc))
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    @posts = @posts.for_tag(params[:tag]) if params[:tag]
-    @posts = @posts.for_category(params[:category]) if params[:category]
     return_the @posts
   end
   # **
