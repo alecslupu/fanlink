@@ -35,7 +35,7 @@ module JSONErrors
           base: errors
         }
       }
-      Rollbar.error(data) unless Rails.env.development?
+      Rollbar.error(errors.join(", ")) unless Rails.env.development?
       render json: data, status: status
     end
 
