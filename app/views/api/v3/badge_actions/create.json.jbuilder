@@ -17,6 +17,17 @@ else
             json.cache! ['v3', award.reward.badge] do
                 json.partial! "api/v3/badges/badge", locals: {badge: award.reward.badge}
             end
+            if !@badges_awarded.nil?
+                @badges_awarded.each do |awarded|
+                    if awarded.reward.reward_type_id == badge.id
+                        json.badge_awarded  true
+                    else
+                        json.badge_awarded false
+                    end
+                end
+            else
+                json.badge_awarded false
+            end
         end
     end
 end
