@@ -16,7 +16,7 @@ json.badges do
         end
         if !@badges_awarded.nil?
             @badges_awarded.each do |awarded|
-                if awarded.reward.reward_type_id == badge.id
+                if awarded.reward.reward_type_id == b.id
                     json.badge_awarded  true
                 else
                     json.badge_awarded false
