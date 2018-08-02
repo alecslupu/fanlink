@@ -161,15 +161,19 @@ class Api::V3::PostsController < Api::V3::BaseController
       pid = params[:person_id].to_i
       person = Person.find_by(id: pid)
       if person
-        @posts = paginate(Post.visible.for_person(person).order(created_at: :desc))
+        @posts = paginate(Post.visible.for_person(person).unblocked(current_user.blocked_people).order(created_at: :desc))
       else
         render_422("Cannot find that person.") && return
       end
     else
-      @posts = paginate(Post.visible.following_and_own(current_user).order(created_at: :desc))
+      @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
     end
-    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    return_the @posts
+    if @posts.present?
+      @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+      return_the @posts
+    else
+      render_not_found
+    end
   end
   # **
   # @api {get} /posts/list Get a list of posts (ADMIN ONLY).

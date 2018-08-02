@@ -18,3 +18,4 @@ if  person.person_rewards.empty?
 else
   json.rewards person.person_rewards, partial: "api/v3/person_rewards/person_reward", as: :reward
 end
+json.blocked_people person.blocked_people
