@@ -1,4 +1,4 @@
-#TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
+# TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person)
     client.set("#{user_path(person)}/message_counts/#{room.id}", 0)

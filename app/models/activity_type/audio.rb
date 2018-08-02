@@ -1,6 +1,4 @@
 class ActivityType
-    module Audio
-        
-    end
-    
+  module Audio
+  end
 end

@@ -1,6 +1,4 @@
 class Reward
-    module Contests
-        
-    end
-    
+  module Contests
+  end
 end

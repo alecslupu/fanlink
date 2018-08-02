@@ -2,7 +2,7 @@ class PortalNotification < ApplicationRecord
   include PortalNotification::RealTime
   include TranslationThings
 
-  #specify languages not used for respective fields
+  # specify languages not used for respective fields
   IGNORE_TRANSLATION_LANGS = { body: ["un"] }
 
   enum sent_status: %i[ pending sent cancelled errored ]

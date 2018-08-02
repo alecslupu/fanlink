@@ -1,6 +1,4 @@
 class Reward
-    module Coupons
-        
-    end
-    
+  module Coupons
+  end
 end

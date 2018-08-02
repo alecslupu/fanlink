@@ -1,5 +1,4 @@
 class ActivityType
-    module Beacon
-        
-    end
+  module Beacon
+  end
 end

@@ -7,6 +7,8 @@ Rails.application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
+  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes }
+
   # Disable full error reports.
   config.consider_all_requests_local = true
 

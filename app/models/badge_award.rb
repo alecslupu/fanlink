@@ -4,7 +4,7 @@ class BadgeAward < ApplicationRecord
 
   validate :product_match
 
-  #returns hash :badge => points_achieved if no badge earned
+  # returns hash :badge => points_achieved if no badge earned
   # else returns array of badges earned
   def self.award_badges(badge_action)
     badge_awards = []
@@ -33,9 +33,9 @@ class BadgeAward < ApplicationRecord
 
   private
 
-  def product_match
-    if badge.product_id != person.product_id
-      errors.add(:base, "Product mismatch!")
+    def product_match
+      if badge.product_id != person.product_id
+        errors.add(:base, "Product mismatch!")
+      end
     end
-  end
 end

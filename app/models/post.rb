@@ -15,7 +15,7 @@ class Post < ApplicationRecord
   has_paper_trail
 
   has_many :post_tags
-  has_many :tags, :through => :post_tags
+  has_many :tags, through: :post_tags
 
   has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
@@ -69,20 +69,20 @@ class Post < ApplicationRecord
 
   private
 
-  def adjust_priorities
-    if priority > 0 && saved_change_to_attribute?(:priority)
-      same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
-      if same_priority.count > 0
-        person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |p|
-          p.increment!(:priority)
+    def adjust_priorities
+      if priority > 0 && saved_change_to_attribute?(:priority)
+        same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
+        if same_priority.count > 0
+          person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |p|
+            p.increment!(:priority)
+          end
         end
       end
     end
-  end
 
-  def sensible_dates
-    if starts_at.present? && ends_at.present? && starts_at > ends_at
-      errors.add(:starts_at, "Cannot start after end!")
+    def sensible_dates
+      if starts_at.present? && ends_at.present? && starts_at > ends_at
+        errors.add(:starts_at, "Cannot start after end!")
+      end
     end
-  end
 end

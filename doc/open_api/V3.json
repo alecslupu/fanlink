@@ -8743,124 +8743,6 @@
       }
     },
     "requestBodies": {
-      "RewardCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the reward."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the reward."
-                    },
-                    "reward_type": {
-                      "type": "string",
-                      "description": "What the reward provides. Currently supports badges."
-                    },
-                    "reward_type_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
-                    },
-                    "series": {
-                      "type": "string",
-                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
-                    },
-                    "completion_requirement": {
-                      "type": "integer",
-                      "description": "The number of completions required to unlock this reward."
-                    },
-                    "points": {
-                      "type": "string",
-                      "description": "The amount of points this reward gives towards a person's level."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The status of the reward. Can be active or inactive."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
-              ]
-            }
-          }
-        }
-      },
-      "RewardUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the reward."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the reward."
-                    },
-                    "reward_type": {
-                      "type": "string",
-                      "description": "What the reward provides. Currently supports badges."
-                    },
-                    "reward_type_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
-                    },
-                    "series": {
-                      "type": "string",
-                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
-                    },
-                    "completion_requirement": {
-                      "type": "integer",
-                      "description": "The number of completions required to unlock this reward."
-                    },
-                    "points": {
-                      "type": "string",
-                      "description": "The amount of points this reward gives towards a person's level."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The status of the reward. Can be active or inactive."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
-              ]
-            }
-          }
-        }
-      },
       "ActionTypeCreateForm": {
         "required": true,
         "description": "",
@@ -10096,140 +9978,129 @@
             }
           }
         }
+      },
+      "RewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
+      },
+      "RewardUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
       }
     },
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
-      },
-      "RelationshipsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RewardObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "$ref": "#/components/schemas/RewardJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RewardArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rewards": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "reward": {
-                        "$ref": "#/components/schemas/RewardJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
       },
       "ActionTypeObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -11002,6 +10873,135 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "$ref": "#/components/schemas/RewardJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rewards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "reward": {
+                        "$ref": "#/components/schemas/RewardJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
                 }
               }
             }

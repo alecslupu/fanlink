@@ -4,12 +4,12 @@ json.type atype.atype
 json.orig_value atype.value
 case atype.atype.to_sym
 when :beacon
-    beacon = ProductBeacon.find(atype.value['id'])
-    json.value do
-        json.cache! ['v3', beacon], expires_in: 10.minutes do
-            json.partial! "api/v3/product_beacons/beacon", locals: { beacon: beacon }
-        end
+  beacon = ProductBeacon.find(atype.value["id"])
+  json.value do
+    json.cache! ["v3", beacon], expires_in: 10.minutes do
+      json.partial! "api/v3/product_beacons/beacon", locals: { beacon: beacon }
     end
+  end
 else
-    json.value atype.value
+  json.value atype.value
 end

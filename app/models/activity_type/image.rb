@@ -1,5 +1,4 @@
 class ActivityType
-    module Image
-        
-    end
+  module Image
+  end
 end

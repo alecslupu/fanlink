@@ -22,7 +22,7 @@ class PersonDashboard < Administrate::BaseDashboard
     product_account: Field::Boolean,
     recommended: Field::Boolean,
     chat_banned: Field::Boolean,
-    level_earned: Field::BelongsTo::with_options(class_name: "Level"),
+    level_earned: Field::BelongsTo.with_options(class_name: "Level"),
     badges: Field::HasMany,
     facebookid: Field::Text,
     facebook_picture_url: Field::Text,

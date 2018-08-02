@@ -10,7 +10,7 @@ class QuestCompletionDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     step: Field::BelongsTo,
     person: Field::BelongsTo,
-    quest_activity: Field::BelongsTo.with_options(foreign_key: "activity_id", ),
+    quest_activity: Field::BelongsTo.with_options(foreign_key: "activity_id",),
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,

@@ -22,6 +22,5 @@ class PortalNotification
     def get_job
       Delayed::Job.find_by("handler like '%portal_notification_id: #{self.id}%'")
     end
-
   end
 end

@@ -1,6 +1,4 @@
 class Reward
-    module Badges
-        
-    end
-    
+  module Badges
+  end
 end
