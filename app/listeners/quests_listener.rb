@@ -19,6 +19,7 @@ class QuestsListener
             unlocked.status = StepCompleted.statuses[:unlocked]
             if unlocked.valid?
               unlocked.save
+              Rails.logger.tagged("[Completion Created]") { Rails.logger.info "Step: #{unlocked.step.id} created with ID #{unlocked.id} for User: #{user.id}" } unless Rails.env.production?
               # unlock.step.touch
               # unlock.step.quest.touch
             else
@@ -53,9 +54,10 @@ class QuestsListener
       su = StepUnlock.find_or_initialize_by(unlock_id: step.uuid)
       su.step_id = step.unlocks
       if su.save
-        Rails.logger.tagged("Step Updated Listener") { Rails.logger.info "Updated unlock for Step: #{step.id} to be unlocked by #{step.unlocks}" } unless Rails.env.production?
+        Rails.logger.tagged("Step Updated Listener") { Rails.logger.info "Updated unlock for Step: #{step.id} UUID: #{step.uuid} to be unlocked by #{step.unlocks}" } unless Rails.env.production?
       else
-        Rails.logger.tagged("Step Updated Listener") { Rails.logger.error "Failed to update previous unlock for Step: #{step.id} to be unlocked by #{step.unlocks}" } unless Rails.env.production?
+        Rails.logger.tagged("Step Updated Listener") { Rails.logger.error "Failed to update previous unlock for Step: #{step.id} UUID: #{step.uuid} to be unlocked by #{step.unlocks}" } unless Rails.env.production?
+        puts su.inspect
       end
     else
       if StepUnlock.exists?(unlock_id: step.uuid)
