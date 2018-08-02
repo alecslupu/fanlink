@@ -1,15 +1,16 @@
 class Person
   module Levels
     def level_earned
-      if rewards.present?
-        points = rewards.sum(:points)
+      if level_progresses.first.present?
+        points = level_progresses.first.total
+        puts points
       else
         points = 0
       end
       if points == 0
         nil
       else
-        Level.where("points <= ?", points).order(points: :desc).first
+        Level.where(product_id: product.id).where("points <= ?", points).order(points: :desc).first
       end
     end
 
