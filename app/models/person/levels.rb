@@ -3,7 +3,6 @@ class Person
     def level_earned
       if level_progresses.first.present?
         points = level_progresses.first.total
-        puts points
       else
         points = 0
       end
