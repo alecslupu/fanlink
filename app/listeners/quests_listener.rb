@@ -5,7 +5,7 @@ class QuestsListener
   def self.completion_created(user, completion)
     puts "Completion detected. #{Person.current_user.id}"
     step = Step.find(completion.step_id)
-    if step.quest_completions.count >= step.quest_activities.count
+    if step.quest_completions.count >= step.quest_activities.where(deleted: false).count
       Rails.logger.tagged("[Step Completed]") { Rails.logger.info "Step #{step.id} for #{user.id} completed." } unless Rails.env.production?
       completed = StepCompleted.find_or_initialize_by(quest_id: step.quest_id, step_id: completion.step_id, person_id: user.id)
       completed.status = StepCompleted.statuses[:completed]
