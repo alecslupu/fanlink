@@ -155,8 +155,8 @@ class Api::V3::PostsController < Api::V3::BaseController
 
   def index
     if params[:tag].present? || params[:categories].present?
-      @posts = Post.for_tag(params[:tag]).order(created_at: :desc) if params[:tag]
-      @posts = Post.for_category(params[:categories]).order(created_at: :desc) if params[:categories]
+      @posts = Post.for_tag(params[:tag]).unblocked(current_user.blocked_people).order(created_at: :desc) if params[:tag]
+      @posts = Post.for_category(params[:categories]).unblocked(current_user.blocked_people).order(created_at: :desc) if params[:categories]
     elsif params[:person_id].present?
       pid = params[:person_id].to_i
       person = Person.find_by(id: pid)
@@ -234,7 +234,7 @@ class Api::V3::PostsController < Api::V3::BaseController
   def list
     @posts = paginate apply_filters
     @posts = @posts.for_tag(params[:tag]) if params[:tag]
-    @posts = @posts.for_category(params[:category]) if params[:category]
+    @posts = @posts.for_categories(params[:categories]) if params[:categories]
     return_the @posts
   end
 
@@ -280,7 +280,7 @@ class Api::V3::PostsController < Api::V3::BaseController
     if current_user&.some_admin? && current_user&.app == "portal"
       @post = Post.for_product(ActAsTenant.current_tenant).find(params[:id])
     else
-      @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
+      @post = Post.for_product(ActsAsTenant.current_tenant).visible.unblocked(current_user.blocked_people).find(params[:id])
     end
     @post_reaction = @post.reactions.find_by(person: current_user)
     return_the @post
