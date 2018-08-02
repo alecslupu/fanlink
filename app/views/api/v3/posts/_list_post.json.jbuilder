@@ -1,6 +1,6 @@
 json.id post.id.to_s
 json.person do
-  json.partial! "api/v1/people/person", locals: { person: post.person }
+  json.partial! "api/v3/people/person", locals: { person: post.person }
 end
 json.body post.body(@lang)
 json.picture_url post.picture_optimal_url

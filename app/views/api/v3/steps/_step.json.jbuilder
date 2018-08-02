@@ -1,5 +1,5 @@
-json.id step.id.to_s
-json.quest_id step.quest_id.to_s
+json.id step.id
+json.quest_id step.quest_id
 json.uuid step.uuid
 if !step.unlocks.blank?
     json.unlocks step.unlocks
@@ -17,21 +17,3 @@ if step.quest_activities.count > 0
 else
     json.activities nil
 end
-
-unlocks_at = nil
-# Updates based on current user.
-if step.quest_completions.present?
-    if step.quest_completions.count >= step.quest_activities.count
-        json.status "completed"
-    end
-elsif step.step_completed.present?
-    json.status step.step_completed.status
-    unlocks_at = step.step_completed.created_at.to_datetime.utc + step.delay_unlock.minute
-else
-    json.status step.initial_status
-end
-unlocks_at ||= Time.now.to_s
-if current_user.app == "portal"
-    json.delay_unlock step.delay_unlock || 0
-end
-json.unlocks_at unlocks_at.to_datetime().utc.iso8601

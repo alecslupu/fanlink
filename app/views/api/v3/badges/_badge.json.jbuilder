@@ -1,4 +1,4 @@
-json.id badge.id.to_s
+json.id badge.id
 json.name badge.name(@lang)
 json.internal_name badge.internal_name
 json.description badge.description(@lang)

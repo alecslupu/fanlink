@@ -2,7 +2,7 @@ json.id atype.id
 json.activity_id atype.activity_id
 json.type atype.atype
 json.orig_value atype.value
-case @activity_type.atype.to_sym
+case atype.atype.to_sym
 when :beacon
     beacon = ProductBeacon.find(atype.value['id'])
     json.value do
@@ -11,5 +11,5 @@ when :beacon
         end
     end
 else
-    json.value @activity_type.value
+    json.value atype.value
 end

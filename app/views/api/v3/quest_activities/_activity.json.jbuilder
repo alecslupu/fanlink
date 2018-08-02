@@ -13,7 +13,11 @@ if !activity.deleted
         json.completed false
     end
     if activity.activity_types.count > 0
-        json.requirements activity.activity_types, partial: "api/v3/activity_types/type", as: :atype
+        json.requirements do
+            json.array(activity.activity_types) do |atype|
+                json.partial! "api/v3/activity_types/type", locals: { atype: atype }
+            end
+        end
     else
         json.requirements nil
     end
