@@ -3,7 +3,7 @@ if @progress.present? && @series_total < @progress.reward.completion_requirement
     json.badge_action_count @series_total
     json.badge do
       json.cache! ["v3", @progress.reward.badge] do
-        json.partial! "api/v3/badges/badge", locals: { badge: award.reward.badge }
+        json.partial! "api/v3/badges/badge", locals: { badge: @progress.reward.badge }
       end
     end
   end

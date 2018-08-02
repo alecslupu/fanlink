@@ -6443,6 +6443,21 @@
           }
         }
       },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/Block"
+                }
+              }
+            }
+          }
+        }
+      },
       "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6498,21 +6513,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/Block"
                 }
               }
             }
