@@ -88,7 +88,7 @@ private
 
   def load_action_type
     if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
-      render_error("You must supply a badge action type.")
+      render_422("You must supply a badge action type.")
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)

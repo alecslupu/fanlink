@@ -1,6 +1,6 @@
 class ActionType < ApplicationRecord
   default_scope { where(active: true) }
-  has_many :badges #all badges that implement this type
+  has_many :badges # all badges that implement this type
   has_many :assigned_rewards, as: :assigned
   has_many :rewards, through: :assigned_rewards
 

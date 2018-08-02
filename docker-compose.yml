@@ -17,12 +17,12 @@ services:
     image: flapi:dev
     links:
       - postgres
-      - elasticsearch
+      # - elasticsearch
       - redis
     depends_on:
       - postgres
       - mail
-      - elasticsearch
+      # - elasticsearch
       - redis
     restart: unless-stopped
     environment: &flapi-environment
@@ -42,6 +42,7 @@ services:
       PAPERCLIP_SECRET: ${PAPERCLIP_SECRET}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       PORTAL_URL: ${PORTAL_URL}
+      REDIS_URL: ${REDIS_URL}
     ports:
       - 3000:3000
     volumes:
@@ -71,50 +72,60 @@ services:
     restart: unless-stopped
     ports:
       - 1080:1080 # open browser here to warch mails sent by rails, use smtp to 1025 as config
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
-    container_name: flapi-es1
-    environment:
-      - cluster.name=flapi-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - esdata1:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-  elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
-    container_name: flapi-es2
-    environment:
-      - cluster.name=flapi-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - esdata2:/usr/share/elasticsearch/data
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.3.1
-    container_name: flapi-kibana
-    links:
-      - elasticsearch
-    depends_on:
-      - elasticsearch
-    environment:
-      ELASTICSEARCH_URL: ${FANLINK_ES_HOST}
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+  #   container_name: flapi-es1
+  #   environment:
+  #     - cluster.name=flapi-cluster
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - esdata1:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  # elasticsearch2:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+  #   container_name: flapi-es2
+  #   environment:
+  #     - cluster.name=flapi-cluster
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #     - "discovery.zen.ping.unicast.hosts=elasticsearch"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - esdata2:/usr/share/elasticsearch/data
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:6.3.1
+  #   container_name: flapi-kibana
+  #   links:
+  #     - elasticsearch
+  #   depends_on:
+  #     - elasticsearch
+  #   environment:
+  #     ELASTICSEARCH_URL: ${FANLINK_ES_HOST}
   redis:
     image: redis:alpine
     container_name: flapi-redis
     ports:
       - "6379:6379"
-
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: unless-stopped
+    links:
+      - redis
+    environment:
+      REDIS_HOSTS: redis
+    ports:
+    - 8081:8081
 volumes:
   gems:
     driver: local

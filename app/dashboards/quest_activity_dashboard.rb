@@ -8,7 +8,7 @@ class QuestActivityDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    activity_types: Field::HasMany.with_options(foreign_key: "activity_id", ),
+    activity_types: Field::HasMany.with_options(foreign_key: "activity_id",),
     step: Field::BelongsTo,
     id: Field::Number,
     deleted: Field::Boolean,

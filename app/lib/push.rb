@@ -18,7 +18,6 @@ module Push
   def message_mention_push(message_mention)
     do_push(message_mention.person.device_tokens, "Mention", "#{message_mention.message.person.username} mentioned you in a message.",
                               "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id)
-
   end
 
   def portal_notification_push(portal_notification)
@@ -45,7 +44,7 @@ module Push
               "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id)
   end
 
-  #sends to posts followers
+  # sends to posts followers
   def post_push(post)
     do_push(NotificationDeviceId.where(person_id: post.person.followers).map { |ndi| ndi.device_identifier },
               "New Post", "#{post.person.username} posted", "new_post", post_id: post.id)

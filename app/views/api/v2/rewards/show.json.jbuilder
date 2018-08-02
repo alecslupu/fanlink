@@ -1,3 +1,3 @@
 json.reward do
-    json.partial! "reward", locals: { reward: @reward, lang: @lang }
+  json.partial! "reward", locals: { reward: @reward, lang: @lang }
 end

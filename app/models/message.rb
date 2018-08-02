@@ -9,7 +9,7 @@ class Message < ApplicationRecord
   normalize_attributes :body
 
   belongs_to :person, touch: true
-  belongs_to :room
+  belongs_to :room, touch: true
 
   has_image_called :picture
   has_audio_called :audio
@@ -31,9 +31,9 @@ class Message < ApplicationRecord
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
-          include: {message_mentions: {except: %i[ message_id ]},
-                    person: {only: %i[ id username name designation product_account chat_banned badge_points
-                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ]}})
+          include: { message_mentions: { except: %i[ message_id ] },
+                    person: { only: %i[ id username name designation product_account chat_banned badge_points
+                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
   end
 
   def create_time

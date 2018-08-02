@@ -12,7 +12,7 @@ json.starts_at quest.starts_at.to_s
 json.ends_at quest.ends_at.to_s
 json.create_time quest.created_at.to_s
 if quest.rewards.count > 0
-    json.rewards quest.rewards
+  json.rewards quest.rewards
 else
-    json.rewads nil
+  json.rewads nil
 end

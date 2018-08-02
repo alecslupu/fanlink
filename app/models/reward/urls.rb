@@ -1,6 +1,4 @@
 class Reward
-    module Urls
-        
-    end
-    
+  module Urls
+  end
 end

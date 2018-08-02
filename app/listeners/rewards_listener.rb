@@ -10,7 +10,7 @@ class RewardsListener
         if reward.valid?
           reward.save
           if progress.reward.points > 0
-            LevelsListener.award_points(user, {"points" => progress.reward.points, "source" => progress.reward.reward_type})
+            LevelsListener.award_points(user, "points" => progress.reward.points, "source" => progress.reward.reward_type)
           end
         end
       end
@@ -24,9 +24,9 @@ class RewardsListener
         reward = PersonReward.find_or_initialize_by(person_id: completed.person_id, reward_id: reward.id, source: "quest_reward")
         if reward.valid?
           reward.save
-          Rails.logger.tagged("[Rewards Quest Completed") { Rails.logger.info "Awarded reward for Quest: #{completed.quest_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+          Rails.logger.tagged("[Rewards Quest Completed") { Rails.logger.info "Awarded reward for Quest: #{completed.quest_id} User: #{completed.person_id} Reward: #{reward.id}" } unless Rails.env.production?
         else
-          Rails.logger.tagged("[Rewards Quest Completed") { Rails.logger.error "Failed to save awarded reward for Quest: #{completed.quest_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+          Rails.logger.tagged("[Rewards Quest Completed") { Rails.logger.error "Failed to save awarded reward for Quest: #{completed.quest_id} User: #{completed.person_id} Reward: #{reward.id}" } unless Rails.env.production?
         end
       end
     end
@@ -37,9 +37,9 @@ class RewardsListener
         reward = PersonReward.find_or_initialize_by(person_id: completed.person_id, reward_id: reward.id, source: "step_reward")
         if reward.valid?
           reward.save
-          Rails.logger.tagged("[Rewards Step Completed") { Rails.logger.info "Awarded reward for Quest: #{completed.quest_id} Step: #{completed.step_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+          Rails.logger.tagged("[Rewards Step Completed") { Rails.logger.info "Awarded reward for Quest: #{completed.quest_id} Step: #{completed.step_id} User: #{completed.person_id} Reward: #{reward.id}" } unless Rails.env.production?
         else
-          Rails.logger.tagged("[Rewards Step Completed") { Rails.logger.error "Failed to save awarded reward for Quest: #{completed.quest_id} Step: #{completed.step_id} User: #{completed.person_id} Reward: #{reward.id}"} unless Rails.env.production?
+          Rails.logger.tagged("[Rewards Step Completed") { Rails.logger.error "Failed to save awarded reward for Quest: #{completed.quest_id} Step: #{completed.step_id} User: #{completed.person_id} Reward: #{reward.id}" } unless Rails.env.production?
         end
       end
     end

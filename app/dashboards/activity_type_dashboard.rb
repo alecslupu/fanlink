@@ -8,7 +8,7 @@ class ActivityTypeDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    quest_activity: Field::BelongsTo.with_options(foreign_key: "activity_id", ),
+    quest_activity: Field::BelongsTo.with_options(foreign_key: "activity_id",),
     id: Field::Number,
     activity_id: Field::Number,
     atype: Field::Enum,

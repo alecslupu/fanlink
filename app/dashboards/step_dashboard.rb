@@ -9,7 +9,7 @@ class StepDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     quest: Field::BelongsTo,
-    quest_activities: Field::HasMany.with_options(foreign_key: "activity_id", ),
+    quest_activities: Field::HasMany.with_options(foreign_key: "activity_id",),
     id: Field::Number,
     unlocks: Field::Text,
     display: Field::Text,

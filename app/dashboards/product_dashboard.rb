@@ -8,7 +8,7 @@ class ProductDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    #versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
+    # versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
     id: Field::Number,
     name: Field::Text,
     internal_name: Field::Text,

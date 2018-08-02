@@ -9,7 +9,7 @@ class Merchandise < ApplicationRecord
 
   acts_as_tenant(:product)
 
-  normalize_attribute :price, :with => :currency
+  normalize_attribute :price, with: :currency
 
   has_paper_trail
 

@@ -1,5 +1,4 @@
 class ActivityType
-    module Post
-        
-    end
+  module Post
+  end
 end

@@ -12,4 +12,3 @@ json.status quest.status.to_s
 json.starts_at quest.starts_at.to_s
 json.ends_at quest.ends_at.to_s
 json.create_time quest.created_at.to_s
-
