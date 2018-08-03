@@ -1,4 +1,4 @@
-json.cache ["v3", "list", post] do
+json.cache! ["v3", "list", post] do
   json.id post.id
   json.person do
     json.partial! "api/v3/people/person", locals: { person: post.person }
