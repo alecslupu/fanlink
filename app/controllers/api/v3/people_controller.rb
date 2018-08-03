@@ -204,8 +204,12 @@ class Api::V3::PeopleController < Api::V3::BaseController
   # *
 
   def show
-    @person = Person.find(params[:id])
-    return_the @person
+    if current_user.blocks_by.where(blocked_id: params[:id]).exists?
+      render_not_found
+    else
+      @person = Person.find(params[:id])
+      return_the @person
+    end
   end
 
   # **
