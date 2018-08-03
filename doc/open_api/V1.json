@@ -6405,67 +6405,6 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
-      "PostCommentsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostComment"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsListArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentList"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostComment"
-                }
-              }
-            }
-          }
-        }
-      },
       "PostReactionsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6733,44 +6672,6 @@
           }
         }
       },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/Event"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          }
-        }
-      },
       "RelationshipsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6803,6 +6704,44 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
@@ -6870,29 +6809,6 @@
           }
         }
       },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/Level"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "RoomsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6922,6 +6838,29 @@
                     "properties": {
                       "room": {
                         "$ref": "#/components/schemas/Room"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
                       }
                     }
                   }
@@ -6963,29 +6902,6 @@
               "properties": {
                 "merchandise": {
                   "$ref": "#/components/schemas/Merchandise"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -7039,6 +6955,29 @@
               "properties": {
                 "message": {
                   "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -7115,6 +7054,67 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostComment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsListArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentList"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostComment"
                 }
               }
             }

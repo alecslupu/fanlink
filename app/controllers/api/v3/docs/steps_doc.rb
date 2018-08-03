@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::StepsDoc < Api::V3::Docs::BaseDoc
   doc_tag name: "Steps", desc: "Steps for a quest"
   route_base "api/v3/steps"
   components do

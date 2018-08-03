@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::ProductsDoc < Api::V3::Docs::BaseDoc
   doc_tag name: "Products", desc: "Products"
   route_base "api/v3/products"
   components do

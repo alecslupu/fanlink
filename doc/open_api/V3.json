@@ -32,6 +32,10 @@
       "description": "Action types allow the apps to send actions that count towards badge/reward unlocks.(Super Admin Only)"
     },
     {
+      "name": "ActivityTypes",
+      "description": "Activity Types"
+    },
+    {
       "name": "AssignedRewards",
       "description": "This allows admins to assign rewards to other systems. Currently supports ActionType, Quest, Step, and QuestActivity."
     },
@@ -111,6 +115,26 @@
       "description": "User/product posts"
     },
     {
+      "name": "ProductBeacons",
+      "description": "Beacons assigned to a product"
+    },
+    {
+      "name": "Products",
+      "description": "Products"
+    },
+    {
+      "name": "QuestActivities",
+      "description": "Quest Activities"
+    },
+    {
+      "name": "QuestCompletions",
+      "description": "This is used to register an activity as completed."
+    },
+    {
+      "name": "Quests",
+      "description": "Quests"
+    },
+    {
       "name": "RecommendedPeople",
       "description": "Recommended People"
     },
@@ -137,6 +161,10 @@
     {
       "name": "Session",
       "description": "User session management."
+    },
+    {
+      "name": "Steps",
+      "description": "Steps for a quest"
     },
     {
       "name": "Tags",
@@ -600,7 +628,36 @@
         "tags": [
           "QuestActivities"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestActivityObject"
           }
@@ -620,10 +677,42 @@
         "tags": [
           "QuestActivities"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestActivityUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestActivityObject"
           }
@@ -643,10 +732,42 @@
         "tags": [
           "QuestActivities"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestActivityUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestActivityObject"
           }
@@ -666,9 +787,38 @@
         "tags": [
           "QuestActivities"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
           "200": {
             "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         },
         "security": [
@@ -1338,7 +1488,49 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconArray"
           }
@@ -1351,10 +1543,30 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/BeaconCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconObject"
           }
@@ -1369,7 +1581,49 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconArray"
           }
@@ -1384,7 +1638,49 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconArray"
           }
@@ -1399,7 +1695,36 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconObject"
           }
@@ -1412,10 +1737,42 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/BeaconUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconObject"
           }
@@ -1428,10 +1785,42 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/BeaconUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductBeaconObject"
           }
@@ -1444,9 +1833,38 @@
         "tags": [
           "ProductBeacons"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
           "200": {
             "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         }
       }
@@ -1630,7 +2048,7 @@
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/CategoryJson"
+          "$ref": "#/components/requestBodies/CategoryForm"
         },
         "responses": {
           "422": {
@@ -1824,7 +2242,49 @@
         "tags": [
           "QuestCompletions"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionArray"
           }
@@ -1846,7 +2306,36 @@
         "tags": [
           "QuestCompletions"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionObject"
           }
@@ -1866,10 +2355,42 @@
         "tags": [
           "QuestCompletions"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestCompletionUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionObject"
           }
@@ -1889,10 +2410,42 @@
         "tags": [
           "QuestCompletions"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestCompletionUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionObject"
           }
@@ -2573,7 +3126,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Delete"
+            "$ref": "#/components/responses/OK"
           }
         },
         "security": [
@@ -3997,7 +4550,7 @@
     },
     "/posts": {
       "get": {
-        "description": "  This gets a list of posts for a from date, to date, with an optional limit and person. Posts are returned newest first, and the limit is applied to that ordering.\n    Posts included are posts from the passed in person or, if none, the current\n    user along with those of the users the current user is following.",
+        "description": "  This gets a list of posts for a from date, to date, with an optional limit and person. Posts are returned newest first, and the limit is applied to that ordering.\n    Posts included are posts from the passed in person or, if none, the current user along with those of the users the current user is following.",
         "summary": "Get posts for a date range.",
         "operationId": "Posts_index",
         "tags": [
@@ -5047,7 +5600,49 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductArray"
           }
@@ -5067,10 +5662,30 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/ProductCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductObject"
           }
@@ -5092,7 +5707,49 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductArray"
           }
@@ -5114,7 +5771,36 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductObject"
           }
@@ -5134,10 +5820,42 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/ProductUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductObject"
           }
@@ -5157,10 +5875,42 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/ProductUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/ProductObject"
           }
@@ -5182,9 +5932,51 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
-            "$ref": "#/components/responses/QuestArray"
+            "$ref": "#/components/responses/QuestsArray"
           }
         },
         "security": [
@@ -5202,10 +5994,30 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestObject"
           }
@@ -5227,9 +6039,51 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
-            "$ref": "#/components/responses/QuestArray"
+            "$ref": "#/components/responses/QuestsArray"
           }
         },
         "security": [
@@ -5249,9 +6103,51 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
-            "$ref": "#/components/responses/QuestArray"
+            "$ref": "#/components/responses/QuestsArray"
           }
         },
         "security": [
@@ -5271,7 +6167,36 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestObject"
           }
@@ -5291,10 +6216,42 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestObject"
           }
@@ -5314,10 +6271,42 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestObject"
           }
@@ -5337,9 +6326,38 @@
         "tags": [
           "Quests"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
           "200": {
             "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         },
         "security": [
@@ -5359,7 +6377,49 @@
         "tags": [
           "QuestCompletions"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionArray"
           }
@@ -5381,6 +6441,15 @@
         ],
         "parameters": [
           {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "step_id",
             "in": "path",
             "required": true,
@@ -5391,9 +6460,18 @@
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/QuestCompletionObject"
+          "$ref": "#/components/requestBodies/QuestCompletionCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionObject"
           }
@@ -5417,6 +6495,37 @@
         ],
         "parameters": [
           {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          },
+          {
             "name": "quest_id",
             "in": "path",
             "required": true,
@@ -5427,6 +6536,15 @@
           }
         ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/Array"
           }
@@ -5448,6 +6566,15 @@
         ],
         "parameters": [
           {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "quest_id",
             "in": "path",
             "required": true,
@@ -5461,6 +6588,15 @@
           "$ref": "#/components/requestBodies/StepCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/StepObject"
           }
@@ -7325,7 +8461,36 @@
         "tags": [
           "Steps"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/StepObject"
           }
@@ -7345,10 +8510,42 @@
         "tags": [
           "Steps"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/StepUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/StepObject"
           }
@@ -7368,10 +8565,42 @@
         "tags": [
           "Steps"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/StepUpdateForm"
         },
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/StepObject"
           }
@@ -7391,9 +8620,38 @@
         "tags": [
           "Steps"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. The database doesn't contain a record for that id. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
           "200": {
             "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         },
         "security": [
@@ -7413,7 +8671,49 @@
         "tags": [
           "QuestActivities"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestActivityArray"
           }
@@ -7433,10 +8733,30 @@
         "tags": [
           "QuestActivities"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/QuestActivityCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestActivityObject"
           }
@@ -7458,7 +8778,49 @@
         "tags": [
           "QuestCompletions"
         ],
+        "parameters": [
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "page, greater than 1",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "description": "data count per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionArray"
           }
@@ -7480,6 +8842,15 @@
         ],
         "parameters": [
           {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "application/vnd.api.v3+json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "step_id",
             "in": "path",
             "required": true,
@@ -7490,9 +8861,18 @@
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/QuestCompletionObject"
+          "$ref": "#/components/requestBodies/QuestCompletionCreateForm"
         },
         "responses": {
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          },
           "200": {
             "$ref": "#/components/responses/QuestCompletionObject"
           }
@@ -7643,7 +9023,7 @@
               "type": "object",
               "properties": {
                 "post": {
-                  "$ref": "#/components/schemas/Post"
+                  "$ref": "#/components/schemas/PostJson"
                 }
               }
             }
@@ -7828,7 +9208,7 @@
             "$ref": "#/components/schemas/PersonJson"
           },
           "mentions": {
-            "$ref": "#/components/schemas/Mention"
+            "$ref": "#/components/schemas/MentionJson"
           }
         },
         "description": "Message Response"
@@ -7925,7 +9305,7 @@
               "type": "object",
               "properties": {
                 "relationship": {
-                  "$ref": "#/components/schemas/Relationship"
+                  "$ref": "#/components/schemas/RelationshipJson"
                 }
               }
             }
@@ -8022,7 +9402,7 @@
               "type": "object",
               "properties": {
                 "relationship": {
-                  "$ref": "#/components/schemas/Relationship"
+                  "$ref": "#/components/schemas/RelationshipJson"
                 }
               }
             }
@@ -8141,7 +9521,7 @@
               "type": "object",
               "properties": {
                 "mention": {
-                  "$ref": "#/components/schemas/Mention"
+                  "$ref": "#/components/schemas/MentionJson"
                 }
               }
             }
@@ -8184,7 +9564,7 @@
               "type": "object",
               "properties": {
                 "mention": {
-                  "$ref": "#/components/schemas/Mention"
+                  "$ref": "#/components/schemas/MentionJson"
                 }
               }
             }
@@ -8270,7 +9650,7 @@
             "type": "integer"
           },
           "post_reaction": {
-            "$ref": "#/components/schemas/PostReaction"
+            "$ref": "#/components/schemas/PostReactionJson"
           },
           "global": {
             "type": "boolean"
@@ -8324,7 +9704,7 @@
               "type": "object",
               "properties": {
                 "tag": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagJson"
                 }
               }
             }
@@ -8422,7 +9802,7 @@
               "type": "object",
               "properties": {
                 "tag": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagJson"
                 }
               }
             }
@@ -8509,14 +9889,14 @@
           "requirements": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ActivityType"
+              "$ref": "#/components/schemas/ActivityTypeJson"
             }
           },
           "deleted": {
             "type": "boolean"
           },
           "step": {
-            "$ref": "#/components/schemas/Step"
+            "$ref": "#/components/schemas/StepJson"
           },
           "created_at": {
             "type": "string",
@@ -8598,7 +9978,7 @@
           "steps": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Step"
+              "$ref": "#/components/schemas/StepJson"
             }
           }
         },
@@ -8719,7 +10099,7 @@
           "quest_activities": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/QuestActivity"
+              "$ref": "#/components/schemas/QuestActivityJson"
             }
           },
           "delay_unlock": {
@@ -8743,7 +10123,7 @@
       }
     },
     "requestBodies": {
-      "PasswordResetForm": {
+      "StepCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -8751,178 +10131,290 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of product."
-                },
-                "email_or_username": {
-                  "type": "string",
-                  "description": "The person's email or username."
-                }
-              },
-              "required": [
-                "product",
-                "email_or_username"
-              ]
-            }
-          }
-        }
-      },
-      "PersonCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of the product."
-                },
-                "person": {
+                "step": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "Email address (required unless using FB auth token)."
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
                     },
-                    "facebook_auth_token": {
+                    "display": {
                       "type": "string",
-                      "description": "Auth token from Facebook"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username. This needs to be unique within product scope."
-                    },
-                    "password": {
-                      "type": "string",
-                      "format": "password",
-                      "description": "User\\s password."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "gender": {
-                      "type": "string",
-                      "description": "Gender. Valid options: unspecified (default), male, female."
-                    },
-                    "birthdate": {
-                      "type": "string",
-                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                    },
-                    "biography": {
-                      "type": "string",
-                      "description": "A paragraph a user can submit about themselves."
-                    },
-                    "city": {
-                      "type": "string",
-                      "description": "Person's supplied city."
-                    },
-                    "country_code": {
-                      "type": "string",
-                      "description": "Alpha2 code (two letters) from ISO 3166 list."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Sets the post to recommended. Available only to admins and product accounts."
-                    }
-                  },
-                  "required": [
-                    "email",
-                    "facebook_auth_token",
-                    "username",
-                    "password"
-                  ]
-                }
-              },
-              "required": [
-                "product",
-                "person"
-              ]
-            }
-          }
-        }
-      },
-      "PersonUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of the product."
-                },
-                "person": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "Email address (required unless using FB auth token)."
-                    },
-                    "facebook_auth_token": {
-                      "type": "string",
-                      "description": "Auth token from Facebook"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username. This needs to be unique within product scope."
-                    },
-                    "password": {
-                      "type": "string",
-                      "format": "password",
-                      "description": "User\\s password."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "gender": {
-                      "type": "string",
-                      "description": "Gender. Valid options: unspecified (default), male, female."
-                    },
-                    "birthdate": {
-                      "type": "string",
-                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                    },
-                    "biography": {
-                      "type": "string",
-                      "description": "A paragraph a user can submit about themselves."
-                    },
-                    "city": {
-                      "type": "string",
-                      "description": "Person's supplied city."
-                    },
-                    "country_code": {
-                      "type": "string",
-                      "description": "Alpha2 code (two letters) from ISO 3166 list."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                      "description": "Sets the display name for the step."
                     }
                   }
                 }
               },
               "required": [
-                "product",
-                "person"
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "StepUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "RewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
+      },
+      "RewardUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description",
+                    "starts_at"
+                  ]
+                }
+              },
+              "required": [
+                "quest"
+              ]
+            }
+          }
+        }
+      },
+      "QuestUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "descriptio": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+                    }
+                  },
+                  "required": [
+                    "descriptio"
+                  ]
+                }
+              },
+              "required": [
+                "quest"
               ]
             }
           }
@@ -9066,6 +10558,62 @@
           }
         }
       },
+      "QuestCompletionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCompletionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+              ]
+            }
+          }
+        }
+      },
       "PostCommentCreateForm": {
         "required": true,
         "description": "",
@@ -9114,6 +10662,86 @@
               },
               "required": [
                 "post_comment"
+              ]
+            }
+          }
+        }
+      },
+      "TypeBodyCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "atype",
+                    "value"
+                  ]
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "TypeBodyUpdate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "activity_type"
               ]
             }
           }
@@ -9188,38 +10816,6 @@
           }
         }
       },
-      "BadgeActionCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
-              ]
-            }
-          }
-        }
-      },
       "PostReactionCreateForm": {
         "required": true,
         "description": "",
@@ -9268,6 +10864,38 @@
               },
               "required": [
                 "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeActionCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
               ]
             }
           }
@@ -9439,6 +11067,77 @@
           }
         }
       },
+      "QuestActivityCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  },
+                  "required": [
+                    "hint"
+                  ]
+                }
+              },
+              "required": [
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
+      "QuestActivityUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
       "BlockCreate": {
         "required": true,
         "description": "",
@@ -9532,124 +11231,6 @@
               },
               "required": [
                 "category"
-              ]
-            }
-          }
-        }
-      },
-      "RewardCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the reward."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the reward."
-                    },
-                    "reward_type": {
-                      "type": "string",
-                      "description": "What the reward provides. Currently supports badges."
-                    },
-                    "reward_type_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
-                    },
-                    "series": {
-                      "type": "string",
-                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
-                    },
-                    "completion_requirement": {
-                      "type": "integer",
-                      "description": "The number of completions required to unlock this reward."
-                    },
-                    "points": {
-                      "type": "string",
-                      "description": "The amount of points this reward gives towards a person's level."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The status of the reward. Can be active or inactive."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
-              ]
-            }
-          }
-        }
-      },
-      "RewardUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the reward."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the reward."
-                    },
-                    "reward_type": {
-                      "type": "string",
-                      "description": "What the reward provides. Currently supports badges."
-                    },
-                    "reward_type_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
-                    },
-                    "series": {
-                      "type": "string",
-                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
-                    },
-                    "completion_requirement": {
-                      "type": "integer",
-                      "description": "The number of completions required to unlock this reward."
-                    },
-                    "points": {
-                      "type": "string",
-                      "description": "The amount of points this reward gives towards a person's level."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The status of the reward. Can be active or inactive."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
               ]
             }
           }
@@ -9997,6 +11578,78 @@
           }
         }
       },
+      "ProductCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
+                }
+              },
+              "required": [
+                "product"
+              ]
+            }
+          }
+        }
+      },
+      "ProductUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product"
+              ]
+            }
+          }
+        }
+      },
       "MessageCreateForm": {
         "required": true,
         "description": "",
@@ -10077,6 +11730,94 @@
           }
         }
       },
+      "BeaconCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  },
+                  "required": [
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
+                  ]
+                }
+              },
+              "required": [
+                "product_beacon"
+              ]
+            }
+          }
+        }
+      },
+      "BeaconUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product_beacon"
+              ]
+            }
+          }
+        }
+      },
       "NotificationDeviceIdsForm": {
         "required": true,
         "description": "",
@@ -10096,11 +11837,257 @@
             }
           }
         }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
+              ]
+            }
+          }
+        }
+      },
+      "PersonCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "facebook_auth_token",
+                    "username",
+                    "password"
+                  ]
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
+      },
+      "PersonUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
       }
     },
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
+      },
+      "TagArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "StepObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Array": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "steps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -10111,59 +12098,6 @@
               "properties": {
                 "person": {
                   "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonPrivateObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivateJson"
                 }
               }
             }
@@ -10208,6 +12142,128 @@
           }
         }
       },
+      "RewardObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "$ref": "#/components/schemas/RewardJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rewards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "reward": {
+                        "$ref": "#/components/schemas/RewardJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "$ref": "#/components/schemas/QuestJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quests": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quest": {
+                        "$ref": "#/components/schemas/QuestJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "PostCommentReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10222,6 +12278,44 @@
                     "properties": {
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
                       }
                     }
                   }
@@ -10260,6 +12354,44 @@
                     "properties": {
                       "Action": {
                         "$ref": "#/components/schemas/ActionTypeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completion": {
+                  "$ref": "#/components/schemas/QuestCompletionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "completion": {
+                        "$ref": "#/components/schemas/QuestCompletionJson"
                       }
                     }
                   }
@@ -10330,22 +12462,27 @@
           }
         }
       },
-      "TagArray": {
+      "ActivityTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActivityTypeJson"
+            }
+          }
+        }
+      },
+      "ActivityTypeArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "posts": {
+                "types": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
+                    "$ref": "#/components/schemas/ActivityTypeJson"
                   }
                 }
               }
@@ -10391,37 +12528,6 @@
           }
         }
       },
-      "BadgeActionsPending": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "PostReactionsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10454,6 +12560,37 @@
               "properties": {
                 "post_reaction": {
                   "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
                 }
               }
             }
@@ -10536,6 +12673,44 @@
           }
         }
       },
+      "QuestActivityObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestActivityArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activities": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10580,44 +12755,6 @@
                     "properties": {
                       "category": {
                         "$ref": "#/components/schemas/CategoryJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RewardObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "$ref": "#/components/schemas/RewardJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RewardArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rewards": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "reward": {
-                        "$ref": "#/components/schemas/RewardJson"
                       }
                     }
                   }
@@ -10741,44 +12878,6 @@
           }
         }
       },
-      "RelationshipsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "FollowingsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10863,52 +12962,6 @@
           }
         }
       },
-      "RecommendedPostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10970,6 +13023,44 @@
           }
         }
       },
+      "ProductObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -11002,6 +13093,97 @@
               "properties": {
                 "message": {
                   "$ref": "#/components/schemas/MessageJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacon": {
+                  "$ref": "#/components/schemas/ProductBeaconJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacons": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beacon": {
+                        "$ref": "#/components/schemas/ProductBeaconJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
                 }
               }
             }

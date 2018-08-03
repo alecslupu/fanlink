@@ -7509,26 +7509,6 @@
           }
         }
       },
-      "FollowingForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-              ]
-            }
-          }
-        }
-      },
       "MessageReportCreateForm": {
         "required": true,
         "description": "",
@@ -7584,6 +7564,26 @@
               },
               "required": [
                 "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
               ]
             }
           }
@@ -7685,28 +7685,6 @@
               "required": [
                 "device_id"
               ]
-            }
-          }
-        }
-      },
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
             }
           }
         }
@@ -7956,6 +7934,28 @@
           }
         }
       },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
       "PostCommentCreateForm": {
         "required": true,
         "description": "",
@@ -8122,104 +8122,6 @@
           }
         }
       },
-      "CategoryForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "role"
-                  ]
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-      "BlockCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "type": "object",
-                  "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
-              ]
-            }
-          }
-        }
-      },
       "PostCreateForm": {
         "required": true,
         "description": "",
@@ -8350,6 +8252,104 @@
           }
         }
       },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
       "BadgeActionCreate": {
         "required": true,
         "description": "",
@@ -8387,29 +8387,6 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -8442,6 +8419,52 @@
               "properties": {
                 "merchandise": {
                   "$ref": "#/components/schemas/MerchandiseJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -8509,29 +8532,6 @@
           }
         }
       },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -8564,44 +8564,6 @@
               "properties": {
                 "message": {
                   "$ref": "#/components/schemas/MessageJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
                 }
               }
             }
@@ -8678,6 +8640,44 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
                 }
               }
             }
@@ -8821,59 +8821,6 @@
           }
         }
       },
-      "CategoryObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "categories": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
-                }
-              }
-            }
-          }
-        }
-      },
       "PostsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -8950,6 +8897,59 @@
           }
         }
       },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
       "BadgesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -9004,29 +9004,6 @@
           }
         }
       },
-      "TagArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "RecommendedPeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -9051,6 +9028,29 @@
         }
       },
       "RecommendedPostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "TagArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {

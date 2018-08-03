@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::TagsDoc < Api::V3::Docs::BaseDoc
   doc_tag name: "Tags", desc: "Tags"
   route_base "api/v3/tags"
   components do
@@ -9,10 +9,10 @@ class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
     }]
   end
 
-  api :show, "Find posts by tag" do
-    need_auth :SessionCookie
-    desc "Returns all posts for the given tag."
-    query! :tag_name, String, desc: "The tag to search for."
-    response_ref 200 => :TagArray
-  end
+  # api :show, "Find posts by tag" do
+  #   need_auth :SessionCookie
+  #   desc "Returns all posts for the given tag."
+  #   query! :tag_name, String, desc: "The tag to search for."
+  #   response_ref 200 => :TagArray
+  # end
 end

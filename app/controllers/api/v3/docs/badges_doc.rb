@@ -60,9 +60,9 @@ class Api::V3::Docs::BadgesDoc < Api::V3::Docs::BaseDoc
     response_ref 200 => :BadgesObject
   end
 
-  api :destroy, "Destroy a badge" do
-    need_auth :SessionCookie
-    desc "Soft deletes a badge."
-    response_ref 200 => :OK
-  end
+  # api :destroy, "Destroy a badge" do
+  #   need_auth :SessionCookie
+  #   desc "Soft deletes a badge."
+  #   response_ref 200 => :OK
+  # end
 end

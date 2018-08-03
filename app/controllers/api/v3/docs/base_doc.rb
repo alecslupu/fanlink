@@ -59,9 +59,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         product_id: { type: Integer },
         color: { type: String },
         role: { type: String },
-        posts: [
-          post: :Post
-        ]
+        posts: [:PostJson]
       },
       desc: "Category Reponse"
     ]
@@ -141,7 +139,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         audio_size: { type: String },
         audio_content_type: { type: String },
         person: :PersonJson,
-        mentions: :Mention
+        mentions: :MentionJson
       },
       desc: "Message Response"
     ]
@@ -180,9 +178,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         chat_banned: { type: Boolean },
         designation: { type: String },
         following_id: { type: Integer },
-        relationships: [
-          relationship: :Relationship
-        ],
+        relationships: [:RelationshipJson],
         badge_points: { type: Integer },
         role: { type: String },
         level: { type: String },
@@ -215,9 +211,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         chat_banned: { type: Boolean },
         designation: { type: String },
         following_id: { type: Integer },
-        relationships: [
-          relationship: :Relationship
-        ],
+        relationships: [:RelationshipJson],
         badge_points: { type: Integer },
         role: { type: String },
         level: { type: String },
@@ -262,9 +256,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         id: { type: Integer },
         create_time: { type: DateTime },
         body: { type: String },
-        mentions: [
-          mention: :Mention
-        ],
+        mentions: [:MentionJson],
         person: :PersonJson
       },
       desc: "Post Comment Response"
@@ -278,9 +270,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         hidden: { type: Boolean },
         created_at: { type: DateTime },
         updated_at: { type: DateTime },
-        mentions: [
-          mention: :Mention
-        ]
+        mentions: [:MentionJson]
       },
       desc: "Post Comment Response"
     ]
@@ -316,7 +306,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         audio_content_type: { type: String },
         person: :PersonJson,
         post_reaction_counts: { type: Integer },
-        post_reaction: :PostReaction,
+        post_reaction: :PostReactionJson,
         global: { type: Boolean },
         starts_at: { type: DateTime },
         ends_at: { type: DateTime },
@@ -332,9 +322,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
           color: { type: String },
           role: { type: String }
         },
-        tags: [
-          tag: :Tag
-        ]
+        tags: [:TagJson]
       },
       desc: "Post Response"
     ]
@@ -371,7 +359,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
           role: { type: String }
         },
         tags: [
-          tag: :Tag
+          tag: :TagJson
         ]
       },
       desc: "List Post Response"
@@ -408,9 +396,9 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         picture_width: { type: Integer },
         picture_height: { type: Integer },
         completed: { type: Boolean },
-        requirements: [:ActivityType],
+        requirements: [:ActivityTypeJson],
         deleted: { type: Boolean },
-        step: :Step,
+        step: :StepJson,
         created_at: { type: String, format: "date-time" }
       },
       desc: "Quest Activity Response"
@@ -448,7 +436,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         starts_at: { type: String, format: "date-time" },
         ends_at: { type: String, format: "date-time" },
         create_time: { type: String, format: "date-time" },
-        steps: [:Step]
+        steps: [:StepJson]
       },
       desc: "Quest Response"
     ]
@@ -503,7 +491,7 @@ class Api::V3::Docs::BaseDoc < ApiDoc
         unlocks: [Integer],
         display: { type: String },
         status: { type: String },
-        quest_activities: [:QuestActivity],
+        quest_activities: [:QuestActivityJson],
         delay_unlock: { type: Integer },
         unlocks_at: { type: String, format: "date-time" }
       },

@@ -54,8 +54,7 @@ class Api::V3::Docs::PostsDoc < Api::V3::Docs::BaseDoc
   api :index, "Get posts for a date range." do
     need_auth :SessionCookie
     desc '  This gets a list of posts for a from date, to date, with an optional limit and person. Posts are returned newest first, and the limit is applied to that ordering.
-    Posts included are posts from the passed in person or, if none, the current
-    user along with those of the users the current user is following.'
+    Posts included are posts from the passed in person or, if none, the current user along with those of the users the current user is following.'
     query :person_id, Integer, desc: "The person whose posts to get. If not supplied, posts from current user plus those from people the current user is following will be returned."
     query :tag, String, desc: "Returns posts with the tag specified from the user and the user's that they are following"
     query :category, String, desc: "Returns posts with the category specified from the user and the user's that they are following"

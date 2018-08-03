@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::QuestsDoc < Api::V3::Docs::BaseDoc
   doc_tag name: "Quests", desc: "Quests"
   route_base "api/v3/quests"
   components do
@@ -6,7 +6,7 @@ class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
       quest: :QuestJson
     }]
 
-    resp QuestArray: ["HTTP/1.1 200 Ok", :json, data: {
+    resp QuestsArray: ["HTTP/1.1 200 Ok", :json, data: {
       quests: [
         quest: :QuestJson
       ]
@@ -42,13 +42,13 @@ class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
   api :index, "Get all viewable quests" do
     need_auth :SessionCookie
     desc "Returns all quests for the current user's product that aren't deleted."
-    response_ref 200 => :QuestArray
+    response_ref 200 => :QuestsArray
   end
 
   api :list, "Get all quests (Admin Only)" do
     need_auth :SessionCookie
     desc "Returns all quests for the current user's product regardless of status."
-    response_ref 200 => :QuestArray
+    response_ref 200 => :QuestsArray
   end
 
   api :create, "Create a quest" do

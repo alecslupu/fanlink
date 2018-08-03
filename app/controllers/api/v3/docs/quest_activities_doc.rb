@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::QuestActivitiesDoc < Api::V3::Docs::BaseDoc
   doc_tag name: "QuestActivities", desc: "Quest Activities"
   route_base "api/v3/quest_activities"
   components do

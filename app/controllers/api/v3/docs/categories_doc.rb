@@ -37,7 +37,7 @@ class Api::V3::Docs::CategoriesDoc < Api::V3::Docs::BaseDoc
   api :create, "Create a category" do
     need_auth :SessionCookie
     desc "Creates a category for current user's associated product."
-    body_ref :CategoryJson
+    body_ref :CategoryForm
     response_ref 200 => :CategoryObject
   end
 

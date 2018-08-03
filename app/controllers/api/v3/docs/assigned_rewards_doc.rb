@@ -42,11 +42,11 @@ class Api::V3::Docs::AssignedRewardsDoc < Api::V3::Docs::BaseDoc
     response_ref 200 => :AssignedRewardObject
   end
 
-  api :show, "Find an assigned reward" do
-    need_auth :SessionCookie
-    desc "Returns the assigned reward for the provided id."
-    response_ref 200 => :AssignedRewardObject
-  end
+  # api :show, "Find an assigned reward" do
+  #   need_auth :SessionCookie
+  #   desc "Returns the assigned reward for the provided id."
+  #   response_ref 200 => :AssignedRewardObject
+  # end
 
   api :update, "Update an assigned reward" do
     need_auth :SessionCookie

@@ -62,6 +62,6 @@ class Api::V3::Docs::MerchandiseDoc < Api::V3::Docs::BaseDoc
   api :destroy, "Delete a merchandise item." do
     desc "Soft deletes a merchandise item."
     need_auth :SessionCookie
-    response_ref 200 => :Delete
+    response_ref 200 => :OK
   end
 end

@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::ProductBeaconsDoc < Api::V3::Docs::BaseDoc
   doc_tag name: "ProductBeacons", desc: "Beacons assigned to a product"
   route_base "api/v3/product_beacons"
   components do

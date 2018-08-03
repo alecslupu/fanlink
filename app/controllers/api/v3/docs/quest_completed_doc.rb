@@ -1,4 +1,4 @@
-class Api::V3::Docs::ActivtyTypesDoc < Api::V3::Docs::BaseDoc
+class Api::V3::Docs::QuestCompletedDoc < Api::V3::Docs::BaseDoc
   # doc_tag name: '', desc: ""
   # route_base 'api/v/'
   # components do
