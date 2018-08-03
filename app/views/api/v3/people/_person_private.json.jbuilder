@@ -18,9 +18,13 @@ if  person.person_rewards.empty?
 else
   json.rewards person.person_rewards, partial: "api/v3/person_rewards/person_reward", as: :reward
 end
-json.blocked_people do
-  json.array! person.blocked_people do |bp|
-    json.id bp.id
-    json.username bp.username
+if person.blocked_people.empty?
+  json.blocked_people nil
+else
+  json.blocked_people do
+    json.array! person.blocked_people do |bp|
+      json.id bp.id
+      json.username bp.username
+    end
   end
 end
