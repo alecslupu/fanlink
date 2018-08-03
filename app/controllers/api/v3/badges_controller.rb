@@ -7,10 +7,11 @@ class Api::V3::BadgesController < Api::V3::BaseController
     @badges = paginate(Badge.all)
     if params.has_key?(:person_id)
       @badges_awarded = PersonReward.where(person_id: params[:person_id]).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
+      @series_total = Person.find(params[:person_id]).reward_progresses
     else
       @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
+      @series_total = current_user.reward_progresses
     end
-    @series_total = current_user.reward_progresses
     return_the @badges
   end
 
