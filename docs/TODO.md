@@ -7,10 +7,10 @@
 - Finish caching
 - Add tests for event listeners
 - Test cronjobs with delayed job
-- Cleanup apidocs repo
-- Generate postman collections from API data
+- ~~Cleanup apidocs repo~~
+- ~~Generate postman collections from API data~~
 - Fix docker init script
-- Polls on posts
+- Polls on posts (Started)
 - Cole:
   * ~~Badges endpoint needs pagination~~
   * Rewards endpoint needs pagination

@@ -12,13 +12,14 @@ json.cache! ["v3", step] do
   else
     json.display "Step #{step.id.to_s}"
   end
-
-  if step.quest_activities.count > 0
-    json.activities step.quest_activities,  partial: "api/v3/quest_activities/activity", as: :activity
-  else
-    json.activities nil
-  end
 end
+
+if step.quest_activities.count > 0
+  json.activities step.quest_activities,  partial: "api/v3/quest_activities/activity", as: :activity
+else
+  json.activities nil
+end
+
 unlocks_at = step.unlocks_at || nil
 # Updates based on current user.
 #json.step_completed step.step_completed
