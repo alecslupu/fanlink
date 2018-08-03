@@ -1,5 +1,5 @@
 json.cache! ["v3", post] do
-  json.id post.id.to_s
+  json.id post.id
   json.create_time post.created_at.to_s
   json.body post.body(@lang)
   json.picture_url post.picture_optimal_url
@@ -11,7 +11,7 @@ json.cache! ["v3", post] do
   end
   json.post_reaction_counts post.reaction_breakdown.to_json
   if defined?(post_reaction) && post_reaction.present?
-    json.post_reaction post_reaction, partial: "api/v1/post_reactions/post_reaction", as: :post_reaction
+    json.post_reaction post_reaction, partial: "api/v3/post_reactions/post_reaction", as: :post_reaction
   else
     json.post_reaction nil
   end
@@ -24,7 +24,7 @@ json.cache! ["v3", post] do
   json.recommended post.recommended
   json.notify_followers post.notify_followers
   json.comment_count post.comments.count
-  if !post.category.nil?
+  if post.category.present?
     json.category do
       json.id post.category.id
       json.name post.category.name
@@ -32,12 +32,10 @@ json.cache! ["v3", post] do
       json.role post.category.role
     end
   else
-    json.category do
-      json.name nil
-    end
+    json.category nil
   end
   if post.tags.count > 0
-    json.tags post.tags, partial: "api/v2/tags/tag", as: :tag
+    json.tags post.tags, partial: "api/v3/tags/tag", as: :tag
   else
     json.tag nil
   end

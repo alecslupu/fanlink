@@ -1,5 +1,5 @@
 if defined?(@relationships)
-  json.relationships @relationships, partial: "api/v1/relationships/relationship", as: :relationship
+  json.relationships @relationships, partial: "api/v3/relationships/relationship", as: :relationship
 else
-  json.relationships @relationships, partial: "api/v1/relationships/relationship", as: :relationship
+  json.relationships @relationships, partial: "api/v3/relationships/relationship", as: :relationship
 end

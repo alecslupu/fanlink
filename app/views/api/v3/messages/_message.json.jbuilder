@@ -1,5 +1,5 @@
 json.cache! ["v3", message] do
-  json.id message.id.to_s
+  json.id message.id
   json.create_time message.created_at.to_s
   json.body message.body
   json.picture_url message.picture_url

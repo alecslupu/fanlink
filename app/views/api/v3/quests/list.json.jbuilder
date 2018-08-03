@@ -9,10 +9,8 @@ json.quests do
     if quest.steps.count > 0
       json.steps do
         json.array!(quest.steps) do |step|
-            json.cache! ["v3", step] do
-              json.partial! "api/v3/steps/step", locals: { step: step }
-            end
-          end
+          json.partial! "api/v3/steps/step", locals: { step: step }
+        end
       end
     else
       json.steps nil
@@ -22,9 +20,7 @@ json.quests do
       if assigned.badge
         json.assigned_badge assigned.badge
         json.badge do
-          json.cache! ["v3", assigned.badge] do
-              json.partial! "api/v3/badges/badge", locals: { badge: assigned.badge }
-            end
+          json.partial! "api/v3/badges/badge", locals: { badge: assigned.badge }
         end
       else
         json.badge nil
