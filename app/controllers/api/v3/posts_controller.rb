@@ -168,12 +168,8 @@ class Api::V3::PostsController < Api::V3::BaseController
     else
       @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
     end
-    if @posts.present?
-      @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-      return_the @posts
-    else
-      render_not_found
-    end
+    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    return_the @posts
   end
   # **
   # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
