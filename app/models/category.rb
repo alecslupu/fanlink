@@ -7,7 +7,12 @@ class Category < ApplicationRecord
 
   enum role: %i[normal product staff admin super_admin]
 
-  validates :name, uniqueness: { scope: :product_id, allow_nil: false, message: "A category already exists with this name." }
+  validates :name,
+            presence: { message: "Name is required" },
+            length: { in: 3..26 },
+            uniqueness: { scope: :product_id, allow_nil: false, message: "A category already exists with this name." }
+
+  validates :color, format: { with: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/, message: lambda { |*| _("Color must be a hexadecimal value.") } }
 
   scope :for_admin, -> { where(role: [:normal, :product, :staff, :admin]) }
   scope :for_user, -> { where(role: [:normal]) }

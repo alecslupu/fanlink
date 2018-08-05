@@ -1,6 +1,4 @@
 FactoryBot.define do
-  factory :step_completed do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
-  end
+  # factory :step_completed do
+  # end
 end

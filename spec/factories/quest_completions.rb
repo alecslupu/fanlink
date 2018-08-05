@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :quest_completion do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
-  end
+  # factory :quest_completion do
+  #   person { create(:person) }
+  #   activity { create(:quest_activity) }
+  # end
 end
