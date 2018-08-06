@@ -12,6 +12,7 @@ module JSONErrors
     end
 
     def render_401(errors = "unauthorized access")
+      Rollbar.warning(errors.join(", ")) unless Rails.env.development?
       render_errors(errors, 401)
     end
 
@@ -20,10 +21,12 @@ module JSONErrors
     end
 
     def render_422(errors = "could not save data")
+      Rollbar.warning(errors.join(", ")) unless Rails.env.development?
       render_errors(errors, 422)
     end
 
     def render_500(errors = "internal server error")
+      Rollbar.error(errors.join(", ")) unless Rails.env.development?
       render_errors(errors, 500)
     end
 
@@ -33,7 +36,6 @@ module JSONErrors
       data = {
         errors: errors
       }
-      Rollbar.error(errors.join(", ")) unless Rails.env.development?
       render json: data, status: status
     end
 
