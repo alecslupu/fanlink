@@ -31,9 +31,7 @@ module JSONErrors
     def render_errors(errors, status = 400)
       errors = Array.wrap(errors) unless errors.is_a?(Array)
       data = {
-        errors:  {
-          base: errors
-        }
+        errors: errors
       }
       Rollbar.error(errors.join(", ")) unless Rails.env.development?
       render json: data, status: status
