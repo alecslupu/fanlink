@@ -130,7 +130,7 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
       else
         @message.hidden = false
         @message.save
-        render_422("Invalid or missing status.")
+        head :ok
       end
     else
       render_422("Invalid or missing status.")
