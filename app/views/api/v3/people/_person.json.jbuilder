@@ -14,7 +14,11 @@ json.cache! ["v3", person] do
   json.created_at person.created_at.to_s
   json.updated_at person.updated_at.to_s
 end
-json.badge_points person.level_progresses.first.total
+if person.level_progresses.present?
+  json.badge_points person.level_progresses.first.total
+else
+  json.badge_points 0
+end
 lev = person.level_earned
 if lev.nil?
   json.level nil
