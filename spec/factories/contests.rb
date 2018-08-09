@@ -1,6 +1,10 @@
+require "faker"
+
 FactoryBot.define do
   factory :contest do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
+    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    sequence(:name) { |n| "Contest #{n}" }
+    sequence(:internal_name) { |n| "contest_#{n}" }
+    description { Faker::Lorem.paragraph }
   end
 end

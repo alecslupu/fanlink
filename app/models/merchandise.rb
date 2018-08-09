@@ -8,12 +8,17 @@ class Merchandise < ApplicationRecord
   has_manual_translated :description, :name
 
   acts_as_tenant(:product)
+  belongs_to :product
 
   normalize_attribute :price, with: :currency
 
   has_paper_trail
 
   scope :listable, -> { where(available: true) }
+
+  #TODO Translate returned error messages
+  validates :name, presence: { message: "Name is required" }
+  validates :description, presence: { message: "Description is required" }
 
 private
 

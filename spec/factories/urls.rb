@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :url do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
+    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    sequence(:displayed_url) { |n| "http://example.com/#{n}" }
   end
 end

@@ -1,6 +1,7 @@
 FactoryBot.define do
-  factory :assigned_reward do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
+  factory :assigned_quest_reward do
+    reward_id { create(:reward).id }
+    assigned_id { create(:quest).id }
+    assigned_type "Quest"
   end
 end

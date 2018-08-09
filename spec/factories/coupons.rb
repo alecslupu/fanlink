@@ -1,6 +1,9 @@
+require "faker"
+
 FactoryBot.define do
   factory :coupon do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
+    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    sequence(:name) { |n| "Coupon #{n}" }
+    description { Faker::Lorem.paragraph }
   end
 end

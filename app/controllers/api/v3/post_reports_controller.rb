@@ -129,7 +129,11 @@ class Api::V3::PostReportsController < Api::V3::BaseController
         end
       else
         post.status = :published
-        render_422("Invalid or missing status.")
+        if post.save
+          head :ok
+        else
+          render_422("Invalid or missing status.")
+        end
       end
     else
       render_422("Invalid or missing status.")

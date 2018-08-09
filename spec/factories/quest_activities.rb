@@ -1,6 +1,7 @@
 FactoryBot.define do
-  factory :activity_type do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
+  factory :quest_activity do
+    hint { Faker::Lorem.sentence }
+    description { Faker::Lorem.paragraph }
+    step { create(:step) }
   end
 end

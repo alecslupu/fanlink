@@ -12,6 +12,7 @@ class PortalNotification < ApplicationRecord
   has_paper_trail
 
   acts_as_tenant(:product)
+  belongs_to :product
 
   validates :body, length: { in: 3..200, message: "Body must be between 3 and 200 characters." }
   validates :send_me_at, presence: true

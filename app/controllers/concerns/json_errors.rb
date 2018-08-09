@@ -31,11 +31,13 @@ module JSONErrors
     def render_errors(errors, status = 400)
       errors = Array.wrap(errors) unless errors.is_a?(Array)
       data = {
-        errors:  {
-          base: errors
-        }
+        errors: errors
       }
-      Rollbar.error(errors.join(", ")) unless Rails.env.development?
+      if status == 500
+        Rollbar.error(errors.join(", ")) unless Rails.env.development?
+      else
+        Rollbar.warning(errors.join(", ")) unless Rails.env.development?
+      end
       render json: data, status: status
     end
 

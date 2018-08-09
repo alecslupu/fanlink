@@ -6,6 +6,7 @@ class Quest < ApplicationRecord
   # enum status: %i[ in_development in_testing published deleted ]
   enum status: %i[ disabled enabled active deleted ]
 
+  acts_as_tenant(:product)
   belongs_to :product
 
   has_image_called :picture
@@ -22,8 +23,6 @@ class Quest < ApplicationRecord
   accepts_nested_attributes_for :steps
 
   normalize_attributes :event_id, :ends_at
-
-  acts_as_tenant(:product)
 
   has_paper_trail
 

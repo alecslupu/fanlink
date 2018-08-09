@@ -1,7 +1,6 @@
 class ProductBeacon < ApplicationRecord
-  belongs_to :product
-
   acts_as_tenant(:product)
+  belongs_to :product
 
   has_paper_trail
 

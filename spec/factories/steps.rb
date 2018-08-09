@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :step do
-    # sequence(:name) { |n| "Action #{n}" }
-    # sequence(:internal_name) { |n| "action_#{n}" }
+    quest { create(:quest) }
   end
 end
