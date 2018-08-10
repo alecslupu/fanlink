@@ -178,7 +178,10 @@ class Api::V3::RoomsController < Api::V3::BaseController
 private
   # TODO: Add description field for admins
   def room_params
-    params.require(:room).permit(%i[ name picture member_ids: [] ] +
-      ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [ :description, :public ] : []))
+    allowed_params = [ :name, :picture, member_ids: [] ]
+    if current_user.admin? || current_user.product_account? || current_user.super_admin?
+      allowed_params += [ :description, :public ]
+    end
+    params.require(:room).permit(allowed_params)
   end
 end
