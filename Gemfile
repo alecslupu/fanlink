@@ -41,6 +41,7 @@ group :staging, :development do
     gem 'redis'
     gem 'redis-namespace'
     gem 'redis-rails'
+    gem 'yajl-ruby', require: 'yajl/json_gem'
 end
 
 group :development, :test do
@@ -64,6 +65,8 @@ group :development do
   gem "seed_dump"
   gem "awesome_print", require:"ap"
   gem "apigen", :path => 'lib/gems/apigen'
+  gem 'memory_profiler'
+  gem 'derailed_benchmarks'
 end
 
 group :test do
