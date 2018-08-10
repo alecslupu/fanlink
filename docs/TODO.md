@@ -4,13 +4,14 @@
 - ~~Finish migrations for account termination and unlocks_at timestamp~~
 - Add filters and pagination to list endpoints
 - Add tests using generated api data
-- Finish caching
+- ~~Finish caching~~
 - Add tests for event listeners
 - Test cronjobs with delayed job
 - ~~Cleanup apidocs repo~~
 - ~~Generate postman collections from API data~~
 - Fix docker init script
 - Polls on posts (Started)
+- Venues (Migrations done)
 - Cole:
   * ~~Badges endpoint needs pagination~~
   * Rewards endpoint needs pagination
@@ -26,10 +27,10 @@
 - App/Portal Separation
   * Show hidden messages for the portal
   * ~~Show future posts for portal~~
-- Get user block list
+- ~~Get user block list~~
 
 
-####JSON Cleanup
+####JSON Cleanup and other changes
 - Badge Actions
     * Return badge name and ID instead of entire badge object
 - Badges
