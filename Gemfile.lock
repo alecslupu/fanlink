@@ -746,6 +746,7 @@ GEM
       json
     ffi (1.9.23)
     filterrific (5.0.1)
+    flag_shih_tzu (0.3.19)
     get_process_mem (0.2.2)
     gettext (3.2.9)
       locale (>= 2.0.5)
@@ -1088,6 +1089,7 @@ DEPENDENCIES
   fcm
   filterrific
   firebase!
+  flag_shih_tzu
   gettext (>= 3.0.2)
   gettext_i18n_rails
   google_places

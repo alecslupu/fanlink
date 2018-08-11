@@ -95,6 +95,7 @@ gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging
 gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
+gem 'flag_shih_tzu'
 gem "gettext_i18n_rails"
 gem "google_places"
 gem "jko_api" # api versioning

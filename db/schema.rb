@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180726171334) do
+ActiveRecord::Schema.define(version: 20180811023954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -264,6 +264,7 @@ ActiveRecord::Schema.define(version: 20180726171334) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
+    t.integer "audio_duration"
     t.index ["created_at"], name: "index_messages_on_created_at"
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
@@ -328,6 +329,20 @@ ActiveRecord::Schema.define(version: 20180726171334) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
+  end
+
+  create_table "portal_access", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "post", default: 0, null: false
+    t.integer "chat", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "user", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "beacon", default: 0, null: false
+    t.integer "reporting", default: 0, null: false
   end
 
   create_table "portal_notifications", force: :cascade do |t|
@@ -425,6 +440,7 @@ ActiveRecord::Schema.define(version: 20180726171334) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
+    t.integer "audio_duration"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
@@ -677,6 +693,7 @@ ActiveRecord::Schema.define(version: 20180726171334) do
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
   add_foreign_key "message_reports", "people", name: "fk_message_reports_people", on_delete: :cascade
   add_foreign_key "messages", "people", name: "fk_messages_people", on_delete: :cascade
+  add_foreign_key "messages", "people", name: "fk_portal_access_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade

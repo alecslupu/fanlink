@@ -15,6 +15,7 @@ class PersonDashboard < Administrate::BaseDashboard
     email: Field::Text.with_options(searchable: true),
     picture: Field::Paperclip.with_options(blank_text: ""),
     role: Field::Enum.with_options(collection_method: :roles_for_select),
+    permissions: Field::Number,
     designation: TranslatedField,
     do_not_message_me: Field::Boolean,
     pin_messages_from: Field::Boolean,
@@ -31,7 +32,7 @@ class PersonDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     password: PasswordField,
-    notification_device_ids: Field::HasMany
+    notification_device_ids: Field::HasMany,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -46,7 +47,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :picture,
     :role,
     :created_at,
-    :notification_device_ids
+    :notification_device_ids,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -70,7 +71,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :level_earned,
-    :badges
+    :badges,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -82,6 +83,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :role,
+    :permissions,
     :designation,
     :do_not_message_me,
     :pin_messages_from,
@@ -89,7 +91,7 @@ class PersonDashboard < Administrate::BaseDashboard
     :chat_banned,
     :product_account,
     :recommended,
-    :password
+    :password,
   ].freeze
 
   # Overwrite this method to customize how people are displayed
