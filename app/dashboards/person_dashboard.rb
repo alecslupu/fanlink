@@ -83,7 +83,6 @@ class PersonDashboard < Administrate::BaseDashboard
     :name,
     :picture,
     :role,
-    :permissions,
     :designation,
     :do_not_message_me,
     :pin_messages_from,

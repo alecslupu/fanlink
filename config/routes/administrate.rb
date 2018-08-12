@@ -23,6 +23,7 @@ namespace :admin do
   end
   resources :message_reports, only: %i[ index update ]
   resources :people
+  resources :portal_accesses
   resources :portal_notifications
   resources :posts
   resources :post_reports, only: %i[ index update ]
