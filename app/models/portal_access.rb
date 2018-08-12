@@ -52,4 +52,14 @@ class PortalAccess < ApplicationRecord
             2 => :reporting_update,
             3 => :reporting_delete,
             :column => "reporting"
+
+  def summarize
+    perms = {}
+    self.flag_columns.each do |c|
+      self.as_flag_collection(c, :"#{c}_read", :"#{c}_update", :"#{c}_delete").collect do |o|
+        perms[o.first] = o.second
+      end
+    end
+    perms
+  end
 end
