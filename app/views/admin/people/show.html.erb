@@ -29,6 +29,13 @@ as well as a link to its edit page.
       [:edit, namespace, page.resource],
       class: "button",
     ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
+            <% if page.resource.role == 'admin' %>
+        <% if page.resource.portal_access.nil? %>
+          <td><a href="<%= new_admin_portal_access_path(:person_id => page.resource.id) %>">Perms</a>
+          <% else %>
+          <td><a href="<%= edit_admin_portal_access_path(page.resource.portal_access) %>">Perms</a>
+          <% end %>
+        <% end %>
   </div>
 </header>
 
