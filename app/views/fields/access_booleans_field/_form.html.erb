@@ -5,7 +5,7 @@
   <% labels = ["Read", "Write", "Delete"] %>
   <% i = 0 %>
   <% f.object.as_flag_collection("#{field.attribute}", :"#{field.attribute}_read", :"#{field.attribute}_update", :"#{field.attribute}_delete").collect do |o| %>
-    <td><%= i %>: <%= f.check_box(o.first) %></td>
+    <td><%= labels.inspect %>: <%= f.check_box(o.first) %></td>
     <% i = i + 1 %>
   <% end %>
 </div>
