@@ -10291,6 +10291,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post_comment_report": {
                   "type": "object",
                   "properties": {
@@ -10305,17 +10306,41 @@
                   },
                   "required": [
                     "post_comment_id"
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+                    }
+                  },
+                  "required": [
+                    "post_id"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD
                 "post_comment_report"
+=======
+                "post_report"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
               ]
             }
           }
         }
       },
+<<<<<<< HEAD
       "PostCommentReportUpdateForm": {
+=======
+      "PostReportsUpdateForm": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "required": true,
         "description": "",
         "content": {
@@ -10323,12 +10348,20 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post_comment_report": {
+=======
+                "post_report": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   "type": "object",
                   "properties": {
                     "status": {
                       "type": "string",
+<<<<<<< HEAD
                       "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+=======
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                     }
                   },
                   "required": [
@@ -10337,13 +10370,21 @@
                 }
               },
               "required": [
+<<<<<<< HEAD
                 "post_comment_report"
+=======
+                "post_report"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
               ]
             }
           }
         }
       },
+<<<<<<< HEAD
       "PasswordResetForm": {
+=======
+      "PostCreateForm": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "required": true,
         "description": "",
         "content": {
@@ -10351,6 +10392,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "product": {
                   "type": "string",
                   "description": "Internal name of product."
@@ -10363,12 +10405,70 @@
               "required": [
                 "product",
                 "email_or_username"
+=======
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
               ]
             }
           }
         }
       },
+<<<<<<< HEAD
       "NotificationDeviceIdsForm": {
+=======
+      "PostUpdateForm": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "required": true,
         "description": "",
         "content": {
@@ -10376,6 +10476,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "device_id": {
                   "type": "string",
                   "description": "ID of the device"
@@ -10383,6 +10484,60 @@
               },
               "required": [
                 "device_id"
+=======
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
               ]
             }
           }
@@ -10539,7 +10694,14 @@
                     }
                   },
                   "required": [
+<<<<<<< HEAD
                     "post_id"
+=======
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   ]
                 }
               },
@@ -10829,9 +10991,16 @@
                     }
                   },
                   "required": [
+<<<<<<< HEAD
                     "name",
                     "internal_name",
                     "description"
+=======
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   ]
                 }
               },
@@ -11617,7 +11786,7 @@
                       "type": "object",
                       "description": "Name of the quest. Can be string or an object. Translatable."
                     },
-                    "internal_name": {
+                    "username": {
                       "type": "string",
                       "description": "Internal name of the quest."
                     },
@@ -11762,7 +11931,23 @@
                 "message_report": {
                   "type": "object",
                   "properties": {
+<<<<<<< HEAD
                     "status": {
+=======
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                       "type": "string",
                       "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
                     }
@@ -12333,35 +12518,73 @@
           }
         }
       },
+<<<<<<< HEAD
       "ProductBeaconObject": {
+=======
+      "BadgeActionsPending": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "beacon": {
                   "$ref": "#/components/schemas/ProductBeaconJson"
+=======
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "ProductBeaconArray": {
+=======
+      "BadgesArray": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "beacons": {
+=======
+                "badges": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "beacon": {
                         "$ref": "#/components/schemas/ProductBeaconJson"
+=======
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                       }
                     }
                   }
@@ -12401,21 +12624,31 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "badge": {
                   "$ref": "#/components/schemas/BadgeJson"
+=======
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "BadgeActionsPending": {
+=======
+      "CategoryArray": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "pending_badge": {
                   "type": "object",
                   "properties": {
@@ -12424,6 +12657,16 @@
                     },
                     "badge": {
                       "$ref": "#/components/schemas/BadgeJson"
+=======
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                     }
                   }
                 },
@@ -12569,20 +12812,33 @@
           }
         }
       },
+<<<<<<< HEAD
       "Array": {
+=======
+      "MerchandiseArray": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "steps": {
+=======
+                "merchandise": {
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "step": {
                         "$ref": "#/components/schemas/StepJson"
+=======
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                       }
                     }
                   }

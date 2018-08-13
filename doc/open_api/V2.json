@@ -8413,7 +8413,7 @@
       "PostCommentsListArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
@@ -8436,7 +8436,7 @@
       "PostCommentsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
@@ -8451,7 +8451,7 @@
       "PostReactionsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
@@ -8466,7 +8466,10 @@
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "followed_id"
+              ]
             }
           }
         }
@@ -8474,7 +8477,7 @@
       "PostReactionsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
@@ -8493,10 +8496,32 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post_report": {
                   "$ref": "#/components/schemas/PostReportJson"
+=======
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "available",
+                    "priority"
+                  ]
+>>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                 }
-              }
+              },
+              "required": [
+                "merchandise"
+              ]
             }
           }
         }
@@ -8504,7 +8529,7 @@
       "PostReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
@@ -8546,6 +8571,11 @@
             }
           }
         }
+      }
+    },
+    "responses": {
+      "OK": {
+        "description": "HTTP/1.1 200 Ok"
       },
       "PostsListsArray": {
         "description": "HTTP/1.1 200 Ok",
