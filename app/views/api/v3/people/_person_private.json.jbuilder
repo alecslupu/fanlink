@@ -1,4 +1,4 @@
-json.partial! "api/v3/people/person", locals: { person: person }
+json.partial! "api/v3/people/person", locals: {person: person}
 json.cache! ["v3", "private", person] do
   json.email person.email
   json.set! :product do
@@ -7,13 +7,13 @@ json.cache! ["v3", "private", person] do
     json.name person.product.name
   end
 end
-if  person.level_progresses.empty?
+if person.level_progresses.empty?
   json.level_progress nil
 else
   json.level_progress person.level_progresses, partial: "api/v3/level_progresses/level_progress", as: :level
 end
 
-if  person.person_rewards.empty?
+if person.person_rewards.empty?
   json.rewards nil
 else
   json.rewards person.person_rewards, partial: "api/v3/person_rewards/person_reward", as: :reward
@@ -27,4 +27,9 @@ else
       json.username bp.username
     end
   end
+end
+if person.admin? && person.portal_access.present?
+  json.permissions person.portal_access.summarize
+else
+  json.permissions nil
 end
