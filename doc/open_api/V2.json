@@ -7399,48 +7399,6 @@
       }
     },
     "requestBodies": {
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "FollowingForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-              ]
-            }
-          }
-        }
-      },
       "MerchandiseForm": {
         "required": true,
         "description": "",
@@ -7691,271 +7649,6 @@
           }
         }
       },
-      "NotificationDeviceIdsForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "device_id": {
-                  "type": "string",
-                  "description": "ID of the device"
-                }
-              },
-              "required": [
-                "device_id"
-              ]
-            }
-          }
-        }
-      },
-      "PasswordResetForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of product."
-                },
-                "email_or_username": {
-                  "type": "string",
-                  "description": "The person's email or username."
-                }
-              },
-              "required": [
-                "product",
-                "email_or_username"
-              ]
-            }
-          }
-        }
-      },
-      "PersonCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of the product."
-                },
-                "person": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "Email address (required unless using FB auth token)."
-                    },
-                    "facebook_auth_token": {
-                      "type": "string",
-                      "description": "Auth token from Facebook"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username. This needs to be unique within product scope."
-                    },
-                    "password": {
-                      "type": "string",
-                      "format": "password",
-                      "description": "User\\s password."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "gender": {
-                      "type": "string",
-                      "description": "Gender. Valid options: unspecified (default), male, female."
-                    },
-                    "birthdate": {
-                      "type": "string",
-                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                    },
-                    "biography": {
-                      "type": "string",
-                      "description": "A paragraph a user can submit about themselves."
-                    },
-                    "city": {
-                      "type": "string",
-                      "description": "Person's supplied city."
-                    },
-                    "country_code": {
-                      "type": "string",
-                      "description": "Alpha2 code (two letters) from ISO 3166 list."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Sets the post to recommended. Available only to admins and product accounts."
-                    }
-                  },
-                  "required": [
-                    "email",
-                    "facebook_auth_token",
-                    "username",
-                    "password"
-                  ]
-                }
-              },
-              "required": [
-                "product",
-                "person"
-              ]
-            }
-          }
-        }
-      },
-      "PersonUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of the product."
-                },
-                "person": {
-                  "type": "object",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "Email address (required unless using FB auth token)."
-                    },
-                    "facebook_auth_token": {
-                      "type": "string",
-                      "description": "Auth token from Facebook"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username. This needs to be unique within product scope."
-                    },
-                    "password": {
-                      "type": "string",
-                      "format": "password",
-                      "description": "User\\s password."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "gender": {
-                      "type": "string",
-                      "description": "Gender. Valid options: unspecified (default), male, female."
-                    },
-                    "birthdate": {
-                      "type": "string",
-                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                    },
-                    "biography": {
-                      "type": "string",
-                      "description": "A paragraph a user can submit about themselves."
-                    },
-                    "city": {
-                      "type": "string",
-                      "description": "Person's supplied city."
-                    },
-                    "country_code": {
-                      "type": "string",
-                      "description": "Alpha2 code (two letters) from ISO 3166 list."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Sets the post to recommended. Available only to admins and product accounts."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "product",
-                "person"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_comment_id": {
-                      "type": "integer",
-                      "description": "The id of the post comment being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post comment."
-                    }
-                  },
-                  "required": [
-                    "post_comment_id"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
       "PostCommentCreateForm": {
         "required": true,
         "description": "",
@@ -8004,59 +7697,6 @@
               },
               "required": [
                 "post_comment"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  },
-                  "required": [
-                    "reaction"
-                  ]
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post_reaction"
               ]
             }
           }
@@ -8252,66 +7892,6 @@
           }
         }
       },
-      "BadgeActionCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
-              ]
-            }
-          }
-        }
-      },
-      "BlockCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "type": "object",
-                  "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
-              ]
-            }
-          }
-        }
-      },
       "CategoryForm": {
         "required": true,
         "description": "",
@@ -8381,133 +7961,431 @@
             }
           }
         }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
+              ]
+            }
+          }
+        }
+      },
+      "PersonCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "facebook_auth_token",
+                    "username",
+                    "password"
+                  ]
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
+      },
+      "PersonUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "NotificationDeviceIdsForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
+                }
+              },
+              "required": [
+                "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post comment."
+                    }
+                  },
+                  "required": [
+                    "post_comment_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "PostReactionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  },
+                  "required": [
+                    "reaction"
+                  ]
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeActionCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+              ]
+            }
+          }
+        }
       }
     },
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
-      },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowersArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       },
       "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
@@ -8608,82 +8486,6 @@
           }
         }
       },
-      "PeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonPrivateObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivateJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "PostCommentsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -8739,44 +8541,6 @@
               "properties": {
                 "post_comment": {
                   "$ref": "#/components/schemas/PostCommentJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
                 }
               }
             }
@@ -8897,6 +8661,67 @@
           }
         }
       },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "TagArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "RecommendedPeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -8934,6 +8759,303 @@
                     "properties": {
                       "post": {
                         "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
                       }
                     }
                   }
@@ -8981,20 +9103,20 @@
           }
         }
       },
-      "TagArray": {
+      "FollowingsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "posts": {
+                "followings": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
+                      "following": {
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -9004,66 +9126,20 @@
           }
         }
       },
-      "BadgeActionsPending": {
+      "FollowersArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
+                "followers": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
+                      "follower": {
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -9073,91 +9149,15 @@
           }
         }
       },
-      "BadgesArray": {
+      "FollowingObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "badges": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/BadgeJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "categories": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
                 }
               }
             }

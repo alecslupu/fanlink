@@ -20,7 +20,7 @@ as well as a link to its edit page.
 
 <header class="main-content__header" role="banner">
   <h1 class="main-content__page-title">
-    <%= content_for(:title) %>
+    <%= content_for(page.resource.person.name) %>
   </h1>
 
   <div>
@@ -29,13 +29,6 @@ as well as a link to its edit page.
       [:edit, namespace, page.resource],
       class: "button",
     ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
-            <% if page.resource.role == 'admin' %>
-        <% if page.resource.portal_access.nil? %>
-          <td><a href="<%= new_admin_portal_access_path(:person_id => page.resource.id) %>">Perms</a>
-          <% else %>
-          <td><a href="<%= edit_admin_portal_access_path(page.resource.portal_access) %>">Perms</a>
-          <% end %>
-        <% end %>
   </div>
 </header>
 
@@ -48,13 +41,9 @@ as well as a link to its edit page.
         default: attribute.name.titleize,
       ) %>
       </dt>
-      <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
-        <% if attribute.name == "badges" %>
-          <%= render partial: "badges", locals: { badge_awards: page.resource.badge_awards } %>
-        <% else %>
-          <%= render_field attribute %>
-        <% end %>
-      </dd>
+
+      <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
+          ><%= render_field attribute %></dd>
     <% end %>
   </dl>
 </section>
