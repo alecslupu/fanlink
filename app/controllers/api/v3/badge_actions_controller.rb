@@ -57,13 +57,11 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
             @series_total = RewardProgress.where(person_id: current_user.id, series: @action_type.internal_name).sum(:total) || @progress.total
             broadcast(:reward_progress_created, current_user, @progress, @series_total)
             return_the @progress
-          elsif @badges_awarded.present?
-            return_the @badges_awarded
           else
             if @progress.blank?
               render json: { errors: { base: "Reward does not exist for that action type." } }, status: :not_found
             else
-              render json: { errors: { base: @progress.errors.messages.flatten } }, status: :unprocessable_entity
+              render_422(@progress.errors.messages.flatten)
             end
           end
           break
@@ -92,7 +90,6 @@ private
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
-      @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
       render_422("Action type is invalid.") unless @action_type.present?
     end
   end
