@@ -81,6 +81,7 @@ gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" 
 gem "administrate", "~> 0.10.0" #git: "https://github.com/thoughtbot/administrate.git"
 
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
+gem 'administrate-field-hidden', '~> 0.0.3'
 
 # For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
 # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
@@ -95,6 +96,7 @@ gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging
 gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
+gem 'flag_shih_tzu'
 gem "gettext_i18n_rails"
 gem "google_places"
 gem "jko_api" # api versioning
