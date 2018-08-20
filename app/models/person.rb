@@ -37,6 +37,7 @@ class Person < ApplicationRecord
   has_many :step_completed, dependent: :destroy
   has_many :quest_completed, dependent: :destroy
   has_many :person_rewards, dependent: :destroy
+  has_many :person_interests, dependent: :destroy
   has_many :level_progresses, dependent: :destroy
   has_many :reward_progresses, dependent: :destroy
   has_many :messages, dependent: :destroy
@@ -45,6 +46,7 @@ class Person < ApplicationRecord
   has_one :portal_access, dependent: :destroy
 
   has_many :rewards, through: :person_rewards
+  has_many :interests, through: :person_interests
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
