@@ -22,7 +22,7 @@
   * Destroy a level endpoint
 - ~~Use Rollbar for http status errors~~
 - Server side vue
-- Redis for caching
+- Redis for caching (On Staging)
 - Review database indexes
 - App/Portal Separation
   * Show hidden messages for the portal
