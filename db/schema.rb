@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180817024804) do
+ActiveRecord::Schema.define(version: 20180820130240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -360,6 +360,7 @@ ActiveRecord::Schema.define(version: 20180817024804) do
     t.integer "quest", default: 0, null: false
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
   end
 
   create_table "portal_notifications", force: :cascade do |t|
