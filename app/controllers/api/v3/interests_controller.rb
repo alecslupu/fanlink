@@ -30,19 +30,36 @@ class Api::V3::InterestsController < Api::V3::BaseController
   end
 
   def create
-    @interest = Interest.create(interest_params)
-    if @interest.valid?
-      return_the @interest
+    if current_user.some_admin?
+      @interest = Interest.create(interest_params)
+      if @interest.valid?
+        return_the @interest
+      else
+        render_422 @interest.errors.full_messages
+      end
     else
-      render_422 @interest.errors.full_messages
+      render_not_found
     end
   end
 
   def update
-    if @interest.update_attributes(interest_params)
-      return_the @interest
+    if current_user.some_admin?
+      if @interest.update_attributes(interest_params)
+        return_the @interest
+      else
+        render_422 @interest.errors.full_messages
+      end
     else
-      render_422 @interest.errors.full_messages
+      render_not_found
+    end
+  end
+
+  def destroy
+    if current_user.some_admin?
+      @interest.destroy
+      head :ok
+    else
+      render_not_found
     end
   end
 

@@ -53,6 +53,11 @@ class PortalAccess < ApplicationRecord
             3 => :reporting_delete,
             :column => "reporting"
 
+  has_flags 1 => :interest_read,
+            2 => :interest_update,
+            3 => :interest_delete,
+            :column => "interest"
+
   def summarize
     perms = {}
     self.flag_columns.each do |c|
