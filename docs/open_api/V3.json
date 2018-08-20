@@ -8743,7 +8743,11 @@
       }
     },
     "requestBodies": {
+<<<<<<< HEAD:docs/open_api/V3.json
       "RewardCreateForm": {
+=======
+      "QuestCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -8751,11 +8755,249 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "reward": {
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+=======
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                    },
+                    "reward_type": {
+                      "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+=======
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+<<<<<<< HEAD:docs/open_api/V3.json
+                    "reward_type",
+                    "reward_type_id"
+=======
+                    "description",
+                    "starts_at"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "reward"
+=======
+                "quest"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "RewardUpdateForm": {
+=======
+      "QuestUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+=======
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "descriptio": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                    },
+                    "reward_type": {
+                      "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+=======
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+                    }
+                  },
+                  "required": [
+                    "descriptio"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "reward"
+=======
+                "quest"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MerchandiseForm": {
+=======
+      "RewardCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "merchandise": {
+=======
+                "reward": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+=======
                       "description": "Display friendly name of the reward."
                     },
                     "internal_name": {
@@ -8816,9 +9058,28 @@
                     "name": {
                       "type": "string",
                       "description": "Display friendly name of the reward."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                     },
-                    "internal_name": {
+                    "picture": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+=======
                       "description": "Internal name of the reward."
                     },
                     "reward_type": {
@@ -8844,82 +9105,39 @@
                     "status": {
                       "type": "string",
                       "description": "The status of the reward. Can be active or inactive."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                     }
                   },
                   "required": [
                     "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
-              ]
-            }
-          }
-        }
-      },
-      "MerchandiseForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  },
-                  "required": [
-                    "name",
+<<<<<<< HEAD:docs/open_api/V3.json
                     "description",
                     "available",
                     "priority"
+=======
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "merchandise"
+=======
+                "reward"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MerchandiseUpdateForm": {
+=======
+      "QuestCompletionCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -8927,6 +9145,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "merchandise": {
                   "type": "object",
                   "properties": {
@@ -8960,18 +9179,37 @@
                     "purchase_url": {
                       "type": "string",
                       "description": "Where a user can purchase this item."
+=======
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                     }
-                  }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "merchandise"
+=======
+                "quest_completion"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessageReportCreateForm": {
+=======
+      "QuestCompletionUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -8979,6 +9217,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message_report": {
                   "type": "object",
                   "properties": {
@@ -8993,45 +9232,37 @@
                   },
                   "required": [
                     "message_id"
-                  ]
-                }
-              },
-              "required": [
-                "message_report"
-              ]
-            }
-          }
-        }
-      },
-      "MessageReportUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_report": {
+=======
+                "quest_completion": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
                     }
                   },
                   "required": [
-                    "status"
+                    "activity_id"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message_report"
+=======
+                "quest_completion"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
-      "MessageCreateForm": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MessageReportUpdateForm": {
+=======
+      "QuestActivityCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9039,54 +9270,82 @@
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "message_report": {
+=======
+                "quest_activity": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "object",
                   "properties": {
-                    "body": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
                       "type": "string",
-                      "description": "The body of the message."
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+=======
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                    }
+                  },
+                  "required": [
+                    "hint"
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "message_report"
+=======
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
+      "QuestActivityUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
                     },
                     "picture": {
                       "type": "string",
                       "format": "binary",
-                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message audio, this should be `audio/aac`."
-                    },
-                    "mentions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "person_id": {
-                            "type": "integer",
-                            "description": "ID of user mentioned"
-                          },
-                          "location": {
-                            "type": "integer",
-                            "description": "The location in the message body that the mention is at."
-                          },
-                          "length": {
-                            "type": "integer",
-                            "description": "The length of the users name in the mention"
-                          }
-                        }
-                      }
+                      "description": "An image associated with the quest activity."
                     }
                   }
                 }
               },
               "required": [
-                "message"
+                "quest_activity"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
-      "MessageUpdateForm": {
+      "StepCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -9094,24 +9353,28 @@
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
+                "step": {
                   "type": "object",
                   "properties": {
-                    "hidden": {
-                      "type": "boolean",
-                      "description": "Whether or not the item is hidden."
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
                     }
                   }
                 }
               },
               "required": [
-                "message"
+                "step"
               ]
             }
           }
         }
       },
-      "NotificationDeviceIdsForm": {
+      "StepUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -9119,6 +9382,40 @@
             "schema": {
               "type": "object",
               "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "NotificationDeviceIdsForm": {
+=======
+      "BeaconCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "device_id": {
                   "type": "string",
                   "description": "ID of the device"
@@ -9126,12 +9423,52 @@
               },
               "required": [
                 "device_id"
+=======
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  },
+                  "required": [
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
+                  ]
+                }
+              },
+              "required": [
+                "product_beacon"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PasswordResetForm": {
+=======
+      "BeaconUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9139,6 +9476,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "product": {
                   "type": "string",
                   "description": "Internal name of product."
@@ -9151,6 +9489,36 @@
               "required": [
                 "product",
                 "email_or_username"
+=======
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product_beacon"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
@@ -9198,6 +9566,7 @@
                       "format": "binary",
                       "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
                     },
+<<<<<<< HEAD:docs/open_api/V3.json
                     "gender": {
                       "type": "string",
                       "description": "Gender. Valid options: unspecified (default), male, female."
@@ -9228,18 +9597,22 @@
                     "facebook_auth_token",
                     "username",
                     "password"
-                  ]
+=======
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  }
                 }
               },
               "required": [
-                "product",
-                "person"
+                "action_type"
               ]
             }
           }
         }
       },
-      "PersonUpdateForm": {
+      "BadgeActionCreate": {
         "required": true,
         "description": "",
         "content": {
@@ -9247,6 +9620,49 @@
             "schema": {
               "type": "object",
               "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "product",
+                "person"
+=======
+                "badge_action"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PersonUpdateForm": {
+=======
+      "PostReportsCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "product": {
                   "type": "string",
                   "description": "Internal name of the product."
@@ -9338,10 +9754,27 @@
                   },
                   "required": [
                     "post_comment_id"
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+                    }
+                  },
+                  "required": [
+                    "post_id"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment_report"
               ]
             }
@@ -9371,12 +9804,19 @@
               },
               "required": [
                 "post_comment_report"
+=======
+                "post_report"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "ActionTypeCreateForm": {
+=======
+      "PostReportsUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9384,6 +9824,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "action_type": {
                   "type": "object",
                   "properties": {
@@ -9407,10 +9848,23 @@
                   "required": [
                     "name",
                     "internal_name"
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "action_type"
               ]
             }
@@ -9449,12 +9903,19 @@
               },
               "required": [
                 "action_type"
+=======
+                "post_report"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentCreateForm": {
+=======
+      "BadgeCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9462,6 +9923,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment": {
                   "type": "object",
                   "properties": {
@@ -9502,6 +9964,101 @@
               },
               "required": [
                 "post_comment"
+=======
+                "badge": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name for the badge. Translatable"
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the badge"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A short paragraph describing the badge. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the badge."
+                    },
+                    "issued_from": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start time for when the badge is available to earn."
+                    },
+                    "issued_to": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End time for when the badge is available to earn."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description"
+                  ]
+                }
+              },
+              "required": [
+                "badge"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name for the badge. Translatable"
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the badge"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A short paragraph describing the badge. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the badge."
+                    },
+                    "issued_from": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start time for when the badge is available to earn."
+                    },
+                    "issued_to": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End time for when the badge is available to earn."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description"
+                  ]
+                }
+              },
+              "required": [
+                "badge"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
@@ -9560,7 +10117,11 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostReportsCreateForm": {
+=======
+      "PostCommentCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9568,6 +10129,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_report": {
                   "type": "object",
                   "properties": {
@@ -9679,11 +10241,52 @@
                       "default": 1,
                       "description": "The maximum number of times the assigned item can be completed for credit."
                     }
+=======
+                "post_comment": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the comment."
+                    }
+                  },
+                  "required": [
+                    "body"
+                  ]
+                },
+                "mentions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person_id": {
+                        "type": "integer",
+                        "description": "The id of the person mentioned."
+                      },
+                      "location": {
+                        "type": "integer",
+                        "description": "Where the mention text starts in the comment."
+                      },
+                      "length": {
+                        "type": "integer",
+                        "description": "The length of the mention text."
+                      }
+                    },
+                    "required": [
+                      "person_id",
+                      "location",
+                      "length"
+                    ]
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   }
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "assign"
+=======
+                "post_comment"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
@@ -9819,7 +10422,11 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BadgeActionCreate": {
+=======
+      "PostCommentReportCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9827,6 +10434,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge_action": {
                   "type": "object",
                   "properties": {
@@ -9841,17 +10449,41 @@
                   },
                   "required": [
                     "action_type"
+=======
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post comment."
+                    }
+                  },
+                  "required": [
+                    "post_comment_id"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge_action"
+=======
+                "post_comment_report"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BlockCreate": {
+=======
+      "PostCommentReportUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -9859,6 +10491,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "block": {
                   "type": "object",
                   "properties": {
@@ -9869,11 +10502,236 @@
                   },
                   "required": [
                     "blocked_id"
+=======
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "block"
+=======
+                "post_comment_report"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "CategoryForm": {
+=======
+      "PersonCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+=======
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "facebook_auth_token",
+                    "username",
+                    "password"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "category"
+=======
+                "product",
+                "person"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "CategoryUpdateForm": {
+=======
+      "PersonUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+=======
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product",
+                "person"
               ]
             }
           }
@@ -9937,6 +10795,7 @@
                     },
                     "role": {
                       "type": "string",
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
                     }
                   }
@@ -9944,6 +10803,379 @@
               },
               "required": [
                 "category"
+<<<<<<< HEAD:docs/open_api/V3.json
+=======
+              ]
+            }
+          }
+        }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
+              ]
+            }
+          }
+        }
+      },
+      "NotificationDeviceIdsForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
+                }
+              },
+              "required": [
+                "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "EventForm": {
+=======
+      "ProductCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+<<<<<<< HEAD:docs/open_api/V3.json
+              "type": "object"
+=======
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
+                }
+              },
+              "required": [
+                "product"
+              ]
+            }
+          }
+        }
+      },
+      "ProductUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product"
+              ]
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "EventUpdateForm": {
+=======
+      "FollowingForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+<<<<<<< HEAD:docs/open_api/V3.json
+              "type": "object"
+=======
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+              ]
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "FollowingForm": {
+=======
+      "MessageCreateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+=======
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message audio, this should be `audio/aac`."
+                    },
+                    "mentions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "person_id": {
+                            "type": "integer",
+                            "description": "ID of user mentioned"
+                          },
+                          "location": {
+                            "type": "integer",
+                            "description": "The location in the message body that the mention is at."
+                          },
+                          "length": {
+                            "type": "integer",
+                            "description": "The length of the users name in the mention"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BadgeCreateForm": {
+=======
+      "MessageUpdateForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "badge": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name for the badge. Translatable"
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the badge"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A short paragraph describing the badge. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the badge."
+                    },
+                    "issued_from": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start time for when the badge is available to earn."
+                    },
+                    "issued_to": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End time for when the badge is available to earn."
+=======
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Whether or not the item is hidden."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "message_id": {
+                      "type": "integer",
+                      "description": "The id of the message being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the message."
+                    }
+                  },
+                  "required": [
+                    "message_id"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
               ]
             }
           }
@@ -9971,7 +11203,7 @@
           }
         }
       },
-      "FollowingForm": {
+      "TypeBodyCreate": {
         "required": true,
         "description": "",
         "content": {
@@ -9979,19 +11211,41 @@
             "schema": {
               "type": "object",
               "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "atype",
+                    "value"
+                  ]
                 }
               },
               "required": [
-                "followed_id"
+                "activity_type"
               ]
             }
           }
         }
       },
-      "BadgeCreateForm": {
+      "TypeBodyUpdate": {
         "required": true,
         "description": "",
         "content": {
@@ -9999,35 +11253,95 @@
             "schema": {
               "type": "object",
               "properties": {
-                "badge": {
+                "activity_type": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "atype": {
                       "type": "string",
-                      "description": "Display friendly name for the badge. Translatable"
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
                     },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the badge"
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "AssignedRewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assign": {
+                  "type": "object",
+                  "properties": {
+                    "reward_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward it is being assigned to."
                     },
-                    "description": {
+                    "assigned_type": {
                       "type": "string",
-                      "description": "A short paragraph describing the badge. Translatable."
+                      "description": "The model name that the reward belongs to."
                     },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the badge."
+                    "assigned_id": {
+                      "type": "integer",
+                      "description": "The id of the type that is being assigned. Example: If you want to assign the quest with an ID of 1, you would set the type to Quest and the id to 1."
                     },
-                    "issued_from": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Start time for when the badge is available to earn."
-                    },
-                    "issued_to": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "End time for when the badge is available to earn."
+                    "max_times": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The maximum number of times the assigned item can be completed for credit."
+                    }
+                  },
+                  "required": [
+                    "reward_id",
+                    "assigned_type",
+                    "assigned_id"
+                  ]
+                }
+              },
+              "required": [
+                "assign"
+              ]
+            }
+          }
+        }
+      },
+      "AssignedRewardUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assign": {
+                  "type": "object",
+                  "properties": {
+                    "max_times": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The maximum number of times the assigned item can be completed for credit."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                     }
                   },
                   "required": [
@@ -10038,13 +11352,21 @@
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge"
+=======
+                "assign"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BadgeUpdateForm": {
+=======
+      "MerchandiseForm": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10052,11 +11374,16 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge": {
+=======
+                "merchandise": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "description": "Display friendly name for the badge. Translatable"
                     },
                     "internal_name": {
@@ -10066,10 +11393,22 @@
                     "description": {
                       "type": "string",
                       "description": "A short paragraph describing the badge. Translatable."
+=======
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                     },
                     "picture": {
                       "type": "string",
                       "format": "binary",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "description": "Image associated with the badge."
                     },
                     "issued_from": {
@@ -10081,17 +11420,44 @@
                       "type": "string",
                       "format": "date-time",
                       "description": "End time for when the badge is available to earn."
+=======
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                     }
                   },
                   "required": [
                     "name",
+<<<<<<< HEAD:docs/open_api/V3.json
                     "internal_name",
                     "description"
+=======
+                    "description",
+                    "available",
+                    "priority"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge"
+=======
+                "merchandise"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
               ]
             }
           }
@@ -10102,13 +11468,20 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
+=======
+      "MerchandiseUpdateForm": {
+        "required": true,
+        "description": "",
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "levels": {
                   "type": "array",
                   "items": {
@@ -10116,6 +11489,109 @@
                     "properties": {
                       "level": {
                         "$ref": "#/components/schemas/LevelJson"
+                      }
+=======
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                    }
+                  }
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "OK": {
+        "description": "HTTP/1.1 200 Ok"
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "RewardObject": {
+=======
+      "RoomsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "reward": {
+                  "$ref": "#/components/schemas/RewardJson"
+=======
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "RewardArray": {
+=======
+      "RoomsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "rewards": {
+=======
+                "rooms": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "reward": {
+                        "$ref": "#/components/schemas/RewardJson"
+=======
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -10125,13 +11601,214 @@
           }
         }
       },
-      "RewardObject": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MerchandiseArray": {
+=======
+      "SessionObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "merchandise": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
+                      }
+                    }
+                  }
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MerchandiseObject": {
+=======
+      "RecommendedPeopleArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
+=======
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MessageReportsArray": {
+=======
+      "RecommendedPostsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "message_reports": {
+=======
+                "posts": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MessagesArray": {
+=======
+      "QuestObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "$ref": "#/components/schemas/QuestJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quests": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quest": {
+                        "$ref": "#/components/schemas/QuestJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PeopleArray": {
+=======
+      "RelationshipsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "people": {
+=======
+                "relationships": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+=======
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PersonObject": {
+=======
+      "RewardObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+=======
                 "reward": {
                   "$ref": "#/components/schemas/RewardJson"
                 }
@@ -10157,178 +11834,64 @@
                       }
                     }
                   }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PersonPrivateObject": {
+=======
+      "QuestCompletionObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "person": {
                   "$ref": "#/components/schemas/PersonPrivateJson"
+=======
+                "completion": {
+                  "$ref": "#/components/schemas/QuestCompletionJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentReportsArray": {
+=======
+      "QuestCompletionArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment_reports": {
+=======
+                "completions": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReportJson"
+=======
+                      "completion": {
+                        "$ref": "#/components/schemas/QuestCompletionJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -10338,35 +11901,35 @@
           }
         }
       },
-      "RoomsObject": {
+      "QuestActivityObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
                 }
               }
             }
           }
         }
       },
-      "RoomsArray": {
+      "QuestActivityArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "rooms": {
+                "activities": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
                       }
                     }
                   }
@@ -10376,35 +11939,80 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "ActionTypeObject": {
+=======
+      "TagArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "StepObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "action": {
                   "$ref": "#/components/schemas/ActionTypeJson"
+=======
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "ActionTypeArray": {
+=======
+      "Array": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "actions": {
+=======
+                "steps": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "Action": {
                         "$ref": "#/components/schemas/ActionTypeJson"
+=======
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -10437,20 +12045,48 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentsListArray": {
+=======
+      "ActionTypeObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comments": {
+=======
+                "action": {
+                  "$ref": "#/components/schemas/ActionTypeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActionTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actions": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "post_comment": {
                         "$ref": "#/components/schemas/PostCommentListJson"
+=======
+                      "Action": {
+                        "$ref": "#/components/schemas/ActionTypeJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -10460,249 +12096,9 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "TagArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "AssignedRewardObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assigned": {
-                  "$ref": "#/components/schemas/AssignedRewardJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "AssignedRewardArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assignees": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "assigned": {
-                        "$ref": "#/components/schemas/AssignedRewardJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsListsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostListJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostShareJson"
-                }
-              }
-            }
-          }
-        }
-      },
+=======
       "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10734,15 +12130,473 @@
           }
         }
       },
-      "BlocksObject": {
+      "PostReportsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
+=======
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge": {
+                  "$ref": "#/components/schemas/BadgeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "TagArray": {
+=======
+      "PostReactionsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "posts": {
+=======
+                "post_reactions": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+=======
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "SessionObject": {
+=======
+      "PostReactionsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+=======
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostReportsObject": {
+=======
+      "PostCommentsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+=======
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostReportsArray": {
+=======
+      "PostCommentsListArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_reports": {
+=======
+                "post_comments": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+=======
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentListJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "AssignedRewardObject": {
+=======
+      "PostCommentsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "assigned": {
+                  "$ref": "#/components/schemas/AssignedRewardJson"
+=======
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "AssignedRewardArray": {
+=======
+      "PostsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "assignees": {
+=======
+                "posts": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "assigned": {
+                        "$ref": "#/components/schemas/AssignedRewardJson"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsArray": {
+=======
+      "PostsListsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                        "$ref": "#/components/schemas/PostJson"
+=======
+                        "$ref": "#/components/schemas/PostListJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsListsArray": {
+=======
+      "PostsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+                      }
+                    }
+                  }
+=======
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsObject": {
+=======
+      "PostsShareObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                  "$ref": "#/components/schemas/PostJson"
+=======
+                  "$ref": "#/components/schemas/PostShareJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsShareObject": {
+=======
+      "PostCommentReportsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+=======
+                "post_comment_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BadgeActionsPending": {
+=======
+      "PeopleArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+=======
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BlocksObject": {
+=======
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "block": {
                   "$ref": "#/components/schemas/BlockJson"
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                 }
               }
             }
@@ -10810,35 +12664,57 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "EventsObject": {
+=======
+      "ProductObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "event": {
                   "$ref": "#/components/schemas/EventJson"
+=======
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RecommendedPeopleArray": {
+=======
+      "ProductArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "people": {
+=======
+                "products": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "person": {
                         "$ref": "#/components/schemas/PersonJson"
+=======
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -10848,67 +12724,9 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RecommendedPostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+=======
       "FollowingsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -10933,19 +12751,29 @@
         }
       },
       "FollowersArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "posts": {
+=======
                 "followers": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+=======
                       "follower": {
                         "$ref": "#/components/schemas/FollowingJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -10970,13 +12798,203 @@
           }
         }
       },
-      "BadgesArray": {
+      "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/MessageJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "FollowingsArray": {
+=======
+      "MessagesObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "followings": {
+=======
+                "message": {
+                  "$ref": "#/components/schemas/MessageJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "following": {
+                        "$ref": "#/components/schemas/FollowingJson"
+=======
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "FollowersArray": {
+=======
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "followers": {
+=======
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "follower": {
+                        "$ref": "#/components/schemas/FollowingJson"
+=======
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "FollowingObject": {
+=======
+      "ActivityTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActivityTypeJson"
+            }
+          }
+        }
+      },
+      "ActivityTypeArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
+=======
+                "types": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityTypeJson"
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BadgesArray": {
+=======
+      "AssignedRewardObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badges": {
                   "type": "array",
                   "items": {
@@ -10987,21 +13005,80 @@
                       }
                     }
                   }
+=======
+                "assigned": {
+                  "$ref": "#/components/schemas/AssignedRewardJson"
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BadgesObject": {
+=======
+      "AssignedRewardArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge": {
                   "$ref": "#/components/schemas/BadgeJson"
+=======
+                "assignees": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "assigned": {
+                        "$ref": "#/components/schemas/AssignedRewardJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
                 }
               }
             }

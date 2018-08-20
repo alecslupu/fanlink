@@ -6405,13 +6405,18 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "PostCommentsArray": {
+=======
+      "RoomsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "post_comments": {
                   "type": "array",
                   "items": {
@@ -6422,26 +6427,43 @@
                       }
                     }
                   }
+=======
+                "room": {
+                  "$ref": "#/components/schemas/Room"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "PostCommentsListArray": {
+=======
+      "RoomsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "post_comments": {
+=======
+                "rooms": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                       "post_comment": {
                         "$ref": "#/components/schemas/PostCommentList"
+=======
+                      "room": {
+                        "$ref": "#/components/schemas/Room"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                       }
                     }
                   }
@@ -6451,6 +6473,7 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "PostCommentsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6467,19 +6490,31 @@
         }
       },
       "PostReactionsArray": {
+=======
+      "RecommendedPostsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "post_reactions": {
+=======
+                "posts": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                       "post_reaction": {
                         "$ref": "#/components/schemas/PostReaction"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                       }
                     }
                   }
@@ -6489,13 +6524,18 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "PostReactionsObject": {
+=======
+      "RecommendedPeopleArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "post_reaction": {
                   "$ref": "#/components/schemas/PostReaction"
                 }
@@ -6527,12 +6567,20 @@
               "type": "object",
               "properties": {
                 "post_reports": {
+=======
+                "people": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                       "post_report": {
                         "$ref": "#/components/schemas/PostReport"
+=======
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                       }
                     }
                   }
@@ -6603,35 +6651,65 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "PostsShareObject": {
+=======
+      "FollowingsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "post": {
                   "$ref": "#/components/schemas/PostShare"
+=======
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "BadgesArray": {
+=======
+      "FollowersArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "badges": {
+=======
+                "followers": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                       "badge": {
                         "$ref": "#/components/schemas/Badge"
+=======
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                       }
                     }
                   }
@@ -6641,13 +6719,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "BadgeActionsPending": {
+=======
+      "FollowingObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "pending_badge": {
                   "type": "object",
                   "properties": {
@@ -6664,6 +6762,16 @@
                   "properties": {
                     "badge": {
                       "$ref": "#/components/schemas/Badge"
+=======
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+                      }
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                     }
                   }
                 }
@@ -6672,20 +6780,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "RecommendedPeopleArray": {
+=======
+      "MerchandiseArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "people": {
+=======
+                "merchandise": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                       "person": {
                         "$ref": "#/components/schemas/Person"
+=======
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                       }
                     }
                   }
@@ -6695,6 +6816,7 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6711,12 +6833,16 @@
         }
       },
       "RecommendedPostsArray": {
+=======
+      "MerchandiseObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
                 "posts": {
                   "type": "array",
                   "items": {
@@ -6727,6 +6853,10 @@
                       }
                     }
                   }
+=======
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                 }
               }
             }
@@ -6771,280 +6901,6 @@
           }
         }
       },
-      "RelationshipsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationship": {
-                  "$ref": "#/components/schemas/Relationship"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/Relationship"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowersArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/Following"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/Level"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/Room"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/Merchandise"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/Merchandise"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/Message"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          }
-        }
-      },
       "PeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -7068,21 +6924,41 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "FollowingsArray": {
+=======
       "PersonObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+=======
                 "person": {
                   "$ref": "#/components/schemas/Person"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "FollowersArray": {
+=======
       "PersonPrivateObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -7099,19 +6975,486 @@
         }
       },
       "PostCommentReportsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "followers": {
+=======
                 "post_comment_reports": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+=======
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReport"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "FollowingObject": {
+=======
+      "PostReactionsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+=======
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReaction"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "LevelsArray": {
+=======
+      "PostReactionsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+                      }
+                    }
+                  }
+=======
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReaction"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "RoomsObject": {
+=======
+      "PostReportsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "room": {
+                  "$ref": "#/components/schemas/Room"
+=======
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReport"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "RoomsArray": {
+=======
+      "PostReportsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "rooms": {
+=======
+                "post_reports": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                      "room": {
+                        "$ref": "#/components/schemas/Room"
+=======
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReport"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "MerchandiseArray": {
+=======
+      "PostsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "merchandise": {
+=======
+                "posts": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "MerchandiseObject": {
+=======
+      "PostsListsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+=======
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostList"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "MessageReportsArray": {
+=======
+      "PostsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "message_reports": {
+=======
+                "post": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShare"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+=======
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "MessagesArray": {
+=======
+      "RelationshipsObject": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
+                      }
+                    }
+                  }
+=======
+                "relationship": {
+                  "$ref": "#/components/schemas/Relationship"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "MessagesObject": {
+=======
+      "RelationshipsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "message": {
+                  "$ref": "#/components/schemas/Message"
+=======
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/Relationship"
+                      }
+                    }
+                  }
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/Badge"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/Block"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V1.json
+      "PostCommentReportsArray": {
+=======
+      "MessageReportsArray": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                "post_comment_reports": {
+=======
+                "message_reports": {
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V1.json
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReport"
+=======
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+>>>>>>> Added permissions to interests.:doc/open_api/V1.json
                       }
                     }
                   }
