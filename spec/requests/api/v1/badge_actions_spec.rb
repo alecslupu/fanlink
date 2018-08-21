@@ -18,7 +18,7 @@ describe "BadgeActions (v1)" do
       login_as(@person)
       post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
       expect(response).to be_success
-      expect(json["pending_badge"]).to eq(pending_badge_json(1, badge1))
+      expect(json["pending_badge"]).to eq(pending_badge_v1_json(1, badge1))
     end
     it "should not include badge before issued_from time as partially earned badge with highest percent earned" do
       login_as(@person)
@@ -27,7 +27,7 @@ describe "BadgeActions (v1)" do
       create(:badge, action_type: action_type, action_requirement: 2, issued_from: Time.now + 1.day) #pre-issue badge
       post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
       expect(response).to be_success
-      expect(json["pending_badge"]).to eq(pending_badge_json(1, badge1))
+      expect(json["pending_badge"]).to eq(pending_badge_v1_json(1, badge1))
     end
     it "should create a new action and return single earned badge" do
       login_as(@person)
@@ -39,7 +39,7 @@ describe "BadgeActions (v1)" do
       post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
       expect(response).to be_success
       expect(json["badges_awarded"].count).to eq(1)
-      expect(json["badges_awarded"].first).to eq(badge_json(badge1))
+      expect(json["badges_awarded"].first).to eq(badge_v1_json(badge1))
     end
     it "should create a new action and return multiple earned badges" do
       login_as(@person)
@@ -51,8 +51,8 @@ describe "BadgeActions (v1)" do
       post "/badge_actions", params: { badge_action: { action_type: action_type.internal_name } }
       expect(response).to be_success
       expect(json["badges_awarded"].count).to eq(2)
-      expect(json["badges_awarded"].first).to eq(badge_json(badge1))
-      expect(json["badges_awarded"].last).to eq(badge_json(badge2))
+      expect(json["badges_awarded"].first).to eq(badge_v1_json(badge1))
+      expect(json["badges_awarded"].last).to eq(badge_v1_json(badge2))
     end
     it "should create a new action and return nil if everything already earned" do
       login_as(@person)

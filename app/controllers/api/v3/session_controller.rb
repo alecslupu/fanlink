@@ -1,8 +1,8 @@
 class Api::V3::SessionController < Api::V3::BaseController
   prepend_before_action :logout, only: :create
-  skip_before_action :require_login, :set_app
+  skip_before_action :require_login #, :set_app
   skip_before_action :set_product, except: %i[ create ]
-  skip_after_action :unset_app, only: %i[ create destroy ]
+  # skip_after_action :unset_app, only: %i[ create destroy ]
 
   # **
   # @api {get} /session Check a session.
