@@ -8387,6 +8387,44 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+      "RoomsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -9042,6 +9080,29 @@
           }
         }
       },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "RecommendedPostsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -9094,67 +9155,6 @@
                     "properties": {
                       "relationship": {
                         "$ref": "#/components/schemas/RelationshipJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
                       }
                     }
                   }
