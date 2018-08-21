@@ -5,15 +5,15 @@ class Api::V3::BadgesController < Api::V3::BaseController
   # TODO: Fix nil class error when super admin attempts to get badges
   def index
     @badges = paginate(Badge.all)
-    if params.has_key?(:person_id)
-      @badges_awarded = PersonReward.where(person_id: params[:person_id]).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
-      @series_total = Person.find(params[:person_id]).reward_progresses || 0
+    if current_user&.app == "portal"
+      @series_total = 0
     else
-      if current_user
+      if params.has_key?(:person_id)
+        @badges_awarded = PersonReward.where(person_id: params[:person_id]).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
+        @series_total = Person.find(params[:person_id]).reward_progresses || 0
+      else
         @badges_awarded = PersonReward.where(person_id: current_user.id).joins(:reward).where("rewards.reward_type =?", Reward.reward_types["badge"])
         @series_total = RewardProgress.find_by(person_id: current_user.id)
-      else
-        render_422("Must supply a person_id or be logged in to view badges.")
       end
     end
     return_the @badges
@@ -22,9 +22,9 @@ class Api::V3::BadgesController < Api::V3::BaseController
   def create
     @badge = Badge.create(badge_params)
     if @badge.valid?
-      return_the @badge
+      
     else
-      render_422 @badge.errors.full_messages
+      render_422 @badge.errors.messages.values.flatten
     end
   end
 
@@ -32,7 +32,7 @@ class Api::V3::BadgesController < Api::V3::BaseController
     if @badge.update_attributes(badge_params)
       return_the @badge
     else
-      render_422 @badge.errors.full_messages
+      render_422 @badge.errors.messages.values.flatten
     end
   end
 
