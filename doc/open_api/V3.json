@@ -176,7 +176,7 @@
       "get": {
         "description": "Returns all action types.",
         "summary": "Get all action types",
-        "operationId": "ActionTypes_index",
+        "operationId": "ActionTypesIndex",
         "tags": [
           "ActionTypes"
         ],
@@ -238,7 +238,7 @@
       "post": {
         "description": "This creates an action type. Action types do nothing until implimented within the apps.",
         "summary": "Create an action type",
-        "operationId": "ActionTypes_create",
+        "operationId": "ActionTypesCreate",
         "tags": [
           "ActionTypes"
         ],
@@ -283,7 +283,7 @@
       "get": {
         "description": "Returns all action types.",
         "summary": "Get all action types",
-        "operationId": "ActionTypes_index",
+        "operationId": "ActionTypesIndex",
         "tags": [
           "ActionTypes"
         ],
@@ -347,7 +347,7 @@
       "get": {
         "description": "Returns the action type for the given id.",
         "summary": "Find an action type",
-        "operationId": "ActionTypes_show",
+        "operationId": "ActionTypesShow",
         "tags": [
           "ActionTypes"
         ],
@@ -396,7 +396,7 @@
       "patch": {
         "description": "This updates an action type.",
         "summary": "Update an action type.",
-        "operationId": "ActionTypes_update",
+        "operationId": "ActionTypesUpdate",
         "tags": [
           "ActionTypes"
         ],
@@ -451,7 +451,7 @@
       "put": {
         "description": "This updates an action type.",
         "summary": "Update an action type.",
-        "operationId": "ActionTypes_update",
+        "operationId": "ActionTypesUpdate",
         "tags": [
           "ActionTypes"
         ],
@@ -506,7 +506,7 @@
       "delete": {
         "description": "This destroys an action type. If the action type is in use, it will not be allowed to be destroyed.",
         "summary": "Destroy an action type",
-        "operationId": "ActionTypes_destroy",
+        "operationId": "ActionTypesDestroy",
         "tags": [
           "ActionTypes"
         ],
@@ -557,7 +557,7 @@
       "get": {
         "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
         "summary": "Get Activity types",
-        "operationId": "ActivityTypes_index",
+        "operationId": "ActivityTypesIndex",
         "tags": [
           "ActivityTypes"
         ],
@@ -588,7 +588,7 @@
       "post": {
         "description": "Creates an activity type to be used with the quest activity.",
         "summary": "Create Type for Activity",
-        "operationId": "ActivityTypes_create",
+        "operationId": "ActivityTypesCreate",
         "tags": [
           "ActivityTypes"
         ],
@@ -624,7 +624,7 @@
       "get": {
         "description": "Returns the quest activity associated with the id.",
         "summary": "Find a quest activity",
-        "operationId": "QuestActivities_show",
+        "operationId": "QuestActivitiesShow",
         "tags": [
           "QuestActivities"
         ],
@@ -673,7 +673,7 @@
       "patch": {
         "description": "Updates a quest activity associated with the id.",
         "summary": "Update a quest activity",
-        "operationId": "QuestActivities_update",
+        "operationId": "QuestActivitiesUpdate",
         "tags": [
           "QuestActivities"
         ],
@@ -728,7 +728,7 @@
       "put": {
         "description": "Updates a quest activity associated with the id.",
         "summary": "Update a quest activity",
-        "operationId": "QuestActivities_update",
+        "operationId": "QuestActivitiesUpdate",
         "tags": [
           "QuestActivities"
         ],
@@ -783,7 +783,7 @@
       "delete": {
         "description": "Soft deletes a quest activity.",
         "summary": "Delete a quest activity.",
-        "operationId": "QuestActivities_destroy",
+        "operationId": "QuestActivitiesDestroy",
         "tags": [
           "QuestActivities"
         ],
@@ -834,7 +834,7 @@
       "get": {
         "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
         "summary": "Get Activity types",
-        "operationId": "ActivityTypes_index",
+        "operationId": "ActivityTypesIndex",
         "tags": [
           "ActivityTypes"
         ],
@@ -867,7 +867,7 @@
       "get": {
         "description": "Gets activity type by ID",
         "summary": "Get an activity type",
-        "operationId": "ActivityTypes_show",
+        "operationId": "ActivityTypesShow",
         "tags": [
           "ActivityTypes"
         ],
@@ -887,7 +887,7 @@
       "patch": {
         "description": "Updates an activity type",
         "summary": "Update a type",
-        "operationId": "ActivityTypes_update",
+        "operationId": "ActivityTypesUpdate",
         "tags": [
           "ActivityTypes"
         ],
@@ -910,7 +910,7 @@
       "put": {
         "description": "Updates an activity type",
         "summary": "Update a type",
-        "operationId": "ActivityTypes_update",
+        "operationId": "ActivityTypesUpdate",
         "tags": [
           "ActivityTypes"
         ],
@@ -933,7 +933,7 @@
       "delete": {
         "description": "Deletes the activity type for given ID, removing it from the Quest Activities.",
         "summary": "Delete a type from an activity",
-        "operationId": "ActivityTypes_destroy",
+        "operationId": "ActivityTypesDestroy",
         "tags": [
           "ActivityTypes"
         ],
@@ -955,7 +955,7 @@
       "post": {
         "description": "Links a model with a reward.",
         "summary": "Create an assigned reward",
-        "operationId": "AssignedRewards_create",
+        "operationId": "AssignedRewardsCreate",
         "tags": [
           "AssignedRewards"
         ],
@@ -1000,7 +1000,7 @@
       "patch": {
         "description": "Allows you to update the max_times field.",
         "summary": "Update an assigned reward",
-        "operationId": "AssignedRewards_update",
+        "operationId": "AssignedRewardsUpdate",
         "tags": [
           "AssignedRewards"
         ],
@@ -1055,7 +1055,7 @@
       "put": {
         "description": "Allows you to update the max_times field.",
         "summary": "Update an assigned reward",
-        "operationId": "AssignedRewards_update",
+        "operationId": "AssignedRewardsUpdate",
         "tags": [
           "AssignedRewards"
         ],
@@ -1110,7 +1110,7 @@
       "delete": {
         "description": "Soft deletes an assigned reward.",
         "summary": "Destroy an assigned reward.",
-        "operationId": "AssignedRewards_destroy",
+        "operationId": "AssignedRewardsDestroy",
         "tags": [
           "AssignedRewards"
         ],
@@ -1160,7 +1160,7 @@
     "/badge_actions": {
       "post": {
         "summary": "POST create a badge action",
-        "operationId": "BadgeActions_create",
+        "operationId": "BadgeActionsCreate",
         "tags": [
           "BadgeActions"
         ],
@@ -1207,7 +1207,7 @@
     "/badges": {
       "get": {
         "summary": "Get badges",
-        "operationId": "Badges_index",
+        "operationId": "BadgesIndex",
         "tags": [
           "Badges"
         ],
@@ -1278,7 +1278,7 @@
       "post": {
         "description": "Creates a new badge.",
         "summary": "Create a badge",
-        "operationId": "Badges_create",
+        "operationId": "BadgesCreate",
         "tags": [
           "Badges"
         ],
@@ -1323,7 +1323,7 @@
       "get": {
         "description": "Finds a badge for the provided id.",
         "summary": "Find a badge",
-        "operationId": "Badges_show",
+        "operationId": "BadgesShow",
         "tags": [
           "Badges"
         ],
@@ -1372,7 +1372,7 @@
       "patch": {
         "description": "Updates a badge for the provided id.",
         "summary": "Update a badge",
-        "operationId": "Badges_update",
+        "operationId": "BadgesUpdate",
         "tags": [
           "Badges"
         ],
@@ -1427,7 +1427,7 @@
       "put": {
         "description": "Updates a badge for the provided id.",
         "summary": "Update a badge",
-        "operationId": "Badges_update",
+        "operationId": "BadgesUpdate",
         "tags": [
           "Badges"
         ],
@@ -1484,7 +1484,7 @@
       "get": {
         "description": "Get beacons for a product.",
         "summary": "Get Product Beacons",
-        "operationId": "ProductBeacons_index",
+        "operationId": "ProductBeaconsIndex",
         "tags": [
           "ProductBeacons"
         ],
@@ -1539,7 +1539,7 @@
       "post": {
         "description": "Add a beacon to the current user's product.",
         "summary": "Create a beacon",
-        "operationId": "ProductBeacons_create",
+        "operationId": "ProductBeaconsCreate",
         "tags": [
           "ProductBeacons"
         ],
@@ -1577,7 +1577,7 @@
       "get": {
         "description": "This returns all beacons, regardless of deleted status.",
         "summary": "Get all beacons",
-        "operationId": "ProductBeacons_list",
+        "operationId": "ProductBeaconsList",
         "tags": [
           "ProductBeacons"
         ],
@@ -1634,7 +1634,7 @@
       "get": {
         "description": "Get beacons for a product.",
         "summary": "Get Product Beacons",
-        "operationId": "ProductBeacons_index",
+        "operationId": "ProductBeaconsIndex",
         "tags": [
           "ProductBeacons"
         ],
@@ -1691,7 +1691,7 @@
       "get": {
         "description": "Returns the product beacon for the passed in ID.",
         "summary": "Get Product Beacon",
-        "operationId": "ProductBeacons_show",
+        "operationId": "ProductBeaconsShow",
         "tags": [
           "ProductBeacons"
         ],
@@ -1733,7 +1733,7 @@
       "patch": {
         "description": "Updates a product beacon.",
         "summary": "Update a beacon",
-        "operationId": "ProductBeacons_update",
+        "operationId": "ProductBeaconsUpdate",
         "tags": [
           "ProductBeacons"
         ],
@@ -1781,7 +1781,7 @@
       "put": {
         "description": "Updates a product beacon.",
         "summary": "Update a beacon",
-        "operationId": "ProductBeacons_update",
+        "operationId": "ProductBeaconsUpdate",
         "tags": [
           "ProductBeacons"
         ],
@@ -1829,7 +1829,7 @@
       "delete": {
         "description": "Soft deletes a product beacon",
         "summary": "Destroy Product Beacon",
-        "operationId": "ProductBeacons_destroy",
+        "operationId": "ProductBeaconsDestroy",
         "tags": [
           "ProductBeacons"
         ],
@@ -1873,7 +1873,7 @@
       "post": {
         "description": "This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users.",
         "summary": "POST Block a person",
-        "operationId": "Blocks_create",
+        "operationId": "BlocksCreate",
         "tags": [
           "Blocks"
         ],
@@ -1917,7 +1917,7 @@
     "/blocks/{id}": {
       "delete": {
         "summary": "POST Unblock a person",
-        "operationId": "Blocks_destroy",
+        "operationId": "BlocksDestroy",
         "tags": [
           "Blocks"
         ],
@@ -1961,7 +1961,7 @@
       "get": {
         "description": "Returns categories for product based on current users role.",
         "summary": "Get Categories for Product",
-        "operationId": "Categories_index",
+        "operationId": "CategoriesIndex",
         "tags": [
           "Categories"
         ],
@@ -2032,7 +2032,7 @@
       "post": {
         "description": "Creates a category for current user's associated product.",
         "summary": "Create a category",
-        "operationId": "Categories_create",
+        "operationId": "CategoriesCreate",
         "tags": [
           "Categories"
         ],
@@ -2077,7 +2077,7 @@
       "get": {
         "description": "Gets a category by ID.",
         "summary": "Get a category",
-        "operationId": "Categories_show",
+        "operationId": "CategoriesShow",
         "tags": [
           "Categories"
         ],
@@ -2126,7 +2126,7 @@
       "patch": {
         "description": "Updates a category with the passed in ID.",
         "summary": "Update a category",
-        "operationId": "Categories_update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -2181,7 +2181,7 @@
       "put": {
         "description": "Updates a category with the passed in ID.",
         "summary": "Update a category",
-        "operationId": "Categories_update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -2238,7 +2238,7 @@
       "get": {
         "description": "Returns all quest completions for the currently logged in user.",
         "summary": "Get all activity completions for the current user.",
-        "operationId": "QuestCompletions_index",
+        "operationId": "QuestCompletionsIndex",
         "tags": [
           "QuestCompletions"
         ],
@@ -2302,7 +2302,7 @@
       "get": {
         "description": "Returns the quest completion for the provided id.",
         "summary": "Find a quest completion",
-        "operationId": "QuestCompletions_show",
+        "operationId": "QuestCompletionsShow",
         "tags": [
           "QuestCompletions"
         ],
@@ -2351,7 +2351,7 @@
       "patch": {
         "description": "Updates a completion.",
         "summary": "Update a quest completion",
-        "operationId": "QuestCompletions_update",
+        "operationId": "QuestCompletionsUpdate",
         "tags": [
           "QuestCompletions"
         ],
@@ -2406,7 +2406,7 @@
       "put": {
         "description": "Updates a completion.",
         "summary": "Update a quest completion",
-        "operationId": "QuestCompletions_update",
+        "operationId": "QuestCompletionsUpdate",
         "tags": [
           "QuestCompletions"
         ],
@@ -2462,7 +2462,7 @@
     "/events": {
       "get": {
         "summary": "Get all events for a product",
-        "operationId": "Events_index",
+        "operationId": "EventsIndex",
         "tags": [
           "Events"
         ],
@@ -2537,7 +2537,7 @@
       "post": {
         "description": "Creates an event for current user's product",
         "summary": "Create an event",
-        "operationId": "Events_create",
+        "operationId": "EventsCreate",
         "tags": [
           "Events"
         ],
@@ -2581,7 +2581,7 @@
     "/events/{id}": {
       "get": {
         "summary": "Get a single event by id",
-        "operationId": "Events_show",
+        "operationId": "EventsShow",
         "tags": [
           "Events"
         ],
@@ -2623,7 +2623,7 @@
       "patch": {
         "description": "Updates the event for given ID.",
         "summary": "Update an event.",
-        "operationId": "Events_update",
+        "operationId": "EventsUpdate",
         "tags": [
           "Events"
         ],
@@ -2678,7 +2678,7 @@
       "put": {
         "description": "Updates the event for given ID.",
         "summary": "Update an event.",
-        "operationId": "Events_update",
+        "operationId": "EventsUpdate",
         "tags": [
           "Events"
         ],
@@ -2733,7 +2733,7 @@
       "delete": {
         "description": "Soft deletes an event by setting deleted to true.",
         "summary": "Delete an event.",
-        "operationId": "Events_destroy",
+        "operationId": "EventsDestroy",
         "tags": [
           "Events"
         ],
@@ -2784,7 +2784,7 @@
       "get": {
         "description": "This is used to get a list of someone's followers or followed. If followed_id parameter is supplied, it will get the follower's of that user. If follower_id is supplied, it will get the people that person is following. If nothing is supplied it will get the people the current user is following.",
         "summary": "Get followers or followings of a user.",
-        "operationId": "Followings_index",
+        "operationId": "FollowingsIndex",
         "tags": [
           "Followings"
         ],
@@ -2864,7 +2864,7 @@
       "post": {
         "description": "This is used to follow a person.",
         "summary": "Follow a person.",
-        "operationId": "Followings_create",
+        "operationId": "FollowingsCreate",
         "tags": [
           "Followings"
         ],
@@ -2909,7 +2909,7 @@
       "delete": {
         "description": "This is used to unfollow a person.",
         "summary": "Unfollow a person.",
-        "operationId": "Followings_destroy",
+        "operationId": "FollowingsDestroy",
         "tags": [
           "Followings"
         ],
@@ -2953,7 +2953,7 @@
       "get": {
         "description": "This gets a list of all levels available to be obtained.",
         "summary": "Get all available levels.",
-        "operationId": "Levels_index",
+        "operationId": "LevelsIndex",
         "tags": [
           "Levels"
         ],
@@ -3017,7 +3017,7 @@
       "get": {
         "description": "This gets a list of merchandise, in priority order.",
         "summary": "Get available merchandise.",
-        "operationId": "Merchandise_index",
+        "operationId": "MerchandiseIndex",
         "tags": [
           "Merchandise"
         ],
@@ -3061,7 +3061,7 @@
       "post": {
         "description": "Create a merchandise item for the user's current product",
         "summary": "Create a merchandise item",
-        "operationId": "Merchandise_create",
+        "operationId": "MerchandiseCreate",
         "tags": [
           "Merchandise"
         ],
@@ -3086,7 +3086,7 @@
       "get": {
         "description": "This gets a single piece of merchandise for a merchandise id.",
         "summary": "Get a single piece of merchandise.",
-        "operationId": "Merchandise_show",
+        "operationId": "MerchandiseShow",
         "tags": [
           "Merchandise"
         ],
@@ -3120,7 +3120,7 @@
       "delete": {
         "description": "Soft deletes a merchandise item.",
         "summary": "Delete a merchandise item.",
-        "operationId": "Merchandise_destroy",
+        "operationId": "MerchandiseDestroy",
         "tags": [
           "Merchandise"
         ],
@@ -3141,7 +3141,7 @@
     "/message_reports": {
       "get": {
         "summary": "Get list of messages reports (ADMIN).",
-        "operationId": "MessageReports_index",
+        "operationId": "MessageReportsIndex",
         "tags": [
           "MessageReports"
         ],
@@ -3214,7 +3214,7 @@
       "patch": {
         "description": "This updates a message report. The only value that can be changed is the status.",
         "summary": "Update a Message Report. (Admin)",
-        "operationId": "MessageReports_update",
+        "operationId": "MessageReportsUpdate",
         "tags": [
           "MessageReports"
         ],
@@ -3269,7 +3269,7 @@
       "put": {
         "description": "This updates a message report. The only value that can be changed is the status.",
         "summary": "Update a Message Report. (Admin)",
-        "operationId": "MessageReports_update",
+        "operationId": "MessageReportsUpdate",
         "tags": [
           "MessageReports"
         ],
@@ -3326,7 +3326,7 @@
       "get": {
         "description": " This gets a list of messages without regard to room (with possible exception of room filter).",
         "summary": "Get a list of messages without regard to room (ADMIN ONLY).",
-        "operationId": "Messages_list",
+        "operationId": "MessagesList",
         "tags": [
           "Messages"
         ],
@@ -3435,7 +3435,7 @@
       "patch": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -3499,7 +3499,7 @@
       "put": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -3565,7 +3565,7 @@
       "post": {
         "description": "This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have any number of device ids.",
         "summary": "Add a new device id for a person.",
-        "operationId": "NotificationDeviceIds_create",
+        "operationId": "NotificationDeviceIdsCreate",
         "tags": [
           "NotificationDeviceIds"
         ],
@@ -3608,7 +3608,7 @@
       "delete": {
         "description": "This deletes a single device id. Can only be called by the owner.",
         "summary": "Delete a device id",
-        "operationId": "NotificationDeviceIds_destroy",
+        "operationId": "NotificationDeviceIdsDestroy",
         "tags": [
           "NotificationDeviceIds"
         ],
@@ -3652,7 +3652,7 @@
       "get": {
         "description": "This is used to get a list of people.",
         "summary": "Get a list of people.",
-        "operationId": "People_index",
+        "operationId": "PeopleIndex",
         "tags": [
           "People"
         ],
@@ -3692,7 +3692,7 @@
       "post": {
         "description": "This is used to create a new person.\\nIf the account creation is successful, they will be logged in and we will send an onboarding email (if we have an email address for them).",
         "summary": "Create person.",
-        "operationId": "People_create",
+        "operationId": "PeopleCreate",
         "tags": [
           "People"
         ],
@@ -3710,7 +3710,7 @@
       "post": {
         "description": "This is used to initiate a password reset. Product and email or username required. If email or username is not found, password reset will fail silently.",
         "summary": "Initiate a password reset.",
-        "operationId": "PasswordResets_create",
+        "operationId": "PasswordResetsCreate",
         "tags": [
           "PasswordResets"
         ],
@@ -3761,7 +3761,7 @@
       "get": {
         "description": "This is used to get a list of people flagged as \"recommended\". It excludes the current user and anyone the current user is following.",
         "summary": "Get recommended people.",
-        "operationId": "RecommendedPeople_index",
+        "operationId": "RecommendedPeopleIndex",
         "tags": [
           "RecommendedPeople"
         ],
@@ -3783,7 +3783,7 @@
       "get": {
         "description": "This is used to get a person.",
         "summary": "Get a person.",
-        "operationId": "People_show",
+        "operationId": "PeopleShow",
         "tags": [
           "People"
         ],
@@ -3814,7 +3814,7 @@
       "patch": {
         "description": "This is used to update a person. Anything not mentioned is left alone.",
         "summary": "Update person.",
-        "operationId": "People_update",
+        "operationId": "PeopleUpdate",
         "tags": [
           "People"
         ],
@@ -3848,7 +3848,7 @@
       "put": {
         "description": "This is used to update a person. Anything not mentioned is left alone.",
         "summary": "Update person.",
-        "operationId": "People_update",
+        "operationId": "PeopleUpdate",
         "tags": [
           "People"
         ],
@@ -3884,7 +3884,7 @@
       "patch": {
         "description": "This is used to change the logged in user's password.",
         "summary": "Change your password.",
-        "operationId": "People_change_password",
+        "operationId": "PeopleChangePassword",
         "tags": [
           "People"
         ],
@@ -3941,7 +3941,7 @@
     "/people/{person_id}/badges": {
       "get": {
         "summary": "Get badges",
-        "operationId": "Badges_index",
+        "operationId": "BadgesIndex",
         "tags": [
           "Badges"
         ],
@@ -4014,7 +4014,7 @@
       "get": {
         "description": "This gets a list of post comment reports with optional filter.",
         "summary": "Get list of post comment reports (ADMIN).",
-        "operationId": "PostCommentReports_index",
+        "operationId": "PostCommentReportsIndex",
         "tags": [
           "PostCommentReports"
         ],
@@ -4085,7 +4085,7 @@
       "post": {
         "description": "This reports a post comment.",
         "summary": "Report a post comment.",
-        "operationId": "PostCommentReports_create",
+        "operationId": "PostCommentReportsCreate",
         "tags": [
           "PostCommentReports"
         ],
@@ -4130,7 +4130,7 @@
       "patch": {
         "description": "This updates a post comment report. The only value that can be changed is the status.",
         "summary": "Update a Post Comment Report (Admin)",
-        "operationId": "PostCommentReports_update",
+        "operationId": "PostCommentReportsUpdate",
         "tags": [
           "PostCommentReports"
         ],
@@ -4185,7 +4185,7 @@
       "put": {
         "description": "This updates a post comment report. The only value that can be changed is the status.",
         "summary": "Update a Post Comment Report (Admin)",
-        "operationId": "PostCommentReports_update",
+        "operationId": "PostCommentReportsUpdate",
         "tags": [
           "PostCommentReports"
         ],
@@ -4242,7 +4242,7 @@
       "get": {
         "description": "This gets a list of post comments with optional filters and pagination.",
         "summary": "Get a list of post comments (ADMIN).",
-        "operationId": "PostComments_list",
+        "operationId": "PostCommentsList",
         "tags": [
           "PostComments"
         ],
@@ -4324,7 +4324,7 @@
       "get": {
         "description": "This gets a list of post reports with optional filter.",
         "summary": "Get list of post reports (ADMIN).",
-        "operationId": "PostReports_index",
+        "operationId": "PostReportsIndex",
         "tags": [
           "PostReports"
         ],
@@ -4395,7 +4395,7 @@
       "post": {
         "description": "This reports a post that was posted to a feed.",
         "summary": "Report a post.",
-        "operationId": "PostReports_create",
+        "operationId": "PostReportsCreate",
         "tags": [
           "PostReports"
         ],
@@ -4440,7 +4440,7 @@
       "patch": {
         "description": "This updates a post report. The only value that can be changed is the status.",
         "summary": "Update a Post Report.",
-        "operationId": "PostReports_update",
+        "operationId": "PostReportsUpdate",
         "tags": [
           "PostReports"
         ],
@@ -4495,7 +4495,7 @@
       "put": {
         "description": "This updates a post report. The only value that can be changed is the status.",
         "summary": "Update a Post Report.",
-        "operationId": "PostReports_update",
+        "operationId": "PostReportsUpdate",
         "tags": [
           "PostReports"
         ],
@@ -4552,7 +4552,7 @@
       "get": {
         "description": "  This gets a list of posts for a from date, to date, with an optional limit and person. Posts are returned newest first, and the limit is applied to that ordering.\n    Posts included are posts from the passed in person or, if none, the current user along with those of the users the current user is following.",
         "summary": "Get posts for a date range.",
-        "operationId": "Posts_index",
+        "operationId": "PostsIndex",
         "tags": [
           "Posts"
         ],
@@ -4641,7 +4641,7 @@
       "post": {
         "description": "This creates a post and puts in on the feed of the author's followers. It also sends a push notification to poster's followers if the notify_followers flag is set to true.",
         "summary": "Create a post.",
-        "operationId": "Posts_create",
+        "operationId": "PostsCreate",
         "tags": [
           "Posts"
         ],
@@ -4686,7 +4686,7 @@
       "get": {
         "description": "This gets a list of posts with optional filters and pagination.",
         "summary": "Get a list of posts (ADMIN ONLY).",
-        "operationId": "Posts_list",
+        "operationId": "PostsList",
         "tags": [
           "Posts"
         ],
@@ -4813,7 +4813,7 @@
       "get": {
         "description": "This is used to get a list of published posts flagged as \"recommended\".",
         "summary": "Get recommended posts.",
-        "operationId": "RecommendedPosts_index",
+        "operationId": "RecommendedPostsIndex",
         "tags": [
           "RecommendedPosts"
         ],
@@ -4877,7 +4877,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single post.",
-        "operationId": "Posts_show",
+        "operationId": "PostsShow",
         "tags": [
           "Posts"
         ],
@@ -4926,7 +4926,7 @@
       "patch": {
         "description": "This updates a post.",
         "summary": "Update a post",
-        "operationId": "Posts_update",
+        "operationId": "PostsUpdate",
         "tags": [
           "Posts"
         ],
@@ -4981,7 +4981,7 @@
       "put": {
         "description": "This updates a post.",
         "summary": "Update a post",
-        "operationId": "Posts_update",
+        "operationId": "PostsUpdate",
         "tags": [
           "Posts"
         ],
@@ -5036,7 +5036,7 @@
       "delete": {
         "description": "This deletes a single post by marking as deleted. Can only be called by the creator.",
         "summary": "Delete (hide) a single post.",
-        "operationId": "Posts_destroy",
+        "operationId": "PostsDestroy",
         "tags": [
           "Posts"
         ],
@@ -5087,7 +5087,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single, shareable post.",
-        "operationId": "Posts_share",
+        "operationId": "PostsShare",
         "tags": [
           "Posts"
         ],
@@ -5128,7 +5128,7 @@
       "get": {
         "description": "This gets all the non-hidden comments on a post with pagination.",
         "summary": "Get the comments on a post.",
-        "operationId": "PostComments_index",
+        "operationId": "PostCommentsIndex",
         "tags": [
           "PostComments"
         ],
@@ -5199,7 +5199,7 @@
       "post": {
         "description": "This creates a post comment. It is automatically attributed to the logged in user.",
         "summary": "Create a comment on a post.",
-        "operationId": "PostComments_create",
+        "operationId": "PostCommentsCreate",
         "tags": [
           "PostComments"
         ],
@@ -5253,7 +5253,7 @@
       "delete": {
         "description": "This deletes a comment on a post. Can be performed by admin or creator of comment.",
         "summary": "Delete a comment on a post.",
-        "operationId": "PostComments_destroy",
+        "operationId": "PostCommentsDestroy",
         "tags": [
           "PostComments"
         ],
@@ -5313,7 +5313,7 @@
       "post": {
         "description": "This reacts to a post.",
         "summary": "React to a post.",
-        "operationId": "PostReactions_create",
+        "operationId": "PostReactionsCreate",
         "tags": [
           "PostReactions"
         ],
@@ -5367,7 +5367,7 @@
       "patch": {
         "description": "This updates a reaction on a post.",
         "summary": "Update a reaction to a post.",
-        "operationId": "PostReactions_update",
+        "operationId": "PostReactionsUpdate",
         "tags": [
           "PostReactions"
         ],
@@ -5431,7 +5431,7 @@
       "put": {
         "description": "This updates a reaction on a post.",
         "summary": "Update a reaction to a post.",
-        "operationId": "PostReactions_update",
+        "operationId": "PostReactionsUpdate",
         "tags": [
           "PostReactions"
         ],
@@ -5495,7 +5495,7 @@
       "delete": {
         "description": "This deletes a reaction to a post.",
         "summary": "Delete a reaction to a post.",
-        "operationId": "PostReactions_destroy",
+        "operationId": "PostReactionsDestroy",
         "tags": [
           "PostReactions"
         ],
@@ -5555,7 +5555,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single, shareable post.",
-        "operationId": "Posts_share",
+        "operationId": "PostsShare",
         "tags": [
           "Posts"
         ],
@@ -5596,7 +5596,7 @@
       "get": {
         "description": "Get all products (Super Admin Only)",
         "summary": "Get Products",
-        "operationId": "Products_index",
+        "operationId": "ProductsIndex",
         "tags": [
           "Products"
         ],
@@ -5658,7 +5658,7 @@
       "post": {
         "description": "Create a product (Super Admin Only)",
         "summary": "Create Product",
-        "operationId": "Products_create",
+        "operationId": "ProductsCreate",
         "tags": [
           "Products"
         ],
@@ -5703,7 +5703,7 @@
       "get": {
         "description": "Get all products (Super Admin Only)",
         "summary": "Get Products",
-        "operationId": "Products_index",
+        "operationId": "ProductsIndex",
         "tags": [
           "Products"
         ],
@@ -5767,7 +5767,7 @@
       "get": {
         "description": "Get a product for provided ID. (Super Admin Only)",
         "summary": "Get Product",
-        "operationId": "Products_show",
+        "operationId": "ProductsShow",
         "tags": [
           "Products"
         ],
@@ -5816,7 +5816,7 @@
       "patch": {
         "description": "Update a product (Super Admin Only)",
         "summary": "Update Product",
-        "operationId": "Products_update",
+        "operationId": "ProductsUpdate",
         "tags": [
           "Products"
         ],
@@ -5871,7 +5871,7 @@
       "put": {
         "description": "Update a product (Super Admin Only)",
         "summary": "Update Product",
-        "operationId": "Products_update",
+        "operationId": "ProductsUpdate",
         "tags": [
           "Products"
         ],
@@ -5928,7 +5928,7 @@
       "get": {
         "description": "Returns all quests for the current user's product that aren't deleted.",
         "summary": "Get all viewable quests",
-        "operationId": "Quests_index",
+        "operationId": "QuestsIndex",
         "tags": [
           "Quests"
         ],
@@ -5990,7 +5990,7 @@
       "post": {
         "description": "Creates a quest for the current user's product.",
         "summary": "Create a quest",
-        "operationId": "Quests_create",
+        "operationId": "QuestsCreate",
         "tags": [
           "Quests"
         ],
@@ -6035,7 +6035,7 @@
       "get": {
         "description": "Returns all quests for the current user's product regardless of status.",
         "summary": "Get all quests (Admin Only)",
-        "operationId": "Quests_list",
+        "operationId": "QuestsList",
         "tags": [
           "Quests"
         ],
@@ -6099,7 +6099,7 @@
       "get": {
         "description": "Returns all quests for the current user's product that aren't deleted.",
         "summary": "Get all viewable quests",
-        "operationId": "Quests_index",
+        "operationId": "QuestsIndex",
         "tags": [
           "Quests"
         ],
@@ -6163,7 +6163,7 @@
       "get": {
         "description": "Returns the quest for the given ID",
         "summary": "Find a quest",
-        "operationId": "Quests_show",
+        "operationId": "QuestsShow",
         "tags": [
           "Quests"
         ],
@@ -6212,7 +6212,7 @@
       "patch": {
         "description": "Updates the quest for the given id",
         "summary": "Update a quest",
-        "operationId": "Quests_update",
+        "operationId": "QuestsUpdate",
         "tags": [
           "Quests"
         ],
@@ -6267,7 +6267,7 @@
       "put": {
         "description": "Updates the quest for the given id",
         "summary": "Update a quest",
-        "operationId": "Quests_update",
+        "operationId": "QuestsUpdate",
         "tags": [
           "Quests"
         ],
@@ -6322,7 +6322,7 @@
       "delete": {
         "description": "Soft deletes a quest",
         "summary": "Destroy a quest",
-        "operationId": "Quests_destroy",
+        "operationId": "QuestsDestroy",
         "tags": [
           "Quests"
         ],
@@ -6373,7 +6373,7 @@
       "get": {
         "description": "Returns all quest completions for the currently logged in user.",
         "summary": "Get all activity completions for the current user.",
-        "operationId": "QuestCompletions_index",
+        "operationId": "QuestCompletionsIndex",
         "tags": [
           "QuestCompletions"
         ],
@@ -6435,7 +6435,7 @@
       "post": {
         "description": "This registers an activity as complete for the current user.",
         "summary": "Create a quest completion",
-        "operationId": "QuestCompletions_create",
+        "operationId": "QuestCompletionsCreate",
         "tags": [
           "QuestCompletions"
         ],
@@ -6489,7 +6489,7 @@
       "get": {
         "description": "Returns all the steps for a quest",
         "summary": "Get all steps",
-        "operationId": "Steps_index",
+        "operationId": "StepsIndex",
         "tags": [
           "Steps"
         ],
@@ -6560,7 +6560,7 @@
       "post": {
         "description": "Creates a step for the supplied quest id.",
         "summary": "Create a step",
-        "operationId": "Steps_create",
+        "operationId": "StepsCreate",
         "tags": [
           "Steps"
         ],
@@ -6614,7 +6614,7 @@
       "get": {
         "description": "This is used to get a list of someone's friends. If the person supplied is the logged in user, \"requested\" status is included for requests TO the current user. Otherwise, only \"friended\" status is included.",
         "summary": "Get current relationships of a person.",
-        "operationId": "Relationships_index",
+        "operationId": "RelationshipsIndex",
         "tags": [
           "Relationships"
         ],
@@ -6685,7 +6685,7 @@
       "post": {
         "description": "This is used to send a friend request to a person. If there is a block between the people, an error will be returned.",
         "summary": "Send a friend request to a person.",
-        "operationId": "Relationships_create",
+        "operationId": "RelationshipsCreate",
         "tags": [
           "Relationships"
         ],
@@ -6755,7 +6755,7 @@
       "get": {
         "description": "This gets a single relationship for a relationship id. Only available to a participating user.",
         "summary": "Get a single relationship.",
-        "operationId": "Relationships_show",
+        "operationId": "RelationshipsShow",
         "tags": [
           "Relationships"
         ],
@@ -6804,7 +6804,7 @@
       "patch": {
         "description": "This is used to accept, deny or unfriend a relationship (friend request).",
         "summary": "Update a relationship.",
-        "operationId": "Relationships_update",
+        "operationId": "RelationshipsUpdate",
         "tags": [
           "Relationships"
         ],
@@ -6884,7 +6884,7 @@
       "put": {
         "description": "This is used to accept, deny or unfriend a relationship (friend request).",
         "summary": "Update a relationship.",
-        "operationId": "Relationships_update",
+        "operationId": "RelationshipsUpdate",
         "tags": [
           "Relationships"
         ],
@@ -6964,7 +6964,7 @@
       "delete": {
         "description": "This is used to unfriend a person.",
         "summary": "Unfriend a person.",
-        "operationId": "Relationships_destroy",
+        "operationId": "RelationshipsDestroy",
         "tags": [
           "Relationships"
         ],
@@ -7015,7 +7015,7 @@
       "get": {
         "description": "Returns all rewards for the current user's product",
         "summary": "Get all rewards",
-        "operationId": "Rewards_index",
+        "operationId": "RewardsIndex",
         "tags": [
           "Rewards"
         ],
@@ -7077,7 +7077,7 @@
       "post": {
         "description": "Creates a reward",
         "summary": "Create a reward",
-        "operationId": "Rewards_create",
+        "operationId": "RewardsCreate",
         "tags": [
           "Rewards"
         ],
@@ -7122,7 +7122,7 @@
       "get": {
         "description": "Returns all rewards for the current user's product",
         "summary": "Get all rewards",
-        "operationId": "Rewards_index",
+        "operationId": "RewardsIndex",
         "tags": [
           "Rewards"
         ],
@@ -7186,7 +7186,7 @@
       "get": {
         "description": "Returns the reward for the provided id.",
         "summary": "Find a reward",
-        "operationId": "Rewards_show",
+        "operationId": "RewardsShow",
         "tags": [
           "Rewards"
         ],
@@ -7235,7 +7235,7 @@
       "patch": {
         "description": "Updates a reward",
         "summary": "Update a reward",
-        "operationId": "Rewards_update",
+        "operationId": "RewardsUpdate",
         "tags": [
           "Rewards"
         ],
@@ -7290,7 +7290,7 @@
       "put": {
         "description": "Updates a reward",
         "summary": "Update a reward",
-        "operationId": "Rewards_update",
+        "operationId": "RewardsUpdate",
         "tags": [
           "Rewards"
         ],
@@ -7345,7 +7345,7 @@
       "delete": {
         "description": "Soft deletes a reward",
         "summary": "Destroy a reward",
-        "operationId": "Rewards_destroy",
+        "operationId": "RewardsDestroy",
         "tags": [
           "Rewards"
         ],
@@ -7396,7 +7396,7 @@
       "get": {
         "description": "Returns all assigned rewards for the provided reward id.",
         "summary": "Return all assigned rewards",
-        "operationId": "AssignedRewards_index",
+        "operationId": "AssignedRewardsIndex",
         "tags": [
           "AssignedRewards"
         ],
@@ -7460,7 +7460,7 @@
       "get": {
         "description": "This gets a list of active rooms (public or private, as specified by the \"private\" parameter).",
         "summary": "Get a list of rooms.",
-        "operationId": "Rooms_index",
+        "operationId": "RoomsIndex",
         "tags": [
           "Rooms"
         ],
@@ -7531,7 +7531,7 @@
       "post": {
         "description": "The creates a private room and makes it active.",
         "summary": "Create a private room.",
-        "operationId": "Rooms_create",
+        "operationId": "RoomsCreate",
         "tags": [
           "Rooms"
         ],
@@ -7622,7 +7622,7 @@
       "patch": {
         "description": "The updates a private room. Only the name can by updated, and only by the owner.",
         "summary": "Update a private room (name).",
-        "operationId": "Rooms_update",
+        "operationId": "RoomsUpdate",
         "tags": [
           "Rooms"
         ],
@@ -7707,7 +7707,7 @@
       "put": {
         "description": "The updates a private room. Only the name can by updated, and only by the owner.",
         "summary": "Update a private room (name).",
-        "operationId": "Rooms_update",
+        "operationId": "RoomsUpdate",
         "tags": [
           "Rooms"
         ],
@@ -7792,7 +7792,7 @@
       "delete": {
         "description": "The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the status to deleted.",
         "summary": "Delete a private room.",
-        "operationId": "Rooms_destroy",
+        "operationId": "RoomsDestroy",
         "tags": [
           "Rooms"
         ],
@@ -7843,7 +7843,7 @@
       "post": {
         "description": "This reports a message that was posted to a public room.",
         "summary": "Report a message in a public room.",
-        "operationId": "MessageReports_create",
+        "operationId": "MessageReportsCreate",
         "tags": [
           "MessageReports"
         ],
@@ -7897,7 +7897,7 @@
       "get": {
         "description": "This gets a list of message for a from date, to date, with an optional limit. Messages are returned newest first, and the limit is applied to that ordering.",
         "summary": "Get messages.",
-        "operationId": "Messages_index",
+        "operationId": "MessagesIndex",
         "tags": [
           "Messages"
         ],
@@ -7997,7 +7997,7 @@
       "post": {
         "description": "This creates a message in a room and posts it to Firebase as appropriate.",
         "summary": "Create a message in a room.",
-        "operationId": "Messages_create",
+        "operationId": "MessagesCreate",
         "tags": [
           "Messages"
         ],
@@ -8051,7 +8051,7 @@
       "get": {
         "description": "This gets a single message for a message id. Only works for messages in private rooms. If the message author has been blocked by the current user, this will return 404 Not Found.",
         "summary": "Get a single message.",
-        "operationId": "Messages_show",
+        "operationId": "MessagesShow",
         "tags": [
           "Messages"
         ],
@@ -8109,7 +8109,7 @@
       "patch": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -8173,7 +8173,7 @@
       "put": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -8237,7 +8237,7 @@
       "delete": {
         "description": "This deletes a single message by marking as hidden. Can only be called by the creator.",
         "summary": "Delete (hide) a single message.",
-        "operationId": "Messages_destroy",
+        "operationId": "MessagesDestroy",
         "tags": [
           "Messages"
         ],
@@ -8297,7 +8297,7 @@
       "post": {
         "description": "This adds a person to a private room. On success (person added), just returns 200.",
         "summary": "Add a room member.",
-        "operationId": "RoomMemberships_create",
+        "operationId": "RoomMembershipsCreate",
         "tags": [
           "RoomMemberships"
         ],
@@ -8376,7 +8376,7 @@
       "get": {
         "description": "This is used to see if your current session is valid. We return the currently logged-in person if the session is still good and a 404 otherwise.",
         "summary": "Check a session.",
-        "operationId": "Session_index",
+        "operationId": "SessionIndex",
         "tags": [
           "Session"
         ],
@@ -8389,7 +8389,7 @@
       "post": {
         "description": "This is used to log someone in.",
         "summary": "Log someone in.",
-        "operationId": "Session_create",
+        "operationId": "SessionCreate",
         "tags": [
           "Session"
         ],
@@ -8442,7 +8442,7 @@
       "delete": {
         "description": "This is used to log someone out.",
         "summary": "Log someone out.",
-        "operationId": "Session_destroy",
+        "operationId": "SessionDestroy",
         "tags": [
           "Session"
         ],
@@ -8457,7 +8457,7 @@
       "get": {
         "description": "Returns the step for the supplied id.",
         "summary": "Find a step",
-        "operationId": "Steps_show",
+        "operationId": "StepsShow",
         "tags": [
           "Steps"
         ],
@@ -8506,7 +8506,7 @@
       "patch": {
         "description": "Updates a step for the supplied id.",
         "summary": "Update a step",
-        "operationId": "Steps_update",
+        "operationId": "StepsUpdate",
         "tags": [
           "Steps"
         ],
@@ -8561,7 +8561,7 @@
       "put": {
         "description": "Updates a step for the supplied id.",
         "summary": "Update a step",
-        "operationId": "Steps_update",
+        "operationId": "StepsUpdate",
         "tags": [
           "Steps"
         ],
@@ -8616,7 +8616,7 @@
       "delete": {
         "description": "Soft deletes a step.",
         "summary": "Destroy a step",
-        "operationId": "Steps_destroy",
+        "operationId": "StepsDestroy",
         "tags": [
           "Steps"
         ],
@@ -8667,7 +8667,7 @@
       "get": {
         "description": "Get all quest activities associated with a step.",
         "summary": "Get Quest Activities",
-        "operationId": "QuestActivities_index",
+        "operationId": "QuestActivitiesIndex",
         "tags": [
           "QuestActivities"
         ],
@@ -8729,7 +8729,7 @@
       "post": {
         "description": "Creates a quest activity",
         "summary": "Create a quest activity",
-        "operationId": "QuestActivities_create",
+        "operationId": "QuestActivitiesCreate",
         "tags": [
           "QuestActivities"
         ],
@@ -8774,7 +8774,7 @@
       "get": {
         "description": "Returns all quest completions for the currently logged in user.",
         "summary": "Get all activity completions for the current user.",
-        "operationId": "QuestCompletions_index",
+        "operationId": "QuestCompletionsIndex",
         "tags": [
           "QuestCompletions"
         ],
@@ -8836,7 +8836,7 @@
       "post": {
         "description": "This registers an activity as complete for the current user.",
         "summary": "Create a quest completion",
-        "operationId": "QuestCompletions_create",
+        "operationId": "QuestCompletionsCreate",
         "tags": [
           "QuestCompletions"
         ],
@@ -10093,6 +10093,481 @@
       }
     },
     "requestBodies": {
+      "QuestActivityCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  },
+                  "required": [
+                    "hint"
+                  ]
+                }
+              },
+              "required": [
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
+      "QuestActivityUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCompletionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCompletionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description",
+                    "starts_at"
+                  ]
+                }
+              },
+              "required": [
+                "quest"
+              ]
+            }
+          }
+        }
+      },
+      "QuestUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "descriptio": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+                    }
+                  },
+                  "required": [
+                    "descriptio"
+                  ]
+                }
+              },
+              "required": [
+                "quest"
+              ]
+            }
+          }
+        }
+      },
+      "ActionTypeCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
+                }
+              },
+              "required": [
+                "action_type"
+              ]
+            }
+          }
+        }
+      },
+      "ActionTypeUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "action_type"
+              ]
+            }
+          }
+        }
+      },
+      "TypeBodyCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "atype",
+                    "value"
+                  ]
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "TypeBodyUpdate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "AssignedRewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assign": {
+                  "type": "object",
+                  "properties": {
+                    "reward_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward it is being assigned to."
+                    },
+                    "assigned_type": {
+                      "type": "string",
+                      "description": "The model name that the reward belongs to."
+                    },
+                    "assigned_id": {
+                      "type": "integer",
+                      "description": "The id of the type that is being assigned. Example: If you want to assign the quest with an ID of 1, you would set the type to Quest and the id to 1."
+                    },
+                    "max_times": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The maximum number of times the assigned item can be completed for credit."
+                    }
+                  },
+                  "required": [
+                    "reward_id",
+                    "assigned_type",
+                    "assigned_id"
+                  ]
+                }
+              },
+              "required": [
+                "assign"
+              ]
+            }
+          }
+        }
+      },
+      "AssignedRewardUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assign": {
+                  "type": "object",
+                  "properties": {
+                    "max_times": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The maximum number of times the assigned item can be completed for credit."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "assign"
+              ]
+            }
+          }
+        }
+      },
       "RewardCreateForm": {
         "required": true,
         "description": "",
@@ -10211,7 +10686,7 @@
           }
         }
       },
-      "ProductCreateForm": {
+      "BadgeActionCreate": {
         "required": true,
         "description": "",
         "content": {
@@ -10219,37 +10694,84 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge": {
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Product display name."
+                      "description": "Display friendly name for the badge. Translatable"
                     },
                     "internal_name": {
                       "type": "string",
-                      "description": "Product internal name."
+                      "description": "Internal name of the badge"
                     },
-                    "enabled": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Whether or not the product is enabled."
+                    "description": {
+                      "type": "string",
+                      "description": "A short paragraph describing the badge. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the badge."
+                    },
+                    "issued_from": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start time for when the badge is available to earn."
+                    },
+                    "issued_to": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End time for when the badge is available to earn."
                     }
                   },
                   "required": [
                     "name",
-                    "internal_name"
+                    "internal_name",
+                    "description"
                   ]
                 }
               },
               "required": [
-                "product"
+                "badge"
               ]
             }
           }
         }
       },
-      "ProductUpdateForm": {
+      "BadgeUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -10257,218 +10779,52 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
+                "badge": {
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Product display name."
+                      "description": "Display friendly name for the badge. Translatable"
                     },
                     "internal_name": {
                       "type": "string",
-                      "description": "Product internal name."
+                      "description": "Internal name of the badge"
                     },
-                    "enabled": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Whether or not the product is enabled."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "product"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_comment_id": {
-                      "type": "integer",
-                      "description": "The id of the post comment being reported."
-                    },
-                    "reason": {
+                    "description": {
                       "type": "string",
-                      "description": "The reason given by the user for reporting the post comment."
-                    }
-                  },
-                  "required": [
-                    "post_comment_id"
-=======
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_id": {
-                      "type": "integer",
-                      "description": "The id of the post being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post."
-                    }
-                  },
-                  "required": [
-                    "post_id"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                  ]
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "post_comment_report"
-=======
-                "post_report"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "PostCommentReportUpdateForm": {
-=======
-      "PostReportsUpdateForm": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "post_comment_report": {
-=======
-                "post_report": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-<<<<<<< HEAD
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-=======
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "post_comment_report"
-=======
-                "post_report"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "PasswordResetForm": {
-=======
-      "PostCreateForm": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of product."
-                },
-                "email_or_username": {
-                  "type": "string",
-                  "description": "The person's email or username."
-                }
-              },
-              "required": [
-                "product",
-                "email_or_username"
-=======
-                "post": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
+                      "description": "A short paragraph describing the badge. Translatable."
                     },
                     "picture": {
                       "type": "string",
                       "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                      "description": "Image associated with the badge."
                     },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
+                    "issued_from": {
                       "type": "string",
                       "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
+                      "description": "Start time for when the badge is available to earn."
                     },
-                    "ends_at": {
+                    "issued_to": {
                       "type": "string",
                       "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
+                      "description": "End time for when the badge is available to earn."
                     }
-                  }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description"
+                  ]
                 }
               },
               "required": [
-                "post"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
+                "badge"
               ]
             }
           }
         }
       },
-<<<<<<< HEAD
-      "NotificationDeviceIdsForm": {
-=======
-      "PostUpdateForm": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
+      "BlockCreate": {
         "required": true,
         "description": "",
         "content": {
@@ -10476,68 +10832,191 @@
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-                "device_id": {
-                  "type": "string",
-                  "description": "ID of the device"
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
                 }
               },
               "required": [
-                "device_id"
-=======
-                "post": {
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
                   "type": "object",
                   "properties": {
-                    "body": {
+                    "name": {
                       "type": "string",
-                      "description": "The body of the message."
+                      "description": "Category name."
                     },
-                    "picture": {
+                    "color": {
                       "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                      "description": "The color hex code for the category."
                     },
-                    "audio": {
+                    "role": {
                       "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
+                      "description": "Category name."
                     },
-                    "ends_at": {
+                    "color": {
                       "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
+                      "description": "The color hex code for the category."
                     },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
+                    "role": {
                       "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
                     }
                   }
                 }
               },
               "required": [
-                "post"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "StepCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "StepUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
               ]
             }
           }
@@ -10653,7 +11132,7 @@
           }
         }
       },
-      "FollowingForm": {
+      "MessageReportCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -10661,58 +11140,31 @@
             "schema": {
               "type": "object",
               "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
+                "message_report": {
                   "type": "object",
                   "properties": {
-                    "post_id": {
+                    "message_id": {
                       "type": "integer",
-                      "description": "The id of the post being reported."
+                      "description": "The id of the message being reported."
                     },
                     "reason": {
                       "type": "string",
-                      "description": "The reason given by the user for reporting the post."
+                      "description": "The reason given by the user for reporting the message."
                     }
                   },
                   "required": [
-<<<<<<< HEAD
-                    "post_id"
-=======
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
+                    "message_id"
                   ]
                 }
               },
               "required": [
-                "post_report"
+                "message_report"
               ]
             }
           }
         }
       },
-      "PostReportsUpdateForm": {
+      "MessageReportUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -10720,12 +11172,12 @@
             "schema": {
               "type": "object",
               "properties": {
-                "post_report": {
+                "message_report": {
                   "type": "object",
                   "properties": {
                     "status": {
                       "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
                     }
                   },
                   "required": [
@@ -10734,794 +11186,7 @@
                 }
               },
               "required": [
-                "post_report"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "role"
-                  ]
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-      "BeaconCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product_beacon": {
-                  "type": "object",
-                  "properties": {
-                    "beacon_pid": {
-                      "type": "string",
-                      "description": "The manufacturer's id of the beacon"
-                    },
-                    "uuid": {
-                      "type": "string",
-                      "description": "The UUID of the beacon."
-                    },
-                    "lower": {
-                      "type": "string",
-                      "description": "Lower value."
-                    },
-                    "upper": {
-                      "type": "string",
-                      "description": "Upper value."
-                    },
-                    "attached_to": {
-                      "type": "integer",
-                      "description": "The activity the beacon is attached to. Can be null."
-                    }
-                  },
-                  "required": [
-                    "beacon_pid",
-                    "uuid",
-                    "lower",
-                    "upper"
-                  ]
-                }
-              },
-              "required": [
-                "product_beacon"
-              ]
-            }
-          }
-        }
-      },
-      "BeaconUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product_beacon": {
-                  "type": "object",
-                  "properties": {
-                    "beacon_pid": {
-                      "type": "string",
-                      "description": "The manufacturer's id of the beacon"
-                    },
-                    "uuid": {
-                      "type": "string",
-                      "description": "The UUID of the beacon."
-                    },
-                    "lower": {
-                      "type": "string",
-                      "description": "Lower value."
-                    },
-                    "upper": {
-                      "type": "string",
-                      "description": "Upper value."
-                    },
-                    "attached_to": {
-                      "type": "integer",
-                      "description": "The activity the beacon is attached to. Can be null."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "product_beacon"
-              ]
-            }
-          }
-        }
-      },
-      "BadgeCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name for the badge. Translatable"
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the badge"
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "A short paragraph describing the badge. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the badge."
-                    },
-                    "issued_from": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Start time for when the badge is available to earn."
-                    },
-                    "issued_to": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "End time for when the badge is available to earn."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "description"
-                  ]
-                }
-              },
-              "required": [
-                "badge"
-              ]
-            }
-          }
-        }
-      },
-      "BadgeUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name for the badge. Translatable"
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the badge"
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "A short paragraph describing the badge. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the badge."
-                    },
-                    "issued_from": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Start time for when the badge is available to earn."
-                    },
-                    "issued_to": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "End time for when the badge is available to earn."
-                    }
-                  },
-                  "required": [
-<<<<<<< HEAD
-                    "name",
-                    "internal_name",
-                    "description"
-=======
-                    "beacon_pid",
-                    "uuid",
-                    "lower",
-                    "upper"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                  ]
-                }
-              },
-              "required": [
-                "badge"
-              ]
-            }
-          }
-        }
-      },
-      "BadgeActionCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
-              ]
-            }
-          }
-        }
-      },
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "AssignedRewardCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assign": {
-                  "type": "object",
-                  "properties": {
-                    "reward_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward it is being assigned to."
-                    },
-                    "assigned_type": {
-                      "type": "string",
-                      "description": "The model name that the reward belongs to."
-                    },
-                    "assigned_id": {
-                      "type": "integer",
-                      "description": "The id of the type that is being assigned. Example: If you want to assign the quest with an ID of 1, you would set the type to Quest and the id to 1."
-                    },
-                    "max_times": {
-                      "type": "integer",
-                      "default": 1,
-                      "description": "The maximum number of times the assigned item can be completed for credit."
-                    }
-                  },
-                  "required": [
-                    "reward_id",
-                    "assigned_type",
-                    "assigned_id"
-                  ]
-                }
-              },
-              "required": [
-                "assign"
-              ]
-            }
-          }
-        }
-      },
-      "AssignedRewardUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assign": {
-                  "type": "object",
-                  "properties": {
-                    "max_times": {
-                      "type": "integer",
-                      "default": 1,
-                      "description": "The maximum number of times the assigned item can be completed for credit."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "assign"
-              ]
-            }
-          }
-        }
-      },
-      "StepCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "type": "object",
-                  "properties": {
-                    "unlocks": {
-                      "type": "array",
-                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
-                    },
-                    "display": {
-                      "type": "string",
-                      "description": "Sets the display name for the step."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "step"
-              ]
-            }
-          }
-        }
-      },
-      "StepUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "type": "object",
-                  "properties": {
-                    "unlocks": {
-                      "type": "array",
-                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
-                    },
-                    "display": {
-                      "type": "string",
-                      "description": "Sets the display name for the step."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "step"
-              ]
-            }
-          }
-        }
-      },
-      "TypeBodyCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity_type": {
-                  "type": "object",
-                  "properties": {
-                    "atype": {
-                      "type": "string",
-                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
-                    },
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "This field is used as a display field for the end user."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "atype",
-                    "value"
-                  ]
-                }
-              },
-              "required": [
-                "activity_type"
-              ]
-            }
-          }
-        }
-      },
-      "TypeBodyUpdate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity_type": {
-                  "type": "object",
-                  "properties": {
-                    "atype": {
-                      "type": "string",
-                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
-                    },
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "This field is used as a display field for the end user."
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "activity_type"
-              ]
-            }
-          }
-        }
-      },
-      "ActionTypeCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name"
-                  ]
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
-      "ActionTypeUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
-      "QuestActivityCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  },
-                  "required": [
-                    "hint"
-                  ]
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "QuestActivityUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  },
-                  "required": [
-                    "reaction"
-                  ]
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the comment."
-                    }
-                  },
-                  "required": [
-                    "body"
-                  ]
-                },
-                "mentions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person_id": {
-                        "type": "integer",
-                        "description": "The id of the person mentioned."
-                      },
-                      "location": {
-                        "type": "integer",
-                        "description": "Where the mention text starts in the comment."
-                      },
-                      "length": {
-                        "type": "integer",
-                        "description": "The length of the mention text."
-                      }
-                    },
-                    "required": [
-                      "person_id",
-                      "location",
-                      "length"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "post_comment"
+                "message_report"
               ]
             }
           }
@@ -11602,6 +11267,51 @@
               },
               "required": [
                 "message"
+              ]
+            }
+          }
+        }
+      },
+      "NotificationDeviceIdsForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
+                }
+              },
+              "required": [
+                "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
               ]
             }
           }
@@ -11767,7 +11477,7 @@
           }
         }
       },
-      "QuestCreateForm": {
+      "PostCommentReportCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11775,152 +11485,31 @@
             "schema": {
               "type": "object",
               "properties": {
-                "quest": {
+                "post_comment_report": {
                   "type": "object",
                   "properties": {
-                    "event_id": {
+                    "post_comment_id": {
                       "type": "integer",
-                      "description": "The event a quest is attached to. Optional."
-                    },
-                    "name": {
-                      "type": "object",
-                      "description": "Name of the quest. Can be string or an object. Translatable."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Internal name of the quest."
-                    },
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the quest. Can be string or object. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the quest."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest starts."
-                    },
-                    "end_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest ends."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "description",
-                    "starts_at"
-                  ]
-                }
-              },
-              "required": [
-                "quest"
-              ]
-            }
-          }
-        }
-      },
-      "QuestUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest": {
-                  "type": "object",
-                  "properties": {
-                    "event_id": {
-                      "type": "integer",
-                      "description": "The event a quest is attached to. Optional."
-                    },
-                    "name": {
-                      "type": "object",
-                      "description": "Name of the quest. Can be string or an object. Translatable."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the quest."
-                    },
-                    "descriptio": {
-                      "type": "object",
-                      "description": "Description of the quest. Can be string or object. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the quest."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest starts."
-                    },
-                    "end_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest ends."
-                    }
-                  },
-                  "required": [
-                    "descriptio"
-                  ]
-                }
-              },
-              "required": [
-                "quest"
-              ]
-            }
-          }
-        }
-      },
-      "MessageReportCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_report": {
-                  "type": "object",
-                  "properties": {
-                    "message_id": {
-                      "type": "integer",
-                      "description": "The id of the message being reported."
+                      "description": "The id of the post comment being reported."
                     },
                     "reason": {
                       "type": "string",
-                      "description": "The reason given by the user for reporting the message."
+                      "description": "The reason given by the user for reporting the post comment."
                     }
                   },
                   "required": [
-                    "message_id"
+                    "post_comment_id"
                   ]
                 }
               },
               "required": [
-                "message_report"
+                "post_comment_report"
               ]
             }
           }
         }
       },
-      "MessageReportUpdateForm": {
+      "PostCommentReportUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11928,28 +11517,12 @@
             "schema": {
               "type": "object",
               "properties": {
-                "message_report": {
+                "post_comment_report": {
                   "type": "object",
                   "properties": {
-<<<<<<< HEAD
                     "status": {
-=======
-                    "event_id": {
-                      "type": "integer",
-                      "description": "The event a quest is attached to. Optional."
-                    },
-                    "name": {
                       "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
                     }
                   },
                   "required": [
@@ -11958,13 +11531,13 @@
                 }
               },
               "required": [
-                "message_report"
+                "post_comment_report"
               ]
             }
           }
         }
       },
-      "BlockCreate": {
+      "PostCommentCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11972,21 +11545,159 @@
             "schema": {
               "type": "object",
               "properties": {
-                "block": {
+                "post_comment": {
                   "type": "object",
                   "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the comment."
                     }
                   },
                   "required": [
-                    "blocked_id"
+                    "body"
+                  ]
+                },
+                "mentions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person_id": {
+                        "type": "integer",
+                        "description": "The id of the person mentioned."
+                      },
+                      "location": {
+                        "type": "integer",
+                        "description": "Where the mention text starts in the comment."
+                      },
+                      "length": {
+                        "type": "integer",
+                        "description": "The length of the mention text."
+                      }
+                    },
+                    "required": [
+                      "person_id",
+                      "location",
+                      "length"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "post_comment"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  },
+                  "required": [
+                    "reaction"
                   ]
                 }
               },
               "required": [
-                "block"
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+                    }
+                  },
+                  "required": [
+                    "post_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
               ]
             }
           }
@@ -12122,7 +11833,7 @@
           }
         }
       },
-      "QuestCompletionCreateForm": {
+      "BeaconCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -12130,27 +11841,46 @@
             "schema": {
               "type": "object",
               "properties": {
-                "quest_completion": {
+                "product_beacon": {
                   "type": "object",
                   "properties": {
-                    "activity_id": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
                       "type": "integer",
-                      "description": "The id of the activity completed."
+                      "description": "The activity the beacon is attached to. Can be null."
                     }
                   },
                   "required": [
-                    "activity_id"
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
                   ]
                 }
               },
               "required": [
-                "quest_completion"
+                "product_beacon"
               ]
             }
           }
         }
       },
-      "QuestCompletionUpdateForm": {
+      "BeaconUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -12158,21 +11888,106 @@
             "schema": {
               "type": "object",
               "properties": {
-                "quest_completion": {
+                "product_beacon": {
                   "type": "object",
                   "properties": {
-                    "activity_id": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
                       "type": "integer",
-                      "description": "The id of the activity completed."
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product_beacon"
+              ]
+            }
+          }
+        }
+      },
+      "ProductCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
                     }
                   },
                   "required": [
-                    "activity_id"
+                    "name",
+                    "internal_name"
                   ]
                 }
               },
               "required": [
-                "quest_completion"
+                "product"
+              ]
+            }
+          }
+        }
+      },
+      "ProductUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product"
               ]
             }
           }
@@ -12183,7 +11998,210 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
-      "TagArray": {
+      "QuestActivityObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestActivityArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activities": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completion": {
+                  "$ref": "#/components/schemas/QuestCompletionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "completion": {
+                        "$ref": "#/components/schemas/QuestCompletionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest": {
+                  "$ref": "#/components/schemas/QuestJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quests": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quest": {
+                        "$ref": "#/components/schemas/QuestJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActionTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "$ref": "#/components/schemas/ActionTypeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActionTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Action": {
+                        "$ref": "#/components/schemas/ActionTypeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActivityTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActivityTypeJson"
+            }
+          }
+        }
+      },
+      "ActivityTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "types": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityTypeJson"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPostsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -12197,6 +12215,44 @@
                     "properties": {
                       "post": {
                         "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "AssignedRewardObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assigned": {
+                  "$ref": "#/components/schemas/AssignedRewardJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AssignedRewardArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assignees": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "assigned": {
+                        "$ref": "#/components/schemas/AssignedRewardJson"
                       }
                     }
                   }
@@ -12244,6 +12300,257 @@
           }
         }
       },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge": {
+                  "$ref": "#/components/schemas/BadgeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StepObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Array": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "steps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "RelationshipsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -12276,105 +12583,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "$ref": "#/components/schemas/ProductJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "product": {
-                        "$ref": "#/components/schemas/ProductJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
                 }
               }
             }
@@ -12442,248 +12650,7 @@
           }
         }
       },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "categories": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "ProductBeaconObject": {
-=======
-      "BadgeActionsPending": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "beacon": {
-                  "$ref": "#/components/schemas/ProductBeaconJson"
-=======
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "ProductBeaconArray": {
-=======
-      "BadgesArray": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "beacons": {
-=======
-                "badges": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD
-                      "beacon": {
-                        "$ref": "#/components/schemas/ProductBeaconJson"
-=======
-                      "badge": {
-                        "$ref": "#/components/schemas/BadgeJson"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badges": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/BadgeJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "badge": {
-                  "$ref": "#/components/schemas/BadgeJson"
-=======
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "BadgeActionsPending": {
-=======
-      "CategoryArray": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-=======
-                "categories": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
-                      }
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPostsArray": {
+      "TagArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -12706,20 +12673,20 @@
           }
         }
       },
-      "EventsArray": {
+      "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "events": {
+                "levels": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
                       }
                     }
                   }
@@ -12729,116 +12696,20 @@
           }
         }
       },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "AssignedRewardObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assigned": {
-                  "$ref": "#/components/schemas/AssignedRewardJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "AssignedRewardArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assignees": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "assigned": {
-                        "$ref": "#/components/schemas/AssignedRewardJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "StepObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "$ref": "#/components/schemas/StepJson"
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "Array": {
-=======
       "MerchandiseArray": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-                "steps": {
-=======
                 "merchandise": {
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-                      "step": {
-                        "$ref": "#/components/schemas/StepJson"
-=======
                       "merchandise": {
                         "$ref": "#/components/schemas/MerchandiseJson"
->>>>>>> 3512ec2eadbcdbdbab9a5ff2990e4d312d06d023
                       }
                     }
                   }
@@ -12848,241 +12719,38 @@
           }
         }
       },
-      "ActivityTypeObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ActivityTypeJson"
-            }
-          }
-        }
-      },
-      "ActivityTypeArray": {
+      "MerchandiseObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "types": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ActivityTypeJson"
-                  }
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
                 }
               }
             }
           }
         }
       },
-      "ActionTypeObject": {
+      "MessageReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "action": {
-                  "$ref": "#/components/schemas/ActionTypeJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActionTypeArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "actions": {
+                "message_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "Action": {
-                        "$ref": "#/components/schemas/ActionTypeJson"
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity": {
-                  "$ref": "#/components/schemas/QuestActivityJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "activity": {
-                        "$ref": "#/components/schemas/QuestActivityJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsListArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentListJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
                 }
               }
             }
@@ -13180,35 +12848,20 @@
           }
         }
       },
-      "QuestObject": {
+      "PostCommentReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "quest": {
-                  "$ref": "#/components/schemas/QuestJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quests": {
+                "post_comment_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "quest": {
-                        "$ref": "#/components/schemas/QuestJson"
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
                       }
                     }
                   }
@@ -13218,20 +12871,20 @@
           }
         }
       },
-      "MessageReportsArray": {
+      "PostCommentsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "message_reports": {
+                "post_comments": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
                       }
                     }
                   }
@@ -13241,15 +12894,114 @@
           }
         }
       },
-      "BlocksObject": {
+      "PostCommentsListArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -13332,20 +13084,35 @@
           }
         }
       },
-      "RecommendedPeopleArray": {
+      "ProductBeaconObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "people": {
+                "beacon": {
+                  "$ref": "#/components/schemas/ProductBeaconJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacons": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
+                      "beacon": {
+                        "$ref": "#/components/schemas/ProductBeaconJson"
                       }
                     }
                   }
@@ -13355,58 +13122,35 @@
           }
         }
       },
-      "QuestCompletionObject": {
+      "ProductObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "completion": {
-                  "$ref": "#/components/schemas/QuestCompletionJson"
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
                 }
               }
             }
           }
         }
       },
-      "QuestCompletionArray": {
+      "ProductArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "completions": {
+                "products": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "completion": {
-                        "$ref": "#/components/schemas/QuestCompletionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
                       }
                     }
                   }

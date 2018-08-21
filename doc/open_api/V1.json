@@ -120,7 +120,7 @@
     "/badge_actions": {
       "post": {
         "summary": "POST create a badge action",
-        "operationId": "BadgeActions_create",
+        "operationId": "BadgeActionsCreate",
         "tags": [
           "BadgeActions"
         ],
@@ -196,7 +196,7 @@
     "/badges": {
       "get": {
         "summary": "Get badges",
-        "operationId": "Badges_index",
+        "operationId": "BadgesIndex",
         "tags": [
           "Badges"
         ],
@@ -269,7 +269,7 @@
       "post": {
         "description": "This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users.",
         "summary": "POST Block a person",
-        "operationId": "Blocks_create",
+        "operationId": "BlocksCreate",
         "tags": [
           "Blocks"
         ],
@@ -338,7 +338,7 @@
     "/blocks/{id}": {
       "delete": {
         "summary": "POST Unblock a person",
-        "operationId": "Blocks_destroy",
+        "operationId": "BlocksDestroy",
         "tags": [
           "Blocks"
         ],
@@ -381,7 +381,7 @@
     "/events": {
       "get": {
         "summary": "Get all events for a product",
-        "operationId": "Events_index",
+        "operationId": "EventsIndex",
         "tags": [
           "Events"
         ],
@@ -464,7 +464,7 @@
     "/events/{id}": {
       "get": {
         "summary": "Get a single event by id",
-        "operationId": "Events_show",
+        "operationId": "EventsShow",
         "tags": [
           "Events"
         ],
@@ -508,7 +508,7 @@
       "get": {
         "description": "This is used to get a list of someone's followers or followed. If followed_id parameter is supplied, it will get the follower's of that user. If follower_id is supplied, it will get the people that person is following. If nothing is supplied it will get the people the current user is following.",
         "summary": "Get followers or followings of a user.",
-        "operationId": "Followings_index",
+        "operationId": "FollowingsIndex",
         "tags": [
           "Followings"
         ],
@@ -588,7 +588,7 @@
       "post": {
         "description": "This is used to follow a person.",
         "summary": "Follow a person.",
-        "operationId": "Followings_create",
+        "operationId": "FollowingsCreate",
         "tags": [
           "Followings"
         ],
@@ -650,7 +650,7 @@
       "delete": {
         "description": "This is used to unfollow a person.",
         "summary": "Unfollow a person.",
-        "operationId": "Followings_destroy",
+        "operationId": "FollowingsDestroy",
         "tags": [
           "Followings"
         ],
@@ -694,7 +694,7 @@
       "get": {
         "description": "This gets a list of all levels available to be obtained.",
         "summary": "Get all available levels.",
-        "operationId": "Levels_index",
+        "operationId": "LevelsIndex",
         "tags": [
           "Levels"
         ],
@@ -758,7 +758,7 @@
       "get": {
         "description": " This gets a list of merchandise, in priority order.",
         "summary": "Get available merchandise.",
-        "operationId": "Merchandise_index",
+        "operationId": "MerchandiseIndex",
         "tags": [
           "Merchandise"
         ],
@@ -804,7 +804,7 @@
       "get": {
         "description": "This gets a single piece of merchandise for a merchandise id.",
         "summary": "Get a single piece of merchandise.",
-        "operationId": "Merchandise_show",
+        "operationId": "MerchandiseShow",
         "tags": [
           "Merchandise"
         ],
@@ -839,7 +839,7 @@
     "/message_reports": {
       "get": {
         "summary": "Get list of messages reports (ADMIN).",
-        "operationId": "MessageReports_index",
+        "operationId": "MessageReportsIndex",
         "tags": [
           "MessageReports"
         ],
@@ -912,7 +912,7 @@
       "patch": {
         "description": "This updates a message report. The only value that can be changed is the status.",
         "summary": "Update a Message Report. (Admin)",
-        "operationId": "MessageReports_update",
+        "operationId": "MessageReportsUpdate",
         "tags": [
           "MessageReports"
         ],
@@ -992,7 +992,7 @@
       "put": {
         "description": "This updates a message report. The only value that can be changed is the status.",
         "summary": "Update a Message Report. (Admin)",
-        "operationId": "MessageReports_update",
+        "operationId": "MessageReportsUpdate",
         "tags": [
           "MessageReports"
         ],
@@ -1074,7 +1074,7 @@
       "get": {
         "description": " This gets a list of messages without regard to room (with possible exception of room filter).",
         "summary": "Get a list of messages without regard to room (ADMIN ONLY).",
-        "operationId": "Messages_list",
+        "operationId": "MessagesList",
         "tags": [
           "Messages"
         ],
@@ -1183,7 +1183,7 @@
       "patch": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -1269,7 +1269,7 @@
       "put": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -1357,7 +1357,7 @@
       "post": {
         "description": "This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have any number of device ids.",
         "summary": "Add a new device id for a person.",
-        "operationId": "NotificationDeviceIds_create",
+        "operationId": "NotificationDeviceIdsCreate",
         "tags": [
           "NotificationDeviceIds"
         ],
@@ -1417,7 +1417,7 @@
       "delete": {
         "description": "This deletes a single device id. Can only be called by the owner.",
         "summary": "Delete a device id",
-        "operationId": "NotificationDeviceIds_destroy",
+        "operationId": "NotificationDeviceIdsDestroy",
         "tags": [
           "NotificationDeviceIds"
         ],
@@ -1461,7 +1461,7 @@
       "get": {
         "description": "This is used to get a list of people.",
         "summary": "Get a list of people.",
-        "operationId": "People_index",
+        "operationId": "PeopleIndex",
         "tags": [
           "People"
         ],
@@ -1501,7 +1501,7 @@
       "post": {
         "description": "This is used to create a new person.\\nIf the account creation is successful, they will be logged in and we will send an onboarding email (if we have an email address for them).",
         "summary": "Create person.",
-        "operationId": "People_create",
+        "operationId": "PeopleCreate",
         "tags": [
           "People"
         ],
@@ -1591,7 +1591,7 @@
       "post": {
         "description": "This is used to initiate a password reset. Product and email or username required. If email or username is not found, password reset will fail silently.",
         "summary": "Initiate a password reset.",
-        "operationId": "PasswordResets_create",
+        "operationId": "PasswordResetsCreate",
         "tags": [
           "PasswordResets"
         ],
@@ -1664,7 +1664,7 @@
       "get": {
         "description": "This is used to get a list of people flagged as \"recommended\". It excludes the current user and anyone the current user is following.",
         "summary": "Get recommended people.",
-        "operationId": "RecommendedPeople_index",
+        "operationId": "RecommendedPeopleIndex",
         "tags": [
           "RecommendedPeople"
         ],
@@ -1686,7 +1686,7 @@
       "get": {
         "description": "This is used to get a person.",
         "summary": "Get a person.",
-        "operationId": "People_show",
+        "operationId": "PeopleShow",
         "tags": [
           "People"
         ],
@@ -1717,7 +1717,7 @@
       "patch": {
         "description": "This is used to update a person. Anything not mentioned is left alone.",
         "summary": "Update person.",
-        "operationId": "People_update",
+        "operationId": "PeopleUpdate",
         "tags": [
           "People"
         ],
@@ -1807,7 +1807,7 @@
       "put": {
         "description": "This is used to update a person. Anything not mentioned is left alone.",
         "summary": "Update person.",
-        "operationId": "People_update",
+        "operationId": "PeopleUpdate",
         "tags": [
           "People"
         ],
@@ -1899,7 +1899,7 @@
       "patch": {
         "description": "This is used to change the logged in user's password.",
         "summary": "Change your password.",
-        "operationId": "People_change_password",
+        "operationId": "PeopleChangePassword",
         "tags": [
           "People"
         ],
@@ -1957,7 +1957,7 @@
       "get": {
         "description": "This gets a list of post comment reports with optional filter.",
         "summary": "Get list of post comment reports (ADMIN).",
-        "operationId": "PostCommentReports_index",
+        "operationId": "PostCommentReportsIndex",
         "tags": [
           "PostCommentReports"
         ],
@@ -2028,7 +2028,7 @@
       "post": {
         "description": "This reports a post comment.",
         "summary": "Report a post comment.",
-        "operationId": "PostCommentReports_create",
+        "operationId": "PostCommentReportsCreate",
         "tags": [
           "PostCommentReports"
         ],
@@ -2102,7 +2102,7 @@
       "patch": {
         "description": "This updates a post comment report. The only value that can be changed is the status.",
         "summary": "Update a Post Comment Report (Admin)",
-        "operationId": "PostCommentReports_update",
+        "operationId": "PostCommentReportsUpdate",
         "tags": [
           "PostCommentReports"
         ],
@@ -2182,7 +2182,7 @@
       "put": {
         "description": "This updates a post comment report. The only value that can be changed is the status.",
         "summary": "Update a Post Comment Report (Admin)",
-        "operationId": "PostCommentReports_update",
+        "operationId": "PostCommentReportsUpdate",
         "tags": [
           "PostCommentReports"
         ],
@@ -2264,7 +2264,7 @@
       "get": {
         "description": "This gets a list of post comments with optional filters and pagination.",
         "summary": "Get a list of post comments (ADMIN).",
-        "operationId": "PostComments_list",
+        "operationId": "PostCommentsList",
         "tags": [
           "PostComments"
         ],
@@ -2346,7 +2346,7 @@
       "get": {
         "description": "This gets a list of post reports with optional filter.",
         "summary": "Get list of post reports (ADMIN).",
-        "operationId": "PostReports_index",
+        "operationId": "PostReportsIndex",
         "tags": [
           "PostReports"
         ],
@@ -2417,7 +2417,7 @@
       "post": {
         "description": "This reports a post that was posted to a feed.",
         "summary": "Report a post.",
-        "operationId": "PostReports_create",
+        "operationId": "PostReportsCreate",
         "tags": [
           "PostReports"
         ],
@@ -2491,7 +2491,7 @@
       "patch": {
         "description": "This updates a post report. The only value that can be changed is the status.",
         "summary": "Update a Post Report.",
-        "operationId": "PostReports_update",
+        "operationId": "PostReportsUpdate",
         "tags": [
           "PostReports"
         ],
@@ -2571,7 +2571,7 @@
       "put": {
         "description": "This updates a post report. The only value that can be changed is the status.",
         "summary": "Update a Post Report.",
-        "operationId": "PostReports_update",
+        "operationId": "PostReportsUpdate",
         "tags": [
           "PostReports"
         ],
@@ -2653,7 +2653,7 @@
       "get": {
         "description": "  This gets a list of posts for a from date, to date, with an optional limit and person. Posts are returned newest first, and the limit is applied to that ordering.\n    Posts included are posts from the passed in person or, if none, the current\n    user along with those of the users the current user is following.",
         "summary": "Get posts for a date range.",
-        "operationId": "Posts_index",
+        "operationId": "PostsIndex",
         "tags": [
           "Posts"
         ],
@@ -2744,7 +2744,7 @@
       "post": {
         "description": "This creates a post and puts in on the feed of the author's followers. It also sends a push notification to poster's followers if the notify_followers flag is set to true.",
         "summary": "Create a post.",
-        "operationId": "Posts_create",
+        "operationId": "PostsCreate",
         "tags": [
           "Posts"
         ],
@@ -2851,7 +2851,7 @@
       "get": {
         "description": "This gets a list of posts with optional filters and pagination.",
         "summary": "Get a list of posts (ADMIN ONLY).",
-        "operationId": "Posts_list",
+        "operationId": "PostsList",
         "tags": [
           "Posts"
         ],
@@ -2978,7 +2978,7 @@
       "get": {
         "description": "This is used to get a list of published posts flagged as \"recommended\".",
         "summary": "Get recommended posts.",
-        "operationId": "RecommendedPosts_index",
+        "operationId": "RecommendedPostsIndex",
         "tags": [
           "RecommendedPosts"
         ],
@@ -3042,7 +3042,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single post.",
-        "operationId": "Posts_show",
+        "operationId": "PostsShow",
         "tags": [
           "Posts"
         ],
@@ -3091,7 +3091,7 @@
       "patch": {
         "description": "This updates a post.",
         "summary": "Update a post",
-        "operationId": "Posts_update",
+        "operationId": "PostsUpdate",
         "tags": [
           "Posts"
         ],
@@ -3208,7 +3208,7 @@
       "put": {
         "description": "This updates a post.",
         "summary": "Update a post",
-        "operationId": "Posts_update",
+        "operationId": "PostsUpdate",
         "tags": [
           "Posts"
         ],
@@ -3325,7 +3325,7 @@
       "delete": {
         "description": "This deletes a single post by marking as deleted. Can only be called by the creator.",
         "summary": "Delete (hide) a single post.",
-        "operationId": "Posts_destroy",
+        "operationId": "PostsDestroy",
         "tags": [
           "Posts"
         ],
@@ -3376,7 +3376,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single, shareable post.",
-        "operationId": "Posts_share",
+        "operationId": "PostsShare",
         "tags": [
           "Posts"
         ],
@@ -3417,7 +3417,7 @@
       "get": {
         "description": "This gets all the non-hidden comments on a post with pagination.",
         "summary": "Get the comments on a post.",
-        "operationId": "PostComments_index",
+        "operationId": "PostCommentsIndex",
         "tags": [
           "PostComments"
         ],
@@ -3488,7 +3488,7 @@
       "post": {
         "description": "This creates a post comment. It is automatically attributed to the logged in user.",
         "summary": "Create a comment on a post.",
-        "operationId": "PostComments_create",
+        "operationId": "PostCommentsCreate",
         "tags": [
           "PostComments"
         ],
@@ -3592,7 +3592,7 @@
       "delete": {
         "description": "This deletes a comment on a post. Can be performed by admin or creator of comment.",
         "summary": "Delete a comment on a post.",
-        "operationId": "PostComments_destroy",
+        "operationId": "PostCommentsDestroy",
         "tags": [
           "PostComments"
         ],
@@ -3652,7 +3652,7 @@
       "post": {
         "description": "This reacts to a post.",
         "summary": "React to a post.",
-        "operationId": "PostReactions_create",
+        "operationId": "PostReactionsCreate",
         "tags": [
           "PostReactions"
         ],
@@ -3731,7 +3731,7 @@
       "patch": {
         "description": "This updates a reaction on a post.",
         "summary": "Update a reaction to a post.",
-        "operationId": "PostReactions_update",
+        "operationId": "PostReactionsUpdate",
         "tags": [
           "PostReactions"
         ],
@@ -3820,7 +3820,7 @@
       "put": {
         "description": "This updates a reaction on a post.",
         "summary": "Update a reaction to a post.",
-        "operationId": "PostReactions_update",
+        "operationId": "PostReactionsUpdate",
         "tags": [
           "PostReactions"
         ],
@@ -3909,7 +3909,7 @@
       "delete": {
         "description": "This deletes a reaction to a post.",
         "summary": "Delete a reaction to a post.",
-        "operationId": "PostReactions_destroy",
+        "operationId": "PostReactionsDestroy",
         "tags": [
           "PostReactions"
         ],
@@ -3969,7 +3969,7 @@
       "get": {
         "description": "This is used to get a list of someone's friends. If the person supplied is the logged in user, \"requested\" status is included for requests TO the current user. Otherwise, only \"friended\" status is included.",
         "summary": "Get current relationships of a person.",
-        "operationId": "Relationships_index",
+        "operationId": "RelationshipsIndex",
         "tags": [
           "Relationships"
         ],
@@ -4040,7 +4040,7 @@
       "post": {
         "description": "This is used to send a friend request to a person. If there is a block between the people, an error will be returned.",
         "summary": "Send a friend request to a person.",
-        "operationId": "Relationships_create",
+        "operationId": "RelationshipsCreate",
         "tags": [
           "Relationships"
         ],
@@ -4110,7 +4110,7 @@
       "get": {
         "description": "This gets a single relationship for a relationship id. Only available to a participating user.",
         "summary": "Get a single relationship.",
-        "operationId": "Relationships_show",
+        "operationId": "RelationshipsShow",
         "tags": [
           "Relationships"
         ],
@@ -4159,7 +4159,7 @@
       "patch": {
         "description": "This is used to accept, deny or unfriend a relationship (friend request).",
         "summary": "Update a relationship.",
-        "operationId": "Relationships_update",
+        "operationId": "RelationshipsUpdate",
         "tags": [
           "Relationships"
         ],
@@ -4239,7 +4239,7 @@
       "put": {
         "description": "This is used to accept, deny or unfriend a relationship (friend request).",
         "summary": "Update a relationship.",
-        "operationId": "Relationships_update",
+        "operationId": "RelationshipsUpdate",
         "tags": [
           "Relationships"
         ],
@@ -4319,7 +4319,7 @@
       "delete": {
         "description": "This is used to unfriend a person.",
         "summary": "Unfriend a person.",
-        "operationId": "Relationships_destroy",
+        "operationId": "RelationshipsDestroy",
         "tags": [
           "Relationships"
         ],
@@ -4370,7 +4370,7 @@
       "get": {
         "description": "This gets a list of active rooms (public or private, as specified by the \"private\" parameter).",
         "summary": "Get a list of rooms.",
-        "operationId": "Rooms_index",
+        "operationId": "RoomsIndex",
         "tags": [
           "Rooms"
         ],
@@ -4441,7 +4441,7 @@
       "post": {
         "description": "The creates a private room and makes it active.",
         "summary": "Create a private room.",
-        "operationId": "Rooms_create",
+        "operationId": "RoomsCreate",
         "tags": [
           "Rooms"
         ],
@@ -4532,7 +4532,7 @@
       "patch": {
         "description": "The updates a private room. Only the name can by updated, and only by the owner.",
         "summary": "Update a private room (name).",
-        "operationId": "Rooms_update",
+        "operationId": "RoomsUpdate",
         "tags": [
           "Rooms"
         ],
@@ -4617,7 +4617,7 @@
       "put": {
         "description": "The updates a private room. Only the name can by updated, and only by the owner.",
         "summary": "Update a private room (name).",
-        "operationId": "Rooms_update",
+        "operationId": "RoomsUpdate",
         "tags": [
           "Rooms"
         ],
@@ -4702,7 +4702,7 @@
       "delete": {
         "description": "The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the status to deleted.",
         "summary": "Delete a private room.",
-        "operationId": "Rooms_destroy",
+        "operationId": "RoomsDestroy",
         "tags": [
           "Rooms"
         ],
@@ -4753,7 +4753,7 @@
       "post": {
         "description": "This reports a message that was posted to a public room.",
         "summary": "Report a message in a public room.",
-        "operationId": "MessageReports_create",
+        "operationId": "MessageReportsCreate",
         "tags": [
           "MessageReports"
         ],
@@ -4836,7 +4836,7 @@
       "get": {
         "description": "This gets a list of message for a from date, to date, with an optional limit. Messages are returned newest first, and the limit is applied to that ordering.",
         "summary": "Get messages.",
-        "operationId": "Messages_index",
+        "operationId": "MessagesIndex",
         "tags": [
           "Messages"
         ],
@@ -4936,7 +4936,7 @@
       "post": {
         "description": "This creates a message in a room and posts it to Firebase as appropriate.",
         "summary": "Create a message in a room.",
-        "operationId": "Messages_create",
+        "operationId": "MessagesCreate",
         "tags": [
           "Messages"
         ],
@@ -5042,7 +5042,7 @@
       "get": {
         "description": "This gets a single message for a message id. Only works for messages in private rooms. If the message author has been blocked by the current user, this will return 404 Not Found.",
         "summary": "Get a single message.",
-        "operationId": "Messages_show",
+        "operationId": "MessagesShow",
         "tags": [
           "Messages"
         ],
@@ -5100,7 +5100,7 @@
       "patch": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -5186,7 +5186,7 @@
       "put": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -5272,7 +5272,7 @@
       "delete": {
         "description": "This deletes a single message by marking as hidden. Can only be called by the creator.",
         "summary": "Delete (hide) a single message.",
-        "operationId": "Messages_destroy",
+        "operationId": "MessagesDestroy",
         "tags": [
           "Messages"
         ],
@@ -5332,7 +5332,7 @@
       "post": {
         "description": "This adds a person to a private room. On success (person added), just returns 200.",
         "summary": "Add a room member.",
-        "operationId": "RoomMemberships_create",
+        "operationId": "RoomMembershipsCreate",
         "tags": [
           "RoomMemberships"
         ],
@@ -5411,7 +5411,7 @@
       "get": {
         "description": "This is used to see if your current session is valid. We return the currently logged-in person if the session is still good and a 404 otherwise.",
         "summary": "Check a session.",
-        "operationId": "Session_index",
+        "operationId": "SessionIndex",
         "tags": [
           "Session"
         ],
@@ -5424,7 +5424,7 @@
       "post": {
         "description": "This is used to log someone in.",
         "summary": "Log someone in.",
-        "operationId": "Session_create",
+        "operationId": "SessionCreate",
         "tags": [
           "Session"
         ],
@@ -5477,7 +5477,7 @@
       "delete": {
         "description": "This is used to log someone out.",
         "summary": "Log someone out.",
-        "operationId": "Session_destroy",
+        "operationId": "SessionDestroy",
         "tags": [
           "Session"
         ],
@@ -6443,35 +6443,20 @@
           }
         }
       },
-      "RoomsObject": {
+      "RecommendedPostsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
+                "posts": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/Room"
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
                       }
                     }
                   }
@@ -6481,7 +6466,7 @@
           }
         }
       },
-      "PeopleArray": {
+      "RecommendedPeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -6495,150 +6480,6 @@
                     "properties": {
                       "person": {
                         "$ref": "#/components/schemas/Person"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PersonPrivateObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivate"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReport"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReaction"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReaction"
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReport"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReport"
                       }
                     }
                   }
@@ -6724,20 +6565,35 @@
           }
         }
       },
-      "BadgesArray": {
+      "PostReportsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "badges": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReport"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/Badge"
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReport"
                       }
                     }
                   }
@@ -6747,23 +6603,91 @@
           }
         }
       },
-      "LevelsArray": {
+      "PostReactionsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "levels": {
+                "post_reactions": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/Level"
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReaction"
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReaction"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
                 }
               }
             }
@@ -6801,58 +6725,20 @@
           }
         }
       },
-      "MerchandiseArray": {
+      "PostCommentReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "merchandise": {
+                "post_comment_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/Merchandise"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/Merchandise"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReport"
                       }
                     }
                   }
@@ -6923,20 +6809,35 @@
           }
         }
       },
-      "FollowingsArray": {
+      "RoomsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "followings": {
+                "room": {
+                  "$ref": "#/components/schemas/Room"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/Following"
+                      "room": {
+                        "$ref": "#/components/schemas/Room"
                       }
                     }
                   }
@@ -6946,119 +6847,35 @@
           }
         }
       },
-      "FollowersArray": {
+      "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "followers": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/Following"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/Message"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/Message"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/Post"
+                      "badge": {
+                        "$ref": "#/components/schemas/Badge"
                       }
                     }
                   }
@@ -7121,35 +6938,20 @@
           }
         }
       },
-      "SessionObject": {
+      "FollowingsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badges": {
+                "followings": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/Badge"
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
                       }
                     }
                   }
@@ -7159,15 +6961,160 @@
           }
         }
       },
-      "BlocksObject": {
+      "FollowersArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/Block"
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+                      }
+                    }
+                  }
                 }
               }
             }
