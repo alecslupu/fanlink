@@ -1,7 +1,7 @@
-describe "People (v1)" do
+describe "People (v3)" do
 
   before(:all) do
-    @product = Product.first || create(:product)
+    @product = Product.first || create(:product, age_requirement: 18)
     @prod_name = @product.internal_name
     @person = create(:person, product: @product)
   end
@@ -57,7 +57,7 @@ describe "People (v1)" do
       expect(person.reload.valid_password?(current)).to be_truthy
     end
   end
-  describe "#create" do
+  describe "#create_success" do
     it "should sign up new user with email, username, and password, profile fields and send onboarding email" do
       expect_any_instance_of(Person).to receive(:do_auto_follows)
       username = "newuser#{Time.now.to_i}"
@@ -115,6 +115,8 @@ describe "People (v1)" do
                         to_values: { name: p.name })
       ).to be_nil
     end
+  end
+  describe "#create_failure" do
     it "should not sign up new user if there is a problem with FB" do
       tok = "1234"
       username = "newuser#{Time.now.to_i}"
@@ -221,6 +223,26 @@ describe "People (v1)" do
       }.to change { Person.count }.by(0)
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("A user has already signed up with that email address.")
+    end
+    it "should not sign up new user without a birthdate" do
+      expect {
+        post "/people", params:
+          { product: @product.internal_name,
+            person: { username: username, email: email, password: "secret", gender: "male",
+                      city: "Shambala", country_code: "us" } }
+      }.to change { Person.count }.by(0)
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Birthdate is required.")
+    end
+    it "should not allow sign up if birthdate doesn't meet the age requirement" do
+      expect {
+        post "/people", params:
+          { product: @product.internal_name,
+            person: { username: username, email: email, password: "secret", gender: "male",
+                      city: "Shambala", country_code: "us", birthdate: "2017-01-01" } }
+      }.to change { Person.count }.by(0)
+      expect(response).to be_unprocessable
+      expect(json["errors"]).to include("Age requirement is not met. You must be 18 years or older to use this app.")
     end
   end
 
@@ -370,7 +392,7 @@ describe "People (v1)" do
     end
   end
 
-  describe "#update" do
+  describe "#update_success" do
     it "should update a person" do
       person = create(:person)
       login_as(person)
@@ -389,17 +411,6 @@ describe "People (v1)" do
       expect(per.city).to eq("FooismTown")
       expect(per.country_code).to eq("FR")
     end
-    it "should not update a different person by normal person" do
-      person = create(:person)
-      other = create(:person, product: person.product)
-      original_username = other.username
-      login_as(person)
-      new_username = "thisbetterbeunique"
-      patch "/people/#{other.id}", params: { person: { username: new_username } }
-      expect(response).to be_not_found
-      oth = other.reload
-      expect(oth.username).to eq(original_username)
-    end
     it "should update recommended by admin" do
       person = create(:person, product: @product, role: :admin)
       rec_person = create(:person, product: @product)
@@ -417,6 +428,19 @@ describe "People (v1)" do
       patch "/people/#{rec_person.id}", params: { person: { recommended: true } }
       expect(response).to be_success
       expect(rec_person.reload.recommended).to be_truthy
+    end
+  end
+  describe "#update_failure" do
+    it "should not update a different person by normal person" do
+      person = create(:person)
+      other = create(:person, product: person.product)
+      original_username = other.username
+      login_as(person)
+      new_username = "thisbetterbeunique"
+      patch "/people/#{other.id}", params: { person: { username: new_username } }
+      expect(response).to be_not_found
+      oth = other.reload
+      expect(oth.username).to eq(original_username)
     end
   end
 

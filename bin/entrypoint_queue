@@ -2,6 +2,7 @@
 # bin/entrypoint_queue
 
 echo "Running start up script..."
+sleep 15 # Allows docker to fully load the volume mount before running.
 
 echo "Checking installed gems..."
 /usr/src/app/bin/bundle check || /usr/src/app/bin/bundle install
