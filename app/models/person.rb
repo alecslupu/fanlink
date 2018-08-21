@@ -180,8 +180,7 @@ class Person < ApplicationRecord
     end
 
     def validate_age
-      Rails.logger.info(((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000))
-      if ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
+      if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
         errors.add(:age_requirement, "is not met. You must be #{product.age_requirement} years or older to use this app.")
       end
     end
