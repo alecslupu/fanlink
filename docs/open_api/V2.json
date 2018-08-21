@@ -136,7 +136,7 @@
       "get": {
         "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
         "summary": "Get Activity types",
-        "operationId": "ActivityTypes_index",
+        "operationId": "ActivityTypesIndex",
         "tags": [
           "ActivityTypes"
         ],
@@ -167,7 +167,7 @@
       "post": {
         "description": "Creates an activity type to be used with the quest activity.",
         "summary": "Create Type for Activity",
-        "operationId": "ActivityTypes_create",
+        "operationId": "ActivityTypesCreate",
         "tags": [
           "ActivityTypes"
         ],
@@ -203,7 +203,7 @@
       "get": {
         "description": "Returns the quest activity associated with the id.",
         "summary": "Find a quest activity",
-        "operationId": "QuestActivities_show",
+        "operationId": "QuestActivitiesShow",
         "tags": [
           "QuestActivities"
         ],
@@ -223,7 +223,7 @@
       "patch": {
         "description": "Updates a quest activity associated with the id.",
         "summary": "Update a quest activity",
-        "operationId": "QuestActivities_update",
+        "operationId": "QuestActivitiesUpdate",
         "tags": [
           "QuestActivities"
         ],
@@ -246,7 +246,7 @@
       "put": {
         "description": "Updates a quest activity associated with the id.",
         "summary": "Update a quest activity",
-        "operationId": "QuestActivities_update",
+        "operationId": "QuestActivitiesUpdate",
         "tags": [
           "QuestActivities"
         ],
@@ -269,7 +269,7 @@
       "delete": {
         "description": "Soft deletes a quest activity.",
         "summary": "Delete a quest activity.",
-        "operationId": "QuestActivities_destroy",
+        "operationId": "QuestActivitiesDestroy",
         "tags": [
           "QuestActivities"
         ],
@@ -291,7 +291,7 @@
       "get": {
         "description": "Get the activity types belonging to the activity. Returns them ordered by created at descending.",
         "summary": "Get Activity types",
-        "operationId": "ActivityTypes_index",
+        "operationId": "ActivityTypesIndex",
         "tags": [
           "ActivityTypes"
         ],
@@ -324,7 +324,7 @@
       "get": {
         "description": "Gets activity type by ID",
         "summary": "Get an activity type",
-        "operationId": "ActivityTypes_show",
+        "operationId": "ActivityTypesShow",
         "tags": [
           "ActivityTypes"
         ],
@@ -344,7 +344,7 @@
       "patch": {
         "description": "Updates an activity type",
         "summary": "Update a type",
-        "operationId": "ActivityTypes_update",
+        "operationId": "ActivityTypesUpdate",
         "tags": [
           "ActivityTypes"
         ],
@@ -367,7 +367,7 @@
       "put": {
         "description": "Updates an activity type",
         "summary": "Update a type",
-        "operationId": "ActivityTypes_update",
+        "operationId": "ActivityTypesUpdate",
         "tags": [
           "ActivityTypes"
         ],
@@ -390,7 +390,7 @@
       "delete": {
         "description": "Deletes the activity type for given ID, removing it from the Quest Activities.",
         "summary": "Delete a type from an activity",
-        "operationId": "ActivityTypes_destroy",
+        "operationId": "ActivityTypesDestroy",
         "tags": [
           "ActivityTypes"
         ],
@@ -411,7 +411,7 @@
     "/badge_actions": {
       "post": {
         "summary": "POST create a badge action",
-        "operationId": "BadgeActions_create",
+        "operationId": "BadgeActionsCreate",
         "tags": [
           "BadgeActions"
         ],
@@ -458,7 +458,7 @@
     "/badges": {
       "get": {
         "summary": "Get badges",
-        "operationId": "Badges_index",
+        "operationId": "BadgesIndex",
         "tags": [
           "Badges"
         ],
@@ -531,7 +531,7 @@
       "get": {
         "description": "Get beacons for a product.",
         "summary": "Get Product Beacons",
-        "operationId": "ProductBeacons_index",
+        "operationId": "ProductBeaconsIndex",
         "tags": [
           "ProductBeacons"
         ],
@@ -544,7 +544,7 @@
       "post": {
         "description": "Add a beacon to the current user's product.",
         "summary": "Create a beacon",
-        "operationId": "ProductBeacons_create",
+        "operationId": "ProductBeaconsCreate",
         "tags": [
           "ProductBeacons"
         ],
@@ -562,7 +562,7 @@
       "get": {
         "description": "This returns all beacons, regardless of deleted status.",
         "summary": "Get all beacons",
-        "operationId": "ProductBeacons_list",
+        "operationId": "ProductBeaconsList",
         "tags": [
           "ProductBeacons"
         ],
@@ -577,7 +577,7 @@
       "get": {
         "description": "Get beacons for a product.",
         "summary": "Get Product Beacons",
-        "operationId": "ProductBeacons_index",
+        "operationId": "ProductBeaconsIndex",
         "tags": [
           "ProductBeacons"
         ],
@@ -592,7 +592,7 @@
       "get": {
         "description": "Returns the product beacon for the passed in ID.",
         "summary": "Get Product Beacon",
-        "operationId": "ProductBeacons_show",
+        "operationId": "ProductBeaconsShow",
         "tags": [
           "ProductBeacons"
         ],
@@ -605,7 +605,7 @@
       "patch": {
         "description": "Updates a product beacon.",
         "summary": "Update a beacon",
-        "operationId": "ProductBeacons_update",
+        "operationId": "ProductBeaconsUpdate",
         "tags": [
           "ProductBeacons"
         ],
@@ -621,7 +621,7 @@
       "put": {
         "description": "Updates a product beacon.",
         "summary": "Update a beacon",
-        "operationId": "ProductBeacons_update",
+        "operationId": "ProductBeaconsUpdate",
         "tags": [
           "ProductBeacons"
         ],
@@ -637,7 +637,7 @@
       "delete": {
         "description": "Soft deletes a product beacon",
         "summary": "Destroy Product Beacon",
-        "operationId": "ProductBeacons_destroy",
+        "operationId": "ProductBeaconsDestroy",
         "tags": [
           "ProductBeacons"
         ],
@@ -652,7 +652,7 @@
       "post": {
         "description": "This is used to block a person. When a person is blocked, any followings and relationships are immediately removed between the users.",
         "summary": "POST Block a person",
-        "operationId": "Blocks_create",
+        "operationId": "BlocksCreate",
         "tags": [
           "Blocks"
         ],
@@ -696,7 +696,7 @@
     "/blocks/{id}": {
       "delete": {
         "summary": "POST Unblock a person",
-        "operationId": "Blocks_destroy",
+        "operationId": "BlocksDestroy",
         "tags": [
           "Blocks"
         ],
@@ -740,7 +740,7 @@
       "get": {
         "description": "Returns categories for product based on current users role.",
         "summary": "Get Categories for Product",
-        "operationId": "Categories_index",
+        "operationId": "CategoriesIndex",
         "tags": [
           "Categories"
         ],
@@ -811,7 +811,7 @@
       "post": {
         "description": "Creates a category for current user's associated product.",
         "summary": "Create a category",
-        "operationId": "Categories_create",
+        "operationId": "CategoriesCreate",
         "tags": [
           "Categories"
         ],
@@ -856,7 +856,7 @@
       "get": {
         "description": "Gets a category by ID.",
         "summary": "Get a category",
-        "operationId": "Categories_show",
+        "operationId": "CategoriesShow",
         "tags": [
           "Categories"
         ],
@@ -905,7 +905,7 @@
       "patch": {
         "description": "Updates a category with the passed in ID.",
         "summary": "Update a category",
-        "operationId": "Categories_update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -960,7 +960,7 @@
       "put": {
         "description": "Updates a category with the passed in ID.",
         "summary": "Update a category",
-        "operationId": "Categories_update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -1017,7 +1017,7 @@
       "get": {
         "description": "Returns all quest completions for the currently logged in user.",
         "summary": "Get all activity completions for the current user.",
-        "operationId": "QuestCompletions_index",
+        "operationId": "QuestCompletionsIndex",
         "tags": [
           "QuestCompletions"
         ],
@@ -1039,7 +1039,7 @@
       "get": {
         "description": "Returns the quest completion for the provided id.",
         "summary": "Find a quest completion",
-        "operationId": "QuestCompletions_show",
+        "operationId": "QuestCompletionsShow",
         "tags": [
           "QuestCompletions"
         ],
@@ -1059,7 +1059,7 @@
       "patch": {
         "description": "Updates a completion.",
         "summary": "Update a quest completion",
-        "operationId": "QuestCompletions_update",
+        "operationId": "QuestCompletionsUpdate",
         "tags": [
           "QuestCompletions"
         ],
@@ -1082,7 +1082,7 @@
       "put": {
         "description": "Updates a completion.",
         "summary": "Update a quest completion",
-        "operationId": "QuestCompletions_update",
+        "operationId": "QuestCompletionsUpdate",
         "tags": [
           "QuestCompletions"
         ],
@@ -1106,7 +1106,7 @@
     "/events": {
       "get": {
         "summary": "Get all events for a product",
-        "operationId": "Events_index",
+        "operationId": "EventsIndex",
         "tags": [
           "Events"
         ],
@@ -1181,7 +1181,7 @@
       "post": {
         "description": "Creates an event for current user's product",
         "summary": "Create an event",
-        "operationId": "Events_create",
+        "operationId": "EventsCreate",
         "tags": [
           "Events"
         ],
@@ -1225,7 +1225,7 @@
     "/events/{id}": {
       "get": {
         "summary": "Get a single event by id",
-        "operationId": "Events_show",
+        "operationId": "EventsShow",
         "tags": [
           "Events"
         ],
@@ -1267,7 +1267,7 @@
       "patch": {
         "description": "Updates the event for given ID.",
         "summary": "Update an event.",
-        "operationId": "Events_update",
+        "operationId": "EventsUpdate",
         "tags": [
           "Events"
         ],
@@ -1322,7 +1322,7 @@
       "put": {
         "description": "Updates the event for given ID.",
         "summary": "Update an event.",
-        "operationId": "Events_update",
+        "operationId": "EventsUpdate",
         "tags": [
           "Events"
         ],
@@ -1377,7 +1377,7 @@
       "delete": {
         "description": "Soft deletes an event by setting deleted to true.",
         "summary": "Delete an event.",
-        "operationId": "Events_destroy",
+        "operationId": "EventsDestroy",
         "tags": [
           "Events"
         ],
@@ -1428,7 +1428,7 @@
       "get": {
         "description": "This is used to get a list of someone's followers or followed. If followed_id parameter is supplied, it will get the follower's of that user. If follower_id is supplied, it will get the people that person is following. If nothing is supplied it will get the people the current user is following.",
         "summary": "Get followers or followings of a user.",
-        "operationId": "Followings_index",
+        "operationId": "FollowingsIndex",
         "tags": [
           "Followings"
         ],
@@ -1508,7 +1508,7 @@
       "post": {
         "description": "This is used to follow a person.",
         "summary": "Follow a person.",
-        "operationId": "Followings_create",
+        "operationId": "FollowingsCreate",
         "tags": [
           "Followings"
         ],
@@ -1553,7 +1553,7 @@
       "delete": {
         "description": "This is used to unfollow a person.",
         "summary": "Unfollow a person.",
-        "operationId": "Followings_destroy",
+        "operationId": "FollowingsDestroy",
         "tags": [
           "Followings"
         ],
@@ -1597,7 +1597,7 @@
       "get": {
         "description": "This gets a list of all levels available to be obtained.",
         "summary": "Get all available levels.",
-        "operationId": "Levels_index",
+        "operationId": "LevelsIndex",
         "tags": [
           "Levels"
         ],
@@ -1661,7 +1661,7 @@
       "get": {
         "description": "This gets a list of merchandise, in priority order.",
         "summary": "Get available merchandise.",
-        "operationId": "Merchandise_index",
+        "operationId": "MerchandiseIndex",
         "tags": [
           "Merchandise"
         ],
@@ -1705,7 +1705,7 @@
       "post": {
         "description": "Create a merchandise item for the user's current product",
         "summary": "Create a merchandise item",
-        "operationId": "Merchandise_create",
+        "operationId": "MerchandiseCreate",
         "tags": [
           "Merchandise"
         ],
@@ -1730,7 +1730,7 @@
       "get": {
         "description": "This gets a single piece of merchandise for a merchandise id.",
         "summary": "Get a single piece of merchandise.",
-        "operationId": "Merchandise_show",
+        "operationId": "MerchandiseShow",
         "tags": [
           "Merchandise"
         ],
@@ -1764,7 +1764,7 @@
       "delete": {
         "description": "Soft deletes a merchandise item.",
         "summary": "Delete a merchandise item.",
-        "operationId": "Merchandise_destroy",
+        "operationId": "MerchandiseDestroy",
         "tags": [
           "Merchandise"
         ],
@@ -1785,7 +1785,7 @@
     "/message_reports": {
       "get": {
         "summary": "Get list of messages reports (ADMIN).",
-        "operationId": "MessageReports_index",
+        "operationId": "MessageReportsIndex",
         "tags": [
           "MessageReports"
         ],
@@ -1858,7 +1858,7 @@
       "patch": {
         "description": "This updates a message report. The only value that can be changed is the status.",
         "summary": "Update a Message Report. (Admin)",
-        "operationId": "MessageReports_update",
+        "operationId": "MessageReportsUpdate",
         "tags": [
           "MessageReports"
         ],
@@ -1913,7 +1913,7 @@
       "put": {
         "description": "This updates a message report. The only value that can be changed is the status.",
         "summary": "Update a Message Report. (Admin)",
-        "operationId": "MessageReports_update",
+        "operationId": "MessageReportsUpdate",
         "tags": [
           "MessageReports"
         ],
@@ -1970,7 +1970,7 @@
       "get": {
         "description": " This gets a list of messages without regard to room (with possible exception of room filter).",
         "summary": "Get a list of messages without regard to room (ADMIN ONLY).",
-        "operationId": "Messages_list",
+        "operationId": "MessagesList",
         "tags": [
           "Messages"
         ],
@@ -2079,7 +2079,7 @@
       "patch": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -2143,7 +2143,7 @@
       "put": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -2209,7 +2209,7 @@
       "post": {
         "description": "This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have any number of device ids.",
         "summary": "Add a new device id for a person.",
-        "operationId": "NotificationDeviceIds_create",
+        "operationId": "NotificationDeviceIdsCreate",
         "tags": [
           "NotificationDeviceIds"
         ],
@@ -2252,7 +2252,7 @@
       "delete": {
         "description": "This deletes a single device id. Can only be called by the owner.",
         "summary": "Delete a device id",
-        "operationId": "NotificationDeviceIds_destroy",
+        "operationId": "NotificationDeviceIdsDestroy",
         "tags": [
           "NotificationDeviceIds"
         ],
@@ -2296,7 +2296,7 @@
       "get": {
         "description": "This is used to get a list of people.",
         "summary": "Get a list of people.",
-        "operationId": "People_index",
+        "operationId": "PeopleIndex",
         "tags": [
           "People"
         ],
@@ -2336,7 +2336,7 @@
       "post": {
         "description": "This is used to create a new person.\\nIf the account creation is successful, they will be logged in and we will send an onboarding email (if we have an email address for them).",
         "summary": "Create person.",
-        "operationId": "People_create",
+        "operationId": "PeopleCreate",
         "tags": [
           "People"
         ],
@@ -2354,7 +2354,7 @@
       "post": {
         "description": "This is used to initiate a password reset. Product and email or username required. If email or username is not found, password reset will fail silently.",
         "summary": "Initiate a password reset.",
-        "operationId": "PasswordResets_create",
+        "operationId": "PasswordResetsCreate",
         "tags": [
           "PasswordResets"
         ],
@@ -2405,7 +2405,7 @@
       "get": {
         "description": "This is used to get a list of people flagged as \"recommended\". It excludes the current user and anyone the current user is following.",
         "summary": "Get recommended people.",
-        "operationId": "RecommendedPeople_index",
+        "operationId": "RecommendedPeopleIndex",
         "tags": [
           "RecommendedPeople"
         ],
@@ -2427,7 +2427,7 @@
       "get": {
         "description": "This is used to get a person.",
         "summary": "Get a person.",
-        "operationId": "People_show",
+        "operationId": "PeopleShow",
         "tags": [
           "People"
         ],
@@ -2458,7 +2458,7 @@
       "patch": {
         "description": "This is used to update a person. Anything not mentioned is left alone.",
         "summary": "Update person.",
-        "operationId": "People_update",
+        "operationId": "PeopleUpdate",
         "tags": [
           "People"
         ],
@@ -2492,7 +2492,7 @@
       "put": {
         "description": "This is used to update a person. Anything not mentioned is left alone.",
         "summary": "Update person.",
-        "operationId": "People_update",
+        "operationId": "PeopleUpdate",
         "tags": [
           "People"
         ],
@@ -2528,7 +2528,7 @@
       "patch": {
         "description": "This is used to change the logged in user's password.",
         "summary": "Change your password.",
-        "operationId": "People_change_password",
+        "operationId": "PeopleChangePassword",
         "tags": [
           "People"
         ],
@@ -2585,7 +2585,7 @@
     "/people/{person_id}/badges": {
       "get": {
         "summary": "Get badges",
-        "operationId": "Badges_index",
+        "operationId": "BadgesIndex",
         "tags": [
           "Badges"
         ],
@@ -2658,7 +2658,7 @@
       "get": {
         "description": "This gets a list of post comment reports with optional filter.",
         "summary": "Get list of post comment reports (ADMIN).",
-        "operationId": "PostCommentReports_index",
+        "operationId": "PostCommentReportsIndex",
         "tags": [
           "PostCommentReports"
         ],
@@ -2729,7 +2729,7 @@
       "post": {
         "description": "This reports a post comment.",
         "summary": "Report a post comment.",
-        "operationId": "PostCommentReports_create",
+        "operationId": "PostCommentReportsCreate",
         "tags": [
           "PostCommentReports"
         ],
@@ -2774,7 +2774,7 @@
       "patch": {
         "description": "This updates a post comment report. The only value that can be changed is the status.",
         "summary": "Update a Post Comment Report (Admin)",
-        "operationId": "PostCommentReports_update",
+        "operationId": "PostCommentReportsUpdate",
         "tags": [
           "PostCommentReports"
         ],
@@ -2829,7 +2829,7 @@
       "put": {
         "description": "This updates a post comment report. The only value that can be changed is the status.",
         "summary": "Update a Post Comment Report (Admin)",
-        "operationId": "PostCommentReports_update",
+        "operationId": "PostCommentReportsUpdate",
         "tags": [
           "PostCommentReports"
         ],
@@ -2886,7 +2886,7 @@
       "get": {
         "description": "This gets a list of post comments with optional filters and pagination.",
         "summary": "Get a list of post comments (ADMIN).",
-        "operationId": "PostComments_list",
+        "operationId": "PostCommentsList",
         "tags": [
           "PostComments"
         ],
@@ -2968,7 +2968,7 @@
       "get": {
         "description": "This gets a list of post reports with optional filter.",
         "summary": "Get list of post reports (ADMIN).",
-        "operationId": "PostReports_index",
+        "operationId": "PostReportsIndex",
         "tags": [
           "PostReports"
         ],
@@ -3039,7 +3039,7 @@
       "post": {
         "description": "This reports a post that was posted to a feed.",
         "summary": "Report a post.",
-        "operationId": "PostReports_create",
+        "operationId": "PostReportsCreate",
         "tags": [
           "PostReports"
         ],
@@ -3084,7 +3084,7 @@
       "patch": {
         "description": "This updates a post report. The only value that can be changed is the status.",
         "summary": "Update a Post Report.",
-        "operationId": "PostReports_update",
+        "operationId": "PostReportsUpdate",
         "tags": [
           "PostReports"
         ],
@@ -3139,7 +3139,7 @@
       "put": {
         "description": "This updates a post report. The only value that can be changed is the status.",
         "summary": "Update a Post Report.",
-        "operationId": "PostReports_update",
+        "operationId": "PostReportsUpdate",
         "tags": [
           "PostReports"
         ],
@@ -3196,7 +3196,7 @@
       "get": {
         "description": "  This gets a list of posts for a from date, to date, with an optional limit and person. Posts are returned newest first, and the limit is applied to that ordering.\n    Posts included are posts from the passed in person or, if none, the current\n    user along with those of the users the current user is following.",
         "summary": "Get posts for a date range.",
-        "operationId": "Posts_index",
+        "operationId": "PostsIndex",
         "tags": [
           "Posts"
         ],
@@ -3285,7 +3285,7 @@
       "post": {
         "description": "This creates a post and puts in on the feed of the author's followers. It also sends a push notification to poster's followers if the notify_followers flag is set to true.",
         "summary": "Create a post.",
-        "operationId": "Posts_create",
+        "operationId": "PostsCreate",
         "tags": [
           "Posts"
         ],
@@ -3330,7 +3330,7 @@
       "get": {
         "description": "This gets a list of posts with optional filters and pagination.",
         "summary": "Get a list of posts (ADMIN ONLY).",
-        "operationId": "Posts_list",
+        "operationId": "PostsList",
         "tags": [
           "Posts"
         ],
@@ -3457,7 +3457,7 @@
       "get": {
         "description": "This is used to get a list of published posts flagged as \"recommended\".",
         "summary": "Get recommended posts.",
-        "operationId": "RecommendedPosts_index",
+        "operationId": "RecommendedPostsIndex",
         "tags": [
           "RecommendedPosts"
         ],
@@ -3521,7 +3521,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single post.",
-        "operationId": "Posts_show",
+        "operationId": "PostsShow",
         "tags": [
           "Posts"
         ],
@@ -3570,7 +3570,7 @@
       "patch": {
         "description": "This updates a post.",
         "summary": "Update a post",
-        "operationId": "Posts_update",
+        "operationId": "PostsUpdate",
         "tags": [
           "Posts"
         ],
@@ -3625,7 +3625,7 @@
       "put": {
         "description": "This updates a post.",
         "summary": "Update a post",
-        "operationId": "Posts_update",
+        "operationId": "PostsUpdate",
         "tags": [
           "Posts"
         ],
@@ -3680,7 +3680,7 @@
       "delete": {
         "description": "This deletes a single post by marking as deleted. Can only be called by the creator.",
         "summary": "Delete (hide) a single post.",
-        "operationId": "Posts_destroy",
+        "operationId": "PostsDestroy",
         "tags": [
           "Posts"
         ],
@@ -3731,7 +3731,7 @@
       "get": {
         "description": "This gets a single post for a post id.",
         "summary": "Get a single, shareable post.",
-        "operationId": "Posts_share",
+        "operationId": "PostsShare",
         "tags": [
           "Posts"
         ],
@@ -3772,7 +3772,7 @@
       "get": {
         "description": "This gets all the non-hidden comments on a post with pagination.",
         "summary": "Get the comments on a post.",
-        "operationId": "PostComments_index",
+        "operationId": "PostCommentsIndex",
         "tags": [
           "PostComments"
         ],
@@ -3843,7 +3843,7 @@
       "post": {
         "description": "This creates a post comment. It is automatically attributed to the logged in user.",
         "summary": "Create a comment on a post.",
-        "operationId": "PostComments_create",
+        "operationId": "PostCommentsCreate",
         "tags": [
           "PostComments"
         ],
@@ -3897,7 +3897,7 @@
       "delete": {
         "description": "This deletes a comment on a post. Can be performed by admin or creator of comment.",
         "summary": "Delete a comment on a post.",
-        "operationId": "PostComments_destroy",
+        "operationId": "PostCommentsDestroy",
         "tags": [
           "PostComments"
         ],
@@ -3957,7 +3957,7 @@
       "post": {
         "description": "This reacts to a post.",
         "summary": "React to a post.",
-        "operationId": "PostReactions_create",
+        "operationId": "PostReactionsCreate",
         "tags": [
           "PostReactions"
         ],
@@ -4011,7 +4011,7 @@
       "patch": {
         "description": "This updates a reaction on a post.",
         "summary": "Update a reaction to a post.",
-        "operationId": "PostReactions_update",
+        "operationId": "PostReactionsUpdate",
         "tags": [
           "PostReactions"
         ],
@@ -4075,7 +4075,7 @@
       "put": {
         "description": "This updates a reaction on a post.",
         "summary": "Update a reaction to a post.",
-        "operationId": "PostReactions_update",
+        "operationId": "PostReactionsUpdate",
         "tags": [
           "PostReactions"
         ],
@@ -4139,7 +4139,7 @@
       "delete": {
         "description": "This deletes a reaction to a post.",
         "summary": "Delete a reaction to a post.",
-        "operationId": "PostReactions_destroy",
+        "operationId": "PostReactionsDestroy",
         "tags": [
           "PostReactions"
         ],
@@ -4199,7 +4199,7 @@
       "get": {
         "description": "Get all products (Super Admin Only)",
         "summary": "Get Products",
-        "operationId": "Products_index",
+        "operationId": "ProductsIndex",
         "tags": [
           "Products"
         ],
@@ -4219,7 +4219,7 @@
       "post": {
         "description": "Create a product (Super Admin Only)",
         "summary": "Create Product",
-        "operationId": "Products_create",
+        "operationId": "ProductsCreate",
         "tags": [
           "Products"
         ],
@@ -4244,7 +4244,7 @@
       "get": {
         "description": "Get all products (Super Admin Only)",
         "summary": "Get Products",
-        "operationId": "Products_index",
+        "operationId": "ProductsIndex",
         "tags": [
           "Products"
         ],
@@ -4266,7 +4266,7 @@
       "get": {
         "description": "Get a product for provided ID. (Super Admin Only)",
         "summary": "Get Product",
-        "operationId": "Products_show",
+        "operationId": "ProductsShow",
         "tags": [
           "Products"
         ],
@@ -4286,7 +4286,7 @@
       "patch": {
         "description": "Update a product (Super Admin Only)",
         "summary": "Update Product",
-        "operationId": "Products_update",
+        "operationId": "ProductsUpdate",
         "tags": [
           "Products"
         ],
@@ -4309,7 +4309,7 @@
       "put": {
         "description": "Update a product (Super Admin Only)",
         "summary": "Update Product",
-        "operationId": "Products_update",
+        "operationId": "ProductsUpdate",
         "tags": [
           "Products"
         ],
@@ -4334,7 +4334,7 @@
       "get": {
         "description": "Returns all quests for the current user's product that aren't deleted.",
         "summary": "Get all viewable quests",
-        "operationId": "Quests_index",
+        "operationId": "QuestsIndex",
         "tags": [
           "Quests"
         ],
@@ -4354,7 +4354,7 @@
       "post": {
         "description": "Creates a quest for the current user's product.",
         "summary": "Create a quest",
-        "operationId": "Quests_create",
+        "operationId": "QuestsCreate",
         "tags": [
           "Quests"
         ],
@@ -4379,7 +4379,7 @@
       "get": {
         "description": "Returns all quests for the current user's product regardless of status.",
         "summary": "Get all quests (Admin Only)",
-        "operationId": "Quests_list",
+        "operationId": "QuestsList",
         "tags": [
           "Quests"
         ],
@@ -4401,7 +4401,7 @@
       "get": {
         "description": "Returns all quests for the current user's product that aren't deleted.",
         "summary": "Get all viewable quests",
-        "operationId": "Quests_index",
+        "operationId": "QuestsIndex",
         "tags": [
           "Quests"
         ],
@@ -4423,7 +4423,7 @@
       "get": {
         "description": "Returns the quest for the given ID",
         "summary": "Find a quest",
-        "operationId": "Quests_show",
+        "operationId": "QuestsShow",
         "tags": [
           "Quests"
         ],
@@ -4443,7 +4443,7 @@
       "patch": {
         "description": "Updates the quest for the given id",
         "summary": "Update a quest",
-        "operationId": "Quests_update",
+        "operationId": "QuestsUpdate",
         "tags": [
           "Quests"
         ],
@@ -4466,7 +4466,7 @@
       "put": {
         "description": "Updates the quest for the given id",
         "summary": "Update a quest",
-        "operationId": "Quests_update",
+        "operationId": "QuestsUpdate",
         "tags": [
           "Quests"
         ],
@@ -4489,7 +4489,7 @@
       "delete": {
         "description": "Soft deletes a quest",
         "summary": "Destroy a quest",
-        "operationId": "Quests_destroy",
+        "operationId": "QuestsDestroy",
         "tags": [
           "Quests"
         ],
@@ -4511,7 +4511,7 @@
       "get": {
         "description": "Returns all quest completions for the currently logged in user.",
         "summary": "Get all activity completions for the current user.",
-        "operationId": "QuestCompletions_index",
+        "operationId": "QuestCompletionsIndex",
         "tags": [
           "QuestCompletions"
         ],
@@ -4531,7 +4531,7 @@
       "post": {
         "description": "This registers an activity as complete for the current user.",
         "summary": "Create a quest completion",
-        "operationId": "QuestCompletions_create",
+        "operationId": "QuestCompletionsCreate",
         "tags": [
           "QuestCompletions"
         ],
@@ -4567,7 +4567,7 @@
       "get": {
         "description": "Returns all the steps for a quest",
         "summary": "Get all steps",
-        "operationId": "Steps_index",
+        "operationId": "StepsIndex",
         "tags": [
           "Steps"
         ],
@@ -4598,7 +4598,7 @@
       "post": {
         "description": "Creates a step for the supplied quest id.",
         "summary": "Create a step",
-        "operationId": "Steps_create",
+        "operationId": "StepsCreate",
         "tags": [
           "Steps"
         ],
@@ -4634,7 +4634,7 @@
       "get": {
         "description": "This is used to get a list of someone's friends. If the person supplied is the logged in user, \"requested\" status is included for requests TO the current user. Otherwise, only \"friended\" status is included.",
         "summary": "Get current relationships of a person.",
-        "operationId": "Relationships_index",
+        "operationId": "RelationshipsIndex",
         "tags": [
           "Relationships"
         ],
@@ -4705,7 +4705,7 @@
       "post": {
         "description": "This is used to send a friend request to a person. If there is a block between the people, an error will be returned.",
         "summary": "Send a friend request to a person.",
-        "operationId": "Relationships_create",
+        "operationId": "RelationshipsCreate",
         "tags": [
           "Relationships"
         ],
@@ -4775,7 +4775,7 @@
       "get": {
         "description": "This gets a single relationship for a relationship id. Only available to a participating user.",
         "summary": "Get a single relationship.",
-        "operationId": "Relationships_show",
+        "operationId": "RelationshipsShow",
         "tags": [
           "Relationships"
         ],
@@ -4824,7 +4824,7 @@
       "patch": {
         "description": "This is used to accept, deny or unfriend a relationship (friend request).",
         "summary": "Update a relationship.",
-        "operationId": "Relationships_update",
+        "operationId": "RelationshipsUpdate",
         "tags": [
           "Relationships"
         ],
@@ -4904,7 +4904,7 @@
       "put": {
         "description": "This is used to accept, deny or unfriend a relationship (friend request).",
         "summary": "Update a relationship.",
-        "operationId": "Relationships_update",
+        "operationId": "RelationshipsUpdate",
         "tags": [
           "Relationships"
         ],
@@ -4984,7 +4984,7 @@
       "delete": {
         "description": "This is used to unfriend a person.",
         "summary": "Unfriend a person.",
-        "operationId": "Relationships_destroy",
+        "operationId": "RelationshipsDestroy",
         "tags": [
           "Relationships"
         ],
@@ -5035,7 +5035,7 @@
       "get": {
         "description": "This gets a list of active rooms (public or private, as specified by the \"private\" parameter).",
         "summary": "Get a list of rooms.",
-        "operationId": "Rooms_index",
+        "operationId": "RoomsIndex",
         "tags": [
           "Rooms"
         ],
@@ -5106,7 +5106,7 @@
       "post": {
         "description": "The creates a private room and makes it active.",
         "summary": "Create a private room.",
-        "operationId": "Rooms_create",
+        "operationId": "RoomsCreate",
         "tags": [
           "Rooms"
         ],
@@ -5197,7 +5197,7 @@
       "patch": {
         "description": "The updates a private room. Only the name can by updated, and only by the owner.",
         "summary": "Update a private room (name).",
-        "operationId": "Rooms_update",
+        "operationId": "RoomsUpdate",
         "tags": [
           "Rooms"
         ],
@@ -5282,7 +5282,7 @@
       "put": {
         "description": "The updates a private room. Only the name can by updated, and only by the owner.",
         "summary": "Update a private room (name).",
-        "operationId": "Rooms_update",
+        "operationId": "RoomsUpdate",
         "tags": [
           "Rooms"
         ],
@@ -5367,7 +5367,7 @@
       "delete": {
         "description": "The deletes a private room. If it has no messages, it deletes it completely. Otherwise, it just changes the status to deleted.",
         "summary": "Delete a private room.",
-        "operationId": "Rooms_destroy",
+        "operationId": "RoomsDestroy",
         "tags": [
           "Rooms"
         ],
@@ -5418,7 +5418,7 @@
       "post": {
         "description": "This reports a message that was posted to a public room.",
         "summary": "Report a message in a public room.",
-        "operationId": "MessageReports_create",
+        "operationId": "MessageReportsCreate",
         "tags": [
           "MessageReports"
         ],
@@ -5472,7 +5472,7 @@
       "get": {
         "description": "This gets a list of message for a from date, to date, with an optional limit. Messages are returned newest first, and the limit is applied to that ordering.",
         "summary": "Get messages.",
-        "operationId": "Messages_index",
+        "operationId": "MessagesIndex",
         "tags": [
           "Messages"
         ],
@@ -5572,7 +5572,7 @@
       "post": {
         "description": "This creates a message in a room and posts it to Firebase as appropriate.",
         "summary": "Create a message in a room.",
-        "operationId": "Messages_create",
+        "operationId": "MessagesCreate",
         "tags": [
           "Messages"
         ],
@@ -5626,7 +5626,7 @@
       "get": {
         "description": "This gets a single message for a message id. Only works for messages in private rooms. If the message author has been blocked by the current user, this will return 404 Not Found.",
         "summary": "Get a single message.",
-        "operationId": "Messages_show",
+        "operationId": "MessagesShow",
         "tags": [
           "Messages"
         ],
@@ -5684,7 +5684,7 @@
       "patch": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -5748,7 +5748,7 @@
       "put": {
         "description": "This updates a message in a room. Only the hidden field can be changed and only by an admin. If the item is hidden, Firebase will be updated to inform the app that the message has been hidden.",
         "summary": "Update a message",
-        "operationId": "Messages_update",
+        "operationId": "MessagesUpdate",
         "tags": [
           "Messages"
         ],
@@ -5812,7 +5812,7 @@
       "delete": {
         "description": "This deletes a single message by marking as hidden. Can only be called by the creator.",
         "summary": "Delete (hide) a single message.",
-        "operationId": "Messages_destroy",
+        "operationId": "MessagesDestroy",
         "tags": [
           "Messages"
         ],
@@ -5872,7 +5872,7 @@
       "post": {
         "description": "This adds a person to a private room. On success (person added), just returns 200.",
         "summary": "Add a room member.",
-        "operationId": "RoomMemberships_create",
+        "operationId": "RoomMembershipsCreate",
         "tags": [
           "RoomMemberships"
         ],
@@ -5951,7 +5951,7 @@
       "get": {
         "description": "This is used to see if your current session is valid. We return the currently logged-in person if the session is still good and a 404 otherwise.",
         "summary": "Check a session.",
-        "operationId": "Session_index",
+        "operationId": "SessionIndex",
         "tags": [
           "Session"
         ],
@@ -5964,7 +5964,7 @@
       "post": {
         "description": "This is used to log someone in.",
         "summary": "Log someone in.",
-        "operationId": "Session_create",
+        "operationId": "SessionCreate",
         "tags": [
           "Session"
         ],
@@ -6017,7 +6017,7 @@
       "delete": {
         "description": "This is used to log someone out.",
         "summary": "Log someone out.",
-        "operationId": "Session_destroy",
+        "operationId": "SessionDestroy",
         "tags": [
           "Session"
         ],
@@ -6032,7 +6032,7 @@
       "get": {
         "description": "Returns the step for the supplied id.",
         "summary": "Find a step",
-        "operationId": "Steps_show",
+        "operationId": "StepsShow",
         "tags": [
           "Steps"
         ],
@@ -6052,7 +6052,7 @@
       "patch": {
         "description": "Updates a step for the supplied id.",
         "summary": "Update a step",
-        "operationId": "Steps_update",
+        "operationId": "StepsUpdate",
         "tags": [
           "Steps"
         ],
@@ -6075,7 +6075,7 @@
       "put": {
         "description": "Updates a step for the supplied id.",
         "summary": "Update a step",
-        "operationId": "Steps_update",
+        "operationId": "StepsUpdate",
         "tags": [
           "Steps"
         ],
@@ -6098,7 +6098,7 @@
       "delete": {
         "description": "Soft deletes a step.",
         "summary": "Destroy a step",
-        "operationId": "Steps_destroy",
+        "operationId": "StepsDestroy",
         "tags": [
           "Steps"
         ],
@@ -6120,7 +6120,7 @@
       "get": {
         "description": "Get all quest activities associated with a step.",
         "summary": "Get Quest Activities",
-        "operationId": "QuestActivities_index",
+        "operationId": "QuestActivitiesIndex",
         "tags": [
           "QuestActivities"
         ],
@@ -6140,7 +6140,7 @@
       "post": {
         "description": "Creates a quest activity",
         "summary": "Create a quest activity",
-        "operationId": "QuestActivities_create",
+        "operationId": "QuestActivitiesCreate",
         "tags": [
           "QuestActivities"
         ],
@@ -6165,7 +6165,7 @@
       "get": {
         "description": "Returns all quest completions for the currently logged in user.",
         "summary": "Get all activity completions for the current user.",
-        "operationId": "QuestCompletions_index",
+        "operationId": "QuestCompletionsIndex",
         "tags": [
           "QuestCompletions"
         ],
@@ -6185,7 +6185,7 @@
       "post": {
         "description": "This registers an activity as complete for the current user.",
         "summary": "Create a quest completion",
-        "operationId": "QuestCompletions_create",
+        "operationId": "QuestCompletionsCreate",
         "tags": [
           "QuestCompletions"
         ],
@@ -7399,11 +7399,7 @@
       }
     },
     "requestBodies": {
-<<<<<<< HEAD:docs/open_api/V2.json
-      "FollowingForm": {
-=======
       "BadgeActionCreate": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "required": true,
         "description": "",
         "content": {
@@ -7411,7 +7407,158 @@
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
                 "followed_id": {
                   "type": "integer",
                   "description": "Person to follow."
@@ -7669,148 +7816,6 @@
               },
               "required": [
                 "message"
-=======
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-              ]
-            }
-          }
-        }
-      },
-      "FollowingForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-              ]
-            }
-          }
-        }
-      },
-      "BlockCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "type": "object",
-                  "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "role"
-                  ]
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "NotificationDeviceIdsForm": {
-=======
-      "CategoryUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "category"
               ]
             }
           }
@@ -7861,759 +7866,7 @@
           }
         }
       },
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-<<<<<<< HEAD:docs/open_api/V2.json
-              "type": "object",
-              "properties": {
-                "device_id": {
-                  "type": "string",
-                  "description": "ID of the device"
-                }
-              },
-              "required": [
-                "device_id"
-              ]
-=======
-              "type": "object"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-            }
-          }
-        }
-      },
-      "MessageCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message audio, this should be `audio/aac`."
-                    },
-                    "mentions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "person_id": {
-                            "type": "integer",
-                            "description": "ID of user mentioned"
-                          },
-                          "location": {
-                            "type": "integer",
-                            "description": "The location in the message body that the mention is at."
-                          },
-                          "length": {
-                            "type": "integer",
-                            "description": "The length of the users name in the mention"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
-          }
-        }
-      },
-      "MessageUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "hidden": {
-                      "type": "boolean",
-                      "description": "Whether or not the item is hidden."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "BadgeActionCreate": {
-=======
-      "PostReportsCreateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-=======
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_id": {
-                      "type": "integer",
-                      "description": "The id of the post being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post."
-                    }
-                  },
-                  "required": [
-                    "post_id"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  ]
-                }
-              },
-              "required": [
-<<<<<<< HEAD:docs/open_api/V2.json
-                "badge_action"
-=======
-                "post_report"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentReportCreateForm": {
-=======
-      "PostReportsUpdateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_comment_id": {
-                      "type": "integer",
-                      "description": "The id of the post comment being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post comment."
-                    }
-                  },
-                  "required": [
-                    "post_comment_id"
-=======
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  ]
-                }
-              },
-              "required": [
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment_report"
-=======
-                "post_report"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentReportUpdateForm": {
-=======
-      "PostCreateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-=======
-                "post": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
-                    },
-                    "ends_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "BlockCreate": {
-=======
-      "PostUpdateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "block": {
-                  "type": "object",
-                  "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
-=======
-                "post": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
-                    },
-                    "ends_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-              ]
-            }
-          }
-        }
-      },
-      "MerchandiseForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "description",
-                    "available",
-                    "priority"
-                  ]
-                }
-              },
-              "required": [
-                "merchandise"
-              ]
-            }
-          }
-        }
-      },
-      "MerchandiseUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "merchandise"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_id": {
-                      "type": "integer",
-                      "description": "The id of the post being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post."
-                    }
-                  },
-                  "required": [
-                    "post_id"
-                  ]
-                }
-              },
-              "required": [
-                "post_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_report"
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentCreateForm": {
-=======
-      "PostCommentReportCreateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the comment."
-                    }
-                  },
-                  "required": [
-                    "body"
-=======
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_comment_id": {
-                      "type": "integer",
-                      "description": "The id of the post comment being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post comment."
-                    }
-                  },
-                  "required": [
-                    "post_comment_id"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  },
-                  "required": [
-                    "reaction"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  ]
-                },
-                "mentions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person_id": {
-                        "type": "integer",
-                        "description": "The id of the person mentioned."
-                      },
-                      "location": {
-                        "type": "integer",
-                        "description": "Where the mention text starts in the comment."
-                      },
-                      "length": {
-                        "type": "integer",
-                        "description": "The length of the mention text."
-                      }
-                    },
-                    "required": [
-                      "person_id",
-                      "location",
-                      "length"
-                    ]
-                  }
-                }
-              },
-              "required": [
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment"
-=======
-                "post_reaction"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "EventForm": {
-=======
-      "PostReactionUpdateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-<<<<<<< HEAD:docs/open_api/V2.json
-              "type": "object"
-=======
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "PostReactionCreateForm": {
-=======
       "PersonCreateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "required": true,
         "description": "",
         "content": {
@@ -8621,18 +7874,6 @@
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  },
-                  "required": [
-                    "reaction"
-=======
                 "product": {
                   "type": "string",
                   "description": "Internal name of the product."
@@ -8697,27 +7938,18 @@
                     "facebook_auth_token",
                     "username",
                     "password"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                   ]
                 }
               },
               "required": [
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_reaction"
-=======
                 "product",
                 "person"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
               ]
             }
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostReactionUpdateForm": {
-=======
       "PersonUpdateForm": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "required": true,
         "description": "",
         "content": {
@@ -8725,14 +7957,6 @@
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-=======
                 "product": {
                   "type": "string",
                   "description": "Internal name of the product."
@@ -8790,54 +8014,86 @@
                     "recommended": {
                       "type": "boolean",
                       "description": "Sets the post to recommended. Available only to admins and product accounts."
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                     }
                   }
                 }
               },
               "required": [
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_reaction"
-=======
                 "product",
                 "person"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
               ]
             }
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-=======
-      "PostCommentCreateForm": {
+      "PostCommentReportCreateForm": {
         "required": true,
         "description": "",
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "content": {
           "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post comment."
+                    }
+                  },
+                  "required": [
+                    "post_comment_id"
+                  ]
                 }
-              }
+              },
+              "required": [
+                "post_comment_report"
+              ]
             }
           }
         }
       },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
+      "PostCommentReportUpdateForm": {
+        "required": true,
+        "description": "",
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
-                "rooms": {
-=======
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
                 "post_comment": {
                   "type": "object",
                   "properties": {
@@ -8851,15 +8107,10 @@
                   ]
                 },
                 "mentions": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-=======
                       "person_id": {
                         "type": "integer",
                         "description": "The id of the person mentioned."
@@ -8871,7 +8122,6 @@
                       "length": {
                         "type": "integer",
                         "description": "The length of the mention text."
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                       }
                     },
                     "required": [
@@ -8888,35 +8138,269 @@
             }
           }
         }
+      },
+      "PostReactionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  },
+                  "required": [
+                    "reaction"
+                  ]
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+              ]
+            }
+          }
+        }
+      },
+      "PostUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+                    }
+                  },
+                  "required": [
+                    "post_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
       }
     },
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "FollowingsArray": {
-=======
       "TagArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "followings": {
+                "posts": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
-=======
                       "post": {
                         "$ref": "#/components/schemas/PostJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                       }
                     }
                   }
@@ -8926,27 +8410,13 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "FollowersArray": {
-=======
       "BadgeActionsPending": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-=======
                 "pending_badge": {
                   "type": "object",
                   "properties": {
@@ -8963,7 +8433,6 @@
                   "properties": {
                     "badge": {
                       "$ref": "#/components/schemas/BadgeJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                     }
                   }
                 }
@@ -8972,21 +8441,13 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "FollowingObject": {
-=======
       "BadgesArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
-=======
                 "badges": {
                   "type": "array",
                   "items": {
@@ -8997,192 +8458,21 @@
                       }
                     }
                   }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "SessionObject": {
-=======
-      "FollowingsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-=======
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "LevelsArray": {
-=======
-      "FollowersArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "levels": {
-=======
-                "followers": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
-=======
-                      "follower": {
-                        "$ref": "#/components/schemas/FollowingJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "RelationshipsObject": {
-=======
-      "FollowingObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
-=======
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "MerchandiseArray": {
-=======
       "BlocksObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
-                      }
-                    }
-                  }
-=======
                 "block": {
                   "$ref": "#/components/schemas/BlockJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                 }
               }
             }
@@ -9227,257 +8517,20 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "MessagesArray": {
-=======
-      "RecommendedPeopleArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "messages": {
-=======
-                "people": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
-=======
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "MessagesObject": {
-=======
-      "RecommendedPostsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
-=======
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostsArray": {
-=======
-      "RelationshipsObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-=======
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostsListsArray": {
-=======
-      "RelationshipsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "posts": {
-=======
-                "relationships": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "post": {
-                        "$ref": "#/components/schemas/PostListJson"
-=======
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostsObject": {
-=======
-      "RoomsObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post": {
-                  "$ref": "#/components/schemas/PostJson"
-=======
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostsShareObject": {
-=======
-      "RoomsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post": {
-                  "$ref": "#/components/schemas/PostShareJson"
-=======
-                "rooms": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-                      }
-                    }
-                  }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "RecommendedPostsArray": {
-=======
-      "SessionObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-=======
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "TagArray": {
-=======
       "EventsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "posts": {
-=======
                 "events": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-=======
                       "event": {
                         "$ref": "#/components/schemas/EventJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                       }
                     }
                   }
@@ -9487,9 +8540,6 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PeopleArray": {
-=======
       "EventsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -9505,21 +8555,20 @@
           }
         }
       },
-      "MessagesArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+      "FollowingsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "messages": {
+                "followings": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
+                      "following": {
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -9529,109 +8578,20 @@
           }
         }
       },
-      "MessagesObject": {
+      "FollowersArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "BadgeActionsPending": {
-=======
-      "PostReportsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-=======
-                "post_reports": {
+                "followers": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
-                      }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "BadgesArray": {
-=======
-      "PostsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "badges": {
-=======
-                "posts": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "badge": {
-                        "$ref": "#/components/schemas/BadgeJson"
-=======
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+                      "follower": {
+                        "$ref": "#/components/schemas/FollowingJson"
                       }
                     }
                   }
@@ -9641,69 +8601,38 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentReportsArray": {
-=======
-      "PostsListsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+      "FollowingObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment_reports": {
-=======
-                "posts": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
-=======
-                      "post": {
-                        "$ref": "#/components/schemas/PostListJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "BlocksObject": {
-=======
-      "PostsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostShareJson"
                 }
               }
             }
@@ -9711,17 +8640,12 @@
         }
       },
       "MerchandiseArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
-=======
                 "merchandise": {
                   "type": "array",
                   "items": {
@@ -9732,7 +8656,6 @@
                       }
                     }
                   }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                 }
               }
             }
@@ -9777,21 +8700,104 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostReportsObject": {
-=======
-      "PostCommentReportsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+      "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-=======
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/MessageJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/MessageJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
                 "post_comment_reports": {
                   "type": "array",
                   "items": {
@@ -9802,40 +8808,216 @@
                       }
                     }
                   }
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostReportsArray": {
-=======
-      "PostReactionsArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+      "PostCommentsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_reports": {
-=======
-                "post_reactions": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+                "post_comments": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsListArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsListsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
                       "post_report": {
                         "$ref": "#/components/schemas/PostReportJson"
-=======
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                       }
                     }
                   }
@@ -9845,65 +9027,20 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentsArray": {
-=======
-      "PostReactionsObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+      "RecommendedPeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentJson"
-                      }
-                    }
-                  }
-=======
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentsListArray": {
-=======
-      "PeopleArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comments": {
-=======
                 "people": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentListJson"
-=======
                       "person": {
                         "$ref": "#/components/schemas/PersonJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                       }
                     }
                   }
@@ -9913,150 +9050,114 @@
           }
         }
       },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostCommentsObject": {
-=======
-      "PersonObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
+      "RecommendedPostsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
-=======
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SessionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
                 "person": {
                   "$ref": "#/components/schemas/PersonJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "EventsArray": {
-=======
-      "PersonPrivateObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "events": {
-=======
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivateJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
-=======
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "EventsObject": {
-=======
-      "PostCommentsListArray": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-=======
-                "post_comments": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-=======
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentListJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD:docs/open_api/V2.json
-      "PostReactionsObject": {
-=======
-      "PostCommentsObject": {
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD:docs/open_api/V2.json
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
-=======
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
->>>>>>> Added permissions to interests.:doc/open_api/V2.json
                 }
               }
             }
