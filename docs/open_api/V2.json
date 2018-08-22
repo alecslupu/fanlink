@@ -8181,6 +8181,7 @@
                     "reaction": {
                       "type": "string",
                       "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+<<<<<<< HEAD:docs/open_api/V2.json
                     }
                   }
                 }
@@ -8402,21 +8403,33 @@
                       "post": {
                         "$ref": "#/components/schemas/PostJson"
                       }
+=======
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "post_reaction"
+              ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
+=======
+      "PostReportsCreateForm": {
+        "required": true,
+        "description": "",
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "pending_badge": {
                   "type": "object",
                   "properties": {
@@ -8456,21 +8469,46 @@
                       "badge": {
                         "$ref": "#/components/schemas/BadgeJson"
                       }
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                     }
-                  }
+                  },
+                  "required": [
+                    "post_id"
+                  ]
                 }
-              }
+              },
+              "required": [
+                "post_report"
+              ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
+=======
+      "PostReportsUpdateForm": {
+        "required": true,
+        "description": "",
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "block": {
                   "$ref": "#/components/schemas/BlockJson"
                 }
@@ -8534,19 +8572,42 @@
                       }
                     }
                   }
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                 }
-              }
+              },
+              "required": [
+                "post_report"
+              ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "EventsObject": {
         "description": "HTTP/1.1 200 Ok",
+=======
+      "PostCreateForm": {
+        "required": true,
+        "description": "",
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "event": {
                   "$ref": "#/components/schemas/EventJson"
                 }
@@ -8570,21 +8631,79 @@
                       "following": {
                         "$ref": "#/components/schemas/FollowingJson"
                       }
+=======
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "post"
+              ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "FollowersArray": {
         "description": "HTTP/1.1 200 Ok",
+=======
+      "PostUpdateForm": {
+        "required": true,
+        "description": "",
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "content": {
-          "application/json": {
+          "multipart/form-data": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "followers": {
                   "type": "array",
                   "items": {
@@ -8593,41 +8712,115 @@
                       "follower": {
                         "$ref": "#/components/schemas/FollowingJson"
                       }
+=======
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                     }
                   }
                 }
-              }
+              },
+              "required": [
+                "post"
+              ]
             }
           }
         }
+      }
+    },
+    "responses": {
+      "OK": {
+        "description": "HTTP/1.1 200 Ok"
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "FollowingObject": {
+=======
+      "RoomsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "following": {
                   "$ref": "#/components/schemas/FollowingJson"
+=======
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "LevelsArray": {
+=======
+      "RoomsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "levels": {
+=======
+                "rooms": {
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                       "level": {
                         "$ref": "#/components/schemas/LevelJson"
                       }
@@ -8653,6 +8846,10 @@
                     "properties": {
                       "merchandise": {
                         "$ref": "#/components/schemas/MerchandiseJson"
+=======
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                       }
                     }
                   }
@@ -8662,6 +8859,7 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "MerchandiseObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -8678,12 +8876,16 @@
         }
       },
       "MessageReportsArray": {
+=======
+      "SessionObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "message_reports": {
                   "type": "array",
                   "items": {
@@ -8694,6 +8896,10 @@
                       }
                     }
                   }
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                 }
               }
             }
@@ -8761,22 +8967,35 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "PersonObject": {
+=======
+      "BlocksObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V2.json
                 "person": {
                   "$ref": "#/components/schemas/PersonJson"
+=======
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V2.json
       "PersonPrivateObject": {
+=======
+      "CategoryObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V2.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -9158,6 +9377,242 @@
               "properties": {
                 "person": {
                   "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsListsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+                      }
+                    }
+                  }
                 }
               }
             }

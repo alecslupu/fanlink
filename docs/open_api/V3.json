@@ -10093,7 +10093,11 @@
       }
     },
     "requestBodies": {
+<<<<<<< HEAD:docs/open_api/V3.json
       "StepCreateForm": {
+=======
+      "TypeBodyCreate": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10101,6 +10105,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "step": {
                   "type": "object",
                   "properties": {
@@ -10117,12 +10122,47 @@
               },
               "required": [
                 "step"
+=======
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "atype",
+                    "value"
+                  ]
+                }
+              },
+              "required": [
+                "activity_type"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "StepUpdateForm": {
+=======
+      "TypeBodyUpdate": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10130,6 +10170,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "step": {
                   "type": "object",
                   "properties": {
@@ -10174,12 +10215,43 @@
               },
               "required": [
                 "post_reaction"
+=======
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "activity_type"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostReactionUpdateForm": {
+=======
+      "AssignedRewardCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10187,6 +10259,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_reaction": {
                   "type": "object",
                   "properties": {
@@ -10199,12 +10272,48 @@
               },
               "required": [
                 "post_reaction"
+=======
+                "assign": {
+                  "type": "object",
+                  "properties": {
+                    "reward_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward it is being assigned to."
+                    },
+                    "assigned_type": {
+                      "type": "string",
+                      "description": "The model name that the reward belongs to."
+                    },
+                    "assigned_id": {
+                      "type": "integer",
+                      "description": "The id of the type that is being assigned. Example: If you want to assign the quest with an ID of 1, you would set the type to Quest and the id to 1."
+                    },
+                    "max_times": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The maximum number of times the assigned item can be completed for credit."
+                    }
+                  },
+                  "required": [
+                    "reward_id",
+                    "assigned_type",
+                    "assigned_id"
+                  ]
+                }
+              },
+              "required": [
+                "assign"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostReportsCreateForm": {
+=======
+      "AssignedRewardUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10212,6 +10321,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_report": {
                   "type": "object",
                   "properties": {
@@ -10231,12 +10341,31 @@
               },
               "required": [
                 "post_report"
+=======
+                "assign": {
+                  "type": "object",
+                  "properties": {
+                    "max_times": {
+                      "type": "integer",
+                      "default": 1,
+                      "description": "The maximum number of times the assigned item can be completed for credit."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "assign"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostReportsUpdateForm": {
+=======
+      "BadgeActionCreate": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10244,6 +10373,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_report": {
                   "type": "object",
                   "properties": {
@@ -10254,147 +10384,41 @@
                   },
                   "required": [
                     "status"
+=======
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_report"
+=======
+                "badge_action"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
-                    },
-                    "ends_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post"
-              ]
-            }
-          }
-        }
-      },
-      "PostUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
-                    },
-                    "ends_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post"
-              ]
-            }
-          }
-        }
-      },
+=======
       "BeaconCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10402,6 +10426,54 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+=======
                 "product_beacon": {
                   "type": "object",
                   "properties": {
@@ -10471,12 +10543,285 @@
                     "attached_to": {
                       "type": "integer",
                       "description": "The activity the beacon is attached to. Can be null."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                    }
+                  }
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post"
+=======
+                "product_beacon"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostUpdateForm": {
+=======
+      "BadgeCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+=======
+                "badge": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name for the badge. Translatable"
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the badge"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A short paragraph describing the badge. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the badge."
+                    },
+                    "issued_from": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start time for when the badge is available to earn."
+                    },
+                    "issued_to": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End time for when the badge is available to earn."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description"
+                  ]
+                }
+              },
+              "required": [
+                "badge"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BeaconCreateForm": {
+=======
+      "BadgeUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  },
+                  "required": [
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
+=======
+                "badge": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name for the badge. Translatable"
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the badge"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A short paragraph describing the badge. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the badge."
+                    },
+                    "issued_from": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start time for when the badge is available to earn."
+                    },
+                    "issued_to": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End time for when the badge is available to earn."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "description"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "product_beacon"
+=======
+                "badge"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BeaconUpdateForm": {
+=======
+      "BlockCreate": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
                     }
                   }
                 }
               },
               "required": [
                 "product_beacon"
+=======
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
@@ -10554,6 +10899,155 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestActivityCreateForm": {
+=======
+      "CategoryForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  },
+                  "required": [
+                    "hint"
+=======
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_activity"
+=======
+                "category"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestActivityUpdateForm": {
+=======
+      "CategoryUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+=======
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                    }
+                  }
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_activity"
+              ]
+=======
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+            }
+          }
+        }
+      },
       "QuestActivityCreateForm": {
         "required": true,
         "description": "",
@@ -10625,85 +11119,10 @@
           }
         }
       },
-      "ActionTypeCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name"
-                  ]
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
-      "ActionTypeUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
+<<<<<<< HEAD:docs/open_api/V3.json
       "TypeBodyCreate": {
+=======
+      "FollowingForm": {
         "required": true,
         "description": "",
         "content": {
@@ -10711,73 +11130,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "activity_type": {
-                  "type": "object",
-                  "properties": {
-                    "atype": {
-                      "type": "string",
-                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
-                    },
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "This field is used as a display field for the end user."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "atype",
-                    "value"
-                  ]
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
                 }
               },
               "required": [
-                "activity_type"
-              ]
-            }
-          }
-        }
-      },
-      "TypeBodyUpdate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity_type": {
-                  "type": "object",
-                  "properties": {
-                    "atype": {
-                      "type": "string",
-                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
-                    },
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "This field is used as a display field for the end user."
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "activity_type"
+                "followed_id"
               ]
             }
           }
@@ -10812,6 +11171,7 @@
         }
       },
       "QuestCompletionUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10839,7 +11199,7 @@
           }
         }
       },
-      "AssignedRewardCreateForm": {
+      "MerchandiseForm": {
         "required": true,
         "description": "",
         "content": {
@@ -10847,6 +11207,196 @@
             "schema": {
               "type": "object",
               "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "available",
+                    "priority"
+                  ]
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestCompletionCreateForm": {
+=======
+      "MerchandiseUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+=======
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "merchandise"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestCompletionUpdateForm": {
+=======
+      "MessageReportCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+=======
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "message_id": {
+                      "type": "integer",
+                      "description": "The id of the message being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the message."
+                    }
+                  },
+                  "required": [
+                    "message_id"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest_completion"
+=======
+                "message_report"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "AssignedRewardCreateForm": {
+=======
+      "MessageReportUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "assign": {
                   "type": "object",
                   "properties": {
@@ -10872,17 +11422,37 @@
                     "reward_id",
                     "assigned_type",
                     "assigned_id"
+=======
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                    }
+                  },
+                  "required": [
+                    "status"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "assign"
+=======
+                "message_report"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "AssignedRewardUpdateForm": {
+=======
+      "MessageCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10890,6 +11460,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "assign": {
                   "type": "object",
                   "properties": {
@@ -10897,18 +11468,64 @@
                       "type": "integer",
                       "default": 1,
                       "description": "The maximum number of times the assigned item can be completed for credit."
+=======
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message audio, this should be `audio/aac`."
+                    },
+                    "mentions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "person_id": {
+                            "type": "integer",
+                            "description": "ID of user mentioned"
+                          },
+                          "location": {
+                            "type": "integer",
+                            "description": "The location in the message body that the mention is at."
+                          },
+                          "length": {
+                            "type": "integer",
+                            "description": "The length of the users name in the mention"
+                          }
+                        }
+                      }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
                   }
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "assign"
+=======
+                "message"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BadgeActionCreate": {
+=======
+      "MessageUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -10916,6 +11533,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge_action": {
                   "type": "object",
                   "properties": {
@@ -10926,6 +11544,14 @@
                     "indentifier": {
                       "type": "string",
                       "description": "The indentifier for this badge action."
+=======
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Whether or not the item is hidden."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
                   },
                   "required": [
@@ -10934,113 +11560,11 @@
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge_action"
-              ]
-            }
-          }
-        }
-      },
-      "BadgeCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name for the badge. Translatable"
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the badge"
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "A short paragraph describing the badge. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the badge."
-                    },
-                    "issued_from": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Start time for when the badge is available to earn."
-                    },
-                    "issued_to": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "End time for when the badge is available to earn."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "description"
-                  ]
-                }
-              },
-              "required": [
-                "badge"
-              ]
-            }
-          }
-        }
-      },
-      "BadgeUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name for the badge. Translatable"
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the badge"
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "A short paragraph describing the badge. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the badge."
-                    },
-                    "issued_from": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Start time for when the badge is available to earn."
-                    },
-                    "issued_to": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "End time for when the badge is available to earn."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "description"
-                  ]
-                }
-              },
-              "required": [
-                "badge"
+=======
+                "message"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
@@ -11167,7 +11691,11 @@
           }
         }
       },
-      "BlockCreate": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestCreateForm": {
+=======
+      "NotificationDeviceIdsForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11175,64 +11703,65 @@
             "schema": {
               "type": "object",
               "properties": {
-                "block": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest": {
                   "type": "object",
                   "properties": {
-                    "blocked_id": {
+                    "event_id": {
                       "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
+                      "description": "The event a quest is attached to. Optional."
+                    },
                     "name": {
-                      "type": "string",
-                      "description": "Category name."
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
                     },
-                    "color": {
+                    "internal_name": {
                       "type": "string",
-                      "description": "The color hex code for the category."
+                      "description": "Internal name of the quest."
                     },
-                    "role": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
                       "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
                     }
                   },
                   "required": [
                     "name",
-                    "role"
-                  ]
+                    "internal_name",
+                    "description",
+                    "starts_at"
+=======
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
                 }
               },
               "required": [
-                "category"
+                "device_id"
               ]
             }
           }
         }
       },
-      "CategoryUpdateForm": {
+      "PasswordResetForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11240,19 +11769,321 @@
             "schema": {
               "type": "object",
               "properties": {
-                "category": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
+              ]
+            }
+          }
+        }
+      },
+      "PersonCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "facebook_auth_token",
+                    "username",
+                    "password"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest"
+=======
+                "product",
+                "person"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestUpdateForm": {
+=======
+      "PersonUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest": {
+                  "type": "object",
+                  "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
+                    "name": {
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the quest."
+                    },
+                    "descriptio": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
+=======
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                    }
+                  },
+                  "required": [
+                    "descriptio"
+                  ]
+                }
+              },
+              "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
+                "quest"
+=======
+                "product",
+                "person"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post comment."
+                    }
+                  },
+                  "required": [
+                    "post_comment_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "RewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
-                      "description": "Category name."
+                      "description": "Display friendly name of the reward."
                     },
-                    "color": {
+                    "internal_name": {
                       "type": "string",
-                      "description": "The color hex code for the category."
+                      "description": "Internal name of the reward."
                     },
-                    "role": {
+                    "reward_type": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
                     }
                   }
@@ -11272,10 +12103,47 @@
           "multipart/form-data": {
             "schema": {
               "type": "object"
+=======
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "EventUpdateForm": {
         "required": true,
         "description": "",
@@ -11288,6 +12156,9 @@
         }
       },
       "FollowingForm": {
+=======
+      "RewardUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11295,6 +12166,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "followed_id": {
                   "type": "integer",
                   "description": "Person to follow."
@@ -11316,14 +12188,22 @@
               "type": "object",
               "properties": {
                 "merchandise": {
+=======
+                "reward": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "object",
                   "properties": {
                     "name": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "description": "Name of the item."
+=======
+                      "description": "Display friendly name of the reward."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     },
                     "description": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "description": "Description of the item."
                     },
                     "price": {
@@ -11348,17 +12228,51 @@
                     "purchase_url": {
                       "type": "string",
                       "description": "Where a user can purchase this item."
+=======
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
                   },
                   "required": [
                     "name",
+<<<<<<< HEAD:docs/open_api/V3.json
                     "description",
                     "available",
                     "priority"
+=======
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "merchandise"
               ]
             }
@@ -11412,12 +12326,19 @@
               },
               "required": [
                 "merchandise"
+=======
+                "reward"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessageReportCreateForm": {
+=======
+      "PostReactionCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11425,6 +12346,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message_report": {
                   "type": "object",
                   "properties": {
@@ -11439,17 +12361,37 @@
                   },
                   "required": [
                     "message_id"
+=======
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  },
+                  "required": [
+                    "reaction"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message_report"
+=======
+                "post_reaction"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessageReportUpdateForm": {
+=======
+      "PostReactionUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11457,6 +12399,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message_report": {
                   "type": "object",
                   "properties": {
@@ -11472,12 +12415,30 @@
               },
               "required": [
                 "message_report"
+=======
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post_reaction"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessageCreateForm": {
+=======
+      "PostReportsCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11485,15 +12446,25 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message": {
                   "type": "object",
                   "properties": {
                     "body": {
                       "type": "string",
                       "description": "The body of the message."
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     },
-                    "picture": {
+                    "reason": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "format": "binary",
                       "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
                     },
@@ -11521,18 +12492,32 @@
                           }
                         }
                       }
+=======
+                      "description": "The reason given by the user for reporting the post."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
-                  }
+                  },
+                  "required": [
+                    "post_id"
+                  ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message"
+=======
+                "post_report"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessageUpdateForm": {
+=======
+      "PostReportsUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11540,6 +12525,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message": {
                   "type": "object",
                   "properties": {
@@ -11552,12 +12538,33 @@
               },
               "required": [
                 "message"
+=======
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RewardCreateForm": {
+=======
+      "PostCommentCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11565,6 +12572,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "reward": {
                   "type": "object",
                   "properties": {
@@ -11606,17 +12614,62 @@
                     "internal_name",
                     "reward_type",
                     "reward_type_id"
+=======
+                "post_comment": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the comment."
+                    }
+                  },
+                  "required": [
+                    "body"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   ]
+                },
+                "mentions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person_id": {
+                        "type": "integer",
+                        "description": "The id of the person mentioned."
+                      },
+                      "location": {
+                        "type": "integer",
+                        "description": "Where the mention text starts in the comment."
+                      },
+                      "length": {
+                        "type": "integer",
+                        "description": "The length of the mention text."
+                      }
+                    },
+                    "required": [
+                      "person_id",
+                      "location",
+                      "length"
+                    ]
+                  }
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "reward"
+=======
+                "post_comment"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RewardUpdateForm": {
+=======
+      "PostCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11624,11 +12677,16 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "reward": {
+=======
+                "post": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "body": {
                       "type": "string",
+<<<<<<< HEAD:docs/open_api/V3.json
                       "description": "Display friendly name of the reward."
                     },
                     "internal_name": {
@@ -11658,6 +12716,49 @@
                     "status": {
                       "type": "string",
                       "description": "The status of the reward. Can be active or inactive."
+=======
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
                   },
                   "required": [
@@ -11669,13 +12770,21 @@
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "reward"
+=======
+                "post"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "NotificationDeviceIdsForm": {
+=======
+      "PostUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11683,6 +12792,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "device_id": {
                   "type": "string",
                   "description": "ID of the device"
@@ -11798,12 +12908,70 @@
               "required": [
                 "product",
                 "person"
+=======
+                "post": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Post audio, this should be `audio/acc`."
+                    },
+                    "global": {
+                      "type": "boolean",
+                      "description": "Whether the post is global (seen by all users)."
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the post should start being visible (same format as in responses)."
+                    },
+                    "ends_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": " When the post should stop being visible (same format as in responses)."
+                    },
+                    "repost_interval": {
+                      "type": "integer",
+                      "description": "How often this post should be republished."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "description": "Priority value for post."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Whether the post is recommended.(Admin or product account)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PersonUpdateForm": {
+=======
+      "ActionTypeCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11811,6 +12979,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "product": {
                   "type": "string",
                   "description": "Internal name of the product."
@@ -11902,17 +13071,50 @@
                   },
                   "required": [
                     "post_comment_id"
+=======
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   ]
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment_report"
+=======
+                "action_type"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentReportUpdateForm": {
+=======
+      "ActionTypeUpdateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11920,6 +13122,7 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment_report": {
                   "type": "object",
                   "properties": {
@@ -11935,12 +13138,42 @@
               },
               "required": [
                 "post_comment_report"
+=======
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "action_type"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentCreateForm": {
+=======
+      "StepCreateForm": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "required": true,
         "description": "",
         "content": {
@@ -11948,12 +13181,54 @@
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment": {
                   "type": "object",
                   "properties": {
                     "body": {
                       "type": "string",
                       "description": "The body of the comment."
+=======
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "StepUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
                   },
                   "required": [
@@ -11987,7 +13262,11 @@
                 }
               },
               "required": [
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment"
+=======
+                "step"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
               ]
             }
           }
@@ -11998,386 +13277,9 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "StepObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "$ref": "#/components/schemas/StepJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Array": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "steps": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "step": {
-                        "$ref": "#/components/schemas/StepJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "TagArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsListsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostListJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostShareJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductBeaconObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "beacon": {
-                  "$ref": "#/components/schemas/ProductBeaconJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductBeaconArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "beacons": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "beacon": {
-                        "$ref": "#/components/schemas/ProductBeaconJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "$ref": "#/components/schemas/ProductJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "product": {
-                        "$ref": "#/components/schemas/ProductJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity": {
-                  "$ref": "#/components/schemas/QuestActivityJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "activity": {
-                        "$ref": "#/components/schemas/QuestActivityJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActionTypeObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action": {
-                  "$ref": "#/components/schemas/ActionTypeJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActionTypeArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "actions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "Action": {
-                        "$ref": "#/components/schemas/ActionTypeJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+=======
       "ActivityTypeObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -12406,66 +13308,42 @@
           }
         }
       },
-      "QuestCompletionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "completion": {
-                  "$ref": "#/components/schemas/QuestCompletionJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestCompletionArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "completions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "completion": {
-                        "$ref": "#/components/schemas/QuestCompletionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "AssignedRewardObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+=======
                 "assigned": {
                   "$ref": "#/components/schemas/AssignedRewardJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "StepObject": {
+=======
       "AssignedRewardArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+=======
                 "assignees": {
                   "type": "array",
                   "items": {
@@ -12476,19 +13354,70 @@
                       }
                     }
                   }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
-      "BadgeActionsPending": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "Array": {
+=======
+      "TagArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "steps": {
+=======
+                "posts": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostReactionsArray": {
+=======
+      "BadgeActionsPending": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+=======
                 "pending_badge": {
                   "type": "object",
                   "properties": {
@@ -12505,6 +13434,7 @@
                   "properties": {
                     "badge": {
                       "$ref": "#/components/schemas/BadgeJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                     }
                   }
                 }
@@ -12513,13 +13443,696 @@
           }
         }
       },
-      "BadgesArray": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostReactionsObject": {
+=======
+      "ProductBeaconObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+=======
+                "beacon": {
+                  "$ref": "#/components/schemas/ProductBeaconJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostReportsObject": {
+=======
+      "ProductBeaconArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+=======
+                "beacons": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beacon": {
+                        "$ref": "#/components/schemas/ProductBeaconJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostReportsArray": {
+=======
+      "BadgesArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_reports": {
+=======
+                "badges": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+=======
+                      "badge": {
+                        "$ref": "#/components/schemas/BadgeJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "TagArray": {
+=======
+      "BadgesObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+=======
+                "badge": {
+                  "$ref": "#/components/schemas/BadgeJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsArray": {
+=======
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+=======
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsListsArray": {
+=======
+      "ProductArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "posts": {
+=======
+                "products": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+=======
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsObject": {
+=======
+      "CategoryObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+=======
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostsShareObject": {
+=======
+      "CategoryArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+=======
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "ProductBeaconObject": {
+=======
+      "EventsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "beacon": {
+                  "$ref": "#/components/schemas/ProductBeaconJson"
+=======
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "ProductBeaconArray": {
+=======
+      "EventsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "beacons": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beacon": {
+                        "$ref": "#/components/schemas/ProductBeaconJson"
+                      }
+                    }
+                  }
+=======
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "ProductObject": {
+=======
+      "QuestActivityObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
+=======
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "ProductArray": {
+=======
+      "QuestActivityArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "products": {
+=======
+                "activities": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
+=======
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestActivityObject": {
+=======
+      "FollowingsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
+=======
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/FollowingJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestActivityArray": {
+=======
+      "FollowersArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "activities": {
+=======
+                "followers": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
+=======
+                      "follower": {
+                        "$ref": "#/components/schemas/FollowingJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "ActionTypeObject": {
+=======
+      "FollowingObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "action": {
+                  "$ref": "#/components/schemas/ActionTypeJson"
+=======
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "ActionTypeArray": {
+=======
+      "LevelsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "actions": {
+=======
+                "levels": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "Action": {
+                        "$ref": "#/components/schemas/ActionTypeJson"
+=======
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completion": {
+                  "$ref": "#/components/schemas/QuestCompletionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestCompletionObject": {
+=======
+      "QuestCompletionArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "completion": {
+                  "$ref": "#/components/schemas/QuestCompletionJson"
+=======
+                "completions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "completion": {
+                        "$ref": "#/components/schemas/QuestCompletionJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "QuestCompletionArray": {
+=======
+      "MerchandiseArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "completions": {
+=======
+                "merchandise": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "completion": {
+                        "$ref": "#/components/schemas/QuestCompletionJson"
+=======
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BadgeActionsPending": {
+=======
+      "MessagesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/MessageJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/MessageJson"
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "BadgesArray": {
+=======
+      "QuestObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badges": {
                   "type": "array",
                   "items": {
@@ -12530,19 +14143,28 @@
                       }
                     }
                   }
+=======
+                "quest": {
+                  "$ref": "#/components/schemas/QuestJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BadgesObject": {
+=======
+      "QuestsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "badge": {
                   "$ref": "#/components/schemas/BadgeJson"
                 }
@@ -12573,6 +14195,8 @@
             "schema": {
               "type": "object",
               "properties": {
+=======
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 "quests": {
                   "type": "array",
                   "items": {
@@ -12589,6 +14213,7 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -12620,19 +14245,31 @@
         }
       },
       "CategoryArray": {
+=======
+      "PeopleArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "categories": {
+=======
+                "people": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "category": {
                         "$ref": "#/components/schemas/CategoryJson"
+=======
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12642,13 +14279,18 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "EventsArray": {
+=======
+      "PersonObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "events": {
                   "type": "array",
                   "items": {
@@ -12659,21 +14301,34 @@
                       }
                     }
                   }
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "EventsObject": {
+=======
+      "PersonPrivateObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "event": {
                   "$ref": "#/components/schemas/EventJson"
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
@@ -12726,20 +14381,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "FollowingsArray": {
+=======
+      "PostCommentReportsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "followings": {
+=======
+                "post_comment_reports": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "following": {
                         "$ref": "#/components/schemas/FollowingJson"
+=======
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12749,13 +14417,18 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "FollowersArray": {
+=======
+      "RelationshipsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "followers": {
                   "type": "array",
                   "items": {
@@ -12766,49 +14439,31 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
+=======
                 "relationship": {
                   "$ref": "#/components/schemas/RelationshipJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "FollowingObject": {
+=======
       "RelationshipsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
+=======
                 "relationships": {
                   "type": "array",
                   "items": {
@@ -12819,26 +14474,64 @@
                       }
                     }
                   }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
-      "LevelsArray": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "RelationshipsObject": {
+=======
+      "RewardObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "levels": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+=======
+                "reward": {
+                  "$ref": "#/components/schemas/RewardJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "RelationshipsArray": {
+=======
+      "RewardArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "relationships": {
+=======
+                "rewards": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+=======
+                      "reward": {
+                        "$ref": "#/components/schemas/RewardJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12848,13 +14541,54 @@
           }
         }
       },
-      "MerchandiseArray": {
+<<<<<<< HEAD:docs/open_api/V3.json
+      "LevelsArray": {
+=======
+      "PostReactionsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "levels": {
+=======
+                "post_reactions": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+=======
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "MerchandiseArray": {
+=======
+      "PostReactionsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "merchandise": {
                   "type": "array",
                   "items": {
@@ -12865,41 +14599,67 @@
                       }
                     }
                   }
+=======
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MerchandiseObject": {
+=======
+      "PostReportsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "merchandise": {
                   "$ref": "#/components/schemas/MerchandiseJson"
+=======
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessageReportsArray": {
+=======
+      "PostReportsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message_reports": {
+=======
+                "post_reports": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "message_report": {
                         "$ref": "#/components/schemas/MessageReportJson"
+=======
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12909,20 +14669,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessagesArray": {
+=======
+      "PostCommentsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "messages": {
+=======
+                "post_comments": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "message": {
                         "$ref": "#/components/schemas/MessageJson"
+=======
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12932,50 +14705,89 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "MessagesObject": {
+=======
+      "PostCommentsListArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "message": {
                   "$ref": "#/components/schemas/MessageJson"
+=======
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentListJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RewardObject": {
+=======
+      "PostCommentsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "reward": {
                   "$ref": "#/components/schemas/RewardJson"
+=======
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RewardArray": {
+=======
+      "PostsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "rewards": {
+=======
+                "posts": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "reward": {
                         "$ref": "#/components/schemas/RewardJson"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12985,20 +14797,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PeopleArray": {
+=======
+      "PostsListsArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "people": {
+=======
+                "posts": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "person": {
                         "$ref": "#/components/schemas/PersonJson"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -13008,28 +14833,42 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PersonObject": {
+=======
+      "PostsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "person": {
                   "$ref": "#/components/schemas/PersonJson"
+=======
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PersonPrivateObject": {
+=======
+      "PostsShareObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "person": {
                   "$ref": "#/components/schemas/PersonPrivateJson"
                 }
@@ -13055,19 +14894,90 @@
                       }
                     }
                   }
+=======
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "RoomsObject": {
+=======
+      "ActionTypeObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+=======
+                "action": {
+                  "$ref": "#/components/schemas/ActionTypeJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "RoomsArray": {
+=======
+      "ActionTypeArray": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "rooms": {
+=======
+                "actions": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+=======
+                      "Action": {
+                        "$ref": "#/components/schemas/ActionTypeJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostCommentsArray": {
+=======
+      "RoomsObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
+                "post_comments": {
+=======
                 "room": {
                   "$ref": "#/components/schemas/RoomJson"
                 }
@@ -13084,35 +14994,18 @@
               "type": "object",
               "properties": {
                 "rooms": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "post_comment": {
                         "$ref": "#/components/schemas/PostCommentJson"
+=======
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                       }
                     }
                   }
@@ -13122,13 +15015,18 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "PostCommentsListArray": {
+=======
+      "SessionObject": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comments": {
                   "type": "array",
                   "items": {
@@ -13139,21 +15037,57 @@
                       }
                     }
                   }
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
                 }
               }
             }
           }
         }
       },
-      "PostCommentsObject": {
+      "StepObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD:docs/open_api/V3.json
+      "PostCommentsObject": {
+=======
+      "Array": {
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "post_comment": {
                   "$ref": "#/components/schemas/PostCommentJson"
+=======
+                "steps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
+                      }
+                    }
+                  }
+>>>>>>> fixes: bug fixes:doc/open_api/V3.json
                 }
               }
             }
