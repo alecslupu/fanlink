@@ -6405,50 +6405,90 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+<<<<<<< HEAD
       "SessionObject": {
+=======
+      "PostCommentsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostComment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsListArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
                 "person": {
                   "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/Room"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
+=======
+                "post_comments": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/Room"
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentList"
+                      }
+                    }
+                  }
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostComment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
                       }
                     }
                   }
@@ -6458,35 +6498,80 @@
           }
         }
       },
+<<<<<<< HEAD
       "RelationshipsObject": {
+=======
+      "PostReactionsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReaction"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
                 "relationship": {
                   "$ref": "#/components/schemas/Relationship"
+=======
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReaction"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "RelationshipsArray": {
+=======
+      "LevelsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "relationships": {
+=======
+                "levels": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "relationship": {
                         "$ref": "#/components/schemas/Relationship"
+=======
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                       }
                     }
                   }
@@ -6496,20 +6581,33 @@
           }
         }
       },
+<<<<<<< HEAD
       "RecommendedPostsArray": {
+=======
+      "FollowingsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "posts": {
+=======
+                "followings": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "post": {
                         "$ref": "#/components/schemas/Post"
+=======
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                       }
                     }
                   }
@@ -6519,13 +6617,41 @@
           }
         }
       },
+<<<<<<< HEAD
       "RecommendedPeopleArray": {
+=======
+      "FollowersArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
                 "people": {
                   "type": "array",
                   "items": {
@@ -6536,6 +6662,10 @@
                       }
                     }
                   }
+=======
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
@@ -6580,7 +6710,26 @@
           }
         }
       },
+<<<<<<< HEAD
       "PostReactionsArray": {
+=======
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/Block"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -6679,6 +6828,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6703,20 +6853,37 @@
         }
       },
       "MessagesObject": {
+=======
+      "RecommendedPeopleArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "message": {
                   "$ref": "#/components/schemas/Message"
+=======
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+                      }
+                    }
+                  }
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6749,19 +6916,31 @@
         }
       },
       "PeopleArray": {
+=======
+      "RecommendedPostsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "people": {
+=======
+                "posts": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "person": {
                         "$ref": "#/components/schemas/Person"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                       }
                     }
                   }
@@ -6771,28 +6950,42 @@
           }
         }
       },
+<<<<<<< HEAD
       "PersonObject": {
+=======
+      "RelationshipsObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "person": {
                   "$ref": "#/components/schemas/Person"
+=======
+                "relationship": {
+                  "$ref": "#/components/schemas/Relationship"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "PersonPrivateObject": {
+=======
+      "RelationshipsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "person": {
                   "$ref": "#/components/schemas/PersonPrivate"
                 }
@@ -6809,12 +7002,20 @@
               "type": "object",
               "properties": {
                 "post_comment_reports": {
+=======
+                "relationships": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReport"
+=======
+                      "relationship": {
+                        "$ref": "#/components/schemas/Relationship"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                       }
                     }
                   }
@@ -6824,13 +7025,18 @@
           }
         }
       },
+<<<<<<< HEAD
       "PostsArray": {
+=======
+      "RoomsObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "posts": {
                   "type": "array",
                   "items": {
@@ -6841,26 +7047,43 @@
                       }
                     }
                   }
+=======
+                "room": {
+                  "$ref": "#/components/schemas/Room"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "PostsListsArray": {
+=======
+      "RoomsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "posts": {
+=======
+                "rooms": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "post": {
                         "$ref": "#/components/schemas/PostList"
+=======
+                      "room": {
+                        "$ref": "#/components/schemas/Room"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                       }
                     }
                   }
@@ -6870,43 +7093,45 @@
           }
         }
       },
+<<<<<<< HEAD
       "PostsObject": {
+=======
+      "SessionObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post": {
                   "$ref": "#/components/schemas/Post"
+=======
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "PostsShareObject": {
+=======
+      "BadgesArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post": {
                   "$ref": "#/components/schemas/PostShare"
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
+=======
                 "badges": {
                   "type": "array",
                   "items": {
@@ -6917,12 +7142,50 @@
                       }
                     }
                   }
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
+      "BadgesArray": {
+=======
+      "EventsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "badges": {
+=======
+                "events": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD
+                      "badge": {
+                        "$ref": "#/components/schemas/Badge"
+=======
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6939,12 +7202,16 @@
         }
       },
       "EventsArray": {
+=======
+      "EventsObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "events": {
                   "type": "array",
                   "items": {
@@ -6955,118 +7222,31 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
+=======
                 "event": {
                   "$ref": "#/components/schemas/Event"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
-      "FollowingsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowersArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/Following"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/Level"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+<<<<<<< HEAD
+      "EventsObject": {
+=======
       "MerchandiseArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
+                "event": {
+                  "$ref": "#/components/schemas/Event"
+=======
                 "merchandise": {
                   "type": "array",
                   "items": {
@@ -7077,41 +7257,72 @@
                       }
                     }
                   }
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
+      "FollowingsArray": {
+=======
       "MerchandiseObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/Merchandise"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
+<<<<<<< HEAD
+                "followings": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+=======
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
+      "FollowersArray": {
+=======
+      "MessagesArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "followers": {
+=======
+                "messages": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+=======
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                       }
                     }
                   }
@@ -7120,6 +7331,192 @@
             }
           }
         }
+      },
+<<<<<<< HEAD
+      "FollowingObject": {
+=======
+      "MessagesObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "following": {
+                  "$ref": "#/components/schemas/Following"
+=======
+                "message": {
+                  "$ref": "#/components/schemas/Message"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
+      "LevelsArray": {
+=======
+      "PeopleArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "levels": {
+=======
+                "people": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+=======
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
+      "MerchandiseArray": {
+=======
+      "PersonObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "merchandise": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
+                      }
+                    }
+                  }
+=======
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
+      "MerchandiseObject": {
+=======
+      "PersonPrivateObject": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
+      "MessageReportsArray": {
+=======
+      "PostCommentReportsArray": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+<<<<<<< HEAD
+                "message_reports": {
+=======
+                "post_comment_reports": {
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+<<<<<<< HEAD
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+=======
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReport"
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+<<<<<<< HEAD
+=======
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+>>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
       }
     }
   }
