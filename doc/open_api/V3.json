@@ -10093,6 +10093,77 @@
       }
     },
     "requestBodies": {
+      "QuestActivityCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  },
+                  "required": [
+                    "hint"
+                  ]
+                }
+              },
+              "required": [
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
+      "QuestActivityUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_activity": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "quest_activity"
+              ]
+            }
+          }
+        }
+      },
       "QuestCompletionCreateForm": {
         "required": true,
         "description": "",
@@ -10851,6 +10922,28 @@
           }
         }
       },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
       "StepCreateForm": {
         "required": true,
         "description": "",
@@ -10905,28 +10998,6 @@
               "required": [
                 "step"
               ]
-            }
-          }
-        }
-      },
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
             }
           }
         }
@@ -11921,82 +11992,49 @@
             }
           }
         }
-      },
-      "QuestActivityCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  },
-                  "required": [
-                    "hint"
-                  ]
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "QuestActivityUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
       }
     },
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
+      },
+      "QuestActivityObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestActivityArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activities": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "QuestCompletionObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -12112,6 +12150,34 @@
           }
         }
       },
+      "ActivityTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActivityTypeJson"
+            }
+          }
+        }
+      },
+      "ActivityTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "types": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityTypeJson"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "RecommendedPeopleArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -12151,34 +12217,6 @@
                         "$ref": "#/components/schemas/PostJson"
                       }
                     }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActivityTypeObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ActivityTypeJson"
-            }
-          }
-        }
-      },
-      "ActivityTypeArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "types": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ActivityTypeJson"
                   }
                 }
               }
@@ -12460,6 +12498,44 @@
           }
         }
       },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+                }
+              }
+            }
+          }
+        }
+      },
       "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -12507,44 +12583,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
                 }
               }
             }
@@ -12612,29 +12650,6 @@
           }
         }
       },
-      "TagArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -12649,6 +12664,29 @@
                     "properties": {
                       "level": {
                         "$ref": "#/components/schemas/LevelJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "TagArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
                       }
                     }
                   }
@@ -13113,44 +13151,6 @@
                     "properties": {
                       "product": {
                         "$ref": "#/components/schemas/ProductJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity": {
-                  "$ref": "#/components/schemas/QuestActivityJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "activity": {
-                        "$ref": "#/components/schemas/QuestActivityJson"
                       }
                     }
                   }
