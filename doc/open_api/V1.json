@@ -6406,50 +6406,54 @@
         "description": "HTTP/1.1 200 Ok"
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "SessionObject": {
 =======
       "PostCommentsArray": {
+=======
+      "RoomsObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostComment"
-                      }
-                    }
-                  }
+                "room": {
+                  "$ref": "#/components/schemas/Room"
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "PostCommentsListArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "RoomsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "person": {
                   "$ref": "#/components/schemas/Person"
 =======
                 "post_comments": {
+=======
+                "rooms": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentList"
+                      "room": {
+                        "$ref": "#/components/schemas/Room"
                       }
                     }
                   }
@@ -6460,35 +6464,73 @@
           }
         }
       },
-      "PostCommentsObject": {
+      "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostComment"
+                "person": {
+                  "$ref": "#/components/schemas/Person"
                 }
               }
             }
           }
         }
       },
-      "MessageReportsArray": {
+      "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "message_reports": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+<<<<<<< HEAD
+<<<<<<< HEAD
+      "RelationshipsObject": {
+=======
+      "PostReactionsArray": {
+=======
+      "BadgesArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badges": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
+                      "badge": {
+                        "$ref": "#/components/schemas/Badge"
                       }
                     }
                   }
@@ -6499,39 +6541,18 @@
         }
       },
 <<<<<<< HEAD
-      "RelationshipsObject": {
-=======
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReaction"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "PostReactionsObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "BlocksObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "relationship": {
                   "$ref": "#/components/schemas/Relationship"
@@ -6539,6 +6560,10 @@
                 "post_reaction": {
                   "$ref": "#/components/schemas/PostReaction"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "block": {
+                  "$ref": "#/components/schemas/Block"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -6546,10 +6571,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "RelationshipsArray": {
 =======
       "LevelsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "EventsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -6557,14 +6586,19 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "relationships": {
 =======
                 "levels": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "events": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                       "relationship": {
                         "$ref": "#/components/schemas/Relationship"
@@ -6572,6 +6606,10 @@
                       "level": {
                         "$ref": "#/components/schemas/Level"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -6582,8 +6620,26 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "RecommendedPostsArray": {
 =======
+=======
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      },
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
       "FollowingsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
         "description": "HTTP/1.1 200 Ok",
@@ -6672,35 +6728,43 @@
           }
         }
       },
-      "PostReportsObject": {
+      "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReport"
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/Level"
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         }
       },
-      "PostReportsArray": {
+      "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "post_reports": {
+                "merchandise": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReport"
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
                       }
                     }
                   }
@@ -6711,38 +6775,55 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "PostReactionsArray": {
 =======
       "BlocksObject": {
+=======
+      "MerchandiseObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/Block"
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
       "PostsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "MessageReportsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post_reactions": {
+=======
+                "message_reports": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "post_reaction": {
                         "$ref": "#/components/schemas/PostReaction"
+=======
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -6752,13 +6833,18 @@
           }
         }
       },
+<<<<<<< HEAD
       "PostReactionsObject": {
+=======
+      "MessagesArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post_reaction": {
                   "$ref": "#/components/schemas/PostReaction"
                 }
@@ -6775,12 +6861,20 @@
               "type": "object",
               "properties": {
                 "post_comments": {
+=======
+                "messages": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "post_comment": {
                         "$ref": "#/components/schemas/PostComment"
+=======
+                      "message": {
+                        "$ref": "#/components/schemas/Message"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -6790,6 +6884,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "PostCommentsListArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6814,20 +6909,29 @@
         }
       },
       "PostCommentsObject": {
+=======
+      "MessagesObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
                 "post_comment": {
                   "$ref": "#/components/schemas/PostComment"
+=======
+                "message": {
+                  "$ref": "#/components/schemas/Message"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
 <<<<<<< HEAD
       "MessagesArray": {
         "description": "HTTP/1.1 200 Ok",
@@ -6856,6 +6960,9 @@
 =======
       "RecommendedPeopleArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PeopleArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -6915,16 +7022,21 @@
           }
         }
       },
+<<<<<<< HEAD
       "PeopleArray": {
 =======
       "RecommendedPostsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PersonObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "people": {
 =======
@@ -6944,6 +7056,10 @@
                       }
                     }
                   }
+=======
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -6951,10 +7067,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "PersonObject": {
 =======
       "RelationshipsObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PersonPrivateObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -6962,18 +7082,24 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "person": {
                   "$ref": "#/components/schemas/Person"
 =======
                 "relationship": {
                   "$ref": "#/components/schemas/Relationship"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
 <<<<<<< HEAD
       "PersonPrivateObject": {
 =======
@@ -6994,6 +7120,8 @@
           }
         }
       },
+=======
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
       "PostCommentReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -7002,13 +7130,17 @@
               "type": "object",
               "properties": {
                 "post_comment_reports": {
+<<<<<<< HEAD
 =======
                 "relationships": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReport"
@@ -7016,6 +7148,10 @@
                       "relationship": {
                         "$ref": "#/components/schemas/Relationship"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReport"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -7026,10 +7162,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "PostsArray": {
 =======
       "RoomsObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostCommentsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7037,11 +7177,16 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "posts": {
+=======
+                "post_comments": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "post": {
                         "$ref": "#/components/schemas/Post"
                       }
@@ -7051,6 +7196,13 @@
                 "room": {
                   "$ref": "#/components/schemas/Room"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostComment"
+                      }
+                    }
+                  }
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7058,10 +7210,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "PostsListsArray": {
 =======
       "RoomsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostCommentsListArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7069,14 +7225,19 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "posts": {
 =======
                 "rooms": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "post_comments": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                       "post": {
                         "$ref": "#/components/schemas/PostList"
@@ -7084,6 +7245,10 @@
                       "room": {
                         "$ref": "#/components/schemas/Room"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentList"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -7094,16 +7259,21 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "PostsObject": {
 =======
       "SessionObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostCommentsObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "post": {
                   "$ref": "#/components/schemas/Post"
@@ -7111,6 +7281,10 @@
                 "person": {
                   "$ref": "#/components/schemas/Person"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostComment"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7118,10 +7292,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "PostsShareObject": {
 =======
       "BadgesArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostReactionsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7129,16 +7307,20 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "post": {
                   "$ref": "#/components/schemas/PostShare"
 =======
                 "badges": {
+=======
+                "post_reactions": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/Badge"
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReaction"
                       }
                     }
                   }
@@ -7150,16 +7332,21 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "BadgesArray": {
 =======
       "EventsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostReactionsObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "badges": {
 =======
@@ -7179,12 +7366,17 @@
                       }
                     }
                   }
+=======
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReaction"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
+<<<<<<< HEAD
 <<<<<<< HEAD
       "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -7205,12 +7397,16 @@
 =======
       "EventsObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostReportsObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "events": {
                   "type": "array",
@@ -7226,6 +7422,10 @@
                 "event": {
                   "$ref": "#/components/schemas/Event"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReport"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7233,10 +7433,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "EventsObject": {
 =======
       "MerchandiseArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostReportsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7244,16 +7448,20 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "event": {
                   "$ref": "#/components/schemas/Event"
 =======
                 "merchandise": {
+=======
+                "post_reports": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/Merchandise"
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReport"
                       }
                     }
                   }
@@ -7265,10 +7473,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "FollowingsArray": {
 =======
       "MerchandiseObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7276,11 +7488,16 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "followings": {
+=======
+                "posts": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "following": {
                         "$ref": "#/components/schemas/Following"
                       }
@@ -7290,6 +7507,13 @@
                 "merchandise": {
                   "$ref": "#/components/schemas/Merchandise"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
+                      }
+                    }
+                  }
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7297,10 +7521,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "FollowersArray": {
 =======
       "MessagesArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostsListsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7308,14 +7536,19 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "followers": {
 =======
                 "messages": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "posts": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                       "follower": {
                         "$ref": "#/components/schemas/Following"
@@ -7323,6 +7556,10 @@
                       "message": {
                         "$ref": "#/components/schemas/Message"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostList"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -7333,10 +7570,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "FollowingObject": {
 =======
       "MessagesObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostsObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7344,12 +7585,17 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "following": {
                   "$ref": "#/components/schemas/Following"
 =======
                 "message": {
                   "$ref": "#/components/schemas/Message"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "post": {
+                  "$ref": "#/components/schemas/Post"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7357,10 +7603,29 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "LevelsArray": {
 =======
       "PeopleArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShare"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7393,10 +7658,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "MerchandiseArray": {
 =======
       "PersonObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "RecommendedPostsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7404,11 +7673,16 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "merchandise": {
+=======
+                "posts": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
                       "merchandise": {
                         "$ref": "#/components/schemas/Merchandise"
                       }
@@ -7418,6 +7692,13 @@
                 "person": {
                   "$ref": "#/components/schemas/Person"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
+                      }
+                    }
+                  }
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7425,16 +7706,21 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "MerchandiseObject": {
 =======
       "PersonPrivateObject": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "RelationshipsObject": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                 "merchandise": {
                   "$ref": "#/components/schemas/Merchandise"
@@ -7442,6 +7728,10 @@
                 "person": {
                   "$ref": "#/components/schemas/PersonPrivate"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "relationship": {
+                  "$ref": "#/components/schemas/Relationship"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -7449,10 +7739,14 @@
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       "MessageReportsArray": {
 =======
       "PostCommentReportsArray": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+      "RelationshipsArray": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7460,14 +7754,19 @@
               "type": "object",
               "properties": {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 "message_reports": {
 =======
                 "post_comment_reports": {
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                "relationships": {
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD
 <<<<<<< HEAD
                       "message_report": {
                         "$ref": "#/components/schemas/MessageReport"
@@ -7475,6 +7774,10 @@
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReport"
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+                      "relationship": {
+                        "$ref": "#/components/schemas/Relationship"
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -7483,6 +7786,7 @@
             }
           }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       },
@@ -7517,6 +7821,8 @@
           }
         }
 >>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+=======
+>>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
       }
     }
   }
