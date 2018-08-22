@@ -10093,6 +10093,26 @@
       }
     },
     "requestBodies": {
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+              ]
+            }
+          }
+        }
+      },
       "QuestCreateForm": {
         "required": true,
         "description": "",
@@ -10214,6 +10234,256 @@
           }
         }
       },
+      "MerchandiseForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "available",
+                    "priority"
+                  ]
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "message_id": {
+                      "type": "integer",
+                      "description": "The id of the message being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the message."
+                    }
+                  },
+                  "required": [
+                    "message_id"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message audio, this should be `audio/aac`."
+                    },
+                    "mentions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "person_id": {
+                            "type": "integer",
+                            "description": "ID of user mentioned"
+                          },
+                          "location": {
+                            "type": "integer",
+                            "description": "The location in the message body that the mention is at."
+                          },
+                          "length": {
+                            "type": "integer",
+                            "description": "The length of the users name in the mention"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "MessageUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Whether or not the item is hidden."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
       "NotificationDeviceIdsForm": {
         "required": true,
         "description": "",
@@ -10229,6 +10499,149 @@
               },
               "required": [
                 "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "RewardCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
+      },
+      "RewardUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the reward."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the reward."
+                    },
+                    "reward_type": {
+                      "type": "string",
+                      "description": "What the reward provides. Currently supports badges."
+                    },
+                    "reward_type_id": {
+                      "type": "integer",
+                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
+                    },
+                    "series": {
+                      "type": "string",
+                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
+                    },
+                    "completion_requirement": {
+                      "type": "integer",
+                      "description": "The number of completions required to unlock this reward."
+                    },
+                    "points": {
+                      "type": "string",
+                      "description": "The amount of points this reward gives towards a person's level."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the reward. Can be active or inactive."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name",
+                    "reward_type",
+                    "reward_type_id"
+                  ]
+                }
+              },
+              "required": [
+                "reward"
+              ]
+            }
+          }
+        }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
               ]
             }
           }
@@ -10507,31 +10920,6 @@
           }
         }
       },
-      "PasswordResetForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of product."
-                },
-                "email_or_username": {
-                  "type": "string",
-                  "description": "The person's email or username."
-                }
-              },
-              "required": [
-                "product",
-                "email_or_username"
-              ]
-            }
-          }
-        }
-      },
       "PostReactionCreateForm": {
         "required": true,
         "description": "",
@@ -10580,124 +10968,6 @@
               },
               "required": [
                 "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "RewardCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the reward."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the reward."
-                    },
-                    "reward_type": {
-                      "type": "string",
-                      "description": "What the reward provides. Currently supports badges."
-                    },
-                    "reward_type_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
-                    },
-                    "series": {
-                      "type": "string",
-                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
-                    },
-                    "completion_requirement": {
-                      "type": "integer",
-                      "description": "The number of completions required to unlock this reward."
-                    },
-                    "points": {
-                      "type": "string",
-                      "description": "The amount of points this reward gives towards a person's level."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The status of the reward. Can be active or inactive."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
-              ]
-            }
-          }
-        }
-      },
-      "RewardUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the reward."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the reward."
-                    },
-                    "reward_type": {
-                      "type": "string",
-                      "description": "What the reward provides. Currently supports badges."
-                    },
-                    "reward_type_id": {
-                      "type": "integer",
-                      "description": "The ID of the reward_type. Example: If this reward gives a badge, you would set the type to Badge and the ID to the ID of the badge it should reward."
-                    },
-                    "series": {
-                      "type": "string",
-                      "description": "The series this reward belongs to. For rewards that are awarded from actions, this is the action type internal name. For all others, it's up to the person creating the reward."
-                    },
-                    "completion_requirement": {
-                      "type": "integer",
-                      "description": "The number of completions required to unlock this reward."
-                    },
-                    "points": {
-                      "type": "string",
-                      "description": "The amount of points this reward gives towards a person's level."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "The status of the reward. Can be active or inactive."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "reward_type",
-                    "reward_type_id"
-                  ]
-                }
-              },
-              "required": [
-                "reward"
               ]
             }
           }
@@ -10763,7 +11033,7 @@
           }
         }
       },
-      "ActionTypeCreateForm": {
+      "StepCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -10771,71 +11041,51 @@
             "schema": {
               "type": "object",
               "properties": {
-                "action_type": {
+                "step": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
                       "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name"
-                  ]
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
-      "ActionTypeUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
+                      "description": "Sets the display name for the step."
                     }
                   }
                 }
               },
               "required": [
-                "action_type"
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "StepUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
               ]
             }
           }
@@ -10966,6 +11216,172 @@
               },
               "required": [
                 "post"
+              ]
+            }
+          }
+        }
+      },
+      "ActionTypeCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
+                }
+              },
+              "required": [
+                "action_type"
+              ]
+            }
+          }
+        }
+      },
+      "ActionTypeUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "action_type"
+              ]
+            }
+          }
+        }
+      },
+      "BeaconCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  },
+                  "required": [
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
+                  ]
+                }
+              },
+              "required": [
+                "product_beacon"
+              ]
+            }
+          }
+        }
+      },
+      "BeaconUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product_beacon"
               ]
             }
           }
@@ -11120,7 +11536,7 @@
           }
         }
       },
-      "StepCreateForm": {
+      "ProductCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11128,28 +11544,37 @@
             "schema": {
               "type": "object",
               "properties": {
-                "step": {
+                "product": {
                   "type": "object",
                   "properties": {
-                    "unlocks": {
-                      "type": "array",
-                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
-                    },
-                    "display": {
+                    "name": {
                       "type": "string",
-                      "description": "Sets the display name for the step."
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
                     }
-                  }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
                 }
               },
               "required": [
-                "step"
+                "product"
               ]
             }
           }
         }
       },
-      "StepUpdateForm": {
+      "ProductUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11157,22 +11582,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "step": {
+                "product": {
                   "type": "object",
                   "properties": {
-                    "unlocks": {
-                      "type": "array",
-                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
-                    },
-                    "display": {
+                    "name": {
                       "type": "string",
-                      "description": "Sets the display name for the step."
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
                     }
                   }
                 }
               },
               "required": [
-                "step"
+                "product"
               ]
             }
           }
@@ -11316,7 +11746,7 @@
           }
         }
       },
-      "BeaconCreateForm": {
+      "QuestActivityCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11324,46 +11754,36 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product_beacon": {
+                "quest_activity": {
                   "type": "object",
                   "properties": {
-                    "beacon_pid": {
-                      "type": "string",
-                      "description": "The manufacturer's id of the beacon"
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
                     },
-                    "uuid": {
-                      "type": "string",
-                      "description": "The UUID of the beacon."
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
                     },
-                    "lower": {
+                    "picture": {
                       "type": "string",
-                      "description": "Lower value."
-                    },
-                    "upper": {
-                      "type": "string",
-                      "description": "Upper value."
-                    },
-                    "attached_to": {
-                      "type": "integer",
-                      "description": "The activity the beacon is attached to. Can be null."
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
                     }
                   },
                   "required": [
-                    "beacon_pid",
-                    "uuid",
-                    "lower",
-                    "upper"
+                    "hint"
                   ]
                 }
               },
               "required": [
-                "product_beacon"
+                "quest_activity"
               ]
             }
           }
         }
       },
-      "BeaconUpdateForm": {
+      "QuestActivityUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11371,34 +11791,27 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product_beacon": {
+                "quest_activity": {
                   "type": "object",
                   "properties": {
-                    "beacon_pid": {
-                      "type": "string",
-                      "description": "The manufacturer's id of the beacon"
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
                     },
-                    "uuid": {
-                      "type": "string",
-                      "description": "The UUID of the beacon."
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
                     },
-                    "lower": {
+                    "picture": {
                       "type": "string",
-                      "description": "Lower value."
-                    },
-                    "upper": {
-                      "type": "string",
-                      "description": "Upper value."
-                    },
-                    "attached_to": {
-                      "type": "integer",
-                      "description": "The activity the beacon is attached to. Can be null."
+                      "format": "binary",
+                      "description": "An image associated with the quest activity."
                     }
                   }
                 }
               },
               "required": [
-                "product_beacon"
+                "quest_activity"
               ]
             }
           }
@@ -11502,361 +11915,6 @@
           }
         }
       },
-      "ProductCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Product display name."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Product internal name."
-                    },
-                    "enabled": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Whether or not the product is enabled."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name"
-                  ]
-                }
-              },
-              "required": [
-                "product"
-              ]
-            }
-          }
-        }
-      },
-      "ProductUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Product display name."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Product internal name."
-                    },
-                    "enabled": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Whether or not the product is enabled."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "product"
-              ]
-            }
-          }
-        }
-      },
-      "QuestActivityCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  },
-                  "required": [
-                    "hint"
-                  ]
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "QuestActivityUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "FollowingForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-              ]
-            }
-          }
-        }
-      },
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "MerchandiseForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "description",
-                    "available",
-                    "priority"
-                  ]
-                }
-              },
-              "required": [
-                "merchandise"
-              ]
-            }
-          }
-        }
-      },
-      "MerchandiseUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "merchandise"
-              ]
-            }
-          }
-        }
-      },
-      "MessageReportCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_report": {
-                  "type": "object",
-                  "properties": {
-                    "message_id": {
-                      "type": "integer",
-                      "description": "The id of the message being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the message."
-                    }
-                  },
-                  "required": [
-                    "message_id"
-                  ]
-                }
-              },
-              "required": [
-                "message_report"
-              ]
-            }
-          }
-        }
-      },
-      "MessageReportUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "message_report"
-              ]
-            }
-          }
-        }
-      },
       "QuestCompletionCreateForm": {
         "required": true,
         "description": "",
@@ -11913,82 +11971,24 @@
           }
         }
       },
-      "MessageCreateForm": {
+      "EventForm": {
         "required": true,
         "description": "",
         "content": {
           "multipart/form-data": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message audio, this should be `audio/aac`."
-                    },
-                    "mentions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "person_id": {
-                            "type": "integer",
-                            "description": "ID of user mentioned"
-                          },
-                          "location": {
-                            "type": "integer",
-                            "description": "The location in the message body that the mention is at."
-                          },
-                          "length": {
-                            "type": "integer",
-                            "description": "The length of the users name in the mention"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
+              "type": "object"
             }
           }
         }
       },
-      "MessageUpdateForm": {
+      "EventUpdateForm": {
         "required": true,
         "description": "",
         "content": {
           "multipart/form-data": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "hidden": {
-                      "type": "boolean",
-                      "description": "Whether or not the item is hidden."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
+              "type": "object"
             }
           }
         }
@@ -11997,6 +11997,90 @@
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
+      },
+      "FollowingsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/FollowingJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowersArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "follower": {
+                        "$ref": "#/components/schemas/FollowingJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "QuestObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -12036,20 +12120,20 @@
           }
         }
       },
-      "PeopleArray": {
+      "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "people": {
+                "merchandise": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
                       }
                     }
                   }
@@ -12059,53 +12143,76 @@
           }
         }
       },
-      "PersonObject": {
+      "MerchandiseObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
                 }
               }
             }
           }
         }
       },
-      "PersonPrivateObject": {
+      "MessageReportsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivateJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
+                "message_reports": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReportJson"
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/MessageJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/MessageJson"
                 }
               }
             }
@@ -12187,6 +12294,120 @@
                     "properties": {
                       "relationship": {
                         "$ref": "#/components/schemas/RelationshipJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "$ref": "#/components/schemas/RewardJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rewards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "reward": {
+                        "$ref": "#/components/schemas/RewardJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
                       }
                     }
                   }
@@ -12295,35 +12516,35 @@
           }
         }
       },
-      "RewardObject": {
+      "RoomsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "reward": {
-                  "$ref": "#/components/schemas/RewardJson"
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
                 }
               }
             }
           }
         }
       },
-      "RewardArray": {
+      "RoomsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "rewards": {
+                "rooms": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "reward": {
-                        "$ref": "#/components/schemas/RewardJson"
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
                       }
                     }
                   }
@@ -12371,35 +12592,50 @@
           }
         }
       },
-      "ActionTypeObject": {
+      "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "action": {
-                  "$ref": "#/components/schemas/ActionTypeJson"
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
                 }
               }
             }
           }
         }
       },
-      "ActionTypeArray": {
+      "StepObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "actions": {
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Array": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "steps": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "Action": {
-                        "$ref": "#/components/schemas/ActionTypeJson"
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
                       }
                     }
                   }
@@ -12485,35 +12721,96 @@
           }
         }
       },
-      "RoomsObject": {
+      "TagArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         }
       },
-      "RoomsArray": {
+      "ActionTypeObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "rooms": {
+                "action": {
+                  "$ref": "#/components/schemas/ActionTypeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActionTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actions": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
+                      "Action": {
+                        "$ref": "#/components/schemas/ActionTypeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacon": {
+                  "$ref": "#/components/schemas/ProductBeaconJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacons": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beacon": {
+                        "$ref": "#/components/schemas/ProductBeaconJson"
                       }
                     }
                   }
@@ -12589,50 +12886,35 @@
           }
         }
       },
-      "SessionObject": {
+      "ProductObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
                 }
               }
             }
           }
         }
       },
-      "StepObject": {
+      "ProductArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "step": {
-                  "$ref": "#/components/schemas/StepJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Array": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "steps": {
+                "products": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "step": {
-                        "$ref": "#/components/schemas/StepJson"
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
                       }
                     }
                   }
@@ -12711,58 +12993,35 @@
           }
         }
       },
-      "ProductBeaconObject": {
+      "QuestActivityObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "beacon": {
-                  "$ref": "#/components/schemas/ProductBeaconJson"
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
                 }
               }
             }
           }
         }
       },
-      "ProductBeaconArray": {
+      "QuestActivityArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "beacons": {
+                "activities": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "beacon": {
-                        "$ref": "#/components/schemas/ProductBeaconJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "TagArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
                       }
                     }
                   }
@@ -12825,265 +13084,6 @@
           }
         }
       },
-      "ProductObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "$ref": "#/components/schemas/ProductJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "products": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "product": {
-                        "$ref": "#/components/schemas/ProductJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity": {
-                  "$ref": "#/components/schemas/QuestActivityJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestActivityArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activities": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "activity": {
-                        "$ref": "#/components/schemas/QuestActivityJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowersArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "QuestCompletionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -13122,20 +13122,20 @@
           }
         }
       },
-      "MessagesArray": {
+      "EventsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "messages": {
+                "events": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
                       }
                     }
                   }
@@ -13145,15 +13145,15 @@
           }
         }
       },
-      "MessagesObject": {
+      "EventsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
                 }
               }
             }
