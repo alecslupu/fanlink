@@ -38,10 +38,9 @@ group :production, :staging do
 end
 
 group :staging, :development do
-    gem 'redis'
-    gem 'redis-namespace'
-    gem 'redis-rails'
-    gem 'yajl-ruby', require: 'yajl/json_gem'
+    # gem 'redis'
+    # gem 'redis-namespace'
+    # gem 'redis-rails'
 end
 
 group :development, :test do
