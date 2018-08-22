@@ -10093,144 +10093,6 @@
       }
     },
     "requestBodies": {
-      "StepCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "type": "object",
-                  "properties": {
-                    "unlocks": {
-                      "type": "array",
-                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
-                    },
-                    "display": {
-                      "type": "string",
-                      "description": "Sets the display name for the step."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "step"
-              ]
-            }
-          }
-        }
-      },
-      "StepUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "type": "object",
-                  "properties": {
-                    "unlocks": {
-                      "type": "array",
-                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
-                    },
-                    "display": {
-                      "type": "string",
-                      "description": "Sets the display name for the step."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "step"
-              ]
-            }
-          }
-        }
-      },
-      "TypeBodyCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity_type": {
-                  "type": "object",
-                  "properties": {
-                    "atype": {
-                      "type": "string",
-                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
-                    },
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "This field is used as a display field for the end user."
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "atype",
-                    "value"
-                  ]
-                }
-              },
-              "required": [
-                "activity_type"
-              ]
-            }
-          }
-        }
-      },
-      "TypeBodyUpdate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activity_type": {
-                  "type": "object",
-                  "properties": {
-                    "atype": {
-                      "type": "string",
-                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
-                    },
-                    "value": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "This field is used as a display field for the end user."
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "activity_type"
-              ]
-            }
-          }
-        }
-      },
       "AssignedRewardCreateForm": {
         "required": true,
         "description": "",
@@ -10295,484 +10157,6 @@
               },
               "required": [
                 "assign"
-              ]
-            }
-          }
-        }
-      },
-      "BadgeActionCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
-              ]
-            }
-          }
-        }
-      },
-      "BlockCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "type": "object",
-                  "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "role"
-                  ]
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-      "CategoryUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "category"
-              ]
-            }
-          }
-        }
-      },
-      "EventForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "FollowingForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-              ]
-            }
-          }
-        }
-      },
-      "MessageCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message audio, this should be `audio/aac`."
-                    },
-                    "mentions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "person_id": {
-                            "type": "integer",
-                            "description": "ID of user mentioned"
-                          },
-                          "location": {
-                            "type": "integer",
-                            "description": "The location in the message body that the mention is at."
-                          },
-                          "length": {
-                            "type": "integer",
-                            "description": "The length of the users name in the mention"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
-          }
-        }
-      },
-      "MessageUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "hidden": {
-                      "type": "boolean",
-                      "description": "Whether or not the item is hidden."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_comment_id": {
-                      "type": "integer",
-                      "description": "The id of the post comment being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post comment."
-                    }
-                  },
-                  "required": [
-                    "post_comment_id"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the comment."
-                    }
-                  },
-                  "required": [
-                    "body"
-                  ]
-                },
-                "mentions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person_id": {
-                        "type": "integer",
-                        "description": "The id of the person mentioned."
-                      },
-                      "location": {
-                        "type": "integer",
-                        "description": "Where the mention text starts in the comment."
-                      },
-                      "length": {
-                        "type": "integer",
-                        "description": "The length of the mention text."
-                      }
-                    },
-                    "required": [
-                      "person_id",
-                      "location",
-                      "length"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "post_comment"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  },
-                  "required": [
-                    "reaction"
-                  ]
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_id": {
-                      "type": "integer",
-                      "description": "The id of the post being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post."
-                    }
-                  },
-                  "required": [
-                    "post_id"
-                  ]
-                }
-              },
-              "required": [
-                "post_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_report"
               ]
             }
           }
@@ -10908,420 +10292,6 @@
           }
         }
       },
-      "QuestActivityCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  },
-                  "required": [
-                    "hint"
-                  ]
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "QuestActivityUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_activity": {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the activity. Translatable"
-                    },
-                    "hint": {
-                      "type": "object",
-                      "description": "A hint for completing the quest activity. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "An image associated with the quest activity."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "quest_activity"
-              ]
-            }
-          }
-        }
-      },
-      "QuestCompletionCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_completion": {
-                  "type": "object",
-                  "properties": {
-                    "activity_id": {
-                      "type": "integer",
-                      "description": "The id of the activity completed."
-                    }
-                  },
-                  "required": [
-                    "activity_id"
-                  ]
-                }
-              },
-              "required": [
-                "quest_completion"
-              ]
-            }
-          }
-        }
-      },
-      "QuestCompletionUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest_completion": {
-                  "type": "object",
-                  "properties": {
-                    "activity_id": {
-                      "type": "integer",
-                      "description": "The id of the activity completed."
-                    }
-                  },
-                  "required": [
-                    "activity_id"
-                  ]
-                }
-              },
-              "required": [
-                "quest_completion"
-              ]
-            }
-          }
-        }
-      },
-      "QuestCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest": {
-                  "type": "object",
-                  "properties": {
-                    "event_id": {
-                      "type": "integer",
-                      "description": "The event a quest is attached to. Optional."
-                    },
-                    "name": {
-                      "type": "object",
-                      "description": "Name of the quest. Can be string or an object. Translatable."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the quest."
-                    },
-                    "description": {
-                      "type": "object",
-                      "description": "Description of the quest. Can be string or object. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the quest."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest starts."
-                    },
-                    "end_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest ends."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name",
-                    "description",
-                    "starts_at"
-                  ]
-                }
-              },
-              "required": [
-                "quest"
-              ]
-            }
-          }
-        }
-      },
-      "QuestUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest": {
-                  "type": "object",
-                  "properties": {
-                    "event_id": {
-                      "type": "integer",
-                      "description": "The event a quest is attached to. Optional."
-                    },
-                    "name": {
-                      "type": "object",
-                      "description": "Name of the quest. Can be string or an object. Translatable."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the quest."
-                    },
-                    "descriptio": {
-                      "type": "object",
-                      "description": "Description of the quest. Can be string or object. Translatable."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the quest."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest starts."
-                    },
-                    "end_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "String for when the quest ends."
-                    }
-                  },
-                  "required": [
-                    "descriptio"
-                  ]
-                }
-              },
-              "required": [
-                "quest"
-              ]
-            }
-          }
-        }
-      },
-      "ActionTypeCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "internal_name"
-                  ]
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
-      "ActionTypeUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action_type": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Display friendly name of the action type."
-                    },
-                    "internal_name": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "seconds_lag": {
-                      "type": "integer",
-                      "description": "Delay between each action before it will count towards progression."
-                    },
-                    "active": {
-                      "type": "boolean",
-                      "description": "Determines if the action is actively being used in the apps."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "action_type"
-              ]
-            }
-          }
-        }
-      },
-      "BeaconCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product_beacon": {
-                  "type": "object",
-                  "properties": {
-                    "beacon_pid": {
-                      "type": "string",
-                      "description": "The manufacturer's id of the beacon"
-                    },
-                    "uuid": {
-                      "type": "string",
-                      "description": "The UUID of the beacon."
-                    },
-                    "lower": {
-                      "type": "string",
-                      "description": "Lower value."
-                    },
-                    "upper": {
-                      "type": "string",
-                      "description": "Upper value."
-                    },
-                    "attached_to": {
-                      "type": "integer",
-                      "description": "The activity the beacon is attached to. Can be null."
-                    }
-                  },
-                  "required": [
-                    "beacon_pid",
-                    "uuid",
-                    "lower",
-                    "upper"
-                  ]
-                }
-              },
-              "required": [
-                "product_beacon"
-              ]
-            }
-          }
-        }
-      },
-      "BeaconUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product_beacon": {
-                  "type": "object",
-                  "properties": {
-                    "beacon_pid": {
-                      "type": "string",
-                      "description": "The manufacturer's id of the beacon"
-                    },
-                    "uuid": {
-                      "type": "string",
-                      "description": "The UUID of the beacon."
-                    },
-                    "lower": {
-                      "type": "string",
-                      "description": "Lower value."
-                    },
-                    "upper": {
-                      "type": "string",
-                      "description": "Upper value."
-                    },
-                    "attached_to": {
-                      "type": "integer",
-                      "description": "The activity the beacon is attached to. Can be null."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "product_beacon"
-              ]
-            }
-          }
-        }
-      },
       "RewardCreateForm": {
         "required": true,
         "description": "",
@@ -11440,6 +10410,755 @@
           }
         }
       },
+      "TypeBodyCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "atype",
+                    "value"
+                  ]
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "TypeBodyUpdate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activity_type": {
+                  "type": "object",
+                  "properties": {
+                    "atype": {
+                      "type": "string",
+                      "description": "Activity Type. Valid types are beacon, post, image, audio, activity_code."
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "This field is used as an identifier for determining completion criteria of the atype. ID for Product Beacons, Unlock code for activity code, hashtag for post."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "This field is used as a display field for the end user."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "activity_type"
+              ]
+            }
+          }
+        }
+      },
+      "ActionTypeCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
+                }
+              },
+              "required": [
+                "action_type"
+              ]
+            }
+          }
+        }
+      },
+      "ActionTypeUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action_type": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Display friendly name of the action type."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "seconds_lag": {
+                      "type": "integer",
+                      "description": "Delay between each action before it will count towards progression."
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Determines if the action is actively being used in the apps."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "action_type"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "BeaconCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  },
+                  "required": [
+                    "beacon_pid",
+                    "uuid",
+                    "lower",
+                    "upper"
+                  ]
+                }
+              },
+              "required": [
+                "product_beacon"
+              ]
+            }
+          }
+        }
+      },
+      "BeaconUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product_beacon": {
+                  "type": "object",
+                  "properties": {
+                    "beacon_pid": {
+                      "type": "string",
+                      "description": "The manufacturer's id of the beacon"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "The UUID of the beacon."
+                    },
+                    "lower": {
+                      "type": "string",
+                      "description": "Lower value."
+                    },
+                    "upper": {
+                      "type": "string",
+                      "description": "Upper value."
+                    },
+                    "attached_to": {
+                      "type": "integer",
+                      "description": "The activity the beacon is attached to. Can be null."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product_beacon"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "ProductCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "internal_name"
+                  ]
+                }
+              },
+              "required": [
+                "product"
+              ]
+            }
+          }
+        }
+      },
+      "ProductUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Product display name."
+                    },
+                    "internal_name": {
+                      "type": "string",
+                      "description": "Product internal name."
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Whether or not the product is enabled."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCompletionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+              ]
+            }
+          }
+        }
+      },
+      "QuestCompletionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quest_completion": {
+                  "type": "object",
+                  "properties": {
+                    "activity_id": {
+                      "type": "integer",
+                      "description": "The id of the activity completed."
+                    }
+                  },
+                  "required": [
+                    "activity_id"
+                  ]
+                }
+              },
+              "required": [
+                "quest_completion"
+              ]
+            }
+          }
+        }
+      },
+      "NotificationDeviceIdsForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
+                }
+              },
+              "required": [
+                "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post comment."
+                    }
+                  },
+                  "required": [
+                    "post_comment_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_comment_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer",
+                      "description": "The id of the post being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the post."
+                    }
+                  },
+                  "required": [
+                    "post_id"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
+      },
+      "PostReportsUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "post_report"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeActionCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "StepCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
+      "StepUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "type": "object",
+                  "properties": {
+                    "unlocks": {
+                      "type": "array",
+                      "description": "The steps that are unlocked when this step is completed. Pass as {1,2,3} for multiple steps."
+                    },
+                    "display": {
+                      "type": "string",
+                      "description": "Sets the display name for the step."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "step"
+              ]
+            }
+          }
+        }
+      },
       "BadgeCreateForm": {
         "required": true,
         "description": "",
@@ -11546,7 +11265,7 @@
           }
         }
       },
-      "NotificationDeviceIdsForm": {
+      "FollowingForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11554,13 +11273,306 @@
             "schema": {
               "type": "object",
               "properties": {
-                "device_id": {
-                  "type": "string",
-                  "description": "ID of the device"
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
                 }
               },
               "required": [
-                "device_id"
+                "followed_id"
+              ]
+            }
+          }
+        }
+      },
+      "MessageCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message audio, this should be `audio/aac`."
+                    },
+                    "mentions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "person_id": {
+                            "type": "integer",
+                            "description": "ID of user mentioned"
+                          },
+                          "location": {
+                            "type": "integer",
+                            "description": "The location in the message body that the mention is at."
+                          },
+                          "length": {
+                            "type": "integer",
+                            "description": "The length of the users name in the mention"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "MessageUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Whether or not the item is hidden."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  },
+                  "required": [
+                    "reaction"
+                  ]
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PostReactionUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "type": "object",
+                  "properties": {
+                    "reaction": {
+                      "type": "string",
+                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "post_reaction"
+              ]
+            }
+          }
+        }
+      },
+      "PersonCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "facebook_auth_token",
+                    "username",
+                    "password"
+                  ]
+                }
+              },
+              "required": [
+                "product",
+                "person"
+              ]
+            }
+          }
+        }
+      },
+      "PersonUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of the product."
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address (required unless using FB auth token)."
+                    },
+                    "facebook_auth_token": {
+                      "type": "string",
+                      "description": "Auth token from Facebook"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name."
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "Username. This needs to be unique within product scope."
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password",
+                      "description": "User\\s password."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "gender": {
+                      "type": "string",
+                      "description": "Gender. Valid options: unspecified (default), male, female."
+                    },
+                    "birthdate": {
+                      "type": "string",
+                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
+                    },
+                    "biography": {
+                      "type": "string",
+                      "description": "A paragraph a user can submit about themselves."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "Person's supplied city."
+                    },
+                    "country_code": {
+                      "type": "string",
+                      "description": "Alpha2 code (two letters) from ISO 3166 list."
+                    },
+                    "recommended": {
+                      "type": "boolean",
+                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "product",
+                "person"
               ]
             }
           }
@@ -11736,7 +11748,7 @@
           }
         }
       },
-      "PasswordResetForm": {
+      "QuestActivityCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11744,107 +11756,36 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of product."
-                },
-                "email_or_username": {
-                  "type": "string",
-                  "description": "The person's email or username."
-                }
-              },
-              "required": [
-                "product",
-                "email_or_username"
-              ]
-            }
-          }
-        }
-      },
-      "PersonCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of the product."
-                },
-                "person": {
+                "quest_activity": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "Email address (required unless using FB auth token)."
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
                     },
-                    "facebook_auth_token": {
-                      "type": "string",
-                      "description": "Auth token from Facebook"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username. This needs to be unique within product scope."
-                    },
-                    "password": {
-                      "type": "string",
-                      "format": "password",
-                      "description": "User\\s password."
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
                     },
                     "picture": {
                       "type": "string",
                       "format": "binary",
-                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "gender": {
-                      "type": "string",
-                      "description": "Gender. Valid options: unspecified (default), male, female."
-                    },
-                    "birthdate": {
-                      "type": "string",
-                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                    },
-                    "biography": {
-                      "type": "string",
-                      "description": "A paragraph a user can submit about themselves."
-                    },
-                    "city": {
-                      "type": "string",
-                      "description": "Person's supplied city."
-                    },
-                    "country_code": {
-                      "type": "string",
-                      "description": "Alpha2 code (two letters) from ISO 3166 list."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                      "description": "An image associated with the quest activity."
                     }
                   },
                   "required": [
-                    "email",
-                    "facebook_auth_token",
-                    "username",
-                    "password"
+                    "hint"
                   ]
                 }
               },
               "required": [
-                "product",
-                "person"
+                "quest_activity"
               ]
             }
           }
         }
       },
-      "PersonUpdateForm": {
+      "QuestActivityUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11852,76 +11793,33 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of the product."
-                },
-                "person": {
+                "quest_activity": {
                   "type": "object",
                   "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "Email address (required unless using FB auth token)."
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the activity. Translatable"
                     },
-                    "facebook_auth_token": {
-                      "type": "string",
-                      "description": "Auth token from Facebook"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name."
-                    },
-                    "username": {
-                      "type": "string",
-                      "description": "Username. This needs to be unique within product scope."
-                    },
-                    "password": {
-                      "type": "string",
-                      "format": "password",
-                      "description": "User\\s password."
+                    "hint": {
+                      "type": "object",
+                      "description": "A hint for completing the quest activity. Translatable."
                     },
                     "picture": {
                       "type": "string",
                       "format": "binary",
-                      "description": "Profile picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "gender": {
-                      "type": "string",
-                      "description": "Gender. Valid options: unspecified (default), male, female."
-                    },
-                    "birthdate": {
-                      "type": "string",
-                      "description": "Birth dateTo date in format \"YYYY-MM-DD\"."
-                    },
-                    "biography": {
-                      "type": "string",
-                      "description": "A paragraph a user can submit about themselves."
-                    },
-                    "city": {
-                      "type": "string",
-                      "description": "Person's supplied city."
-                    },
-                    "country_code": {
-                      "type": "string",
-                      "description": "Alpha2 code (two letters) from ISO 3166 list."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Sets the post to recommended. Available only to admins and product accounts."
+                      "description": "An image associated with the quest activity."
                     }
                   }
                 }
               },
               "required": [
-                "product",
-                "person"
+                "quest_activity"
               ]
             }
           }
         }
       },
-      "ProductCreateForm": {
+      "QuestCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11929,37 +11827,61 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
+                "quest": {
                   "type": "object",
                   "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
                     "name": {
-                      "type": "string",
-                      "description": "Product display name."
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
                     },
                     "internal_name": {
                       "type": "string",
-                      "description": "Product internal name."
+                      "description": "Internal name of the quest."
                     },
-                    "enabled": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Whether or not the product is enabled."
+                    "description": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
                     }
                   },
                   "required": [
                     "name",
-                    "internal_name"
+                    "internal_name",
+                    "description",
+                    "starts_at"
                   ]
                 }
               },
               "required": [
-                "product"
+                "quest"
               ]
             }
           }
         }
       },
-      "ProductUpdateForm": {
+      "QuestUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -11967,27 +11889,105 @@
             "schema": {
               "type": "object",
               "properties": {
-                "product": {
+                "quest": {
                   "type": "object",
                   "properties": {
+                    "event_id": {
+                      "type": "integer",
+                      "description": "The event a quest is attached to. Optional."
+                    },
                     "name": {
-                      "type": "string",
-                      "description": "Product display name."
+                      "type": "object",
+                      "description": "Name of the quest. Can be string or an object. Translatable."
                     },
                     "internal_name": {
                       "type": "string",
-                      "description": "Product internal name."
+                      "description": "Internal name of the quest."
                     },
-                    "enabled": {
-                      "type": "boolean",
-                      "default": false,
-                      "description": "Whether or not the product is enabled."
+                    "descriptio": {
+                      "type": "object",
+                      "description": "Description of the quest. Can be string or object. Translatable."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the quest."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current quest status. Can be Active, Enabled, Disabled or Deleted"
+                    },
+                    "starts_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest starts."
+                    },
+                    "end_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "String for when the quest ends."
                     }
+                  },
+                  "required": [
+                    "descriptio"
+                  ]
+                }
+              },
+              "required": [
+                "quest"
+              ]
+            }
+          }
+        }
+      },
+      "PostCommentCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the comment."
+                    }
+                  },
+                  "required": [
+                    "body"
+                  ]
+                },
+                "mentions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person_id": {
+                        "type": "integer",
+                        "description": "The id of the person mentioned."
+                      },
+                      "location": {
+                        "type": "integer",
+                        "description": "Where the mention text starts in the comment."
+                      },
+                      "length": {
+                        "type": "integer",
+                        "description": "The length of the mention text."
+                      }
+                    },
+                    "required": [
+                      "person_id",
+                      "location",
+                      "length"
+                    ]
                   }
                 }
               },
               "required": [
-                "product"
+                "post_comment"
               ]
             }
           }
@@ -11997,125 +11997,6 @@
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
-      },
-      "RoomsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rooms": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "SessionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "StepObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "step": {
-                  "$ref": "#/components/schemas/StepJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Array": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "steps": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "step": {
-                        "$ref": "#/components/schemas/StepJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActivityTypeObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ActivityTypeJson"
-            }
-          }
-        }
-      },
-      "ActivityTypeArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "types": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ActivityTypeJson"
-                  }
-                }
-              }
-            }
-          }
-        }
       },
       "AssignedRewardObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -12146,433 +12027,6 @@
                     "properties": {
                       "assigned": {
                         "$ref": "#/components/schemas/AssignedRewardJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "TagArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgeActionsPending": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CategoryArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "categories": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowersArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/FollowingJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LevelsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "levels": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "messages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsListArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentListJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostCommentsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reactions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
                       }
                     }
                   }
@@ -12658,271 +12112,50 @@
           }
         }
       },
-      "QuestActivityObject": {
+      "SessionObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "activity": {
-                  "$ref": "#/components/schemas/QuestActivityJson"
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
                 }
               }
             }
           }
         }
       },
-      "QuestActivityArray": {
+      "RoomsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "activities": {
+                "room": {
+                  "$ref": "#/components/schemas/RoomJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rooms": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "activity": {
-                        "$ref": "#/components/schemas/QuestActivityJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestCompletionObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "completion": {
-                  "$ref": "#/components/schemas/QuestCompletionJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestCompletionArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "completions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "completion": {
-                        "$ref": "#/components/schemas/QuestCompletionJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quest": {
-                  "$ref": "#/components/schemas/QuestJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "QuestsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "quests": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "quest": {
-                        "$ref": "#/components/schemas/QuestJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPeopleArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "people": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RecommendedPostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RelationshipsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "relationships": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActionTypeObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "action": {
-                  "$ref": "#/components/schemas/ActionTypeJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ActionTypeArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "actions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "Action": {
-                        "$ref": "#/components/schemas/ActionTypeJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductBeaconObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "beacon": {
-                  "$ref": "#/components/schemas/ProductBeaconJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductBeaconArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "beacons": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "beacon": {
-                        "$ref": "#/components/schemas/ProductBeaconJson"
+                      "room": {
+                        "$ref": "#/components/schemas/RoomJson"
                       }
                     }
                   }
@@ -12970,6 +12203,491 @@
           }
         }
       },
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/RelationshipJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/RelationshipJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActivityTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ActivityTypeJson"
+            }
+          }
+        }
+      },
+      "ActivityTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "types": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityTypeJson"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActionTypeObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "$ref": "#/components/schemas/ActionTypeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ActionTypeArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Action": {
+                        "$ref": "#/components/schemas/ActionTypeJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacon": {
+                  "$ref": "#/components/schemas/ProductBeaconJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductBeaconArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "beacons": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "beacon": {
+                        "$ref": "#/components/schemas/ProductBeaconJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "$ref": "#/components/schemas/ProductJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "products": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "product": {
+                        "$ref": "#/components/schemas/ProductJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completion": {
+                  "$ref": "#/components/schemas/QuestCompletionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestCompletionArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "completions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "completion": {
+                        "$ref": "#/components/schemas/QuestCompletionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "TagArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LevelsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "level": {
+                        "$ref": "#/components/schemas/LevelJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment_report": {
+                        "$ref": "#/components/schemas/PostCommentReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadgeActionsPending": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/BadgeJson"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "StepObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "step": {
+                  "$ref": "#/components/schemas/StepJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Array": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "steps": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "step": {
+                        "$ref": "#/components/schemas/StepJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "BadgesArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -13002,6 +12720,242 @@
               "properties": {
                 "badge": {
                   "$ref": "#/components/schemas/BadgeJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/FollowingJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowersArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "follower": {
+                        "$ref": "#/components/schemas/FollowingJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/FollowingJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "messages": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "$ref": "#/components/schemas/MessageJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessagesObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "$ref": "#/components/schemas/MessageJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/PersonJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivateJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -13069,20 +13023,35 @@
           }
         }
       },
-      "PeopleArray": {
+      "QuestActivityObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "people": {
+                "activity": {
+                  "$ref": "#/components/schemas/QuestActivityJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "QuestActivityArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activities": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
+                      "activity": {
+                        "$ref": "#/components/schemas/QuestActivityJson"
                       }
                     }
                   }
@@ -13092,68 +13061,99 @@
           }
         }
       },
-      "PersonObject": {
+      "QuestObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
+                "quest": {
+                  "$ref": "#/components/schemas/QuestJson"
                 }
               }
             }
           }
         }
       },
-      "PersonPrivateObject": {
+      "QuestsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivateJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "$ref": "#/components/schemas/ProductJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ProductArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "products": {
+                "quests": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "product": {
-                        "$ref": "#/components/schemas/ProductJson"
+                      "quest": {
+                        "$ref": "#/components/schemas/QuestJson"
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsListArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_comment": {
+                        "$ref": "#/components/schemas/PostCommentListJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostCommentsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_comment": {
+                  "$ref": "#/components/schemas/PostCommentJson"
                 }
               }
             }
