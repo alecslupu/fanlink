@@ -6443,120 +6443,6 @@
           }
         }
       },
-      "BlocksObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "block": {
-                  "$ref": "#/components/schemas/Block"
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "events": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/Event"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "EventsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "event": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followings": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "following": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowersArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "followers": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "follower": {
-                        "$ref": "#/components/schemas/Following"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "FollowingObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "following": {
-                  "$ref": "#/components/schemas/Following"
-                }
-              }
-            }
-          }
-        }
-      },
       "LevelsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -6571,6 +6457,67 @@
                     "properties": {
                       "level": {
                         "$ref": "#/components/schemas/Level"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "merchandise": {
+                        "$ref": "#/components/schemas/Merchandise"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "$ref": "#/components/schemas/Merchandise"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message_report": {
+                        "$ref": "#/components/schemas/MessageReport"
                       }
                     }
                   }
@@ -6612,6 +6559,59 @@
               "properties": {
                 "message": {
                   "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "person": {
+                        "$ref": "#/components/schemas/Person"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PersonPrivateObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "person": {
+                  "$ref": "#/components/schemas/PersonPrivate"
                 }
               }
             }
@@ -6717,20 +6717,51 @@
           }
         }
       },
-      "PeopleArray": {
+      "BadgeActionsPending": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "people": {
+                "pending_badge": {
+                  "type": "object",
+                  "properties": {
+                    "badge_action_count": {
+                      "type": "integer"
+                    },
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                },
+                "badges_awarded": {
+                  "type": "object",
+                  "properties": {
+                    "badge": {
+                      "$ref": "#/components/schemas/Badge"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "posts": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "person": {
-                        "$ref": "#/components/schemas/Person"
+                      "post": {
+                        "$ref": "#/components/schemas/Post"
                       }
                     }
                   }
@@ -6740,30 +6771,61 @@
           }
         }
       },
-      "PersonObject": {
+      "FollowingsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/Person"
+                "followings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "following": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
                 }
               }
             }
           }
         }
       },
-      "PersonPrivateObject": {
+      "FollowersArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivate"
+                "followers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "follower": {
+                        "$ref": "#/components/schemas/Following"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FollowingObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "following": {
+                  "$ref": "#/components/schemas/Following"
                 }
               }
             }
@@ -6784,6 +6846,44 @@
                     "properties": {
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReport"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReport"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReport"
                       }
                     }
                   }
@@ -6892,90 +6992,6 @@
           }
         }
       },
-      "RecommendedPostsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/Post"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/Merchandise"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/Merchandise"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReport"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "RelationshipsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
@@ -7052,35 +7068,35 @@
           }
         }
       },
-      "PostReportsObject": {
+      "BlocksObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReport"
+                "block": {
+                  "$ref": "#/components/schemas/Block"
                 }
               }
             }
           }
         }
       },
-      "PostReportsArray": {
+      "EventsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "post_reports": {
+                "events": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReport"
+                      "event": {
+                        "$ref": "#/components/schemas/Event"
                       }
                     }
                   }
@@ -7090,31 +7106,15 @@
           }
         }
       },
-      "BadgeActionsPending": {
+      "EventsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/Badge"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/Badge"
-                    }
-                  }
+                "event": {
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
