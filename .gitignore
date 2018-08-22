@@ -10,12 +10,12 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-/doc/*
-/docs/*
+doc/open_api/*
+docs/open_api/*
 !/log/.keep
 !/tmp/.keep
-!/doc/.keep
-!/docs/.keep
+!doc/.keep
+!docs/.keep
 
 /node_modules
 /yarn-error.log
