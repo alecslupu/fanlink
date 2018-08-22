@@ -66,6 +66,9 @@ group :development do
   gem "apigen", :path => 'lib/gems/apigen'
   gem 'memory_profiler'
   gem 'derailed_benchmarks'
+  gem 'redis'
+  gem 'redis-namespace'
+  gem 'redis-rails'
 end
 
 group :test do
