@@ -15,19 +15,12 @@ class Api::V3::BadgesController < Api::V3::BaseController
 
   def create
     @badge = Badge.create(badge_params)
-    if @badge.valid?
-      
-    else
-      render_422 @badge.errors.messages.values.flatten
-    end
+    return_the @badge
   end
 
   def update
-    if @badge.update_attributes(badge_params)
-      return_the @badge
-    else
-      render_422 @badge.errors.messages.values.flatten
-    end
+    @badge.update_attributes(badge_params)
+    return_the @badge
   end
 
   def show
