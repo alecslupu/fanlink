@@ -25,7 +25,9 @@ gem "coffee-rails", "~> 4.2"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.5"
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 3.0"
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
 
@@ -38,10 +40,6 @@ group :production, :staging do
 end
 
 group :staging, :development do
-    gem 'redis'
-    gem 'redis-namespace'
-    gem 'redis-rails'
-    gem 'yajl-ruby', require: 'yajl/json_gem'
 end
 
 group :development, :test do
