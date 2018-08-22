@@ -40,6 +40,12 @@ group :production, :staging do
 end
 
 group :staging, :development do
+<<<<<<< HEAD
+=======
+    # gem 'redis'
+    # gem 'redis-namespace'
+    # gem 'redis-rails'
+>>>>>>> fixes: changed staging environment config to better match production. Commented out staging only gems
 end
 
 group :development, :test do
