@@ -6,7 +6,7 @@ json.badges do
       if b.reward.series.present?
         badge_action_count = ((RewardProgress.where(person_id: for_user, series: b.reward.series).exists?) ? RewardProgress.where(person_id: for_user, series: b.reward.series).sum(:total) : 0)
       else
-        badge_action_count = ((RewardProgress.where(person_id: for_user, reward_id: b.reward.id).exists?) ? RewardProgress.where(person_id: for_user, reward_id: b.reward.id).total : 0 )
+        badge_action_count = ((RewardProgress.where(person_id: for_user, reward_id: b.reward.id).exists?) ? RewardProgress.where(person_id: for_user, reward_id: b.reward.id).sum(:total) : 0)
       end
     end
     json.badge_action_count badge_action_count
