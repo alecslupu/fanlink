@@ -1,4 +1,4 @@
-for_user = (params.has_key?[:person_id] ? params[:person_id] : current_user.id)
+for_user = (params.has_key?(:person_id) ? params[:person_id] : current_user.id)
 badge_action_count = 0
 json.badges do
   json.array! @badges.each do |b|
