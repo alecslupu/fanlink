@@ -1,15 +1,15 @@
+for_user = (params.is_set?[:person_id] ? params[:person_id] : current_user.id)
+badge_action_count = 0
 json.badges do
   json.array! @badges.each do |b|
-    reward_progress = b.reward.reward_progresses.where(person_id: current_user.id).first
-    if b.reward.series
-      json.badge_action_count RewardProgress.where(person_id: current_user.id, series: b.reward.series).sum(:total)
-    else
-      if reward_progress.present?
-        json.badge_action_count reward_progress.total
+    if b.reward.present?
+      if b.reward.series.present?
+        badge_action_count = ((RewardProgress.where(person_id: for_user, series: b.reward.series).exists?) ? RewardProgress.where(person_id: for_user, series: b.reward.series).sum(:total) : 0)
       else
-        json.badge_action_count 0
+        badge_action_count = ((RewardProgress.where(person_id: for_user, reward_id: b.reward.id).exists?) ? RewardProgress.where(person_id: for_user, reward_id: b.reward.id).total : 0 )
       end
     end
+    json.badge_action_count badge_action_count
     json.badge do
       json.cache! ["v3", b] do
         json.partial! "api/v3/badges/badge", locals: { badge: b, lang: nil }
