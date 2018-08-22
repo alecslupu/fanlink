@@ -1,4 +1,3 @@
-require "json"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -6,8 +5,7 @@ Rails.application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes }
-
+  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
   # Disable full error reports.
   config.consider_all_requests_local = true
 
