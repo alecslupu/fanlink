@@ -132,20 +132,16 @@ protected
 
   def set_app
     if request.headers["X-App"].present?
-      if current_user.present?
-        current_user.app = request.headers["X-App"]
-      elsif params[:app].present?
-        current_user.app = params[:app]
-      else
-        current_user.app = "mobile"
-      end
+      @req_source = request.headers["X-App"]
+    elsif params[:app].present?
+      @req_source = params[:app]
+    else
+      @req_source = "mobile"
     end
   end
 
   def unset_app
-    if current_user.present?
-      current_user.app = false
-    end
+    @req_source = nil
   end
 
   # def set_chewy_filter

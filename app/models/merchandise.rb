@@ -16,7 +16,7 @@ class Merchandise < ApplicationRecord
 
   scope :listable, -> { where(available: true) }
 
-  #TODO Translate returned error messages
+  # TODO Translate returned error messages
   validates :name, presence: { message: "Name is required" }
   validates :description, presence: { message: "Description is required" }
 

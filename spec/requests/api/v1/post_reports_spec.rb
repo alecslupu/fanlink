@@ -66,25 +66,25 @@ describe "PostReports (v1)" do
       get "/post_reports", params: { page: 1, per_page: 2 }
       expect(response).to be_success
       expect(json["post_reports"].count).to eq(2)
-      expect(json["post_reports"].first).to eq(post_report_json(@index_reports.last))
-      expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-2]))
+      expect(json["post_reports"].first).to eq(post_report_v1_json(@index_reports.last))
+      expect(json["post_reports"].last).to eq(post_report_v1_json(@index_reports[-2]))
     end
     it "should get all reports paginated to page 2" do
       login_as(@index_admin)
       get "/post_reports", params: { page: 2, per_page: 2 }
       expect(response).to be_success
       expect(json["post_reports"].count).to eq(2)
-      expect(json["post_reports"].first).to eq(post_report_json(@index_reports[-3]))
-      expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-4]))
+      expect(json["post_reports"].first).to eq(post_report_v1_json(@index_reports[-3]))
+      expect(json["post_reports"].last).to eq(post_report_v1_json(@index_reports[-4]))
     end
     it "should get all reports with pending status" do
       login_as(@index_admin)
       get "/post_reports", params: { status_filter: "pending" }
       expect(response).to be_success
       pending = PostReport.for_product(@index_admin.product).where(status: :pending)
-      reports_json = json["post_reports"]
-      expect(reports_json.count).to eq(pending.count)
-      expect(reports_json.map { |rj| rj["id"] }.sort).to eq(pending.map { |pr| pr.id.to_s }.sort)
+      reports_v1_json = json["post_reports"]
+      expect(reports_v1_json.count).to eq(pending.count)
+      expect(reports_v1_json.map { |rj| rj["id"] }.sort).to eq(pending.map { |pr| pr.id.to_s }.sort)
     end
     it "should return unauthorized if not logged in" do
       get "/post_reports"

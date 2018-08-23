@@ -14,6 +14,7 @@ class ProductDashboard < Administrate::BaseDashboard
     internal_name: Field::Text,
     enabled: Field::Boolean,
     can_have_supers: Field::Boolean,
+    age_requirement: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -40,6 +41,7 @@ class ProductDashboard < Administrate::BaseDashboard
     :internal_name,
     :enabled,
     :can_have_supers,
+    :age_requirement,
     :created_at,
     :updated_at,
   ].freeze
@@ -52,7 +54,8 @@ class ProductDashboard < Administrate::BaseDashboard
     :name,
     :internal_name,
     :enabled,
-    :can_have_supers
+    :can_have_supers,
+    :age_requirement
   ].freeze
 
   # Overwrite this method to customize how products are displayed

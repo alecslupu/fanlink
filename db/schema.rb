@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180811023954) do
+ActiveRecord::Schema.define(version: 20180821232531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
@@ -91,10 +90,10 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
@@ -182,6 +181,16 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.index ["follower_id", "followed_id"], name: "unq_followings_follower_followed", unique: true
   end
 
+  create_table "interests", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "parent_id"
+    t.jsonb "title", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "idx_interests_parent"
+    t.index ["product_id"], name: "idx_interests_product"
+  end
+
   create_table "level_progresses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.jsonb "points", default: {}, null: false
@@ -218,9 +227,9 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
@@ -264,9 +273,7 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
-    t.integer "audio_duration"
     t.index ["created_at"], name: "index_messages_on_created_at"
-    t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
   end
@@ -305,8 +312,8 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -322,6 +329,13 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
+  create_table "person_interests", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "interest_id", null: false
+    t.index ["interest_id"], name: "idx_person_interests_interest"
+    t.index ["person_id"], name: "idx_person_interests_person"
+  end
+
   create_table "person_rewards", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "reward_id", null: false
@@ -331,7 +345,7 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.boolean "deleted", default: false
   end
 
-  create_table "portal_access", force: :cascade do |t|
+  create_table "portal_accesses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "post", default: 0, null: false
     t.integer "chat", default: 0, null: false
@@ -343,6 +357,7 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.integer "quest", default: 0, null: false
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
   end
 
   create_table "portal_notifications", force: :cascade do |t|
@@ -440,7 +455,6 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
-    t.integer "audio_duration"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
@@ -468,6 +482,7 @@ ActiveRecord::Schema.define(version: 20180811023954) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "can_have_supers", default: false, null: false
+    t.integer "age_requirement", default: 0
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end
@@ -686,6 +701,7 @@ ActiveRecord::Schema.define(version: 20180811023954) do
   add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
+  add_foreign_key "interests", "products", name: "fk_interests_products"
   add_foreign_key "levels", "products", name: "fk_levels_products"
   add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
   add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
@@ -697,6 +713,8 @@ ActiveRecord::Schema.define(version: 20180811023954) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
+  add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
