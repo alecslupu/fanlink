@@ -12361,20 +12361,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "FollowingsArray": {
+=======
+      "TagArray": {
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "followings": {
+=======
+                "posts": {
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "following": {
                         "$ref": "#/components/schemas/FollowingJson"
+=======
+                      "post": {
+                        "$ref": "#/components/schemas/PostJson"
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12384,20 +12397,33 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "FollowersArray": {
+=======
+      "EventsArray": {
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "followers": {
+=======
+                "events": {
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                       "follower": {
                         "$ref": "#/components/schemas/FollowingJson"
+=======
+                      "event": {
+                        "$ref": "#/components/schemas/EventJson"
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
                       }
                     }
                   }
@@ -12407,13 +12433,18 @@
           }
         }
       },
+<<<<<<< HEAD:docs/open_api/V3.json
       "FollowingObject": {
+=======
+      "EventsObject": {
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
+<<<<<<< HEAD:docs/open_api/V3.json
                 "following": {
                   "$ref": "#/components/schemas/FollowingJson"
                 }
@@ -12439,6 +12470,10 @@
                       }
                     }
                   }
+=======
+                "event": {
+                  "$ref": "#/components/schemas/EventJson"
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V3.json
                 }
               }
             }

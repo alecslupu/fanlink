@@ -6405,7 +6405,49 @@
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
+<<<<<<< HEAD:docs/open_api/V1.json
       "PostCommentsArray": {
+=======
+      "RelationshipsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationship": {
+                  "$ref": "#/components/schemas/Relationship"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RelationshipsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "relationship": {
+                        "$ref": "#/components/schemas/Relationship"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RoomsObject": {
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V1.json
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -7082,6 +7124,7 @@
             }
           }
         }
+<<<<<<< HEAD:docs/open_api/V1.json
       },
       "PersonPrivateObject": {
         "description": "HTTP/1.1 200 Ok",
@@ -7120,6 +7163,8 @@
             }
           }
         }
+=======
+>>>>>>> feat: Added JB gem. Added quest jb templates. Modified return_the to accent a handler parameter.:doc/open_api/V1.json
       }
     }
   }
