@@ -1,4 +1,4 @@
-json = Rails.cache.fetch ["v3", step] do
+json = Rails.cache.fetch ["v3", step.updated_at, step] do
   {
     id: step.id,
     quest_id: step.quest_id,
