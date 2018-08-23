@@ -6,7 +6,7 @@ FanlinkApi::API.endpoint :get_rooms do
     status 200
     type :object do
       rooms :array do
-        type :room_json
+        type :room_app_json
       end
     end
   end
@@ -45,7 +45,7 @@ FanlinkApi::API.endpoint :get_a_room do
   output :success do
     status 200
     type :object do
-      type :room_json
+      type :room_app_json
     end
   end
 
@@ -140,7 +140,7 @@ FanlinkApi::API.endpoint :create_room do
   output :success do
     status 200
     type :object do
-      type :room_json
+      type :room_app_json
     end
   end
 
@@ -254,7 +254,7 @@ FanlinkApi::API.endpoint :update_room do
   output :success do
     status 200
     type :object do
-      type :room_json
+      type :room_app_json
     end
   end
 

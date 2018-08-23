@@ -10,7 +10,7 @@ FanlinkApi::API.endpoint :get_messages do
       description "From date in format 'YYYY-MM-DD'. Note valid dates start from 2017-01-01."
       example "2017-01-01"
     end
-    from_date(:date).explain do
+    to_date(:date).explain do
       description "To date in format 'YYYY-MM-DD'. Note valid dates start from 2017-01-01."
       example "2017-01-01"
     end
@@ -57,11 +57,9 @@ FanlinkApi::API.endpoint :list_messages do
   description "This gets a list of messages without regard to room (with possible exception of room filter).(Admin Only)"
   method :get
   tag "Messages"
-  path "/messages/list" do
-    room_id :int32
-  end
+  path "/messages/list"
   query do
-    id_filter(:in32).explain do
+    id_filter(:int32).explain do
       description "Full match on Message id."
     end
     person_filter(:string).explain do
@@ -189,14 +187,15 @@ FanlinkApi::API.endpoint :create_message do
             description "ID of user mentioned"
             example 1
           end
-          location?(:int32) do
+          location?(:int32).explain do
             description "The location in the message body that the mention is at."
             example 25
           end
-          length?(:int32) do
+          length?(:int32).explain do
             description "The length of the users name in the mention"
             example 7
           end
+        end
       end
     end
   end

@@ -77,8 +77,8 @@ describe "Posts (v2)" do
       login_as(@person)
       get "/posts", params: { page: 1, per_page: @per_page }, headers: headers
       expect(response).to be_success
-      post_v2_json = json["posts"].find { |p| p["id"] == @index_posts.last.id.to_s }
-      expect(post_v2_json["body"]).to eq(translation)
+      post_json = json["posts"].find { |p| p["id"] == @index_posts.last.id.to_s }
+      expect(post_json["body"]).to eq(translation)
     end
     it "should not get the list if not logged in" do
       get "/posts", params: { page: 1 }

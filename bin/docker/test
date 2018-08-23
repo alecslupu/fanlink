@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker-compose run -e RAILS_ENV=test -e RUN_TESTS=true flapi

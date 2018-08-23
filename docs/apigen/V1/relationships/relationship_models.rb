@@ -1,4 +1,4 @@
-FanlinkApi::API.model :relationship_json do
+FanlinkApi::API.model :relationship_app_json do
   type :object do
     relationship :object do
       id :int32

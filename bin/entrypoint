@@ -1,9 +1,9 @@
 #!/bin/sh
 # bin/entrypoint
-DEPLOY_ENV="${RAILS_ENV:-development}"
+
 echo "Running start up script..."
 
-echo "$(git rev-parse --abbrev-ref HEAD)"
+# echo "$(git rev-parse --abbrev-ref HEAD)"
 # if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
 #   echo "Generating Postman import"
 
@@ -11,30 +11,31 @@ echo "$(git rev-parse --abbrev-ref HEAD)"
 # fi
 
 echo "Checking installed gems..."
-/usr/src/app/bin/bundle check || /usr/src/app/bin/bundle install
-
-
-echo "Checking DB migrations..."
-sleep 20 # Allows docker to fully load the volume mount before running.
-echo "$DEPLOY_ENV"
-bundle exec rails db:setup
-MIGRATION_NEEDED=$(/usr/src/app/bin/rake db:migrate:status | grep -c down)
-if [[ $MIGRATION_NEEDED -gt "0" ]]; then
-  echo "Migrations needed. Running..."
-  /usr/src/app/bin/rails db:migrate
-  /usr/src/app/bin/rake db:schema:dump
-fi
+bundle check || bundle install
 
 if [ "$RUN_TESTS" == "true" ]; then
-  echo "Running tests"
-  /usr/src/app/bin/rails db:test:prepare
-  /usr/src/app/bin/rails spec
+    sleep 20
+    echo "Setting up test DB"
+    bundle exec rails db:setup
+    echo "Preparing test db"
+    bundle exec rails db:environment:set RAILS_ENV=test  db:test:prepare
+    echo "Running tests"
+    bundle exec rails spec
 else
+    echo "Checking DB migrations..."
+    sleep 20
+    bundle exec rake db:setup
+    MIGRATION_NEEDED=$(bundle exec rake db:migrate:status | grep -c down)
+    if [[ $MIGRATION_NEEDED -gt "0" ]]; then
+        echo "Migrations needed. Running..."
+        bundle exec rails db:migrate
+        bundle exec rake db:seed
+        bundle exec rake db:schema:dump
+    fi
   if [ -f '/usr/src/app/tmp/pids/server.pid' ]; then
     echo "Found existing Puma server process id file, deleting..."
     rm /usr/src/app/tmp/pids/server.pid
   fi
-  /usr/src/app/bin/rake db:seed
   echo "Starting server."
   bundle exec rails s -p 3000 -b 0.0.0.0
 fi

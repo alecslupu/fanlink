@@ -7,6 +7,7 @@ FanlinkApi::API.endpoint :get_post_comment_reports do
     status_filter(:string).explain do
       description "If provided, valid values are 'pending', 'no_action_needed', and 'comment_hidden'"
     end
+  end
   output :success do
     status 200
     type :object do
@@ -109,12 +110,13 @@ FanlinkApi::API.endpoint :create_a_post_comment_report do
           description "The reason given by the user for reporting the post comment."
           example "Harrassment"
         end
+      end
     end
   end
   output :success do
     status 200
     type :object do
-      type :post_comment_report_json
+      type :post_comment_report_app_json
     end
   end
 
@@ -303,4 +305,4 @@ end
 #     end
 #     description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
 #   end
-end
+# end

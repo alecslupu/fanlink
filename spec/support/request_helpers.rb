@@ -32,7 +32,7 @@ module RequestHelpers
 private
 
   def add_accept_header(args)
-    vmatch = /V([0-9])\:\:/.match(self.class.name)
+    vmatch = /V([0-9]).*\:\:/.match(self.class.name)
     v = vmatch[1]
     acc = { "ACCEPT" => "application/vnd.api.v#{v}+json" }
     if args.size == 1

@@ -17,7 +17,7 @@ FanlinkApi::API.endpoint :get_followings do
     status 200
     type :object do
       followings :array do
-        type :following_json
+        type :following_app_json
       end
     end
   end
@@ -114,7 +114,7 @@ FanlinkApi::API.endpoint :create_following do
   output :success do
     status 200
     type :object do
-      type :following_json
+      type :following_app_json
     end
   end
 

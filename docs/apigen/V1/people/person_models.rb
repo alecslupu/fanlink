@@ -39,7 +39,7 @@ FanlinkApi::API.model :person_app_json do
 end
 
 
-FanlinkApi::API.model :person_private_json do
+FanlinkApi::API.model :person_private_app_json do
   type :object do
     person :object do
       id :int32

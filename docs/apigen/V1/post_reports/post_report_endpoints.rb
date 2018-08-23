@@ -1,8 +1,8 @@
 FanlinkApi::API.endpoint :get_post_reports do
   method :get
-  tag post_report
-  path '/post_reports'
-  description 'Get Post Reports'
+  tag "Post Reports"
+  path "/post_reports"
+  description "Get Post Reports"
   output :success do
     status 200
     type :object do
@@ -10,8 +10,8 @@ FanlinkApi::API.endpoint :get_post_reports do
         type :oneof do
           discriminator :type
           map(
-            post_report_app_json: post_report,
-            post_report_portal_json: post_report
+            post_report_app_json: "Post Reports App",
+            post_report_portal_json: "Post Reports Portal"
           )
         end
       end
@@ -45,7 +45,7 @@ end
 
 FanlinkApi::API.endpoint :get_a_post_report do
   method :get
-  tag post_report
+  tag "Post Reports"
   path '/post_reports/{id}' do
     id :int32
   end
@@ -56,8 +56,8 @@ FanlinkApi::API.endpoint :get_a_post_report do
       type :oneof do
         discriminator :type
         map(
-          post_report_app_json: post_report,
-          post_report_portal_json: post_report
+          post_report_app_json: "Post Reports App",
+            post_report_portal_json: "Post Reports Portal"
         )
       end
     end
@@ -103,7 +103,7 @@ end
 
 FanlinkApi::API.endpoint :create_a_post_report do
   method :post
-  tag post_report
+  tag "Post Reports"
   path '/post_reports'
   description 'Create a Post Report'
   input do
@@ -192,7 +192,7 @@ end
 
 FanlinkApi::API.endpoint :update_a_post_report do
   method :put
-  tag post_report
+  tag "Post Reports"
   path '/post_reports/{id}' do
     id :int32
   end
@@ -277,7 +277,7 @@ end
 
 FanlinkApi::API.endpoint :destroy_a_post_report do
   method :delete
-  tag post_report
+  tag "Post Reports"
   path '/post_reports/{id}' do
     id :int32
   end
