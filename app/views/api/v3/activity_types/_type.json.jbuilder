@@ -1,4 +1,4 @@
-json.cache! ["v3", atype] do
+json.cache! ["v3", atype.updated_at, atype] do
   json.id atype.id
   json.activity_id atype.activity_id
   json.type atype.atype
