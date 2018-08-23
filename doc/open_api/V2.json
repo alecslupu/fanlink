@@ -7399,689 +7399,6 @@
       }
     },
     "requestBodies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "EventForm": {
-=======
-      "BadgeActionCreate": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-<<<<<<< HEAD
-              "type": "object"
-=======
-              "type": "object",
-              "properties": {
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
-              ]
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "EventUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object"
-            }
-          }
-        }
-      },
-      "FollowingForm": {
-=======
-=======
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-      "BlockCreate": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
-=======
-                "block": {
-                  "type": "object",
-                  "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
-                    }
-                  },
-                  "required": [
-                    "blocked_id"
-                  ]
-                }
-              },
-              "required": [
-                "block"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "MerchandiseForm": {
-=======
-      "CategoryForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "merchandise": {
-=======
-                "category": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-<<<<<<< HEAD
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-=======
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                    }
-                  },
-                  "required": [
-                    "name",
-<<<<<<< HEAD
-                    "description",
-                    "available",
-                    "priority"
-=======
-                    "role"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  ]
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "merchandise"
-=======
-                "category"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "MerchandiseUpdateForm": {
-=======
-      "CategoryUpdateForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "merchandise": {
-=======
-                "category": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-<<<<<<< HEAD
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-=======
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                    }
-                  }
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "merchandise"
-=======
-                "category"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "MessageReportCreateForm": {
-=======
-      "EventForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-<<<<<<< HEAD
-              "type": "object",
-              "properties": {
-                "message_report": {
-                  "type": "object",
-                  "properties": {
-                    "message_id": {
-                      "type": "integer",
-                      "description": "The id of the message being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the message."
-                    }
-                  },
-                  "required": [
-                    "message_id"
-                  ]
-                }
-              },
-              "required": [
-                "message_report"
-              ]
-=======
-              "type": "object"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "MessageReportUpdateForm": {
-=======
-      "EventUpdateForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-<<<<<<< HEAD
-              "type": "object",
-              "properties": {
-                "message_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "message_report"
-              ]
-=======
-              "type": "object"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "MessageCreateForm": {
-=======
-      "FollowingForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Message audio, this should be `audio/aac`."
-                    },
-                    "mentions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "person_id": {
-                            "type": "integer",
-                            "description": "ID of user mentioned"
-                          },
-                          "location": {
-                            "type": "integer",
-                            "description": "The location in the message body that the mention is at."
-                          },
-                          "length": {
-                            "type": "integer",
-                            "description": "The length of the users name in the mention"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-=======
-                "followed_id": {
-                  "type": "integer",
-                  "description": "Person to follow."
-                }
-              },
-              "required": [
-                "followed_id"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "MessageUpdateForm": {
-=======
-      "MerchandiseForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "message": {
-                  "type": "object",
-                  "properties": {
-                    "hidden": {
-                      "type": "boolean",
-                      "description": "Whether or not the item is hidden."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
-          }
-        }
-      },
-      "NotificationDeviceIdsForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "device_id": {
-                  "type": "string",
-                  "description": "ID of the device"
-                }
-              },
-              "required": [
-                "device_id"
-              ]
-            }
-          }
-        }
-      },
-      "PasswordResetForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "product": {
-                  "type": "string",
-                  "description": "Internal name of product."
-                },
-                "email_or_username": {
-                  "type": "string",
-                  "description": "The person's email or username."
-                }
-              },
-              "required": [
-                "product",
-                "email_or_username"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentReportCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_comment_id": {
-                      "type": "integer",
-                      "description": "The id of the post comment being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post comment."
-                    }
-                  },
-                  "required": [
-                    "post_comment_id"
-=======
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "description",
-                    "available",
-                    "priority"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  ]
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "post_comment_report"
-=======
-                "merchandise"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "PostCommentReportUpdateForm": {
-=======
-      "MerchandiseUpdateForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "post_comment_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_comment_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostCommentCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_comment": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the comment."
-                    }
-                  },
-                  "required": [
-                    "body"
-                  ]
-                },
-                "mentions": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "person_id": {
-                        "type": "integer",
-                        "description": "The id of the person mentioned."
-                      },
-                      "location": {
-                        "type": "integer",
-                        "description": "Where the mention text starts in the comment."
-                      },
-                      "length": {
-                        "type": "integer",
-                        "description": "The length of the mention text."
-                      }
-                    },
-                    "required": [
-                      "person_id",
-                      "location",
-                      "length"
-                    ]
-=======
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  }
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "post_comment"
-=======
-                "merchandise"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
       "PostReactionCreateForm": {
         "required": true,
         "description": "",
@@ -8136,9 +7453,6 @@
         }
       },
       "PostReportsCreateForm": {
-=======
-      "MessageReportCreateForm": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "required": true,
         "description": "",
         "content": {
@@ -8323,6 +7637,473 @@
               },
               "required": [
                 "post"
+              ]
+            }
+          }
+        }
+      },
+      "BadgeActionCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "badge_action": {
+                  "type": "object",
+                  "properties": {
+                    "action_type": {
+                      "type": "string",
+                      "description": "Internal name of the action type."
+                    },
+                    "indentifier": {
+                      "type": "string",
+                      "description": "The indentifier for this badge action."
+                    }
+                  },
+                  "required": [
+                    "action_type"
+                  ]
+                }
+              },
+              "required": [
+                "badge_action"
+              ]
+            }
+          }
+        }
+      },
+      "EventForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "EventUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "FollowingForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "followed_id": {
+                  "type": "integer",
+                  "description": "Person to follow."
+                }
+              },
+              "required": [
+                "followed_id"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "available",
+                    "priority"
+                  ]
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "MerchandiseUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the item."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the item."
+                    },
+                    "price": {
+                      "type": "integer",
+                      "description": "Price of the item."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Image associated with the item"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Is the item currently available"
+                    },
+                    "priority": {
+                      "type": "integer",
+                      "default": 0,
+                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
+                    },
+                    "purchase_url": {
+                      "type": "string",
+                      "description": "Where a user can purchase this item."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "merchandise"
+              ]
+            }
+          }
+        }
+      },
+      "BlockCreate": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "type": "object",
+                  "properties": {
+                    "blocked_id": {
+                      "type": "integer",
+                      "description": "Internal name of the action type."
+                    }
+                  },
+                  "required": [
+                    "blocked_id"
+                  ]
+                }
+              },
+              "required": [
+                "block"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "role"
+                  ]
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "CategoryUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category name."
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "The color hex code for the category."
+                    },
+                    "role": {
+                      "type": "string",
+                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "message_id": {
+                      "type": "integer",
+                      "description": "The id of the message being reported."
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "The reason given by the user for reporting the message."
+                    }
+                  },
+                  "required": [
+                    "message_id"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageReportUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_report": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"message_hidden\", \"no_action_needed\", and \"pending\"."
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              },
+              "required": [
+                "message_report"
+              ]
+            }
+          }
+        }
+      },
+      "MessageCreateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "description": "The body of the message."
+                    },
+                    "picture": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
+                    },
+                    "audio": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Message audio, this should be `audio/aac`."
+                    },
+                    "mentions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "person_id": {
+                            "type": "integer",
+                            "description": "ID of user mentioned"
+                          },
+                          "location": {
+                            "type": "integer",
+                            "description": "The location in the message body that the mention is at."
+                          },
+                          "length": {
+                            "type": "integer",
+                            "description": "The length of the users name in the mention"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "MessageUpdateForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "hidden": {
+                      "type": "boolean",
+                      "description": "Whether or not the item is hidden."
+                    }
+                  }
+                }
+              },
+              "required": [
+                "message"
+              ]
+            }
+          }
+        }
+      },
+      "NotificationDeviceIdsForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "device_id": {
+                  "type": "string",
+                  "description": "ID of the device"
+                }
+              },
+              "required": [
+                "device_id"
+              ]
+            }
+          }
+        }
+      },
+      "PasswordResetForm": {
+        "required": true,
+        "description": "",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string",
+                  "description": "Internal name of product."
+                },
+                "email_or_username": {
+                  "type": "string",
+                  "description": "The person's email or username."
+                }
+              },
+              "required": [
+                "product",
+                "email_or_username"
               ]
             }
           }
@@ -8488,7 +8269,7 @@
           }
         }
       },
-      "BadgeActionCreate": {
+      "PostCommentReportCreateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -8496,31 +8277,31 @@
             "schema": {
               "type": "object",
               "properties": {
-                "badge_action": {
+                "post_comment_report": {
                   "type": "object",
                   "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
+                    "post_comment_id": {
+                      "type": "integer",
+                      "description": "The id of the post comment being reported."
                     },
-                    "indentifier": {
+                    "reason": {
                       "type": "string",
-                      "description": "The indentifier for this badge action."
+                      "description": "The reason given by the user for reporting the post comment."
                     }
                   },
                   "required": [
-                    "action_type"
+                    "post_comment_id"
                   ]
                 }
               },
               "required": [
-                "badge_action"
+                "post_comment_report"
               ]
             }
           }
         }
       },
-      "BlockCreate": {
+      "PostCommentReportUpdateForm": {
         "required": true,
         "description": "",
         "content": {
@@ -8528,21 +8309,21 @@
             "schema": {
               "type": "object",
               "properties": {
-                "block": {
+                "post_comment_report": {
                   "type": "object",
                   "properties": {
-                    "blocked_id": {
-                      "type": "integer",
-                      "description": "Internal name of the action type."
+                    "status": {
+                      "type": "string",
+                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"comment_hidden\""
                     }
                   },
                   "required": [
-                    "blocked_id"
+                    "status"
                   ]
                 }
               },
               "required": [
-                "block"
+                "post_comment_report"
               ]
             }
           }
@@ -8559,29 +8340,6 @@
                 "post_comment": {
                   "type": "object",
                   "properties": {
-<<<<<<< HEAD
-                    "name": {
-                      "type": "string",
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "role"
-                  ]
-                }
-              },
-              "required": [
-                "category"
-=======
                     "body": {
                       "type": "string",
                       "description": "The body of the comment."
@@ -8623,441 +8381,95 @@
             }
           }
         }
-      },
-      "MerchandiseForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "description",
-                    "available",
-                    "priority"
-                  ]
-                }
-              },
-              "required": [
-                "merchandise"
-              ]
-            }
-          }
-        }
-      },
-      "MerchandiseUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the item."
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Description of the item."
-                    },
-                    "price": {
-                      "type": "integer",
-                      "description": "Price of the item."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Image associated with the item"
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "default": true,
-                      "description": "Is the item currently available"
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "default": 0,
-                      "description": "Where the item resides in the list. A number greater than 0 means the item will show up sooner in the list."
-                    },
-                    "purchase_url": {
-                      "type": "string",
-                      "description": "Where a user can purchase this item."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "merchandise"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  },
-                  "required": [
-                    "reaction"
-                  ]
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostReactionUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_reaction": {
-                  "type": "object",
-                  "properties": {
-                    "reaction": {
-                      "type": "string",
-                      "description": "The identifier for the reaction. Accepts stringified hex values between 0 and 10FFFF, inclusive."
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post_reaction"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "post_id": {
-                      "type": "integer",
-                      "description": "The id of the post being reported."
-                    },
-                    "reason": {
-                      "type": "string",
-                      "description": "The reason given by the user for reporting the post."
-                    }
-                  },
-                  "required": [
-                    "post_id"
-                  ]
-                }
-              },
-              "required": [
-                "post_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostReportsUpdateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post_report": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "The new status. Valid statuses are \"pending\", \"no_action_needed\", \"post_hidden\""
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                }
-              },
-              "required": [
-                "post_report"
-              ]
-            }
-          }
-        }
-      },
-      "PostCreateForm": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
-                    },
-                    "ends_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
-                    }
-                  }
-                }
-              },
-              "required": [
-                "post"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-      "CategoryUpdateForm": {
-=======
-      "PostUpdateForm": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "category": {
-=======
-                "post": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  "type": "object",
-                  "properties": {
-                    "body": {
-                      "type": "string",
-<<<<<<< HEAD
-                      "description": "Category name."
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "The color hex code for the category."
-                    },
-                    "role": {
-                      "type": "string",
-                      "description": "The role the category is allowed to be used by. Supports normal, product, staff, admin, super_admin."
-=======
-                      "description": "The body of the message."
-                    },
-                    "picture": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`."
-                    },
-                    "audio": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "Post audio, this should be `audio/acc`."
-                    },
-                    "global": {
-                      "type": "boolean",
-                      "description": "Whether the post is global (seen by all users)."
-                    },
-                    "starts_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "When the post should start being visible (same format as in responses)."
-                    },
-                    "ends_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": " When the post should stop being visible (same format as in responses)."
-                    },
-                    "repost_interval": {
-                      "type": "integer",
-                      "description": "How often this post should be republished."
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Valid values: \"pending\", \"published\", \"deleted\", \"rejected\""
-                    },
-                    "priority": {
-                      "type": "integer",
-                      "description": "Priority value for post."
-                    },
-                    "recommended": {
-                      "type": "boolean",
-                      "description": "Whether the post is recommended.(Admin or product account)"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                    }
-                  }
-                }
-              },
-              "required": [
-<<<<<<< HEAD
-                "category"
-=======
-                "post"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-              ]
-            }
-          }
-        }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      },
-      "BadgeActionCreate": {
-        "required": true,
-        "description": "",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "badge_action": {
-                  "type": "object",
-                  "properties": {
-                    "action_type": {
-                      "type": "string",
-                      "description": "Internal name of the action type."
-                    },
-                    "indentifier": {
-                      "type": "string",
-                      "description": "The indentifier for this badge action."
-                    }
-                  },
-                  "required": [
-                    "action_type"
-                  ]
-                }
-              },
-              "required": [
-                "badge_action"
-              ]
-            }
-          }
-        }
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
       }
     },
     "responses": {
       "OK": {
         "description": "HTTP/1.1 200 Ok"
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "TagArray": {
-=======
-      "BlocksObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
+      "PostReactionsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
+                "post_reactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_reaction": {
+                        "$ref": "#/components/schemas/PostReactionJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReactionsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reaction": {
+                  "$ref": "#/components/schemas/PostReactionJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_report": {
+                  "$ref": "#/components/schemas/PostReportJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_report": {
+                        "$ref": "#/components/schemas/PostReportJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
                 "posts": {
                   "type": "array",
                   "items": {
@@ -9074,56 +8486,66 @@
           }
         }
       },
-      "EventsArray": {
+      "PostsListsArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "events": {
+                "posts": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
+                      "post": {
+                        "$ref": "#/components/schemas/PostListJson"
                       }
                     }
                   }
-=======
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD
-      "EventsObject": {
-=======
-      "CategoryObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "RecommendedPeopleArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
+      "PostsObject": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
-=======
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
+                "post": {
+                  "$ref": "#/components/schemas/PostJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PostsShareObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "post": {
+                  "$ref": "#/components/schemas/PostShareJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendedPeopleArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
                 "people": {
                   "type": "array",
                   "items": {
@@ -9134,53 +8556,26 @@
                       }
                     }
                   }
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "FollowingsArray": {
-=======
-      "CategoryArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "RecommendedPostsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "followings": {
-=======
-                "categories": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "posts": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
-=======
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "post": {
                         "$ref": "#/components/schemas/PostJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9190,39 +8585,15 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "FollowersArray": {
-=======
-      "BadgesArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "RelationshipsObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "followers": {
-=======
-                "badges": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "badge": {
-                        "$ref": "#/components/schemas/BadgeJson"
-                      }
-                    }
-                  }
-=======
                 "relationship": {
                   "$ref": "#/components/schemas/RelationshipJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -9236,28 +8607,13 @@
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-                "events": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "relationships": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "follower": {
-                        "$ref": "#/components/schemas/FollowingJson"
-=======
-                      "event": {
-                        "$ref": "#/components/schemas/EventJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "relationship": {
                         "$ref": "#/components/schemas/RelationshipJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9267,79 +8623,35 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "FollowingObject": {
-=======
-      "EventsObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "RoomsObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "following": {
-                  "$ref": "#/components/schemas/FollowingJson"
-=======
-                "event": {
-                  "$ref": "#/components/schemas/EventJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "room": {
                   "$ref": "#/components/schemas/RoomJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "LevelsArray": {
-=======
-      "FollowingsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "RoomsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "levels": {
-=======
-                "followings": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "rooms": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
-=======
-                      "following": {
-                        "$ref": "#/components/schemas/FollowingJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "room": {
                         "$ref": "#/components/schemas/RoomJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9349,14 +8661,7 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "MerchandiseArray": {
-=======
-      "FollowersArray": {
-=======
       "SessionObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -9425,43 +8730,20 @@
           }
         }
       },
-<<<<<<< HEAD
-      "LevelsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "BadgesArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "merchandise": {
-=======
-                "levels": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "badges": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
-=======
-                      "level": {
-                        "$ref": "#/components/schemas/LevelJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "badge": {
                         "$ref": "#/components/schemas/BadgeJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9471,211 +8753,20 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessageReportsArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MessagesArray": {
-=======
-      "MerchandiseArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "BlocksObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "messages": {
-=======
-                "merchandise": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
-=======
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                      }
-                    }
-                  }
-=======
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "MessagesObject": {
-=======
-      "MerchandiseObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "CategoryObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
-=======
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostCommentReportsArray": {
-=======
-      "MessageReportsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "CategoryArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "post_comment_reports": {
-=======
-                "message_reports": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                "categories": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
-=======
-                      "message_report": {
-                        "$ref": "#/components/schemas/MessageReportJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostCommentsArray": {
-=======
-      "MessagesArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "EventsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "post_comments": {
-=======
-                "messages": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "events": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentJson"
-=======
-                      "message": {
-                        "$ref": "#/components/schemas/MessageJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "event": {
                         "$ref": "#/components/schemas/EventJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9685,102 +8776,35 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostCommentsListArray": {
-=======
-      "MessagesObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "EventsObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "post_comments": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentListJson"
-                      }
-                    }
-                  }
-=======
-                "message": {
-                  "$ref": "#/components/schemas/MessageJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "event": {
                   "$ref": "#/components/schemas/EventJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostCommentsObject": {
-=======
-      "PeopleArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReactionsArray": {
-=======
       "FollowingsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-                "post_reactions": {
-=======
-                "people": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "followings": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
-=======
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "following": {
                         "$ref": "#/components/schemas/FollowingJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9790,30 +8814,13 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostReactionsObject": {
-=======
-      "PersonObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "FollowersArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
-=======
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "followers": {
                   "type": "array",
                   "items": {
@@ -9824,86 +8831,41 @@
                       }
                     }
                   }
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostReportsObject": {
-=======
-      "PersonPrivateObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "FollowingObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
-=======
-                "person": {
-                  "$ref": "#/components/schemas/PersonPrivateJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "following": {
                   "$ref": "#/components/schemas/FollowingJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostReportsArray": {
-=======
-      "PostCommentReportsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "LevelsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "post_reports": {
-=======
-                "post_comment_reports": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "levels": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
-=======
-                      "post_comment_report": {
-                        "$ref": "#/components/schemas/PostCommentReportJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "level": {
                         "$ref": "#/components/schemas/LevelJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9913,46 +8875,111 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostsArray": {
-=======
-      "PostCommentsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "MessageReportsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
+      "MerchandiseArray": {
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "posts": {
-=======
-                "post_comments": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                "message_reports": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
+                "merchandise": {
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-=======
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
+                      "merchandise": {
+                        "$ref": "#/components/schemas/MerchandiseJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MerchandiseObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchandise": {
+                  "$ref": "#/components/schemas/MerchandiseJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BlocksObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "block": {
+                  "$ref": "#/components/schemas/BlockJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryObject": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/components/schemas/CategoryJson"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CategoryArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$ref": "#/components/schemas/CategoryJson"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MessageReportsArray": {
+        "description": "HTTP/1.1 200 Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message_reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
                       "message_report": {
                         "$ref": "#/components/schemas/MessageReportJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -9962,46 +8989,20 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostsListsArray": {
-=======
-      "PostCommentsListArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "MessagesArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "posts": {
-=======
-                "post_comments": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "messages": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "post": {
-                        "$ref": "#/components/schemas/PostListJson"
-=======
-                      "post_comment": {
-                        "$ref": "#/components/schemas/PostCommentListJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "message": {
                         "$ref": "#/components/schemas/MessageJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -10011,48 +9012,15 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "PostsObject": {
-=======
-      "PostCommentsObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "post": {
-                  "$ref": "#/components/schemas/PostJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-=======
       "MessagesObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-                "post": {
-                  "$ref": "#/components/schemas/PostShareJson"
-=======
-                "post_comment": {
-                  "$ref": "#/components/schemas/PostCommentJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "message": {
                   "$ref": "#/components/schemas/MessageJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                 }
               }
             }
@@ -10112,46 +9080,20 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "RecommendedPeopleArray": {
-=======
-      "PostReportsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "PostCommentReportsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "people": {
-=======
-                "post_reports": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                 "post_comment_reports": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                   "type": "array",
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "person": {
-                        "$ref": "#/components/schemas/PersonJson"
-=======
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "post_comment_report": {
                         "$ref": "#/components/schemas/PostCommentReportJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -10161,14 +9103,7 @@
           }
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "RecommendedPostsArray": {
-=======
-      "PostsArray": {
-=======
       "PostCommentsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -10191,12 +9126,7 @@
           }
         }
       },
-<<<<<<< HEAD
-      "PostsListsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
       "PostCommentsListArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
         "description": "HTTP/1.1 200 Ok",
         "content": {
           "application/json": {
@@ -10208,17 +9138,8 @@
                   "items": {
                     "type": "object",
                     "properties": {
-<<<<<<< HEAD
-                      "post": {
-<<<<<<< HEAD
-                        "$ref": "#/components/schemas/PostJson"
-=======
-                        "$ref": "#/components/schemas/PostListJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
                       "post_comment": {
                         "$ref": "#/components/schemas/PostCommentListJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
                       }
                     }
                   }
@@ -10237,386 +9158,6 @@
               "properties": {
                 "post_comment": {
                   "$ref": "#/components/schemas/PostCommentJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseArray": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "merchandise": {
-                        "$ref": "#/components/schemas/MerchandiseJson"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MerchandiseObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "merchandise": {
-                  "$ref": "#/components/schemas/MerchandiseJson"
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "RoomsObject": {
-=======
-      "RecommendedPostsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
-                }
-              }
-            }
-          }
-        }
-      },
-      "RoomsArray": {
-=======
-      "PostReactionsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "rooms": {
-=======
-                "posts": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                "post_reactions": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "room": {
-                        "$ref": "#/components/schemas/RoomJson"
-=======
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                      "post_reaction": {
-                        "$ref": "#/components/schemas/PostReactionJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "SessionObject": {
-=======
-      "RelationshipsObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "PostReactionsObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-=======
-                "relationship": {
-                  "$ref": "#/components/schemas/RelationshipJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                "post_reaction": {
-                  "$ref": "#/components/schemas/PostReactionJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "BadgeActionsPending": {
-=======
-      "RelationshipsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "pending_badge": {
-                  "type": "object",
-                  "properties": {
-                    "badge_action_count": {
-                      "type": "integer"
-                    },
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                },
-                "badges_awarded": {
-                  "type": "object",
-                  "properties": {
-                    "badge": {
-                      "$ref": "#/components/schemas/BadgeJson"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BadgesArray": {
-=======
-      "PostReportsObject": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "badges": {
-=======
-                "relationships": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD
-                      "badge": {
-                        "$ref": "#/components/schemas/BadgeJson"
-=======
-                      "relationship": {
-                        "$ref": "#/components/schemas/RelationshipJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                      }
-                    }
-                  }
-=======
-                "post_report": {
-                  "$ref": "#/components/schemas/PostReportJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "BlocksObject": {
-=======
-      "RoomsObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "PostReportsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "block": {
-                  "$ref": "#/components/schemas/BlockJson"
-=======
-                "room": {
-                  "$ref": "#/components/schemas/RoomJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-                "post_reports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_report": {
-                        "$ref": "#/components/schemas/PostReportJson"
-                      }
-                    }
-                  }
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "CategoryObject": {
-=======
-      "RoomsArray": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "PostsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "category": {
-                  "$ref": "#/components/schemas/CategoryJson"
-=======
-                "rooms": {
-=======
-                "posts": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
-                      }
-                    }
-                  }
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                }
-              }
-            }
-          }
-        }
-      },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "CategoryArray": {
-=======
-      "SessionObject": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-=======
-      "PostsListsArray": {
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "categories": {
-=======
-                "person": {
-                  "$ref": "#/components/schemas/PersonJson"
-=======
-                "posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post": {
-                        "$ref": "#/components/schemas/PostListJson"
-                      }
-                    }
-                  }
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-<<<<<<< HEAD
-                "posts": {
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-<<<<<<< HEAD
-                      "category": {
-                        "$ref": "#/components/schemas/CategoryJson"
-=======
-                      "post": {
-                        "$ref": "#/components/schemas/PostJson"
->>>>>>> aec457e3e4ecbe4af62dc6c45f2b11b7ffc6f045
-                      }
-                    }
-                  }
-=======
-                "post": {
-                  "$ref": "#/components/schemas/PostJson"
->>>>>>> 1a52b90ced911647e44d40cdafe927d6acbba433
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostsShareObject": {
-        "description": "HTTP/1.1 200 Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "post": {
-                  "$ref": "#/components/schemas/PostShareJson"
                 }
               }
             }
