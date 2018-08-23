@@ -1,0 +1,31 @@
+if !activity.deleted
+  json = Rails.cache.fetch ["v3", @lang, activity] do
+    {
+      id: activity.id,
+      title: activity.title(@lang),
+      quest_id: activity.step.quest_id,
+      step_id: activity.step_id,
+      description: activity.description,
+      hint: activity.hint,
+      picture_url: activity.picture_optimal_url,
+      picture_width: activity.picture.width,
+      picture_height: activity.picture.height,
+      completed: QuestCompletion.where(person_id: current_user.id, activity_id: activity.id).exists?,
+      deleted: activity.deleted,
+      created_at: activity.created_at
+    }
+  end
+  json[:step] = Rails.cache.fetch ["v3", activity.step.updated_at, activity.step] do
+    activity.step
+  end
+  if activity.activity_types.count > 0
+    json[:requirements] = activity.activity_types.map do |atype|
+      Rails.cache.fetch ["v3", atype] do
+        render partial: "api/v3/activity_types/type", locals: { atype: atype }, handlers: "jb"
+      end
+    end
+  else
+    json[:requirements] = nil
+  end
+  json
+end

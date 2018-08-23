@@ -811,6 +811,8 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     jaro_winkler (1.5.1)
+    jb (0.5.0)
+      multi_json
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -1129,6 +1131,7 @@ DEPENDENCIES
   gettext (>= 3.0.2)
   gettext_i18n_rails
   google_places
+  jb
   jbuilder (~> 2.5)
   jbuilder_cache_multi
   jko_api
