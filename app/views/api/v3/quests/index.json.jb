@@ -18,3 +18,4 @@ else
     render partial: 'quest', locals: { quest: quest, lang: @lang }, handlers: "jb"
   end.compact!
 end
+json
