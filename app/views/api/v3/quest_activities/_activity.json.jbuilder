@@ -1,5 +1,5 @@
 if !activity.deleted
-  json.cache! ["v3", activty.updated_at, activity] do
+  json.cache! ["v3", activity.updated_at, activity] do
     json.id activity.id
     json.quest_id activity.step.quest_id
     json.step_id activity.step_id
