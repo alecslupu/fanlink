@@ -1,6 +1,6 @@
 json.quests do
   json.array!(@quests) do |quest|
-    json.cache! ["v3", quest, @lang] do
+    json.cache! ["v3", quest.updated_at, quest, @lang] do
       json.partial! "list_quest", locals: { quest: quest, lang: @lang }
     end
     quest_completed = current_user.quest_completed.find { |x| x.quest_id == quest.id }

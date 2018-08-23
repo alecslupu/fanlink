@@ -1,5 +1,5 @@
 
-json.cache! ["v3", @lang, quest] do
+json.cache! ["v3", quest.updated_at, @lang, quest] do
   json.id quest.id.to_s
   json.product_id quest.product_id.to_s
   json.event_id quest.event_id.to_s
