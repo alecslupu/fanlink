@@ -8,6 +8,7 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
+  
   # Disable full error reports.
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = true
@@ -56,14 +57,10 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
-<<<<<<< HEAD
-  config.public_file_server.enabled = false
-=======
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
->>>>>>> fixes: changed staging environment config to better match production. Commented out staging only gems
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

@@ -41,12 +41,6 @@ group :production, :staging do
 end
 
 group :staging, :development do
-<<<<<<< HEAD
-=======
-    # gem 'redis'
-    # gem 'redis-namespace'
-    # gem 'redis-rails'
->>>>>>> fixes: changed staging environment config to better match production. Commented out staging only gems
 end
 
 group :development, :test do
@@ -72,9 +66,6 @@ group :development do
   gem "apigen", :path => 'lib/gems/apigen'
   gem 'memory_profiler'
   gem 'derailed_benchmarks'
-  gem 'redis'
-  gem 'redis-namespace'
-  gem 'redis-rails'
 end
 
 group :test do
