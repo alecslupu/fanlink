@@ -6,8 +6,10 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
+  
   # Disable full error reports.
   config.consider_all_requests_local = true
+  config.action_controller.perform_caching = true
 
   # Specifies the header that your server uses for sending files
   # config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -39,6 +41,8 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = false
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
 
