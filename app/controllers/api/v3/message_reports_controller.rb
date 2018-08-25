@@ -129,6 +129,7 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
         end
       else
         @message.hidden = false
+        @message.status = Message.statuses[:posted]
         @message.save
         head :ok
       end
