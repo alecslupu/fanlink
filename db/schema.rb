@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180825023048) do
+ActiveRecord::Schema.define(version: 20180825144322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,8 @@ ActiveRecord::Schema.define(version: 20180825023048) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false, null: false
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.index ["ends_at"], name: "ind_events_ends_at"
     t.index ["product_id"], name: "ind_events_products"
     t.index ["starts_at"], name: "ind_events_starts_at"
@@ -274,6 +276,7 @@ ActiveRecord::Schema.define(version: 20180825023048) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
+    t.integer "audio_duration"
     t.index ["created_at"], name: "index_messages_on_created_at"
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
@@ -347,7 +350,7 @@ ActiveRecord::Schema.define(version: 20180825023048) do
     t.boolean "deleted", default: false
   end
 
-  create_table "portal_accesses", force: :cascade do |t|
+  create_table "portal_accesses", id: :bigint, default: -> { "nextval('portal_access_id_seq'::regclass)" }, force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "post", default: 0, null: false
     t.integer "chat", default: 0, null: false
@@ -457,6 +460,7 @@ ActiveRecord::Schema.define(version: 20180825023048) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
+    t.integer "audio_duration"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
