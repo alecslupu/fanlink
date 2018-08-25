@@ -1,6 +1,5 @@
 #!/bin/sh
 # bin/entrypoint
-DEPLOY_ENV="${RAILS_ENV:-development}"
 echo "Running start up script..."
 
 echo "$(git rev-parse --abbrev-ref HEAD)"
@@ -16,8 +15,8 @@ echo "Checking installed gems..."
 
 echo "Checking DB migrations..."
 sleep 20 # Allows docker to fully load the volume mount before running.
-echo "$DEPLOY_ENV"
-bundle exec rails db:setup
+echo "$RAILS_ENV"
+/usr/src/app/bin/rails db:environment:set RAILS_ENV=$RAILS_ENV db:setup
 MIGRATION_NEEDED=$(/usr/src/app/bin/rake db:migrate:status | grep -c down)
 if [[ $MIGRATION_NEEDED -gt "0" ]]; then
   echo "Migrations needed. Running..."

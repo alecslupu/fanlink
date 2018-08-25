@@ -1,3 +1,5 @@
+#require "json"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -55,7 +57,10 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
-  config.public_file_server.enabled = false
+
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
