@@ -106,6 +106,37 @@ class Api::V3::EventsController < Api::V3::BaseController
     end
   end
 
+  def checkins
+    interests = params[:interst_id] || []
+    if interests.empty?
+      @event_checkins = @event.event_checkins.includes(:person)
+    else
+      @event_checkins = @event.event_checkins.includes(:person).joins(person: :person_interests).where("person_interests.interest_id IN (?)", interests)
+    end
+
+    return_the @event_checkins, handler: "jb"
+  end
+
+  def checkin 
+    @event_checkin = EventCheckin.create(person_id: current_user.id, event_id: @event.id)
+    if @event_checkin.valid?
+      return_the @event_checkin, handler: "jb"
+    else
+      render json: { errors: [@event_checkin.errors.messages] }, status: :unprocessable_entity
+    end
+  end
+
+  def checkout
+    ci = EventCheckin.where(person_id: current_user.id, event_id: @event.id).first
+
+    if ci != nil
+      ci.destroy
+      head :ok
+    else
+      head :not_found
+    end
+  end
+
   # **
   # @api {get} /events/:id Get a single event.
   # @apiName GetEvent

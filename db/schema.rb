@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180825144322) do
+ActiveRecord::Schema.define(version: 20180825190040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,15 @@ ActiveRecord::Schema.define(version: 20180825144322) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "event_checkins", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "idx_event_checkins_event"
+    t.index ["person_id"], name: "idx_event_checkins_person"
   end
 
   create_table "events", force: :cascade do |t|
@@ -704,6 +713,7 @@ ActiveRecord::Schema.define(version: 20180825144322) do
   add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
+  add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
   add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
@@ -720,6 +730,7 @@ ActiveRecord::Schema.define(version: 20180825144322) do
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
+  add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade

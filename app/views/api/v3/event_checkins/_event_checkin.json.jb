@@ -1,0 +1,5 @@
+json = {
+    checkin_at: event_checkin.created_at.to_s,
+}
+json[:person] = render partial: 'api/v3/people/person', locals: {person: event_checkin.person, lang: @lang}
+json

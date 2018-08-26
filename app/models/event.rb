@@ -4,6 +4,8 @@ class Event < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
+  has_many :event_checkins, dependent: :destroy
+  has_many :people, through: :event_checkins, source: :person
   normalize_attributes :place_identifier
 
   validate :date_sanity
