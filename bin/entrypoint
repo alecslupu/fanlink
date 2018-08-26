@@ -1,6 +1,5 @@
 #!/bin/sh
 # bin/entrypoint
-
 echo "Running start up script..."
 
 # echo "$(git rev-parse --abbrev-ref HEAD)"
