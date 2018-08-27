@@ -109,9 +109,9 @@ class Api::V3::EventsController < Api::V3::BaseController
   def checkins
     interests = params[:interst_id] || []
     if interests.empty?
-      @event_checkins = @event.event_checkins.includes(:person)
+      @event_checkins = paginate(@event.event_checkins.includes(:person).order(created_at: :desc), per_page: 2)
     else
-      @event_checkins = @event.event_checkins.includes(:person).joins(person: :person_interests).where("person_interests.interest_id IN (?)", interests)
+      @event_checkins = paginate(@event.event_checkins.includes(:person).joins(person: :person_interests).where("person_interests.interest_id IN (?)", interests).order(created_at: :desc))
     end
 
     return_the @event_checkins, handler: "jb"
