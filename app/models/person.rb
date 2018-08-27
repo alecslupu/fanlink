@@ -47,6 +47,7 @@ class Person < ApplicationRecord
 
   has_many :rewards, through: :person_rewards
   has_many :interests, through: :person_interests
+  has_many :checkins, through: :event_checkins, dependent: :destroy
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
