@@ -274,7 +274,6 @@ ActiveRecord::Schema.define(version: 20180820130240) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
-    t.integer "audio_duration"
     t.index ["created_at"], name: "index_messages_on_created_at"
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
@@ -348,7 +347,7 @@ ActiveRecord::Schema.define(version: 20180820130240) do
     t.boolean "deleted", default: false
   end
 
-  create_table "portal_accesses", id: :bigint, default: -> { "nextval('portal_access_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "portal_accesses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "post", default: 0, null: false
     t.integer "chat", default: 0, null: false
@@ -458,7 +457,6 @@ ActiveRecord::Schema.define(version: 20180820130240) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
-    t.integer "audio_duration"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
