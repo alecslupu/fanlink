@@ -34,7 +34,7 @@ if defined?(relationships) && !relationships.empty?
   json.relationships relationships, partial: "api/v3/relationships/relationship", as: :relationship
 end
 if person.interests.present?
-  json.interests person.interests, partial: "api/v3/interests/interest", as: :interest
+  json.interests person.interests, partial: "api/v3/interests/flat_interest", as: :interest
 else
   json.interests nil
 end
