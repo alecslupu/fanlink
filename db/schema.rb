@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180825190040) do
+ActiveRecord::Schema.define(version: 20180830195053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -518,6 +518,7 @@ ActiveRecord::Schema.define(version: 20180825190040) do
     t.datetime "updated_at", null: false
     t.integer "step_id", null: false
     t.integer "reward_id"
+    t.jsonb "title", default: {}, null: false
     t.index ["reward_id"], name: "idx_quest_activities_rewards"
     t.index ["step_id"], name: "index_quest_activities_on_step_id"
   end
