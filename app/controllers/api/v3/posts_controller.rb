@@ -112,7 +112,7 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def destroy
-    post = Post.visible.find(params[:id])
+    post = Post.find(params[:id])
     if post.person == current_user || current_user.try(:some_admin?)
       post.deleted!
       post.delete_real_time
