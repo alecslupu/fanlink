@@ -47,24 +47,30 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
           break
         else
           next if PersonReward.exists?(person_id: current_user.id, reward_id: reward.id)
-          @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
-          @progress.series = @action_type.internal_name || nil
-          @progress.actions["badge_action"] ||= 0
-          @progress.actions["badge_action"] += 1
-          @progress.total ||= 0
-          @progress.total += 1
-          if @progress.present? && @progress.save
-            @series_total = RewardProgress.where(person_id: current_user.id, series: @action_type.internal_name).sum(:total) || @progress.total
-            broadcast(:reward_progress_created, current_user, @progress, @series_total)
-            return_the @progress
-          else
-            if @progress.blank?
-              render json: { errors: { base: "Reward does not exist for that action type." } }, status: :not_found
+          badge_action = current_user.badge_actions.create(action_type: @action_type, identifier: params[:badge_action][:identifier])
+          if badge_action.valid?
+            @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
+            @progress.series = @action_type.internal_name || nil
+            @progress.actions["badge_action"] ||= 0
+            @progress.actions["badge_action"] += 1
+            @progress.total ||= 0
+            @progress.total += 1
+            if @progress.present? && @progress.save
+              @series_total = RewardProgress.where(person_id: current_user.id, series: @action_type.internal_name).sum(:total) || @progress.total
+              broadcast(:reward_progress_created, current_user, @progress, @series_total)
+              return_the @progress
             else
-              render_422(@progress.errors.messages.flatten)
+              if @progress.blank?
+                render json: { errors: { base: "Reward does not exist for that action type." } }, status: :not_found
+              else
+                render_422(@progress.errors.values.flatten)
+              end
             end
+            break
+          else
+            render_error(badge_action.errors.values.flatten)
+            break
           end
-          break
         end
       end
     end
@@ -89,8 +95,11 @@ private
       render_422("You must supply a badge action type.")
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
-      @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
-      render_422("Action type is invalid.") unless @action_type.present?
+      if @action_type.present?
+        @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
+      else
+        render_422("Action type is invalid.")
+      end
     end
   end
 end
