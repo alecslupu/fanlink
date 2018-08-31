@@ -1,3 +1,4 @@
+json =
 Rails.cache.fetch ["v3", event.updated_at, event] do
   {
     id: event.id.to_s,
@@ -11,4 +12,12 @@ Rails.cache.fetch ["v3", event.updated_at, event] do
     ends_at: event.ends_at.present? ? event.ends_at.to_s : nil
   }
 end
+#TODO: n+1 query, but seeing if this works for Travis.
+ ci = current_user.event_checkins.where(event_id: event.id).first
+if ci.nil?
+json[:checkin_id] = nil
+else
+json[:checkin_id] = ci.id
+end
+json
 
