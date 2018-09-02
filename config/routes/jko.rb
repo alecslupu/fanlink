@@ -130,7 +130,18 @@ JkoApi.routes self do
 
     resources :badges, except: %i[ destroy ]
 
-    resources :people, only: %i[ create index show update destroy]
+    resources :interests do
+      member do
+        post "add" => "interests#add_interest"
+        post "remove" => "interests#remove_interest"
+      end
+    end
+
+    resources :people, only: %i[ create index show update destroy] do
+      member do
+        get "interests" => "people#interests"
+      end
+    end
 
     resources :portal_notifications
 
