@@ -170,8 +170,13 @@ class Person < ApplicationRecord
     end
 
     def canonicalize_username
-      self.username_canonical = canonicalize(self.username)
-      true
+      if Person.find_by(username_canonical: canonicalize(self.username), product_id: product.id)
+        errors.add(:username, "A user has already signed up with that username.")
+        false
+      else
+        self.username_canonical = canonicalize(self.username)
+        true
+      end
     end
 
     def check_role
