@@ -7,7 +7,7 @@ FanlinkApi::API.endpoint :get_events do
     status 200
     type :object do
       events :array do
-        type :event_json
+        type :event_app_json
       end
     end
   end
@@ -47,7 +47,7 @@ FanlinkApi::API.endpoint :get_an_event do
   output :success do
     status 200
     type :object do
-      type :event_json
+      type :event_app_json
     end
   end
 

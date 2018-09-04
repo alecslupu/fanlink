@@ -11,7 +11,7 @@
 /log/*
 /tmp/*
 /doc/
-/docs/
+docs/**/*.json
 !/log/.keep
 !/tmp/.keep
 !/doc/.keep

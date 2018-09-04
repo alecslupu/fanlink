@@ -25,7 +25,7 @@ describe "Posts (v1)" do
       expect(post.person).to eq(@person)
       expect(post.body).to eq(body)
       expect(post.published?).to be_truthy
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should create a new post and publish it with a lot of fields normal users really should not have access to but i am told they should" do
       expect_any_instance_of(Post).not_to receive(:post)
@@ -174,8 +174,8 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts", params: { from_date: from, to_date: to }, headers: headers
       expect(response).to be_success
-      post11_v1_json = json["posts"].find { |p| p["id"] == post11.id.to_s }
-      expect(post11_v1_json["body"]).to eq(translation)
+      post11_json = json["posts"].find { |p| p["id"] == post11.id.to_s }
+      expect(post11_json["body"]).to eq(translation)
     end
     it "should not get the list if not logged in" do
       get "/posts", params: { from_date: from, to_date: to, limit: 2 }
@@ -263,8 +263,8 @@ describe "Posts (v1)" do
       get "/posts/list", params: { page: 1, per_page: pp }
       expect(response).to be_success
       expect(json["posts"].count).to eq(pp)
-      expect(json["posts"].first).to eq(post_list_v1_json(@list_posts.last))
-      expect(json["posts"].last).to eq(post_list_v1_json(@list_posts[-2]))
+      expect(json["posts"].first).to eq(post_list_json(@list_posts.last))
+      expect(json["posts"].last).to eq(post_list_json(@list_posts[-2]))
     end
     it "should get list paginated at page 2" do
       login_as(@admin)
@@ -272,8 +272,8 @@ describe "Posts (v1)" do
       get "/posts/list", params: { page: 2, per_page: pp }
       expect(response).to be_success
       expect(json["posts"].count).to eq(pp)
-      expect(json["posts"].first).to eq(post_list_v1_json(@list_posts[-3]))
-      expect(json["posts"].last).to eq(post_list_v1_json(@list_posts[-4]))
+      expect(json["posts"].first).to eq(post_list_json(@list_posts[-3]))
+      expect(json["posts"].last).to eq(post_list_json(@list_posts[-4]))
     end
     it "should get the list of all posts filtered on person_id" do
       login_as(@admin)
@@ -380,7 +380,7 @@ describe "Posts (v1)" do
       expect(response).to be_success
       pjson = json["posts"]
       expect(pjson.count).to eq(1)
-      expect(pjson.first).to eq(post_list_v1_json(post))
+      expect(pjson.first).to eq(post_list_json(post))
     end
     it "should not give you anything if not logged in" do
       get "/posts/list"
@@ -398,7 +398,7 @@ describe "Posts (v1)" do
     it "should get a post without authentication" do
       get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
       expect(response).to be_success
-      expect(json["post"]).to eq(post_share_v1_json(post))
+      expect(json["post"]).to eq(post_share_json(post))
     end
     it "should 404 with valid post in different product" do
       post = create(:post, person: create(:person, product: create(:product)), status: :published)
@@ -423,7 +423,7 @@ describe "Posts (v1)" do
 
       get "/posts/#{post.id}/share", params: { product: post.product.internal_name }
       expect(response).to be_success
-      expect(json["post"]).to eq(post_share_v1_json(post))
+      expect(json["post"]).to eq(post_share_json(post))
     end
     it "should 404 on an unpublished post" do
       post = create(:post)
@@ -442,7 +442,7 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should get a visible post with reaction counts" do
       post = create(:post, person: @person, status: :published)
@@ -452,7 +452,7 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should include current user reaction" do
       post = create(:post, person: @person, status: :published)
@@ -460,7 +460,7 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post, nil, reaction))
+      expect(json["post"]).to eq(post_json(post, nil, reaction))
       expect(json["post"]["post_reaction"]).not_to be_nil
     end
     it "should return english language body if no device language provided and english exists" do
@@ -500,7 +500,7 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should include current user reaction" do
       post = create(:post, person: @person, status: :published)
@@ -508,7 +508,7 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post, nil, reaction))
+      expect(json["post"]).to eq(post_json(post, nil, reaction))
       expect(json["post"]["post_reaction"]).not_to be_nil
     end
     it "should not get a deleted post" do
@@ -528,21 +528,21 @@ describe "Posts (v1)" do
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should get an unexpired post with no start date and an end date" do
       post = create(:post, person: @person, status: :published, ends_at: Time.now + 1.hour)
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should get an unexpired post with both dates" do
       post = create(:post, person: @person, status: :published, starts_at: Time.now - 1.hour, ends_at: Time.now + 1.hour)
       login_as(@person)
       get "/posts/#{post.id}"
       expect(response).to be_success
-      expect(json["post"]).to eq(post_v1_json(post))
+      expect(json["post"]).to eq(post_json(post))
     end
     it "should not get a premature post with a start date and no end date" do
       post = create(:post, person: @person, status: :published, starts_at: Time.now + 1.hour)

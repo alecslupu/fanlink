@@ -1,4 +1,4 @@
-FanlinkApi::API.model :post_json do
+FanlinkApi::API.model :post_app_json do
   type :object do
     post :object do
       id :int32
