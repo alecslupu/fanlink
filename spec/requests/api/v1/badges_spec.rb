@@ -16,10 +16,10 @@ describe "Badges (v1)" do
       expect(json["badges"].count).to eq(2)
       fb = json["badges"].first
       expect(fb["badge_action_count"]).to eq(1)
-      expect(fb["badge"]).to eq(badge_v1_json(badge1))
+      expect(fb["badge"]).to eq(badge_json(badge1))
       sb = json["badges"].last
       expect(sb["badge_action_count"]).to eq(0)
-      expect(sb["badge"]).to eq(badge_v1_json(badge2))
+      expect(sb["badge"]).to eq(badge_json(badge2))
     end
     it "should return 404 for non-existent passed in person" do
       person2 = create(:person)

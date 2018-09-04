@@ -1,4 +1,4 @@
-FanlinkApi::API.model :room_json do
+FanlinkApi::API.model :room_app_json do
   type :object do
     room :object do
       id :int32

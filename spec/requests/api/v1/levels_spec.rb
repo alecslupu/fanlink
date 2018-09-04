@@ -10,8 +10,8 @@ describe "Levels (v1)" do
       expect(response).to be_success
       expect(json["levels"].count).to eq(2)
       l1 = json["levels"].first
-      expect(json["levels"].first).to eq(level_v1_json(level2))
-      expect(json["levels"].last).to eq(level_v1_json(level1))
+      expect(json["levels"].first).to eq(level_json(level2))
+      expect(json["levels"].last).to eq(level_json(level1))
     end
   end
 end

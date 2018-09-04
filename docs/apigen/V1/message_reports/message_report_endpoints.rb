@@ -7,6 +7,7 @@ FanlinkApi::API.endpoint :get_message_reports do
     status_filter(:string).explain do
       description "If provided, valid values are 'message_hidden', 'no_action_needed', and 'pending'"
     end
+  end
   output :success do
     status 200
     type :object do
@@ -195,7 +196,7 @@ FanlinkApi::API.endpoint :update_message_report do
   output :success do
     status 200
     type :object do
-      type :message_report_json
+      type :message_report_app_json
     end
   end
 

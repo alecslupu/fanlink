@@ -108,6 +108,7 @@ FanlinkApi::API.endpoint :create_password_reset do
     type :object do
       message :object do
         type :string
+      end
     end
   end
 

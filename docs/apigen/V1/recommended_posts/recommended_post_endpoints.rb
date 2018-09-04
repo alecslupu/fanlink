@@ -6,7 +6,7 @@ FanlinkApi::API.endpoint :get_recommended_posts do
     status 200
     type :object do
       recommended_posts :array do
-        type :recommended_post_json
+        type :recommended_post_app_json
       end
     end
   end
@@ -45,7 +45,7 @@ FanlinkApi::API.endpoint :get_a_recommended_post do
   output :success do
     status 200
     type :object do
-      type :recommended_post_json
+      type :recommended_post_app_json
     end
   end
 
@@ -101,7 +101,7 @@ FanlinkApi::API.endpoint :create_recommended_post do
   output :success do
     status 200
     type :object do
-      type :recommended_post_json
+      type :recommended_post_app_json
     end
   end
 
@@ -176,7 +176,7 @@ FanlinkApi::API.endpoint :update_recommended_post do
   output :success do
     status 200
     type :object do
-      type :recommended_post_json
+      type :recommended_post_app_json
     end
   end
 

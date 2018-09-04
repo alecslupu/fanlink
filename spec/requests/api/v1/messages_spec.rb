@@ -27,7 +27,7 @@ describe "Messages (v1)" do
       expect(msg.room).to eq(@room)
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
-      expect(json["message"]).to eq(message_v1_json(msg))
+      expect(json["message"]).to eq(message_json(msg))
     end
     it "should create a new message in a public room with mentions" do
       expect_any_instance_of(Message).to receive(:post)
@@ -82,7 +82,7 @@ describe "Messages (v1)" do
       expect(msg.room).to eq(room)
       expect(msg.person).to eq(@person)
       expect(msg.body).to eq(body)
-      expect(json["message"]).to eq(message_v1_json(msg))
+      expect(json["message"]).to eq(message_json(msg))
     end
     it "should create a new message in a private room with a mention" do
       expect_any_instance_of(Message).to receive(:post)
@@ -280,7 +280,7 @@ describe "Messages (v1)" do
         expect_any_instance_of(Room).to receive(:clear_message_counter).with(@private_room.room_memberships.where(person: @person).first)
         get "/rooms/#{@private_room.id}/messages", params: { from_date: from, to_date: to, limit: 1 }
         expect(response).to be_success
-        expect(json["messages"].first).to eq(message_v1_json(msg))
+        expect(json["messages"].first).to eq(message_json(msg))
       end
       it "should return not found if not member of private room" do
         p = create(:person)
@@ -317,8 +317,8 @@ describe "Messages (v1)" do
       get "/messages", params: { page: 1, per_page: 2 }
       expect(response).to be_success
       expect(json["messages"].count).to eq(toget.size)
-      expect(json["messages"].first).to eq(message_list_v1_json(toget.first))
-      expect(json["messages"].last).to eq(message_list_v1_json(toget.last))
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
     end
     it "should give you page 1 with 2 per page if no page specified" do
       toget = [msg3, msg14]
@@ -326,8 +326,8 @@ describe "Messages (v1)" do
       get "/messages", params: { per_page: 2 }
       expect(response).to be_success
       expect(json["messages"].count).to eq(toget.size)
-      expect(json["messages"].first).to eq(message_list_v1_json(toget.first))
-      expect(json["messages"].last).to eq(message_list_v1_json(toget.last))
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
     end
     it "should give you page 2 with 2 per page" do
       toget = [msg13, msg12]
@@ -335,22 +335,22 @@ describe "Messages (v1)" do
       get "/messages", params: { page: 2, per_page: 2 }
       expect(response).to be_success
       expect(json["messages"].count).to eq(toget.size)
-      expect(json["messages"].first).to eq(message_list_v1_json(toget.first))
-      expect(json["messages"].last).to eq(message_list_v1_json(toget.last))
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
     end
     it "should give you messages filtered on id" do
       login_as(admin)
       get "/messages", params: { id_filter: msg1.id }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_list_v1_json(msg1))
+      expect(json["messages"].first).to eq(message_list_json(msg1))
     end
     it "should give you messages filtered on person" do
       login_as(admin)
       get "/messages", params: { person_filter: "ship1" }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_list_v1_json(msg3))
+      expect(json["messages"].first).to eq(message_list_json(msg3))
     end
     it "should give you messages filtered on room" do
       toget = [msg14, msg13, msg12, msg2, msg1 ]
@@ -358,15 +358,15 @@ describe "Messages (v1)" do
       get "/messages", params: { room_id_filter: room1.id }
       expect(response).to be_success
       expect(json["messages"].count).to eq(toget.size)
-      expect(json["messages"].last).to eq(message_list_v1_json(toget.last))
-      expect(json["messages"].first).to eq(message_list_v1_json(toget.first))
+      expect(json["messages"].last).to eq(message_list_json(toget.last))
+      expect(json["messages"].first).to eq(message_list_json(toget.first))
     end
     it "should give you messages filtered on body" do
       login_as(admin)
       get "/messages", params: { body_filter: "his is msg1" }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_list_v1_json(msg1))
+      expect(json["messages"].first).to eq(message_list_json(msg1))
     end
     it "should give you reported messages" do
       create(:message_report, message: msg1)
@@ -374,7 +374,7 @@ describe "Messages (v1)" do
       get "/messages", params: { reported_filter: "Yes" }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_list_v1_json(msg1))
+      expect(json["messages"].first).to eq(message_list_json(msg1))
     end
     it "should return unauth if not logged in" do
       get "/messages"
@@ -390,7 +390,7 @@ describe "Messages (v1)" do
       get "/messages", params: { room_id_filter: room1.id, person_filter:  "essage1" }
       expect(response).to be_success
       expect(json["messages"].count).to eq(1)
-      expect(json["messages"].first).to eq(message_list_v1_json(msg1))
+      expect(json["messages"].first).to eq(message_list_json(msg1))
     end
   end
   describe "#show" do
@@ -399,7 +399,7 @@ describe "Messages (v1)" do
       msg = create(:message, room: @private_room, body: "this is my body")
       get "/rooms/#{@private_room.id}/messages/#{msg.id}"
       expect(response).to be_success
-      expect(json["message"]).to eq(message_v1_json(msg))
+      expect(json["message"]).to eq(message_json(msg))
     end
     it "should not get a single private message from a blocked user" do
       login_as(@person)
@@ -445,7 +445,7 @@ describe "Messages (v1)" do
       patch "/messages/#{msg.id}", params: { message: { hidden: true } }
       expect(response).to be_success
       expect(msg.reload.hidden).to be_truthy
-      expect(json["message"]).to eq(message_list_v1_json(msg))
+      expect(json["message"]).to eq(message_list_json(msg))
     end
     it "should unhide a message by an admin" do
       expect_any_instance_of(Message).to_not receive(:delete_real_time)
@@ -455,7 +455,7 @@ describe "Messages (v1)" do
       patch "/messages/#{msg.id}", params: { message: { hidden: false } }
       expect(response).to be_success
       expect(msg.reload.hidden).to be_falsey
-      expect(json["message"]).to eq(message_list_v1_json(msg))
+      expect(json["message"]).to eq(message_list_json(msg))
     end
     it "should not hide a message if not logged in" do
       expect_any_instance_of(Message).to_not receive(:delete_real_time)

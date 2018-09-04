@@ -6,7 +6,7 @@
 #     status 200
 #     type :object do
 #       blocks :array do
-#         type :block_json
+#         type :block_app_json
 #       end
 #     end
 #   end
@@ -109,7 +109,7 @@ FanlinkApi::API.endpoint :create_block do
   output :success do
     status 200
     type :object do
-      type :block_json
+      type :block_app_json
     end
   end
 
@@ -191,7 +191,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :block_json
+#       type :block_app_json
 #     end
 #   end
 

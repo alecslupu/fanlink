@@ -12,11 +12,12 @@ FanlinkApi::API.endpoint :get_merchandise do
       description "How many records to return per page."
       example 25
     end
+  end
   output :success do
     status 200
     type :object do
       merchandise :array do
-        type :merchandise_json
+        type :merchandise_app_json
       end
     end
   end
@@ -55,7 +56,7 @@ FanlinkApi::API.endpoint :get_a_merchandise do
   output :success do
     status 200
     type :object do
-      type :merchandise_json
+      type :merchandise_app_json
     end
   end
 

@@ -137,7 +137,11 @@ JkoApi.routes self do
       end
     end
 
-    resources :people, only: %i[ create index show update destroy]
+    resources :people, only: %i[ create index show update destroy] do
+      member do
+        get "interests" => "people#interests"
+      end
+    end
 
     resources :portal_notifications
 

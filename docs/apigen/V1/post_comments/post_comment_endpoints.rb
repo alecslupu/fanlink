@@ -9,7 +9,7 @@ FanlinkApi::API.endpoint :get_post_comments do
     status 200
     type :object do
       post_comments :array do
-        type :post_comment_json
+        type :post_comment_app_json
       end
     end
   end
@@ -60,7 +60,7 @@ FanlinkApi::API.endpoint :list_post_comments do
     status 200
     type :object do
       post_comments :array do
-        type :post_comment_json
+        type :post_comment_app_json
       end
     end
   end
@@ -175,7 +175,7 @@ FanlinkApi::API.endpoint :create_post_comment do
   output :success do
     status 200
     type :object do
-      type :post_comment_json
+      type :post_comment_app_json
     end
   end
 

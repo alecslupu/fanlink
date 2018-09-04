@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require 'json'
+require 'yaml'
+require 'oas_parser'
+
+file = ARGF.path
+# input = ARGF.read()
+# json = JSON.load(input)
+# yaml = YAML.dump(json)
+# yaml_file = File.open("#{File.dirname(file)}/#{File.basename(file,'.*')}.yaml", "w")
+# yaml_file << yaml
+# yaml_file.close
+
+definition = OasParser::Definition.resolve(file)
+puts definition
+# path = definition.path_by_path('/rewards')
+# puts path
+# definition.paths.each do |path|
+#   endpoint = path.endpoint_by_method('get')
+#   puts endpoint
+# end

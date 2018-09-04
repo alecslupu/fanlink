@@ -112,7 +112,7 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def destroy
-    post = Post.visible.find(params[:id])
+    post = Post.find(params[:id])
     if post.person == current_user || current_user.try(:some_admin?)
       post.deleted!
       post.delete_real_time
@@ -277,13 +277,20 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def show
-    if current_user&.some_admin? && current_user&.app == "portal"
+    if current_user.try(:some_admin?) && current_user.try(:app) == "portal"
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
     else
-      @post = Post.for_product(ActsAsTenant.current_tenant).visible.unblocked(current_user.blocked_people).find(params[:id])
+      @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
+      if @post.person != current_user
+        @post = @post.visible?
+      end
     end
-    @post_reaction = @post.reactions.find_by(person: current_user)
-    return_the @post
+    if @post.nil?
+      render_not_found
+    else
+      @post_reaction = @post.reactions.find_by(person: current_user)
+      return_the @post
+    end
   end
 
   # **

@@ -74,7 +74,7 @@ describe "People (v1)" do
       expect(p.birthdate).to eq(Date.parse("2000-01-02"))
       expect(p.city).to eq("Shambala")
       expect(p.country_code).to eq("US")
-      expect(json["person"]).to eq(person_private_v1_json(p))
+      expect(json["person"]).to eq(person_private_json(p))
       expect(email_sent(template: "#{p.product.internal_name}-onboarding",
                         to_values: { email: p.email, name: p.name })
       ).to_not be_nil
@@ -93,7 +93,7 @@ describe "People (v1)" do
       p = Person.last
       expect(p.email).to eq(email)
       expect(p.username).to eq(username)
-      expect(json["person"]).to eq(person_private_v1_json(p))
+      expect(json["person"]).to eq(person_private_json(p))
       expect(email_sent(template: "#{p.product.internal_name}-onboarding",
                         to_values: { email: p.email, name: p.name })
       ).to_not be_nil
@@ -110,7 +110,7 @@ describe "People (v1)" do
       expect(response).to be_success
       p = Person.last
       expect(p.username).to eq(username)
-      expect(json["person"]).to eq(person_private_v1_json(p))
+      expect(json["person"]).to eq(person_private_json(p))
       expect(email_sent(template: "#{p.product.internal_name}-onboarding",
                         to_values: { name: p.name })
       ).to be_nil
@@ -348,7 +348,7 @@ describe "People (v1)" do
       login_as(person)
       get "/people/#{person.id}"
       expect(response).to be_success
-      expect(json["person"]).to eq(person_v1_json(person))
+      expect(json["person"]).to eq(person_json(person))
     end
     it "should not get person if not logged in" do
       person = create(:person)

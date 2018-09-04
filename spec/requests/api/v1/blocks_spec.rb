@@ -7,7 +7,7 @@ describe "Blocks (v1)" do
       login_as(blocker)
       post "/blocks", params: { block: { blocked_id: to_be_blocked.id } }
       expect(response).to be_success
-      expect(json["block"]).to eq(block_v1_json(Block.last))
+      expect(json["block"]).to eq(block_json(Block.last))
       expect(blocker.blocked?(to_be_blocked)).to be_truthy
     end
     it "should kill relationships with person" do

@@ -4,6 +4,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Action #{n}" }
     sequence(:internal_name) { |n| "action_#{n}" }
     # action_type_id { FactoryBot.create(:action_type).id }
-    point_value 10
+    point_value { 10 }
   end
 end

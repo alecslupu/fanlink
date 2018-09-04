@@ -283,6 +283,10 @@ class Api::V3::PeopleController < Api::V3::BaseController
     end
   end
 
+  def interests
+    return_the @person
+  end
+
 private
 
   def apply_filters
