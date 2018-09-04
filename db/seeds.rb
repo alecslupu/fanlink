@@ -7,18 +7,18 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Product.count == 0
-  Product.create(name: "Admin", internal_name: "admin", can_have_supers: true, enabled: true)
+  Product.create(name: "Admin", internal_name: "admin", can_have_supers: true, enabled: true, age_requirement: 18)
   unless Rails.env.production?
-    Product.create(name: "Test Product", internal_name: "test")
-    Product.create(name: "Test Product2", internal_name: "test2")
+    Product.create(name: "Test Product", internal_name: "test", age_requirement: 21)
+    Product.create(name: "Test Product2", internal_name: "test2", age_requirement: 13)
   end
 end
 
 if Person.count == 0
   unless Rails.env.production?
     Person.create(name: "Admin User", username: "admin", product_id: Product.find_by(internal_name: "admin").id, email: "admin@example.com",
-                  password: "flink_admin", role: :super_admin)
-    Person.create(name: "Some User", username: "some_user", product_id: Product.find_by(internal_name: "test").id, email: "somebody@example.com", password: "password")
+                  password: "flink_admin", role: :super_admin, birthdate: "1982-01-01")
+    Person.create(name: "Some User", username: "some_user", product_id: Product.find_by(internal_name: "test").id, email: "somebody@example.com", password: "password", birthdate: "1982-01-01")
   end
 end
 

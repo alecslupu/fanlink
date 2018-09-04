@@ -260,10 +260,11 @@ class Api::V3::PeopleController < Api::V3::BaseController
   # *
 
   def update
+    Rails.logger.info(@person.inspect)
     if !check_gender
       render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
     else
-      if @person == current_user || current_user.admin? || current_user.product_account
+      if @person == current_user || current_user.some_admin? || current_user.product_account
         @person.update(person_params)
         return_the @person
       else

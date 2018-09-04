@@ -68,6 +68,10 @@ class Post < ApplicationRecord
     (post_reports.size > 0) ? "Yes" : "No"
   end
 
+  def visible?
+    (status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
+  end
+
   private
 
     def adjust_priorities

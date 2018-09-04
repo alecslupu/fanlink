@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180820130240) do
+ActiveRecord::Schema.define(version: 20180825023048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -484,6 +484,7 @@ ActiveRecord::Schema.define(version: 20180820130240) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "can_have_supers", default: false, null: false
+    t.integer "age_requirement", default: 0
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end

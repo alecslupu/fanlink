@@ -31,7 +31,7 @@ class ApiController < ApplicationController
   #   to the current `params[:action]` value.
   #
   def return_the(obj, opts = {})
-    opts = { using: params[:action] }.merge(opts)
+    opts = { using: params[:action], handler: "jbuilder" }.merge(opts)
 
     #
     # If `obj` doesn't know what `valid?` means then we're presumably
@@ -41,11 +41,11 @@ class ApiController < ApplicationController
     # everything else.
     #
     if obj.nil?
-      render json: { errors: { base: [ _("Not found") ] } }, status: :not_found
+      render_404("Not found.")
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render json: { errors: obj.errors.messages.values.flatten }, status: :unprocessable_entity
+      render_422(obj.errors.messages.values.flatten)
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
-      render action: opts[:using], formats: %i[json]
+      render action: opts[:using], formats: %i[json], handlers: opts[:handler]
     end
   end
 
@@ -132,20 +132,16 @@ protected
 
   def set_app
     if request.headers["X-App"].present?
-      if current_user.present?
-        current_user.app = request.headers["X-App"]
-      elsif params[:app].present?
-        current_user.app = params[:app]
-      else
-        current_user.app = "mobile"
-      end
+      @req_source = request.headers["X-App"]
+    elsif params[:app].present?
+      @req_source = params[:app]
+    else
+      @req_source = "mobile"
     end
   end
 
   def unset_app
-    if current_user.present?
-      current_user.app = false
-    end
+    @req_source = nil
   end
 
   # def set_chewy_filter

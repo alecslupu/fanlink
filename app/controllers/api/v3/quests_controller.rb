@@ -75,8 +75,8 @@ class Api::V3::QuestsController < Api::V3::BaseController
   # *
 
   def index
-    @quests = paginate(Quest.where.not(status: :deleted).order(created_at: :desc))
-    return_the @quests
+    @quests = paginate(Quest.includes(:rewards, steps: [:quest_activities]).where.not(status: :deleted).order(created_at: :desc))
+    return_the @quests, handler: "jb"
   end
 
   # **

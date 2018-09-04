@@ -22,6 +22,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V3::BaseController
 
   def create
     if params[:device_id].present?
+      NotificationDeviceId.find_by(device_identifier: params[:device_id]).destroy if NotificationDeviceId.where(device_identifier: params[:device_id]).exists?
       ndi = current_user.notification_device_ids.create(device_identifier: params[:device_id])
       if ndi.valid?
         head :ok
