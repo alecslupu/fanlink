@@ -1,5 +1,5 @@
 FanlinkApi::API.endpoint :get_badges do
-  descriptions "This gets a list of all badges earned for a passed in user. Will include points earned towards each badge and whether badge has been awarded to the user."
+  description "This gets a list of all badges earned for a passed in user. Will include points earned towards each badge and whether badge has been awarded to the user."
   method :get
   tag "Badges"
   path "/badges"
@@ -13,7 +13,7 @@ FanlinkApi::API.endpoint :get_badges do
     status 200
     type :object do
       badges :array do
-        type :badge_json
+        type :badge_app_json
       end
     end
   end

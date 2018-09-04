@@ -50,6 +50,7 @@ group :development, :test do
   gem "faker"
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "rswag-specs"
 end
 
 group :development do
@@ -66,6 +67,7 @@ group :development do
   gem "apigen", :path => 'lib/gems/apigen'
   gem 'memory_profiler'
   gem 'derailed_benchmarks'
+  gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 end
 
 group :test do
@@ -73,6 +75,7 @@ group :test do
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'wisper-rspec', require: false
 end
 
@@ -126,4 +129,3 @@ gem 'wisper-activerecord'
 #gem 'chewy'#testTest
 gem 'versionist'
 gem 'jbuilder_cache_multi'
-gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'

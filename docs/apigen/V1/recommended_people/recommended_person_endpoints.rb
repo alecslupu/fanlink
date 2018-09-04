@@ -6,7 +6,7 @@ FanlinkApi::API.endpoint :get_recommended_people do
     status 200
     type :object do
       recommended_people :array do
-        type :recommended_person_json
+        type :recommended_person_app_json
       end
     end
   end
@@ -45,7 +45,7 @@ FanlinkApi::API.endpoint :get_a_recommended_person do
   output :success do
     status 200
     type :object do
-      type :recommended_person_json
+      type :recommended_person_app_json
     end
   end
 
@@ -101,7 +101,7 @@ FanlinkApi::API.endpoint :create_recommended_person do
   output :success do
     status 200
     type :object do
-      type :recommended_person_json
+      type :recommended_person_app_json
     end
   end
 
@@ -176,7 +176,7 @@ FanlinkApi::API.endpoint :update_recommended_person do
   output :success do
     status 200
     type :object do
-      type :recommended_person_json
+      type :recommended_person_app_json
     end
   end
 

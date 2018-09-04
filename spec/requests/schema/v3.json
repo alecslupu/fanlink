@@ -1,0 +1,3257 @@
+{
+  "/action_types": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "actions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "Action": {
+                    "type": "object",
+                    "description": "Action Type Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "seconds_lag": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "object",
+              "description": "Action Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "seconds_lag": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/action_types/select": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "actions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "Action": {
+                    "type": "object",
+                    "description": "Action Type Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "seconds_lag": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/action_types/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "object",
+              "description": "Action Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "seconds_lag": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "object",
+              "description": "Action Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "seconds_lag": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "object",
+              "description": "Action Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "seconds_lag": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/activities/{activity_id}/types": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "Activity Type Reponse",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "atype": {
+                    "type": "string"
+                  },
+                  "activity_id": {
+                    "type": "integer"
+                  },
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "atype": {
+              "type": "string"
+            },
+            "activity_id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Activity Type Reponse",
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    }
+  },
+  "/activities/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/activity_types/select": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "Activity Type Reponse",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "atype": {
+                    "type": "string"
+                  },
+                  "activity_id": {
+                    "type": "integer"
+                  },
+                  "value": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    }
+  },
+  "/activity_types/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "atype": {
+              "type": "string"
+            },
+            "activity_id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Activity Type Reponse",
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "atype": {
+              "type": "string"
+            },
+            "activity_id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Activity Type Reponse",
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "atype": {
+              "type": "string"
+            },
+            "activity_id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Activity Type Reponse",
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {}
+      }
+    }
+  },
+  "/assigned_rewards": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "assigned": {
+              "type": "object",
+              "description": "Activity Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/assigned_rewards/{id}": {
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "assigned": {
+              "type": "object",
+              "description": "Activity Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "assigned": {
+              "type": "object",
+              "description": "Activity Type Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/badge_actions": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "pending_badge": {
+              "type": "object",
+              "properties": {
+                "badge_action_count": {
+                  "type": "integer"
+                },
+                "badge": {
+                  "type": "object",
+                  "description": "Badge Response",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "internal_name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "picture_url": {
+                      "type": "string"
+                    },
+                    "action_requirement": {
+                      "type": "integer"
+                    },
+                    "point_value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "badges_awarded": {
+              "type": "object",
+              "properties": {
+                "badge": {
+                  "type": "object",
+                  "description": "Badge Response",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "internal_name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "picture_url": {
+                      "type": "string"
+                    },
+                    "action_requirement": {
+                      "type": "integer"
+                    },
+                    "point_value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "429": {},
+        "500": {}
+      }
+    }
+  },
+  "/badges": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "badges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "badge": {
+                    "type": "object",
+                    "description": "Badge Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "picture_url": {
+                        "type": "string"
+                      },
+                      "action_requirement": {
+                        "type": "integer"
+                      },
+                      "point_value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "object",
+              "description": "Badge Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "action_requirement": {
+                  "type": "integer"
+                },
+                "point_value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/badges/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "object",
+              "description": "Badge Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "action_requirement": {
+                  "type": "integer"
+                },
+                "point_value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "object",
+              "description": "Badge Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "action_requirement": {
+                  "type": "integer"
+                },
+                "point_value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "object",
+              "description": "Badge Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "action_requirement": {
+                  "type": "integer"
+                },
+                "point_value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/beacons": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacons": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "beacon": {
+                    "type": "object",
+                    "description": "Product Beacon Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "product_id": {
+                        "type": "integer"
+                      },
+                      "beacon_pid": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "lower": {
+                        "type": "integer"
+                      },
+                      "upper": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacon": {
+              "type": "object",
+              "description": "Product Beacon Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "product_id": {
+                  "type": "integer"
+                },
+                "beacon_pid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "lower": {
+                  "type": "integer"
+                },
+                "upper": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/beacons/list": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacons": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "beacon": {
+                    "type": "object",
+                    "description": "Product Beacon Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "product_id": {
+                        "type": "integer"
+                      },
+                      "beacon_pid": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "lower": {
+                        "type": "integer"
+                      },
+                      "upper": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/beacons/select": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacons": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "beacon": {
+                    "type": "object",
+                    "description": "Product Beacon Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "product_id": {
+                        "type": "integer"
+                      },
+                      "beacon_pid": {
+                        "type": "string"
+                      },
+                      "uuid": {
+                        "type": "string"
+                      },
+                      "lower": {
+                        "type": "integer"
+                      },
+                      "upper": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/beacons/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacon": {
+              "type": "object",
+              "description": "Product Beacon Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "product_id": {
+                  "type": "integer"
+                },
+                "beacon_pid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "lower": {
+                  "type": "integer"
+                },
+                "upper": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacon": {
+              "type": "object",
+              "description": "Product Beacon Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "product_id": {
+                  "type": "integer"
+                },
+                "beacon_pid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "lower": {
+                  "type": "integer"
+                },
+                "upper": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "beacon": {
+              "type": "object",
+              "description": "Product Beacon Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "product_id": {
+                  "type": "integer"
+                },
+                "beacon_pid": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                },
+                "lower": {
+                  "type": "integer"
+                },
+                "upper": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/blocks": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "block": {
+              "type": "object",
+              "description": "Block Reponse",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "blocker_id": {
+                  "type": "integer"
+                },
+                "blocked_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/blocks/{id}": {
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/categories": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/categories/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    }
+  },
+  "/completions": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "completion": {
+                    "type": "object",
+                    "description": "Quest Completion Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "person_id": {
+                        "type": "integer"
+                      },
+                      "step_id": {
+                        "type": "integer"
+                      },
+                      "activity_id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "create_time": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/completions/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completion": {
+              "type": "object",
+              "description": "Quest Completion Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "step_id": {
+                  "type": "integer"
+                },
+                "activity_id": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "create_time": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completion": {
+              "type": "object",
+              "description": "Quest Completion Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "step_id": {
+                  "type": "integer"
+                },
+                "activity_id": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "create_time": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completion": {
+              "type": "object",
+              "description": "Quest Completion Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "step_id": {
+                  "type": "integer"
+                },
+                "activity_id": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "create_time": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/events": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "events": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "object",
+                    "description": "Event Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "starts_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "ends_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "ticket_url": {
+                        "type": "string"
+                      },
+                      "place_identifier": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "event": {
+              "type": "object",
+              "description": "Event Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "starts_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ends_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ticket_url": {
+                  "type": "string"
+                },
+                "place_identifier": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/events/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "event": {
+              "type": "object",
+              "description": "Event Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "starts_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ends_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ticket_url": {
+                  "type": "string"
+                },
+                "place_identifier": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "event": {
+              "type": "object",
+              "description": "Event Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "starts_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ends_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ticket_url": {
+                  "type": "string"
+                },
+                "place_identifier": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "event": {
+              "type": "object",
+              "description": "Event Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "starts_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ends_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "ticket_url": {
+                  "type": "string"
+                },
+                "place_identifier": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/followings": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/followings/{id}": {
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/levels": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "object",
+                    "description": "Level Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "points": {
+                        "type": "integer"
+                      },
+                      "picture_url": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/merchandise": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "merchandise": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "merchandise": {
+                    "type": "object",
+                    "description": "Merchandise Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "price": {
+                        "type": "integer"
+                      },
+                      "purchase_url": {
+                        "type": "string"
+                      },
+                      "picture_url": {
+                        "type": "string"
+                      },
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "priority": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "merchandise": {
+              "type": "object",
+              "description": "Merchandise Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                },
+                "purchase_url": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "available": {
+                  "type": "boolean"
+                },
+                "priority": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        }
+      }
+    }
+  },
+  "/merchandise/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "merchandise": {
+              "type": "object",
+              "description": "Merchandise Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                },
+                "purchase_url": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "available": {
+                  "type": "boolean"
+                },
+                "priority": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "404": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {}
+      }
+    }
+  },
+  "/message_reports": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "message_reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "message_report": {
+                    "type": "object",
+                    "description": "Message Report Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "message_id": {
+                        "type": "integer"
+                      },
+                      "poster": {
+                        "type": "string"
+                      },
+                      "reporter": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/message_reports/{id}": {
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/messages/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    }
+  },
+  "/notification_device_ids": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/people": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/people/password_forgot": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "default": "Reset password instructions have been sent to your email, if it exists in our system."
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/people/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    }
+  },
+  "/people/{id}/change_password": {
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {}
+      }
+    }
+  },
+  "/people/{person_id}/badges": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "badges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "badge": {
+                    "type": "object",
+                    "description": "Badge Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "picture_url": {
+                        "type": "string"
+                      },
+                      "action_requirement": {
+                        "type": "integer"
+                      },
+                      "point_value": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/post_comment_reports": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post_comment_reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "post_comment_report": {
+                    "type": "object",
+                    "description": "Post Comment Report Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "post_comment_id": {
+                        "type": "integer"
+                      },
+                      "commenter": {
+                        "type": "string"
+                      },
+                      "reporter": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/post_comment_reports/{id}": {
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/post_comments/list": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post_comments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "post_comment": {
+                    "type": "object",
+                    "description": "Post Comment Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "person_id": {
+                        "type": "integer"
+                      },
+                      "post_id": {
+                        "type": "integer"
+                      },
+                      "body": {
+                        "type": "string"
+                      },
+                      "hidden": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "mentions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "description": "Notification Type ID Response",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "person_id": {
+                              "type": "integer"
+                            },
+                            "location": {
+                              "type": "integer"
+                            },
+                            "length": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/post_reports": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post_reports": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "post_report": {
+                    "type": "object",
+                    "description": "Post Report Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "post_id": {
+                        "type": "integer"
+                      },
+                      "poster": {
+                        "type": "string"
+                      },
+                      "reporter": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/post_reports/{id}": {
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/posts": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/posts/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/posts/{id}/share": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post": {
+              "type": "object",
+              "description": "Shared Post Response",
+              "properties": {
+                "body": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "picture_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "500": {}
+      }
+    }
+  },
+  "/posts/{post_id}/comments": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/posts/{post_id}/comments/{id}": {
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/posts/{post_id}/reactions": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post_reaction": {
+              "type": "object",
+              "description": "Post Reaction Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "post_id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "reaction": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/posts/{post_id}/reactions/{id}": {
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post_reaction": {
+              "type": "object",
+              "description": "Post Reaction Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "post_id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "reaction": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post_reaction": {
+              "type": "object",
+              "description": "Post Reaction Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "post_id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "reaction": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/posts/{post_id}/share": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "post": {
+              "type": "object",
+              "description": "Shared Post Response",
+              "properties": {
+                "body": {
+                  "type": "string"
+                },
+                "picture_url": {
+                  "type": "string"
+                },
+                "person": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "picture_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "500": {}
+      }
+    }
+  },
+  "/products": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "product": {
+                    "type": "object",
+                    "description": "Product Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "object",
+              "description": "Product Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/products/select": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "products": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "product": {
+                    "type": "object",
+                    "description": "Product Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "internal_name": {
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/products/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "object",
+              "description": "Product Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "object",
+              "description": "Product Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "object",
+              "description": "Product Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "internal_name": {
+                  "type": "string"
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/quests": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/quests/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/quests/{quest_id}/completions": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "completion": {
+                    "type": "object",
+                    "description": "Quest Completion Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "person_id": {
+                        "type": "integer"
+                      },
+                      "step_id": {
+                        "type": "integer"
+                      },
+                      "activity_id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "create_time": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completion": {
+              "type": "object",
+              "description": "Quest Completion Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "step_id": {
+                  "type": "integer"
+                },
+                "activity_id": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "create_time": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/quests/{quest_id}/steps": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/relationships": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/relationships/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/rewards": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "rewards": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "reward": {
+                    "type": "object",
+                    "description": "Reward Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "reward": {
+              "type": "object",
+              "description": "Reward Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/rewards/select": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "rewards": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "reward": {
+                    "type": "object",
+                    "description": "Reward Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/rewards/{id}": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "reward": {
+              "type": "object",
+              "description": "Reward Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "patch": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "reward": {
+              "type": "object",
+              "description": "Reward Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "put": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "reward": {
+              "type": "object",
+              "description": "Reward Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "422": {},
+        "500": {}
+      }
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/rewards/{reward_id}/assigned": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "assignees": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "assigned": {
+                    "type": "object",
+                    "description": "Activity Type Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/rooms": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/rooms/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/rooms/{room_id}/message_reports": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/rooms/{room_id}/messages": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/rooms/{room_id}/messages/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/rooms/{room_id}/room_memberships": {
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {},
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  },
+  "/session": {
+    "post": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {}
+      }
+    }
+  },
+  "/steps/{id}": {
+    "patch": {
+      "body": {}
+    },
+    "put": {
+      "body": {}
+    },
+    "delete": {
+      "responses": {
+        "200": {},
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    }
+  },
+  "/steps/{step_id}/activities": {
+    "post": {
+      "body": {}
+    }
+  },
+  "/steps/{step_id}/completions": {
+    "get": {
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "completion": {
+                    "type": "object",
+                    "description": "Quest Completion Response",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "person_id": {
+                        "type": "integer"
+                      },
+                      "step_id": {
+                        "type": "integer"
+                      },
+                      "activity_id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "create_time": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "404": {},
+        "500": {}
+      }
+    },
+    "post": {
+      "body": {},
+      "responses": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "completion": {
+              "type": "object",
+              "description": "Quest Completion Response",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "person_id": {
+                  "type": "integer"
+                },
+                "step_id": {
+                  "type": "integer"
+                },
+                "activity_id": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "create_time": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "$schema": "http://json-schema.org/draft-04/schema#"
+        },
+        "401": {},
+        "422": {},
+        "500": {}
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ FanlinkApi::API.endpoint :get_relationships do
     status 200
     type :object do
       relationships :array do
-        type :relationship_json
+        type :relationship_app_json
       end
     end
   end
@@ -45,7 +45,7 @@ FanlinkApi::API.endpoint :get_a_relationship do
   output :success do
     status 200
     type :object do
-      type :relationship_json
+      type :relationship_app_json
     end
   end
 
@@ -112,7 +112,7 @@ FanlinkApi::API.endpoint :create_relationship do
   output :success do
     status 200
     type :object do
-      type :relationship_json
+      type :relationship_app_json
     end
   end
 
@@ -198,7 +198,7 @@ FanlinkApi::API.endpoint :update_relationship do
   output :success do
     status 200
     type :object do
-      type :relationship_json
+      type :relationship_app_json
     end
   end
 

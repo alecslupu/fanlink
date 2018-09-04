@@ -24,7 +24,7 @@ describe "Events (v1)" do
       expected = [@started_month_ago, @event1, @event2, @starts_in_month]
       expect(json["events"].count).to eq(expected.size)
       0.upto (expected.size - 1) do |n|
-        expect(json["events"][n]).to eq(event_v1_json(expected[n]))
+        expect(json["events"][n]).to eq(event_json(expected[n]))
       end
     end
     it "should get events specifying one start time" do
@@ -34,7 +34,7 @@ describe "Events (v1)" do
       expected = [@event1, @event2, @starts_in_month]
       expect(json["events"].count).to eq(expected.size)
       0.upto (expected.size - 1) do |n|
-        expect(json["events"][n]).to eq(event_v1_json(expected[n]))
+        expect(json["events"][n]).to eq(event_json(expected[n]))
       end
     end
     it "should get events specifying a start time range" do
@@ -44,7 +44,7 @@ describe "Events (v1)" do
       expected = [@event1, @event2]
       expect(json["events"].count).to eq(expected.size)
       0.upto (expected.size - 1) do |n|
-        expect(json["events"][n]).to eq(event_v1_json(expected[n]))
+        expect(json["events"][n]).to eq(event_json(expected[n]))
       end
     end
     it "should not get the events if not logged in" do
@@ -58,7 +58,7 @@ describe "Events (v1)" do
       login_as(@person)
       get "/events/#{@event1.id}"
       expect(response).to be_success
-      expect(json["event"]).to eq(event_v1_json(@event1))
+      expect(json["event"]).to eq(event_json(@event1))
     end
     it "should not get the event if not logged in" do
       get "/events/#{@event1.id}"

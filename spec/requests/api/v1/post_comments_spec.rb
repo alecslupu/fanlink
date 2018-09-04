@@ -27,7 +27,7 @@ describe "PostComments (v1)" do
         post "/posts/#{@post.id}/comments", params: { post_comment: { body: "a comment" } }
       }.to change { @post.comments.count }.by(1)
       expect(response).to be_success
-      expect(json["post_comment"]).to eq(post_comment_v1_json(@post.comments.last))
+      expect(json["post_comment"]).to eq(post_comment_json(@post.comments.last))
     end
     it "should create a post comment with one mention" do
       login_as(@person)
@@ -38,7 +38,7 @@ describe "PostComments (v1)" do
       expect(response).to be_success
       comment = @post.comments.last
       expect(comment.mentions.count).to eq(1)
-      expect(json["post_comment"]).to eq(post_comment_v1_json(comment))
+      expect(json["post_comment"]).to eq(post_comment_json(comment))
     end
     it "should create a post comment with multiple mentions" do
       login_as(@person)
@@ -51,7 +51,7 @@ describe "PostComments (v1)" do
       expect(response).to be_success
       comment = @post.comments.last
       expect(comment.mentions.count).to eq(2)
-      expect(json["post_comment"]).to eq(post_comment_v1_json(comment))
+      expect(json["post_comment"]).to eq(post_comment_json(comment))
     end
     it "should not create a post comment if not logged in" do
       expect {
@@ -122,7 +122,7 @@ describe "PostComments (v1)" do
       get "/posts/#{@post.id}/comments", params: { page: 1, per_page: pp }
       expect(response).to be_success
       expect(json["post_comments"].count).to eq(pp)
-      expect(json["post_comments"].first).to eq(post_comment_v1_json(@post.comments.visible.order(created_at: :desc).first))
+      expect(json["post_comments"].first).to eq(post_comment_json(@post.comments.visible.order(created_at: :desc).first))
     end
     it "should get all the comments for a post without comments" do
       login_as(@person)
@@ -156,26 +156,26 @@ describe "PostComments (v1)" do
       login_as(@admin)
       get "/post_comments/list", params: { per_page: @per_page, page: @page }
       expect(response).to be_success
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(@per_page)
-      expect(pc_v1_json.first).to eq(post_comment_list_v1_json(@list_comments.last))
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(@per_page)
+      expect(pc_json.first).to eq(post_comment_list_json(@list_comments.last))
     end
     it "should get list of comments paginated at page 2" do
       login_as(@admin)
       get "/post_comments/list", params: { per_page: @per_page, page: 2 }
       expect(response).to be_success
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(@per_page)
-      expect(pc_v1_json.first).to eq(post_comment_list_v1_json(@list_comments[-3]))
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(@per_page)
+      expect(pc_json.first).to eq(post_comment_list_json(@list_comments[-3]))
     end
     it "should get the list of all post comments filtered on body" do
       login_as(@admin)
       fragment = "made up 2"
       get "/post_comments/list", params: { body_filter: fragment }
       expect(response).to be_success
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(1)
-      expect(pc_v1_json.first["body"]).to include(fragment)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(1)
+      expect(pc_json.first["body"]).to include(fragment)
     end
     it "should get the list of all post comments filtered on full person username match" do
       login_as(@admin)
@@ -183,9 +183,9 @@ describe "PostComments (v1)" do
       get "/post_comments/list", params: { person_filter: person.username }
       expect(response).to be_success
       post_comments = PostComment.where(person_id: person.id)
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(post_comments.count)
-      expect(pc_v1_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
     end
     it "should get the list of all post comments filtered on partial person username match" do
       login_as(@admin)
@@ -193,9 +193,9 @@ describe "PostComments (v1)" do
       get "/post_comments/list", params: { person_filter: "cuser11" }
       expect(response).to be_success
       post_comments = PostComment.where(person_id: people)
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(post_comments.count)
-      expect(pc_v1_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
     end
     it "should get the list of all post comments filtered on full person email match" do
       login_as(@admin)
@@ -203,9 +203,9 @@ describe "PostComments (v1)" do
       get "/post_comments/list", params: { person_filter: person.email }
       expect(response).to be_success
       post_comments = PostComment.where(person_id: person.id)
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(post_comments.count)
-      expect(pc_v1_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
     end
     it "should get the list of all post comments filtered on partial person email match" do
       login_as(@admin)
@@ -213,9 +213,9 @@ describe "PostComments (v1)" do
       get "/post_comments/list", params: { person_filter: "112@example" }
       expect(response).to be_success
       post_comments = PostComment.where(person_id: people)
-      pc_v1_json = json["post_comments"]
-      expect(pc_v1_json.count).to eq(post_comments.count)
-      expect(pc_v1_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
+      pc_json = json["post_comments"]
+      expect(pc_json.count).to eq(post_comments.count)
+      expect(pc_json.map { |jp| jp["id"] }.sort).to eq(post_comments.map { |p| p.id.to_s }.sort)
     end
   end
 end

@@ -104,7 +104,7 @@
 FanlinkApi::API.endpoint :create_a_notification_device_id do
   description "This adds a new device id to be used for notifications to the Firebase Cloud Messaging Service. A user can have any number of device ids."
   method :post
-  tag notification_device_id
+  tag "Notification Device IDs"
   path "/notification_device_ids"
   description "Create a Notification Device Id"
   input do
@@ -256,7 +256,7 @@ end
 
 FanlinkApi::API.endpoint :destroy_a_notification_device_id do
   method :delete
-  tag notification_device_id
+  tag "Notification Device IDs"
   path "/notification_device_ids/{id}" do
     id :int32
   end

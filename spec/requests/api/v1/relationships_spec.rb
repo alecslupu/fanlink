@@ -15,7 +15,7 @@ describe "Relationships (v1)" do
       login_as(@requester)
       post "/relationships", params: { relationship: { requested_to_id: @requested.id } }
       expect(response).to be_success
-      expect(json["relationship"]).to eq(relationship_v1_json(Relationship.last, @requester))
+      expect(json["relationship"]).to eq(relationship_json(Relationship.last, @requester))
     end
     it "should not send a friend request to someone you have blocked" do
       expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
@@ -126,7 +126,7 @@ describe "Relationships (v1)" do
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
       get "/relationships/#{rel.id}"
       expect(response).to be_success
-      expect(json["relationship"]).to eq(relationship_v1_json(rel, person))
+      expect(json["relationship"]).to eq(relationship_json(rel, person))
     end
     it "should not get relationship if not logged in" do
       person = create(:person)
@@ -161,7 +161,7 @@ describe "Relationships (v1)" do
       patch "/relationships/#{rel.id}", params: { relationship: { status: "friended" } }
       expect(response).to be_success
       expect(rel.reload.friended?).to be_truthy
-      expect(json["relationship"]).to eq(relationship_v1_json(rel, person))
+      expect(json["relationship"]).to eq(relationship_json(rel, person))
     end
     it "should not accept own friend request" do
       person = create(:person)

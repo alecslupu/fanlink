@@ -1,5 +1,5 @@
 FanlinkApi::API.endpoint :get_posts do
-  description 
+  description "Get posts visable to current user."
   method :get
   tag "Posts"
   path "/posts"
@@ -7,7 +7,7 @@ FanlinkApi::API.endpoint :get_posts do
     status 200
     type :object do
       posts :array do
-        type :post_json
+        type :post_app_json
       end
     end
   end
@@ -38,6 +38,7 @@ FanlinkApi::API.endpoint :get_posts do
 end
 
 FanlinkApi::API.endpoint :get_a_post do
+  description "Get a single post that is visible to the current user."
   method :get
   tag "Posts"
   path "/posts/{id}" do
@@ -46,7 +47,7 @@ FanlinkApi::API.endpoint :get_a_post do
   output :success do
     status 200
     type :object do
-      type :post_json
+      type :post_app_json
     end
   end
 
@@ -89,6 +90,7 @@ end
 
 
 FanlinkApi::API.endpoint :create_post do
+  description "Create a new post."
   method :post
   tag "Posts"
   path "/posts"
@@ -177,7 +179,7 @@ FanlinkApi::API.endpoint :create_post do
   output :success do
     status 200
     type :object do
-      type :post_json
+      type :post_app_json
     end
   end
 
@@ -237,6 +239,7 @@ FanlinkApi::API.endpoint :create_post do
 end
 
 FanlinkApi::API.endpoint :update_post do
+  description "Update a post"
   method :put
   tag "Posts"
   path "/posts/{id}" do
@@ -327,7 +330,7 @@ FanlinkApi::API.endpoint :update_post do
   output :success do
     status 200
     type :object do
-      type :post_json
+      type :post_app_json
     end
   end
 
@@ -381,6 +384,7 @@ FanlinkApi::API.endpoint :update_post do
 end
 
 FanlinkApi::API.endpoint :destroy_post do
+  description "Soft delete a post."
   method :delete
   tag "Posts"
   path "/posts/{id}" do

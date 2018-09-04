@@ -1,4 +1,4 @@
-FanlinkApi::API.model :post_comment_report_json do
+FanlinkApi::API.model :post_comment_report_app_json do
   type :object do
     post_comment_report :object do
       id :int32

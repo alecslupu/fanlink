@@ -107,7 +107,7 @@ FanlinkApi::API.endpoint :create_post_reaction do
   output :success do
     status 200
     type :object do
-      type :post_reaction_json
+      type :post_reaction_app_json
     end
   end
 
@@ -171,7 +171,7 @@ FanlinkApi::API.endpoint :update_post_reaction do
   method :put
   tag "Post Reactions"
   path "/posts/{post_id}/reactions/{id}" do
-    path_id :int32
+    post_id :int32
     id :int32
   end
   input do
@@ -187,7 +187,7 @@ FanlinkApi::API.endpoint :update_post_reaction do
   output :success do
     status 200
     type :object do
-      type :post_reaction_json
+      type :post_reaction_app_json
     end
   end
 

@@ -6,7 +6,7 @@ FanlinkApi::API.endpoint :get_room_memberships do
     status 200
     type :object do
       room_memberships :array do
-        type :room_membership_json
+        type :room_membership_app_json
       end
     end
   end
@@ -45,7 +45,7 @@ FanlinkApi::API.endpoint :get_a_room_membership do
   output :success do
     status 200
     type :object do
-      type :room_membership_json
+      type :room_membership_app_json
     end
   end
 
@@ -112,7 +112,7 @@ FanlinkApi::API.endpoint :create_room_membership do
   output :success do
     status 200
     type :object do
-      type :room_membership_json
+      type :room_membership_app_json
     end
   end
 
@@ -198,7 +198,7 @@ FanlinkApi::API.endpoint :update_room_membership do
   output :success do
     status 200
     type :object do
-      type :room_membership_json
+      type :room_membership_app_json
     end
   end
 

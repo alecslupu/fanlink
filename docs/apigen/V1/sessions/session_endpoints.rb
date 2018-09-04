@@ -6,7 +6,7 @@ FanlinkApi::API.endpoint :get_sessions do
     status 200
     type :object do
       sessions :array do
-        type :session_json
+        type :session_app_json
       end
     end
   end
@@ -45,7 +45,7 @@ FanlinkApi::API.endpoint :get_a_session do
   output :success do
     status 200
     type :object do
-      type :session_json
+      type :session_app_json
     end
   end
 
@@ -102,7 +102,7 @@ FanlinkApi::API.endpoint :create_session do
   output :success do
     status 200
     type :object do
-      type :session_json
+      type :session_app_json
     end
   end
 
@@ -178,7 +178,7 @@ FanlinkApi::API.endpoint :update_session do
   output :success do
     status 200
     type :object do
-      type :session_json
+      type :session_app_json
     end
   end
 

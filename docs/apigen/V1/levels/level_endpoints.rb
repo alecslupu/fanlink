@@ -7,7 +7,7 @@ FanlinkApi::API.endpoint :get_levels do
     status 200
     type :object do
       levels :array do
-        type :level_json
+        type :level_app_json
       end
     end
   end

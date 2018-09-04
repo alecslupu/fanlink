@@ -130,11 +130,8 @@ RSpec.configure do |config|
   config.include SessionHelpers
   config.include RequestHelpers
   config.include JsonHelpers, type: :request
-  config.include JsonHelpers::V1, type: :request
-  config.include JsonHelpers::V2, type: :request
-  config.include JsonHelpers::V3, type: :request
 
-  #config.include Sorcery::TestHelpers::Rails::Controller, type: :request
+  config.include Sorcery::TestHelpers::Rails::Controller#, type: :request
   config.include Sorcery::TestHelpers::Rails::Integration #, type: :request
 
   config.before :each, type: :request do
