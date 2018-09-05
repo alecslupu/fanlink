@@ -188,7 +188,7 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
     if @quest_activity.update_attributes(activity_params)
       return_the @quest_activity
     else
-      render_422 @message.errors.full_messages
+      render_422 @message.errors
     end
   end
 
@@ -276,7 +276,7 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
       if @quest_activity.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the quest activity.")
+        render_422(_("Failed to delete the quest activity."))
       end
     else
       render_not_found

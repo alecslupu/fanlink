@@ -60,7 +60,7 @@ class Api::V3::PostCommentsController < Api::V3::BaseController
       @post_comment.post_me
       return_the @post_comment
     else
-      render_422 @post_comment.errors.full_messages
+      render_422 @post_comment.errors
     end
   end
 

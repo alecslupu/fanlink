@@ -17,13 +17,445 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-msgid "Age requirement is not met. You must be #{age_requirement} years or older to use this app."
+msgid "%{value} is not a valid activity type."
+msgstr ""
+
+msgid "%{value} is not an assignable type."
+msgstr ""
+
+msgid "A category already exists with this name."
+msgstr ""
+
+msgid "A quest description is required."
+msgstr ""
+
+msgid "A reward with that reward_type and reward_type_id already exists."
+msgstr ""
+
+msgid "A user has already signed up with that Facebook account."
+msgstr ""
+
+msgid "A user has already signed up with that email address."
+msgstr ""
+
+msgid "A user has already signed up with that username."
+msgstr ""
+
+msgid "Action is in use and cannot be deleted."
+msgstr ""
+
+msgid "Action requirement is required."
+msgstr ""
+
+msgid "Action requirement must be greater than zero."
+msgstr ""
+
+msgid "Action type"
+msgstr ""
+
+msgid "Action type is invalid."
+msgstr ""
+
+msgid "ActionType|Active"
+msgstr ""
+
+msgid "ActionType|Internal name"
+msgstr ""
+
+msgid "ActionType|Name"
+msgstr ""
+
+msgid "ActionType|Seconds lag"
+msgstr ""
+
+msgid "Activity ID is required."
+msgstr ""
+
+msgid "Activity type"
+msgstr ""
+
+msgid "ActivityType|Atype"
+msgstr ""
+
+msgid "ActivityType|Atype old"
+msgstr ""
+
+msgid "ActivityType|Deleted"
+msgstr ""
+
+msgid "ActivityType|Value"
+msgstr ""
+
+msgid "Age requirement is not met. You must be %{age_requirement} years or older to use this app."
+msgstr ""
+
+msgid "Assigned reward"
+msgstr ""
+
+msgid "AssignedReward|Assigned type"
+msgstr ""
+
+msgid "AssignedReward|Max times"
+msgstr ""
+
+msgid "Badge"
+msgstr ""
+
+msgid "Badge action"
+msgstr ""
+
+msgid "BadgeAction|Identifier"
+msgstr ""
+
+msgid "Badge|Action requirement"
+msgstr ""
+
+msgid "Badge|Description"
+msgstr ""
+
+msgid "Badge|Description text old"
+msgstr ""
+
+msgid "Badge|Internal name"
+msgstr ""
+
+msgid "Badge|Issued from"
+msgstr ""
+
+msgid "Badge|Issued to"
+msgstr ""
+
+msgid "Badge|Name"
+msgstr ""
+
+msgid "Badge|Name text old"
+msgstr ""
+
+msgid "Badge|Picture content type"
+msgstr ""
+
+msgid "Badge|Picture file name"
+msgstr ""
+
+msgid "Badge|Picture file size"
+msgstr ""
+
+msgid "Badge|Picture updated at"
+msgstr ""
+
+msgid "Badge|Point value"
+msgstr ""
+
+msgid "Beacon PID is required."
+msgstr ""
+
+msgid "Body must be between 3 and 200 characters."
+msgstr ""
+
+msgid "Cannot find that person."
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Category|Color"
+msgstr ""
+
+msgid "Category|Deleted"
+msgstr ""
+
+msgid "Category|Name"
+msgstr ""
+
+msgid "Category|Role"
 msgstr ""
 
 msgid "Color must be a hexadecimal value."
 msgstr ""
 
+msgid "Contest"
+msgstr ""
+
+msgid "Contest|Contest url"
+msgstr ""
+
+msgid "Contest|Deleted"
+msgstr ""
+
+msgid "Contest|Description"
+msgstr ""
+
+msgid "Contest|Internal name"
+msgstr ""
+
+msgid "Contest|Name"
+msgstr ""
+
+msgid "Contest|Rules url"
+msgstr ""
+
+msgid "Contest|Status"
+msgstr ""
+
+msgid "Coupon"
+msgstr ""
+
+msgid "Coupon|Code"
+msgstr ""
+
+msgid "Coupon|Deleted"
+msgstr ""
+
+msgid "Coupon|Description"
+msgstr ""
+
+msgid "Coupon|Url"
+msgstr ""
+
+msgid "Description is required."
+msgstr ""
+
+msgid "Device identifier is required."
+msgstr ""
+
+msgid "Email is invalid."
+msgstr ""
+
+msgid "Email is required."
+msgstr ""
+
+msgid "Ending time cannot be before starting time."
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Event|Deleted"
+msgstr ""
+
+msgid "Event|Description"
+msgstr ""
+
+msgid "Event|Ends at"
+msgstr ""
+
+msgid "Event|Name"
+msgstr ""
+
+msgid "Event|Place identifier"
+msgstr ""
+
+msgid "Event|Starts at"
+msgstr ""
+
+msgid "Event|Ticket url"
+msgstr ""
+
+msgid "Failed to delete the activity type."
+msgstr ""
+
+msgid "Failed to delete the assigned reward."
+msgstr ""
+
+msgid "Failed to delete the beacon."
+msgstr ""
+
+msgid "Failed to delete the event."
+msgstr ""
+
+msgid "Failed to delete the merchandise."
+msgstr ""
+
+msgid "Failed to delete the quest activity."
+msgstr ""
+
+msgid "Failed to delete the quest completion."
+msgstr ""
+
+msgid "Failed to delete the reward."
+msgstr ""
+
+msgid "Failed to delete the step."
+msgstr ""
+
+msgid "Interest"
+msgstr ""
+
+msgid "Interest|Title"
+msgstr ""
+
+msgid "Internal name already exists."
+msgstr ""
+
+msgid "Internal name can only contain letters, numbers and underscores."
+msgstr ""
+
 msgid "Internal name can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Internal name is required."
+msgstr ""
+
+msgid "Internal name must be between 3 and 26 characters in length."
+msgstr ""
+
+msgid "Internal name must be between 3 and 26 characters."
+msgstr ""
+
+msgid "Internal name must be between 3 and 63 characters."
+msgstr ""
+
+msgid "Invalid date(s)"
+msgstr ""
+
+msgid "Invalid login."
+msgstr ""
+
+msgid "Invalid or missing status."
+msgstr ""
+
+msgid "Issued to cannot be before issued from."
+msgstr ""
+
+msgid "Level"
+msgstr ""
+
+msgid "Level progress"
+msgstr ""
+
+msgid "LevelProgress|Points"
+msgstr ""
+
+msgid "LevelProgress|Total"
+msgstr ""
+
+msgid "Level|Description"
+msgstr ""
+
+msgid "Level|Internal name"
+msgstr ""
+
+msgid "Level|Name"
+msgstr ""
+
+msgid "Level|Name text old"
+msgstr ""
+
+msgid "Level|Picture content type"
+msgstr ""
+
+msgid "Level|Picture file name"
+msgstr ""
+
+msgid "Level|Picture file size"
+msgstr ""
+
+msgid "Level|Picture updated at"
+msgstr ""
+
+msgid "Level|Points"
+msgstr ""
+
+msgid "Merchandise"
+msgstr ""
+
+msgid "Merchandise|Available"
+msgstr ""
+
+msgid "Merchandise|Deleted"
+msgstr ""
+
+msgid "Merchandise|Description"
+msgstr ""
+
+msgid "Merchandise|Description text old"
+msgstr ""
+
+msgid "Merchandise|Name"
+msgstr ""
+
+msgid "Merchandise|Name text old"
+msgstr ""
+
+msgid "Merchandise|Picture content type"
+msgstr ""
+
+msgid "Merchandise|Picture file name"
+msgstr ""
+
+msgid "Merchandise|Picture file size"
+msgstr ""
+
+msgid "Merchandise|Picture updated at"
+msgstr ""
+
+msgid "Merchandise|Price"
+msgstr ""
+
+msgid "Merchandise|Priority"
+msgstr ""
+
+msgid "Merchandise|Purchase url"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Message mention"
+msgstr ""
+
+msgid "Message report"
+msgstr ""
+
+msgid "MessageMention|Length"
+msgstr ""
+
+msgid "MessageMention|Location"
+msgstr ""
+
+msgid "MessageReport|Reason"
+msgstr ""
+
+msgid "MessageReport|Status"
+msgstr ""
+
+msgid "Message|Audio content type"
+msgstr ""
+
+msgid "Message|Audio file name"
+msgstr ""
+
+msgid "Message|Audio file size"
+msgstr ""
+
+msgid "Message|Audio updated at"
+msgstr ""
+
+msgid "Message|Body"
+msgstr ""
+
+msgid "Message|Hidden"
+msgstr ""
+
+msgid "Message|Picture content type"
+msgstr ""
+
+msgid "Message|Picture file name"
+msgstr ""
+
+msgid "Message|Picture file size"
+msgstr ""
+
+msgid "Message|Picture updated at"
+msgstr ""
+
+msgid "Message|Status"
+msgstr ""
+
+msgid "Missing device_id."
+msgstr ""
+
+msgid "Missing or invalid product."
 msgstr ""
 
 msgid "Missing password resetting token."
@@ -32,14 +464,719 @@ msgstr ""
 msgid "Missing password."
 msgstr ""
 
+msgid "Missing reward_id parameter."
+msgstr ""
+
+msgid "Name is required."
+msgstr ""
+
 msgid "Name may not contain emojis."
+msgstr ""
+
+msgid "Name must be between 3 and 26 characters."
+msgstr ""
+
+msgid "Name must be between 3 and 60 characters."
+msgstr ""
+
+msgid "Not found."
+msgstr ""
+
+msgid "Notification device"
+msgstr ""
+
+msgid "NotificationDeviceId|Device identifier"
+msgstr ""
+
+msgid "Paper trail/version"
+msgstr ""
+
+msgid "PaperTrail::Version|Event"
+msgstr ""
+
+msgid "PaperTrail::Version|Item type"
+msgstr ""
+
+msgid "PaperTrail::Version|Object"
+msgstr ""
+
+msgid "PaperTrail::Version|Whodunnit"
+msgstr ""
+
+msgid "Parameter tag_name is required."
+msgstr ""
+
+msgid "Password is required."
+msgstr ""
+
+msgid "Password must be at least 6 characters in length."
+msgstr ""
+
+msgid "Person"
+msgstr ""
+
+msgid "Person ID is not being automatically set."
+msgstr ""
+
+msgid "Person reward"
+msgstr ""
+
+msgid "PersonReward|Deleted"
+msgstr ""
+
+msgid "PersonReward|Source"
+msgstr ""
+
+msgid "Person|Auto follow"
+msgstr ""
+
+msgid "Person|Biography"
+msgstr ""
+
+msgid "Person|Birthdate"
+msgstr ""
+
+msgid "Person|Chat banned"
+msgstr ""
+
+msgid "Person|City"
+msgstr ""
+
+msgid "Person|Country code"
+msgstr ""
+
+msgid "Person|Crypted password"
+msgstr ""
+
+msgid "Person|Designation"
+msgstr ""
+
+msgid "Person|Do not message me"
+msgstr ""
+
+msgid "Person|Email"
+msgstr ""
+
+msgid "Person|Facebook picture url"
+msgstr ""
+
+msgid "Person|Facebookid"
+msgstr ""
+
+msgid "Person|Gender"
+msgstr ""
+
+msgid "Person|Name"
+msgstr ""
+
+msgid "Person|Picture content type"
+msgstr ""
+
+msgid "Person|Picture file name"
+msgstr ""
+
+msgid "Person|Picture file size"
+msgstr ""
+
+msgid "Person|Picture updated at"
+msgstr ""
+
+msgid "Person|Pin messages from"
+msgstr ""
+
+msgid "Person|Product account"
+msgstr ""
+
+msgid "Person|Recommended"
+msgstr ""
+
+msgid "Person|Reset password email sent at"
+msgstr ""
+
+msgid "Person|Reset password token"
+msgstr ""
+
+msgid "Person|Reset password token expires at"
+msgstr ""
+
+msgid "Person|Role"
+msgstr ""
+
+msgid "Person|Salt"
+msgstr ""
+
+msgid "Person|Terminated"
+msgstr ""
+
+msgid "Person|Terminated reason"
+msgstr ""
+
+msgid "Person|Tester"
+msgstr ""
+
+msgid "Person|Username"
+msgstr ""
+
+msgid "Person|Username canonical"
+msgstr ""
+
+msgid "Point value is required."
+msgstr ""
+
+msgid "Point value must be greater than zero."
+msgstr ""
+
+msgid "Portal access"
+msgstr ""
+
+msgid "Portal notification"
+msgstr ""
+
+msgid "PortalAccess|Badge"
+msgstr ""
+
+msgid "PortalAccess|Beacon"
+msgstr ""
+
+msgid "PortalAccess|Chat"
+msgstr ""
+
+msgid "PortalAccess|Event"
+msgstr ""
+
+msgid "PortalAccess|Interest"
+msgstr ""
+
+msgid "PortalAccess|Merchandise"
+msgstr ""
+
+msgid "PortalAccess|Post"
+msgstr ""
+
+msgid "PortalAccess|Quest"
+msgstr ""
+
+msgid "PortalAccess|Reporting"
+msgstr ""
+
+msgid "PortalAccess|Reward"
+msgstr ""
+
+msgid "PortalAccess|User"
+msgstr ""
+
+msgid "PortalNotification|Body"
+msgstr ""
+
+msgid "PortalNotification|Send me at"
+msgstr ""
+
+msgid "PortalNotification|Sent status"
+msgstr ""
+
+msgid "Post"
+msgstr ""
+
+msgid "Post comment"
+msgstr ""
+
+msgid "Post comment mention"
+msgstr ""
+
+msgid "Post comment report"
+msgstr ""
+
+msgid "Post reaction"
+msgstr ""
+
+msgid "Post report"
+msgstr ""
+
+msgid "PostCommentMention|Length"
+msgstr ""
+
+msgid "PostCommentMention|Location"
+msgstr ""
+
+msgid "PostCommentReport|Reason"
+msgstr ""
+
+msgid "PostCommentReport|Status"
+msgstr ""
+
+msgid "PostComment|Body"
+msgstr ""
+
+msgid "PostComment|Hidden"
+msgstr ""
+
+msgid "PostReaction|Reaction"
+msgstr ""
+
+msgid "PostReport|Reason"
+msgstr ""
+
+msgid "PostReport|Status"
+msgstr ""
+
+msgid "Post|Audio content type"
+msgstr ""
+
+msgid "Post|Audio file name"
+msgstr ""
+
+msgid "Post|Audio file size"
+msgstr ""
+
+msgid "Post|Audio updated at"
+msgstr ""
+
+msgid "Post|Body"
+msgstr ""
+
+msgid "Post|Body text old"
+msgstr ""
+
+msgid "Post|Ends at"
+msgstr ""
+
+msgid "Post|Global"
+msgstr ""
+
+msgid "Post|Notify followers"
+msgstr ""
+
+msgid "Post|Picture content type"
+msgstr ""
+
+msgid "Post|Picture file name"
+msgstr ""
+
+msgid "Post|Picture file size"
+msgstr ""
+
+msgid "Post|Picture updated at"
+msgstr ""
+
+msgid "Post|Priority"
+msgstr ""
+
+msgid "Post|Recommended"
+msgstr ""
+
+msgid "Post|Repost interval"
+msgstr ""
+
+msgid "Post|Starts at"
+msgstr ""
+
+msgid "Post|Status"
+msgstr ""
+
+msgid "Private rooms may not have pictures."
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Product %{product_name} already exists."
+msgstr ""
+
+msgid "Product beacon"
+msgstr ""
+
+msgid "Product mismatch!"
+msgstr ""
+
+msgid "ProductBeacon|Attached to"
+msgstr ""
+
+msgid "ProductBeacon|Beacon pid"
+msgstr ""
+
+msgid "ProductBeacon|Deleted"
+msgstr ""
+
+msgid "ProductBeacon|Lower"
+msgstr ""
+
+msgid "ProductBeacon|Upper"
+msgstr ""
+
+msgid "ProductBeacon|Uuid"
+msgstr ""
+
+msgid "Product|Age requirement"
+msgstr ""
+
+msgid "Product|Can have supers"
+msgstr ""
+
+msgid "Product|Enabled"
+msgstr ""
+
+msgid "Product|Internal name"
+msgstr ""
+
+msgid "Product|Name"
+msgstr ""
+
+msgid "Public room cannot have members."
+msgstr ""
+
+msgid "Quest"
+msgstr ""
+
+msgid "Quest activity"
+msgstr ""
+
+msgid "Quest completion"
+msgstr ""
+
+msgid "QuestActivity|Activity code"
+msgstr ""
+
+msgid "QuestActivity|Deleted"
+msgstr ""
+
+msgid "QuestActivity|Description"
+msgstr ""
+
+msgid "QuestActivity|Description text old"
+msgstr ""
+
+msgid "QuestActivity|Hint"
+msgstr ""
+
+msgid "QuestActivity|Hint text old"
+msgstr ""
+
+msgid "QuestActivity|Picture content type"
+msgstr ""
+
+msgid "QuestActivity|Picture file name"
+msgstr ""
+
+msgid "QuestActivity|Picture file size"
+msgstr ""
+
+msgid "QuestActivity|Picture meta"
+msgstr ""
+
+msgid "QuestActivity|Picture updated at"
+msgstr ""
+
+msgid "QuestCompletion|Status"
+msgstr ""
+
+msgid "QuestCompletion|Status old"
+msgstr ""
+
+msgid "Quest|Description"
+msgstr ""
+
+msgid "Quest|Description text old"
+msgstr ""
+
+msgid "Quest|Ends at"
+msgstr ""
+
+msgid "Quest|Internal name"
+msgstr ""
+
+msgid "Quest|Name"
+msgstr ""
+
+msgid "Quest|Name text old"
+msgstr ""
+
+msgid "Quest|Picture content type"
+msgstr ""
+
+msgid "Quest|Picture file name"
+msgstr ""
+
+msgid "Quest|Picture file size"
+msgstr ""
+
+msgid "Quest|Picture meta"
+msgstr ""
+
+msgid "Quest|Picture updated at"
+msgstr ""
+
+msgid "Quest|Starts at"
+msgstr ""
+
+msgid "Quest|Status"
+msgstr ""
+
+msgid "Reaction is not a valid value."
+msgstr ""
+
+msgid "Reaction is required."
+msgstr ""
+
+msgid "Reason cannot be longer than 500 characters."
+msgstr ""
+
+msgid "Relationship"
+msgstr ""
+
+msgid "Relationship|Status"
+msgstr ""
+
+msgid "Required parameter missing."
+msgstr ""
+
+msgid "Reset password instructions have been sent to your email, if it exists in our system."
+msgstr ""
+
+msgid "Reward"
+msgstr ""
+
+msgid "Reward does not exist for that action type."
+msgstr ""
+
+msgid "Reward progress"
+msgstr ""
+
+msgid "RewardProgress|Actions"
+msgstr ""
+
+msgid "RewardProgress|Series"
+msgstr ""
+
+msgid "RewardProgress|Total"
+msgstr ""
+
+msgid "Reward|Completion requirement"
+msgstr ""
+
+msgid "Reward|Deleted"
+msgstr ""
+
+msgid "Reward|Internal name"
+msgstr ""
+
+msgid "Reward|Name"
+msgstr ""
+
+msgid "Reward|Points"
+msgstr ""
+
+msgid "Reward|Reward type"
+msgstr ""
+
+msgid "Reward|Series"
+msgstr ""
+
+msgid "Reward|Status"
+msgstr ""
+
+msgid "Room"
+msgstr ""
+
+msgid "Room creator cannot be deleted."
+msgstr ""
+
+msgid "Room membership"
+msgstr ""
+
+msgid "RoomMembership|Message count"
+msgstr ""
+
+msgid "Room|Description"
+msgstr ""
+
+msgid "Room|Name"
+msgstr ""
+
+msgid "Room|Name text old"
+msgstr ""
+
+msgid "Room|Picture content type"
+msgstr ""
+
+msgid "Room|Picture file name"
+msgstr ""
+
+msgid "Room|Picture file size"
+msgstr ""
+
+msgid "Room|Picture updated at"
+msgstr ""
+
+msgid "Room|Public"
+msgstr ""
+
+msgid "Room|Status"
 msgstr ""
 
 msgid "Series can only contain lowercase letters, numbers and underscores."
 msgstr ""
 
+msgid "Series must be between 3 and 26 characters."
+msgstr ""
+
+msgid "Sorry, you cannot get credit for that action again."
+msgstr ""
+
+msgid "Sorry, you cannot unfriend that person right now."
+msgstr ""
+
+msgid "Start date cannot be after end date."
+msgstr ""
+
+msgid "Starting date and time is required."
+msgstr ""
+
+msgid "Starts at is required."
+msgstr ""
+
+msgid "Step"
+msgstr ""
+
+msgid "Step completed"
+msgstr ""
+
+msgid "StepCompleted|Status"
+msgstr ""
+
+msgid "StepCompleted|Status old"
+msgstr ""
+
+msgid "Step|Delay unlock"
+msgstr ""
+
+msgid "Step|Deleted"
+msgstr ""
+
+msgid "Step|Display"
+msgstr ""
+
+msgid "Step|Initial status"
+msgstr ""
+
+msgid "Step|Int unlocks"
+msgstr ""
+
+msgid "Step|Unlocks"
+msgstr ""
+
+msgid "Step|Unlocks at"
+msgstr ""
+
+msgid "Step|Uuid"
+msgstr ""
+
+msgid "Tag"
+msgstr ""
+
+msgid "Tag|Deleted"
+msgstr ""
+
+msgid "Tag|Name"
+msgstr ""
+
+msgid "That device id is already registered."
+msgstr ""
+
+msgid "That user is already blocked."
+msgstr ""
+
+msgid "The password is incorrect"
+msgstr ""
+
+msgid "There is already a badge with that internal name."
+msgstr ""
+
+msgid "There is already a level with that internal name."
+msgstr ""
+
+msgid "There is already a level with that point value."
+msgstr ""
+
+msgid "There is already a reward with that internal name."
+msgstr ""
+
+msgid "There is already an action type with that internal name."
+msgstr ""
+
+msgid "There is already an action type with that name."
+msgstr ""
+
+msgid "There was a problem contacting Facebook."
+msgstr ""
+
+msgid "This product cannot have super admins."
+msgstr ""
+
+msgid "This room is no longer active."
+msgstr ""
+
+msgid "Unable to find user from token. Likely a problem contacting Facebook."
+msgstr ""
+
 msgid "Unknown password resetting token."
 msgstr ""
 
+msgid "Url"
+msgstr ""
+
+msgid "Url|Deleted"
+msgstr ""
+
+msgid "Url|Displayed url"
+msgstr ""
+
+msgid "Url|Protected"
+msgstr ""
+
+msgid "Username is required."
+msgstr ""
+
 msgid "Username may not contain emojis."
+msgstr ""
+
+msgid "Username must be between 3 and 26 characters"
+msgstr ""
+
+msgid "You already have an existing friendship or friend request to or from that person."
+msgstr ""
+
+msgid "You are already a member of this room."
+msgstr ""
+
+msgid "You are already following that person."
+msgstr ""
+
+msgid "You cannot change from friended to requested."
+msgstr ""
+
+msgid "You cannot destroy this action type because badge named: '#{badge_name}' is using it."
+msgstr ""
+
+msgid "You cannot destroy this action type because users have already received credit for it."
+msgstr ""
+
+msgid "You cannot have a relationship with yourself."
+msgstr ""
+
+msgid "You cannot report a private message."
+msgstr ""
+
+msgid "You cannot set the send time to a time before now."
+msgstr ""
+
+msgid "You have already reacted to this post."
+msgstr ""
+
+msgid "You have blocked this person or this person has blocked you."
+msgstr ""
+
+msgid "You must specify a date and time to send the notification."
+msgstr ""
+
+msgid "You must supply a badge action type."
 msgstr ""

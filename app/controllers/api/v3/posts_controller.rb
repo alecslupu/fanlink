@@ -89,7 +89,7 @@ class Api::V3::PostsController < Api::V3::BaseController
       broadcast(:post_created, current_user, @post)
       return_the @post
     else
-      render_422 @post.errors.full_messages
+      render_422 @post.errors
     end
   end
 
@@ -163,7 +163,7 @@ class Api::V3::PostsController < Api::V3::BaseController
       if person
         @posts = paginate(Post.visible.for_person(person).unblocked(current_user.blocked_people).order(created_at: :desc))
       else
-        render_422("Cannot find that person.") && return
+        render_422(_("Cannot find that person.")) && return
       end
     else
       @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
@@ -325,7 +325,7 @@ class Api::V3::PostsController < Api::V3::BaseController
   def share
     product = get_product
     if product.nil?
-      render_422("Missing or invalid product.")
+      render_422(_("Missing or invalid product."))
     else
       @post = Post.for_product(product).visible.find(params[:post_id])
       return_the @post

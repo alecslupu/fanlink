@@ -101,7 +101,7 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
     if @activity_type.valid?
       return_the @activity_type
     else
-      render_422 @activity_type.errors.messages.flatten
+      render_422 @activity_type.errors
     end
   end
 
@@ -163,7 +163,7 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
     if @activity_type.update_attributes(type_params)
       return_the @activity_type
     else
-      render_422 @activity_type.errors.full_messages
+      render_422 @activity_type.errors
     end
   end
 
@@ -225,7 +225,7 @@ class Api::V3::ActivityTypesController < Api::V3::BaseController
       if @activity_type.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the activity type.")
+        render_422(_("Failed to delete the activity type."))
       end
     else
       render_not_found

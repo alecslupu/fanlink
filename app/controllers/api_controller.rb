@@ -41,9 +41,9 @@ class ApiController < ApplicationController
     # everything else.
     #
     if obj.nil?
-      render_404("Not found.")
+      render_404(_("Not found."))
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render_422(obj.errors.messages.values.flatten)
+      render_422(obj.errors)
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       render action: opts[:using], formats: %i[json], handlers: opts[:handler]
     end
@@ -74,7 +74,7 @@ protected
   end
 
   def render_error(error)
-    render_422(error)
+    render_422(error.messages.values.flatten)
   end
 
   def render_not_found

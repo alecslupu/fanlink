@@ -40,13 +40,13 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
     parms = message_report_params
     message = Message.find(parms[:message_id])
     if message.room.private?
-      render_422("You cannot report a private message")
+      render_422(_("You cannot report a private message."))
     else
       message_report = MessageReport.create(message_report_params)
       if message_report.valid?
         head :ok
       else
-        render_422 message_report.errors.full_messages
+        render_422 message_report.errors
       end
     end
   end
@@ -134,7 +134,7 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
         head :ok
       end
     else
-      render_422("Invalid or missing status.")
+      render_422(_("Invalid or missing status."))
     end
   end
 
