@@ -32,11 +32,11 @@ module JSONErrors
     def render_errors(errors, status = 400)
       errors = Array.wrap(errors) unless errors.is_a?(Array)
       if status == 500
-        logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-        errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
+        # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
+        # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
         Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
       else
-        logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
+        # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
         Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
       end
       data = {
