@@ -35,12 +35,12 @@ private
 
   def check_usage
     if actions_using?
-      errors.add(:base, _("You cannot destroy this action type because users have already received credit for it."))
+      errors.add(:base, :in_use, message: _("You cannot destroy this action type because users have already received credit for it."))
       throw :abort
     else
       badge = badge_using
       if badge
-        errors.add(:base, _("You cannot destroy this action type because badge named: '#{badge_name}' is using it.") % { badge_name: badge.name })
+        errors.add(:base, :badge_credit, message: _("You cannot destroy this action type because badge named: '%{badge_name}' is using it.") % { badge_name: badge.name })
         throw :abort
       end
     end

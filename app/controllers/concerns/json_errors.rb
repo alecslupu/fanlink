@@ -20,8 +20,9 @@ module JSONErrors
     end
 
     def render_422(errors = "could not save data")
+      puts errors.class
       errors = errors.messages.values.flatten unless errors.is_a?(String)
-      render_errors(errors.messages.values.flatten, 422)
+      render_errors(errors, 422)
     end
 
     def render_500(errors = "internal server error")

@@ -30,7 +30,7 @@ private
 
   def date_sanity
     if ends_at.present? && ends_at < starts_at
-      errors.add(:ends_at, _("Ending time cannot be before starting time."))
+      errors.add(:ends_at, :date_sanity, message: _("Ending time cannot be before starting time."))
     end
   end
 end

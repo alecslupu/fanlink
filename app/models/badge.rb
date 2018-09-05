@@ -43,7 +43,7 @@ private
 
   def issued_time_sanity
     if issued_from.present? && issued_to.present? && issued_from > issued_to
-      errors.add(:issued_to, _("Issued to cannot be before issued from."))
+      errors.add(:issued_to, :time_sanity, message: _("Issued to cannot be before issued from."))
     end
   end
 end

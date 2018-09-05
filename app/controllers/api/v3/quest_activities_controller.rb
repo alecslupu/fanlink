@@ -152,7 +152,7 @@ class Api::V3::QuestActivitiesController < Api::V3::BaseController
     if @quest_activity.valid?
       return_the @quest_activity
     else
-      render_422 @quest_activity.errors.full_messages
+      render_422 @quest_activity.errors
     end
   end
 

@@ -170,7 +170,7 @@ class Person < ApplicationRecord
 
     def canonicalize_username
       if Person.find_by(username_canonical: canonicalize(self.username), product_id: product.id)
-        errors.add(:username, "A user has already signed up with that username.")
+        errors.add(:username, :username_in_use, message: _("A user has already signed up with that username."))
         false
       else
         self.username_canonical = canonicalize(self.username)
@@ -180,13 +180,13 @@ class Person < ApplicationRecord
 
     def check_role
       if super_admin? && !product.can_have_supers
-        errors.add(:role, _("This product cannot have super admins."))
+        errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
       end
     end
 
     def validate_age
       if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-        errors.add(:age_requirement, _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
+        errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
       end
     end
 

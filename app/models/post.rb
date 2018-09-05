@@ -87,7 +87,7 @@ class Post < ApplicationRecord
 
     def sensible_dates
       if starts_at.present? && ends_at.present? && starts_at > ends_at
-        errors.add(:starts_at, _("Start date cannot be after end date."))
+        errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
       end
     end
 end

@@ -44,7 +44,7 @@ private
 
   def date_sanity
     if ends_at.present? && ends_at < starts_at
-      errors.add(:ends_at, _("Start date cannot be after end date."))
+      errors.add(:ends_at, :date_sanity, message: _("Start date cannot be after end date."))
     end
   end
 end

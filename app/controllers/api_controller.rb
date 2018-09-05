@@ -74,7 +74,7 @@ protected
   end
 
   def render_error(error)
-    render_422(error.messages.values.flatten)
+    render_422(error)
   end
 
   def render_not_found

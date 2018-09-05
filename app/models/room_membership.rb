@@ -13,14 +13,14 @@ private
 
   def check_created_by
     if person_id == room.created_by_id
-      errors.add(:person_id, _("Room creator cannot be deleted."))
+      errors.add(:person_id, :check_created_by, message: _("Room creator cannot be deleted."))
       throw :abort
     end
   end
 
   def check_private
     if room.public
-      errors.add(:room_id, _("Public room cannot have members."))
+      errors.add(:room_id, :check_private, message: _("Public room cannot have members."))
     end
   end
 end

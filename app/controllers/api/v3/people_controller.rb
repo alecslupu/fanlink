@@ -121,7 +121,7 @@ class Api::V3::PeopleController < Api::V3::BaseController
         end
         return_the @person
       else
-        render_422 @person.errors.full_messages
+        render_422 @person.errors
       end
     end
   end

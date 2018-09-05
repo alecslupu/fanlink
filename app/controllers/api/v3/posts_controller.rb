@@ -387,7 +387,7 @@ class Api::V3::PostsController < Api::V3::BaseController
     if @post.update_attributes(post_params)
       return_the @post
     else
-      render_422 @post.errors.full_messages
+      render_422 @post.errors
     end
   end
 
