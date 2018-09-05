@@ -147,6 +147,12 @@ JkoApi.routes self do
     resources :people, only: %i[ create index show update destroy] do
       member do
         get "interests" => "people#interests"
+        patch "change_password"
+      end
+      collection do
+        post "password_forgot" => "password_resets#create"
+        post "password_reset" => "password_resets#update"
+        get "recommended" => "recommended_people#index"
       end
     end
 
