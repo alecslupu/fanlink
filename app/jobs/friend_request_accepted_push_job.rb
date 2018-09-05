@@ -9,6 +9,7 @@ class FriendRequestAcceptedPushJob < Struct.new(:relationship_id)
   end
 
   def error(job, exception)
+    Rails.logger.tagged("[Friend Request Accepted]") { Rails.logger.error exception.inspect }
     if exception.is_a?(ActiveRecord::RecordNotFound)
       job.destroy
     end
