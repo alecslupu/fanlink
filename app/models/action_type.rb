@@ -9,15 +9,15 @@ class ActionType < ApplicationRecord
   before_destroy :check_usage
 
   validates :internal_name,
-            presence: true,
+            presence: { message: _("Internal name is required.") },
             format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
-            length: { in: 3..26 },
-            uniqueness: { message: "There is already an action type with that internal name." }
+            length: { in: 3..26, message: _("Internal name must be between 3 and 26 characters.") },
+            uniqueness: { message: _("There is already an action type with that internal name.") }
 
   validates :name,
-            presence: true,
-            length: { in: 3..36 },
-            uniqueness: { message: "There is already an action type with that name." }
+            presence: { message: _("Name is required.") },
+            length: { in: 3..36, message: _("Name must be between 3 and 26 characters.") },
+            uniqueness: { message: _("There is already an action type with that name.") }
 
   def in_use?
     actions_using? || badge_using.present?
@@ -35,12 +35,12 @@ private
 
   def check_usage
     if actions_using?
-      errors.add(:base, "You cannot destroy this action type because users have already received credit for it.")
+      errors.add(:base, _("You cannot destroy this action type because users have already received credit for it."))
       throw :abort
     else
       badge = badge_using
       if badge
-        errors.add(:base, "You cannot destroy this action type because badge named: '#{badge.name}' is using it.")
+        errors.add(:base, _("You cannot destroy this action type because badge named: '#{badge_name}' is using it.") % { badge_name: badge.name })
         throw :abort
       end
     end

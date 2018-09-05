@@ -17,8 +17,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-msgid "Access denied"
+msgid "Age requirement is not met. You must be #{age_requirement} years or older to use this app."
 msgstr ""
 
-msgid "Not found"
+msgid "Color must be a hexadecimal value."
+msgstr ""
+
+msgid "Internal name can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Missing password resetting token."
+msgstr ""
+
+msgid "Missing password."
+msgstr ""
+
+msgid "Name may not contain emojis."
+msgstr ""
+
+msgid "Series can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Unknown password resetting token."
+msgstr ""
+
+msgid "Username may not contain emojis."
 msgstr ""

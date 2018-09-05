@@ -23,20 +23,20 @@ private
 
   def check_non_self
     if requested_by_id == requested_to_id
-      errors.add(:base, "You cannot have a relationship with yourself")
+      errors.add(:base, _("You cannot have a relationship with yourself."))
     end
   end
 
   def check_outstanding
     if requested? && Relationship.where.not(id: id).for_people(requested_by, requested_to).exists?
-      errors.add(:base, "You already have an existing friendship or friend request to or from that person")
+      errors.add(:base, _("You already have an existing friendship or friend request to or from that person."))
     end
   end
 
   def valid_status_transition
     if status_changed?
       if status_was.to_sym == :friended && self.requested?
-        errors.add(:status, "You cannot change from friended to requested.")
+        errors.add(:status, _("You cannot change from friended to requested."))
       end
     end
   end

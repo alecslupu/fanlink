@@ -205,7 +205,7 @@ class Api::V3::QuestsController < Api::V3::BaseController
     if @quest.valid?
       return_the @quest
     else
-      render_422 @quest.errors.full_messages
+      render_422 @quest.errors
     end
   end
 
@@ -271,7 +271,7 @@ class Api::V3::QuestsController < Api::V3::BaseController
     if @quest.update_attributes(quest_params)
       return_the @quest
     else
-      render_422 @quest.errors.full_messages
+      render_422 @quest.errors
     end
   end
 

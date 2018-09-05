@@ -7,7 +7,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FanLink 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-12 18:35-0800\n"
 "PO-Revision-Date: 2017-12-12 18:35-0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: English\n"
@@ -18,8 +17,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-msgid "Access denied"
+msgid "Age requirement is not met. You must be #{age_requirement} years or older to use this app."
 msgstr ""
 
-msgid "Not found"
+msgid "Color must be a hexadecimal value."
+msgstr ""
+
+msgid "Internal name can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Missing password resetting token."
+msgstr ""
+
+msgid "Missing password."
+msgstr ""
+
+msgid "Name may not contain emojis."
+msgstr ""
+
+msgid "Series can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Unknown password resetting token."
+msgstr ""
+
+msgid "Username may not contain emojis."
 msgstr ""

@@ -5,8 +5,8 @@ class PostReaction < ApplicationRecord
   has_paper_trail
 
   validate :check_emoji
-  validates :person, uniqueness: { scope: :post, message: "You have already reacted to this post." }
-  validates :reaction, presence: { message: "Reaction is required." }
+  validates :person, uniqueness: { scope: :post, message: _("You have already reacted to this post.") }
+  validates :reaction, presence: { message: _("Reaction is required.") }
 
   private
 
@@ -15,7 +15,7 @@ class PostReaction < ApplicationRecord
       top = 0x10FFFF
       hex_val = reaction.to_i(16)
       if hex_val < bottom || hex_val > top
-        errors.add(:reaction, "Reaction is not a valid value.")
+        errors.add(:reaction, _("Reaction is not a valid value."))
       end
     end
 end

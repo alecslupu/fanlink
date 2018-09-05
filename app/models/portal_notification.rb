@@ -14,8 +14,8 @@ class PortalNotification < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  validates :body, length: { in: 3..200, message: "Body must be between 3 and 200 characters." }
-  validates :send_me_at, presence: true
+  validates :body, length: { in: 3..200, message: _("Body must be between 3 and 200 characters.") }
+  validates :send_me_at, presence: { message: _("You must specify a date and time to send the notification.") }
 
   validate :sensible_send_time
 
@@ -37,7 +37,7 @@ private
   def sensible_send_time
     unless persisted?
       if send_me_at.present? && send_me_at < Time.now
-        errors.add(:send_me_at, "cannot be before now.")
+        errors.add(:send_me_at, _("You cannot set the send time to a time before now."))
       end
     end
   end
