@@ -87,14 +87,8 @@ class Api::V3::RoomsController < Api::V3::BaseController
   def destroy
     @room = Room.find(params[:id])
     if @room.created_by_id == current_user.id || current_user.some_admin?
-      if @room.messages.empty?
-        @room.destroy
-      elsif current_user.super_admin? && param[:force] == "1"
-        @room.destroy
-      else
-        @room.deleted!
-        @room.delete_me
-      end
+      @room.deleted!
+      @room.delete_me
       head :ok
     else
       head :unauthorized
@@ -175,7 +169,7 @@ class Api::V3::RoomsController < Api::V3::BaseController
     end
   end
 
-private
+  private
   # TODO: Add description field for admins
   def room_params
     allowed_params = [ :name, :picture, member_ids: [] ]
