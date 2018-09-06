@@ -21,7 +21,7 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
       broadcast(:assigned_reward_created, current_user, @assigned)
       return_the @assigned
     else
-      render_422 @assigned.errors.full_messages
+      render_422 @assigned.errors
     end
   end
 
@@ -31,7 +31,7 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
       broadcast(:assigned_reward_updated, current_user, @assigned)
       return_the @assigned
     else
-      render_422 @assigned.errors.full_messages
+      render_422 @assigned.errors
     end
   end
 
@@ -41,7 +41,7 @@ class Api::V3::AssignedRewardsController < Api::V3::BaseController
       if @assigned.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the assigned reward.")
+        render_422(_("Failed to delete the assigned reward."))
       end
     else
       render_not_found

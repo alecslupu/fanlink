@@ -62,7 +62,7 @@ class Api::V3::RoomsController < Api::V3::BaseController
       @room.new_room
       return_the @room
     else
-      render_422 @room.errors.full_messages
+      render_422 @room.errors
     end
   end
 
@@ -164,7 +164,7 @@ class Api::V3::RoomsController < Api::V3::BaseController
       if @room.update_attribute(:name, room_params[:name])
         return_the @room
       else
-        render_422 @room.errors.full_messages
+        render_422 @room.errors
       end
     end
   end

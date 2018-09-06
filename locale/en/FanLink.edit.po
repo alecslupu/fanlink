@@ -7,7 +7,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FanLink 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-12 18:35-0800\n"
 "PO-Revision-Date: 2017-12-12 18:35-0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: English\n"
@@ -18,8 +17,326 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-msgid "Access denied"
+msgid "%{value} is not a valid activity type."
 msgstr ""
 
-msgid "Not found"
+msgid "%{value} is not an assignable type."
+msgstr ""
+
+msgid "A category already exists with this name."
+msgstr ""
+
+msgid "A quest description is required."
+msgstr ""
+
+msgid "A reward with that reward_type and reward_type_id already exists."
+msgstr ""
+
+msgid "A user has already signed up with that Facebook account."
+msgstr ""
+
+msgid "A user has already signed up with that email address."
+msgstr ""
+
+msgid "A user has already signed up with that username."
+msgstr ""
+
+msgid "Action is in use and cannot be deleted."
+msgstr ""
+
+msgid "Action requirement is required."
+msgstr ""
+
+msgid "Action requirement must be greater than zero."
+msgstr ""
+
+msgid "Action type is invalid."
+msgstr ""
+
+msgid "Activity ID is required."
+msgstr ""
+
+msgid "Age requirement is not met. You must be %{age_requirement} years or older to use this app."
+msgstr ""
+
+msgid "Beacon PID is required."
+msgstr ""
+
+msgid "Body must be between 3 and 200 characters."
+msgstr ""
+
+msgid "Cannot find that person."
+msgstr ""
+
+msgid "Color must be a hexadecimal value."
+msgstr ""
+
+msgid "Country code '%{country_code}' is invalid"
+msgstr ""
+
+msgid "Description is required."
+msgstr ""
+
+msgid "Device identifier is required."
+msgstr ""
+
+msgid "Email is invalid."
+msgstr ""
+
+msgid "Email is required."
+msgstr ""
+
+msgid "Ending time cannot be before starting time."
+msgstr ""
+
+msgid "Failed to delete the activity type."
+msgstr ""
+
+msgid "Failed to delete the assigned reward."
+msgstr ""
+
+msgid "Failed to delete the beacon."
+msgstr ""
+
+msgid "Failed to delete the event."
+msgstr ""
+
+msgid "Failed to delete the merchandise."
+msgstr ""
+
+msgid "Failed to delete the quest activity."
+msgstr ""
+
+msgid "Failed to delete the quest completion."
+msgstr ""
+
+msgid "Failed to delete the reward."
+msgstr ""
+
+msgid "Failed to delete the step."
+msgstr ""
+
+msgid "Internal name already exists."
+msgstr ""
+
+msgid "Internal name can only contain letters, numbers and underscores."
+msgstr ""
+
+msgid "Internal name can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Internal name is required."
+msgstr ""
+
+msgid "Internal name must be between 3 and 26 characters in length."
+msgstr ""
+
+msgid "Internal name must be between 3 and 26 characters."
+msgstr ""
+
+msgid "Internal name must be between 3 and 63 characters."
+msgstr ""
+
+msgid "Invalid date(s)"
+msgstr ""
+
+msgid "Invalid login."
+msgstr ""
+
+msgid "Invalid or missing status."
+msgstr ""
+
+msgid "Issued to cannot be before issued from."
+msgstr ""
+
+msgid "Missing device_id."
+msgstr ""
+
+msgid "Missing or invalid product."
+msgstr ""
+
+msgid "Missing password resetting token."
+msgstr ""
+
+msgid "Missing password."
+msgstr ""
+
+msgid "Missing reward_id parameter."
+msgstr ""
+
+msgid "Name is required."
+msgstr ""
+
+msgid "Name may not contain emojis."
+msgstr ""
+
+msgid "Name must be between 3 and 26 characters."
+msgstr ""
+
+msgid "Name must be between 3 and 60 characters."
+msgstr ""
+
+msgid "Not found."
+msgstr ""
+
+msgid "Parameter tag_name is required."
+msgstr ""
+
+msgid "Password is required."
+msgstr ""
+
+msgid "Password must be at least 6 characters in length."
+msgstr ""
+
+msgid "Person ID is not being automatically set."
+msgstr ""
+
+msgid "Point value is required."
+msgstr ""
+
+msgid "Point value must be greater than zero."
+msgstr ""
+
+msgid "Private rooms may not have pictures."
+msgstr ""
+
+msgid "Product %{product_name} already exists."
+msgstr ""
+
+msgid "Product mismatch!"
+msgstr ""
+
+msgid "Public room cannot have members."
+msgstr ""
+
+msgid "Reaction is not a valid value."
+msgstr ""
+
+msgid "Reaction is required."
+msgstr ""
+
+msgid "Reason cannot be longer than 500 characters."
+msgstr ""
+
+msgid "Required parameter missing."
+msgstr ""
+
+msgid "Reset password instructions have been sent to your email, if it exists in our system."
+msgstr ""
+
+msgid "Reward does not exist for that action type."
+msgstr ""
+
+msgid "Room creator cannot be deleted."
+msgstr ""
+
+msgid "Series can only contain lowercase letters, numbers and underscores."
+msgstr ""
+
+msgid "Series must be between 3 and 26 characters."
+msgstr ""
+
+msgid "Sorry, you cannot get credit for that action again."
+msgstr ""
+
+msgid "Sorry, you cannot unfriend that person right now."
+msgstr ""
+
+msgid "Start date cannot be after end date."
+msgstr ""
+
+msgid "Starting date and time is required."
+msgstr ""
+
+msgid "Starts at is required."
+msgstr ""
+
+msgid "That device id is already registered."
+msgstr ""
+
+msgid "That user is already blocked."
+msgstr ""
+
+msgid "The password is incorrect"
+msgstr ""
+
+msgid "There is already a badge with that internal name."
+msgstr ""
+
+msgid "There is already a level with that internal name."
+msgstr ""
+
+msgid "There is already a level with that point value."
+msgstr ""
+
+msgid "There is already a reward with that internal name."
+msgstr ""
+
+msgid "There is already an action type with that internal name."
+msgstr ""
+
+msgid "There is already an action type with that name."
+msgstr ""
+
+msgid "There was a problem contacting Facebook."
+msgstr ""
+
+msgid "This product cannot have super admins."
+msgstr ""
+
+msgid "This room is no longer active."
+msgstr ""
+
+msgid "Unable to find user from token. Likely a problem contacting Facebook."
+msgstr ""
+
+msgid "Unknown password resetting token."
+msgstr ""
+
+msgid "Username is required."
+msgstr ""
+
+msgid "Username may not contain emojis."
+msgstr ""
+
+msgid "Username must be between 3 and 26 characters"
+msgstr ""
+
+msgid "You already have an existing friendship or friend request to or from that person."
+msgstr ""
+
+msgid "You are already a member of this room."
+msgstr ""
+
+msgid "You are already following that person."
+msgstr ""
+
+msgid "You cannot change from friended to requested."
+msgstr ""
+
+msgid "You cannot destroy this action type because badge named: '%{badge_name}' is using it."
+msgstr ""
+
+msgid "You cannot destroy this action type because users have already received credit for it."
+msgstr ""
+
+msgid "You cannot have a relationship with yourself."
+msgstr ""
+
+msgid "You cannot report a private message."
+msgstr ""
+
+msgid "You cannot set the send time to a time before now."
+msgstr ""
+
+msgid "You have already reacted to this post."
+msgstr ""
+
+msgid "You have blocked this person or this person has blocked you."
+msgstr ""
+
+msgid "You must specify a date and time to send the notification."
+msgstr ""
+
+msgid "You must supply a badge action type."
 msgstr ""

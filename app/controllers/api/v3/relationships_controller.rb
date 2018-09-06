@@ -52,11 +52,11 @@ class Api::V3::RelationshipsController < Api::V3::BaseController
           @relationship.friend_request_received_push
           return_the @relationship
         else
-          render_422 @relationship.errors.full_messages
+          render_422 @relationship.errors
         end
       end
     else
-      render_422("You have blocked this person or this person has blocked you.") && return
+      render_422(_("You have blocked this person or this person has blocked you.")) && return
     end
   end
 
@@ -81,7 +81,7 @@ class Api::V3::RelationshipsController < Api::V3::BaseController
       if @relationship.destroy
         head :ok
       else
-        render_422("Sorry, you cannot unfriend that person right now.")
+        render_422(_("Sorry, you cannot unfriend that person right now."))
       end
     else
       render_not_found

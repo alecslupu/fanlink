@@ -4,7 +4,8 @@ class PostComment < ApplicationRecord
 
   belongs_to :person, touch: true
   belongs_to :post, touch: true
-  validates :body, presence: true
+  
+  validates :body, presence: { message: "Comment body is required." }
 
   has_many :post_comment_mentions, dependent: :destroy
 

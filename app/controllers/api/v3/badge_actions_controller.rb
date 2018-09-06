@@ -59,9 +59,9 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
             return_the @progress
           else
             if @progress.blank?
-              render json: { errors: { base: "Reward does not exist for that action type." } }, status: :not_found
+              render json: { errors: { base: _("Reward does not exist for that action type.") } }, status: :not_found
             else
-              render_422(@progress.errors.messages.flatten)
+              render_422(@progress.errors)
             end
           end
           break
@@ -86,11 +86,11 @@ private
 
   def load_action_type
     if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
-      render_422("You must supply a badge action type.")
+      render_422(_("You must supply a badge action type."))
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
-      render_422("Action type is invalid.") unless @action_type.present?
+      render_422(_("Action type is invalid.")) unless @action_type.present?
     end
   end
 end

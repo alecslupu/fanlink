@@ -20,13 +20,13 @@ class Badge < ApplicationRecord
   normalize_attributes :issued_from, :issued_to
 
   validates :internal_name,
-            presence: true,
+            presence: { message: _("Internal name is required.") },
             format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
-            length: { in: 3..26 },
-            uniqueness: { scope: :product_id, message: "There is already a badge with that internal name." }
+            length: { in: 3..26, message: _("Internal name must be between 3 and 26 characters.") },
+            uniqueness: { scope: :product_id, message: _("There is already a badge with that internal name.") }
 
-  validates :action_requirement, presence: { message: "Action requirement is required." },
-            numericality: { greater_than: 0, message: "Action requirement must be greater than zero." }
+  validates :action_requirement, presence: { message: _("Action requirement is required.") },
+            numericality: { greater_than: 0, message: _("Action requirement must be greater than zero.") }
 
 
   def action_count_earned_by(person)
@@ -43,7 +43,7 @@ private
 
   def issued_time_sanity
     if issued_from.present? && issued_to.present? && issued_from > issued_to
-      errors.add(:issued_to, "Issued to cannot be before issued from.")
+      errors.add(:issued_to, :time_sanity, message: _("Issued to cannot be before issued from."))
     end
   end
 end

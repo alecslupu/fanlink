@@ -14,7 +14,7 @@ class Api::V3::RewardsController < Api::V3::BaseController
     if @reward.valid?
       return_the @reward
     else
-      render_422 @reward.errors.full_messages
+      render_422 @reward.errors
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V3::RewardsController < Api::V3::BaseController
     if @reward.update_attributes(reward_params)
       return_the @reward
     else
-      render_422 @reward.errors.full_messages
+      render_422 @reward.errors
     end
   end
 
@@ -32,7 +32,7 @@ class Api::V3::RewardsController < Api::V3::BaseController
       if reward.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the reward.")
+        render_422(_("Failed to delete the reward."))
       end
     else
       render_not_found
