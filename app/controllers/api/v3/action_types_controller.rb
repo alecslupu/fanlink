@@ -11,11 +11,11 @@ class Api::V3::ActionTypesController < Api::V3::BaseController
   end
 
   def create
-    @action_type = Quest.create(action_params)
+    @action_type = ActionType.create(action_params)
     if @action_type.valid?
       return_the @action_type
     else
-      render_422 action_type.errors.messages.flatten
+      render_422 @action_type.errors
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V3::ActionTypesController < Api::V3::BaseController
     if current_user.super_admin?
       @action_type = ActionType.find(params[:id])
       if @action_type.in_use?
-        render_422 "Action is in use and cannot be deleted."
+        render_422 _("Action is in use and cannot be deleted.")
       else
         @action_type.destroy
         head :ok

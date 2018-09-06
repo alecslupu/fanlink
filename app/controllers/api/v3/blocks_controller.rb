@@ -38,7 +38,7 @@ class Api::V3::BlocksController < Api::V3::BaseController
       blocked.unfollow(current_user)
       return_the @block
     else
-      render_422 @block.errors.full_messages
+      render_422 @block.errors
     end
   end
 

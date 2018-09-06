@@ -15,7 +15,7 @@ class <%= "#{controller_class_name}Controller" %> < <%= "#{api_module_path}::Bas
       broadcast(:<%= singular_name %>_created, current_user, @<%= singular_name %>)
       return_the @<%= singular_name %>
     else
-      render_422(@<%= singular_name %>.errors.full_messages)
+      render_422(@<%= singular_name %>.errors.)
     end
   end
 
@@ -24,7 +24,7 @@ class <%= "#{controller_class_name}Controller" %> < <%= "#{api_module_path}::Bas
       broadcast(:<%= singular_name %>_updated, current_user, @<%= singular_name %>)
       return_the @<%= singular_name %>
     else
-      render_422(@<%= singular_name %>.errors.full_messages)
+      render_422(@<%= singular_name %>.errors)
     end
   end
 
@@ -33,7 +33,7 @@ class <%= "#{controller_class_name}Controller" %> < <%= "#{api_module_path}::Bas
       if @<%= singular_name %>.update(deleted: true)
         head :ok
       else
-        render_422(@<%= singular_name %>.errors.full_messages)
+        render_422(@<%= singular_name %>.errors)
       end
     else
       render_not_found

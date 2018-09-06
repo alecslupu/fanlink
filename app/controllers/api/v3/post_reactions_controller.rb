@@ -42,7 +42,7 @@ class Api::V3::PostReactionsController < Api::V3::BaseController
       if @post_reaction.valid?
         return_the @post_reaction
       else
-        render_422 @post_reaction.errors.full_messages
+        render_422 @post_reaction.errors
       end
     else
       render_not_found
@@ -121,7 +121,7 @@ class Api::V3::PostReactionsController < Api::V3::BaseController
       if @post_reaction.update_attributes(post_reaction_params)
         return_the @post_reaction
       else
-        render_422 @post_reaction.errors.full_messages
+        render_422 @post_reaction.errors
       end
     else
       render_not_found

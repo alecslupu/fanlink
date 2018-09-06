@@ -96,7 +96,7 @@ class Api::V3::EventsController < Api::V3::BaseController
 
   def index
     if !check_dates
-      render json: { errors: "Invalid date(s)" }, status: :unprocessable_entity
+      render json: { errors: _("Invalid date(s)") }, status: :unprocessable_entity
     else
       start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.now - 3.years).beginning_of_day
       end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.now + 3.years).end_of_day
@@ -202,7 +202,7 @@ class Api::V3::EventsController < Api::V3::BaseController
       broadcast(:event_created, current_user, @event)
       return_the @event, handler: "jb", using: :show
     else
-      render json: { errors: [@event.errors.messages] }, status: :unprocessable_entity
+      render_422 @event.errors
     end
   end
 
@@ -235,7 +235,7 @@ class Api::V3::EventsController < Api::V3::BaseController
       broadcast(:event_updated, current_user, @event)
       return_the @event, handler: "jb", using: :show
     else
-      render_422 @event.errors.full_messages
+      render_422 @event.errors
     end
   end
 
@@ -266,7 +266,7 @@ class Api::V3::EventsController < Api::V3::BaseController
       if @event.update(deleted: true)
         head :ok
       else
-        render_error("Failed to delete the event.")
+        render_error(_("Failed to delete the event."))
       end
     else
       render_not_found

@@ -102,11 +102,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
 
   def create
     @category = Category.create(category_params)
-    if @category.valid?
-      return_the @category
-    else
-      render_422 @category.errors.full_messages
-    end
+    return_the @category
   end
 
   # **
@@ -139,7 +135,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
       broadcast(:category_updated, current_user, @category)
       return_the @category
     else
-      render_422 @category.errors.full_messages
+      render_422 @category.errors
     end
   end
 
@@ -152,7 +148,7 @@ class Api::V3::CategoriesController < Api::V3::BaseController
         if @category.update(deleted: true)
           head :ok
         else
-          render_422 @category.errors.full_messages
+          render_422 @category.errors
         end
       end
     else

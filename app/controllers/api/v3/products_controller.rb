@@ -16,7 +16,7 @@ class Api::V3::ProductsController < Api::V3::BaseController
     if @product.valid?
       return_the @product
     else
-      render_422 @product.errors.full_messages
+      render_422 @product.errors
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V3::ProductsController < Api::V3::BaseController
     if @product.update_attributes(product_params)
       return_the @product
     else
-      render_422 @product.errors.full_messages
+      render_422 @product.errors
     end
   end
 

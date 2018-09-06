@@ -47,6 +47,7 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
 
   def index
     @merchandise = paginate(Merchandise.listable.order(:priority))
+    return_the @merchandise
   end
 
   # **
@@ -118,7 +119,7 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
       broadcast(:merchandise_created, current_user, @merchandise)
       return_the @merchandise
     else
-      render_422 @merchandise.errors.full_messages
+      render_422 @merchandise.errors
     end
   end
 
@@ -153,7 +154,7 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
       broadcast(:merchandise_updated, current_user, @merchandise)
       return_the @merchandise
     else
-      render_422 @merchandise.errors.full_messages
+      render_422 @merchandise.errors
     end
   end
 
@@ -186,7 +187,7 @@ class Api::V3::MerchandiseController < Api::V3::BaseController
       if @merchandise.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the merchandise.")
+        render_422(_("Failed to delete the merchandise."))
       end
     else
       render_not_found
