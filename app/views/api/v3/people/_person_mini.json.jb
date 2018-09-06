@@ -1,4 +1,4 @@
-{
+json = {
   id: person.id.to_s,
   username: person.username,
   picture_url: person.picture_url,
@@ -6,3 +6,14 @@
   facebook_picture_url: person.facebook_picture_url,
   badge_points: person.level_progresses.present? ? person.level_progresses.first.total : 0,
 }
+
+lev = person.level_earned
+if lev.nil?
+  json["level"] =  nil
+else
+  json["level"] = render partial: 'api/v3/levels/level', locals: {level: lev}
+end
+
+json
+
+
