@@ -254,10 +254,14 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
   # *
 
   def update
-    if @product_beacon.update_attributes(beacon_update_params)
-      return_the @product_beacon
+    if params.has_key?(:product_beacon)
+      if @product_beacon.update_attributes(beacon_update_params)
+        return_the @product_beacon
+      else
+        render_422 @product_beacon.errors
+      end
     else
-      render_422 @product_beacon.errors
+      render_422(_("Update failed. Missing product_beacon object."))
     end
   end
 

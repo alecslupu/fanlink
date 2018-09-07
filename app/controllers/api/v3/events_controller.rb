@@ -231,11 +231,15 @@ class Api::V3::EventsController < Api::V3::BaseController
   # *
 
   def update
-    if @event.update_attributes(event_params)
-      broadcast(:event_updated, current_user, @event)
-      return_the @event, handler: "jb", using: :show
+    if params.has_key?(:event)
+      if @event.update_attributes(event_params)
+        broadcast(:event_updated, current_user, @event)
+        return_the @event, handler: "jb", using: :show
+      else
+        render_422 @event.errors
+      end
     else
-      render_422 @event.errors
+      return_the @event, handler: "jb", using: :show
     end
   end
 
