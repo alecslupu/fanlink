@@ -276,6 +276,7 @@ class Api::V3::QuestsController < Api::V3::BaseController
       end 
     else
       render_422(_("Update failed. Missing quest object."))
+    end
   end
 
   # **

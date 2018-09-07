@@ -27,6 +27,7 @@ class Api::V3::RewardsController < Api::V3::BaseController
       end
     else
       render_422(_("Update failed. Missing the reward object."))
+    end
   end
 
   def destroy
