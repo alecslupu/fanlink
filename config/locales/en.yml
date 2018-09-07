@@ -30,6 +30,207 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  controllers:
+    v1:
+      badge_actions:
+        errors:
+          action_type_missing: "You must supply a badge action type."
+          action_type_invalid: "Action type is invalid."
+      message_reports:
+        errors:
+          report_private_message: "You cannot report a private message."
+      messages:
+        errors:
+          banned: "You are banned from chat."
+          room_inactive: "This room is no longer active."
+      notification_device_ids:
+        errors:
+          device_id_missing: "Missing device_id"
+      password_resets:
+        success:
+          instructions: "Reset password instructions have been sent to your email, if it exists in our system."
+        error:
+          product_missing: "Required parameter missing."
+          token_missing: "Missing password resetting token."
+          password_missing: "Missing password."
+          token_unknown: "Unknown password resetting token."
+      people:
+        errors:
+          invalid_password: "The password is incorrect"
+          facebook_contact: "There was a problem contacting Facebook"
+          gender: "Gender is not valid. Valid genders: %{Person.genders.keys.join('/')}"
+      posts:
+        errors:
+          unknown_person: "Cannot find that person."
+      relationships:
+        errors:
+          blocked: "You have blocked this person or this person has blocked you."
+          unfriend: "Sorry, you cannot unfriend that person right now."
+          relationship_status: "You cannot change to the relationship to that status."
+          invalid_status: "That status is invalid"
+      # rooms:
+      #   errors:
+      session:
+        errors:
+          invalid_login: "Invalid login."
+    v2:
+    v3:
+  models:
+    action_type:
+      validation:
+        internal_name_present: "Internal name is required."
+        internal_name_format: "Internal name can only contain lowercase letters, numbers and underscores."
+        internal_name_length: "Internal name must be between 3 and 26 characters in length."
+        internal_name_uniqueness: "There is already an action type with that internal name."
+        name_present: "A name is required."
+        name_length: "Name must be between 3 and 26 characters in length."
+        name_uniqueness: "There is already an action type with that name."
+      errors:
+        user_usage: "You cannot destroy this action type because users have already received credit for it."
+        badge_usage: "You cannot destroy this action type because badge named: %{badge.name} is using it."
+    activity_type:
+      validation:
+        atype_allowed: "%{value} is not a valid activity type."
+    assigned_reward:
+      assigned_type_allowed: "%{value} is not an assignable type."
+    badge_action:
+      validation:
+        indentifier_uniqueness: "Sorry, you cannot get credit for that action again."
+    badge_award:
+      validation:
+        product_mismatch: "Product mismatch!"
+    badge:
+      validation:
+        internal_name_present: "Internal name is required."
+        internal_name_format: "Internal name can only contain lowercase letters, numbers and underscores."
+        internal_name_length: "Internal name must be between 3 and 26 characters in length."
+        internal_name_uniqueness: "There is already a badge with that internal name."
+        action_requirement_present: "Action requirement is required."
+        action_requirement_greater_0: "Action requirement must be greater than zero."
+    block:
+      validation:
+        blocked_id_unqiueness: "That user is already blocked."
+    category:
+      validation:
+        name_present: "Name is required."
+        name_length: "Category name must be between 3 and 26 characters in length."
+        name_uniqueness: "A category already exists with this name."
+        color_format: "Color must be a hexadecimal value."
+    event:
+      validation:
+        date_sanity: "Ending time cannot be before starting time."
+        name_present: "Name is required."
+        starts_at_present: "Starts at is required."
+    following:
+      validation:
+        followed_unqiueness: "You are already following that person."
+    interest:
+      validation:
+        title_present: "Title is required"
+    level:
+      validation:
+        internal_name_present: "Internal name is required."
+        internal_name_format: "Internal name can only contain lowercase letters, numbers and underscores."
+        internal_name_length: "Internal name must be between 3 and 26 characters in length."
+        internal_name_uniqueness: "There is already a level with that internal name."
+        points_present: "Point value is required."
+        point_greater_0: "Point value must be greater than zero."
+        point_uniqueness: "There is already a level with that point value."
+    merchandise:
+      validation:
+        name_present: "Name is required."
+        decription_present: "Description is required."
+    message_report:
+      validation:
+        reason_max_length: "Reason cannot be longer than 500 characters."
+    message:
+      validation:
+
+    notification_device_id:
+      validation:
+        device_identifier_present: "A device identifier is required."
+    person_interest:
+      validation:
+        interest_unique_person: "You are already interested in that."
+    person:
+      validation:
+        facebook_id_uniqueness: "A user has already signed up with that Facebook account."
+        email_uniqueness: "A user has already signed up with that email address."
+        username_uniqueness: "A user has already signed up with that username."
+        email_present: "An email address is required."
+        email_format: "Email is invalid."
+        username_present: "A username is required."
+        username_length: "Username must be between 3 and 26 characters."
+        username_format: "Username may not contain emojis."
+        password_present: "A password is required."
+        password_minimum_length: "Password must be at least 6 characters long."
+        name_format: "Name may not contain emojis."
+        check_role: "This product cannot have super admins."
+        age_requirement: "Age requirement is not met. You must be %{product.age_requirement} years or older to use this app."
+    portal_notification:
+      validation:
+        body_length: "Body must be between 3 and 200 characters."
+        send_me_at_present: "You must specify a date and time to send the notification."
+        sensible_send_time: "You cannot set the send time to a time before now."
+    post_comment_report:
+      validation:
+        reason_max_length: "Reason cannot be longer than 500 characters."
+    post_comment:
+      validation:
+        body_present: "Comment body is required."
+    post_reaction:
+      validation:
+        person_unique: "You have already reacted to this post."
+        reaction_present: "Reaction is required."
+        emoji_valid: "Reaction is not a valid value."
+    post_report:
+      validation:
+        reason_max_length: "Reason cannot be longer than 500 characters."
+    post:
+      validation:
+        sensible_date: "Start date cannot be after end date."
+    product_beacon:
+      validation:
+        beacon_pid_present: "Beacon PID is required."
+    product:
+      validation:
+        name_length: "Name must be between 3 and 60 characters."
+        internal_name_format: "Internal name can only contain letters, numbers and underscores."
+        internal_name_presence:  "Internal name is required."
+        internal_name_length: "Internal name must be between 3 and 63 characters."
+    quest_activity:
+    quest_completion:
+      validation:
+        person_present: "Person ID is not being automatically set."
+        activity_id_present: "Activity ID is required."
+    quest:
+      validation:
+        name_present: "Name is required."
+        description_present: "A description is required."
+        starts_at_present: "Starting date and time is required."
+        ends_at_sane: "Ending date and time cannot be before starting date and time."
+    relationship:
+      validation:
+        check_non_self: "You cannot have a relationship with yourself."
+        checkout_outstanding: "You already have an existing friendship or friend request to or from that person."
+        valid_status_transition: "You cannot change from friended to requested."
+    reward:
+      validation:
+        internal_name_format: "Internal name can only contain lowercase letters, numbers and underscores."
+        internal_name_uniqueness: "There is already a reward with that internal name."
+        series_format: "Series can only contain lowercase letters, numbers and underscores."
+        reward_type_id_uniqueness: "A reward with that reward_type and reward_type_id already exists."
+    room_membership:
+      errors:
+        creator_delete: "Room creator cannot be deleted."
+        public_room_members: "Public room cannot have members."
+    room:
+      validation:
+        picture_not_allowed: "Private rooms are not allowed to have pictures."
+  http:
+    401: "Unathorized."
+    404: "Not found."
+    422: ""
   helpers:
     label:
       badge:
@@ -47,3 +248,8 @@ en:
   time:
     formats:
       default: "%d/%m/%Y %H:%M:%S"
+  shared:
+    errors:
+      missing_invalid_status: "Invalid or missing status."
+      missing_invalid_date: "Missing or invalid date(s)"
+      invalid_dates: "Invalid date(s)"

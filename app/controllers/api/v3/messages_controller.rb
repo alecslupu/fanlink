@@ -101,11 +101,11 @@ class Api::V3::MessagesController < Api::V3::BaseController
           end
           return_the @message
         else
-          render_422 @message.errors.full_messages
+          render_422 @message.errors
         end
       end
     else
-      render_422 "This room is no longer active."
+      render_422 _("This room is no longer active.")
     end
   end
 
@@ -267,7 +267,7 @@ class Api::V3::MessagesController < Api::V3::BaseController
       end
       return_the @message
     else
-      render_422 @message.errors.full_messages
+      render_422 @message.errors
     end
   end
 

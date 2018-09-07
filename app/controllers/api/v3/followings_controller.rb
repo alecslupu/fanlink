@@ -26,11 +26,7 @@ class Api::V3::FollowingsController < Api::V3::BaseController
 
   def create
     @following = current_user.follow(@followed)
-    if @following.valid?
-      return_the @following
-    else
-      render_422 @following.errors.full_messages
-    end
+    return_the @following
   end
 
   # **

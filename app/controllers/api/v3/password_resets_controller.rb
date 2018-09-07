@@ -42,9 +42,9 @@ class Api::V3::PasswordResetsController < Api::V3::BaseController
       end
       # Tell the user instructions have been sent whether or not email was found.
       # This is to not leak information about which emails exist in the system.
-      render json: { message: "Reset password instructions have been sent to your email, if it exists in our system" }, status: :ok
+      render json: { message: _("Reset password instructions have been sent to your email, if it exists in our system.") }, status: :ok
     else
-      render_422 "Required parameter missing."
+      render_422 _("Required parameter missing.")
     end
   end
 
@@ -75,7 +75,7 @@ class Api::V3::PasswordResetsController < Api::V3::BaseController
       if person.reset_password_to(password)
         head :ok
       else
-        render_422 @person.errors.full_messages
+        render_422 @person.errors
       end
     end
   end

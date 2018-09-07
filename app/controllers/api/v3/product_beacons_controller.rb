@@ -199,7 +199,7 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
     if @product_beacon.valid?
       return_the @product_beacon
     else
-      render_422 @product_beacon.errors.full_messages
+      render_422 @product_beacon.errors
     end
   end
 
@@ -257,7 +257,7 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
     if @product_beacon.update_attributes(beacon_update_params)
       return_the @product_beacon
     else
-      render_422 @product_beacon.errors.full_messages
+      render_422 @product_beacon.errors
     end
   end
 
@@ -291,7 +291,7 @@ class Api::V3::ProductBeaconsController < Api::V3::BaseController
       if beacon.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the beacon.")
+        render_422(_("Failed to delete the beacon."))
       end
     else
       render_not_found

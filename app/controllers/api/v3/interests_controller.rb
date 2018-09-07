@@ -35,7 +35,7 @@ class Api::V3::InterestsController < Api::V3::BaseController
       if @interest.valid?
         return_the @interest
       else
-        render_422 @interest.errors.full_messages
+        render_422 @interest.errors
       end
     else
       render_not_found
@@ -47,7 +47,7 @@ class Api::V3::InterestsController < Api::V3::BaseController
       if @interest.update_attributes(interest_params)
         return_the @interest
       else
-        render_422 @interest.errors.full_messages
+        render_422 @interest.errors
       end
     else
       render_not_found

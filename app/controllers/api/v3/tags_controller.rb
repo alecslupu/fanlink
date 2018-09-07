@@ -29,7 +29,7 @@ class Api::V3::TagsController < Api::V3::BaseController
       @posts = Post.visible.for_tag(params[:tag_name])
       return_the @posts
     else
-      render_422 "Parameter tag_name is required."
+      render_422 _("Parameter tag_name is required.")
     end
   end
 end

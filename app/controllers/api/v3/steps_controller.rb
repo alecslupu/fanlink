@@ -133,7 +133,7 @@ class Api::V3::StepsController < Api::V3::BaseController
       broadcast(:step_created, current_user, @step)
       return_the @step
     else
-      render_422 @step.errors.full_messages
+      render_422 @step.errors
     end
   end
 
@@ -172,7 +172,7 @@ class Api::V3::StepsController < Api::V3::BaseController
       end
       return_the @step
     else
-      render_422 @step.errors.full_messages
+      render_422 @step.errors
     end
   end
 
@@ -224,7 +224,7 @@ class Api::V3::StepsController < Api::V3::BaseController
       if @step.update(deleted: true)
         head :ok
       else
-        render_422("Failed to delete the step.")
+        render_422(_("Failed to delete the step."))
       end
     else
       render_not_found

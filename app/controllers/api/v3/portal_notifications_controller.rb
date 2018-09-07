@@ -15,7 +15,7 @@ class Api::V3::PortalNotificationsController < Api::V3::BaseController
     if @portal_notification.valid?
       return_the @portal_notification
     else
-      render_422 @portal_notification.errors.full_messages
+      render_422 @portal_notification.errors
     end
   end
 
@@ -23,7 +23,7 @@ class Api::V3::PortalNotificationsController < Api::V3::BaseController
     if @portal_notification.update_attributes(portal_params)
       return_the @portal_notification
     else
-      render_422 @portal_notification.errors.full_messages
+      render_422 @portal_notification.errors
     end
   end
 

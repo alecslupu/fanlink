@@ -8,7 +8,7 @@ class MessageReport < ApplicationRecord
 
   has_paper_trail
 
-  validates :reason, length: { maximum: 500 }
+  validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
 
   normalize_attributes :reason
 

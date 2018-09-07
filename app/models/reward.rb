@@ -28,13 +28,13 @@ class Reward < ApplicationRecord
   normalize_attributes :series
 
   validates :internal_name,
-      presence: true,
+      presence: { message: _("Internal name is required.") },
       format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
-      length: { in: 3..26 },
-      uniqueness: { scope: :product_id, message: "There is already a reward with that internal name." }
+      length: { in: 3..26, message: _("Internal name must be between 3 and 26 characters.") },
+      uniqueness: { scope: :product_id, message: _("There is already a reward with that internal name.") }
   validates :series,
       format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Series can only contain lowercase letters, numbers and underscores.") } },
-      length: { in: 3..26 },
+      length: { in: 3..26, message: _("Series must be between 3 and 26 characters.") },
       allow_blank: true
-  validates_uniqueness_of :reward_type_id, scope: :reward_type, message: "A reward with that reward_type and reward_type_id already exists."
+  validates_uniqueness_of :reward_type_id, scope: :reward_type, message: _("A reward with that reward_type and reward_type_id already exists.")
 end

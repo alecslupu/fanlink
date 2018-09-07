@@ -27,7 +27,7 @@ class Api::V3::RoomMembershipsController < Api::V3::BaseController
       if mem.valid?
         render body: nil, status: :ok
       else
-        render_422 mem.errors.full_messages
+        render_422 mem.errors
       end
     else
       render_not_found
