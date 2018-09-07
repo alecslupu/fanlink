@@ -24,6 +24,7 @@ class Api::V3::RecommendedPostsController < Api::V3::BaseController
 
   def index
     @posts = paginate Post.for_product(ActsAsTenant.current_tenant).published.where(recommended: true).order(created_at: :desc)
+    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
     return_the @posts
   end
 end
