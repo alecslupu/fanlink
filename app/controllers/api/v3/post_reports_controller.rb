@@ -116,27 +116,31 @@ class Api::V3::PostReportsController < Api::V3::BaseController
   # *
 
   def update
-    parms = post_report_update_params
-    if PostReport.valid_status?(parms[:status])
-      @post_report.update(parms)
-      post = @post_report.post
-      if parms[:status] == "post_hidden"
-        post.status = :deleted
-        if post.save && delete_post(post, post.person.followers)
-          head :ok
+    if params.has_key?(:post_report)
+      parms = post_report_update_params
+      if PostReport.valid_status?(parms[:status])
+        @post_report.update(parms)
+        post = @post_report.post
+        if parms[:status] == "post_hidden"
+          post.status = :deleted
+          if post.save && delete_post(post, post.person.followers)
+            head :ok
+          else
+            render_422(_("Invalid or missing status."))
+          end
         else
-          render_422(_("Invalid or missing status."))
+          post.status = :published
+          if post.save
+            head :ok
+          else
+            render_422(_("Invalid or missing status."))
+          end
         end
       else
-        post.status = :published
-        if post.save
-          head :ok
-        else
-          render_422(_("Invalid or missing status."))
-        end
+        render_422(_("Invalid or missing status."))
       end
     else
-      render_422(_("Invalid or missing status."))
+      render_422(_("Updated failed. Missing post_report object."))
     end
   end
 

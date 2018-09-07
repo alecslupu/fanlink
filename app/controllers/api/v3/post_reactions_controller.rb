@@ -117,14 +117,18 @@ class Api::V3::PostReactionsController < Api::V3::BaseController
   # *
 
   def update
-    if @post_reaction.person == current_user
-      if @post_reaction.update_attributes(post_reaction_params)
-        return_the @post_reaction
+    if params.has_key?(:post_reaction)
+      if @post_reaction.person == current_user
+        if @post_reaction.update_attributes(post_reaction_params)
+          return_the @post_reaction
+        else
+          render_422 @post_reaction.errors
+        end
       else
-        render_422 @post_reaction.errors
+        render_not_found
       end
     else
-      render_not_found
+      return_the @post_reaction
     end
   end
 

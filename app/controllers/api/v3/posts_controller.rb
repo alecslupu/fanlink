@@ -384,10 +384,14 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def update
-    if @post.update_attributes(post_params)
-      return_the @post
+    if params.has_key?(:post)
+      if @post.update_attributes(post_params)
+        return_the @post
+      else
+        render_422 @post.errors
+      end
     else
-      render_422 @post.errors
+      return_the @post
     end
   end
 

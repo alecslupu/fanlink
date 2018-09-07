@@ -19,11 +19,14 @@ class Api::V3::RewardsController < Api::V3::BaseController
   end
 
   def update
-    if @reward.update_attributes(reward_params)
-      return_the @reward
+    if param.has_key?(:reward)
+      if @reward.update_attributes(reward_params)
+        return_the @reward
+      else
+        render_422 @reward.errors
+      end
     else
-      render_422 @reward.errors
-    end
+      render_422(_("Update failed. Missing the reward object."))
   end
 
   def destroy

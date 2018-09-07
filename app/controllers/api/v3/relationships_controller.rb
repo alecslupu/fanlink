@@ -189,49 +189,53 @@ class Api::V3::RelationshipsController < Api::V3::BaseController
   # *
 
   def update
-    if check_status
-      if current_user.relationships.include?(@relationship)
-        old_status = @relationship.status
-        new_status = relationship_params[:status]
-        can_status = true
-        # TODO: simplify this mess
-        if new_status == "friended"
-          if old_status == "requested" && @relationship.requested_to == current_user
-            @relationship.friended!
-            update_relationship_count(current_user)
-            @relationship.friend_request_accepted_push
-          else
-            can_status = false
+    if param.has_key?(:relationship)
+      if check_status
+        if current_user.relationships.include?(@relationship)
+          old_status = @relationship.status
+          new_status = relationship_params[:status]
+          can_status = true
+          # TODO: simplify this mess
+          if new_status == "friended"
+            if old_status == "requested" && @relationship.requested_to == current_user
+              @relationship.friended!
+              update_relationship_count(current_user)
+              @relationship.friend_request_accepted_push
+            else
+              can_status = false
+            end
+          elsif new_status == "denied"
+            if old_status == "requested" && @relationship.requested_to == current_user
+              @relationship.destroy
+              update_relationship_count(current_user)
+            else
+              can_status = false
+            end
+          else # withdrawn
+            if old_status == "requested" && @relationship.requested_by == current_user
+              @relationship.destroy
+              update_relationship_count(@relationship.requested_to)
+            else
+              can_status = false
+            end
           end
-        elsif new_status == "denied"
-          if old_status == "requested" && @relationship.requested_to == current_user
-            @relationship.destroy
-            update_relationship_count(current_user)
+          if can_status
+            if @relationship.destroyed?
+              head :ok
+            else
+              return_the @relationship
+            end
           else
-            can_status = false
-          end
-        else # withdrawn
-          if old_status == "requested" && @relationship.requested_by == current_user
-            @relationship.destroy
-            update_relationship_count(@relationship.requested_to)
-          else
-            can_status = false
-          end
-        end
-        if can_status
-          if @relationship.destroyed?
-            head :ok
-          else
-            return_the @relationship
+            render_422("You cannot change to the relationship to that status.")
           end
         else
-          render_422("You cannot change to the relationship to that status.")
+          render_not_found
         end
       else
-        render_not_found
+        render_error("That status is invalid")
       end
     else
-      render_error("That status is invalid")
+      return_the @relationship
     end
   end
 
