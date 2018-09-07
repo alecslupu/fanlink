@@ -40,3 +40,9 @@ json.cache! ["v3", post] do
     json.tag nil
   end
 end
+if defined?(post_reaction) && post_reaction.present?
+  json.post_reaction post_reaction, partial: "api/v3/post_reactions/post_reaction", as: :post_reaction
+else
+  json.post_reaction nil
+end
+
