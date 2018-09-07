@@ -1,4 +1,4 @@
-json.cache! ["v3", person] do
+json.cache! ["v3", person],  expires_in: 20.minutes do
   json.id person.id.to_s
   json.(person, :username, :name, :gender, :city, :country_code, :birthdate, :biography, :picture_url, :product_account, :recommended, :chat_banned, :tester)
   json.designation person.designation(@lang)

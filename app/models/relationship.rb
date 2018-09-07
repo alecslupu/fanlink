@@ -5,7 +5,7 @@ class Relationship < ApplicationRecord
   has_paper_trail
 
   belongs_to :requested_by, class_name: "Person", touch: true
-  belongs_to :requested_to, class_name: "Person"
+  belongs_to :requested_to, class_name: "Person", touch: true
 
   validate :check_outstanding
   validate :check_non_self
