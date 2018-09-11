@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180911010639) do
+ActiveRecord::Schema.define(version: 20180911220820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false, null: false
     t.index ["name"], name: "idx_category_names"
+    t.index ["product_id"], name: "index_categories_on_product_id"
     t.index ["role"], name: "idx_category_roles"
   end
 
@@ -131,6 +132,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.boolean "deleted", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_contests_on_product_id"
   end
 
   create_table "coupons", force: :cascade do |t|
@@ -139,6 +141,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.text "description", null: false
     t.text "url"
     t.boolean "deleted", default: false
+    t.index ["product_id"], name: "index_coupons_on_product_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -149,6 +152,8 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false
+    t.index ["semester_id"], name: "index_courses_on_semester_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -210,12 +215,15 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.text "video", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false
+    t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
   create_table "level_progresses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.jsonb "points", default: {}, null: false
     t.integer "total", default: 0, null: false
+    t.index ["person_id"], name: "index_level_progresses_on_person_id"
   end
 
   create_table "levels", force: :cascade do |t|
@@ -294,6 +302,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.string "audio_content_type"
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
+    t.index ["body"], name: "index_messages_on_body"
     t.index ["created_at"], name: "index_messages_on_created_at"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
@@ -345,8 +354,10 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.text "terminated_reason"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
+    t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
+    t.index ["product_id", "username"], name: "index_people_on_product_id_and_username"
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
@@ -364,6 +375,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
+    t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
   end
 
   create_table "portal_accesses", force: :cascade do |t|
@@ -379,6 +391,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
     t.integer "interest", default: 0, null: false
+    t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
   create_table "portal_notifications", force: :cascade do |t|
@@ -412,6 +425,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.index ["created_at"], name: "index_post_comment_reports_on_created_at"
     t.index ["person_id"], name: "index_post_comment_reports_on_person_id"
     t.index ["post_comment_id"], name: "idx_post_comment_reports_post_comment"
+    t.index ["status"], name: "index_post_comment_reports_on_status"
   end
 
   create_table "post_comments", force: :cascade do |t|
@@ -421,6 +435,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.boolean "hidden", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["body"], name: "index_post_comments_on_body"
     t.index ["created_at"], name: "index_post_comments_on_created_at"
     t.index ["person_id"], name: "index_post_comments_on_person_id"
     t.index ["post_id"], name: "idx_post_comments_post"
@@ -444,6 +459,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.index ["created_at"], name: "index_post_reports_on_created_at"
     t.index ["person_id"], name: "index_post_reports_on_person_id"
     t.index ["post_id"], name: "idx_post_reports_post"
+    t.index ["status"], name: "index_post_reports_on_status"
   end
 
   create_table "post_tags", id: false, force: :cascade do |t|
@@ -476,10 +492,13 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
+    t.index ["body"], name: "index_posts_on_body", using: :gin
+    t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
+    t.index ["status"], name: "index_posts_on_status"
   end
 
   create_table "product_beacons", force: :cascade do |t|
@@ -569,10 +588,17 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
     t.integer "reward_id"
+    t.index ["created_at"], name: "index_quests_on_created_at"
+    t.index ["description"], name: "index_quests_on_description", using: :gin
+    t.index ["ends_at"], name: "index_quests_on_ends_at", where: "(ends_at IS NOT NULL)"
     t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
     t.index ["internal_name"], name: "ind_quests_internal_name"
+    t.index ["name"], name: "index_quests_on_name", using: :gin
+    t.index ["product_id", "internal_name"], name: "index_quests_on_product_id_and_internal_name"
     t.index ["product_id"], name: "ind_quests_products"
     t.index ["reward_id"], name: "idx_quests_rewards"
+    t.index ["starts_at"], name: "index_quests_on_starts_at"
+    t.index ["status"], name: "index_quests_on_status"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -596,6 +622,8 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.integer "total", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_reward_progresses_on_person_id"
+    t.index ["reward_id"], name: "index_reward_progresses_on_reward_id"
   end
 
   create_table "rewards", force: :cascade do |t|
@@ -615,6 +643,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.index ["product_id", "name"], name: "unq_rewards_product_name", unique: true
     t.index ["product_id"], name: "idx_rewards_product"
     t.index ["reward_type", "reward_type_id"], name: "unq_rewards_type_reward_type_id", unique: true
+    t.index ["series"], name: "index_rewards_on_series", where: "(series IS NOT NULL)"
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -653,6 +682,8 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false
+    t.index ["product_id"], name: "index_semesters_on_product_id"
   end
 
   create_table "step_completed", force: :cascade do |t|
@@ -671,6 +702,8 @@ ActiveRecord::Schema.define(version: 20180911010639) do
   create_table "step_unlocks", force: :cascade do |t|
     t.uuid "step_id", null: false
     t.uuid "unlock_id", null: false
+    t.index ["step_id", "unlock_id"], name: "index_step_unlocks_on_step_id_and_unlock_id"
+    t.index ["step_id"], name: "index_step_unlocks_on_step_id"
   end
 
   create_table "steps", force: :cascade do |t|
@@ -706,6 +739,7 @@ ActiveRecord::Schema.define(version: 20180911010639) do
     t.text "displayed_url", null: false
     t.boolean "protected", default: false
     t.boolean "deleted", default: false
+    t.index ["product_id"], name: "index_urls_on_product_id"
   end
 
   create_table "versions", force: :cascade do |t|
