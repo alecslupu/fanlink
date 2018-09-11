@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180830195053) do
+ActiveRecord::Schema.define(version: 20180911010639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
@@ -91,10 +90,10 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
@@ -140,6 +139,16 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.text "description", null: false
     t.text "url"
     t.boolean "deleted", default: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.integer "semester_id", null: false
+    t.text "name", null: false
+    t.text "description", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -203,6 +212,17 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.index ["product_id"], name: "idx_interests_product"
   end
 
+  create_table "lessons", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.text "name", null: false
+    t.text "description", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date"
+    t.text "video", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "level_progresses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.jsonb "points", default: {}, null: false
@@ -239,9 +259,9 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
@@ -286,7 +306,6 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.index ["created_at"], name: "index_messages_on_created_at"
-    t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
   end
@@ -325,8 +344,8 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -636,6 +655,16 @@ ActiveRecord::Schema.define(version: 20180830195053) do
     t.jsonb "description", default: {}, null: false
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
+  end
+
+  create_table "semesters", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.text "name", null: false
+    t.text "description", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "step_completed", force: :cascade do |t|

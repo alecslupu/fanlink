@@ -1,0 +1,14 @@
+json = Rails.cache.fetch ["v3", semester.updated_at, semester] do
+  {
+  name: semester.name,
+  description: semester.description,
+  start_date: semester.start_date,
+  end_date: ((semester.end_date.present?) ? semester.end_date : nil)
+  }
+end
+
+json[:courses] = semester.courses.map do |course|
+  render partial: "api/v3/courses/course", locals: { course: course }, handlers: "jb"
+end
+
+json

@@ -15,7 +15,7 @@ class <%= "#{controller_class_name}Controller" %> < <%= "#{api_module_path}::Bas
       broadcast(:<%= singular_name %>_created, current_user, @<%= singular_name %>)
       return_the @<%= singular_name %>
     else
-      render_422(@<%= singular_name %>.errors.)
+      render_422(@<%= singular_name %>.errors)
     end
   end
 
