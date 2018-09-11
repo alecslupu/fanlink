@@ -41,6 +41,7 @@ group :production, :staging do
 end
 
 group :staging, :development do
+    gem "bullet"
 end
 
 group :development, :test do
