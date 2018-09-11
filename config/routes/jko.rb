@@ -130,12 +130,19 @@ JkoApi.routes self do
 
     resources :badges, except: %i[ destroy ]
 
+    resources :courses, except: %i[ index create ] do
+      get "lessons" => "lessons#index"
+      post "lessons" => "lessons#create"
+    end
+
     resources :interests do
       member do
         post "add" => "interests#add_interest"
         post "remove" => "interests#remove_interest"
       end
     end
+
+    resources :lessons, except: %i[ index create ]
 
     resources :people, only: %i[ create index show update destroy] do
       member do
@@ -173,7 +180,10 @@ JkoApi.routes self do
       end
       get "assigned" => "assigned_rewards#index"
     end
-
+    resources :semesters do
+      get "courses" => "courses#index"
+      post "courses" => "courses#create"
+    end
     resources :steps, except: %i[ create index show update ] do
       collection do
         post "complete" => "reward_progresses#create"
