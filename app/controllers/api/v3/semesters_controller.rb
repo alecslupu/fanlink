@@ -3,7 +3,7 @@ class Api::V3::SemestersController < Api::V3::BaseController
   load_up_the Semester, only: %i[ update show destroy ]
 
   def index
-    @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons).where("courses.deleted", false).where("courses.lessons.deleted", false))
+    @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons).where("courses.deleted = ?", false).where("courses.lessons.deleted = ?", false))
     return_the @semesters, handler: "jb"
   end
 
