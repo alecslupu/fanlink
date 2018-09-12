@@ -4,7 +4,7 @@ class Api::V3::LessonsController < Api::V3::BaseController
   load_up_the Course, from: :course_id, only: %i[ index create ]
 
   def index
-    @lessons = paginate(@course.lessons)
+    @lessons = paginate(@course.lessons.where(deleted: false))
     return_the @lessons, handler: "jb"
   end
 
