@@ -12,6 +12,6 @@ end
 json[:lessons] = course.lessons.map do |lesson|
   next if lesson.deleted
   render partial: "api/v3/lessons/lesson", locals: { lesson: lesson }, handlers: "jb"
-end
+end.compact!
 
 json

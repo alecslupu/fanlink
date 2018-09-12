@@ -11,6 +11,6 @@ end
 json[:courses] = semester.courses.map do |course|
   next if course.deleted
   render partial: "api/v3/courses/course", locals: { course: course }, handlers: "jb"
-end
+end.compact!
 
 json
