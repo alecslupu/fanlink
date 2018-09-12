@@ -1,5 +1,6 @@
 json = Rails.cache.fetch ["v3", course.updated_at, course] do
   {
+    id: course.id,
     semester_id: course.semester_id,
     name: course.name,
     description: course.description,
