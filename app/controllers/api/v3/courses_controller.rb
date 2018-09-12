@@ -4,7 +4,7 @@ class Api::V3::CoursesController < Api::V3::BaseController
   load_up_the Semester, from: :semester_id, only: %i[ index create ]
 
   def index
-    @courses = paginate(@semester.courses.where(deleted: false).includes(:lessons).where(deleted: false))
+    @courses = paginate(@semester.courses.where(deleted: false).includes(:lessons).where("lessons.deleted", false))
     return_the @courses, handler: "jb"
   end
 
