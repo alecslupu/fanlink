@@ -6,9 +6,10 @@ class CorsGuard
   ALWAYS_ALLOW << ENV["PORTAL_URL"] if ENV["PORTAL_URL"]
 
   def self.allow_from?(source)
-    Rails.cache.fetch(CORS_KEY, expires_in: 5.minutes) do
-      ALWAYS_ALLOW + Product.enabled.pluck(:internal_name).map { |n| "https://#{n}.fan.link" }
-    end.include?(source)
+    true
+    #Rails.cache.fetch(CORS_KEY, expires_in: 5.minutes) do
+    #  ALWAYS_ALLOW + Product.enabled.pluck(:internal_name).map { |n| "https://#{n}.fan.link" }
+    #end.include?(source)
   end
 
   def self.invalidate
