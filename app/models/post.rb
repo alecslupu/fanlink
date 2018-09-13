@@ -4,6 +4,8 @@ class Post < ApplicationRecord
   include Post::RealTime
   include TranslationThings
 
+  replicated_model
+
   enum status: %i[ pending published deleted rejected errored ]
 
   after_save :adjust_priorities
