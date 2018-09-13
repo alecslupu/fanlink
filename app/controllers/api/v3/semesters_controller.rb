@@ -1,6 +1,6 @@
 class Api::V3::SemestersController < Api::V3::BaseController
   before_action :admin_only, only: %i[ create update delete ]
-  load_up_the Semester, only: %i[ show destroy ]
+  load_up_the Semester, only: %i[ update destroy ]
 
   def index
     @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons))
