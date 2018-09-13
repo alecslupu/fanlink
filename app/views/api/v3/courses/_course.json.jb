@@ -9,9 +9,8 @@ json = Rails.cache.fetch ["v3", course.updated_at, course] do
   }
 end
 
-json[:lessons] = course.lessons.map do |lesson|
-  next if lesson.deleted
+json[:lessons] = course.lessons.reject { |lesson| lesson.deleted }.map do |lesson|
   render partial: "api/v3/lessons/lesson", locals: { lesson: lesson }, handlers: "jb"
-end.compact!
+end
 
 json

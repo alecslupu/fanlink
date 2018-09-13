@@ -8,9 +8,8 @@ json = Rails.cache.fetch ["v3", semester.updated_at, semester] do
   }
 end
 
-json[:courses] = semester.courses.map do |course|
-  next if course.deleted
+json[:courses] = semester.courses.reject { |course| course.deleted }.map do |course|
   render partial: "api/v3/courses/course", locals: { course: course }, handlers: "jb"
-end.compact!
+end
 
 json
