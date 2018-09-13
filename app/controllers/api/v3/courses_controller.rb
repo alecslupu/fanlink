@@ -9,6 +9,7 @@ class Api::V3::CoursesController < Api::V3::BaseController
   end
 
   def show
+    @course = @course.includes(:lessons)
     return_the @course, handler: "jb"
   end
 
