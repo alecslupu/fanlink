@@ -1,6 +1,11 @@
 #!/bin/sh
 # bin/entrypoint
 echo "Running start up script..."
+while [ ! -f /usr/src/app/config/database.yml ]
+do
+  echo "Waiting for database.yml to be available..."
+  sleep 2
+done
 
 # echo "$(git rev-parse --abbrev-ref HEAD)"
 # if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
@@ -13,7 +18,6 @@ echo "Checking installed gems..."
 bundle check || bundle install
 
 if [ "$RUN_TESTS" == "true" ]; then
-    sleep 20
     echo "Setting up test DB"
     bundle exec rails db:setup
     echo "Preparing test db"
@@ -22,7 +26,6 @@ if [ "$RUN_TESTS" == "true" ]; then
     bundle exec rails spec
 else
     echo "Checking DB migrations..."
-    sleep 20
     bundle exec rake db:setup
     MIGRATION_NEEDED=$(bundle exec rake db:migrate:status | grep -c down)
     if [[ $MIGRATION_NEEDED -gt "0" ]]; then
