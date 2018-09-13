@@ -1,6 +1,12 @@
 #!/bin/sh
 # bin/entrypoint_queue
 
+while [ ! -f /usr/src/app/config/database.yml ]
+do
+  echo "Waiting for database.yml to be available..."
+  sleep 2
+done
+
 echo "Running start up script..."
 
 echo "Checking installed gems..."
