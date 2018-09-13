@@ -1041,6 +1041,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    scout_apm (2.4.18)
     seed_dump (3.3.1)
       activerecord (>= 4)
       activesupport (>= 4)
@@ -1177,6 +1178,7 @@ DEPENDENCIES
   rswag-specs
   rubocop-rails
   sass-rails (~> 5.0)
+  scout_apm
   seed_dump
   shoulda-matchers!
   simplecov
