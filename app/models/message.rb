@@ -4,6 +4,8 @@ class Message < ApplicationRecord
   include Message::PortalFilters
   include Message::RealTime
 
+  replicated_model
+
   enum status: %i[ pending posted ]
 
   normalize_attributes :body

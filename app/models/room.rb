@@ -3,6 +3,8 @@ class Room < ApplicationRecord
   include Room::RealTime
   include TranslationThings
 
+  replicated_model
+
   enum status: %i[ inactive active deleted ]
 
   acts_as_tenant(:product)
