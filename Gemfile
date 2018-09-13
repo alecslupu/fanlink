@@ -38,7 +38,6 @@ gem 'redis-rails'
 
 group :production, :staging do
   gem 'newrelic_rpm'
-  gem 'scout_apm'
 end
 
 group :staging, :development do
