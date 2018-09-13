@@ -9,7 +9,7 @@ class Api::V3::CoursesController < Api::V3::BaseController
   end
 
   def show
-    @course = Course.find(params[:id]).includes(:lessons)
+    @course = Course.includes(:lessons).find(params[:id])
     return_the @course, handler: "jb"
   end
 

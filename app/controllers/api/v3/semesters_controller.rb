@@ -8,7 +8,7 @@ class Api::V3::SemestersController < Api::V3::BaseController
   end
 
   def show
-    @semester = Semester.find(params[:id]).includes(courses: :lessons)
+    @semester = Semester.includes(courses: :lessons).find(params[:id])
     return_the @semester, handler: "jb"
   end
 
