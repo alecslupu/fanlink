@@ -1,6 +1,6 @@
 class Api::V3::CoursesController < Api::V3::BaseController
   before_action :admin_only, only: %i[ create update delete ]
-  load_up_the Course, only: %i[ update show destroy ]
+  load_up_the Course, only: %i[ show destroy ]
   load_up_the Semester, from: :semester_id, only: %i[ index create ]
 
   def index
@@ -9,7 +9,7 @@ class Api::V3::CoursesController < Api::V3::BaseController
   end
 
   def show
-    @course = @course.includes(:lessons)
+    @course = Course.find(params[:id]).includes(:lessons)
     return_the @course, handler: "jb"
   end
 
