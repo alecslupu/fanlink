@@ -1,3 +1,4 @@
+# https://github.com/thiagopradi/octopus/issues/241
 if Octopus.enabled?
   module Delayed
     module Backend
