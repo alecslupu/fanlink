@@ -96,6 +96,15 @@ private
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       if @action_type.present?
+        #,,, Gross hack for now
+        if @action_type.id == 8
+          HackedMetrics.create(
+            person_id: current_user.id,
+            product_id: ActsAsTenant.current_tenant.id,
+            action_type_id: @action_type.id,
+            identifier: params[:badge_action][:identifier]
+          )
+        end
         @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
       else
         render_422(_("Action type is invalid."))
