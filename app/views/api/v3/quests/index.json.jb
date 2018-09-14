@@ -1,5 +1,5 @@
 json = {}
-if current_user.some_admin? && current_user.app == "portal"
+if current_user.some_admin? && @req_source == "portal"
   json[:quests] = @quests.map do |quest|
     render partial: 'quest', locals: { quest: quest, lang: @lang }, handlers: "jb"
   end.compact!

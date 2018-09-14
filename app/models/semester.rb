@@ -16,6 +16,11 @@ class Semester < ApplicationRecord
 
   validate :sensible_dates
 
+  scope :available, -> {
+    where("(start_date < ?) and (end_date IS NULL or end_date > ?)",
+                    Time.zone.now, Time.zone.now)
+  }
+
 private
 
   def sensible_dates

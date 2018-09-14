@@ -1,4 +1,4 @@
-if current_user.some_admin? && current_user.app == "portal"
+if current_user.some_admin? && @req_source == "portal"
   json.quests do
     json.array!(@quests) do |quest|
       json.partial! "quest", locals: { quest: quest, lang: @lang }

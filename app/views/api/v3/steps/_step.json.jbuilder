@@ -30,7 +30,7 @@ else
     json.status step.initial_status
 end
 unlocks_at ||= Time.now.to_s
-if current_user.app == "portal"
+if @req_source == "portal"
     json.delay_unlock step.delay_unlock || 0
 end
 json.unlocks_at unlocks_at.to_datetime().utc.iso8601

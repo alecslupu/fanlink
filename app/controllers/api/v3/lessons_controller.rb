@@ -4,7 +4,11 @@ class Api::V3::LessonsController < Api::V3::BaseController
   load_up_the Course, from: :course_id, only: %i[ index create ]
 
   def index
-    @lessons = paginate(@course.lessons.where(deleted: false))
+    if @req_source == "portal"
+      @lessons = paginate(@course.lessons.where(deleted: false))
+    else
+      @lessons = paginate(@course.lessons.available.where(deleted: false))
+    end
     return_the @lessons, handler: "jb"
   end
 
