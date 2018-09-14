@@ -55,12 +55,16 @@ class Api::V3::PostCommentsController < Api::V3::BaseController
   # *
 
   def create
-    @post_comment = @post.post_comments.create(post_comment_params)
-    if @post_comment.valid?
-      @post_comment.post_me
-      return_the @post_comment
+    if current_user.chat_banned?
+      render json: { errors: "You are banned." }, status: :unprocessable_entity
     else
-      render_422 @post_comment.errors
+      @post_comment = @post.post_comments.create(post_comment_params)
+      if @post_comment.valid?
+        @post_comment.post_me
+        return_the @post_comment
+      else
+        render_422 @post_comment.errors
+      end
     end
   end
 
@@ -181,7 +185,7 @@ class Api::V3::PostCommentsController < Api::V3::BaseController
     return_the @post_comments
   end
 
-private
+  private
 
   def apply_filters
     post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
