@@ -41,6 +41,7 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
 
   def create
     if @rewards.any?
+      Rails.logger.error("Yes rewards")
       @rewards.each do |reward|
         if @action_type.seconds_lag > 0 && current_user.reward_progresses.where(reward_id: reward.id).where("updated_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?
           head :too_many_requests
@@ -54,6 +55,7 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
           @progress.total ||= 0
           @progress.total += 1
           if @progress.present? && @progress.save
+            Rails.logger.error("Yes broadcast")
             @series_total = RewardProgress.where(person_id: current_user.id, series: @action_type.internal_name).sum(:total) || @progress.total
             broadcast(:reward_progress_created, current_user, @progress, @series_total)
             return_the @progress
