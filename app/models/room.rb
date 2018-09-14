@@ -3,7 +3,7 @@ class Room < ApplicationRecord
   include Room::RealTime
   include TranslationThings
 
-  replicated_model
+  #replicated_model
 
   enum status: %i[ inactive active deleted ]
 
