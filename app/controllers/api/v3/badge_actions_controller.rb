@@ -89,8 +89,20 @@ private
       render_422(_("You must supply a badge action type."))
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
-      @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
-      render_422(_("Action type is invalid.")) unless @action_type.present?
+      if @action_type.present?
+        #,,, Gross hack for now
+        if @action_type.id == 8
+          HackedMetrics.create(
+            person_id: current_user.id,
+            product_id: ActsAsTenant.current_tenant.id,
+            action_type_id: @action_type.id,
+            identifier: params[:badge_action][:identifier]
+          )
+        end
+        @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
+      else
+        render_422(_("Action type is invalid."))
+      end
     end
   end
 end
