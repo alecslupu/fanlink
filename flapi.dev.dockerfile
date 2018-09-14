@@ -16,13 +16,11 @@ RUN apk add --no-cache \
 
 RUN npm config set unsafe-perm true && npm install -g newman leasot auto-changelog redoc-cli
 
-RUN cat ${FIREBASE_JSON_FILE_PATH}/fanlink-${BUILD_ENV}.json > ./fanlink-${BUILD_ENV}.json
-COPY ./fanlink-${BUILD_ENV}.json /tmp/
-
 ENV BUNDLE_PATH /gems
 
 COPY ./bin/entrypoint /entrypoint
 COPY ./bin/entrypoint_queue /entrypoint_queue
+COPY ./ /usr/src/app/
 
 RUN chmod +x /entrypoint
 RUN chmod +x /entrypoint_queue

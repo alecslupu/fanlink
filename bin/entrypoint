@@ -1,11 +1,6 @@
 #!/bin/sh
 # bin/entrypoint
 echo "Running start up script..."
-while [ ! -f /usr/src/app/config/database.yml ]
-do
-  echo "Waiting for database.yml to be available..."
-  sleep 2
-done
 
 # echo "$(git rev-parse --abbrev-ref HEAD)"
 # if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
