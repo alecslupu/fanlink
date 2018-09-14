@@ -70,19 +70,19 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
     end
   end
 
-# def index
+  # def index
 
-# end
+  # end
 
-# def update
+  # def update
 
-# end
+  # end
 
-# def destroy
+  # def destroy
 
-# end
+  # end
 
-private
+  private
 
   def load_action_type
     if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
@@ -91,14 +91,12 @@ private
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       if @action_type.present?
         #,,, Gross hack for now
-        if @action_type.id == 8
-          HackedMetrics.create(
-            person_id: current_user.id,
-            product_id: ActsAsTenant.current_tenant.id,
-            action_type_id: @action_type.id,
-            identifier: params[:badge_action][:identifier]
-          )
-        end
+        HackedMetrics.create(
+          person_id: current_user.id,
+          product_id: ActsAsTenant.current_tenant.id,
+          action_type_id: @action_type.id,
+          identifier: params[:badge_action][:identifier]
+        )
         @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
       else
         render_422(_("Action type is invalid."))
