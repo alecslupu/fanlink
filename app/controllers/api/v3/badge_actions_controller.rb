@@ -91,7 +91,7 @@ class Api::V3::BadgeActionsController < Api::V3::BaseController
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       if @action_type.present?
         #,,, Gross hack for now
-        HackedMetrics.create(
+        HackedMetric.create(
           person_id: current_user.id,
           product_id: ActsAsTenant.current_tenant.id,
           action_type_id: @action_type.id,
