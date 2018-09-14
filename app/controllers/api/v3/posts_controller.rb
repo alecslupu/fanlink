@@ -80,16 +80,20 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def create
-    @post = Post.create(post_params.merge(person_id: current_user.id))
-    if @post.valid?
-      unless post_params["status"].present?
-        @post.published!
-      end
-      @post.post if @post.published?
-      broadcast(:post_created, current_user, @post)
-      return_the @post
+    if current_user.chat_banned?
+      render json: { errors: "You are banned." }, status: :unprocessable_entity
     else
-      render_422 @post.errors
+      @post = Post.create(post_params.merge(person_id: current_user.id))
+      if @post.valid?
+        unless post_params["status"].present?
+          @post.published!
+        end
+        @post.post if @post.published?
+        broadcast(:post_created, current_user, @post)
+        return_the @post
+      else
+        render_422 @post.errors
+      end
     end
   end
 
@@ -391,7 +395,7 @@ class Api::V3::PostsController < Api::V3::BaseController
     end
   end
 
-private
+  private
 
   def get_product
     product = nil
@@ -417,6 +421,6 @@ private
 
   def post_params
     params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
-                                     ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
+                                 ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
   end
 end
