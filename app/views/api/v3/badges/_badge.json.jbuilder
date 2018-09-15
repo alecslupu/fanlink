@@ -16,7 +16,7 @@ else
   json.action_requirement nil
   json.point_value nil
 end
-if current_user&.app == "portal"
+if @req_source == "portal"
   json.issued_to badge.issued_to
   json.issued_from badge.issued_from
 end
