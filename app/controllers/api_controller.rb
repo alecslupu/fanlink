@@ -138,6 +138,7 @@ protected
     else
       @req_source = "mobile"
     end
+    puts "Source: #{@req_source}"
   end
 
   def unset_app
