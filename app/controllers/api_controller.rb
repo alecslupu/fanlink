@@ -138,7 +138,7 @@ protected
     else
       @req_source = "mobile"
     end
-    puts "Source: #{@req_source}"
+    puts "Source: #{@req_source} Source is portal? #{@req_source == 'portal'}"
   end
 
   def unset_app
