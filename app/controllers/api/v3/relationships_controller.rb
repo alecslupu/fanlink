@@ -189,7 +189,7 @@ class Api::V3::RelationshipsController < Api::V3::BaseController
   # *
 
   def update
-    if param.has_key?(:relationship)
+    if params.has_key?(:relationship)
       if check_status
         if current_user.relationships.include?(@relationship)
           old_status = @relationship.status
