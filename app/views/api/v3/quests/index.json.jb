@@ -1,21 +1,15 @@
 json = {}
-if current_user.some_admin? && current_user.app == "portal"
+if current_user.some_admin? && @req_source == "portal"
   json[:quests] = @quests.map do |quest|
     render partial: 'quest', locals: { quest: quest, lang: @lang }, handlers: "jb"
-  end.compact!
+  end
 elsif current_user.tester
-  json[:quests] = @quests.map do |quest|
-    next if %w[ deleted disabled].include?(quest.status.to_s)
-    next if quest.starts_at > DateTime.now
-    next if quest.ends_at && quest.ends_at < DateTime.now
+  json[:quests] = @quests.reject {|quest| %w[ deleted disabled].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now}.map do |quest|
     render partial: 'quest', locals: { quest: quest, lang: @lang }, handlers: "jb"
-  end.compact!
+  end
 else
-  json[:quests] = @quests.map do |quest|
-    next if %w[ deleted disabled enabled ].include?(quest.status.to_s)
-    next if quest.starts_at > DateTime.now
-    next if quest.ends_at && quest.ends_at < DateTime.now
+  json[:quests] = @quests.reject {|quest| %w[ deleted disabled enabled ].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now}.map do |quest|
     render partial: 'quest', locals: { quest: quest, lang: @lang }, handlers: "jb"
-  end.compact!
+  end
 end
 json

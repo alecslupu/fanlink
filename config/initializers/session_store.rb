@@ -1,2 +1,5 @@
-Rails.application.config.session_store :cookie_store, key: "_fanlink_session",
-                                       expire_after: 1.year
+Rails.application.config.session_store :redis_store, {
+  servers: [ "#{ENV['REDIS_URL']}/0/session" ],
+  key: "_fanlink_session",
+  expire_after: 14.days
+}
