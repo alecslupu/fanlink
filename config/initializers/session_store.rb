@@ -1,7 +1,5 @@
 Rails.application.config.session_store :redis_store, {
-  servers: [
-    { host: ENV["REDIS_URL"], db: 0, serializer: JSON },
-  ],
+  servers: [ "#{ENV['REDIS_URL']}/0/cache" ],
   key: "_fanlink_session",
   expire_after: 14.days
 }
