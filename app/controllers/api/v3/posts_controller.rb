@@ -281,7 +281,7 @@ class Api::V3::PostsController < Api::V3::BaseController
   # *
 
   def show
-    if current_user.try(:some_admin?) && current_user.try(:app) == "portal"
+    if current_user.try(:some_admin?) && @req_source == "portal"
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
     else
       @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
