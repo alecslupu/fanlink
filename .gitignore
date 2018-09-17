@@ -17,6 +17,8 @@ docs/**/*.json
 !/doc/.keep
 !/docs/.keep
 
+*.dump*
+
 /node_modules
 /yarn-error.log
 
