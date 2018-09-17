@@ -17,15 +17,6 @@ GIT
       json
 
 GIT
-  remote: https://github.com/thiagopradi/octopus
-  revision: 1c9a07fd9f663a33b7298297a10e10c8b37cd648
-  branch: master
-  specs:
-    ar-octopus (0.9.2)
-      activerecord (>= 4.0.0, < 5.2.0)
-      activesupport (>= 4.0.0, < 5.2.0)
-
-GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: 4b160bd19ecca7f97d7ac22dccd5fde9b0da5a9f
   branch: rails-5
@@ -1131,7 +1122,6 @@ DEPENDENCIES
   administrate-field-paperclip!
   api-pagination
   apigen!
-  ar-octopus!
   attribute_normalizer
   awesome_print
   aws-sdk
