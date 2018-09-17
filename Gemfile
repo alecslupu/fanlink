@@ -92,7 +92,7 @@ gem 'administrate-field-hidden', '~> 0.0.3'
 # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "api-pagination"
-gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
+# gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
 gem "aws-sdk"
 gem "countries"
