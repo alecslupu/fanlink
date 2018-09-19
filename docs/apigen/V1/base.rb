@@ -21,20 +21,28 @@ module FanlinkApi
   ]
   Dir[File.join(__dir__, "**", "*.rb")].each { |file| require file unless file.include?("base.rb") }
   API.validate
+  FileUtils.mkdir_p("spec/schema/v1/") unless Dir.exists?("spec/schema/v1/")
 
+  # require "apigen/formats/openapi"
+  # openapi = File.open("docs/specs/OpenApi-V1.yaml", "w")
+  # openapi << Apigen::Formats::OpenAPI::V3.generate(API)
+  # openapi.close
 
-  require "apigen/formats/openapi"
-  openapi = File.open("docs/specs/OpenApi-V1.yaml", "w")
-  openapi << Apigen::Formats::OpenAPI::V3.generate(API)
-  openapi.close
-
-  require "apigen/formats/swagger"
-  swagger = File.open("docs/specs/Swagger-V1.yaml", "w")
-  swagger << Apigen::Formats::Swagger::V2.generate(API)
-  swagger.close
+  # require "apigen/formats/swagger"
+  # swagger = File.open("docs/specs/Swagger-V1.yaml", "w")
+  # swagger << Apigen::Formats::Swagger::V2.generate(API)
+  # swagger.close
 
   require "apigen/formats/jsonschema"
-  jsonschema = File.open("docs/specs/JsonSchema-V1.yaml", "w")
-  jsonschema << Apigen::Formats::JsonSchema::Draft7.generate(API)
-  jsonschema.close
+  v7_draft = JSON.parse(Apigen::Formats::JsonSchema::Draft7.generate(API))
+  v7_draft["definitions"].each do |key, definition|
+    schema = definition
+    schema["$schema"] = v7_draft["$schema"]
+    schema_file = File.open("spec/schema/v1/#{key}.json", "w")
+    schema_file << JSON.pretty_generate(schema)
+    schema_file.close
+  end
+  # jsonschema = File.open("docs/specs/JsonSchema-V1.yaml", "w")
+  # jsonschema << Apigen::Formats::JsonSchema::Draft7.generate(API)
+  # jsonschema.close
 end

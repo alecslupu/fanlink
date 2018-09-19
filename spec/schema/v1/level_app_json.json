@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "level": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "internal_name": {
+          "type": "string"
+        },
+        "points": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "picture_url": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "internal_name",
+        "points",
+        "picture_url",
+        "description",
+        "name"
+      ]
+    }
+  },
+  "required": [
+    "level"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "post_comment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "post_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "person_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "body": {
+          "type": "string"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "post_id",
+        "person_id",
+        "body",
+        "hidden",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  },
+  "required": [
+    "post_comment"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

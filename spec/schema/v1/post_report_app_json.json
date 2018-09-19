@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "post_report": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "post_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "person_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "post_id",
+        "person_id",
+        "reason",
+        "status",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  },
+  "required": [
+    "post_report"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

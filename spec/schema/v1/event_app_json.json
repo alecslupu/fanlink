@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "starts_at": {
+          "type": "string"
+        },
+        "ends_at": {
+          "type": "string"
+        },
+        "ticket_url": {
+          "type": "string"
+        },
+        "place_identifier": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "starts_at",
+        "ends_at",
+        "ticket_url",
+        "place_identifier"
+      ]
+    }
+  },
+  "required": [
+    "event"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
