@@ -1,0 +1,13 @@
+json = Rails.cache.fetch ["v3", beacon.updated_at, beacon] do
+  {
+    id: beacon.id,
+    product_id: beacon.product_id,
+    beacon_pid: beacon.beacon_pid,
+    uuid: beacon.uuid,
+    lower: beacon.lower,
+    upper: beacon.upper,
+    # attached_to: beacon.attached_to.to_s
+    created_at: beacon.created_at.to_s
+  }
+end
+json
