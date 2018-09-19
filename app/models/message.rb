@@ -30,6 +30,7 @@ class Message < ApplicationRecord
   scope :reported_action_needed, -> { joins(:message_reports).where("message_reports.status = ?", MessageReport.statuses[:pending]) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> { where(hidden: false) }
+  scope :room_date_range, -> (from,to) { where("messages.created_at BETWEEN ? AND ?", from, to)}
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
