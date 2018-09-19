@@ -199,4 +199,7 @@ JkoApi.routes self do
 
   end
 
+  version 4 do
+    resources :followings, only: %i[ index ]
+  end
 end
