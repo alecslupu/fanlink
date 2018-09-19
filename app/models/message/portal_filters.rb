@@ -6,6 +6,8 @@ module Message::PortalFilters
     scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
     scope :room_id_filter, -> (query) { joins(:room).where("rooms.id = ?", query.to_i) }
     scope :body_filter, -> (query) { where("body ilike ?", "%#{query}%") }
+    scope :created_after_filter, -> (query) { where("messages.created_at > ?", query)}
+    scope :created_before_filter, -> (query) { where("messages.created_at < ?", query)}
 
     scope :reported_filter, lambda { |reported|
       if reported == "Yes"

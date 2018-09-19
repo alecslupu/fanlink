@@ -279,7 +279,6 @@ private
 
   def apply_filters
     messages = Message.joins(:room).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).order(created_at: :desc)
-    messages = messages.room_date_range(params[:created_after_filter],params[:created_before_filter]) if params[:created_after_filter]
     params.each do |p, v|
       if p.end_with?("_filter") && Message.respond_to?(p)
         messages = messages.send(p, v)
