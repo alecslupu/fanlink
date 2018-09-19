@@ -80,7 +80,7 @@ class Api::V3::FollowingsController < Api::V3::BaseController
     followed_id = params[:followed_id].to_i
     if followed_id > 0
       followed = Person.find(followed_id)
-      @followers = followed.followers
+      @followers = followed.followers.includes(:followers, :level_progresses, :badge_awards)
       return_the @followers
     else
       follower_id = params[:follower_id].to_i
