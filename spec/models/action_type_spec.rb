@@ -4,6 +4,7 @@ RSpec.describe ActionType, type: :model do
   describe "#destroy" do
     it "should not let you destroy an action type that has been used in a badge" do
       act_type = create(:action_type)
+      p act_type.inspect
       create(:badge, action_type: act_type)
       expect(act_type.destroy).to be_falsey
       expect(act_type).to exist_in_database
