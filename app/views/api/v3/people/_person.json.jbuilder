@@ -13,23 +13,28 @@ json.cache! ["v3", person],  expires_in: 20.minutes do
   json.facebook_picture_url person.facebook_picture_url
   json.created_at person.created_at.to_s
   json.updated_at person.updated_at.to_s
+
+  progresses = person.level_progresses
+  if progresses.present?
+    json.badge_points progresses.first.total
+  else
+    json.badge_points 0
+  end
+
+  lev = person.level_earned_from_progresses(progresses)
+  if lev.nil?
+    json.level nil
+  else
+    json.level lev, partial: "api/v3/levels/level", as: :level
+  end
 end
-if person.level_progresses.present?
-  json.badge_points person.level_progresses.first.total
-else
-  json.badge_points 0
-end
-lev = person.level_earned
-if lev.nil?
-  json.level nil
-else
-  json.level lev, partial: "api/v3/levels/level", as: :level
-end
+
 if fol = current_user && current_user.following_for_person(person)
   json.following_id fol.id
 else
   json.following_id nil
 end
+
 if defined?(relationships) && !relationships.empty?
   json.relationships relationships, partial: "api/v3/relationships/relationship", as: :relationship
 end
