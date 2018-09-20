@@ -1,6 +1,0 @@
-json = {}
-json[:courses] = @courses.map do |course|
-  render partial: "course", locals: { course: course }, handlers: "jb"
-end
-
-json

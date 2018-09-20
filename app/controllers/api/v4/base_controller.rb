@@ -1,2 +1,2 @@
-class Api::V4::BaseController < Api::V2::BaseController
+class Api::V4::BaseController < Api::V3::BaseController
 end

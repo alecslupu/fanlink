@@ -1,5 +1,0 @@
-json = {
-  lesson: render(partial: "lesson", locals: { lesson: @lesson }, handlers: "jb")
-}
-
-json

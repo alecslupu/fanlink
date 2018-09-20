@@ -1,54 +1,6 @@
-class Api::V4::FollowingsController < Api::V4::BaseController
-  load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
-  load_up_the Following, except: %i[ create index ]
-
-  # **
-  # @api {post} /followings Follow a person.
-  # @apiName CreateFollowing
-  # @apiGroup Following
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to follow a person.
-  #
-  # @apiParam (body) {Integer} followed_id
-  #   Person to follow
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok
-  #     "following": {
-  #       "id" : 123, #id of the following
-  #       "follower" : { ...public json of the person following },
-  #       "followed" : { ...public json of the person followed }
-  #     }
-  #
-  # *
-
-  def create
-    @following = current_user.follow(@followed)
-    return_the @following
-  end
-
-  # **
-  # @api {delete} /followings/:id Unfollow a person.
-  # @apiName DeleteFollowing
-  # @apiGroup Following
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to unfollow a person.
-  #
-  # @apiParam (path) {Integer} id
-  #   id of the underlying following
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok
-  # *
-
-  def destroy
-    @following.destroy
-    head :ok
-  end
+class Api::V4::FollowingsController< Api::V3::FollowingsController
+  #load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
+  #load_up_the Following, except: %i[ create index ]
 
   # **
   # @api {get} /followings Get followers or followings of a user.
