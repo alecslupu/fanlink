@@ -18,7 +18,7 @@ module Push
   def message_mention_push(message_mention)
     blocks_with = message_mention.message.person.blocks_with.map { |b| b.id }
     do_push(message_mention.person.device_tokens, "Mention", "#{message_mention.message.person.username} mentioned you in a message.",
-                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include(message_mention.person.id)
+                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
   end
 
   def portal_notification_push(portal_notification)
@@ -43,7 +43,7 @@ module Push
   def post_comment_mention_push(post_comment_mention)
     blocks_with = post_comment_mention.post_comment.person.blocks_with.map { |b| b.id }
     do_push(post_comment_mention.person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include(post_comment_mention.person.id)
+              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(post_comment_mention.person.id)
   end
 
   # sends to posts followers
