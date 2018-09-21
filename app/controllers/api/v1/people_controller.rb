@@ -35,7 +35,7 @@ class Api::V1::PeopleController < Api::V1::BaseController
         if @person.save
           head :ok
         else
-          render_error(@person.errors.full_messages)
+          render_error(@person.errors)
         end
       else
         render_error("The password is incorrect")

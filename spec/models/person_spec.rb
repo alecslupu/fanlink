@@ -34,10 +34,10 @@ RSpec.describe Person, type: :model do
       expect(person).not_to be_valid
       expect(person.errors[:country_code]).not_to be_empty
     end
-    it "should not accept an empty string country code" do
+    it "should accept an empty string country code" do
       person = build(:person, country_code: "")
-      expect(person).not_to be_valid
-      expect(person.errors[:country_code]).not_to be_empty
+      expect(person).to be_valid
+      expect(person.country_code).to be_nil
     end
     it "should upcase it" do
       person = create(:person, country_code: "us")

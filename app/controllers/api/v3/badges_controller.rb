@@ -19,7 +19,9 @@ class Api::V3::BadgesController < Api::V3::BaseController
   end
 
   def update
-    @badge.update_attributes(badge_params)
+    if params.has_key?(:badge)
+      @badge.update_attributes(badge_params)
+    end
     return_the @badge
   end
 

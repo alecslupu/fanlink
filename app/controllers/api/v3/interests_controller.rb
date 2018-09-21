@@ -43,14 +43,18 @@ class Api::V3::InterestsController < Api::V3::BaseController
   end
 
   def update
-    if current_user.some_admin?
-      if @interest.update_attributes(interest_params)
-        return_the @interest
+    if params.has_key?(:interest)
+      if current_user.some_admin?
+        if @interest.update_attributes(interest_params)
+          return_the @interest
+        else
+          render_422 @interest.errors
+        end
       else
-        render_422 @interest.errors
+        render_not_found
       end
     else
-      render_not_found
+      return_the @interest
     end
   end
 

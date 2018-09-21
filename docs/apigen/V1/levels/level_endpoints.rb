@@ -1,41 +1,43 @@
-FanlinkApi::API.endpoint :get_levels do
-  description "This gets a list of all levels available to be obtained."
-  method :get
-  tag "User level"
-  path "/levels"
-  output :success do
-    status 200
-    type :object do
-      levels :array do
-        type :level_app_json
-      end
-    end
-  end
-
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
+class AddLevelEndpoints < Apigen::Migration
+    def up
+      add_endpoint :get_levels do
+        description "This gets a list of all levels available to be obtained."
+        method :get
+        tag "User level"
+        path "/levels"
+        output :success do
+          status 200
+          type :object do
+            levels :array do
+              type :level_response
+            end
+          end
+        end
+        output :unauthorized do
+          status 401
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "User is not authorized to access this endpoint."
+        end
+        output :server_error do
+          status 500
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated."
         end
       end
     end
-    description "User is not authorized to access this endpoint."
   end
-
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated."
-  end
-end
 
 # FanlinkApi::API.endpoint :get_a_level do
 #   method :get
@@ -46,7 +48,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :level_json
+#       type :level_response
 #     end
 #   end
 
@@ -137,7 +139,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :level_json
+#       type :level_response
 #     end
 #   end
 
@@ -247,7 +249,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :level_json
+#       type :level_response
 #     end
 #   end
 

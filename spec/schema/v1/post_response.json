@@ -1,0 +1,114 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "created_time": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "picture_url": {
+      "type": "string"
+    },
+    "audio_url": {
+      "type": "string"
+    },
+    "audio_content_type": {
+      "type": "string"
+    },
+    "audio_file_size": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "person": {
+      "$ref": "./person_response.json"
+    },
+    "post_reaction_counts": {
+      "type": "object",
+      "properties": {
+        "emoji": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+
+      ]
+    },
+    "post_reaction": {
+      "$ref": "./post_reaction_response.json"
+    },
+    "global": {
+      "type": "boolean"
+    },
+    "starts_at": {
+      "type": "string"
+    },
+    "ends_at": {
+      "type": "string"
+    },
+    "repost_interval": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "status": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "recommended": {
+      "type": "boolean"
+    },
+    "notify_followers": {
+      "type": "boolean"
+    },
+    "comment_count": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "required": [
+
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+
+        ]
+      }
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

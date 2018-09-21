@@ -9,7 +9,7 @@ json = Rails.cache.fetch ["v3", step.updated_at, step] do
 end
 
 if step.quest_activities.count > 0
-  json[:activities] = render partial: "api/v3/quest_activities/activity", collection: step.quest_activities, as: :activity, handlers: "jb"
+  json[:activities] = render partial: "api/v3/quest_activities/activity", collection: step.quest_activities.where(deleted: false), as: :activity, handlers: "jb"
 else
   json[:activities] = nil
 end

@@ -44,7 +44,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
     room = Room.find(params[:room_id])
     if room.active?
       if room.public && current_user.chat_banned?
-        render json: { errors: "You are banned from chat." }, status: :unprocessable_entity
+        render_error "You are banned from chat."
       else
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
@@ -57,7 +57,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
         return_the @message
       end
     else
-      render json: { errors: "This room is no longer active." }, status: :unprocessable_entity
+      render_error "This room is no longer active." 
     end
   end
 
@@ -130,7 +130,7 @@ class Api::V1::MessagesController < Api::V1::BaseController
       render_not_found
     else
       if !check_dates
-        render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
+        render_error "Missing or invalid date(s)"
       else
         l = params[:limit].to_i
         l = nil if l == 0

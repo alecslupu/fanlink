@@ -20,8 +20,10 @@ describe "Merchandise (v1)" do
       expect(response).to be_success
       expected = [@merch2, @merch1]
       expect(json["merchandise"].count).to eq(expected.size)
-      expect(json["merchandise"].first).to eq(merchandise_json(@merch2))
-      expect(json["merchandise"].last).to eq(merchandise_json(@merch1))
+      # expect(json["merchandise"].first).to eq(merchandise_json(@merch2))
+      # expect(json["merchandise"].last).to eq(merchandise_json(@merch1))
+      expect(merchandise_json(json["merchandise"].first)).to be true
+      expect(merchandise_json(json["merchandise"].last)).to be true
     end
     it "should not get the available merchandise if not logged in" do
       get "/merchandise"
@@ -34,7 +36,8 @@ describe "Merchandise (v1)" do
       login_as(@person)
       get "/merchandise/#{@merch1.id}"
       expect(response).to be_success
-      expect(json["merchandise"]).to eq(merchandise_json(@merch1))
+      # expect(json["merchandise"]).to eq(merchandise_json(@merch1))
+      expect(merchandise_json(json["merchandise"])).to be true
     end
     it "should not get the available merchandise if not logged in" do
       get "/merchandise/#{@merch1.id}"

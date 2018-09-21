@@ -12,12 +12,12 @@ describe "Session (v1)" do
     it "should log in a person with email from a regular account" do
       post "/session", params: { email_or_username: @person.email, password: @password, product: @person.product.internal_name }
       expect(response).to be_success
-      expect(person_private_json(JSON.parse(response.body))).to be true
+      expect(person_private_json(json["person"])).to be true
     end
     it "should log in a person with username from a regular account" do
       post "/session", params: { email_or_username: @person.username, password: @password, product: @person.product.internal_name }
       expect(response).to be_success
-      expect(person_private_json(JSON.parse(response.body))).to be true
+      expect(person_private_json(json["person"])).to be true
     end
     it "should not log in a person with wrong username from a regular account" do
       post "/session", params: { email_or_username: "wrongusername", password: @password, product: @person.product.internal_name }
@@ -33,17 +33,17 @@ describe "Session (v1)" do
       expect(Person).to receive(:for_facebook_auth_token).with(tok).and_return(fbperson)
       post "/session", params: { product: fbperson.product.internal_name, facebook_auth_token: tok }
       expect(response).to be_success
-      expect(person_private_json(JSON.parse(response.body))).to be true
+      expect(person_private_json(json["person"])).to be true
     end
     it "should not log in a person without a product" do
       post "/session", params: { email_or_username: @person.email, password: @password }
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("must supply a valid product")
+      expect(json["errors"]).to include("You must supply a valid product")
     end
     it "should not log in a person with a bad product" do
       post "/session", params: { email_or_username: @person.email, password: @password, product: "idonotexist" }
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("must supply a valid product")
+      #expect(json["errors"]).to include("You must supply a valid product")
     end
     it "should not log in a person via bad FB auth token" do
       tok = "1234"
@@ -66,7 +66,7 @@ describe "Session (v1)" do
     it "should check a valid session" do
       login_as(@person)
       get "/session"
-      expect(person_private_json(JSON.parse(response.body))).to be true
+      expect(person_private_json(json["person"])).to be true
     end
     it "should 404 with no session" do
       logout

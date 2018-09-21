@@ -29,6 +29,7 @@ gem "jb"
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rails'
+
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
 
@@ -40,7 +41,8 @@ group :production, :staging do
   gem 'newrelic_rpm'
 end
 
-group :staging, :development do
+group :staging, :development, :test do
+    gem "bullet"
 end
 
 group :development, :test do
@@ -79,7 +81,6 @@ group :test do
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'wisper-rspec', require: false
   gem 'json_schemer'
-  gem "bullet"
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
@@ -93,6 +94,7 @@ gem 'administrate-field-hidden', '~> 0.0.3'
 # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "api-pagination"
+# gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
 gem "aws-sdk"
 gem "countries"

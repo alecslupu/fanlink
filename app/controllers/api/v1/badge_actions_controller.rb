@@ -48,7 +48,7 @@ class Api::V1::BadgeActionsController < Api::V1::BaseController
         @badge_awards = BadgeAward.award_badges(badge_action)
         return_the @badge_awards
       else
-        render_error(badge_action.errors.full_messages)
+        render_error(badge_action.errors)
       end
     end
   end

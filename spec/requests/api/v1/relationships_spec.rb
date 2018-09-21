@@ -15,7 +15,7 @@ describe "Relationships (v1)" do
       login_as(@requester)
       post "/relationships", params: { relationship: { requested_to_id: @requested.id } }
       expect(response).to be_success
-      expect(json["relationship"]).to eq(relationship_json(Relationship.last, @requester))
+      expect(relationship_json(json["relationship"], @requester)).to be true
     end
     it "should not send a friend request to someone you have blocked" do
       expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
@@ -25,7 +25,7 @@ describe "Relationships (v1)" do
       login_as(requester)
       post "/relationships", params: { relationship: { requested_to_id: blocked.id } }
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("blocked")
+      expect(json["errors"]).to include("You have blocked this person or this person has blocked you.")
     end
     it "should not send a friend request to someone who has blocked you" do
       expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
@@ -35,7 +35,7 @@ describe "Relationships (v1)" do
       login_as(requester)
       post "/relationships", params: { relationship: { requested_to_id: blocking.id } }
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("blocked")
+      expect(json["errors"]).to include("You have blocked this person or this person has blocked you.")
     end
     it "should just change request to friended if to person sends a new request to from person" do
       expect_any_instance_of(Api::V1::RelationshipsController).to receive(:update_relationship_count).and_return(true)
@@ -126,7 +126,8 @@ describe "Relationships (v1)" do
       rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
       get "/relationships/#{rel.id}"
       expect(response).to be_success
-      expect(json["relationship"]).to eq(relationship_json(rel, person))
+      # expect(json["relationship"]).to eq(relationship_json(rel, person))
+      expect(relationship_json(json["relationship"], person)).to be true
     end
     it "should not get relationship if not logged in" do
       person = create(:person)
@@ -161,7 +162,7 @@ describe "Relationships (v1)" do
       patch "/relationships/#{rel.id}", params: { relationship: { status: "friended" } }
       expect(response).to be_success
       expect(rel.reload.friended?).to be_truthy
-      expect(json["relationship"]).to eq(relationship_json(rel, person))
+      expect(relationship_json(json["relationship"], person)).to be true
     end
     it "should not accept own friend request" do
       person = create(:person)
@@ -210,7 +211,7 @@ describe "Relationships (v1)" do
       patch "/relationships/#{rel.id}", params: { relationship: { status: :incestral } }
       expect(response).to be_unprocessable
       expect(rel.reload.requested?).to be_truthy
-      expect(json["errors"]).to include("status is invalid")
+      expect(json["errors"]).to include("That status is invalid")
     end
   end
 

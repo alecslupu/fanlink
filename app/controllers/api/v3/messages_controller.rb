@@ -261,13 +261,17 @@ class Api::V3::MessagesController < Api::V3::BaseController
   # *
 
   def update
-    if @message.update_attributes(message_update_params)
-      if @message.hidden
-        @message.delete_real_time
+    if params.has_key?(:message)
+      if @message.update_attributes(message_update_params)
+        if @message.hidden
+          @message.delete_real_time
+        end
+        return_the @message
+      else
+        render_422 @message.errors
       end
-      return_the @message
     else
-      render_422 @message.errors
+      return_the @message
     end
   end
 
