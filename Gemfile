@@ -126,6 +126,3 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'wisper-activerecord'
-#gem 'chewy'#testTest
-gem 'versionist'
-gem 'jbuilder_cache_multi'

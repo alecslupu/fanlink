@@ -1,4 +1,4 @@
-class Api::V1::RelationshipsController < Api::V1::BaseController
+class Api::V1::RelationshipsController < ApiController
   include Messaging
   load_up_the Relationship, except: %i[ create index ]
 

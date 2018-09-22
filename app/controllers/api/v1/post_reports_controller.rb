@@ -1,4 +1,4 @@
-class Api::V1::PostReportsController < Api::V1::BaseController
+class Api::V1::PostReportsController < ApiController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update
 

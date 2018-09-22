@@ -192,4 +192,5 @@ JkoApi.routes self do
 
   end
 
+  version 4
 end

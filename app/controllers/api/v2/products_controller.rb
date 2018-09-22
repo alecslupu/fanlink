@@ -1,4 +1,4 @@
-class Api::V2::ProductsController < Api::V2::BaseController
+class Api::V2::ProductsController < ApiController
   before_action :super_admin_only
 
   def select

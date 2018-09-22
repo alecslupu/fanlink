@@ -1,4 +1,4 @@
-class Api::V2::CategoriesController < Api::V2::BaseController
+class Api::V2::CategoriesController < ApiController
   load_up_the Category, only: %i[ update ]
   # **
   # @apiDefine V2CategoryObject

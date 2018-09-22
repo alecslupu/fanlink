@@ -1,4 +1,4 @@
-class Api::V1::PasswordResetsController < Api::V1::BaseController
+class Api::V1::PasswordResetsController < ApiController
   skip_before_action :require_login, :set_product
 
   # **

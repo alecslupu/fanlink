@@ -1,4 +1,4 @@
-class Api::V3::PostReactionsController < Api::V3::BaseController
+class Api::V3::PostReactionsController < Api::V2::PostReactionsController
   load_up_the Post, from: :post_id
   load_up_the PostReaction, only: %i[ destroy update ]
 

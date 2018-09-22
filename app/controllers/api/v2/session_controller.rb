@@ -1,6 +1,6 @@
-class Api::V2::SessionController < Api::V2::BaseController
+class Api::V2::SessionController < Api::V1::SessionController
   prepend_before_action :logout, only: :create
-  skip_before_action :require_login, :set_app
+  # skip_before_action :require_login, :set_app
   skip_before_action :set_product, except: %i[ create ]
   skip_after_action :unset_app, only: %i[ create destroy ]
 

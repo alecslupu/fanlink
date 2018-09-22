@@ -1,4 +1,4 @@
-class Api::V3::MessageReportsController < Api::V3::BaseController
+class Api::V3::MessageReportsController < Api::V2::MessageReportsController
   include Messaging
   before_action :admin_only, only: %i[ index update ]
 

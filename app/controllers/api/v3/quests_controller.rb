@@ -1,4 +1,4 @@
-class Api::V3::QuestsController < Api::V3::BaseController
+class Api::V3::QuestsController < Api::V2::QuestsController
   before_action :admin_only, except: %i[ index show ]
   load_up_the Quest, only: %i[ update ]
   # **

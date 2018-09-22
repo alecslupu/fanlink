@@ -1,4 +1,4 @@
-class Api::V2::RoomsController < Api::V2::BaseController
+class Api::V2::RoomsController < Api::V1::RoomsController
   # **
   # @api {post} /rooms Create a private room.
   # @apiName CreateRoom

@@ -1,4 +1,4 @@
-class Api::V1::LevelsController < Api::V1::BaseController
+class Api::V1::LevelsController < ApiController
   # **
   # @api {get} /levels Get all available levels.
   # @apiName GetLevels

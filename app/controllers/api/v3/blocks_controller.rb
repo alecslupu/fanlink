@@ -1,4 +1,4 @@
-class Api::V3::BlocksController < Api::V3::BaseController
+class Api::V3::BlocksController < Api::V2::BlocksController
   # **
   # @api {post} /blocks Block a person.
   # @apiName CreateBlock
@@ -42,35 +42,4 @@ class Api::V3::BlocksController < Api::V3::BaseController
     end
   end
 
-  # **
-  # @api {delete} /blocks/:id Unblock a person.
-  # @apiName DeleteBlock
-  # @apiGroup Blocks
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to unblock a person.
-  #
-  # @apiParam (path) {Integer} id
-  #   id of the underlying block
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok
-  #
-  # @apiErrorExample {json} Error-Response:
-  #     HTTP/1.1 404 if block not found
-  # *
-  # *
-
-  def destroy
-    @block = current_user.blocks_by.find(params[:id])
-    @block.destroy
-    head :ok
-  end
-
-private
-
-  def block_params
-    params.require(:block).permit(:blocked_id)
-  end
 end

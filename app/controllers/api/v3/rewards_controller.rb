@@ -1,4 +1,4 @@
-class Api::V3::RewardsController < Api::V3::BaseController
+class Api::V3::RewardsController < ApiController
   load_up_the Reward, from: :id, only: %i[ show update delete ]
   def index
     @rewards = paginate(Reward.all.order(created_at: :asc))

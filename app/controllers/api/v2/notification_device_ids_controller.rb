@@ -1,4 +1,4 @@
-class Api::V2::NotificationDeviceIdsController < Api::V2::BaseController
+class Api::V2::NotificationDeviceIdsController < Api::V1::NotificationDeviceIdsController
   # **
   # @api {post} /notification_device_ids Add a new device id for a person.
   # @apiName CreateNotificationDeviceId

@@ -1,4 +1,4 @@
-class Api::V2::QuestActivitiesController < Api::V2::BaseController
+class Api::V2::QuestActivitiesController < ApiController
   before_action :admin_only, except: %i[ index show ]
   load_up_the Step, from: :step_id, except: %i[ update show delete ]
   load_up_the QuestActivity, only: %i[ update show delete ]

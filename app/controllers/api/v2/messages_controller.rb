@@ -1,4 +1,4 @@
-class Api::V2::MessagesController < Api::V2::BaseController
+class Api::V2::MessagesController < Api::V1::MessagesController
   before_action :admin_only, only: %i[ list update ]
 
   load_up_the Message, only: %i[ update ]

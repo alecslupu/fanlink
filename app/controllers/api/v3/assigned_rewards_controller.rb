@@ -1,4 +1,4 @@
-class Api::V3::AssignedRewardsController < Api::V3::BaseController
+class Api::V3::AssignedRewardsController < ApiController
   def index
     @assignees = paginate(AssignedReward.where(reward_id: params[:reward_id]).order(created_at: :asc))
     return_the @assignees

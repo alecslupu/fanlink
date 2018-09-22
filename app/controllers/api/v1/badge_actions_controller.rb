@@ -1,4 +1,4 @@
-class Api::V1::BadgeActionsController < Api::V1::BaseController
+class Api::V1::BadgeActionsController < ApiController
   before_action :load_action_type
 
   # **

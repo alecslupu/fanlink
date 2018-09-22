@@ -1,4 +1,4 @@
-class Api::V3::PersonRewardsController < Api::V3::BaseController
+class Api::V3::PersonRewardsController < ApiController
   def index
   end
 

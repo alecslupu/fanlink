@@ -824,8 +824,6 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    jbuilder_cache_multi (0.1.0)
-      jbuilder (>= 1.5.0, < 3)
     jko_api (0.2.7.0)
       rails (>= 4.2.7, <= 5.1.4)
       responders (= 2.4.0)
@@ -1081,10 +1079,6 @@ GEM
     unicode-display_width (1.4.0)
     unicode_utils (1.4.0)
     uuidtools (2.1.5)
-    versionist (1.7.0)
-      activesupport (>= 3)
-      railties (>= 3)
-      yard (~> 0.9.11)
     warden (1.2.7)
       rack (>= 1.0)
     warden-oauth2 (0.0.1)
@@ -1109,7 +1103,6 @@ GEM
       activerecord (>= 3.0.0)
       wisper (~> 2.0)
     wisper-rspec (1.1.0)
-    yard (0.9.16)
 
 PLATFORMS
   ruby
@@ -1147,7 +1140,6 @@ DEPENDENCIES
   google_places
   jb
   jbuilder (~> 2.5)
-  jbuilder_cache_multi
   jko_api
   kaminari
   koala
@@ -1185,7 +1177,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicode_utils
   uuidtools
-  versionist
   web-console (>= 3.3.0)
   webmock
   wisper (= 2.0.0)

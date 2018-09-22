@@ -1,4 +1,4 @@
-class Api::V2::PeopleController < Api::V2::BaseController
+class Api::V2::PeopleController < Api::V1::PeopleController
   prepend_before_action :logout, only: :create
 
   load_up_the Person, except: %i[ index ]

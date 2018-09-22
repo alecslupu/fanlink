@@ -1,4 +1,4 @@
-class Api::V2::PostCommentReportsController < Api::V2::BaseController
+class Api::V2::PostCommentReportsController < Api::V1::PostCommentReportsController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostCommentReport, only: :update
 

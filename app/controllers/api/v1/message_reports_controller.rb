@@ -1,4 +1,4 @@
-class Api::V1::MessageReportsController < Api::V1::BaseController
+class Api::V1::MessageReportsController < ApiController
   before_action :admin_only, only: %i[ index update ]
 
   load_up_the Room, from: :room_id

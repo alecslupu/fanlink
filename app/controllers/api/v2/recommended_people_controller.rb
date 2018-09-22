@@ -1,4 +1,4 @@
-class Api::V2::RecommendedPeopleController < Api::V2::BaseController
+class Api::V2::RecommendedPeopleController < Api::V1::RecommendedPeopleController
   # **
   # @api {get} /people/recommended Get recommended people.
   # @apiName GetRecommendedPeople
