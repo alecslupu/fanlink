@@ -4,313 +4,199 @@ module JsonHelpers
   end
 
   def badge_json(badge)
-    {
-      "id"                  => badge.id.to_s,
-      "name"                => badge.name,
-      "internal_name"       => badge.internal_name,
-      "description"         => badge.description,
-      "picture_url"         => badge.picture_url,
-      "action_requirement"  => badge.action_requirement,
-      "point_value"         => badge.point_value
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/badge_response.json"))
+
+    # puts schema.validate(badge.compact).to_a
+
+    schema.valid?(badge.compact)
   end
 
   def block_json(block)
-    {
-      "id"          => block.id.to_s,
-      "blocker_id"  => block.blocker_id,
-      "blocked_id"  => block.blocked_id
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/block_response.json"))
+
+    # puts schema.validate(block.compact).to_a
+
+    schema.valid?(block.compact)
   end
   def event_json(event)
-    {
-      "id"          => event.id.to_s,
-      "name"        => event.name,
-      "description" => event.description,
-      "starts_at"   => event.starts_at.to_s,
-      "ends_at"     => event.ends_at.to_s,
-      "ticket_url"  => event.place_identifier,
-      "place_identifier" => event.place_identifier
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/event_response.json"))
+
+    # puts schema.validate(event.compact).to_a
+
+    schema.valid?(event.compact)
   end
   def following_json(following, currnt_user)
-    {
-      "id"       => following.id.to_s,
-      "follower" => person_json(following.follower, currnt_user),
-      "followed" => person_json(following.followed, currnt_user)
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/following_response.json"))
+    
+    # puts schema.validate(following.compact).to_a
+
+    schema.valid?(following.compact)
   end
 
   def level_json(level, lang = nil)
-    {
-        "id"                  => level.id.to_s,
-        "name"                => level.name,
-        "internal_name"       => level.internal_name,
-        "description"         => (lang.present?) ? level.description(lang) : level.description,
-        "points"              => level.points,
-        "picture_url"         => level.picture_url
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/level_response.json"))
+
+    # puts schema.validate(level.compact).to_a
+
+    schema.valid?(level.compact)
   end
 
   def merchandise_json(merchandise)
-    {
-      "id"           => merchandise.id.to_s,
-      "name"         => merchandise.name,
-      "description"  => merchandise.description,
-      "price"        => merchandise.price,
-      "purchase_url" => merchandise.purchase_url,
-      "picture_url"  => merchandise.picture_url
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/merchandise_response.json"))
+
+    # puts schema.validate(merchandise.compact).to_a
+
+    schema.valid?(merchandise.compact)
   end
 
   def message_json(msg)
-    {
-      "id"        => msg.id.to_s,
-      "body"      => msg.body,
-      "create_time" => msg.created_at.to_s,
-      "picture_url" => msg.picture_url,
-      "audio_url" => msg.audio_url,
-      "audio_size" => msg.audio_file_size,
-      "audio_content_type" => msg.audio_content_type,
-      "person" => person_json(msg.person),
-      "mentions" => message_mentions_json(msg)
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/message_response.json"))
+
+    msg["mentions"] = msg["mentions"].compact unless msg["mentions"].nil?
+
+    schema.valid?(msg.compact)
   end
 
   def message_list_json(msg)
-    {
-        "id"        => msg.id.to_s,
-        "person_id" => msg.person_id,
-        "room_id"   => msg.room_id,
-        "body"      => msg.body,
-        "hidden"    => msg.hidden,
-        "picture_url" => msg.picture_url,
-        "created_at" => msg.created_at.to_s,
-        "updated_at" => msg.updated_at.to_s
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/message_list_response.json"))
+
+    msg["mentions"] = msg["mentions"].compact unless msg["mentions"].nil?
+
+    schema.valid?(msg.compact)
   end
 
   def message_mentions_json(msg)
-    if msg.mentions.count > 0
-      mentions = []
-      msg.mentions.each do |m|
-        mentions << { person_id: m.person_id, linked_text: m.linked_text }
-      end
-      mentions
-    else
-      nil
-    end
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/mention_response.json"))
+
+    msg["mentions"] = msg["mentions"].compact unless msg["mentions"].nil?
+
+    schema.valid?(msg.compact)
   end
 
   def message_reports_json(msg_report)
-    {
-        "id"          => msg_report.id.to_s,
-        "created_at"  => msg_report.created_at.to_s,
-        "updated_at"  => msg_report.updated_at.to_s,
-        "message_id"  => msg_report.message_id,
-        "poster"      => msg_report.message.person.username,
-        "reporter"    => msg_report.person.username,
-        "reason"      => msg_report.reason,
-        "status"      => msg_report.status
-    }
-  end
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/message_report_response.json"))
 
-  def message_mentions_json(msg)
-    if msg.mentions.count > 0
-      mentions = []
-      msg.mentions.each do |m|
-        mentions << { person_id: m.person_id, linked_text: m.linked_text }
-      end
-      mentions
-    else
-      nil
-    end
+    # puts schema.validate(msg_report.compact).to_a
+
+    schema.valid?(msg_report.compact)
   end
 
   def pending_badge_json(earned, badge)
-    {
-      "badge_action_count"  => earned,
-      "badge"               => badge_json(badge)
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/pending_badge_response.json"))
+
+    # puts schema.validate(earned.compact).to_a
+
+    schema.valid?(badge.compact)
   end
 
   def person_private_json(person, potential_follower = nil)
-    person_json(person, potential_follower).merge(
-      "email" => person.email
-    )
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/person_private_response.json"))
+
+    # puts schema.validate(person.compact).to_a
+
+    schema.valid?(person.compact)
   end
 
   def person_json(person, potential_follower = nil, lang = nil)
     following = (potential_follower) ? potential_follower.following_for_person(person) : nil
-    {
-      "id"                => person.id.to_s,
-      "username"          => person.username,
-      "name"              => person.name,
-      "gender"            => person.gender,
-      "city"              => person.city,
-      "country_code"      => person.country_code,
-      "birthdate"         => (person.birthdate.present?) ? person.birthdate.to_s : nil,
-      "picture_url"       => person.picture_url,
-      "product_account"   => person.product_account,
-      "recommended"       => person.recommended,
-      "chat_banned"       => person.chat_banned,
-      "designation"       => (lang.present?) ? person.designation(lang) : person.designation,
-      "following_id"      => (following) ? following.id : nil,
-      "num_followers"     => person.followers.count,
-      "num_following"     => person.following.count,
-      "badge_points"      => person.badge_points,
-      "role"              => person.role,
-      "level"             => (person.level.nil?) ? nil : level_json(person.level),
-      "do_not_message_me" => person.do_not_message_me,
-      "pin_messages_from" => person.pin_messages_from,
-      "auto_follow"       => person.auto_follow,
-      "facebookid"        => person.facebookid,
-      "facebook_picture_url" => person.facebook_picture_url,
-      "created_at"        => person.created_at.to_s,
-      "updated_at"        => person.updated_at.to_s
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/person_response.json"))
+    person["following_id"] = following.id if following
+
+    # puts schema.validate(person.compact).to_a
+
+    schema.valid?(person.compact)
   end
 
   def person_share_json(person, potential_follower = nil, lang = nil)
-    following = (potential_follower) ? potential_follower.following_for_person(person) : nil
-    {
-      "username"          => person.username,
-      "picture_url"       => person.picture_url
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/person_share_response.json"))
+
+    # puts schema.validate(person.compact).to_a
+
+    schema.valid?(person.compact)
   end
   def post_comment_json(post_comment)
-    {
-      "id"            => post_comment.id.to_s,
-      "create_time"   => post_comment.created_at.to_s,
-      "body"          => post_comment.body,
-      "mentions"      => post_comment_mentions_json(post_comment),
-      "person"        => person_json(post_comment.person)
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_comment_response.json"))
+    post_comment["mentions"] = post_comment["mentions"].compact unless post_comment["mentions"].nil?
+    post_comment["person"] = post_comment["person"].compact
+
+    puts "\n Validation: \n"
+    puts schema.validate(post_comment.compact).to_a
+    puts "\n"
+
+    schema.valid?(post_comment.compact)
   end
 
   def post_comment_list_json(post_comment, lang = nil)
-    {
-        "id"              => post_comment.id.to_s,
-        "post_id"         => post_comment.post_id,
-        "person_id"       => post_comment.person_id,
-        "body"            => (lang.present?) ? post_comment.body(lang) : post_comment.body,
-        "hidden"          => post_comment.hidden,
-        "created_at"      => post_comment.created_at.to_s,
-        "updated_at"      => post_comment.updated_at.to_s,
-        "mentions"        => post_comment_mentions_json(post_comment)
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_comment_list_response.json"))
+    post_comment["mentions"] = post_comment["mentions"].compact unless post_comment["mentions"].nil?
+
+    schema.valid?(post_comment.compact)
   end
 
   def post_comment_mentions_json(post_comment)
-    if post_comment.mentions.count > 0
-      mentions = []
-      post_comment.mentions.each do |m|
-        mentions << { "id" => m.id.to_s, "person_id" => m.person_id, "location" => m.location, "length" => m.length }
-      end
-      mentions
-    else
-      nil
-    end
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/mention_response.json"))
+
+    schema.valid?(post_comment.compact)
   end
 
   def post_comment_report_json(post_comment_report)
-    {
-        "id"              => post_comment_report.id.to_s,
-        "created_at"      => post_comment_report.created_at.to_s,
-        "post_comment_id" => post_comment_report.post_comment_id,
-        "commenter"       => post_comment_report.post_comment.person.username,
-        "reporter"        => post_comment_report.person.username,
-        "reason"          => post_comment_report.reason,
-        "status"          => post_comment_report.status
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_comment_report_response.json"))
+
+    schema.valid?(post_comment_report.compact)
   end
 
   def post_json(post, lang = nil, reaction = nil)
-    {
-      "id"          => post.id.to_s,
-      "create_time" => post.created_at.to_s,
-      "body"        => (lang.present?) ? post.body(lang) : post.body,
-      "picture_url" => post.picture_url,
-      "audio_url" => post.audio_url,
-      "audio_size" => post.audio_file_size,
-      "audio_content_type" => post.audio_content_type,
-      "person" => person_json(post.person),
-      "post_reaction_counts" => post.reaction_breakdown.to_json,
-      "post_reaction"     => (reaction.nil?) ? nil : post_reaction_json(reaction),
-      "global"            => post.global,
-      "starts_at"         => (post.starts_at.present?) ? post.starts_at.to_s : nil,
-      "ends_at"           => (post.ends_at.present?) ? post.ends_at.to_s : nil,
-      "repost_interval"   =>  post.repost_interval,
-      "status"            => post.status,
-      "priority"          => post.priority,
-      "recommended"       => post.recommended,
-      "notify_followers"  => post.notify_followers
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_response.json"))
+
+    post["person"] = post["person"].compact
+    post["category"] = post["category"].compact unless post["category"].nil?
+    post["tags"].each do |idx, tag|
+      post["tags"][idx] = tag.compact
+    end unless post["tags"].nil?
+    post["post_reaction_counts"] = nil #Not easily testable via json schema validation
+    post["post_reaction"] = post["post_reaction"].compact unless  post["post_reaction"].nil?
+ 
+    schema.valid?(post.compact)
   end
+
   def post_share_json(post, lang = nil, reaction = nil)
-    {
-      "body"        => (lang.present?) ? post.body(lang) : post.body,
-      "picture_url" => post.picture_url,
-      "person" => person_share_json(post.person),
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_share_response.json"))
+    post["person"] = post["person"].compact
+
+    schema.valid?(post.compact)
   end
 
   def post_list_json(post, lang = nil)
-    {
-      "id"              => post.id.to_s,
-      "person"          => person_json(post.person),
-      "body"            => (lang.present?) ? post.body(lang) : post.body,
-      "picture_url"     =>  post.picture_url,
-      "global"          => post.global,
-      "starts_at"       => post.starts_at.to_s,
-      "ends_at"         => post.ends_at.to_s,
-      "repost_interval" => post.repost_interval,
-      "status"          => post.status,
-      "priority"        => post.priority,
-      "recommended"     => post.recommended,
-      "created_at"      => post.created_at.to_s,
-      "updated_at"      => post.updated_at.to_s
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_list_response.json"))
+    post["person"] = post["person"].compact
+    post["category"] = post["category"].compact unless post["category"].nil?
+    post["tags"].each do |idx, tag|
+      post["tags"][idx] = tag.compact
+    end unless post["tags"].nil?
+
+    schema.valid?(post.compact)
   end
 
   def post_reaction_json(post_reaction)
-    {
-      "id"        => post_reaction.id.to_s,
-      "post_id"   => post_reaction.post_id,
-      "person_id" => post_reaction.person_id,
-      "reaction"  => post_reaction.reaction
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_reaction_response.json"))
+
+    # puts schema.validate(post_reaction.compact).to_a
+
+    schema.valid?(post_reaction.compact)
   end
 
   def post_report_json(post_report)
-    {
-        "id"          => post_report.id.to_s,
-        "created_at"  => post_report.created_at.to_s,
-        "post_id"     => post_report.post_id,
-        "poster"      => post_report.post.person.username,
-        "reporter"    => post_report.person.username,
-        "reason"      => post_report.reason,
-        "status"      => post_report.status
-    }
-  end
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_report_response.json"))
 
-  def post_share_json(post, lang = nil)
-    {
-      "body"        => (lang.present?) ? post.body(lang) : post.body,
-      "picture_url" => post.picture_url,
-      "person" => { "username" => post.person.username,
-                    "picture_url" => post.person.picture_url }
-    }
+    # puts schema.validate(post_report.compact).to_a
+    
+    schema.valid?(post_report.compact)
   end
 
   def relationship_json(relationship, currnt_user)
-    {
-      "id"            => relationship.id.to_s,
-      "status"        => relationship.status,
-      "create_time"   => relationship.created_at.to_s,
-      "update_time"   => relationship.updated_at.to_s,
-      "requested_by"  => person_json(relationship.requested_by, currnt_user),
-      "requested_to"  => person_json(relationship.requested_to, currnt_user)
-    }
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/relationship_response.json"))
+    relationship["requested_by"] = relationship["requested_by"].compact
+    relationship["requested_to"] = relationship["requested_to"].compact
+    schema.valid?(relationship.compact)
   end
 end

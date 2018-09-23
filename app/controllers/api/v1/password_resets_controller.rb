@@ -44,7 +44,7 @@ class Api::V1::PasswordResetsController < ApiController
       # This is to not leak information about which emails exist in the system.
       render json: { message: "Reset password instructions have been sent to your email, if it exists in our system" }, status: :ok
     else
-      render json: { errors: "Required parameter missing." }, status: :unprocessable_entity
+      render_error(_("Required parameter missing."))
     end
   end
 
@@ -88,14 +88,14 @@ private
     person   = Person.find_by(reset_password_token: token) if token
     errors   = [ ]
 
-    errors.push(_("Missing password resetting token.")) if !token
-    errors.push(_("Missing password.")) if !password
-    errors.push(_("Unknown password resetting token.")) if token && !person
+    errors[:missing_device_token] = { messages: (_("Missing password resetting token.")) } if !token
+    errors[:missing_password] = { messages: (_("Missing password.")) } if !password
+    errors[:unknown_token] = { messages: (_("Unknown password resetting token.")) } if token && !person
 
     if errors.empty?
       yield person, password
     else
-      render json: { errors: errors }, status: :unprocessable_entity
+      render_error(errors)
     end
   end
 end

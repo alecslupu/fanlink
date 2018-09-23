@@ -13,6 +13,7 @@ require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
+require 'json_schemer'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -136,9 +137,15 @@ RSpec.configure do |config|
 
   config.before :each, type: :request do
     @json = nil
-    @api_version = 1
+    vmatch = /V([0-9]).*\:\:/.match(self.class.name)
+    @api_version = "v#{vmatch[1]}"
   end
 
   config.fixture_path = "spec/fixtures"
+
+  if Bullet.enable?
+    config.before(:each) { Bullet.start_request }
+    config.after(:each)  { Bullet.end_request }
+  end
 
 end

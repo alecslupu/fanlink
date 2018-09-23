@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "requested_by": {
+      "$ref": "./person_response.json"
+    },
+    "requested_to": {
+      "$ref": "./person_response.json"
+    },
+    "status": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

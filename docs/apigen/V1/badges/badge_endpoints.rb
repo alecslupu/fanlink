@@ -1,45 +1,49 @@
-FanlinkApi::API.endpoint :get_badges do
-  description "This gets a list of all badges earned for a passed in user. Will include points earned towards each badge and whether badge has been awarded to the user."
-  method :get
-  tag "Badges"
-  path "/badges"
-  query do
-    person_id(:int32).explain do
-      description "The id of the person whose badges you want."
-      example 1
-    end
-  end
-  output :success do
-    status 200
-    type :object do
-      badges :array do
-        type :badge_app_json
-      end
-    end
-  end
-
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
+class AddBadgeEndpoints < Apigen::Migration
+  def up
+    add_endpoint :get_badges do
+      description "This gets a list of all badges earned for a passed in user. Will include points earned towards each badge and whether badge has been awarded to the user."
+      method :get
+      tag "Badges"
+      path "/badges"
+      query do
+        person_id(:int32).explain do
+          description "The id of the person whose badges you want."
+          example 1
         end
       end
-    end
-    description "User is not authorized to access this endpoint."
-  end
-
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
+      output :success do
+        status 200
+        type :object do
+          badges :array do
+            type :badge_response
+          end
         end
       end
+
+      output :unauthorized do
+        status 401
+        type :object do
+          errors :object do
+            base :array do
+              type :string
+            end
+          end
+        end
+        description "User is not authorized to access this endpoint."
+      end
+
+      output :server_error do
+        status 500
+        type :object do
+          errors :object do
+            base :array do
+              type :string
+            end
+          end
+        end
+        description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated."
+      end
     end
-    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you were trying to send, the URL, API version number and any steps you took so that it can be replicated."
   end
 end
 
@@ -52,7 +56,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :badge_json
+#       type :badge_response
 #     end
 #   end
 
@@ -161,7 +165,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :badge_json
+#       type :badge_response
 #     end
 #   end
 

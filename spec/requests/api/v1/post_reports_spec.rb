@@ -66,16 +66,16 @@ describe "PostReports (v1)" do
       get "/post_reports", params: { page: 1, per_page: 2 }
       expect(response).to be_success
       expect(json["post_reports"].count).to eq(2)
-      expect(json["post_reports"].first).to eq(post_report_json(@index_reports.last))
-      expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-2]))
+      expect(post_report_json(json["post_reports"].first)).to be true
+      expect(post_report_json(json["post_reports"].last)).to be true
     end
     it "should get all reports paginated to page 2" do
       login_as(@index_admin)
       get "/post_reports", params: { page: 2, per_page: 2 }
       expect(response).to be_success
       expect(json["post_reports"].count).to eq(2)
-      expect(json["post_reports"].first).to eq(post_report_json(@index_reports[-3]))
-      expect(json["post_reports"].last).to eq(post_report_json(@index_reports[-4]))
+      expect(post_report_json(json["post_reports"].first)).to be true
+      expect(post_report_json(json["post_reports"].last)).to be true
     end
     it "should get all reports with pending status" do
       login_as(@index_admin)

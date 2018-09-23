@@ -39,7 +39,7 @@ class Api::V1::MessageReportsController < ApiController
     parms = message_report_params
     message = Message.find(parms[:message_id])
     if message.room.private?
-      render_error("You cannot report a private message")
+      render_error(_("You cannot report a private message."))
     else
       message_report = MessageReport.create(message_report_params)
       if message_report.valid?

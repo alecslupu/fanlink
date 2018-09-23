@@ -26,11 +26,15 @@ class Api::V3::ProductsController < Api::V2::ProductsController
   end
 
   def update
-    @product = Product.find(params[:id])
-    if @product.update_attributes(product_params)
-      return_the @product
+    if params.has_key?(:product)
+      @product = Product.find(params[:id])
+      if @product.update_attributes(product_params)
+        return_the @product
+      else
+        render_422 @product.errors
+      end
     else
-      render_422 @product.errors
+      render_422(_("Update failed. Missing product object."))
     end
   end
 

@@ -261,15 +261,19 @@ class Api::V3::PeopleController < Api::V2::PeopleController
 
   def update
     Rails.logger.info(@person.inspect)
-    if !check_gender
-      render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
-    else
-      if @person == current_user || current_user.some_admin? || current_user.product_account
-        @person.update(person_params)
-        return_the @person
+    if params.has_key?(:person)
+      if !check_gender
+        render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
-        render_not_found
+        if @person == current_user || current_user.some_admin? || current_user.product_account
+          @person.update(person_params)
+          return_the @person
+        else
+          render_not_found
+        end
       end
+    else
+      return_the @person
     end
   end
 

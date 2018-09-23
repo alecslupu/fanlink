@@ -158,14 +158,18 @@ class Api::V3::RoomsController < Api::V2::RoomsController
 
   def update
     @room = Room.find(params[:id])
-    if @room.created_by != current_user
-      head :unauthorized
-    else
-      if @room.update_attribute(:name, room_params[:name])
-        return_the @room
+    if params.has_key?(:room)
+      if @room.created_by != current_user
+        head :unauthorized
       else
-        render_422 @room.errors
+        if @room.update_attribute(:name, room_params[:name])
+          return_the @room
+        else
+          render_422 @room.errors
+        end
       end
+    else
+      return_the @room
     end
   end
 

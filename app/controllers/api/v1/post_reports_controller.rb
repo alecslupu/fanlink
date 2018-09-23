@@ -119,7 +119,7 @@ class Api::V1::PostReportsController < ApiController
       @post_report.update(parms)
       head :ok
     else
-      render_error("Invalid or missing status.")
+      render_error(_("Invalid or missing status."))
     end
   end
 

@@ -54,7 +54,7 @@ class Api::V1::RelationshipsController < ApiController
       end
       return_the @relationship
     else
-      render_error("You have blocked this person or this person has blocked you.") && return
+      render_error(_("You have blocked this person or this person has blocked you.")) && return
     end
   end
 
@@ -79,7 +79,7 @@ class Api::V1::RelationshipsController < ApiController
       if @relationship.destroy
         head :ok
       else
-        render_error("Sorry, you cannot unfriend that person right now.")
+        render_error(_("Sorry, you cannot unfriend that person right now."))
       end
     else
       render_not_found
@@ -223,13 +223,13 @@ class Api::V1::RelationshipsController < ApiController
             return_the @relationship
           end
         else
-          render_error("You cannot change to the relationship to that status.")
+          render_error(_("You cannot change to the relationship to that status."))
         end
       else
         render_not_found
       end
     else
-      render_error("That status is invalid")
+      render_error(_("That status is invalid"))
     end
   end
 

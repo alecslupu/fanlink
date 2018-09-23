@@ -16,7 +16,7 @@ class ActionType < ApplicationRecord
 
   validates :name,
             presence: { message: _("Name is required.") },
-            length: { in: 3..36, message: _("Name must be between 3 and 26 characters.") },
+            length: { in: 3..36, message: _("Name must be between 3 and 36 characters.") },
             uniqueness: { message: _("There is already an action type with that name.") }
 
   def in_use?

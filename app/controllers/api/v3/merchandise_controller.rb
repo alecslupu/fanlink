@@ -150,11 +150,15 @@ class Api::V3::MerchandiseController < Api::V2::MerchandiseController
   # *
 
   def update
-    if @merchandise.update_attributes(merchandise_params)
-      broadcast(:merchandise_updated, current_user, @merchandise)
-      return_the @merchandise
+    if params.has_key?(:merchandise)
+      if @merchandise.update_attributes(merchandise_params)
+        broadcast(:merchandise_updated, current_user, @merchandise)
+        return_the @merchandise
+      else
+        render_422 @merchandise.errors
+      end
     else
-      render_422 @merchandise.errors
+      return_the @merchandise
     end
   end
 

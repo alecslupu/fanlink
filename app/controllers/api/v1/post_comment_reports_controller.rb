@@ -37,7 +37,7 @@ class Api::V1::PostCommentReportsController < ApiController
       if post_comment_report.valid?
         head :ok
       else
-        render_error(post_comment_report.errors)
+        render_error(_(post_comment_report.errors))
       end
     else
       render_not_found
@@ -119,7 +119,7 @@ class Api::V1::PostCommentReportsController < ApiController
       @post_comment_report.update(parms)
       head :ok
     else
-      render_error("Invalid or missing status.")
+      render_error(_("Invalid or missing status."))
     end
   end
 

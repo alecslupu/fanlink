@@ -27,11 +27,15 @@ class Api::V3::AssignedRewardsController < ApiController
 
   def update
     @assigned = AssignedReward.find(params[:id])
-    if @assigned.update_attributes(assigned_reward_update_params)
-      broadcast(:assigned_reward_updated, current_user, @assigned)
-      return_the @assigned
+    if params.has_key?(:assign)
+      if @assigned.update_attributes(assigned_reward_update_params)
+        broadcast(:assigned_reward_updated, current_user, @assigned)
+        return_the @assigned
+      else
+        render_422 @assigned.errors
+      end
     else
-      render_422 @assigned.errors
+      render_422(_("Updated failed. Missing assign object."))
     end
   end
 

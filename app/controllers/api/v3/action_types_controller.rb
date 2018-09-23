@@ -21,7 +21,9 @@ class Api::V3::ActionTypesController < ApiController
 
   def update
     @action_type = ActionType.find(params[:id])
-    @action_type.update_attributes(action_params)
+    if params.has_key?(:action_type)
+      @action_type.update_attributes(action_params)
+    end
     return_the @action_type
   end
 

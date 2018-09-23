@@ -22,7 +22,7 @@ module Apigen
           private
 
           def model_ref(type)
-            "#/definitions/#{type}"
+            "./#{type}.json"
           end
 
           def supports_discriminator?

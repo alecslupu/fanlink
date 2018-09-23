@@ -114,12 +114,16 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
   # *
 
   def update
-    parms = post_comment_report_update_params
-    if PostCommentReport.valid_status?(parms[:status])
-      @post_comment_report.update(parms)
-      head :ok
+    if params.has_key?(:post_comment_report)
+      parms = post_comment_report_update_params
+      if PostCommentReport.valid_status?(parms[:status])
+        @post_comment_report.update(parms)
+        head :ok
+      else
+        render_422(_("Invalid or missing status."))
+      end
     else
-      render_422(_("Invalid or missing status."))
+      render_422(_("Update failed. Missing post_comment_report object."))
     end
   end
 

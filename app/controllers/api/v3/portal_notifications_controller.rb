@@ -20,10 +20,14 @@ class Api::V3::PortalNotificationsController < ApiController
   end
 
   def update
-    if @portal_notification.update_attributes(portal_params)
-      return_the @portal_notification
+    if params.has_key?(:portal_notification)
+      if @portal_notification.update_attributes(portal_params)
+        return_the @portal_notification
+      else
+        render_422 @portal_notification.errors
+      end
     else
-      render_422 @portal_notification.errors
+      return_the @portal_notification
     end
   end
 

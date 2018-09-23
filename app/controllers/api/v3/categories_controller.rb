@@ -131,11 +131,15 @@ class Api::V3::CategoriesController < Api::V2::CategoriesController
   # *
 
   def update
-    if @category.update_attributes(category_params)
-      broadcast(:category_updated, current_user, @category)
-      return_the @category
+    if params.has_key?(:category)
+      if @category.update_attributes(category_params)
+        broadcast(:category_updated, current_user, @category)
+        return_the @category
+      else
+        render_422 @category.errors
+      end
     else
-      render_422 @category.errors
+      return_the @category
     end
   end
 

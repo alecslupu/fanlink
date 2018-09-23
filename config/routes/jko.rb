@@ -130,6 +130,13 @@ JkoApi.routes self do
 
     resources :badges, except: %i[ destroy ]
 
+    resources :events do
+      member do
+        post "checkins" => "events#checkin"
+        delete "checkins" => "events#checkout"
+        get "checkins" => "events#checkins"
+      end
+    end
     resources :courses, except: %i[ index create ] do
       get "lessons" => "lessons#index"
       post "lessons" => "lessons#create"

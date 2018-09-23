@@ -35,10 +35,10 @@ class Api::V1::PeopleController < ApiController
         if @person.save
           head :ok
         else
-          render_error(@person.errors.full_messages)
+          render_error(@person.errors)
         end
       else
-        render_error("The password is incorrect")
+        render_error(_("The password is incorrect"))
       end
     else
       render_not_found
@@ -103,7 +103,7 @@ class Api::V1::PeopleController < ApiController
 
   def create
     if !check_gender
-      render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
+      render_error(_("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}"))
     else
       parms = person_params
       if params[:facebook_auth_token].present?
@@ -256,7 +256,7 @@ class Api::V1::PeopleController < ApiController
 
   def update
     if !check_gender
-      render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
+      render_error(_("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}"))
     else
       if @person == current_user || current_user.admin? || current_user.product_account
         @person.update(person_params)

@@ -27,40 +27,11 @@ class Api::V2::NotificationDeviceIdsController < Api::V1::NotificationDeviceIdsC
       if ndi.valid?
         head :ok
       else
-        render_error(ndi.errors.full_messages)
+        render_error(ndi.errors)
       end
     else
       render_error("Missing device_id")
     end
   end
 
-  # **
-  # @api {delete} /notification_device_ids Delete a device id
-  # @apiName DeleteNotificationDeviceId
-  # @apiGroup People
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This deletes a single device id. Can only be called by the owner.
-  #
-  # @apiParam (body) {String} device_id
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok
-  #
-  # @apiErrorExample {json} Error-Response:
-  #     HTTP/1.1 404 Not Found
-  # *
-
-  def destroy
-    if params[:device_id].present?
-      ndi = NotificationDeviceId.find_by(person_id: current_user.id, device_identifier: params[:device_id])
-      if ndi
-        ndi.destroy
-        head :ok
-        return
-      end
-    end
-    head :not_found
-  end
 end

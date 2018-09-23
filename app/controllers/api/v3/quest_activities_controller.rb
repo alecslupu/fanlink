@@ -185,10 +185,14 @@ class Api::V3::QuestActivitiesController < Api::V2::QuestActivitiesController
   # *
 
   def update
-    if @quest_activity.update_attributes(activity_params)
-      return_the @quest_activity
+    if params.has_key?(:quest_activity)
+      if @quest_activity.update_attributes(activity_params)
+        return_the @quest_activity
+      else
+        render_422 @message.errors
+      end
     else
-      render_422 @message.errors
+      render_422(_("Updated failed. Missing quest_activity object."))
     end
   end
 

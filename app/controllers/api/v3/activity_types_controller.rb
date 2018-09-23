@@ -160,10 +160,14 @@ class Api::V3::ActivityTypesController <Api::V2::ActivityTypesController
   # *
 
   def update
-    if @activity_type.update_attributes(type_params)
-      return_the @activity_type
+    if params.has_key?(:action_type)
+      if @activity_type.update_attributes(type_params)
+        return_the @activity_type
+      else
+        render_422 @activity_type.errors
+      end
     else
-      render_422 @activity_type.errors
+      return_the @activity_type
     end
   end
 
