@@ -76,9 +76,12 @@ describe "PasswordResets (v1)" do
       expect(person.reload.valid_password?(new_password)).to be_truthy
     end
     it "should not accept invalid token" do
+      person = create(:person, username: "forgetful_too")
+      new_password = "super_secret"
+      person.set_password_token!
       post "/people/password_reset", params: { token: "garbage", password: "super_secret" }
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Unknown password resetting token.")
+      expect(json["errors"][0]).to include("Unknown password resetting token.")
     end
     it "should not accept valid token but invalid password" do
       pw = "secret"

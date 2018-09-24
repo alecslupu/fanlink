@@ -42,7 +42,6 @@ describe "PostReactions (v1)" do
       expect {
         post "/posts/#{@post.id}/reactions", params: { post_reaction: { reaction: nonemoji } }
       }.to change { PostReaction.count }.by(0)
-      puts json["errors"]
       expect(response).to be_unprocessable
       expect(json["errors"]).to include("Reaction is not a valid value.")
     end

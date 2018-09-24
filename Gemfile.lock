@@ -25,15 +25,6 @@ GIT
       activesupport (>= 4.2.0)
 
 GIT
-  remote: https://github.com/zhandao/zero-rails_openapi.git
-  revision: 844414849a1c1a9345bb245ade374c9ab89a7463
-  specs:
-    zero-rails_openapi (1.6.0)
-      activesupport (>= 3)
-      colorize
-      rails (>= 3)
-
-GIT
   remote: https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git
   revision: cb5f6743221c1d7fd1f667c67ad22bd7706b500f
   branch: collection-member-fix
@@ -752,7 +743,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     countries (2.1.4)
       i18n_data (~> 0.8.0)
@@ -1236,7 +1226,6 @@ DEPENDENCIES
   wisper-activejob
   wisper-activerecord
   wisper-rspec
-  zero-rails_openapi!
 
 RUBY VERSION
    ruby 2.5.1p57

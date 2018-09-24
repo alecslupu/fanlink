@@ -87,10 +87,9 @@ private
     password = params[:password].to_s.strip.presence
     person   = Person.find_by(reset_password_token: token) if token
     errors   = [ ]
-
-    errors[:missing_device_token] = { messages: (_("Missing password resetting token.")) } if !token
-    errors[:missing_password] = { messages: (_("Missing password.")) } if !password
-    errors[:unknown_token] = { messages: (_("Unknown password resetting token.")) } if token && !person
+    errors.push((_("Missing password resetting token."))) if !token
+    errors.push((_("Missing password."))) if !password
+    errors.push((_("Unknown password resetting token."))) if token && !person
 
     if errors.empty?
       yield person, password

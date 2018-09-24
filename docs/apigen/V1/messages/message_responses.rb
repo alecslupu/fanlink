@@ -4,9 +4,8 @@ class AddMessageJsonResponse < Apigen::Migration
       type :object do
         id :string
         body :string
-        hidden :bool
-        created_time :datetime
-        status :int32
+        create_time :datetime
+        status :string?
         picture_url :string?
         audio_url :string?
         audio_size :string?

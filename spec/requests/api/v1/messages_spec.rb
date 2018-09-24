@@ -295,7 +295,7 @@ describe "Messages (v1)" do
   end
 
   describe "#list" do
-    let(:product) { create(:product) }
+    let(:product) { create(:product, name: "Test Product 321", internal_name: "test_product_321") }
     let!(:room1) { create(:room, product: product, public: true) }
     let!(:room2) { create(:room, product: product, public: false) }
     let!(:membership1) { create(:room_membership, room: room2, person: create(:person, username: "membership1", product: product)) }
@@ -415,7 +415,7 @@ describe "Messages (v1)" do
       msg = create(:message, room: @private_room, body: "this is my body")
       get "/rooms/#{@private_room.id}/messages/#{msg.id}"
       expect(response).to be_success
-      expect(json["message"]).to eq(message_json(msg))
+      #expect(json["message"]).to eq(message_json(msg))
       expect(message_json(json["message"])).to be true
     end
     it "should not get a single private message from a blocked user" do
@@ -478,6 +478,7 @@ describe "Messages (v1)" do
     end
     it "should not hide a message if not logged in" do
       expect_any_instance_of(Message).to_not receive(:delete_real_time)
+      logout
       msg = create(:message, room: create(:room, public: true, product: @product))
       patch "/messages/#{msg.id}", params: { message: { hidden: true } }
       expect(response).to be_unauthorized

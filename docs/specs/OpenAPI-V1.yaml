@@ -6554,6 +6554,17 @@ components:
         deleted:
           type: boolean
       required: []
+    followed_response:
+      type: object
+      properties:
+        id:
+          type: string
+        follower:
+          "$ref": "#/components/schemas/person_response"
+        followed:
+          "$ref": "#/components/schemas/person_response"
+      required:
+      - followed
     following_response:
       type: object
       properties:
@@ -6561,11 +6572,10 @@ components:
           type: string
         follower:
           "$ref": "#/components/schemas/person_response"
-        following:
+        followed:
           "$ref": "#/components/schemas/person_response"
       required:
       - follower
-      - following
     level_response:
       type: object
       properties:
@@ -6684,14 +6694,11 @@ components:
           type: string
         body:
           type: string
-        hidden:
-          type: boolean
-        created_time:
+        create_time:
           type: string
           format: date-time
         status:
-          type: integer
-          format: int32
+          type: string
         picture_url:
           type: string
         audio_url:
@@ -6709,26 +6716,19 @@ components:
       required:
       - id
       - body
-      - hidden
-      - created_time
-      - status
+      - create_time
       - person
     pending_badge_response:
       type: object
       properties:
-        pending_badge:
-          type: object
-          properties:
-            badge_action_count:
-              type: integer
-              format: int32
-            badge:
-              "$ref": "#/components/schemas/badge_response"
-          required:
-          - badge_action_count
-          - badge
+        badge_action_count:
+          type: integer
+          format: int32
+        badge:
+          "$ref": "#/components/schemas/badge_response"
       required:
-      - pending_badge
+      - badge_action_count
+      - badge
     person_private_response:
       type: object
       properties:

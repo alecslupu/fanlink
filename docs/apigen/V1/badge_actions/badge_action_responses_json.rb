@@ -2,10 +2,8 @@ class AddBadgeActionJsonResponse < Apigen::Migration
   def up
     add_model :pending_badge_response do
       type :object do
-        pending_badge :object do
-          badge_action_count :int32
-          badge :badge_response
-        end
+        badge_action_count :int32
+        badge :badge_response
       end
     end
 

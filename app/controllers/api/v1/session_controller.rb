@@ -70,7 +70,7 @@ class Api::V1::SessionController < ApiController
     @person = nil
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
-      render_errors(_("Unable to find user from token. Likely a problem contacting Facebook.")) if @person.nil?
+      render_503(_("Unable to find user from token. Likely a problem contacting Facebook.")) && return if @person.nil?
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
@@ -81,7 +81,7 @@ class Api::V1::SessionController < ApiController
           @person = login(@person.email, params[:password]) if @person
         end
       end
-      render_errors(_("Invalid login.")) if @person.nil?
+      render_error(_("Invalid login.")) && return if @person.nil?
     end
     return_the @person
   end

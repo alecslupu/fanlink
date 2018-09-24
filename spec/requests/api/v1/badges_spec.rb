@@ -8,7 +8,7 @@ describe "Badges (v1)" do
       badge1 = create(:badge, action_type: action_type, action_requirement: 1)
       badge2 = create(:badge, action_type: action_type2, action_requirement: 4)
       BadgeAward.create(badge: badge1, person: person)
-      person.badge_actions.create(action_type: action_type)
+      person.badge_actions.create(action_type: action_type2)
       person2 = create(:person, product: person.product)
       login_as(person2)
       get "/badges", params: { person_id: person.id.to_s }
@@ -16,10 +16,10 @@ describe "Badges (v1)" do
       expect(json["badges"].count).to eq(2)
       fb = json["badges"].first
       expect(fb["badge_action_count"]).to eq(1)
-      expect(fb["badge"]).to eq(badge_json(badge1))
+      expect(badge_json(fb["badge"])).to be true
       sb = json["badges"].last
       expect(sb["badge_action_count"]).to eq(0)
-      expect(sb["badge"]).to eq(badge_json(badge2))
+      expect(badge_json(sb["badge"])).to be true
     end
     it "should return 404 for non-existent passed in person" do
       person2 = create(:person)
