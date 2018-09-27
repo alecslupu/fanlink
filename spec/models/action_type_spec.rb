@@ -1,8 +1,6 @@
-require "rails_helper"
-
 RSpec.describe ActionType, type: :model do
   context "Validation" do
-    subject { FactoryBot.create(:action_type) }
+    subject { create(:action_type) }
     describe "#presence" do
       it do
         should validate_presence_of(:internal_name).with_message(_("Internal name is required."))

@@ -66,10 +66,10 @@ module JsonHelpers
   def pending_badge_json(earned, badge)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/pending_badge_response.json"))
     earned["badge"] = earned["badge"].compact
-    puts earned.compact
-    puts "\n Validation: \n"
-    puts schema.validate(earned.compact).to_a
-    puts "\n"
+    # puts earned.compact
+    # puts "\n Validation: \n"
+    # puts schema.validate(earned.compact).to_a
+    # puts "\n"
     schema.valid?(earned.compact)
   end
 

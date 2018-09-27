@@ -8,6 +8,117 @@ RSpec.describe Person, type: :model do
     ActsAsTenant.current_tenant = @person.product
   end
 
+  context "Validation for normal user" do
+    describe "#presence" do
+      it do
+        should validate_presence_of(:username).with_message(_("Username is required."))
+        should validate_presence_of(:password).with_message(_("Password is required."))
+      end
+    end
+    describe "#length" do
+      it do
+        should validate_length_of(:username).is_at_least(3).is_at_most(26).with_message(_("Username must be between 3 and 26 characters"))
+        should validate_length_of(:password).is_at_least(6).with_message(_("Password must be at least 6 characters in length."))
+      end
+    end
+
+    describe "#uniqueness" do
+      it "should allow duplicate emails and usernames for differnt products" do
+        product = create(:product)
+        product2 = create(:product)
+        person1 = build(:person, product: product, username: "Joe2987", email: "Joe2987@example.com")
+        person2 = build(:person, product: product2, username: "Joe2987", email: "Joe2987@example.com")
+
+        expect(person1).to be_valid
+        expect(person2).to be_valid
+      end
+
+      it "should not allow duplicate emails and usernames for same product" do
+        product = create(:product)
+        person1 = create(:person, product: product, username: "Person1", password: "testpassword", email: "person1@example.com")
+        person2 = build(:person, product: product, username: "Person1", password: "testpassword", email: "person1@example.com")
+
+        expect(person1).to be_valid
+        expect(person2).not_to be_valid
+      end
+    end
+
+    describe "#format" do
+      subject { FactoryBot.build(:person) }
+      it "should not allow emoji's for name on creation" do
+        should_not allow_value("Person \uFE0F").for(:name).on(:create).with_message(_("Name may not contain emojis."))
+      end
+      it "should not allow emoji's for username on creation" do
+        should_not allow_value("Person_\uFE0F").for(:username).on(:create).with_message(_("Username may not contain emojis."))
+      end
+    end
+  end
+
+  context "Validation as facebook user" do
+    describe "#presence" do
+      it "should not validate the email if a facebook id is present" do
+        person = create(:person, facebookid: "123013910sdaa", email: nil)
+        expect(person).to be_valid
+      end
+
+      it "should not validate the password if a facebook id is present" do
+        person = create(:person, facebookid: "123013910sdaa", password: nil)
+        expect(person).to be_valid
+      end
+    end
+
+    describe "#length" do
+      it "should not validate length of password if a facebook id is present" do
+        person = create(:person, facebookid: "asdjaj231klkda", password: nil)
+        expect(person).to be_valid
+      end
+    end
+  end
+
+  context "Associations" do
+    describe "#has_many" do
+      it "should verify associations" do
+        should have_many(:message_reports)
+        should have_many(:notification_device_ids)
+        should have_many(:post_reactions)
+        should have_many(:room_memberships)
+        should have_many(:posts)
+        should have_many(:quest_completions)
+        should have_many(:step_completed)
+        should have_many(:quest_completed)
+        should have_many(:person_rewards)
+        should have_many(:person_interests)
+        should have_many(:level_progresses)
+        should have_many(:reward_progresses)
+        should have_many(:messages)
+        should have_many(:event_checkins)
+
+        should have_many(:rewards).through(:person_rewards)
+        # should have_many(:private_rooms).through(:room_memberships) # Currently fails with nilClass on room_memberships
+        should have_many(:interests).through(:person_interests)
+      end
+    end
+
+    describe "#has_one" do
+      it "should verify associations" do
+        should have_one(:portal_access)
+      end
+    end
+
+    describe "#belongs_to" do
+      it "should verify associations" do
+        should belong_to(:product)
+      end
+    end
+  end
+
+  context "Filters" do
+    describe "#username_filter" do
+    end
+    describe "#email_filter" do
+    end
+  end
+
   describe "#block" do
     it "should block a user" do
       to_be_blocked = create(:person)
@@ -176,8 +287,9 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         badge = create(:badge, point_value: 10)
         level_earned = create(:level, points: 20)
-        create(:badge_award, badge: badge, person: person)
-        expect(person.level_earned).to be_nil
+        create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
+        person.reload
+        expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
       end
     end
     it "should be right level for person with one badge above only level" do
@@ -185,8 +297,9 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         badge = create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
-        create(:badge_award, badge: badge, person: person)
-        expect(person.level_earned).to eq(level_earned)
+        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+        person.reload
+        expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level_earned)
       end
     end
     it "should be right level for person with one badge between levels" do
@@ -195,8 +308,9 @@ RSpec.describe Person, type: :model do
         badge = create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
         level2 = create(:level, points: 21)
-        create(:badge_award, badge: badge, person: person)
-        expect(person.level_earned).to eq(level1)
+        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+        person.reload
+        expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
       end
     end
   end

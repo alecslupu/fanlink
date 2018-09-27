@@ -297,6 +297,14 @@ describe "People (v1)" do
       listed_ids = json["people"].map { |p| p["id"].to_i }
       expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
     end
+    # it "should not return the current user with the username filter" do
+    #   login_as(person1)
+    #   get "/people", params: { username_filter: "ers" }
+    #   expect(response).to be_success
+    #   expect(json["people"].count).to eq(4)
+    #   listed_ids = json["people"].map { |p| p["id"].to_i }
+    #   expect(listed_ids.sort).to eq([person2.id, person3.id, person4.id, person5.id].sort)
+    # end
     it "should get a person with username filter" do
       login_as(person)
       get "/people", params: { username_filter: "ers1" }
