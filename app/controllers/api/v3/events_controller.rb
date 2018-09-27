@@ -190,11 +190,15 @@ class Api::V3::EventsController < Api::V3::BaseController
   # *
 
   def update
-    if @event.update_attributes(event_params)
-      broadcast(:event_updated, current_user, @event)
-      return_the @event
+    if params.has_key?(:event)
+      if @event.update_attributes(event_params)
+        broadcast(:event_updated, current_user, @event)
+        return_the @event
+      else
+        render_422 @event.errors
+      end
     else
-      render_422 @event.errors
+      return_the @event
     end
   end
 
