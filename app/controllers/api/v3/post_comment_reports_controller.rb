@@ -114,22 +114,26 @@ class Api::V3::PostCommentReportsController < Api::V3::BaseController
   # *
 
   def update
-    parms = post_comment_report_update_params
-    if PostCommentReport.valid_status?(parms[:status])
-      @comment = @post_comment_report
-      @post_comment_report.update(parms)
-      if parms[:status] == "comment_hidden"
-        @comment.hidden = true
-        if @comment.save 
+    if params.has_key?(:post_comment_report)
+      parms = post_comment_report_update_params
+      if PostCommentReport.valid_status?(parms[:status])
+        @comment = @post_comment_report
+        @post_comment_report.update(parms)
+        if parms[:status] == "comment_hidden"
+          @comment.hidden = true
+          if @comment.save 
+            head :ok
+          end
+        else
+          @comment.hidden = false
+          @comment.save
           head :ok
         end
       else
-        @comment.hidden = false
-        @comment.save
-        head :ok
+        render_422(_("Invalid or missing status."))
       end
     else
-      render_422(_("Invalid or missing status."))
+      render_422(_("Update failed. Missing post_comment_report object."))
     end
   end
 
