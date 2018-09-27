@@ -165,14 +165,18 @@ class Api::V3::StepsController < Api::V3::BaseController
   # *
 
   def update
-    old_unlocks = @step.unlocks
-    if @step.update_attributes(step_params)
-      if old_unlocks != params[:step][:unlocks]
-        broadcast(:unlocks_updated, current_user, @step)
+    if param.has_key?(:step)
+      old_unlocks = @step.unlocks
+      if @step.update_attributes(step_params)
+        if old_unlocks != params[:step][:unlocks]
+          broadcast(:unlocks_updated, current_user, @step)
+        end
+        return_the @step
+      else
+        render_422 @step.errors
       end
-      return_the @step
     else
-      render_422 @step.errors
+      return_the @step
     end
   end
 

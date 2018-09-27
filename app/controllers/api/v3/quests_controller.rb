@@ -268,10 +268,14 @@ class Api::V3::QuestsController < Api::V3::BaseController
   # *
 
   def update
-    if @quest.update_attributes(quest_params)
-      return_the @quest
+    if param.has_key?(:quest)
+      if @quest.update_attributes(quest_params)
+        return_the @quest
+      else
+        render_422 @quest.errors
+      end 
     else
-      render_422 @quest.errors
+      render_422(_("Update failed. Missing quest object."))
     end
   end
 

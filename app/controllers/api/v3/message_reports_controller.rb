@@ -118,23 +118,27 @@ class Api::V3::MessageReportsController < Api::V3::BaseController
   # *
 
   def update
-    parms = message_report_update_params
-    @message = @message_report.message
-    if MessageReport.valid_status?(parms[:status])
-      @message_report.update(parms)
-      if parms[:status] == "message_hidden"
-        @message.hidden = true
-        if @message.save && delete_message(@message)
+    if params.has_key?(:message_report)
+      parms = message_report_update_params
+      @message = @message_report.message
+      if MessageReport.valid_status?(parms[:status])
+        @message_report.update(parms)
+        if parms[:status] == "message_hidden"
+          @message.hidden = true
+          if @message.save && delete_message(@message)
+            head :ok
+          end
+        else
+          @message.hidden = false
+          @message.status = Message.statuses[:posted]
+          @message.save
           head :ok
         end
       else
-        @message.hidden = false
-        @message.status = Message.statuses[:posted]
-        @message.save
-        head :ok
+        render_422(_("Invalid or missing status."))
       end
     else
-      render_422(_("Invalid or missing status."))
+      render_422(_("Update failed. Missing message_report object."))
     end
   end
 
