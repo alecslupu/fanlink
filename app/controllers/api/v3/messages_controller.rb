@@ -274,7 +274,7 @@ class Api::V3::MessagesController < Api::V3::BaseController
 private
 
   def apply_filters
-    messages = Message.joins(:room).where("rooms.product_id = ? AND rooms.status != 2", ActsAsTenant.current_tenant.id).order(created_at: :desc)
+    messages = Message.joins(:room).where("rooms.product_id = ? AND rooms.status != ?", ActsAsTenant.current_tenant.id, Room.statuses[:deleted]).order(created_at: :desc)
     params.each do |p, v|
       if p.end_with?("_filter") && Message.respond_to?(p)
         messages = messages.send(p, v)
