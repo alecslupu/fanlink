@@ -1,4 +1,4 @@
-class Api::V3::ContestsController < Api::V3::BaseController
+class Api::V3::ContestsController < ApiController
   def index
   end
 

@@ -6,8 +6,8 @@ RSpec.describe PostCommentReport, type: :model do
     @post_comment = create(:post_comment)
   end
 
-  describe "#create" do
-    it "should create a report" do
+  context "Valid" do
+    it "should create a valid post comment report" do
       expect(create(:post_comment_report)).to be_valid
     end
     it "should not let you create a post comment report without a post comment" do

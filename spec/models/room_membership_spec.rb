@@ -6,6 +6,26 @@ RSpec.describe RoomMembership, type: :model do
     @room.room_memberships.create(person_id: @owner.id)
   end
 
+  context "Associations" do
+    describe "should belong to" do
+      it "#person" do
+        should belong_to(:person).touch(true)
+      end
+
+      it "#room" do
+        should belong_to(:room)
+      end
+    end
+  end
+
+  context "Validation" do
+    describe "should create a valid room membership" do
+      it do
+        expect(create(:room_membership)).to be_valid
+      end
+    end
+  end
+
   describe "#person_id" do
     it "should not allow multiple memberships in room for the same person" do
       mem = @room.room_memberships.build(person: @owner)

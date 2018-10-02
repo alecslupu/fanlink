@@ -25,7 +25,14 @@ module Apigen
 
     def type(shape = nil, &block)
       return @type unless shape
-      @type = Model.type shape, &block
+      if shape.is_a?(Array)
+        @type = []
+        shape.each do |s|
+          @type << Model.type(s, &block)
+        end
+      else
+        @type = Model.type shape, &block
+      end
     end
 
     def self.type(shape = nil, &block)

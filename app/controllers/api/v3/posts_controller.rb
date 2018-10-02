@@ -1,4 +1,4 @@
-class Api::V3::PostsController < Api::V3::BaseController
+class Api::V3::PostsController < Api::V2::PostsController
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
   skip_before_action :require_login, :set_product, only: %i[ share ]

@@ -17,6 +17,12 @@ RSpec.describe Post, type: :model do
     create(:post, created_at: @end_date + 1.day) #after range
   end
 
+  context "Valid" do
+    it "should create a valid post" do
+      expect(create(:post)).to be_valid
+    end
+  end
+
   # we don't care about post status here because that should be handled with scope chaining
   # TODO: we should care about poster status WHEN we implement that
   describe ".following" do
@@ -36,11 +42,6 @@ RSpec.describe Post, type: :model do
     it "should let you create a disembodied nil post" do
       post = build(:post, body: nil)
       expect(post).to be_valid
-    end
-  end
-  describe "#create" do
-    it "should be valid" do
-      expect(create(:post)).to be_valid
     end
   end
 

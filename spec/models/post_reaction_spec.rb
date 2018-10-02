@@ -6,10 +6,12 @@ RSpec.describe PostReaction, type: :model do
     @post = create(:post)
   end
 
-  describe "#create" do
-    it "should react to a post" do
+  context "Valid" do
+    it "should create a valid post reaction" do
       expect(create(:post_reaction)).to be_valid
     end
+  end
+  describe "#create" do
     it "should not let you create a post reaction without a post" do
       reaction = build(:post_reaction, post: nil)
       expect(reaction).not_to be_valid

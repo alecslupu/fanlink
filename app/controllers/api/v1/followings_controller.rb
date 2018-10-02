@@ -1,4 +1,4 @@
-class Api::V1::FollowingsController < Api::V1::BaseController
+class Api::V1::FollowingsController < ApiController
   load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
   load_up_the Following, except: %i[ create index ]
 

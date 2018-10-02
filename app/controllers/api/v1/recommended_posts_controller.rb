@@ -1,4 +1,4 @@
-class Api::V1::RecommendedPostsController < Api::V1::BaseController
+class Api::V1::RecommendedPostsController < ApiController
   # **
   # @api {get} /posts/recommended Get recommended posts.
   # @apiName GetRecommendedPosts

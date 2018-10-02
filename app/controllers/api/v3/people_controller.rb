@@ -1,4 +1,4 @@
-class Api::V3::PeopleController < Api::V3::BaseController
+class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
   before_action :super_admin_only, only: %i[ destroy ]
   load_up_the Person, except: %i[ index ]

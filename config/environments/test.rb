@@ -37,4 +37,9 @@ Rails.application.configure do
   Delayed::Worker.delay_jobs = false
 
   config.log_level = :debug
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+  end
 end

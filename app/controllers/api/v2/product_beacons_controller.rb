@@ -1,4 +1,4 @@
-class Api::V2::ProductBeaconsController < Api::V2::BaseController
+class Api::V2::ProductBeaconsController < ApiController
   before_action :admin_only
   # **
   # @api {get} /beacons Beacons for a product

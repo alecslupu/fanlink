@@ -41,7 +41,7 @@ group :production, :staging do
   gem 'newrelic_rpm'
 end
 
-group :staging, :development do
+group :staging, :development, :test do
     gem "bullet"
 end
 
@@ -69,16 +69,18 @@ group :development do
   gem "apigen", :path => 'lib/gems/apigen'
   gem 'memory_profiler'
   gem 'derailed_benchmarks'
-  gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+#   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 end
 
 group :test do
+  gem 'cucumber-rails', require: false
   gem "database_cleaner", require: false
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'wisper-rspec', require: false
+  gem 'json_schemer'
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
@@ -130,6 +132,3 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'wisper-activerecord'
-#gem 'chewy'#testTest
-gem 'versionist'
-gem 'jbuilder_cache_multi'

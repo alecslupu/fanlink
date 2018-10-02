@@ -62,7 +62,7 @@ describe "PasswordResets (v1)" do
         post "/people/password_forgot", params: { product: "foofarmfizzle", email_or_username: email }
       }.to change { MandrillMailer.deliveries.count }.by(0)
       expect(response).to be_unprocessable
-      expect(json["errors"]).to include("Required parameter missing")
+      expect(json["errors"]).to include("Required parameter missing.")
     end
   end
 
@@ -76,9 +76,12 @@ describe "PasswordResets (v1)" do
       expect(person.reload.valid_password?(new_password)).to be_truthy
     end
     it "should not accept invalid token" do
+      person = create(:person, username: "forgetful_too")
+      new_password = "super_secret"
+      person.set_password_token!
       post "/people/password_reset", params: { token: "garbage", password: "super_secret" }
       expect(response).to be_unprocessable
-      expect(json["errors"].first).to include("Unknown password resetting token")
+      expect(json["errors"][0]).to include("Unknown password resetting token.")
     end
     it "should not accept valid token but invalid password" do
       pw = "secret"
@@ -86,7 +89,7 @@ describe "PasswordResets (v1)" do
       person.set_password_token!
       post "/people/password_reset", params: { token: person.reset_password_token, password: "short" }
       expect(response).to be_unprocessable
-      expect(json["errors"]["password"].first).to include("is too short")
+      expect(json["errors"]).to include("Password must be at least 6 characters in length.")
       expect(person.valid_password?(pw)).to be_truthy
     end
   end

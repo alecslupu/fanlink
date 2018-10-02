@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "create_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string"
+    },
+    "picture_url": {
+      "type": "string"
+    },
+    "audio_url": {
+      "type": "string"
+    },
+    "audio_size": {
+      "type": "string"
+    },
+    "audio_content_type": {
+      "type": "string"
+    },
+    "person": {
+      "$ref": "./person_response.json"
+    },
+    "mentions": {
+      "type": "array",
+      "items": {
+        "$ref": "./mention_response.json"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "body",
+    "create_time",
+    "person"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

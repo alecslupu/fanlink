@@ -1,4 +1,4 @@
-class Api::V2::ActivityTypesController < Api::V2::BaseController
+class Api::V2::ActivityTypesController < ApiController
   load_up_the QuestActivity, from: :activity_id, only: %i[ create index ]
   load_up_the ActivityType, only: %i[ show update destroy ]
   # **
@@ -101,7 +101,7 @@ class Api::V2::ActivityTypesController < Api::V2::BaseController
     if @activity_type.valid?
       return_the @activity_type
     else
-      render json: { errors: @activity_type.errors.messages.flatten }, status: :unprocessable_entity
+      render_errors(@activity_type.errors)
     end
   end
 

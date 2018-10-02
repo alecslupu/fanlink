@@ -9,9 +9,9 @@ class Step < ApplicationRecord
 
   has_one :step_completed, -> { where(person_id: Person.current_user.id) }, class_name: "StepCompleted", inverse_of: :step
 
-  has_many :assigned_rewards, as: :assigned, inverse_of: :step
+  has_many :assigned_rewards, as: :assigned
 
-  has_many :rewards, through: :assigned_rewards
+  has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "Step"
 
   has_many :step_unlocks, primary_key: :uuid, foreign_key: :step_id
 

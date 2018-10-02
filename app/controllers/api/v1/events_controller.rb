@@ -1,4 +1,4 @@
-class Api::V1::EventsController < Api::V1::BaseController
+class Api::V1::EventsController < ApiController
   # **
   # @api {get} /events Get available events.
   # @apiName GetEvents

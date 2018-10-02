@@ -1,4 +1,4 @@
-class Api::V3::PortalNotificationsController < Api::V3::BaseController
+class Api::V3::PortalNotificationsController < ApiController
   before_action :super_admin_only
   load_up_the PortalNotification, only: %i[ show update ]
   def index

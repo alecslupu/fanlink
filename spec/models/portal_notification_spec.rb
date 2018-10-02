@@ -4,12 +4,17 @@ RSpec.describe PortalNotification, type: :model do
     ActsAsTenant.current_tenant = @product
     @person = create(:person)
   end
-
-  describe "#create" do
-    it "should create and save a valid notification" do
-      expect(create(:portal_notification, product: @product)).to be_valid
+  context "Valid" do
+    it "should create a valid portal notification" do
+      expect(create(:portal_notification)).to be_valid
     end
   end
+
+  # describe "#create" do
+  #   it "should create and save a valid notification" do
+  #     expect(create(:portal_notification, product: @product)).to be_valid
+  #   end
+  # end
 
   describe "#body" do
     it "should not create a notification without a body" do

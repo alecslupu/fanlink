@@ -6,10 +6,13 @@ RSpec.describe PostReport, type: :model do
     @post = create(:post)
   end
 
-  describe "#create" do
-    it "should create a report" do
+  context "Valid" do
+    it "should create a valid post report" do
       expect(create(:post_report)).to be_valid
     end
+  end
+
+  describe "#create" do
     it "should not let you create a post report without a post" do
       report = build(:post_report, post: nil)
       expect(report).not_to be_valid

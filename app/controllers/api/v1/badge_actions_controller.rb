@@ -1,4 +1,4 @@
-class Api::V1::BadgeActionsController < Api::V1::BaseController
+class Api::V1::BadgeActionsController < ApiController
   before_action :load_action_type
 
   # **
@@ -48,7 +48,7 @@ class Api::V1::BadgeActionsController < Api::V1::BaseController
         @badge_awards = BadgeAward.award_badges(badge_action)
         return_the @badge_awards
       else
-        render_error(badge_action.errors.full_messages)
+        render_error(badge_action.errors)
       end
     end
   end
@@ -57,7 +57,7 @@ private
 
   def load_action_type
     if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
-      render_error("You must supply a badge action type.")
+      render_error(_("You must supply a badge action type."))
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
       render_error("Action type is invalid.") unless @action_type.present?

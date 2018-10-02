@@ -1,4 +1,4 @@
-class Api::V1::PostCommentsController < Api::V1::BaseController
+class Api::V1::PostCommentsController < ApiController
   before_action :load_post, except: %i[ list ]
   # **
   # @api {post} /posts/:id/comments Create a comment on a post.

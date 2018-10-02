@@ -1,4 +1,4 @@
-class Api::V3::CoursesController < Api::V3::BaseController
+class Api::V3::CoursesController < ApiController
   before_action :admin_only, only: %i[ create update delete ]
   load_up_the Course, only: %i[ update destroy ]
   load_up_the Semester, from: :semester_id, only: %i[ index create ]

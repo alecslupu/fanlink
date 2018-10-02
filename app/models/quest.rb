@@ -15,7 +15,7 @@ class Quest < ApplicationRecord
 
   has_many :assigned_rewards, as: :assigned
 
-  has_many :rewards, through: :assigned_rewards
+  has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "Quest"
 
   has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :quest
   #   has_many :quest_completions, dependent: :destroy

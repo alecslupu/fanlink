@@ -5,11 +5,13 @@ RSpec.describe NotificationDeviceId, type: :model do
     ActsAsTenant.current_tenant = @product
   end
 
-  describe "#create" do
-    it "should let you create a notification device id" do
-      ndi = create(:notification_device_id)
-      expect(ndi).to be_valid
+  context "Valid" do
+    it "should create a valid notification device id" do
+      expect(create(:event)).to be_valid
     end
+  end
+
+  describe "#create" do
     it "should not let you create a duplicate device id" do
       ndi = create(:notification_device_id)
       ndi2 = build(:notification_device_id, device_identifier: ndi.device_identifier)

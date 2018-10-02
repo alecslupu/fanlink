@@ -7,7 +7,9 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require "rspec/rails"
 require "factory_bot_rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-
+require 'shoulda/matchers'
+require 'wisper/rspec/matchers'
+require 'wisper/rspec/stub_wisper_publisher'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -67,6 +69,7 @@ RSpec.configure do |config|
   config.backtrace_inclusion_patterns = [%r{app|spec}]
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.include(Wisper::RSpec::BroadcastMatcher)
 end
 
 Shoulda::Matchers.configure do |config|

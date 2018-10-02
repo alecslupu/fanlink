@@ -7,9 +7,9 @@ RSpec.describe Following, type: :model do
     ActsAsTenant.current_tenant = @follower.product
   end
 
-  describe "#create" do
-    it "should be valid" do
-      expect(@following).to be_valid
+  context "Valid" do
+    it "should create a valid following" do
+      expect(create(:following)).to be_valid
     end
   end
 
@@ -26,5 +26,4 @@ RSpec.describe Following, type: :model do
       expect(@following).not_to be_valid
     end
   end
-
 end

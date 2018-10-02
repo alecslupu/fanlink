@@ -1,4 +1,4 @@
-class Api::V3::UrlsController < Api::V3::BaseController
+class Api::V3::UrlsController < ApiController
   def index
   end
 

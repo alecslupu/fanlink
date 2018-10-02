@@ -1,39 +1,10 @@
-class Api::V4::FollowingsController< Api::V3::FollowingsController
-  #load_up_the Person, from: :followed_id, into: :@followed, except: %i[ destroy index ]
-  #load_up_the Following, except: %i[ create index ]
-
-  # **
-  # @api {get} /followings Get followers or followings of a user.
-  # @apiName GetFollowings
-  # @apiGroup Following
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to get a list of someone's followers or followed. If followed_id parameter
-  #   is supplied, it will get the follower's of that user. If follower_id is supplied,
-  #   it will get the people that person is following. If nothing is supplied, it will
-  #   get the people the current user is following.
-  #
-  # @apiParam (body) {Integer} followed_id
-  #   Person to who's followers to get
-  #
-  # @apiParam (body) {Integer} follower_id
-  #   Id of person who is following the people in the list we are getting.
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok
-  #   "followers [or following]" {
-  #     [ ... person json of follower/followed....],
-  #     ....
-  #   }
-  # *
-
+class Api::V4::FollowingsController < Api::V3::FollowingsController
   def index
     followed_id = params[:followed_id].to_i
     if followed_id > 0
       followed = Person.find(followed_id)
       @followers = followed.followers
-      return_the @followers
+      return_the paginate(@followers)
     else
       follower_id = params[:follower_id].to_i
       follower = (follower_id > 0) ? Person.find(follower_id) : current_user
