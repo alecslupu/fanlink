@@ -28,13 +28,16 @@ if quest.steps.present?
 else
   json[:steps] = nil
 end
-
-quest.rewards.each do |assigned|
-  if assigned.badge
-    json[:assigned_badge] = assigned.badge
-    json[:badge] = render partial: "api/v3/badges/badge", locals: { badge: assigned.badge }, handlers: "jb"
-  else
-    json[:badge] = nil
+if quest.rewards.present?
+  quest.rewards.each do |assigned|
+    if assigned.badge.present?
+      json[:assigned_badge] = assigned.badge
+      json[:badge] = render partial: "api/v3/badges/badge", locals: { badge: assigned.badge }, handlers: "jb"
+    else
+      json[:badge] = nil
+    end
   end
+else
+  json[:badge] = nil
 end
 json

@@ -15,15 +15,16 @@ json.quests do
     else
       json.steps nil
     end
-
-    quest.rewards.each do |assigned|
-      if assigned.badge
-        json.assigned_badge assigned.badge
-        json.badge do
-          json.partial! "api/v3/badges/badge", locals: { badge: assigned.badge }
+    if quest.rewards.present?
+      quest.rewards.each do |assigned|
+        if assigned.badge.present?
+          json.assigned_badge assigned.badge
+          json.badge do
+            json.partial! "api/v3/badges/badge", locals: { badge: assigned.badge }
+          end
+        else
+          json.badge nil
         end
-      else
-        json.badge nil
       end
     end
   end
