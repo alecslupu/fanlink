@@ -4,6 +4,26 @@ RSpec.describe Relationship, type: :model do
     ActsAsTenant.current_tenant = current_product
   end
 
+  context "Associations" do
+    describe "should belong to" do
+      it "#requested_by" do
+        should belong_to(:requested_by).class_name("Person").touch(true)
+      end
+
+      it "#requested_to" do
+        should belong_to(:requested_to).class_name("Person").touch(true)
+      end
+    end
+  end
+
+  context "Validation" do
+    describe "should create a valid relationship" do
+      it do
+        expect(create(:relationship)).to be_valid
+      end
+    end
+  end
+
   describe "#create" do
     it "should not let you create a relationship with yourself" do
       person = create(:person)
@@ -83,12 +103,6 @@ RSpec.describe Relationship, type: :model do
         rel.status = s
         invalid_status(rel)
       end
-    end
-  end
-
-  describe "#valid?" do
-    it "should be valid" do
-      expect(create(:relationship).valid?).to be_truthy
     end
   end
 

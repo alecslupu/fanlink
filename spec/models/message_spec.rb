@@ -6,6 +6,12 @@ RSpec.describe Message, type: :model do
     ActsAsTenant.current_tenant = @product
   end
 
+  context "Valid" do
+    it "should create a valid message" do
+      expect(create(:message)).to be_valid
+    end
+  end
+
   describe "#create" do
     it "should not let you create a message without a room" do
       message = build(:message, room: nil)

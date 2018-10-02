@@ -1,4 +1,5 @@
 require "faker"
+I18n.reload!
 
 FactoryBot.define do
   factory :contest do

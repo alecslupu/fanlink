@@ -8,6 +8,12 @@ RSpec.describe Person, type: :model do
     ActsAsTenant.current_tenant = @person.product
   end
 
+  context "Valid" do
+    it "should create a valid person" do
+      expect(create(:person)).to be_valid
+    end
+  end
+
   context "Validation for normal user" do
     describe "#presence" do
       it do

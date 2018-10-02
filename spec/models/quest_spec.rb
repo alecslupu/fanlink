@@ -1,8 +1,13 @@
 RSpec.describe Quest, type: :model do
   context "Validation" do
+    describe "should create a valid quest" do
+      it do
+        expect(create(:quest)).to be_valid
+      end
+    end
     describe "should validate presence of"
     it "#name" do
-      should validate_presence_of(:name).with_message( _("Name is required."))
+      should validate_presence_of(:name).with_message(_("Name is required."))
     end
     it "#description" do
       should validate_presence_of(:description).with_message(_("A quest description is required."))

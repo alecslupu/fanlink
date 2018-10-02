@@ -2,8 +2,11 @@ require "rails_helper"
 
 RSpec.describe AssignedReward, type: :model do
   context "Validation" do
-    it do
+    it "should validate presence of assigned_type" do
       should validate_presence_of(:assigned_type).with_message(_(" is not an assignable type."))
+    end
+    it "should create a valid assigned_reward" do
+      expect(create(:assigned_as_quest)).to be_valid
     end
   end
   context "Associations" do

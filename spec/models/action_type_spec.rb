@@ -58,15 +58,15 @@ RSpec.describe ActionType, type: :model do
     end
   end
   context "Associations" do
-    describe "#has_many" do
-      it do
+    describe "should verify associations haven't changed for" do
+      it "#has_many" do
         should have_many(:badges)
         should have_many(:assigned_rewards)
         should have_many(:rewards).through(:assigned_rewards)
       end
     end
   end
-  describe "#valid?" do
+  context "#valid?" do
     it "should create a valid action type" do
       expect(create(:action_type)).to be_valid
     end

@@ -6,52 +6,93 @@ RSpec.describe Room, type: :model do
     ActsAsTenant.current_tenant = @room.product
   end
 
-  describe "#destroy" do
-    it "should not let you destroy a room that has messages" do
-      create(:message, room: @room)
-      @room.destroy
-      expect(@room).to exist_in_database
+  context "Associations" do
+    describe "should belong to" do
+      it "#created_by" do
+        should belong_to(:created_by).class_name("Person")
+      end
+
+      it "#product" do
+        should belong_to(:product)
+      end
+    end
+
+    describe "should have many" do
+      it "#courses" do
+        should have_many(:room_memberships).dependent(:destroy)
+      end
+
+      it "#members" do
+        should have_many(:members).through(:room_memberships)
+      end
+
+      it "#messages" do
+        should have_many(:messages).dependent(:restrict_with_error)
+      end
     end
   end
 
-  describe "#is_member" do
-    let(:member) { create(:person) }
-    let(:non_member) { create(:person) }
-    let(:room) { create(:room, public: false) }
-    it "should return true for room member" do
-      room.members << member
-      expect(room.is_member?(member)).to be_truthy
+  context "Validation" do
+    describe "should create a valid room" do
+      it do
+        expect(create(:room)).to be_valid
+      end
     end
-    it "should return false for non room member" do
-      expect(room.is_member?(non_member)).to be_falsey
-    end
-  end
-
-  describe "#name" do
-    it "should accept a good name format" do
-      room = build(:room, name: "My Room")
-      expect(room).to be_valid
-    end
-    it "should not require name for private room" do
-      room = build(:room, name: nil, public: false)
-      expect(room).to be_valid
-    end
-    it "should not require name for public room" do
-      room = build(:room, name: nil, public: true)
-      expect(room).to be_valid
-    end
-    it "should require name for private room" do
-      room = build(:room, name: nil, public: true)
-      expect(room).to be_valid
+    describe "should not allow private rooms to have pictures" do
+      it do
+        room = build(:room, public: false, picture_file_name: "foo.jpg")
+        expect(room).not_to be_valid
+        expect(room.errors[:picture]).not_to be_empty
+      end
     end
   end
 
-  describe "#picture" do
-    it "should not let you have a picture on a private room" do
-      room = build(:room, public: false, picture_file_name: "foo.jpg")
-      expect(room).not_to be_valid
-      expect(room.errors[:picture]).not_to be_empty
+  context "Methods" do
+    describe "#destroy" do
+      it "should not let you destroy a room that has messages" do
+        create(:message, room: @room)
+        @room.destroy
+        expect(@room).to exist_in_database
+      end
+    end
+
+    describe "#is_member" do
+      let(:member) { create(:person) }
+      let(:non_member) { create(:person) }
+      let(:room) { create(:room, public: false) }
+      it "should return true for room member" do
+        room.members << member
+        expect(room.is_member?(member)).to be_truthy
+      end
+      it "should return false for non room member" do
+        expect(room.is_member?(non_member)).to be_falsey
+      end
     end
   end
 
+  context "Enumeration" do
+    it "#should define status enumerables with values of inactive, active, and deleted" do
+      should define_enum_for(:status).with([:inactive, :active, :deleted])
+    end
+  end
+
+  # There is no validation currently in the model for these tests
+  # describe "#name" do
+  #   it "should accept a good name format" do
+  #     room = build(:room, name: "My Room")
+  #     expect(room).to be_valid
+  #   end
+  #   it "should not require name for private room" do
+  #     room = build(:room, name: nil, public: false)
+  #     expect(room).to be_valid
+  #   end
+  #   it "should not require name for public room" do
+  #     room = build(:room, name: nil, public: true)
+  #     expect(room).to be_valid
+  #   end
+  #   it "should require name for public room" do
+  #     room = build(:room, name: nil, public: true)
+  #     expect(room).to be_valid
+  #   end
+  # end
 end

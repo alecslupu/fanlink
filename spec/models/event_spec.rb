@@ -1,5 +1,10 @@
 RSpec.describe Event, type: :model do
-
+  context "Valid" do
+    it "should create a valid event" do
+      expect(create(:event)).to be_valid
+    end
+  end
+  
   describe "#ends_at" do
     it "should not have an ends_at that is before the starts_at" do
       event = create(:event)
@@ -9,11 +14,6 @@ RSpec.describe Event, type: :model do
     end
   end
 
-  describe "#valid?" do
-    it "should create a valid event" do
-      expect(create(:event)).to be_valid
-    end
-  end
   describe "#name" do
     it "should not allow an event without a name" do
       event = build(:event, name: nil)

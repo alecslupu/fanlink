@@ -1,4 +1,10 @@
 RSpec.describe BadgeAward, type: :model do
+  context "Valid" do
+    it "should create a valid badge_award" do
+      expect(create(:badge_award)).to be_valid
+    end
+  end
+  
   context "Associations" do
     describe "#belongs_to" do
       it "should belong to a badge" do

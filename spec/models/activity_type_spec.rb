@@ -16,7 +16,12 @@ RSpec.describe ActivityType, type: :model do
   end
   context "Enumerables" do
     it "should be defined for atype" do
-      should define_enum_for(:atype)#.with_values([:beacon, :image, :audio, :post, :activity_code])
+      should define_enum_for(:atype).with(%i[ beacon image audio post activity_code ])
+    end
+  end
+  context "#valid?" do
+    it "should create a valid activity type" do
+      expect(create(:activity_type)).to be_valid
     end
   end
 end

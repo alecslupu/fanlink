@@ -9,7 +9,7 @@ class QuestActivity < ApplicationRecord
   has_many :activity_types, -> { order(created_at: :asc) }, dependent: :destroy, foreign_key: "activity_id", inverse_of: :quest_activity
   has_many :assigned_rewards, as: :assigned, inverse_of: :quest_activity
 
-  has_many :rewards, through: :assigned_rewards
+  has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "QuestActivity"
 
   has_image_called :picture
 

@@ -12,6 +12,12 @@ RSpec.describe PostComment, type: :model do
     @followed2_post1 = create(:post, person: @followed2)
   end
 
+  context "Valid" do
+    it "should create a valid post comment" do
+      expect(create(:post_comment)).to be_valid
+    end
+  end
+
   describe "#person" do
     it "should not let you create a post comment without a person" do
       cmt = @followed1_post1.post_comments.create(body: "this is not going to work")

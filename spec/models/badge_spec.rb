@@ -7,6 +7,12 @@ RSpec.describe Badge, type: :model do
     ActsAsTenant.current_tenant = @product
   end
 
+  context "Validation" do
+    it "should create a valid badge" do
+      expect(create(:badge)).to be_valid
+    end
+  end
+
   describe "#action_count_earned_by" do
     let(:badge) { create(:badge) }
     let(:person) { create(:person) }
