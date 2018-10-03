@@ -117,7 +117,7 @@ class Api::V3::PostCommentReportsController < Api::V3::BaseController
     if params.has_key?(:post_comment_report)
       parms = post_comment_report_update_params
       if PostCommentReport.valid_status?(parms[:status])
-        @comment = @post_comment_report
+        @comment = @post_comment_report.comment
         @post_comment_report.update(parms)
         if parms[:status] == "comment_hidden"
           @comment.hidden = true
