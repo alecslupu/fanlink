@@ -100,7 +100,7 @@ class Api::V3::EventsController < Api::V3::BaseController
     else
       start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.now - 3.years).beginning_of_day
       end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.now + 3.years).end_of_day
-      query = (current_user.role == "super_admin") ? Event : Event.where(deleted: false)
+      query = (current_user&.role == "super_admin") ? Event : Event.where(deleted: false)
       @events = paginate(query.in_date_range(start_boundary, end_boundary).order(starts_at: :asc))
       return_the @events, handler: "jb"
     end
@@ -117,7 +117,7 @@ class Api::V3::EventsController < Api::V3::BaseController
     return_the @event_checkins, handler: "jb"
   end
 
-  def checkin 
+  def checkin
     @event_checkin = EventCheckin.create(person_id: current_user.id, event_id: @event.id)
     if @event_checkin.valid?
       return_the @event_checkin, handler: "jb"
