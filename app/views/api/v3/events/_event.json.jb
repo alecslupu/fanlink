@@ -21,3 +21,11 @@ json[:checkin_id] = ci.id
 end
 json
 
+#TODO: n+1 query, but seeing if this works for Travis.
+ci = (current_user.present? ? current_user.event_checkins.where(event_id: event.id).first : nil)
+if ci.nil?
+json[:checkin_id] = nil
+else
+json[:checkin_id] = ci.id
+end
+json
