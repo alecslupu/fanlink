@@ -29,6 +29,7 @@ gem "jb"
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rails'
+
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
 
@@ -40,7 +41,8 @@ group :production, :staging do
   gem 'newrelic_rpm'
 end
 
-group :staging, :development do
+group :staging, :development, :test do
+    gem "bullet"
 end
 
 group :development, :test do
@@ -67,16 +69,18 @@ group :development do
   gem "apigen", :path => 'lib/gems/apigen'
   gem 'memory_profiler'
   gem 'derailed_benchmarks'
-  gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+#   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 end
 
 group :test do
+  gem 'cucumber-rails', require: false
   gem "database_cleaner", require: false
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'wisper-rspec', require: false
+  gem 'json_schemer'
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
@@ -90,6 +94,7 @@ gem 'administrate-field-hidden', '~> 0.0.3'
 # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 gem "api-pagination"
+# gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
 gem "aws-sdk"
 gem "countries"
@@ -100,6 +105,7 @@ gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem 'flag_shih_tzu'
 gem "gettext_i18n_rails"
+gem 'goldiloader'
 gem "google_places"
 gem "jko_api" # api versioning
 gem "kaminari"
@@ -126,6 +132,3 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'wisper-activerecord'
-#gem 'chewy'#testTest
-gem 'versionist'
-gem 'jbuilder_cache_multi'

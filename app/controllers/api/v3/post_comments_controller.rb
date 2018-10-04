@@ -1,4 +1,4 @@
-class Api::V3::PostCommentsController < Api::V3::BaseController
+class Api::V3::PostCommentsController < Api::V2::PostCommentsController
   before_action :load_post, except: %i[ list ]
 
   # **

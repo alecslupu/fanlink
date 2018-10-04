@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :person_reward do
-    reward { create(:reward) }
+    reward { create(:badge_reward) }
     person { create(:person) }
     source { "Test" }
   end

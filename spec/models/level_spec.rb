@@ -1,5 +1,9 @@
 RSpec.describe Level, type: :model do
-
+  context "Valid" do
+    it "should create a valid level" do
+      expect(create(:level)).to be_valid
+    end
+  end
   describe "#internal_name" do
     it "should allow an internal name with lower case letters numbers and underscores" do
       expect(create(:level, internal_name: "abc_d12"))
@@ -91,11 +95,6 @@ RSpec.describe Level, type: :model do
         l2 = create(:level, points: points)
         expect(l2).to be_valid
       end
-    end
-  end
-  describe "#valid?" do
-    it "should be valid" do
-      expect(create(:level)).to be_valid
     end
   end
 end

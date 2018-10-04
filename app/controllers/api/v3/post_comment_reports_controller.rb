@@ -1,4 +1,4 @@
-class Api::V3::PostCommentReportsController < Api::V3::BaseController
+class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostCommentReport, only: :update
 
@@ -117,8 +117,18 @@ class Api::V3::PostCommentReportsController < Api::V3::BaseController
     if params.has_key?(:post_comment_report)
       parms = post_comment_report_update_params
       if PostCommentReport.valid_status?(parms[:status])
+        @comment = @post_comment_report.post_comment
         @post_comment_report.update(parms)
-        head :ok
+        if parms[:status] == "comment_hidden"
+          @comment.hidden = true
+          if @comment.save 
+            head :ok
+          end
+        else
+          @comment.hidden = false
+          @comment.save
+          head :ok
+        end
       else
         render_422(_("Invalid or missing status."))
       end

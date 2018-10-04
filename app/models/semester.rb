@@ -11,7 +11,7 @@ class Semester < ApplicationRecord
 
   validates :name, uniqueness: { scope: :product_id, message: _("A semester with that name already exists.") }
 
-  validates :name, length: { in: 3..26, message: _("Name must be between 3 and 26 characters") }
+  validates :name, length: { in: 3..26, message: _("Name must be between 3 and 26 characters.") }
   validates :description, length: { in: 3..500, message: _("Description must be between 3 and 500 characters.") }
 
   validate :sensible_dates
@@ -24,10 +24,6 @@ class Semester < ApplicationRecord
 private
 
   def sensible_dates
-    if end_date.present? && start_date > end_date
-      errors.add(:start_date, :sensible_dates, message: _("Start date cannot be after end date."))
-    end
-
     if end_date.present? && end_date < start_date
       errors.add(:end_date, :sensible_dates, message: _("End date cannot be after start date."))
     end

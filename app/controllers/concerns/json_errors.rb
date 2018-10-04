@@ -20,8 +20,7 @@ module JSONErrors
     end
 
     def render_422(errors = "could not save data")
-      puts errors.class
-      errors = errors.messages.values.flatten unless errors.is_a?(String)
+      errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
       render_errors(errors, 422)
     end
 
@@ -29,6 +28,9 @@ module JSONErrors
       render_errors(errors, 500)
     end
 
+    def render_503(errors = "service unavailable")
+      render_errors(errors, 503)
+    end
 
     def render_errors(errors, status = 400)
       errors = Array.wrap(errors) unless errors.is_a?(Array)

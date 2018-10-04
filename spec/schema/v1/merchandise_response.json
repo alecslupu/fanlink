@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "purchase_url": {
+      "type": "string"
+    },
+    "picture_url": {
+      "type": "string"
+    },
+    "available": {
+      "type": "boolean"
+    },
+    "priority": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

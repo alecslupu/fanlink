@@ -1,5 +1,23 @@
-require 'rails_helper'
-
 RSpec.describe StepUnlock, type: :model do
-  it { should validate_presence_of(:step_id) }
+  context "Associations" do
+    describe "#should belong to" do
+      it do
+        should belong_to(:step).with_primary_key("uuid").with_foreign_key("step_id")
+      end
+    end
+
+    describe "#should have one" do
+      it do
+        should have_one(:unlock).class_name("Step").with_primary_key("unlock_id").with_foreign_key("uuid")
+      end
+    end
+  end
+  
+  context "Validation" do
+    describe "should create a valid step unlock" do
+      it do
+        expect(create(:step_unlock)).to be_valid
+      end
+    end
+  end
 end

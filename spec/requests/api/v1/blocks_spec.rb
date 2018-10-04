@@ -7,7 +7,7 @@ describe "Blocks (v1)" do
       login_as(blocker)
       post "/blocks", params: { block: { blocked_id: to_be_blocked.id } }
       expect(response).to be_success
-      expect(json["block"]).to eq(block_json(Block.last))
+      expect(block_json(json["block"])).to be true
       expect(blocker.blocked?(to_be_blocked)).to be_truthy
     end
     it "should kill relationships with person" do
@@ -44,7 +44,7 @@ describe "Blocks (v1)" do
       login_as(blocker)
       post "/blocks", params: { block: { blocked_id: to_be_blocked.id } }
       expect(response).to be_unprocessable
-      expect(json["errors"].first).to include("already blocked")
+      expect(json["errors"].first).to include(_("That user is already blocked."))
     end
   end
   describe "#destroy" do

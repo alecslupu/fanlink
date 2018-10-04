@@ -1,93 +1,96 @@
-FanlinkApi::API.endpoint :get_events do
-  description "Returns all events associated with the current user's product."
-  method :get
-  tag "Events"
-  path "/events"
-  output :success do
-    status 200
-    type :object do
-      events :array do
-        type :event_app_json
+class AddEventEndpoints < Apigen::Migration
+    def up
+      add_endpoint :get_events do
+        description "Returns all events associated with the current user's product."
+        method :get
+        tag "Events"
+        path "/events"
+        output :success do
+          status 200
+          type :object do
+            events :array do
+              type :event_response
+            end
+          end
+        end
+  
+        output :unauthorized do
+          status 401
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "User is not authorized to access this endpoint."
+        end
+  
+        output :server_error do
+          status 500
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+        end
       end
-    end
-  end
 
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
+      add_endpoint :get_an_event do
+        description "Returns a single event."
+        method :get
+        tag "Events"
+        path "/events/{id}" do
+          id :int32
+        end
+        output :success do
+          status 200
+          type :object do
+            event :event_response
+          end
+        end
+
+        output :unauthorized do
+          status 401
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "User is not authorized to access this endpoint."
+        end
+
+        output :not_found do
+          status 404
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "The record was not found."
+        end
+
+        output :server_error do
+          status 500
+          type :object do
+            errors :object do
+              base :array do
+                type :string
+              end
+            end
+          end
+          description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
         end
       end
     end
-    description "User is not authorized to access this endpoint."
   end
-
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
-  end
-end
-
-FanlinkApi::API.endpoint :get_an_event do
-  description "Returns a single event."
-  method :get
-  tag "Events"
-  path "/events/{id}" do
-    id :int32
-  end
-  output :success do
-    status 200
-    type :object do
-      type :event_app_json
-    end
-  end
-
-  output :unauthorized do
-    status 401
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description "User is not authorized to access this endpoint."
-  end
-
-  output :not_found do
-    status 404
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description "The record was not found."
-  end
-
-  output :server_error do
-    status 500
-    type :object do
-      errors :object do
-        base :array do
-          type :string
-        end
-      end
-    end
-    description "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
-  end
-end
-
 
 # FanlinkApi::API.endpoint :create_an_event do
 #   method :post
@@ -134,7 +137,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :event_json
+#       type :event_response
 #     end
 #   end
 
@@ -240,7 +243,7 @@ end
 #   output :success do
 #     status 200
 #     type :object do
-#       type :event_json
+#       type :event_response
 #     end
 #   end
 

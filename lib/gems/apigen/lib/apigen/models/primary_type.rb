@@ -6,7 +6,7 @@ module Apigen
   ##
   # PrimaryType represents a primary type such as a string or an integer.
   class PrimaryType
-    PRIMARY_TYPES = Set.new %i[string int32 datetime date time file email uuid bool void]
+    PRIMARY_TYPES = Set.new %i[string int32 datetime date time file email uuid bool void null]
 
     def self.primary?(shape)
       PRIMARY_TYPES.include? shape

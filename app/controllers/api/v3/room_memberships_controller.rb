@@ -1,4 +1,4 @@
-class Api::V3::RoomMembershipsController < Api::V3::BaseController
+class Api::V3::RoomMembershipsController < Api::V2::RoomMembershipsController
   # **
   # @api {post} /room/:id/room_memberships Add a room member.
   # @apiName CreateRoomMembership

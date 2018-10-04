@@ -1,4 +1,4 @@
-class Api::V3::PeopleController < Api::V3::BaseController
+class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
   before_action :super_admin_only, only: %i[ destroy ]
   load_up_the Person, except: %i[ index ]
@@ -156,6 +156,7 @@ class Api::V3::PeopleController < Api::V3::BaseController
 
   def index
     @people = paginate apply_filters
+    @people = @people.reject {|person| person==current_user}
     return_the @people
   end
 
@@ -297,7 +298,7 @@ private
     people = Person.order(created_at: :desc)
     params.each do |p, v|
       if p.end_with?("_filter") && Person.respond_to?(p)
-        people = people.send(p, v)
+        people = people.send(p,v)
       end
     end
     people
@@ -309,8 +310,8 @@ private
 
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
-                                      username password picture product current_password new_password ] +
-                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []) +
-                                   ((current_user.present? && current_user.some_admin?) ? %i[ chat_banned role tester terminated terminated_reason ] : []))
+                                      username password picture product current_password new_password do_not_message_me ] +
+                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended pin_messages_from auto_follow ] : []) +
+                                   ((current_user.present? && current_user.some_admin?) ? %i[ chat_banned role tester product_account designation terminated terminated_reason ] : []))
   end
 end

@@ -1,4 +1,4 @@
-class Api::V1::BadgesController < Api::V1::BaseController
+class Api::V1::BadgesController < ApiController
   load_up_the Person, from: :person_id
 
   # **
@@ -39,5 +39,6 @@ class Api::V1::BadgesController < Api::V1::BaseController
     @badges = Badge.all
     @badges_awarded = @person.badge_awards.map { |ba| ba.badge }
     @badge_action_counts = @person.badge_actions.group(:action_type_id).count
+    return_the @badges
   end
 end

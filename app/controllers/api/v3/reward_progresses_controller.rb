@@ -1,4 +1,4 @@
-class Api::V3::RewardProgressesController < Api::V3::BaseController
+class Api::V3::RewardProgressesController < ApiController
   def create
     if params.has_key?(:reward_complete)
       controller = request.fullpath.remove("/").remove("complete").singularize

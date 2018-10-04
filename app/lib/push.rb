@@ -16,8 +16,9 @@ module Push
   end
 
   def message_mention_push(message_mention)
+    blocks_with = message_mention.message.person.blocks_with.map { |b| b.id }
     do_push(message_mention.person.device_tokens, "Mention", "#{message_mention.message.person.username} mentioned you in a message.",
-                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id)
+                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
   end
 
   def portal_notification_push(portal_notification)
@@ -40,8 +41,9 @@ module Push
   end
 
   def post_comment_mention_push(post_comment_mention)
+    blocks_with = post_comment_mention.post_comment.person.blocks_with.map { |b| b.id }
     do_push(post_comment_mention.person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id)
+              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(post_comment_mention.person.id)
   end
 
   # sends to posts followers
@@ -53,7 +55,9 @@ module Push
   def private_message_push(message)
     tokens = []
     message.room.members.each do |m|
+      blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
+      next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)

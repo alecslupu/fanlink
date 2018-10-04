@@ -18,7 +18,7 @@ module Fanlink
     end
 
     def copy_view_files
-      %w(endpoints models).each do |view|
+      %w(endpoints responses).each do |view|
         filename = filename_with_extensions(view)
         template filename, File.join('docs/apigen', options.version, controller_file_path, "#{singular_name}_#{filename}")
       end

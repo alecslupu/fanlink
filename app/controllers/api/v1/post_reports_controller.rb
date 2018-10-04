@@ -1,4 +1,4 @@
-class Api::V1::PostReportsController < Api::V1::BaseController
+class Api::V1::PostReportsController < ApiController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update
 
@@ -119,7 +119,7 @@ class Api::V1::PostReportsController < Api::V1::BaseController
       @post_report.update(parms)
       head :ok
     else
-      render_error("Invalid or missing status.")
+      render_error(_("Invalid or missing status."))
     end
   end
 

@@ -7,10 +7,13 @@ RSpec.describe MessageReport, type: :model do
     ActsAsTenant.current_tenant = @product
   end
 
-  describe "#create" do
-    it "should create a report" do
+  context "Valid" do
+    it "should create a valid message report" do
       expect(create(:message_report)).to be_valid
     end
+  end
+
+  describe "#create" do
     it "should not let you create a message report without a message" do
       report = build(:message_report, message: nil)
       expect(report).not_to be_valid

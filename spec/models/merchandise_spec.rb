@@ -7,10 +7,13 @@ RSpec.describe Merchandise, type: :model do
     ActsAsTenant.current_tenant = @product
   end
 
-  describe "#create" do
-    it "should create valid merchandise" do
-      expect(@merchandise).to be_valid
+  context "Valid" do
+    it "should create a valid merchandise" do
+      expect(create(:merchandise)).to be_valid
     end
+  end
+
+  describe "#create" do
     it "should not let you create merchandise without a product" do
       ActsAsTenant.without_tenant do
         merch = build(:merchandise, product: nil)

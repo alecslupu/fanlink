@@ -1,4 +1,4 @@
-class Api::V2::TagsController < Api::V2::BaseController
+class Api::V2::TagsController < ApiController
   # **
   #
   # @api {get} /tags/:tag_name Get Posts by Tag Name

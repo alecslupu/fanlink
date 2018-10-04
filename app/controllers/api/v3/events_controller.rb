@@ -1,4 +1,4 @@
-class Api::V3::EventsController < Api::V3::BaseController
+class Api::V3::EventsController < Api::V2::EventsController
   before_action :admin_only, only: %i[ create update destroy ]
   skip_before_action :require_login, only: %i[ index ]
   load_up_the Event, only: %i[ update delete ]
@@ -14,6 +14,8 @@ class Api::V3::EventsController < Api::V3::BaseController
   #         "description": "THE event of the moment",
   #         "starts_at": "2018-02-24T00:25:11Z",
   #         "ends_at": "2018-08-23T23:25:11Z",
+  #         "latitude": -37.123121,
+  #         "longitude": 101.121,
   #         "ticket_url": "http://example.com/buy_now",
   #         "place_identifier": "Sazuki"
   #     }
@@ -32,6 +34,8 @@ class Api::V3::EventsController < Api::V3::BaseController
   #             "description": "THE event of the moment",
   #             "starts_at": "2018-02-24T00:30:56Z",
   #             "ends_at": "2018-08-23T23:30:56Z",
+  #             "latitude": -37.123121,
+  #             "longitude": 101.121,
   #             "ticket_url": "http://example.com/buy_now",
   #             "place_identifier": "Montreal"
   #         },
@@ -41,6 +45,8 @@ class Api::V3::EventsController < Api::V3::BaseController
   #             "description": "THE event of the moment 2",
   #             "starts_at": "2018-02-24T00:31:15Z",
   #             "ends_at": "2018-08-23T23:31:15Z",
+  #             "latitude": -37.123121,
+  #             "longitude": 101.121,
   #             "ticket_url": "http://example.com/buy_now",
   #             "place_identifier": "Sazuki"
   #         }
@@ -57,7 +63,8 @@ class Api::V3::EventsController < Api::V3::BaseController
   # @apiParam (body) {String} [event.description] String or Object. Passing a string sets the unknown language. Passing an object lets you set the translated language
   # @apiParam (body) {DateTime} event.starts_at The date and time the event starts at
   # @apiParam (body) {DateTime} [event.ends_at] The date and time the event ends at.
-  # @apiParam (body) {String} [event.ticket_url] The url used for purchasing tickets to the event
+  # @apiParam (body) {Float} [event.longitude] The optional longitude for the location
+  # @apiParam (body) {Float} [event.latitude] The optional latitude for the location
   # @apiParam (body) {String} [event.place_identifier] Used for google maps API
   # *
 
@@ -93,8 +100,40 @@ class Api::V3::EventsController < Api::V3::BaseController
     else
       start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.now - 3.years).beginning_of_day
       end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.now + 3.years).end_of_day
-      @events = paginate(Event.where(deleted: false).in_date_range(start_boundary, end_boundary).order(starts_at: :asc))
-      return_the @events
+      query = (current_user&.role == "super_admin") ? Event : Event.where(deleted: false)
+      @events = paginate(query.in_date_range(start_boundary, end_boundary).order(starts_at: :asc))
+      return_the @events, handler: "jb"
+    end
+  end
+
+  def checkins
+    interests = params[:interst_id] || []
+    if interests.empty?
+      @event_checkins = paginate(@event.event_checkins.includes(:person).order(created_at: :desc), per_page: 2)
+    else
+      @event_checkins = paginate(@event.event_checkins.includes(:person).joins(person: :person_interests).where("person_interests.interest_id IN (?)", interests).order(created_at: :desc))
+    end
+
+    return_the @event_checkins, handler: "jb"
+  end
+
+  def checkin
+    @event_checkin = EventCheckin.create(person_id: current_user.id, event_id: @event.id)
+    if @event_checkin.valid?
+      return_the @event_checkin, handler: "jb"
+    else
+      render json: { errors: [@event_checkin.errors.messages] }, status: :unprocessable_entity
+    end
+  end
+
+  def checkout
+    ci = EventCheckin.where(person_id: current_user.id, event_id: @event.id).first
+
+    if ci != nil
+      ci.destroy
+      head :ok
+    else
+      head :not_found
     end
   end
 
@@ -118,6 +157,8 @@ class Api::V3::EventsController < Api::V3::BaseController
   #         "description": "Some more about the event"
   #         "starts_at": "2018-01-08T12:00:00Z",
   #         "ends_at":  "2018-01-08T15:00:00Z",
+  #         "latitude": -37.123121,
+  #         "longitude": 101.121,
   #         "ticket_url": "https://example.com/3455455",
   #         "place_identifier": "fdA3434Bdfad34134"
   #       },....
@@ -129,7 +170,7 @@ class Api::V3::EventsController < Api::V3::BaseController
 
   def show
     @event = Event.find(params[:id])
-    return_the @event
+    return_the @event, handler: "jb"
   end
 
   # **
@@ -159,7 +200,7 @@ class Api::V3::EventsController < Api::V3::BaseController
     @event = Event.create(event_params)
     if @event.valid?
       broadcast(:event_created, current_user, @event)
-      return_the @event
+      return_the @event, handler: "jb", using: :show
     else
       render_422 @event.errors
     end
@@ -193,12 +234,12 @@ class Api::V3::EventsController < Api::V3::BaseController
     if params.has_key?(:event)
       if @event.update_attributes(event_params)
         broadcast(:event_updated, current_user, @event)
-        return_the @event
+        return_the @event, handler: "jb", using: :show
       else
         render_422 @event.errors
       end
     else
-      return_the @event
+      return_the @event, handler: "jb", using: :show
     end
   end
 
@@ -238,6 +279,6 @@ class Api::V3::EventsController < Api::V3::BaseController
 
 private
   def event_params
-    params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier)
+    params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier, :longitude, :latitude)
   end
 end

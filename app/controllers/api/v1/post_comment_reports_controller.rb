@@ -1,4 +1,4 @@
-class Api::V1::PostCommentReportsController < Api::V1::BaseController
+class Api::V1::PostCommentReportsController < ApiController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostCommentReport, only: :update
 
@@ -37,7 +37,7 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
       if post_comment_report.valid?
         head :ok
       else
-        render_error(post_comment_report.errors)
+        render_error(_(post_comment_report.errors))
       end
     else
       render_not_found
@@ -119,7 +119,7 @@ class Api::V1::PostCommentReportsController < Api::V1::BaseController
       @post_comment_report.update(parms)
       head :ok
     else
-      render_error("Invalid or missing status.")
+      render_error(_("Invalid or missing status."))
     end
   end
 

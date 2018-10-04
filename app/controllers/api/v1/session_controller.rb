@@ -1,4 +1,4 @@
-class Api::V1::SessionController < Api::V1::BaseController
+class Api::V1::SessionController < ApiController
   prepend_before_action :logout, only: :create
   skip_before_action :require_login, :set_app
   skip_before_action :set_product, except: %i[ create ]
@@ -33,7 +33,7 @@ class Api::V1::SessionController < Api::V1::BaseController
     if @person = current_user
       return_the @person
     else
-      render body: nil, status: :not_found
+      render_not_found
     end
   end
 
@@ -70,7 +70,7 @@ class Api::V1::SessionController < Api::V1::BaseController
     @person = nil
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
-      return render json: { errors: [ "Unable to find user from token. Likely a problem contacting Facebook."] }, status: :service_unavailable if @person.nil?
+      render_503(_("Unable to find user from token. Likely a problem contacting Facebook.")) && return if @person.nil?
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
@@ -81,7 +81,7 @@ class Api::V1::SessionController < Api::V1::BaseController
           @person = login(@person.email, params[:password]) if @person
         end
       end
-      return render json: { errors: [ "Invalid login." ] }, status: :unprocessable_entity  if @person.nil?
+      render_error(_("Invalid login.")) && return if @person.nil?
     end
     return_the @person
   end

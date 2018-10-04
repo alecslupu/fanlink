@@ -13,7 +13,6 @@ echo "Checking installed gems..."
 bundle check || bundle install
 
 if [ "$RUN_TESTS" == "true" ]; then
-    sleep 20
     echo "Setting up test DB"
     bundle exec rails db:setup
     echo "Preparing test db"
@@ -22,7 +21,6 @@ if [ "$RUN_TESTS" == "true" ]; then
     bundle exec rails spec
 else
     echo "Checking DB migrations..."
-    sleep 20
     bundle exec rake db:setup
     MIGRATION_NEEDED=$(bundle exec rake db:migrate:status | grep -c down)
     if [[ $MIGRATION_NEEDED -gt "0" ]]; then

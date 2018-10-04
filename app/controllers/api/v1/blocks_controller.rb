@@ -1,4 +1,4 @@
-class Api::V1::BlocksController < Api::V1::BaseController
+class Api::V1::BlocksController < ApiController
   # **
   # @api {post} /blocks Block a person.
   # @apiName CreateBlock

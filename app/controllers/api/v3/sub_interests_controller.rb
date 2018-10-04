@@ -1,4 +1,4 @@
-class Api::V3::SubInterestsController < Api::V3::BaseController
+class Api::V3::SubInterestsController < ApiController
   # **
   #
   # @api {get} /interests Get Interests
