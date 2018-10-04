@@ -19,7 +19,7 @@ class Api::V3::RewardsController < ApiController
   end
 
   def update
-    if param.has_key?(:reward)
+    if params.has_key?(:reward)
       if @reward.update_attributes(reward_params)
         return_the @reward
       else

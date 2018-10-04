@@ -165,7 +165,7 @@ class Api::V3::StepsController < Api::V2::StepsController
   # *
 
   def update
-    if param.has_key?(:step)
+    if params.has_key?(:step)
       old_unlocks = @step.unlocks
       if @step.update_attributes(step_params)
         if old_unlocks != params[:step][:unlocks]
