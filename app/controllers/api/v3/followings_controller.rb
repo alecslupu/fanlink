@@ -80,12 +80,12 @@ class Api::V3::FollowingsController < Api::V2::FollowingsController
     followed_id = params[:followed_id].to_i
     if followed_id > 0
       followed = Person.find(followed_id)
-      @followers = followed.followers
+      @followers = followed.followers.limit(50)
       return_the @followers
     else
       follower_id = params[:follower_id].to_i
       follower = (follower_id > 0) ? Person.find(follower_id) : current_user
-      @following = follower.following
+      @following = follower.following.limit(50)
       return_the @following
     end
   end
