@@ -49,6 +49,8 @@ class Person < ApplicationRecord
   has_many :interests, through: :person_interests
   has_many :event_checkins, dependent: :destroy
 
+  has_and_belongs_to_many :post_poll_options
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 

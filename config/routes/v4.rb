@@ -57,6 +57,8 @@ api_version(:module => "Api::V4", :header => {:name => "Accept", :value => "appl
   resources :portal_notifications
   resources :post_reports, only: %i[ create index update ]
   resources :post_comment_reports, only: %i[ create index update ]
+  resources :post_polls, only: %i[ create index update ]
+  resources :post_poll_options, only: %i[ create index update ]
   resources :posts, except: %i[ new edit ] do
     collection do
       get "list" => "posts#list"

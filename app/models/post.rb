@@ -22,6 +22,7 @@ class Post < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
+  has_many :post_polls
 
   belongs_to :person, touch: true
   belongs_to :category, optional: true
