@@ -1,4 +1,4 @@
-class Api::V3::PostPollsController < Api::V2::PostReactionsController
+class Api::V4::PostPollsController < ApiController
   load_up_the Post, from: :post_id
   load_up_the PostPoll, only: %i[ destroy update ]
 
@@ -38,11 +38,12 @@ class Api::V3::PostPollsController < Api::V2::PostReactionsController
   def create
     parms = post_poll_params
     if @post.person.try(:product) == current_user.product
-      @post_poll = @post.poll.create(parms)
+      @post_poll = @post.post_polls.create(parms)
       if @post_poll.valid?
         return_the @post_poll
       else
-        render_422 @post_poll.errors
+        render parms
+        #render_422 @post_poll.errors
       end
     else
       render_not_found
@@ -135,6 +136,6 @@ class Api::V3::PostPollsController < Api::V2::PostReactionsController
 private
 
   def post_poll_params
-    params.require(:post_poll).permit(:poll).merge(person_id: current_user.id)
+    params.require(:post_poll).permit(:description)
   end
 end

@@ -33,6 +33,11 @@ JkoApi.routes self do
         get "list" => "posts#list"
         get "recommended" => "recommended_posts#index"
       end
+      resources :polls,  :controller => "post_polls", only: %i[ create index update destroy ] do
+        resources :poll_options, :controller => "post_poll_options", only: %i[ index create ]
+      end
+
+      resources :poll_options, :controller => "post_poll_options", only: %i[ show update destroy ]
       resources :post_comments, only: %i[ create destroy index ], path: :comments
       resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
       get "share", on: :member

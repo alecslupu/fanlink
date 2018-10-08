@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180914001746) do
+ActiveRecord::Schema.define(version: 20181005131117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20180914001746) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -403,6 +403,11 @@ ActiveRecord::Schema.define(version: 20180914001746) do
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
   end
 
+  create_table "persons_post_poll_options", id: false, force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "post_poll_option_id"
+  end
+
   create_table "portal_accesses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "post", default: 0, null: false
@@ -464,6 +469,21 @@ ActiveRecord::Schema.define(version: 20180914001746) do
     t.index ["created_at"], name: "index_post_comments_on_created_at"
     t.index ["person_id"], name: "index_post_comments_on_person_id"
     t.index ["post_id"], name: "idx_post_comments_post"
+  end
+
+  create_table "post_poll_options", force: :cascade do |t|
+    t.text "description", null: false
+    t.integer "post_poll_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "post_polls", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "idx_post_polls_post"
   end
 
   create_table "post_reactions", force: :cascade do |t|
@@ -815,6 +835,8 @@ ActiveRecord::Schema.define(version: 20180914001746) do
   add_foreign_key "post_comment_reports", "post_comments", name: "fk_post_comment_reports_post_comments", on_delete: :cascade
   add_foreign_key "post_comments", "people", name: "fk_post_comments_people", on_delete: :cascade
   add_foreign_key "post_comments", "posts", name: "fk_post_comments_post", on_delete: :cascade
+  add_foreign_key "post_poll_options", "post_polls"
+  add_foreign_key "post_polls", "posts", name: "fk_post_polls_post", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade
