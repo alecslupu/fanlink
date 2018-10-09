@@ -32,7 +32,7 @@ class Api::V3::CategoriesController < Api::V2::CategoriesController
   #
   # *
   def index
-    @categories = Category.all
+    @categories = Category.where(deleted: false).order(id: :desc)
     @categories = @categories.for_super_admin if current_user.super_admin?
     @categories = @categories.for_admin if current_user.admin?
     @categories = @categories.for_staff if current_user.staff?
