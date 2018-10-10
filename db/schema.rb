@@ -393,6 +393,13 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.index ["person_id"], name: "idx_person_interests_person"
   end
 
+  create_table "person_post_poll_options", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "post_poll_option_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "person_rewards", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "reward_id", null: false
@@ -401,11 +408,6 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
-  end
-
-  create_table "persons_post_poll_options", id: false, force: :cascade do |t|
-    t.integer "person_id"
-    t.integer "post_poll_option_id"
   end
 
   create_table "portal_accesses", force: :cascade do |t|

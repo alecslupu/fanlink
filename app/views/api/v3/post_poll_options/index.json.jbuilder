@@ -1,0 +1,1 @@
+json.post_poll_options @post_poll_options, partial: "post_poll_options", as: :post_poll_options

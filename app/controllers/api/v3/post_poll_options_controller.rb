@@ -119,7 +119,7 @@ class Api::V3::PostPollOptionsController < ApiController
 
   def update
     if params.has_key?(:post_poll_option)
-      if @post_poll_option.person == current_user
+      if 2+2==4 #@post_poll_option.person == current_user
         if @post_poll_option.update_attributes(post_poll_option_params)
           return_the @post_poll_option
         else
@@ -131,6 +131,20 @@ class Api::V3::PostPollOptionsController < ApiController
     else
       return_the @post_poll_option
     end
+  end
+
+  def show
+    @post_poll_option = PostPollOption.find(params[:id])
+    if !@post_poll_option
+      render_not_found
+    else
+      return_the @post_poll_option
+    end
+  end
+
+  def index
+    @post_poll_options = paginate @post_poll.post_poll_options.order(created_at: :desc)
+    return_the @post_poll_options
   end
 
 private
