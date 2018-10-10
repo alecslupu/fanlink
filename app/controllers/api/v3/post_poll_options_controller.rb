@@ -119,7 +119,7 @@ class Api::V3::PostPollOptionsController < ApiController
 
   def update
     if params.has_key?(:post_poll_option)
-      if 2+2==4 #@post_poll_option.person == current_user
+      if @post_poll_option.person == current_user
         if @post_poll_option.update_attributes(post_poll_option_params)
           return_the @post_poll_option
         else
