@@ -150,6 +150,6 @@ class Api::V3::PostPollOptionsController < ApiController
 private
 
   def post_poll_option_params
-    params.require(:post_poll_option).permit(:description).merge(post_poll_id: @post_poll.id)
+    params.require(:post_poll_option).permit(:description)
   end
 end

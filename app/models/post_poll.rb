@@ -1,5 +1,4 @@
 class PostPoll < ApplicationRecord
-	belongs_to :post 
-
-	has_many :post_poll_options
+  belongs_to :post
+  belongs_to :poll
 end

@@ -398,8 +398,6 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.integer "post_poll_option_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "idx_person_post_poll_options_person"
-    t.index ["post_poll_option_id"], name: "idx_person_post_poll_options_post_poll_option"
   end
 
   create_table "person_rewards", force: :cascade do |t|
@@ -410,6 +408,15 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.text "description", null: false
+    t.datetime "start_date"
+    t.time "duration"
+    t.string "poll_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "portal_accesses", force: :cascade do |t|
@@ -484,9 +491,10 @@ ActiveRecord::Schema.define(version: 20181005131117) do
 
   create_table "post_polls", force: :cascade do |t|
     t.integer "post_id", null: false
-    t.text "description", null: false
+    t.integer "poll_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["poll_id"], name: "idx_post_polls_poll"
     t.index ["post_id"], name: "idx_post_polls_post"
   end
 
@@ -832,8 +840,6 @@ ActiveRecord::Schema.define(version: 20181005131117) do
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
   add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
-  add_foreign_key "person_post_poll_options", "people", name: "fk_person_post_poll_options_person"
-  add_foreign_key "person_post_poll_options", "post_poll_options", name: "fk_person_post_poll_options_post_poll_option"
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
@@ -841,8 +847,6 @@ ActiveRecord::Schema.define(version: 20181005131117) do
   add_foreign_key "post_comment_reports", "post_comments", name: "fk_post_comment_reports_post_comments", on_delete: :cascade
   add_foreign_key "post_comments", "people", name: "fk_post_comments_people", on_delete: :cascade
   add_foreign_key "post_comments", "posts", name: "fk_post_comments_post", on_delete: :cascade
-  add_foreign_key "post_poll_options", "post_polls"
-  add_foreign_key "post_polls", "posts", name: "fk_post_polls_post", on_delete: :cascade
   add_foreign_key "post_reactions", "people", name: "fk_post_reactions_people", on_delete: :cascade
   add_foreign_key "post_reactions", "posts", name: "fk_post_reactions_post", on_delete: :cascade
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade

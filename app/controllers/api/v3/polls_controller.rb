@@ -1,4 +1,4 @@
-class Api::V3::PostPollsController < ApiController
+class Api::V3::PollsController < ApiController
   load_up_the Post, from: :post_id
   load_up_the PostPoll, only: %i[ destroy update ]
 
@@ -36,11 +36,11 @@ class Api::V3::PostPollsController < ApiController
   # *
 
   def create
-    parms = post_poll_params
+    parms = poll_params
     if @post.person.try(:product) == current_user.product
-      @post_poll = @post.post_polls.create(parms)
-      if @post_poll.valid?
-        return_the @post_poll
+      @poll = poll.create(parms)
+      if @poll.valid?
+        return_the @poll
       else
         render parms
         #render_422 @post_poll.errors
@@ -74,7 +74,7 @@ class Api::V3::PostPollsController < ApiController
 
   def destroy
     if @post.person == current_user
-      @post_poll.destroy
+      @poll.destroy
       head :ok
     else
       render_not_found
@@ -120,27 +120,27 @@ class Api::V3::PostPollsController < ApiController
   def update
     if params.has_key?(:post_poll)
       if @post.person == current_user
-        if @post_poll.update_attributes(post_poll_params)
-          return_the @post_poll
+        if @poll.update_attributes(poll_params)
+          return_the @poll
         else
-          render_422 @post_poll.errors
+          render_422 @poll.errors
         end
       else
         render_not_found
       end
     else
-      return_the @post_poll
+      return_the @poll
     end
   end
 
   def index
-    @post_polls = paginate @post.post_polls.order(created_at: :desc)
-    return_the @post_polls
+    @polls = paginate @polls.order(created_at: :desc)
+    return_the @polls
   end
 
 private
 
-  def post_poll_params
-    params.require(:post_poll).permit(:description)
+  def poll_params
+    params.require(:poll).permit(:description, :start_date, :duration, :poll_status)
   end
 end

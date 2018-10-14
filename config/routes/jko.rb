@@ -167,7 +167,7 @@ JkoApi.routes self do
     resources :portal_notifications
 
     resources :posts, except: %i[ new edit ] do
-      resources :polls,  :controller => "post_polls", only: %i[ create index update destroy ] do
+      resources :polls,  :controller => "polls", only: %i[ create index update destroy ] do
         resources :poll_options, :controller => "post_poll_options", only: %i[ index create ]
       end
 

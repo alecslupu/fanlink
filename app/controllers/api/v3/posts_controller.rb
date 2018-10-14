@@ -399,6 +399,10 @@ class Api::V3::PostsController < Api::V2::PostsController
     end
   end
 
+  def add_poll
+    Poll.create(params)
+  end
+
   private
 
   def get_product
