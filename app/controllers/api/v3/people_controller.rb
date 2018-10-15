@@ -1,7 +1,7 @@
 class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
   before_action :super_admin_only, only: %i[ destroy ]
-  load_up_the Person, except: %i[ index ]
+  load_up_the Person, except: %i[ index create ]
   skip_before_action :require_login, only: %i[ create ]
 
 
@@ -267,8 +267,17 @@ class Api::V3::PeopleController < Api::V2::PeopleController
         render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
         if @person == current_user || current_user.some_admin? || current_user.product_account
+          if person_params.has_key?(:terminated) && @person.some_admin?
+            return render_422 _("You cannot ban administative accounts.")
+          end
           @person.update(person_params)
-          return_the @person
+          if @person.terminated && @person == current_user
+            logout
+            cookies.delete :_fanlink_session
+            return render_401 _("Your account has been banned.")
+          else
+            return_the @person
+          end
         else
           render_not_found
         end
