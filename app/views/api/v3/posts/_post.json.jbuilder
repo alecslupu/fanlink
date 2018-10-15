@@ -18,7 +18,7 @@ json.cache! ["v3", post] do
   json.priority post.priority
   json.recommended post.recommended
   json.notify_followers post.notify_followers
-  json.comment_count post.comments.count
+  json.comment_count post.comments.visible.count
   if post.category.present?
     json.category do
       json.id post.category.id
