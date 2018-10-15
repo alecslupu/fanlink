@@ -18,17 +18,17 @@ RUN npm config set unsafe-perm true && npm install -g newman leasot auto-changel
 
 ENV BUNDLE_PATH /gems
 
-COPY ./bin/entrypoint /entrypoint
-COPY ./bin/entrypoint_queue /entrypoint_queue
-COPY ./ /usr/src/app/
+COPY $PWD/ /usr/src/app/
 
-RUN chmod +x /entrypoint
-RUN chmod +x /entrypoint_queue
+RUN chmod +x /usr/src/app/bin/*
+# RUN chmod +x /usr/src/app/bin/entrypoint_queue
 
 EXPOSE 3000
 
 WORKDIR /usr/src/app
 
+# RUN bundle install
+
 VOLUME /usr/src/app
 
-CMD ["/entrypoint"]
+CMD ["bin/entrypoint"]
