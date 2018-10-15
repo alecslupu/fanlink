@@ -26,4 +26,4 @@ json.cache! ["v3", "list", post] do
     json.tag nil
   end
 end
-json.comment_count post.comments.count
+json.comment_count post.comments.visible.count
