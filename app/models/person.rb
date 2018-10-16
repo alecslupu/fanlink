@@ -28,7 +28,7 @@ class Person < ApplicationRecord
 
   has_image_called :picture
 
-  has_many :message_reports, dependent: :restrict_with_error
+  has_many :message_reports, dependent: :destroy
   has_many :notification_device_ids, dependent: :destroy
   has_many :post_reactions, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
@@ -41,8 +41,10 @@ class Person < ApplicationRecord
   has_many :level_progresses, dependent: :destroy
   has_many :reward_progresses, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :pin_messages, dependent: :destroy
 
   has_many :private_rooms, through: :room_memberships
+  has_many :pinned_to, through: :pin_messages, source: :room
   has_one :portal_access, dependent: :destroy
 
   has_many :rewards, through: :person_rewards

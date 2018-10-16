@@ -50,16 +50,18 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   def create
     @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
-      blocks_with = current_user.blocks_with.map { |b| b.id }
-      members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
-      members_ids << current_user.id
-      members_ids.uniq.each do |i|
-        unless blocks_with.include?(i)
-          @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+      if !@room.public
+        blocks_with = current_user.blocks_with.map { |b| b.id }
+        members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
+        members_ids << current_user.id
+        members_ids.uniq.each do |i|
+          unless blocks_with.include?(i)
+            @room.room_memberships.create(person_id: i) if Person.where(id: i).exists?
+          end
         end
+        @room.reload
+        @room.new_room
       end
-      @room.reload
-      @room.new_room
       return_the @room
     else
       render_422 @room.errors
@@ -174,7 +176,6 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   end
 
   private
-  # TODO: Add description field for admins
   def room_params
     allowed_params = [ :name, :picture, member_ids: [] ]
     if current_user.admin? || current_user.product_account? || current_user.super_admin?
