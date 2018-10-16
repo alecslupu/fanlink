@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180914001746) do
+ActiveRecord::Schema.define(version: 20181016104929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -401,6 +401,13 @@ ActiveRecord::Schema.define(version: 20180914001746) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
+  end
+
+  create_table "pin_messages", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "portal_accesses", force: :cascade do |t|
