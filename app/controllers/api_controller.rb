@@ -73,6 +73,19 @@ protected
     true
   end
 
+  def find_device_type
+    case request.user_agent
+    when /iOS|CFNetwork/i
+      :ios
+    when /android|okhttp/i
+      :android
+    when /Mozilla|Chrome|Safari/i
+      :web
+    else
+      :unknown
+    end
+  end
+
   def render_error(error)
     render_422(error)
   end
@@ -131,13 +144,14 @@ protected
   end
 
   def set_app
-    if request.headers["X-App"].present?
-      @req_source = request.headers["X-App"]
-    elsif params[:app].present?
-      @req_source = params[:app]
-    else
-      @req_source = "mobile"
-    end
+    # if request.headers["X-App"].present?
+    #   @req_source = request.headers["X-App"]
+    # elsif params[:app].present?
+    #   @req_source = params[:app]
+    # else
+    #   @req_source = "mobile"
+    # end
+    @req_source = find_device_type.to_s
   end
 
   def unset_app

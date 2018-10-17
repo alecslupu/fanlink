@@ -4,7 +4,7 @@ class Api::V3::LessonsController < ApiController
   load_up_the Course, from: :course_id, only: %i[ index create ]
 
   def index
-    if @req_source == "portal"
+    if @req_source == "web"
       @lessons = paginate(@course.lessons.where(deleted: false))
     else
       @lessons = paginate(@course.lessons.available.where(deleted: false))
