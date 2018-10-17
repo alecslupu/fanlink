@@ -11,7 +11,7 @@ json.steps do
         #     json.status step.initial_status
         # end
         # unlocks_at ||= Time.now.to_s
-        # if @req_source == "portal"
+        # if @req_source == "web"
         #     json.delay_unlock step.delay_unlock || 0
         # end
         # json.unlocks_at unlocks_at.to_datetime().utc.iso8601
