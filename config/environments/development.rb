@@ -54,6 +54,17 @@ Rails.application.configure do
 
   config.web_console.whitelisted_ips = '172.16.0.0/12'
 
+  config.fanlink = {
+    :aws => {
+      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
+      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
+      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
+      transcoder_queue_url: 'https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-development-video',
+
+
+    }
+  }
+
 
   #     #load openapi files
   # Dir['app/controllers/api/v*/docs/*'].each {

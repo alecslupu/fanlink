@@ -14,6 +14,8 @@ class Post < ApplicationRecord
 
   has_image_called :picture
   has_audio_called :audio
+  has_video_called :video
+
   has_paper_trail
 
   has_many :post_tags
@@ -29,6 +31,8 @@ class Post < ApplicationRecord
   normalize_attributes :starts_at, :ends_at
 
   validate :sensible_dates
+
+  after_create :start_transcoding, :if => :video_file_name
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
@@ -74,7 +78,22 @@ class Post < ApplicationRecord
     (status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
   end
 
+  def start_listener
+    return if (!Flaws.transcoding_queue?)
+    Rails.logger.error("Listening to #{self.video_job_id}")
+    Delayed::Job.enqueue(PostQueueListenerJob.new(self.video_job_id), {run_at: 30.seconds.from_now})
+  end
+
   private
+
+    def start_transcoding
+      # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
+      return if(self.video_job_id || Rails.env.test?)
+      Delayed::Job.enqueue(PostTranscoderJob.new(self.id), {run_at: 1.minutes.from_now})
+      true
+    end
+
+
 
     def adjust_priorities
       if priority > 0 && saved_change_to_attribute?(:priority)
