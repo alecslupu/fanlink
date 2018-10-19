@@ -33,7 +33,7 @@ class Message < ApplicationRecord
   scope :room_date_range, -> (from,to) { where("messages.created_at BETWEEN ? AND ?", from, to)}
 
   def as_json
-    super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url ],
+    super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],
           include: { message_mentions: { except: %i[ message_id ] },
                     person: { only: %i[ id username name designation product_account chat_banned badge_points
                                        level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
@@ -71,5 +71,9 @@ class Message < ApplicationRecord
 
   def visible?
     !hidden
+  end
+
+  def pinned
+    PinMessage.where(person_id: person.id, room_id: room.id).exists? || person.product_account?
   end
 end

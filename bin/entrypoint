@@ -2,6 +2,8 @@
 # bin/entrypoint
 echo "Running start up script..."
 
+cd /usr/src/app
+
 # echo "$(git rev-parse --abbrev-ref HEAD)"
 # if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
 #   echo "Generating Postman import"
@@ -18,7 +20,7 @@ if [ "$RUN_TESTS" == "true" ]; then
     echo "Preparing test db"
     bundle exec rails db:environment:set RAILS_ENV=test  db:test:prepare
     echo "Running tests"
-    bundle exec rails spec
+    bundle exec rspec spec
 else
     echo "Checking DB migrations..."
     bundle exec rake db:setup
@@ -26,11 +28,10 @@ else
     if [[ $MIGRATION_NEEDED -gt "0" ]]; then
         echo "Migrations needed. Running..."
         bundle exec rails db:migrate
-        bundle exec rake db:seed
         bundle exec rake db:schema:dump
     fi
+    bundle exec rake db:seed
   if [ -f '/usr/src/app/tmp/pids/server.pid' ]; then
-    echo "Found existing Puma server process id file, deleting..."
     rm /usr/src/app/tmp/pids/server.pid
   fi
   echo "Starting server."

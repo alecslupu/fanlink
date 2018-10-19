@@ -7,7 +7,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app
+  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned
   after_action :unset_person, :unset_app
 
   #
@@ -59,6 +59,14 @@ protected
     head :unauthorized unless current_user.role == "super_admin"
   end
 
+  def check_banned
+    if current_user&.terminated
+      logout
+      cookies.delete :_fanlink_session
+      head :unauthorized if current_user.terminated
+    end
+  end
+
   def check_dates(required = false)
     if params[:from_date].present?
       return false unless DateUtil.valid_date_string?(params[:from_date])
@@ -71,6 +79,19 @@ protected
       return false if required
     end
     true
+  end
+
+  def find_device_type
+    case request.user_agent
+    when /iOS|CFNetwork/i
+      :ios
+    when /android|okhttp/i
+      :android
+    when /Mozilla|Chrome|Safari/i
+      :web
+    else
+      :unknown
+    end
   end
 
   def render_error(error)
@@ -131,13 +152,14 @@ protected
   end
 
   def set_app
-    if request.headers["X-App"].present?
-      @req_source = request.headers["X-App"]
-    elsif params[:app].present?
-      @req_source = params[:app]
-    else
-      @req_source = "mobile"
-    end
+    # if request.headers["X-App"].present?
+    #   @req_source = request.headers["X-App"]
+    # elsif params[:app].present?
+    #   @req_source = params[:app]
+    # else
+    #   @req_source = "mobile"
+    # end
+    @req_source = find_device_type.to_s
   end
 
   def unset_app

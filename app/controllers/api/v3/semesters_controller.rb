@@ -3,7 +3,7 @@ class Api::V3::SemestersController < ApiController
   load_up_the Semester, only: %i[ update destroy ]
 
   def index
-    if @req_source == "portal"
+    if @req_source == "web"
       @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons))
     else
       @semesters = paginate(Semester.available.where(deleted: false).includes(courses: :lessons))

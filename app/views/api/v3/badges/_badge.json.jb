@@ -12,8 +12,8 @@ json =  Rails.cache.fetch ["v3", badge.updated_at, @lang, badge] do
     point_value: ((badge.reward.present?) ? badge.reward.points : nil ),
  }
 end
-if @req_source == "portal"
-  json[:issued_to] = badge.issued_to if @req_source == "portal"
-  json[:issued_from] = badge.issued_from if @req_source == "portal"
+if @req_source == "web"
+  json[:issued_to] = badge.issued_to if @req_source == "web"
+  json[:issued_from] = badge.issued_from if @req_source == "web"
 end
 json
