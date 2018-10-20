@@ -1,7 +1,6 @@
-class Api::V3::PostPollOptionsController < ApiController
-  load_up_the Post, from: :post_id
-  load_up_the PostPoll, from: :poll_id
-  load_up_the PostPollOption, only: %i[ destroy update ]
+class Api::V3::PollOptionsController < ApiController
+  load_up_the Poll, from: :poll_id
+  load_up_the PollOption, only: %i[ destroy update ]
 
   # **
   # @api {post} /posts/:post_id/reactions React to a post.
@@ -37,7 +36,7 @@ class Api::V3::PostPollOptionsController < ApiController
   # *
 
   def create
-    parms = post_poll_option_params
+    parms = poll_option_params
     if @post.person.try(:product) == current_user.product
       @post_poll_option = @post_poll.post_poll_options.create(parms)
       if @post_poll_option.valid?

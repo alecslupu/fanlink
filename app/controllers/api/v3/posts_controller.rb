@@ -400,7 +400,15 @@ class Api::V3::PostsController < Api::V2::PostsController
   end
 
   def add_poll
+    puts params
     Poll.create(params)
+
+    #       Connection.create(
+     #       from_member_id: target_from.id,
+      #      to_member_id: target_to.id,
+       #     rank: rank,
+        #    answered_survey: answered_survey
+    #)
   end
 
   private
@@ -428,7 +436,7 @@ class Api::V3::PostsController < Api::V2::PostsController
   end
 
   def post_params
-    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id polls_attributes: [ :id, :description, :duration, :poll_status, :start_date ]] +
                                  ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
   end
 end

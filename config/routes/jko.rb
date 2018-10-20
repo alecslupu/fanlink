@@ -179,6 +179,7 @@ JkoApi.routes self do
         get "category/:category_name" => "categories#posts"
       end
       get "share" => "posts#share"
+      post "add_poll" => "posts#add_poll"
     end
 
     resources :quests, except: %i[ create index show update ] do
