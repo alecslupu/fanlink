@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181016104929) do
+ActiveRecord::Schema.define(version: 20181024012406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 20181016104929) do
     t.jsonb "title", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order", default: 0, null: false
     t.index ["parent_id"], name: "idx_interests_parent"
     t.index ["product_id"], name: "idx_interests_product"
   end
@@ -338,6 +339,7 @@ ActiveRecord::Schema.define(version: 20181016104929) do
     t.text "device_identifier", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "device_type", default: 0, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
   end
@@ -524,6 +526,12 @@ ActiveRecord::Schema.define(version: 20181016104929) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
+    t.string "video_job_id"
+    t.jsonb "video_transcoded", default: {}, null: false
     t.index ["body"], name: "index_posts_on_body", using: :gin
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
