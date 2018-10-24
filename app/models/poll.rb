@@ -1,7 +1,6 @@
 class Poll < ApplicationRecord
+  validates :poll_type, inclusion: {in: %w(post) }, presence: true
   validates :poll_status, inclusion: { in: %w(active disabled) }, presence: true
 
-  has_many :post_polls
-
-  has_many :posts, through: :post_polls
+  belongs_to :post, foreign_key: "post_type_id", foreign_type: "post_type"
 end

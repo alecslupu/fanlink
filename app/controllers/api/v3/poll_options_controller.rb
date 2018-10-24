@@ -1,6 +1,6 @@
 class Api::V3::PollOptionsController < ApiController
   load_up_the Poll, from: :poll_id
-  load_up_the PollOption, only: %i[ destroy update ]
+  load_up_the PollOption
 
   # **
   # @api {post} /posts/:post_id/reactions React to a post.
@@ -38,11 +38,11 @@ class Api::V3::PollOptionsController < ApiController
   def create
     parms = poll_option_params
     if @post.person.try(:product) == current_user.product
-      @post_poll_option = @post_poll.post_poll_options.create(parms)
-      if @post_poll_option.valid?
-        return_the @post_poll_option
+      poll_option = @poll.poll_options.create(parms)
+      if @poll_option.valid?
+        return_the @poll_option
       else
-        render_422 @post_poll_option.errors
+        render_422 @poll_option.errors
       end
     else
       render_not_found
@@ -72,8 +72,8 @@ class Api::V3::PollOptionsController < ApiController
   # *
 
   def destroy
-    if @post_poll_option.person == current_user
-      @post_poll_option.destroy
+    if @poll_option.person == current_user
+      @poll_option.destroy
       head :ok
     else
       render_not_found
@@ -117,38 +117,38 @@ class Api::V3::PollOptionsController < ApiController
   # *
 
   def update
-    if params.has_key?(:post_poll_option)
-      if @post_poll_option.person == current_user
-        if @post_poll_option.update_attributes(post_poll_option_params)
-          return_the @post_poll_option
+    if params.has_key?(:poll_option)
+      if @poll_option.person == current_user
+        if @poll_option.update_attributes(poll_option_params)
+          return_the @poll_option
         else
-          render_422 @post_poll_option.errors
+          render_422 @poll_option.errors
         end
       else
         render_not_found
       end
     else
-      return_the @post_poll_option
+      return_the @poll_option
     end
   end
 
   def show
-    @post_poll_option = PostPollOption.find(params[:id])
-    if !@post_poll_option
+    @poll_option = PostPollOption.find(params[:id])
+    if !@poll_option
       render_not_found
     else
-      return_the @post_poll_option
+      return_the @poll_option
     end
   end
 
   def index
-    @post_poll_options = paginate @post_poll.post_poll_options.order(created_at: :desc)
-    return_the @post_poll_options
+    @poll_options = paginate @poll.poll_options.order(created_at: :desc)
+    return_the @poll_options
   end
 
 private
 
-  def post_poll_option_params
-    params.require(:post_poll_option).permit(:description)
+  def poll_option_params
+    params.require(:poll_option).permit(:description)
   end
 end

@@ -1,7 +1,5 @@
 class Api::V3::PollsController < ApiController
-  load_up_the Post, from: :post_id
-  load_up_the PostPoll, only: %i[ destroy update ]
-
+  load_up_the Poll, from: :id
   # **
   # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction
@@ -37,16 +35,11 @@ class Api::V3::PollsController < ApiController
 
   def create
     parms = poll_params
-    if @post.person.try(:product) == current_user.product
-      @poll = poll.create(parms)
-      if @poll.valid?
-        return_the @poll
-      else
-        render parms
-        #render_422 @post_poll.errors
-      end
+    @poll = Poll.create(parms)
+    if @poll.valid?
+      return_the @poll
     else
-      render_not_found
+      render_422 @poll.errors
     end
   end
 
@@ -118,7 +111,7 @@ class Api::V3::PollsController < ApiController
   # *
 
   def update
-    if params.has_key?(:post_poll)
+    if params.has_key?(:poll)
       if @post.person == current_user
         if @poll.update_attributes(poll_params)
           return_the @poll
@@ -141,6 +134,6 @@ class Api::V3::PollsController < ApiController
 private
 
   def poll_params
-    params.require(:poll).permit(:description, :start_date, :duration, :poll_status)
+    params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
   end
 end

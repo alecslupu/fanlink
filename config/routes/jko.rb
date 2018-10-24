@@ -167,11 +167,10 @@ JkoApi.routes self do
     resources :portal_notifications
 
     resources :posts, except: %i[ new edit ] do
-      resources :polls,  :controller => "polls", only: %i[ create index update destroy ] do
-        resources :poll_options, :controller => "post_poll_options", only: %i[ index create ]
+      resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
+        resources :poll_options, :controller => "poll_options", only: %i[ create update destroy ]
       end
 
-      resources :poll_options, :controller => "post_poll_options", only: %i[ show update destroy ]
       collection do
         get "list" => "posts#list"
         get "recommended" => "recommended_posts#index"
@@ -179,7 +178,10 @@ JkoApi.routes self do
         get "category/:category_name" => "categories#posts"
       end
       get "share" => "posts#share"
-      post "add_poll" => "posts#add_poll"
+    end
+
+    resources :polls, only: %i[ index ] do
+      resources :poll_options, :controller => "poll_options", only: %i[ show index ]
     end
 
     resources :quests, except: %i[ create index show update ] do

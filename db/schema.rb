@@ -422,18 +422,14 @@ ActiveRecord::Schema.define(version: 20181005131117) do
 
   create_table "polls", force: :cascade do |t|
     t.text "description", null: false
-    t.datetime "start_date"
-    t.time "duration"
-    t.string "poll_status"
+    t.integer "poll_type", null: false
+    t.integer "poll_type_id", null: false
+    t.datetime "start_date", null: false
+    t.time "duration", null: false
+    t.string "poll_status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "polls_posts", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "poll_id", null: false
-    t.index ["poll_id", "post_id"], name: "index_polls_posts_on_poll_id_and_post_id"
-    t.index ["post_id", "poll_id"], name: "index_polls_posts_on_post_id_and_poll_id"
+    t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
   end
 
   create_table "portal_accesses", force: :cascade do |t|
