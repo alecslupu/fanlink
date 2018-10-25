@@ -75,7 +75,10 @@ class Api::V3::InterestsController < ApiController
       current_user.interests.delete(Interest.where(parent_id: @interest.id))
     end
     current_user.interests << @interest
+    puts "Add interest errors"
+    puts current_user.errors
     puts current_user.interests.errors
+    puts "##################################"
     head :ok
   end
 
