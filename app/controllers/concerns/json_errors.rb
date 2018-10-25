@@ -21,6 +21,7 @@ module JSONErrors
 
     def render_422(errors = "could not save data")
       errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
+      puts "Got 422."
       render_errors(errors, 422)
     end
 
