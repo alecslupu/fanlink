@@ -76,10 +76,10 @@ class Api::V3::InterestsController < ApiController
     end
     begin
       current_user.interests << @interest unless current_user.interests.exists?(@interest)
-      head :ok
+      # head :ok
     rescue
       # Silently fail
-      head :ok
+      # head :ok
     end
   end
 
