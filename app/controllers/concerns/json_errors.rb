@@ -1,7 +1,7 @@
-# module JSONErrors
-#   extend ActiveSupport::Concern
+module JSONErrors
+  extend ActiveSupport::Concern
 
-#   included do
+  included do
 #     rescue_from StandardError,                      with: :render_500
 #     rescue_from ActiveRecord::RecordNotFound,       with: :render_404
 #     rescue_from ActionController::ParameterMissing, with: :render_400
@@ -58,5 +58,5 @@
 #       end
 #     end
 
-#   end
-# end
+  end
+end
