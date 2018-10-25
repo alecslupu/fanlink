@@ -41,7 +41,7 @@ module JSONErrors
       data = {
         errors: errors
       }
-      render json: data, status: status
+      # render json: data, status: status
     end
 
 
