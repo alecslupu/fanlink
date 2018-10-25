@@ -26,7 +26,7 @@ module JSONErrors
 
     def render_500(errors = "internal server error")
       errors = errors.join(", ") if errors.is_a?(Array)
-      Rollbar.error(errors, status: status) unless Rails.env.development? || Rails.env.test?
+      Rollbar.error(errors, status: 500) unless Rails.env.development? || Rails.env.test?
       render_errors("Internal Server Error", 500)
     end
 
