@@ -21,12 +21,10 @@ module JSONErrors
 
     def render_422(errors = "could not save data")
       errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
-      puts "Got 422."
       render_errors(errors, 422)
     end
 
     def render_500(errors = "internal server error")
-      puts "Got 500"
       errors = errors.join(", ") if errors.is_a?(Array)
       Rollbar.error(errors, status: status) unless Rails.env.development? || Rails.env.test?
       render_errors("Internal Server Error", 500)
@@ -37,6 +35,7 @@ module JSONErrors
     end
 
     def render_errors(errors, status = 400)
+      Rails.logger("Status: #{status}")
       errors = Array.wrap(errors) unless errors.is_a?(Array)
       Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test? || status == 500
       data = {

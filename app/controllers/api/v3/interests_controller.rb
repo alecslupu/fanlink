@@ -75,7 +75,7 @@ class Api::V3::InterestsController < ApiController
       current_user.interests.delete(Interest.where(parent_id: @interest.id))
     end
     begin
-      current_user.interests << @interest unless current_user.interests.exists?(@interest)
+      current_user.interests << @interest unless current_user.interests.exists?(@interest.id)
       # head :ok
     rescue
       # Silently fail
