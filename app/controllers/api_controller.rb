@@ -7,7 +7,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app
+  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned
   after_action :unset_person, :unset_app
 
   #
@@ -57,6 +57,14 @@ protected
 
   def super_admin_only
     head :unauthorized unless current_user.role == "super_admin"
+  end
+
+  def check_banned
+    if current_user&.terminated
+      logout
+      cookies.delete :_fanlink_session
+      head :unauthorized if current_user.terminated
+    end
   end
 
   def check_dates(required = false)

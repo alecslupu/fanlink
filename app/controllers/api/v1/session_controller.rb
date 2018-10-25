@@ -1,6 +1,6 @@
 class Api::V1::SessionController < ApiController
   prepend_before_action :logout, only: :create
-  skip_before_action :require_login
+  skip_before_action :require_login, :check_banned
   skip_before_action :set_product, except: %i[ create ]
 
   # **
@@ -30,7 +30,11 @@ class Api::V1::SessionController < ApiController
 
   def index
     if @person = current_user
-      return_the @person
+      if @person.terminated
+        return head :unauthorized
+      else
+        return_the @person
+      end
     else
       render_not_found
     end

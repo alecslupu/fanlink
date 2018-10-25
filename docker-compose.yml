@@ -43,15 +43,17 @@ services:
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       PORTAL_URL: ${PORTAL_URL}
       REDIS_URL: ${REDIS_URL}
+      FANLINK_PROJECT_PATH: ${FANLINK_PROJECT_PATH}
+
     ports:
       - 3000:3000
     volumes:
-      - $PWD/:/usr/src/app
+      - $FANLINK_PROJECT_PATH/:/usr/src/app
       - gems:/gems
   flapi-jobs:
     image: flapi:dev
     container_name: flapi-jobs
-    command: '/entrypoint_queue'
+    command: 'bin/entrypoint_queue'
     ports: []
     links:
       - postgres
@@ -62,7 +64,7 @@ services:
       <<: *flapi-environment
       QUEUE: default
     volumes:
-      - $PWD/:/usr/src/app
+      - $FANLINK_PROJECT_PATH/:/usr/src/app
       - gems:/gems
     restart: unless-stopped
 

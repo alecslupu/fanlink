@@ -19,6 +19,7 @@ if Person.count == 0
     Person.create(name: "Admin User", username: "admin", product_id: Product.find_by(internal_name: "admin").id, email: "admin@example.com",
                   password: "flink_admin", role: :super_admin, birthdate: "1982-01-01")
     Person.create(name: "Some User", username: "some_user", product_id: Product.find_by(internal_name: "test").id, email: "somebody@example.com", password: "password", birthdate: "1982-01-01")
+    Person.create(name: "Some Banned User", username: "some_banned_user", product_id: Product.find_by(internal_name: "test").id, email: "banned@example.com", password: "password", birthdate: "1982-01-01", terminated: true)
   end
 end
 
