@@ -28,7 +28,7 @@ module JSONErrors
       errors = Array.wrap(errors) unless errors.is_a?(Array)
       Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
       errors = Array.wrap("Internal Server Error")
-      render_errors(errors, 500)
+      render_errors(errors, 500) ####Git doesn't like me
     end
 
     def render_503(errors = "service unavailable")
