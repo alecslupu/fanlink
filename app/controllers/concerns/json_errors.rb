@@ -5,7 +5,7 @@ module JSONErrors
     rescue_from StandardError,                      with: :render_500
     rescue_from ActiveRecord::RecordNotFound,       with: :render_404
     rescue_from ActionController::ParameterMissing, with: :render_400
-
+    rescue_from ActiveRecord::RecordInvalid,        with: :render_422
 
     def render_400(errors = "required parameters invalid")
       render_errors(errors, 400)
