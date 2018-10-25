@@ -37,7 +37,7 @@ module JSONErrors
     def render_errors(errors, status = 400)
       logger.debug "Status: #{status}"
       errors = Array.wrap(errors) unless errors.is_a?(Array)
-      Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test? || status == 500
+      # Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test? || status == 500
       data = {
         errors: errors
       }
