@@ -25,7 +25,10 @@ module JSONErrors
     end
 
     def render_500(errors = "internal server error")
-      render_errors(errors, 500)
+      errors = Array.wrap(errors) unless errors.is_a?(Array)
+      Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
+      errors = Array.wrap("Internal Server Error")
+      render_errors(errors, 500) ####Git doesn't like me
     end
 
     def render_503(errors = "service unavailable")
@@ -34,15 +37,7 @@ module JSONErrors
 
     def render_errors(errors, status = 400)
       errors = Array.wrap(errors) unless errors.is_a?(Array)
-      if status == 500
-        # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-        # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
-        Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
-        errors = ["Internal Server Error"]
-      else
-        # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
-        Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
-      end
+      Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test? || status == 500
       data = {
         errors: errors
       }
