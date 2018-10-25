@@ -6,7 +6,7 @@ json.cache! ["v3", post_comment_report.updated_at, post_comment_report] do
   json.reason post_comment_report.reason
   json.status post_comment_report.status
 end
-if @req_source == "portal"
+if @req_source == "web"
   json.cache! ["v3", @req_source, post_comment_report.post_comment.updated_at, post_comment_report.post_comment] do
     json.post_comment post_comment_report.post_comment
   end

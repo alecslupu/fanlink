@@ -13,7 +13,7 @@ json.message do
   json.body message_report.message.body
   json.status message_report.message.status
 end
-if @req_source == "portal"
+if @req_source == "web"
   json.message do
     json.cache! ["v3", @req_source, message_report.message.updated_at, message_report.message.id] do
       json.id message_report.message.id
