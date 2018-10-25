@@ -74,13 +74,11 @@ class Api::V3::InterestsController < ApiController
     if @interest.parent_id.nil?
       current_user.interests.delete(Interest.where(parent_id: @interest.id))
     end
-    Rails.logger("Interests Exists? #{current_user.interests.exists?(@interest)}")
-    current_user.interests << @interest unless current_user.interests.exists?(@interest)
-    puts "Add interest errors"
-    puts current_user.errors
-    puts current_user.interests.errors
-    puts "##################################"
-    head :ok
+    begin
+      current_user.interests << @interest unless current_user.interests.exists?(@interest)
+      head :ok
+    rescue
+    end
   end
 
   def remove_interest
