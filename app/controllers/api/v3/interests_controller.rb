@@ -85,7 +85,7 @@ class Api::V3::InterestsController < ApiController
 
   private
   def interest_params
-    params.require(:interest).permit(:title, :parent_id)
+    params.require(:interest).permit(:title, :parent_id, :order)
   end
 
 end
