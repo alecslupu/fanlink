@@ -25,7 +25,7 @@ class Api::V3::InterestsController < ApiController
   #
   # *
   def index
-    @interests = Interest.interests(ActsAsTenant.current_tenant)
+    @interests = Interest.interests(ActsAsTenant.current_tenant).order(order: :desc)
     return_the @interests
   end
 
