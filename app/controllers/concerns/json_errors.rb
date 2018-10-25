@@ -38,6 +38,7 @@ module JSONErrors
         # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
         # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
         Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
+        errors = ["Internal Server Error"]
       else
         # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
         Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
