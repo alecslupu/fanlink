@@ -13,7 +13,7 @@
 config = Timber::Config.instance
 
 config.integrations.action_view.silence = Rails.env.production?
-config.integrations.action_controller.disable = true
+# config.integrations.action_controller.disable = true
 config.integrations.active_record.disable = true
 config.integrations.action_view.disable = true
 
