@@ -161,7 +161,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   def update
     @room = Room.find(params[:id])
     if params.has_key?(:room)
-      if @room.created_by != current_user
+      if @room.created_by != current_user || !current_user.some_admin?
         head :unauthorized
       else
         if @room.update_attribute(:name, room_params[:name])
@@ -179,7 +179,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   def room_params
     allowed_params = [ :name, :picture, member_ids: [] ]
     if current_user.admin? || current_user.product_account? || current_user.super_admin?
-      allowed_params += [ :description, :public ]
+      allowed_params += [ :description, :public, :order ]
     end
     params.require(:room).permit(allowed_params)
   end
