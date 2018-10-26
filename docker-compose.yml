@@ -48,7 +48,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - $FANLINK_PROJECT_PATH/:/usr/src/app
+      - $PWD/:/usr/src/app
       - gems:/gems
   flapi-jobs:
     image: flapi:dev
@@ -64,7 +64,7 @@ services:
       <<: *flapi-environment
       QUEUE: default
     volumes:
-      - $FANLINK_PROJECT_PATH/:/usr/src/app
+      - $PWD/:/usr/src/app
       - gems:/gems
     restart: unless-stopped
 
