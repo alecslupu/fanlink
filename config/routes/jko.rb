@@ -154,6 +154,7 @@ JkoApi.routes self do
     resources :people, only: %i[ create index show update destroy] do
       member do
         get "interests" => "people#interests"
+        get "public" => "people#public"
         patch "change_password"
       end
       collection do
