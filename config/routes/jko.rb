@@ -210,5 +210,6 @@ JkoApi.routes self do
 
   version 4 do
     resources :followings, only: %i[ index ]
+    resources :posts, only: %i[ index ]
   end
 end

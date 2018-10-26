@@ -16,8 +16,10 @@ Rails.application.configure do
 
   config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
 
+
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join("tmp/caching-dev.txt").exist?
+    config.action_controller.enable_fragment_cache_logging = true
     config.action_controller.perform_caching = true
 
     #config.cache_store = :memory_store
@@ -56,8 +58,11 @@ Rails.application.configure do
 
   config.fanlink = {
     :aws => {
+      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
+      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
       transcoder_key: ENV['AWS_TRANSCODER_KEY'],
       transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
+      s3_bucket: ENV['AWS_BUCKET'],
       transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
       transcoder_queue_url: 'https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-development-video',
 

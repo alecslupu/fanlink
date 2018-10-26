@@ -21,6 +21,9 @@ class Api::V3::PostsController < Api::V2::PostsController
   # @apiParam (body) {Attachment} [post.picture]
   #   Post picture, this should be `image/gif`, `image/png`, or `image/jpeg`.
   #
+  # @apiParam (body) {Attachment} [post.video]
+  #   Post video, this should be `image/gif`, `image/png`, or `image/jpeg`.
+  #
   # @apiParam (body) {Attachment} [post.audio]
   #   Post audio, this should be `audio/acc`.
   #
@@ -173,7 +176,7 @@ class Api::V3::PostsController < Api::V2::PostsController
       @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    return_the @posts
+    return_the @posts, handler: "jb"
   end
   # **
   # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
