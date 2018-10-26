@@ -6,9 +6,9 @@ json.cache! ["v3", post] do
   json.audio_url post.audio_url
   json.audio_size post.audio_file_size
   json.audio_content_type post.audio_content_type
-  #json.person do
-  #  json.partial! "api/v3/people/person", locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) }
-  #end
+  json.person do
+    json.partial! "api/v3/people/person", locals: { person: post.person, relationships: Relationship.for_people(current_user, post.person) }
+  end
   json.post_reaction_counts post.reaction_breakdown.to_json
   json.global post.global
   json.starts_at (post.starts_at.nil?) ? nil : post.starts_at.to_s
