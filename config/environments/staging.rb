@@ -58,6 +58,19 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.fanlink = {
+    :aws => {
+      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
+      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
+      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
+      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
+      s3_bucket: ENV['AWS_BUCKET'],
+      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
+      transcoder_queue_url: 'https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-development-video',
+    }
+  }
+
+
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
