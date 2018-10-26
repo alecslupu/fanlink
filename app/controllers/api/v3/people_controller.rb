@@ -2,7 +2,8 @@ class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
   before_action :super_admin_only, only: %i[ destroy ]
   load_up_the Person, except: %i[ index create ]
-  skip_before_action :require_login, only: %i[ create public ]
+  skip_before_action :require_login, only: %i[ create ]
+  skip_before_action :require_login, :set_product, only: %i[ public ]
 
 
   # **
