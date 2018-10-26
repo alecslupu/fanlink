@@ -2,7 +2,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
   before_action :super_admin_only, only: %i[ destroy ]
   load_up_the Person, except: %i[ index create ]
-  skip_before_action :require_login, only: %i[ create ]
+  skip_before_action :require_login, only: %i[ create public ]
 
 
   # **
@@ -210,6 +210,15 @@ class Api::V3::PeopleController < Api::V2::PeopleController
     else
       @person = Person.find(params[:id])
       return_the @person
+    end
+  end
+
+  def public
+    if current_user.blocks_by.where(blocked_id: params[:id]).exists?
+      render_not_found
+    else
+      @person = Person.find(params[:id])
+      return_the @person, handler: "jb"
     end
   end
 
