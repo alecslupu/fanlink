@@ -215,12 +215,8 @@ class Api::V3::PeopleController < Api::V2::PeopleController
   end
 
   def public
-    if current_user.blocks_by.where(blocked_id: params[:id]).exists?
-      render_not_found
-    else
-      @person = Person.find(params[:id])
-      return_the @person, handler: "jb"
-    end
+    @person = Person.find(params[:id])
+    return_the @person, handler: "jb"
   end
 
   # **
