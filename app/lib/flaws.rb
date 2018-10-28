@@ -208,7 +208,7 @@ module Flaws
   def self.pipeline_id
     Rails.configuration.fanlink[:aws][:transcoder_pipeline_id]
   end
-  j
+
   def self.queue_url
     Rails.configuration.fanlink[:aws][:transcoder_queue_url]
   end

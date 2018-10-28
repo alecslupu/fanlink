@@ -25,4 +25,5 @@ class AwsController < ApplicationController
 		Rails.logger.error "SNS confusion, topic=#{topic}, type=#{type}, params=#{params.inspect}, error=#{e.inspect}, body.Message=#{JSON.parse(body['Message']).inspect}"
 		render :nothing => true, :status => :unprocessable_entity
 	end
+  skip_before_action :require_login
 end
