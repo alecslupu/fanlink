@@ -8,7 +8,7 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
-  
+
   # Disable full error reports.
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = true
@@ -53,7 +53,8 @@ Rails.application.configure do
   config.force_ssl = true
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger = Timber::Logger.new(STDOUT)
+    logger.level = config.log_level
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -84,11 +85,4 @@ Rails.application.configure do
     Bullet.rails_logger = true
     # Bullet.rollbar = true
   end
-
-  # Install the Timber.io logger, send logs over STDOUT. Actual log delivery
-  # to the Timber service is handled external of this application.
-  logger = Timber::Logger.new(STDOUT)
-  logger.level = config.log_level
-  config.logger = ActiveSupport::TaggedLogging.new(logger)
-
 end
