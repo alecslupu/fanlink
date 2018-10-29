@@ -66,7 +66,7 @@ Rails.application.configure do
       transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
       s3_bucket: ENV['AWS_BUCKET'],
       transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
-      transcoder_queue_url: 'https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-development-video',
+      transcoder_queue_url: 'https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-staging-video',
     }
   }
 
