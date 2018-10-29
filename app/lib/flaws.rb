@@ -168,6 +168,7 @@ module Flaws
   #
   def self.transcoded_summary_for(filename, preset_ids)
     #Test to see if this include? is throwing the error.
+    logger.tagged("FLAWS") { logger.debug(preset_ids.inspect) }
     if !preset_ids.nil?
       directory = video_directory_for(filename)
       basename = File.basename(filename, File.extname(filename))
