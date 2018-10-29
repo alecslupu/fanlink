@@ -36,8 +36,8 @@ json.cache! ["v3", post] do
   end
 
   json.video_url post.video.url
-  json.video_transcoded  post.video_transcoded
-  json.video_thumbnail post.video_thumbnail
+  json.video_transcoded  (post.video.url.nil? ? nil : post.video_transcoded)
+  json.video_thumbnail (post.video.url.nil? ? nil : post.video_thumbnail)
 end
 
 if defined?(post_reaction) && post_reaction.present?

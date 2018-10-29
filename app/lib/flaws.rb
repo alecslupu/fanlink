@@ -167,21 +167,17 @@ module Flaws
   #   MIME type, the `:src` is the URL for the video.
   #
   def self.transcoded_summary_for(filename, preset_ids)
-    #Test to see if this include? is throwing the error.
-    logger.tagged("FLAWS") { logger.debug(preset_ids.inspect) }
-    if !preset_ids.nil?
-      directory = video_directory_for(filename)
-      basename = File.basename(filename, File.extname(filename))
+    directory = video_directory_for(filename)
+    basename = File.basename(filename, File.extname(filename))
 
-      presets = VIDEO_PRESETS.select { |p| preset_ids.include?(p[:id]) }
-      #hls_entry = [{:type => "application/x-mpegurl", :src => "#{hls_server}videos/#{directory}/v.m3u8"}]
-      #hls_entry = [] if (presets.all? { |p| !p[:playlist] })
+    presets = VIDEO_PRESETS.select { |p| preset_ids.include?(p[:id]) }
+    #hls_entry = [{:type => "application/x-mpegurl", :src => "#{hls_server}videos/#{directory}/v.m3u8"}]
+    #hls_entry = [] if (presets.all? { |p| !p[:playlist] })
 
-      non_hls = lambda { |p| !p[:playlist] }
-      to_summary = lambda { |p| {:type => p[:mime], :src => "#{s3_server}#{directory}/#{basename}-#{p[:name]}"} }
-      #hls_entry + presets.select(&non_hls).map(&to_summary)
-      presets.select(&non_hls).map(&to_summary)
-    end
+    non_hls = lambda { |p| !p[:playlist] }
+    to_summary = lambda { |p| {:type => p[:mime], :src => "#{s3_server}#{directory}/#{basename}-#{p[:name]}"} }
+    #hls_entry + presets.select(&non_hls).map(&to_summary)
+    presets.select(&non_hls).map(&to_summary)
   end
 
   private
