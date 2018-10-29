@@ -55,7 +55,7 @@ Rails.application.configure do
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger = Timber::Logger.new(STDOUT)
     logger.level = config.log_level
-    logger.formatter = config.log_formatter
+    # logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
