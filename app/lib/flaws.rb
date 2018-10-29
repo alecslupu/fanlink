@@ -8,7 +8,7 @@ module Flaws
   # as we care about).
   #
   VIDEO_PRESETS = [
-    {id: "1351620000001-000001", mime: "video/mp4", name: "v-1080p.mp4", w: 1920, h: 1080},
+    {id: "1351620000001-000001", mime: "video/mp4", name: "v-1080p.mp4", w: 1920, h: 1080, thumbnails: true},
     {id: "1351620000001-000010", mime: "video/mp4", name: "v-720p.mp4", w: 1280, h: 720},
     {id: "1351620000001-000020", mime: "video/mp4", name: "v.mp4", w: 854, h: 480, always: true},
     {id: "1351620000001-000040", mime: "video/mp4", name: "v-360p.mp4", w: 640, h: 320, always: true},
@@ -188,9 +188,19 @@ module Flaws
     -> (p) { "#{dirname}/#{basename}-#{p[:name]}" }
   end
 
+  def self.thumbnail_name_for(filename)
+    basename = File.basename(filename, File.extname(filename))
+    -> (p) { "thumbnails/#{basename}" }
+  end
+
   def self.outputter_for(filename)
     output_name = output_name_for(filename)
-    -> (p) { {key: output_name[p], preset_id: p[:id]}.merge(p[:playlist] ? {segment_duration: "10"} : {}) }
+    thumbnail_name = thumbnail_name_for(filename)
+    -> (p) {
+      {key: output_name[p], preset_id: p[:id]}.merge(
+        p[:thumbnails] ? {thumbnail_pattern: "#{thumbnail_name[p]}-{count}"} : {}).merge(
+        p[:playlist] ? {segment_duration: "10"} : {})
+    }
   end
 
   def self.video_directory_for(filename)

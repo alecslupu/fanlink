@@ -54,13 +54,6 @@ class Post < ApplicationRecord
     [super, person.cache_key].join("/")
   end
 
-  #
-  # Process an Elastic Transcoder response notification.
-  #
-  # @param [Hash] msg
-  #   The unpacked JSON message.
-  #
-
   def comments
     post_comments
   end
@@ -98,9 +91,15 @@ class Post < ApplicationRecord
     end
   end
 
-  def product
-    person.product
+  def video_thumbnail
+    if video_transcoded.empty?
+      nil
+    else
+      id = File.basename(self.video.path, File.extname(self.video.path))
+      url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.png"
+    end
   end
+
 
   def reaction_breakdown
     (post_reactions.count > 0) ? post_reactions.group(:reaction).count.sort_by { |r, c| r.to_i(16) }.to_h : nil
