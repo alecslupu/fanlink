@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # See everything in the log (default is :info)
   config.logger = Logger.new(STDOUT)
-  config.logger.level = Logger::ERROR
+  config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
