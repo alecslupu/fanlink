@@ -34,6 +34,15 @@ json.cache! ["v3", post] do
   else
     json.tag nil
   end
+  if post.poll.present?
+    json.poll do
+      json.poll_id post.poll.id
+      json.description post.poll.description
+      json.start_date post.poll.start_date
+      json.duration post.poll.duration
+      json.poll_status post.poll.poll_status
+    end
+  end
 end
 if defined?(post_reaction) && post_reaction.present?
   json.post_reaction post_reaction, partial: "api/v3/post_reactions/post_reaction", as: :post_reaction

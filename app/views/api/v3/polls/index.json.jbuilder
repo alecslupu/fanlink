@@ -1,1 +1,1 @@
-json.post_polls @post_polls, partial: "post_polls", as: :post_polls
+json.polls @polls, partial: "polls", as: :polls

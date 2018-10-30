@@ -36,7 +36,9 @@ class Api::V3::PollsController < ApiController
   def create
     parms = poll_params
     @poll = Poll.create(parms)
+    @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
     if @poll.valid?
+      @poll.save
       return_the @poll
     else
       render_422 @poll.errors
@@ -112,14 +114,10 @@ class Api::V3::PollsController < ApiController
 
   def update
     if params.has_key?(:poll)
-      if @post.person == current_user
-        if @poll.update_attributes(poll_params)
-          return_the @poll
-        else
-          render_422 @poll.errors
-        end
+      if @poll.update_attributes(poll_params)
+        return_the @poll
       else
-        render_not_found
+        render_422 @poll.errors
       end
     else
       return_the @poll
@@ -127,7 +125,7 @@ class Api::V3::PollsController < ApiController
   end
 
   def index
-    @polls = paginate @polls.order(created_at: :desc)
+    @polls = paginate(Poll.all.order(created_at: :asc))
     return_the @polls
   end
 
