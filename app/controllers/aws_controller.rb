@@ -12,12 +12,9 @@ class AwsController < ApplicationController
 		type  = request.headers['x-amz-sns-message-type'].to_s.downcase
 		topic = request.headers['x-amz-sns-topic-arn']
     body  = JSON.parse(request.raw_post)
-    Rails.logger.error "----->Got #{type}"
 		if(type == 'subscriptionconfirmation')
-      Rails.logger.error "Away we go #{body['Token']}"
 			Flaws.sns_confirm(topic, body['Token'])
 		elsif(type == 'notification')
-      Rails.logger.error body['Message']
 			Post.process_et_response(JSON.parse(body['Message']))
 		else
 			raise 'Unknown message type'
