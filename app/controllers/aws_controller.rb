@@ -14,6 +14,7 @@ class AwsController < ApplicationController
     body  = JSON.parse(request.raw_post)
     Rails.logger.error "----->Got #{type}"
 		if(type == 'subscriptionconfirmation')
+      Rails.logger.error "Away we go"
 			Flaws.sns_confirm(topic, body['Token'])
 		elsif(type == 'notification')
       Rails.logger.error body['Message']
