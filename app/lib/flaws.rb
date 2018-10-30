@@ -68,7 +68,7 @@ module Flaws
   #
   def self.sns_confirm(topic_arn, token)
     raise ArgumentError.new('Missing token for subscription confirmation') if(token.blank?)
-    Aws::SNS::Client.new.confirm_subscription(:topic_arn => topic_arn, :token => token)
+    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret).confirm_subscription(:topic_arn => topic_arn, :token => token)
   end
 
   def self.transcoding_queue?
