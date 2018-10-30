@@ -1,5 +1,5 @@
 class SnsContentType
-	def initialize(app, message = "Response Time")
+	def initialize app
 		@app = app
 	end
 

@@ -10,6 +10,8 @@ require "action_controller/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+require "./app/middleware/sns_content_type"
+
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -52,7 +54,8 @@ module Fanlink
         resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
       end
     end
-    config.middleware.insert_after Rack::Cors, "SnsContentType"
+    v
+    config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
   end
 end
