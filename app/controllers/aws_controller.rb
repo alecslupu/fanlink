@@ -9,8 +9,7 @@ class AwsController < ApplicationController
 	# Authentication is done through basic auth with an `ApiKey`
 	#
 	def video_transcoded
-    request.format = :json
-    Rails.logger.error "\n\nBODY IS\n\n#{request.body.read.inspect}\n\n"
+    Rails.logger.error "\n\n#{request.inspect}\n\n"
 		type  = request.headers['x-amz-sns-message-type'].to_s.downcase
 		topic = request.headers['x-amz-sns-topic-arn']
     body  = JSON.parse(request.body.read)
