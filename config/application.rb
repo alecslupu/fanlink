@@ -43,7 +43,6 @@ module Fanlink
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
 
-    config.middleware.insert_before ActionDispatch::ParamsParser, "SnsContentType"
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
@@ -53,6 +52,7 @@ module Fanlink
         resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
       end
     end
+    config.middleware.insert_after Rack::Cors, "SnsContentType"
     config.i18n.default_locale = :en
   end
 end
