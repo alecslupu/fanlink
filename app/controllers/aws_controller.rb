@@ -22,7 +22,7 @@ class AwsController < ApplicationController
 		else
 			raise 'Unknown message type'
 		end
-		head : ok
+		head :ok
 	rescue Aws::SNS::Errors::ServiceError, ArgumentError, RuntimeError => e
 		Rails.logger.error "SNS confusion, topic=#{topic}, type=#{type}, params=#{params.inspect}, error=#{e.inspect}, body.Message=#{body['Message']}"
 		head :unprocessable_entity
