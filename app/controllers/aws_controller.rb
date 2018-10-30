@@ -12,8 +12,7 @@ class AwsController < ApplicationController
     Rails.logger.error "\n\nBODY IS\n\n#{request.body.read.inspect}\n\n"
 		type  = request.headers['x-amz-sns-message-type'].to_s.downcase
 		topic = request.headers['x-amz-sns-topic-arn']
-    Rails.logger.error request.raw
-		body  = JSON.parse(request.raw)
+		body  = JSON.parse(request.read)
 		if(type == 'subscriptionconfirmation')
 			Flaws.sns_confirm(topic, body['Token'])
 		elsif(type == 'notification')
