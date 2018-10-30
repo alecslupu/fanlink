@@ -54,7 +54,6 @@ module Fanlink
         resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
       end
     end
-    v
     config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
   end
