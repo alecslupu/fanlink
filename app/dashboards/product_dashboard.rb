@@ -10,6 +10,7 @@ class ProductDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     # versions: Field::HasMany.with_options(class_name: "PaperTrail::Version"),
     id: Field::Number,
+    people_count: Field::Number,
     name: Field::Text,
     internal_name: Field::Text,
     enabled: Field::Boolean,
@@ -30,6 +31,7 @@ class ProductDashboard < Administrate::BaseDashboard
     :name,
     :internal_name,
     :can_have_supers,
+    :people_count
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES

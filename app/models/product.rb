@@ -16,6 +16,10 @@ class Product < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  def people_count
+    people.count
+  end
+
   def to_s
     internal_name
   end
