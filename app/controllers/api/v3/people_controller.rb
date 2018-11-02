@@ -298,6 +298,9 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       @person = Person.find(params[:id])
       @person.destroy
       head :ok
+    elsif current_user.some_admin?
+      @person.update(deleted: true)
+      head :ok
     else
       render_not_found
     end
