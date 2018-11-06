@@ -13,6 +13,7 @@ class Api::V3::PortalNotificationsController < ApiController
   def create
     @portal_notification = PortalNotification.create(portal_params)
     if @portal_notification.valid?
+      @portal_notification.enqueue_push
       return_the @portal_notification
     else
       render_422 @portal_notification.errors
@@ -22,6 +23,7 @@ class Api::V3::PortalNotificationsController < ApiController
   def update
     if params.has_key?(:portal_notification)
       if @portal_notification.update_attributes(portal_params)
+        @portal_notification.update_push
         return_the @portal_notification
       else
         render_422 @portal_notification.errors

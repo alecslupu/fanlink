@@ -1,0 +1,13 @@
+json = {}
+
+json[:badges] = @badges.map do |badge|
+  Rails.cache.fetch ["v4", @req_source, badge.id, badge.updated_at] do
+    render partial: @req_source, locals: { badge: badge }, handlers: "jb"
+  end
+end
+
+json
+
+# {
+#   badges: render(partial: @req_source, collection: @badges, as: :badge)
+# }
