@@ -168,7 +168,7 @@ JkoApi.routes self do
 
     resources :posts, except: %i[ new edit ] do
       resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
-        resources :poll_options, :controller => "poll_options", only: %i[ create update destroy ]
+        resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ]
       end
 
       collection do
@@ -181,7 +181,7 @@ JkoApi.routes self do
     end
 
     resources :polls, only: %i[ index ] do
-      resources :poll_options, :controller => "poll_options", only: %i[ show index ]
+      resources :poll_options, :controller => "poll_options", only: %i[ show index cast_vote ]
     end
 
     resources :quests, except: %i[ create index show update ] do

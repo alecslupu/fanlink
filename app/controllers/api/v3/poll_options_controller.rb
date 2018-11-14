@@ -1,7 +1,6 @@
 class Api::V3::PollOptionsController < ApiController
   load_up_the Poll, from: :poll_id
-  load_up_the PollOption
-
+  load_up_the PollOption, from: :id
   # **
   # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction
@@ -37,15 +36,13 @@ class Api::V3::PollOptionsController < ApiController
 
   def create
     parms = poll_option_params
-    if @post.person.try(:product) == current_user.product
-      poll_option = @poll.poll_options.create(parms)
-      if @poll_option.valid?
-        return_the @poll_option
-      else
-        render_422 @poll_option.errors
-      end
+    @poll_option = PollOption.create(parms)
+    @poll_option.poll_id = params[:poll_id]
+    if @poll_option.valid?
+      @poll_option.save
+      return_the @poll_option
     else
-      render_not_found
+      render_422 @poll_option.errors
     end
   end
 
@@ -118,17 +115,13 @@ class Api::V3::PollOptionsController < ApiController
 
   def update
     if params.has_key?(:poll_option)
-      if @poll_option.person == current_user
-        if @poll_option.update_attributes(poll_option_params)
-          return_the @poll_option
-        else
-          render_422 @poll_option.errors
-        end
+      if @poll_option.update_attributes(poll_option_params)
+        return_the @poll_option
       else
-        render_not_found
+        render_422 @poll_option.errors
       end
     else
-      return_the @poll_option
+      render_not_found
     end
   end
 
@@ -144,6 +137,10 @@ class Api::V3::PollOptionsController < ApiController
   def index
     @poll_options = paginate @poll.poll_options.order(created_at: :desc)
     return_the @poll_options
+  end
+
+  def cast_vote
+    @poll_option.persons << current_user
   end
 
 private
