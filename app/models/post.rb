@@ -4,8 +4,6 @@ class Post < ApplicationRecord
   include Post::RealTime
   include TranslationThings
 
-  #replicated_model
-
   enum status: %i[ pending published deleted rejected errored ]
 
   after_save :adjust_priorities
@@ -74,6 +72,9 @@ class Post < ApplicationRecord
     (status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
   end
 
+  def published?
+    status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))
+  end
   private
 
     def adjust_priorities

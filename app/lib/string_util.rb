@@ -30,4 +30,10 @@ module StringUtil
   def self.url_ify(s)
     CGI.escape(s.de_accent.gsub(/\s+/, "-"))
   end
+
+  #
+  #  Returns the string with our tags stripped out. 
+  def self.tag_cleaner(s)
+
+  end
 end

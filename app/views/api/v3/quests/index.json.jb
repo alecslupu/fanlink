@@ -9,7 +9,7 @@ elsif current_user.tester
   end
 else
   json[:quests] = @quests.reject {|quest| %w[ deleted disabled enabled ].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now}.map do |quest|
-    render partial: 'quest', locals: { quest: quest, lang: @lang }, handlers: "jb"
+    render partial: 'quest', locals: { quest: quest, lang: @lang }
   end
 end
 json

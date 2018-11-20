@@ -1,0 +1,9 @@
+json = {}
+
+json[:activities] = @quest_activities.map do |activity|
+  Rails.cache.fetch ["v4", @req_source, activity.id, activity.updated_at] do
+    render partial: @req_source, locals: { activity: activity }, handlers: "jb"
+  end
+end
+
+json

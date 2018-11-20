@@ -72,4 +72,23 @@ class Message < ApplicationRecord
   def visible?
     !hidden
   end
+
+  def parse_tags
+    if body.match?(/\[([^\]]+)\]/i)
+      parsed = []
+      body.scan(/\[([^\]]+)\]/i) {|m| parsed << m.first.split('|') }
+      parsed.each {|p|
+        body_str = p.join('|')
+        case p[0]
+        when "m"
+          person_id = People.where(username: p[1].trim('@', '')).first.id
+          body_str = p.join('|')
+          message_mentions.build(person_id: person_id, location: body.index("[#{body_str}]"), length: p[1].size)
+          body.sub!("[#{body_str}]", p[1])
+        else
+          body.sub!("[#{body_str}]", p[1])
+        end
+      }
+
+  end
 end

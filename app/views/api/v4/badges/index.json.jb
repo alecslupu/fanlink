@@ -1,4 +1,4 @@
-json = {}
+ json = {}
 
 json[:badges] = @badges.map do |badge|
   Rails.cache.fetch ["v4", @req_source, badge.id, badge.updated_at] do

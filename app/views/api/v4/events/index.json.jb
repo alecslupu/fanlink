@@ -1,0 +1,9 @@
+json = {}
+
+json[:events] = @events.map do |event|
+  Rails.cache.fetch ["v4", @req_source, event.id, event.updated_at] do
+    render partial: @req_source, locals: { event: event, lang: @lang }, handlers: "jb"
+  end
+end
+
+json

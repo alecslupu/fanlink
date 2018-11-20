@@ -1,7 +1,0 @@
-json = Rails.cache.fetch ["v4", @activity_type.id, @activity_type.updated_at] do
-  {
-    type: render(partial: "activity", locals: { activity: @activity_type }, handlers: "jb")
-  }
-end
-
-json

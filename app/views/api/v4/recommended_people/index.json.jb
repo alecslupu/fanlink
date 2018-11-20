@@ -1,0 +1,9 @@
+json = {}
+
+json[:recommended_people] = @people.map do |person|
+  Rails.cache.fetch ["v4", @req_source, person.id, person.updated_at] do
+    render partial: @req_source, locals: { person: person }
+  end
+end
+
+json

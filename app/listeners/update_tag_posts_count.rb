@@ -1,0 +1,3 @@
+class UpdateTagPostsCount
+  def
+end

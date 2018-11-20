@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181106160851) do
+ActiveRecord::Schema.define(version: 20181113030903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20181106160851) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false, null: false
+    t.integer "posts_count", default: 0
     t.index ["name"], name: "idx_category_names"
     t.index ["product_id"], name: "index_categories_on_product_id"
     t.index ["role"], name: "idx_category_roles"
@@ -766,6 +767,7 @@ ActiveRecord::Schema.define(version: 20181106160851) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false, null: false
+    t.integer "posts_count", default: 0
     t.index ["name"], name: "idx_tag_names"
     t.index ["product_id"], name: "idx_tag_products"
   end
