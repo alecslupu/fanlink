@@ -13,6 +13,7 @@
 config = Timber::Config.instance
 
 config.integrations.action_view.silence = Rails.env.production?
+config.integrations.rack.http_events.collapse_into_single_event = true
 
 # Add additional configuration here.
 # For common configuration options see:

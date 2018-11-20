@@ -10,6 +10,8 @@ require "action_controller/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+require "./app/middleware/sns_content_type"
+
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -43,6 +45,7 @@ module Fanlink
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
 
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins do |source, env|
@@ -51,6 +54,7 @@ module Fanlink
         resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
       end
     end
+    #config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
   end
 end

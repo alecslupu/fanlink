@@ -1,5 +1,5 @@
 class Api::V2::CategoriesController < ApiController
-  load_up_the Category, only: %i[ update ]
+  load_up_the Category, only: %i[ update delete ]
   # **
   # @apiDefine V2CategoryObject
   #    description
@@ -138,6 +138,23 @@ class Api::V2::CategoriesController < ApiController
   end
 
   def destroy
+    if current_user.some_admin?
+      if current_user.super_admin? && param[:force] == "1"
+        @category.destroy
+        head :ok
+      else
+        if @category.update(deleted: true)
+          @category.posts.each do | post |
+            post.category_id = nil
+          end
+          head :ok
+        else
+          render_422 @category.errors
+        end
+      end
+    else
+      render_not_found
+    end
   end
 
   def search

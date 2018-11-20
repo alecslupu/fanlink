@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # draw :v3
   draw :jko
 
+  post '/aws/video_transcoded' => 'aws#video_transcoded'
+
   get '/status' => 'application#status'
   #temporary hack to get around need for Accept header with api stuff
   # TODO: move the password reset controller update out of the api

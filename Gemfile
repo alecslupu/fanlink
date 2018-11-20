@@ -47,12 +47,15 @@ end
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
+  gem "pry"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-byebug'
   gem "dotenv-rails"
   gem "faker"
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "rswag-specs"
+  gem 'fuubar'
 end
 
 group :development do
@@ -81,6 +84,7 @@ group :test do
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'wisper-rspec', require: false
   gem 'json_schemer'
+  gem "turnip", require: false
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
@@ -125,7 +129,8 @@ gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
 gem "rollbar"
-gem "rubocop-rails"
+# gem "rubocop-rails"
+gem "rubocop-rails_config"
 gem "sorcery"
 gem 'timber', '~> 2.0'
 gem "unicode_utils"

@@ -25,6 +25,8 @@ module JSONErrors
     end
 
     def render_500(errors = "internal server error")
+        logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
+        errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test? || errors.is_a?(String)
       render_errors(errors, 500)
     end
 

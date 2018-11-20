@@ -13,11 +13,11 @@ module AttachmentSupport
           optimal: "-quality 75 -strip",
         }
 
-      validates_attachment name,
-                           content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
-                           size: { in: 0..5.megabytes }
+        validates_attachment name,
+          content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+          size: { in: 0..5.megabytes }
 
-      class_eval <<-EOE
+        class_eval <<-EOE
         def #{name}_url
           #{name}.file? ? #{name}.url : nil
         end
@@ -27,15 +27,27 @@ module AttachmentSupport
         Paperclip.interpolates :product do |attachment, style|
           attachment.instance.product.internal_name
         end
-      EOE
+        EOE
     end
 
     def has_audio_called(name)
       has_attached_file name, default_url: nil
       validates_attachment name,
-                           content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/aac", "audio/x-aac"] },
-                           size: { in: 0..10.megabytes }
+        content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/aac", "audio/x-aac"] },
+        size: { in: 0..10.megabytes }
 
+      class_eval <<-EOE
+        def #{name}_url
+          #{name}.file? ? #{name}.url : nil
+        end
+        Paperclip.interpolates :product do |attachment, style|
+          attachment.instance.product.internal_name
+        end
+      EOE
+    end
+
+    def has_video_called(name)
+      has_attached_file name, default_url: nil
       class_eval <<-EOE
         def #{name}_url
           #{name}.file? ? #{name}.url : nil

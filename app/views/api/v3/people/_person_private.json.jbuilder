@@ -33,3 +33,15 @@ if person.admin? && person.portal_access.present?
 else
   json.permissions nil
 end
+
+if person.pinned_to.present?
+  json.pin_messages_to do
+    json.array!(person.pin_messages) do |pin|
+      json.id pin.id
+      json.room_id pin.room.id
+      json.room_name pin.room.name
+    end
+  end
+else
+  json.pin_messages_to nil
+end

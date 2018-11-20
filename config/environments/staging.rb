@@ -8,7 +8,7 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
-  
+
   # Disable full error reports.
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = true
@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # See everything in the log (default is :info)
   config.logger = Logger.new(STDOUT)
-  config.logger.level = Logger::ERROR
+  config.log_level = :debug
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -53,10 +53,23 @@ Rails.application.configure do
   config.force_ssl = true
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
+    logger = Timber::Logger.new(STDOUT)
+    logger.level = config.log_level
+    # logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
+
+  config.fanlink = {
+    :aws => {
+      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
+      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
+      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
+      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
+      s3_bucket: ENV['AWS_BUCKET'],
+      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
+    }
+  }
+
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -71,11 +84,4 @@ Rails.application.configure do
     Bullet.rails_logger = true
     # Bullet.rollbar = true
   end
-
-  # Install the Timber.io logger, send logs over STDOUT. Actual log delivery
-  # to the Timber service is handled external of this application.
-  logger = Timber::Logger.new(STDOUT)
-  logger.level = config.log_level
-  config.logger = ActiveSupport::TaggedLogging.new(logger)
-
 end

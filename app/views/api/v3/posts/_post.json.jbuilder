@@ -34,7 +34,12 @@ json.cache! ["v3", post] do
   else
     json.tag nil
   end
+
+  json.video_url post.video_url
+  json.video_transcoded post.video_transcoded
+  json.video_thumbnail post.video_thumbnail
 end
+
 if defined?(post_reaction) && post_reaction.present?
   json.post_reaction post_reaction, partial: "api/v3/post_reactions/post_reaction", as: :post_reaction
 else

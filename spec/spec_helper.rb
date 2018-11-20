@@ -1,4 +1,5 @@
 require "simplecov"
+require "pry"
 
 SimpleCov.start "rails" do
   add_filter "app/channels" #nothing here
@@ -134,6 +135,9 @@ RSpec.configure do |config|
 
   config.include Sorcery::TestHelpers::Rails::Controller#, type: :request
   config.include Sorcery::TestHelpers::Rails::Integration #, type: :request
+  config.include RSpec::Rails::RequestExampleGroup, type: :request
+  config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
+
 
   config.before :each, type: :request do
     @json = nil
@@ -147,5 +151,4 @@ RSpec.configure do |config|
     config.before(:each) { Bullet.start_request }
     config.after(:each)  { Bullet.end_request }
   end
-
 end

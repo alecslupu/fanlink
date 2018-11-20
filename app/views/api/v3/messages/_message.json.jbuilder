@@ -14,4 +14,5 @@ json.cache! ["v3", message] do
   else
     json.mentions nil
   end
+  json.pinned message.pinned
 end

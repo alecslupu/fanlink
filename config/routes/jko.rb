@@ -162,7 +162,10 @@ JkoApi.routes self do
         post "password_reset" => "password_resets#update"
         get "recommended" => "recommended_people#index"
       end
+      post "pin" => "pin_messages#pin_to"
     end
+
+    resources :pin_messages, only: %i[ destroy], path: :pinned
 
     resources :portal_notifications
 
@@ -188,10 +191,16 @@ JkoApi.routes self do
       end
       get "assigned" => "assigned_rewards#index"
     end
+
+    resources :rooms do
+      post "pin" => "pin_messages#pin_from"
+    end
+
     resources :semesters do
       get "courses" => "courses#index"
       post "courses" => "courses#create"
     end
+
     resources :steps, except: %i[ create index show update ] do
       collection do
         post "complete" => "reward_progresses#create"
@@ -202,5 +211,6 @@ JkoApi.routes self do
 
   version 4 do
     resources :followings, only: %i[ index ]
+    resources :posts, only: %i[ index ]
   end
 end

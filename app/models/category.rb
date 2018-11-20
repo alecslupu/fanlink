@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
-  has_many :posts
+  has_many :posts, dependent: :nullify
 
   normalize_attributes :color
 
