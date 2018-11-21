@@ -1,3 +1,19 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "sync-rsync.remote": "root@192.168.1.125:/data",
+		"sync-rsync.onSave": true,
+		"sync-rsync.onSaveIndividual": true,
+		"sync-rsync.executableShell": "C:\\Windows\\System32\\bash.exe",
+		"sync-rsync.autoShowOutput": false,
+		"sync-rsync.local": "/d/Sync/Work/flink/flink-music/fanlink/",
+		"sync-rsync.args": [
+			"--delete"
+		],
+		"sync-rsync.exclude": [
+			".vscode",
+			".node_modules",
+			"tmp",
+			"log",
+			".git"
+		]
 }
