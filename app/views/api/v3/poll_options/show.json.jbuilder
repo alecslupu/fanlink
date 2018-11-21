@@ -1,3 +1,3 @@
-json.post_poll_option do
-  json.partial! "post_poll_option", locals: { post_poll_option: @post_poll_option }
+json.poll_option do
+  json.partial! "_poll_option", locals: { poll_option: @poll_option }
 end

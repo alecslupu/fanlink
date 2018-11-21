@@ -5,7 +5,7 @@ class CreatePolls < ActiveRecord::Migration[5.1]
       t.integer :poll_type, null: false
       t.integer :poll_type_id, null: false
       t.datetime :start_date, null: false
-      t.time :duration, null: false
+      t.integer :duration, default: 0, null: false
       t.string :poll_status, null:false
 
       t.timestamps

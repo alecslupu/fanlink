@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181005131117) do
+ActiveRecord::Schema.define(version: 20181111141641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.jsonb "title", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order", default: 0, null: false
     t.index ["parent_id"], name: "idx_interests_parent"
     t.index ["product_id"], name: "idx_interests_product"
   end
@@ -338,6 +339,7 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.text "device_identifier", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "device_type", default: 0, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
   end
@@ -377,6 +379,8 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.boolean "tester", default: false
     t.boolean "terminated", default: false
     t.text "terminated_reason"
+    t.boolean "deleted", default: false
+    t.integer "gdpr_status", default: 0, null: false
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
@@ -412,6 +416,13 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
   end
 
+  create_table "pin_messages", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "poll_options", force: :cascade do |t|
     t.text "description", null: false
     t.integer "poll_id", null: false
@@ -425,7 +436,7 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.integer "poll_type", null: false
     t.integer "poll_type_id", null: false
     t.datetime "start_date", null: false
-    t.time "duration", null: false
+    t.integer "duration", default: 0, null: false
     t.string "poll_status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -546,6 +557,12 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
+    t.string "video_job_id"
+    t.jsonb "video_transcoded", default: {}, null: false
     t.index ["body"], name: "index_posts_on_body", using: :gin
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
@@ -654,6 +671,16 @@ ActiveRecord::Schema.define(version: 20181005131117) do
     t.index ["reward_id"], name: "idx_quests_rewards"
     t.index ["starts_at"], name: "index_quests_on_starts_at"
     t.index ["status"], name: "index_quests_on_status"
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.text "app_name", null: false
+    t.text "server_ip", null: false
+    t.text "app_environment", null: false
+    t.text "user"
+    t.text "hashed_access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "relationships", force: :cascade do |t|

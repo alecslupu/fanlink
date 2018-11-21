@@ -1,1 +1,1 @@
-json.post_poll_option @post_poll_option, partial: "post_poll_option", as: :post_poll_option
+json.poll_option @poll_option, partial: "poll_option", as: :poll_option
