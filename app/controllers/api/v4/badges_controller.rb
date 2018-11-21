@@ -11,14 +11,14 @@ class Api::V4::BadgesController < Api::V3::BadgesController
 
   def create
     @badge = Badge.create(badge_params)
-    return_the @badge, handler: 'jb'
+    return_the @badge, handler: 'jb', using: :show
   end
 
   def update
     if params.has_key?(:badge)
       @badge.update_attributes(badge_params)
     end
-    return_the @badge, handler: 'jb'
+    return_the @badge, handler: 'jb', using: :show
   end
 
   def show

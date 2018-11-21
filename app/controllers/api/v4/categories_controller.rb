@@ -16,19 +16,19 @@ class Api::V4::CategoriesController < Api::V3::CategoriesController
 
   def create
     @category = Category.create(category_params)
-    return_the @category, handler: 'jb'
+    return_the @category, handler: 'jb', using: :show
   end
 
   def update
     if params.has_key?(:category)
       if @category.update_attributes(category_params)
         broadcast(:category_updated, current_user, @category)
-        return_the @category, handler: 'jb'
+        return_the @category, handler: 'jb', using: :show
       else
         render_422 @category.errors
       end
     else
-      return_the @category, handler: 'jb'
+      return_the @category, handler: 'jb', using: :show
     end
   end
 

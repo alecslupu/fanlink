@@ -16,7 +16,7 @@ class Api::V4::ActivityTypesController < Api::V3::ActivityTypesController
   def create
     @activity_type = @quest_activity.activity_types.create(type_params)
     if @activity_type.valid?
-      return_the @activity_type, handler: 'jb'
+      return_the @activity_type, handler: 'jb', using: :show
     else
       render_422 @activity_type.errors
     end
@@ -25,12 +25,12 @@ class Api::V4::ActivityTypesController < Api::V3::ActivityTypesController
   def update
     if params.has_key?(:action_type)
       if @activity_type.update_attributes(type_params)
-        return_the @activity_type, handler: 'jb'
+        return_the @activity_type, handler: 'jb', using: :show
       else
         render_422 @activity_type.errors
       end
     else
-      return_the @activity_type, handler: 'jb'
+      return_the @activity_type, handler: 'jb', using: :show
     end
   end
 end

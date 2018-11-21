@@ -1,8 +1,7 @@
-json = {}
-json[:badge] = render partial: @req_source, locals: { badge: @badge }
-if @req_source == "web"
-  json[:badge][:assigned_rewards] = @badge.assigned_rewards
-  json[:badge][:reward] = @badge.reward
+json = Rails.cache.fetch ["v4", @post.id, @post.updated_at] do
+  {
+    post: render(partial: @req_source, locals: { post: @post }, handlers: "jb")
+  }
 end
 
 json

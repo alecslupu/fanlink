@@ -1,3 +1,0 @@
-{
-  badge: render(partial: @req_source, badge: @badge)
-}

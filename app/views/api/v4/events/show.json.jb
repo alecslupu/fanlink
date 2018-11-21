@@ -1,0 +1,7 @@
+json = Rails.cache.fetch ["v4", @event.id, @event.updated_at] do
+  {
+    event: render(partial: @req_source, locals: { event: @event }, handlers: "jb")
+  }
+end
+
+json

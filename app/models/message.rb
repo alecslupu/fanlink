@@ -89,6 +89,8 @@ class Message < ApplicationRecord
           body.sub!("[#{body_str}]", p[1])
         end
       }
+    end
+  end
 
   def pinned
     PinMessage.where(person_id: person.id, room_id: room.id).exists? || person.product_account?

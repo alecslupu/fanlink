@@ -40,7 +40,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       render_not_found
     else
       @post_reaction = @post.reactions.find_by(person: current_user)
-      return_the @post, handler: 'jb'
+      return_the @post, handler: 'jb', using: :show
     end
   end
 
@@ -65,7 +65,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         end
         @post.post if @post.published?
         broadcast(:post_created, current_user, @post)
-        return_the @post, handler: 'jb'
+        return_the @post, handler: 'jb', using: :show
       else
         render_422 @post.errors
       end
@@ -75,12 +75,12 @@ class Api::V4::PostsController < Api::V3::PostsController
   def update
     if params.has_key?(:post)
       if @post.update_attributes(post_params)
-        return_the @post, handler: 'jb'
+        return_the @post, handler: 'jb', using: :show
       else
         render_422 @post.errors
       end
     else
-      return_the @post, handler: 'jb'
+      return_the @post, handler: 'jb', using: :show
     end
   end
 

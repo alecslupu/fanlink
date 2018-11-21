@@ -15,6 +15,6 @@ class Api::V4::FollowingsController < Api::V3::FollowingsController
 
   def create
     @following = current_user.follow(@followed)
-    return_the @following, handler: 'jb'
+    return_the @following, handler: 'jb', using: :show
   end
 end

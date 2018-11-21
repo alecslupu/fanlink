@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181113030903) do
+ActiveRecord::Schema.define(version: 20181121081425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
@@ -33,10 +32,20 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
+  end
+
+  create_table "assigned_push_notifications", force: :cascade do |t|
+    t.integer "push_notification_id", null: false
+    t.integer "assigned_id", null: false
+    t.text "assigned_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assigned_id", "assigned_type"], name: "idx_push_notifications_assigned"
+    t.index ["push_notification_id"], name: "index_assigned_push_notifications_on_push_notification_id"
   end
 
   create_table "assigned_rewards", force: :cascade do |t|
@@ -91,10 +100,10 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
@@ -282,9 +291,9 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
@@ -330,7 +339,6 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.datetime "audio_updated_at"
     t.index ["body"], name: "index_messages_on_body"
     t.index ["created_at"], name: "index_messages_on_created_at"
-    t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
   end
@@ -370,8 +378,8 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -397,15 +405,6 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.index ["person_id"], name: "idx_person_interests_person"
   end
 
-  create_table "person_poll_options", force: :cascade do |t|
-    t.integer "person_id", null: false
-    t.integer "poll_option_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "idx_person_poll_options_person"
-    t.index ["poll_option_id"], name: "idx_person_poll_options_poll_option"
-  end
-
   create_table "person_rewards", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "reward_id", null: false
@@ -421,26 +420,6 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.integer "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "poll_options", force: :cascade do |t|
-    t.text "description", null: false
-    t.integer "poll_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["poll_id"], name: "idx_poll_options_poll"
-  end
-
-  create_table "polls", force: :cascade do |t|
-    t.text "description", null: false
-    t.integer "poll_type", null: false
-    t.integer "poll_type_id", null: false
-    t.datetime "start_date", null: false
-    t.time "duration", null: false
-    t.string "poll_status", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
   end
 
   create_table "portal_accesses", force: :cascade do |t|
@@ -557,6 +536,12 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.integer "audio_file_size"
     t.datetime "audio_updated_at"
     t.integer "category_id"
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
+    t.string "video_job_id"
+    t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
     t.index ["body"], name: "index_posts_on_body", using: :gin
     t.index ["category_id"], name: "index_posts_on_category_id"
@@ -591,6 +576,14 @@ ActiveRecord::Schema.define(version: 20181113030903) do
     t.integer "age_requirement", default: 0
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
+  end
+
+  create_table "push_notifications", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.jsonb "body", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "idx_push_notifications_products"
   end
 
   create_table "quest_activities", force: :cascade do |t|
@@ -851,9 +844,6 @@ ActiveRecord::Schema.define(version: 20181113030903) do
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
   add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
-  add_foreign_key "person_poll_options", "people", name: "fk_person_poll_options_person"
-  add_foreign_key "person_poll_options", "poll_options", name: "fk_person_poll_options_poll_option"
-  add_foreign_key "poll_options", "polls", name: "idx_poll_options_poll"
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
@@ -867,6 +857,7 @@ ActiveRecord::Schema.define(version: 20181113030903) do
   add_foreign_key "post_reports", "posts", name: "fk_post_reports_post", on_delete: :cascade
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
   add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
+  add_foreign_key "push_notifications", "products", name: "fk_push_notifications_products", on_delete: :cascade
   add_foreign_key "quest_activities", "rewards", name: "fk_quest_activities_rewards"
   add_foreign_key "quest_activities", "steps", name: "fk_activities_steps"
   add_foreign_key "quest_completed", "people", name: "fk_quest_completeds_people"

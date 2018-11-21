@@ -28,7 +28,7 @@ class Api::V4::QuestsController < Api::V3::QuestsController
   def create
     @quest = Quest.create(quest_params)
     if @quest.valid?
-      return_the @quest, handler: "jb"
+      return_the @quest, handler: 'jb', using: :show
     else
       render_422 @quest.errors
     end
@@ -37,7 +37,7 @@ class Api::V4::QuestsController < Api::V3::QuestsController
   def update
     if params.has_key?(:quest)
       if @quest.update_attributes(quest_params)
-        return_the @quest, handler: "jb"
+        return_the @quest, handler: 'jb', using: :show
       else
         render_422 @quest.errors
       end

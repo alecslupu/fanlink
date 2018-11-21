@@ -1,0 +1,12 @@
+{
+  post: {
+    id: @post.id,
+    body: @post.body(@lang),
+    picture_url: @post.picture_optimal_url,
+    status: @post.status,
+    person: {
+      username: @post.person.username,
+      picture_url: (@post.person.picture_url.present? ? @post.person.picture_url : (@post.person.facebook_picture_url.present? ? @post.person.facebook_picture_url : nil))
+    }
+  }
+}

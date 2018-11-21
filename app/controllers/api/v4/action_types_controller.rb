@@ -12,7 +12,7 @@ class Api::V4::ActionTypesController < Api::V3::ActionTypesController
   def create
     @action_type = ActionType.create(action_params)
     if @action_type.valid?
-      return_the @action_type, handler: 'jb'
+      return_the @action_type, handler: 'jb', using: :show
     else
       render_422 @action_type.errors
     end
@@ -23,6 +23,6 @@ class Api::V4::ActionTypesController < Api::V3::ActionTypesController
     if params.has_key?(:action_type)
       @action_type.update_attributes(action_params)
     end
-    return_the @action_type, handler: 'jb'
+    return_the @action_type, handler: 'jb', using: :show
   end
 end

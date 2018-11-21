@@ -8,7 +8,7 @@ class Api::V4::InterestsController < Api::V3::InterestsController
     if current_user.some_admin?
       @interest = Interest.create(interest_params)
       if @interest.valid?
-        return_the @interest, handler: 'jb'
+        return_the @interest, handler: 'jb', using: :show
       else
         render_422 @interest.errors
       end
@@ -21,7 +21,7 @@ class Api::V4::InterestsController < Api::V3::InterestsController
     if params.has_key?(:interest)
       if current_user.some_admin?
         if @interest.update_attributes(interest_params)
-          return_the @interest, handler: 'jb'
+          return_the @interest, handler: 'jb', using: :show
         else
           render_422 @interest.errors
         end
