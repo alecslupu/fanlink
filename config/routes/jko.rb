@@ -210,6 +210,11 @@ JkoApi.routes self do
   end
 
   version 4 do
+    resources :people, except: %i[ create index show update ] do
+      collection do
+        get "person/:username" => "people#show"
+      end
+    end
     resources :followings, only: %i[ index ]
     resources :posts, only: %i[ index ]
   end

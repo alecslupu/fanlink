@@ -1,0 +1,6 @@
+{
+  relationship: Rails.cache.fetch(["v4", @relationship.id, @relationship.updated_at]) {
+    render(partial: @req_source, locals: { relationship: @relationship }, handlers: "jb")
+  }
+}
+

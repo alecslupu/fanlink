@@ -34,6 +34,7 @@ class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
 
   def update
     if params.has_key?(:quest_completion)
+      @completion = QuestCompletion.find(params[:id])
       if @completion.update_attributes(completion_params)
         return_the @completion, handler: 'jb', using: :show
       else

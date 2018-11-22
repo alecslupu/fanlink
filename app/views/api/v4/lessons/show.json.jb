@@ -1,7 +1,6 @@
-json = Rails.cache.fetch ["v4", @lesson.id, @lesson.updated_at] do
-  {
-    lesson: render(partial: @req_source, locals: { lesson: @lesson }, handlers: "jb")
+{
+  lesson: Rails.cache.fetch(["v4", @lesson.id, @lesson.updated_at, @lang]) {
+    render(partial: @req_source, locals: { lesson: @lesson, lang: @lang }, handlers: "jb")
   }
-end
+}
 
-json

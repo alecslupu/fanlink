@@ -1,0 +1,6 @@
+{
+  progress: Rails.cache.fetch(["v4", @progress.id, @progress.updated_at]) {
+    render(partial: @req_source, locals: { progress: @progress }, handlers: "jb")
+  }
+}
+

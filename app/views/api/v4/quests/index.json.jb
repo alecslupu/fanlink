@@ -1,7 +1,7 @@
 json = {}
 
 json[:quests] = @quests.map do |quest|
-  Rails.cache.fetch ["v4", @req_source, quest.id, quest.updated_at] do
+  Rails.cache.fetch ["v4", @req_source, quest.id, quest.updated_at, @lang] do
     render partial: @req_source, locals: { quest: quest, lang: @lang }, handlers: "jb"
   end
 end

@@ -1,0 +1,6 @@
+{
+  step: Rails.cache.fetch(["v4", @step.id, @step.updated_at]) {
+    render(partial: @req_source, locals: { step: @step }, handlers: "jb")
+  }
+}
+
