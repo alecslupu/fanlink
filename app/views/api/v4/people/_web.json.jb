@@ -38,7 +38,7 @@ else
 end
 
 if defined?(relationships) && relationships.present?
-  json[:relationships] = render(partial: "api/v4/relationships/#{@req_source}", locals: { relationship: relationships })
+  json[:relationships] = render(partial: "api/v4/relationships/#{@req_source}", collection: relationships, as: :relationship)
 end
 
 json
