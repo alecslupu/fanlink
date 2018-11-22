@@ -5,7 +5,8 @@ json = {
   audio_url: message.audio_url,
   audio_size: message.audio_file_size,
   audio_content_type: message.audio_content_type,
-  pinned: message.pinned
+  pinned: message.pinned,
+  create_time: message.created_at.to_s
 }
 json[:person] = Rails.cache.fetch ["v4", @req_source, message.person.id, message.person.updated_at] do
     render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: "jb")
