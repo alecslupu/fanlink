@@ -9,7 +9,11 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     if current_user.blocks_by.where(blocked_id: params[:id]).exists?
       render_not_found
     else
-      @person = Person.find(params[:id])
+      if params.has_key?(:username)
+        @person = Person.where(username: params[:username]).first
+      else
+        @person = Person.find(params[:id])
+      end
       return_the @person, handler: 'jb'
     end
   end
@@ -33,7 +37,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
         if @person.email.present?
           @person.send_onboarding_email
         end
-        return_the @person, handler: 'jb'
+        return_the @person, handler: 'jb', using: :show
       else
         render_422 @person.errors
       end
@@ -55,14 +59,14 @@ class Api::V4::PeopleController < Api::V3::PeopleController
             cookies.delete :_fanlink_session
             return render_401 _("Your account has been banned.")
           else
-            return_the @person, handler: 'jb'
+            return_the @person, handler: 'jb', using: :show
           end
         else
           render_not_found
         end
       end
     else
-      return_the @person, handler: 'jb'
+      return_the @person, handler: 'jb', using: :show
     end
   end
 

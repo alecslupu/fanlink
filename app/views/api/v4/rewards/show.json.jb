@@ -1,0 +1,6 @@
+{
+  reward: Rails.cache.fetch(["v4", @reward.id, @reward.updated_at]) {
+    render(partial: @req_source, locals: { reward: @reward }, handlers: "jb")
+  }
+}
+

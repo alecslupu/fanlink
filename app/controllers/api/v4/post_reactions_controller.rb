@@ -4,7 +4,7 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
     if @post.person.try(:product) == current_user.product
       @post_reaction = @post.reactions.create(parms)
       if @post_reaction.valid?
-        return_the @post_reaction, handler: 'jb'
+        return_the @post_reaction, handler: 'jb', using: :show
       else
         render_422 @post_reaction.errors
       end
@@ -25,7 +25,7 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
         render_not_found
       end
     else
-      return_the @post_reaction
+      return_the @post_reaction, handler: 'jb', using: :show
     end
   end
 end

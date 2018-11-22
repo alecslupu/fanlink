@@ -1,0 +1,6 @@
+{
+  completion: Rails.cache.fetch(["v4", @completion.id, @completion.updated_at]) {
+    render(partial: @req_source, locals: { completion: @completion }, handlers: "jb")
+  }
+}
+

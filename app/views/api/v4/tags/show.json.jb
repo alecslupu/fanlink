@@ -1,0 +1,6 @@
+{
+  tag: Rails.cache.fetch(["v4", @tag.id, @tag.updated_at]) {
+    render(partial: @req_source, locals: { tag: @tag }, handlers: "jb")
+  }
+}
+

@@ -1,7 +1,6 @@
-json = Rails.cache.fetch ["v4", @level_progress.id, @level_progress.updated_at] do
-  {
-    level_progress: render(partial: @req_source, locals: { progress: @level_progress }, handlers: "jb")
+{
+  level_progress: Rails.cache.fetch(["v4", @level_progress.id, @level_progress.updated_at]) {
+    render(partial: @req_source, locals: { level: @level_progress}, handlers: "jb")
   }
-end
+}
 
-json

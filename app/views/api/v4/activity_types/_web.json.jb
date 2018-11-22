@@ -11,7 +11,7 @@ when :beacon
   beacon = ProductBeacon.find(activity.value["id"])
   unless beacon.deleted?
     json[:value] = Rails.cache.fetch ["v4", beacon.updated_at, beacon] do
-      render partial: "api/v4/product_beacons/beacon", locals: { beacon: beacon }, handlers: "jb"
+      render partial: "api/v4/product_beacons/#{@req_source}", locals: { beacon: beacon }, handlers: "jb"
     end
   else
     json[:value] = nil

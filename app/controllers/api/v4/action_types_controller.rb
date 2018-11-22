@@ -5,7 +5,7 @@ class Api::V4::ActionTypesController < Api::V3::ActionTypesController
   end
 
   def show
-    @action_type = ActionType.find(params[:id]).includes(:rewards)
+    @action_type = ActionType.includes(:rewards).find(params[:id])
     return_the @action_type, handler: 'jb'
   end
 

@@ -1,0 +1,6 @@
+{
+  product: Rails.cache.fetch(["v4", @pproduct.id, @product.updated_at]) {
+    render(partial: @req_source, locals: { product: @product_beacon }, handlers: "jb")
+  }
+}
+

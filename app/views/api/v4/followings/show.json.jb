@@ -1,7 +1,6 @@
-json = Rails.cache.fetch ["v4", @following.id, @following.updated_at] do
-  {
-    following: render(partial: @req_source, locals: { following: @following }, handlers: "jb")
+{
+  following: Rails.cache.fetch(["v4", @following.id, @following.updated_at]) {
+    render(partial: @req_source, locals: { following: @following }, handlers: "jb")
   }
-end
+}
 
-json

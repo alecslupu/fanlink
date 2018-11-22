@@ -1,0 +1,5 @@
+{
+    event_checkins: @event_checkins.map do |e|
+        render partial: 'api/v3/event_checkins/event_checkin', locals: {event_checkin: e, lang: @lang}, handlers: "jb"
+    end
+}

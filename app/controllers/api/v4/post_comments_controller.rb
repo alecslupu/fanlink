@@ -16,7 +16,7 @@ class Api::V4::PostCommentsController < Api::V3::PostCommentsController
       @post_comment = @post.post_comments.create(post_comment_params)
       if @post_comment.valid?
         @post_comment.post_me
-        return_the @post_comment, handler: 'jb'
+        return_the @post_comment, handler: 'jb', using: :show
       else
         render_422 @post_comment.errors
       end

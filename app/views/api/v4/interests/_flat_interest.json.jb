@@ -1,0 +1,6 @@
+{
+  id: interest.id,
+  title: interest.title,
+  parent_id: interest.parent_id,
+  order: interest.order
+}

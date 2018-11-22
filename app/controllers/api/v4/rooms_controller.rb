@@ -5,6 +5,8 @@ class Api::V4::RoomsController < Api::V3::RoomsController
   end
 
   def show
+    @room = Room.find(params[:id])
+    return_the @room, handler: 'jb'
   end
 
   def create

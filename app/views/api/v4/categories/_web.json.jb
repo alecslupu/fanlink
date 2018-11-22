@@ -1,0 +1,7 @@
+{
+  id: category.id,
+  name: category.name,
+  product_id: category.product_id,
+  color: category.color,
+  role: category.role
+}
