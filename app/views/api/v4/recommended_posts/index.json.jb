@@ -1,6 +1,6 @@
 json = {}
 
-json[:recommened_posts] = @posts.map do |post|
+json[:recommended_posts] = @posts.map do |post|
   Rails.cache.fetch ["v4", @req_source, post.id, post.updated_at] do
     render partial: "api/v4/posts/#{@req_source}", locals: { post: post, lang: @lang, post_reaction: @post_reactions[post.id] }
   end
