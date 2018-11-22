@@ -10,6 +10,8 @@ class Message < ApplicationRecord
 
   normalize_attributes :body
 
+  attr_accessor :mention_meta
+
   belongs_to :person, touch: true
   belongs_to :room, touch: true
 
@@ -71,6 +73,51 @@ class Message < ApplicationRecord
 
   def visible?
     !hidden
+  end
+
+  def parse_content(version=4)
+    mmeta = []
+    if body.present?
+      if version <= 3
+        if body.match?(/(\[(?:(\w)\|([A-Za-z0-9]+)(?:\|?(?:\w*\s*\w*))*)\])/i)
+          body.gsub!(/(\[(?:(\w)\|([A-Za-z0-9]+)(?:\|?(?:\w*\s*\w*))*)\])/i) {|m|
+            case $2
+            when "m"
+              m.gsub!($1, "@#{$3}")
+            when "q"
+              m.gsub!($1, "\u201C#{$3}\u201D")
+            else
+              m.gsub!($1, $3)
+            end
+          }
+          # body.scanm(/\[(\S\|\S+[^\]])\]/i).each {|m|
+          #   p = m[1].split('|')
+          #   if p[0] == 'm'
+          #     person = Person.where(username: p[1]).first
+          #     if person.present?
+          #       # mmeta << { person_id: person.id, location: body.index(m[1]), length: "@#{p[1]}".size }
+          #     end
+          #   end
+          # }
+          # self.mention_meta = mess_men
+        end
+        if body.match?(/@\w{3,26}/i)
+          mod_body = body
+          body.scanm(/(@\w{3,26})/i).each {|m|
+            person = Person.where(username: m[1].sub('@', '')).first
+            if person.present?
+              # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
+              mmeta << { id: MessageMention.maximum(:id) + rand(200-1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
+              mod_body = mod_body.sub(m[1], "a" * m[1].size)
+            end
+          }
+        end
+      else
+        body.gsub!(/(@([A-Za-z0-9]+))/) { |m| m.gsub!($1, "[m|#{$2}]")}
+      end
+    end
+    self.mention_meta = mmeta
+    body
   end
 
   def pinned

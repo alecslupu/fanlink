@@ -1,0 +1,7 @@
+json = Rails.cache.fetch ["v4", @req_source, @assigned.id, @assigned.updated_at] do
+  {
+    asssigned: render(partial: @req_source, locals: { assigned: @assigned }, handlers: "jb")
+  }
+end
+
+json

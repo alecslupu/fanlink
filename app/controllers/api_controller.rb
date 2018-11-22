@@ -152,14 +152,11 @@ protected
   end
 
   def set_app
-    # if request.headers["X-App"].present?
-    #   @req_source = request.headers["X-App"]
-    # elsif params[:app].present?
-    #   @req_source = params[:app]
-    # else
-    #   @req_source = "mobile"
-    # end
-    @req_source = find_device_type.to_s
+    if find_device_type.to_s == "web"
+      @req_source = find_device_type.to_s
+    else
+      @req_source = "app"
+    end
   end
 
   def unset_app

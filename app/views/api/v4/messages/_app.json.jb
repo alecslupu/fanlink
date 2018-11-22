@@ -1,0 +1,16 @@
+json = {
+  id: message.id,
+  body: message.parse_content(),
+  picture_url: message.picture_url,
+  audio_url: message.audio_url,
+  audio_size: message.audio_file_size,
+  audio_content_type: message.audio_content_type,
+  # person: render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }),
+  pinned: message.pinned
+}
+json[:person] = Rails.cache.fetch ["v4", @req_source, message.person.id, message.person.updated_at] do
+    render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: "jb")
+end
+json[:mentions] = message.mention_meta
+
+json

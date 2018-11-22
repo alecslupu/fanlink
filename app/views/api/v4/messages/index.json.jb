@@ -1,0 +1,11 @@
+json = {}
+
+json[:messages] = Rails.cache.fetch ["v4", @messages, Message.maximum(:updated_at)] do
+  @messages.map do |message|
+    Rails.cache.fetch ["v4", @req_source, message.id, message.updated_at] do
+      render partial: @req_source, locals: { message: message }, handlers: "jb"
+    end
+  end
+end
+
+json

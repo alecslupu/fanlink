@@ -21,6 +21,7 @@ Rails.application.configure do
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.enable_fragment_cache_logging = true
     config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
 
     #config.cache_store = :memory_store
     config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes }

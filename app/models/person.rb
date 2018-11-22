@@ -54,8 +54,8 @@ class Person < ApplicationRecord
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
-  scope :username_filter, -> (query) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{query}%", "#{query}") }
-  scope :email_filter, -> (query) { where("people.email ilike ?", "%#{query}%") }
+  scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
+  scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }

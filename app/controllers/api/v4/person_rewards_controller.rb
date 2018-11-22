@@ -1,2 +1,18 @@
-class Api::V4::PersonRewardsController < Api::V3::PersonRewardsController
+class Api::V4::PersonRewardsController < ApiController
+  def index
+  end
+
+  def show
+  end
+
+  def create
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
+private
 end

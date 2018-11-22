@@ -1,0 +1,7 @@
+json = Rails.cache.fetch ["v4", @merchandise.id, @merchandise.updated_at] do
+  {
+    merchandise: render(partial: @req_source, locals: { merchandise: @merchandise }, handlers: "jb")
+  }
+end
+
+json

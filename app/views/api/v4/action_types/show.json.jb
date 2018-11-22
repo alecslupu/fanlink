@@ -1,0 +1,8 @@
+json = Rails.cache.fetch ["v4", action.id, action.update_at] do
+  {
+    action: render(partial: "action", locals: { action: action }, handlers: "jb")
+  }
+end
+
+
+json

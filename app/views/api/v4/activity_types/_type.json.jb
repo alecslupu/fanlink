@@ -1,4 +1,4 @@
-json = Rails.cache.fetch ["v3", atype.updated_at, atype] do
+json = Rails.cache.fetch ["v4", atype.updated_at, atype] do
   {
     id: atype.id,
     activity_id: atype.activity_id,
@@ -11,7 +11,7 @@ when :beacon
   beacon = ProductBeacon.find(atype.value["id"])
   unless beacon.deleted?
     json[:value] = Rails.cache.fetch ["v3", beacon.updated_at, beacon] do
-      render partial: "api/v3/product_beacons/beacon", locals: { beacon: beacon }, handlers: "jb"
+      render partial: "api/v4/product_beacons/beacon", locals: { beacon: beacon }, handlers: "jb"
     end
   else
     json[:value] = nil

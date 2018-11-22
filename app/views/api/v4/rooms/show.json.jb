@@ -1,0 +1,7 @@
+json = Rails.cache.fetch ["v4", @room.id, @room.updated_at] do
+  {
+    room: render(partial: @req_source, locals: { room: @room }, handlers: "jb")
+  }
+end
+
+json

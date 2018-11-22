@@ -1,0 +1,54 @@
+json = Rails.cache.fetch ["v4", @req_source, person.id, person.updated_at] do
+  render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: 'jb' )
+end
+json[:email] = person.email
+json[:product] = {
+  id: person.product.id,
+  internal_name: person.product.internal_name,
+  name: person.product.name
+}
+
+if person.level_progresses.empty?
+  json[:level_progress] = nil
+else
+  json[:level_progress] = render(partial: "api/v4/level_progresses/#{@req_source}", locals: { level: person.level_progresses }, handlers: 'jb')
+end
+
+if person.person_rewards.empty?
+  json[:rewards] = nil
+else
+  json[:rewards] = person.person_rewards.map do |reward|
+    render(partial: "api/v4/person_rewards/#{@req_source}", locals: { reward: reward }, handlers: 'jb')
+  end
+end
+
+if person.blocked_people.empty?
+  json[:blocked_people] = nil
+else
+  json[:blocked_people] = person.blocked_people.map do |blocked|
+    {
+      id: blocked.id,
+      username: blocked.username
+    }
+  end
+end
+
+if person.admin? && person.portal_access.present?
+  json[:permissions] = person.portal_access.summarize
+else
+  json[:permissions] = nil
+end
+
+if person.pinned_to.present?
+  json[:pin_messages_to] = person.pin_messages.map do |pin|
+    {
+      id: pin.id,
+      room_id: pin.room.id,
+      room_name: pin.room.name
+    }
+  end
+else
+  json[:pin_messages_to] = nil
+end
+
+json

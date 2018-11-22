@@ -1,0 +1,3 @@
+json = {
+  person: render(partial: "api/v4/person_private", locals: { person: @person, relationships: @person.relationships } )
+}

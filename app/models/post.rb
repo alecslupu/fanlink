@@ -4,8 +4,6 @@ class Post < ApplicationRecord
   include Post::RealTime
   include TranslationThings
 
-  #replicated_model
-
   enum status: %i[ pending published deleted rejected errored ]
 
   after_save :adjust_priorities
@@ -123,6 +121,9 @@ class Post < ApplicationRecord
     Delayed::Job.enqueue(PostQueueListenerJob.new(self.video_job_id), {run_at: 30.seconds.from_now})
   end
 
+  def published?
+    status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))
+  end
   private
 
   def start_transcoding

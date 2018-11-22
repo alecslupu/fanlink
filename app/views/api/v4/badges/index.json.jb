@@ -1,0 +1,20 @@
+for_user = (params.has_key?(:person_id) ? params[:person_id] : current_user.id)
+json = {}
+
+json[:badges] = @badges.map do |badge|
+  bac = 0
+  if badge.reward&.series.present?
+    bac = (RewardProgress.where(person_id: for_user, series: badge.reward.series).exists? ? RewardProgress.where(person_id: for_user, series: badge.reward.series).sum(:total) : 0)
+  else
+    bac = (RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).exists? ? RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).first.total : 0)
+  end
+  b = {
+    badge: Rails.cache.fetch(["v4", @req_source, badge.id, badge.updated_at]) {
+      render partial: @req_source, locals: { badge: badge }, handlers: "jb"
+    },
+    badge_action_count: bac
+  }
+  b
+end
+
+json
