@@ -11,15 +11,13 @@ json[:product] = {
 if person.level_progresses.empty?
   json[:level_progress] = nil
 else
-  json[:level_progress] = render(partial: "api/v4/level_progresses/#{@req_source}", locals: { level: person.level_progresses }, handlers: 'jb')
+  json[:level_progress] = render(partial: "api/v4/level_progresses/#{@req_source}", collection: person.level_progresses, as: :level, handlers: 'jb')
 end
 
 if person.person_rewards.empty?
   json[:rewards] = nil
 else
-  json[:rewards] = person.person_rewards.map do |reward|
-    render(partial: "api/v4/person_rewards/#{@req_source}", locals: { reward: reward }, handlers: 'jb')
-  end
+  json[:rewards] = render(partial: "api/v4/person_rewards/#{@req_source}", collection: person.person_rewards, as: :reward, handlers: 'jb')
 end
 
 if person.blocked_people.empty?
