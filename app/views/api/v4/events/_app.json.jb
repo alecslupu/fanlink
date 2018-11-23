@@ -1,5 +1,5 @@
 json = {
-  id: event.id,
+  id: event.id.to_s,
   name: event.name,
   description: event.description,
   ticket_url: event.ticket_url,

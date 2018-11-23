@@ -1,7 +1,7 @@
 progress = person.level_progresses
 level = person.level_earned_from_progresses(progress)
 json = {
-  id: person.id,
+  id: person.id.to_s,
   username: person.username,
   name: person.name,
   gender: person.gender,

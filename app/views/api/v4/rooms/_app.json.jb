@@ -1,5 +1,5 @@
 json = {
-  id: room.id,
+  id: room.id.to_s,
   name: room.name(@lang),
   description: room.description(@lang),
   owned: room.created_by_id == current_user.id,
