@@ -1,5 +1,5 @@
 json = {
-  id: interest.id,
+  id: interest.id.to_s,
   title: interest.title,
   order: interest.order,
 }

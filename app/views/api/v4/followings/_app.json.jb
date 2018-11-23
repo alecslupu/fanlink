@@ -1,5 +1,5 @@
 json = {
-  id: following.id
+  id: following.id.to_s
 }
 
 json[:follower] = Rails.cache.fetch ["v4", following.follower.id, following.follower.updated_at] do

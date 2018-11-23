@@ -1,5 +1,5 @@
 {
-  id: beacon.id,
+  id: beacon.id.to_s,
   product_id: beacon.product_id,
   beacon_pid: beacon.beacon_pid,
   uuid: beacon.uuid,

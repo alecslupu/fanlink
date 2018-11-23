@@ -1,5 +1,5 @@
 {
-  id: relationship.id,
+  id: relationship.id.to_s,
   status: relationship.status,
   requested_by: render(partial: "api/v4/people/#{@req_source}", locals: { person: relationship.requested_by }),
   requested_to: render(partial: "api/v4/people/#{@req_source}", locals: { person: relationship.requested_to }),
