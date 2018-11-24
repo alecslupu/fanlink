@@ -79,31 +79,13 @@ class Message < ApplicationRecord
     mmeta = []
     if body.present?
       if version <= 3
-        if body.match?(/(\[(?:(\w)\|([A-Za-z0-9]+)(?:\|?(?:\w*\s*\w*))*)\])/i)
-          body.gsub!(/(\[(?:(\w)\|([A-Za-z0-9]+)(?:\|?(?:\w*\s*\w*))*)\])/i) {|m|
-            case $2
-            when "m"
-              m.gsub!($1, "@#{$3}")
-            when "q"
-              m.gsub!($1, "\u201C#{$3}\u201D")
-            else
-              m.gsub!($1, $3)
-            end
-          }
-          # body.scanm(/\[(\S\|\S+[^\]])\]/i).each {|m|
-          #   p = m[1].split('|')
-          #   if p[0] == 'm'
-          #     person = Person.where(username: p[1]).first
-          #     if person.present?
-          #       # mmeta << { person_id: person.id, location: body.index(m[1]), length: "@#{p[1]}".size }
-          #     end
-          #   end
-          # }
-          # self.mention_meta = mess_men
+        if body.match?(/\[([A-Za-z0-9])\|/i)
+          body.gsub!(/\[m\|(.+?)\]/i, '@\1')
+          body.gsub!(/\[q\|([^\|\]]*)\]/i){|m| "\u201C#{$1}\u201D"}
         end
-        if body.match?(/@\w{3,26}/i)
+        if body.match?(/[^\u201C]*@\w{3,26}[^\u201D]*/i)
           mod_body = body
-          body.scanm(/(@\w{3,26})/i).each {|m|
+          body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each {|m|
             person = Person.where(username: m[1].sub('@', '')).first
             if person.present?
               # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
@@ -112,8 +94,8 @@ class Message < ApplicationRecord
             end
           }
         end
-      else
-        body.gsub!(/(@([A-Za-z0-9]+))/) { |m| m.gsub!($1, "[m|#{$2}]")}
+      # else
+      #   body.gsub!(/(@([A-Za-z0-9]+))/) { |m| m.gsub!($1, "[m|#{$2}]")}
       end
     end
     self.mention_meta = mmeta

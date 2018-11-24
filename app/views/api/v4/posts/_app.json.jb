@@ -40,4 +40,15 @@ else
   json[:tag] = nil
 end
 
+if defined?(post_reaction) && post_reaction.present?
+  json[:post_reaction] = post_reaction.map do |reaction|
+    id: reaction.id,
+    post_id: reaction.post_id,
+    person_id: reaction.person_id,
+    reaction: reaction.reaction
+  end
+else
+  json[:post_reaction] = nil
+end
+
 json

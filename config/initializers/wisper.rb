@@ -5,8 +5,10 @@ Rails.application.config.to_prepare do
   end
   Wisper.clear if Rails.env.development?
   Wisper::ActiveRecord.extend_all
-  Wisper.subscribe(QuestsListener)
-  Wisper.subscribe(RewardsListener)
-  Wisper.subscribe(LevelsListener)
-  Wisper.subscribe(TagsListener)
+  Wisper.subscribe(MentionPushNotification.new, async: true)
+  Wisper.subscribe(QuestsListener.new)
+  Wisper.subscribe(RewardsListener.new)
+  Wisper.subscribe(LevelsListener.new)
+  Wisper.subscribe(TagsListener.new)
+  Wisper.subscribe(UpdateTagPostsCount.new)
 end
