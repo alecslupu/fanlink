@@ -43,10 +43,10 @@ end
 if defined?(post_reaction) && post_reaction.present?
   json[:post_reaction] =
   {
-    id: reaction.id,
-    post_id: reaction.post_id,
-    person_id: reaction.person_id,
-    reaction: reaction.reaction
+    id: post_reaction.id,
+    post_id: post_reaction.post_id,
+    person_id: post_reaction.person_id,
+    reaction: post_reaction.reaction
   }
 else
   json[:post_reaction] = nil
