@@ -16,8 +16,8 @@ else
   json[:post_reaction] = nil
 end
 if @device.to_s == 'ios'
-  json[:post_reaction_counts] = post.reaction_breakdown.to_json
+  json[:post_reaction_counts] = @post.reaction_breakdown.to_json
 else
-  json[:post_reaction_counts] = post.reaction_breakdown
+  json[:post_reaction_counts] = @post.reaction_breakdown
 end
 json
