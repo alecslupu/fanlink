@@ -4,13 +4,13 @@ json[:posts] = @posts.map do |post|
   p = Rails.cache.fetch ["v4", @req_source, post.id, post.updated_at] do
     render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
   end
-  if defined?(post_reaction) && post_reaction.present?
+  if defined?(@post_reactions[post.id]) && @post_reactions[post.id].present?
     p[:post_reaction] =
     {
-      id: post_reaction.id,
-      post_id: post_reaction.post_id,
-      person_id: post_reaction.person_id,
-      reaction: post_reaction.reaction
+      id: @post_reactions[post.id].id,
+      post_id: @post_reactions[post.id].post_id,
+      person_id: @post_reactions[post.id].person_id,
+      reaction: @post_reactions[post.id].reaction
     }
   else
     p[:post_reaction] = nil
