@@ -152,8 +152,9 @@ protected
   end
 
   def set_app
-    if find_device_type.to_s == "web"
-      @req_source = find_device_type.to_s
+    @device = find_device_type
+    if @device.to_s == "web"
+      @req_source = @device.to_s
     else
       @req_source = "app"
     end
