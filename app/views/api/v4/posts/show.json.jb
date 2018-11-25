@@ -15,5 +15,9 @@ if defined?(@post_reaction) && @post_reaction.present?
 else
   json[:post_reaction] = nil
 end
-
+if if find_device_type.to_s == 'ios'
+  json[:post_reaction_counts] = post.reaction_breakdown.to_json
+else
+  json[:post_reaction_counts] = post.reaction_breakdown
+end
 json
