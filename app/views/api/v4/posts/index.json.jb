@@ -2,7 +2,7 @@ json = {}
 
 json[:posts] = @posts.map do |post|
   Rails.cache.fetch ["v4", @req_source, post.id, post.updated_at] do
-    render partial: @req_source, locals: { post: post }
+    render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
   end
 end
 
