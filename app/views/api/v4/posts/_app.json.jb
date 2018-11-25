@@ -9,7 +9,8 @@ json = {
   video_url: post.video_url,
   video_transcoded: post.video_transcoded,
   video_thumbnail: post.video_thumbnail,
-  post_reaction_counts: post.reaction_breakdown.to_json,
+  # post_reaction_counts: post.reaction_breakdown.to_json,
+  post_reaction_counts: post.reaction_breakdown,
   global: post.global,
   starts_at: ((post.starts_at.nil?) ? nil : post.starts_at.to_s),
   ends_at: ((post.ends_at.nil?) ? nil : post.ends_at.to_s),
@@ -38,18 +39,6 @@ if post.tags.count > 0
   end
 else
   json[:tag] = nil
-end
-
-if defined?(post_reaction) && post_reaction.present?
-  json[:post_reaction] =
-  {
-    id: post_reaction.id,
-    post_id: post_reaction.post_id,
-    person_id: post_reaction.person_id,
-    reaction: post_reaction.reaction
-  }
-else
-  json[:post_reaction] = nil
 end
 
 json
