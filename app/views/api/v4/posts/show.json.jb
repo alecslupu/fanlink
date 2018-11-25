@@ -5,7 +5,7 @@ json = Rails.cache.fetch ["v4", @post.id, @post.updated_at] do
 end
 
 if defined?(@post_reaction) && @post_reaction.present?
-  p[:post_reaction] =
+  json[:post_reaction] =
   {
     id: @post_reaction.id,
     post_id: @post_reaction.post_id,
@@ -13,7 +13,7 @@ if defined?(@post_reaction) && @post_reaction.present?
     reaction: @post_reaction.reaction
   }
 else
-  p[:post_reaction] = nil
+  json[:post_reaction] = nil
 end
 
 json
