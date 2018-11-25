@@ -15,6 +15,7 @@ json[:posts] = @posts.map do |post|
   else
     p[:post_reaction] = nil
   end
+  p
 end
 
 json[:total] = @posts.size
