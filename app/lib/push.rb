@@ -68,6 +68,7 @@ private
   def push_client
     @fbcm ||= FCM.new(FIREBASE_CM_KEY)
   end
+  module_function :push_client
 
   def do_push(tokens, title, body, type, data = {})
     unless tokens.empty?
