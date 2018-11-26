@@ -1,9 +1,9 @@
 class MentionPushNotification
   include Push
-  def self.message_created(msg_id)
+  def self.message_created(msg_id, product_id)
     Rails.logger.tagged("Message Created"){ Rails.logger.debug "Message #{msg_id} created. Checking for mentions..." } unless Rails.env.production?
     msg = Message.find(msg_id)
-    mentions = self.parse_content(msg.body, msg.id)
+    mentions = self.parse_content(msg.body, msg.id, product_id)
     if mentions
       mentions.each {|mentioned|
         blocks_with = msg.person.blocks_with.map { |b| b.id }
@@ -13,11 +13,11 @@ class MentionPushNotification
     end
   end
 private
-  def self.parse_content(content, msg_id)
+  def self.parse_content(content, msg_id, product_id)
     mentions = []
     if content.match?(/\[m\|((?:\w*\s*\w*))\]/i)
       content.scanm(/\[m\|((?:\w*\s*\w*))\]/i).each {|mention|
-        person = Person.for_username($1)
+        person = Person.find_by(username_canonical: Person.canonicalize(mention[1]), product_id: product_id)
         if person
           Rails.logger.tagged("Message Created::Parse Content"){ Rails.logger.debug "User found in message, adding them to the notification array." } unless Rails.env.production?
           mentions << person
@@ -25,7 +25,7 @@ private
       }
     elsif conent.match?(/@\w{3,26}/i)
       content.scanm(/@(\w{3,26})/i).each {|mention|
-        person = Person.for_username($1)
+        person = Person.find_by(username_canonical: Person.canonicalize(mention[1]), product_id: product_id)
         if person && !MessageMention.where(messsage_id: msg_id, person_id: person.id).exists?
           mentions << person
         end
