@@ -3,13 +3,13 @@ json = {}
 if defined?(@followers)
   json[:followers] = @followers.map do |follower|
     Rails.cache.fetch ["v4", @req_source, follower.id, follower.updated_at] do
-      render partial: "api/v4/people/person_mini", locals: { person: follower }, handlers: "jb"
+      render partial: @req_source, locals: { person: follower }, handlers: "jb"
     end
   end
 else
   json[:following] = @following.map do |following|
     Rails.cache.fetch ["v4", @req_source, following.id, following.updated_at] do
-      render partial: "api/v4/people/person_mini", locals: { person: following }, handlers: "jb"
+      render partial: @req_source, locals: { person: following }, handlers: "jb"
     end
   end
 end
