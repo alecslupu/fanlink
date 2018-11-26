@@ -85,6 +85,7 @@ private
       Rails.logger.error("Got FCM response: #{resp.inspect}")
     end
   end
+  module_function :do_push
 
   def do_topic_push(topic, msg)
     Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
