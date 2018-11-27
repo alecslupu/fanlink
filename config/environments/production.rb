@@ -85,10 +85,21 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.fanlink = {
+    :aws => {
+      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
+      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
+      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
+      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
+      s3_bucket: ENV['AWS_BUCKET'],
+      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
+    }
+  }
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-    # Install the Timber.io logger, send logs over STDOUT. Actual log delivery
+  # Install the Timber.io logger, send logs over STDOUT. Actual log delivery
   # to the Timber service is handled external of this application.
   logger = Timber::Logger.new(STDOUT)
   logger.level = config.log_level
