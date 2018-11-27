@@ -23,7 +23,7 @@ private
           mentions << person
         end
       }
-    elsif conent.match?(/@\w{3,26}/i)
+    elsif content.match?(/@\w{3,26}/i)
       content.scanm(/@(\w{3,26})/i).each {|mention|
         person = Person.find_by(username_canonical: Person.canonicalize(mention[1]), product_id: product_id)
         if person && !MessageMention.where(messsage_id: msg_id, person_id: person.id).exists?
