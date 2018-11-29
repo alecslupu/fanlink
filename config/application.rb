@@ -49,7 +49,11 @@ module Fanlink
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins do |source, env|
-          CorsGuard.allow_from?(source)
+          if ENV["RAILS_ENV"] != "development"
+            CorsGuard.allow_from?(source)
+          else
+            true
+          end
         end
         resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
       end

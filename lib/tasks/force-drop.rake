@@ -1,0 +1,24 @@
+namespace :db do
+    desc 'Force a db:drop of database'
+    task force_drop: :environment do
+      if Rails.env.development?
+        conn = ActiveRecord::Base.connection
+        # Terminate all connections except our current one
+        conn.execute("SELECT
+                        pg_terminate_backend (pid)
+                      FROM
+                        pg_stat_activity
+                      WHERE
+                        pid <> pg_backend_pid ()
+                      AND datname = 'fanlink_development';")
+        # Close the connection behind us
+        ActiveRecord::Base.connection.close
+  # Invoke a task now all connections are gone
+        Rake::Task['db:drop'].invoke
+        Rake::Task['db:create'].invoke
+  p "Forced a db:drop for environment #{Rails.env}"
+      else
+        p "Sorry I cannot db:drop db on this environment: #{Rails.env}"
+      end
+    end
+end

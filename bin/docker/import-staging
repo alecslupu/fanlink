@@ -4,6 +4,6 @@
 
 # heroku pg:backups:capture --app fanlink-staging && heroku pg:backups:download --app fanlink-staging
 
-docker exec -it flapi bin/rails db:environment:set RAILS_ENV=development db:hard_reset && docker exec -i flapi-postgres pg_restore --verbose -c -O --no-acl -U postgres -h localhost -d fanlink_development < ./latest.dump
+docker exec -it flapi bin/rails db:environment:set RAILS_ENV=development db:force_drop && docker exec -i flapi-postgres pg_restore --verbose -c -O --no-acl -U postgres -h localhost -d fanlink_development < ./latest.dump
 
 docker exec -it flapi bin/rails db:migrate
