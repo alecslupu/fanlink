@@ -8,7 +8,7 @@ json =
   }
 
 if step.quest_activities.count > 0
-  json[:activities] = render partial: "api/v3/quest_activities/activity", collection: step.quest_activities.where(deleted: false), as: :activity, handlers: "jb"
+  json[:activities] = render partial: "api/v4/quest_activities/activity", collection: step.quest_activities.where(deleted: false), as: :activity, handlers: "jb"
 else
   json[:activities] = nil
 end
@@ -21,9 +21,6 @@ else
   json[:status] = step.initial_status
 end
 unlocks_at ||= Time.now.to_s
-if @req_source == "web"
-  json[:delay_unlock] = step.delay_unlock || 0
-end
 json[:unlocks_at] = unlocks_at.to_datetime().utc.iso8601
 
 json

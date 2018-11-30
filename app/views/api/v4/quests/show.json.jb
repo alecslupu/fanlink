@@ -1,6 +1,0 @@
-{
-  quest: Rails.cache.fetch(["v4", @quest.id, @quest.updated_at, @lang]) {
-    render(partial: @req_source, locals: { quest: @quest }, handlers: "jb")
-  }
-}
-

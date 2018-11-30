@@ -15,4 +15,5 @@ bundle check || bundle install
 rm /usr/src/app/tmp/pids/delayed*.pid
 
 echo "Starting server."
+export FIREBASE_KEY=$(cat /usr/src/app/fanlink-development.json)
 bundle exec rails jobs:work
