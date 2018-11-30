@@ -26,12 +26,7 @@ class PostMessageJob < Struct.new(:message_id)
         }
         if message.mention_meta.length > 0
           msg[:message_mentions] = message.mention_meta.map do |mention|
-            {
-              id: mention.id,
-              length: mention.length,
-              location: mention.location,
-              person_id: mention.person_id
-            }
+            mention
           end
         else
           msg[:message_mentions] = nil
