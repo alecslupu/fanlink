@@ -94,7 +94,7 @@ class Post < ApplicationRecord
       nil
     else
       id = File.basename(self.video.path, File.extname(self.video.path))
-      url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.png"
+      url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.jpg"
     end
   end
 
