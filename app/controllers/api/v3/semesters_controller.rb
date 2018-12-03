@@ -4,9 +4,9 @@ class Api::V3::SemestersController < ApiController
 
   def index
     if @req_source == "web"
-      @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons))
+      @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons)).order(created_at: :asc)
     else
-      @semesters = paginate(Semester.available.where(deleted: false).includes(courses: :lessons))
+      @semesters = paginate(Semester.available.where(deleted: false).includes(courses: :lessons)).order(created_at: :asc)
     end
     return_the @semesters, handler: "jb"
   end
