@@ -7,7 +7,7 @@ class PostMessageJob < Struct.new(:message_id)
       if message.room.public?
         msg = {
           id: message.id,
-          body: message.parse_content(3),
+          body: message.parse_content(),
           # picture_id: message.picture_id,
           create_time: message.create_time,
           picture_url: message.picture_url,
