@@ -5,9 +5,9 @@ class Api::V3::LessonsController < ApiController
 
   def index
     if @req_source == "web"
-      @lessons = paginate(@course.lessons.where(deleted: false))
+      @lessons = paginate(@course.lessons.where(deleted: false)).order(created_at: :asc)
     else
-      @lessons = paginate(@course.lessons.available.where(deleted: false))
+      @lessons = paginate(@course.lessons.available.where(deleted: false)).order(created_at: :asc)
     end
     return_the @lessons, handler: "jb"
   end
