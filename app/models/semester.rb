@@ -3,7 +3,7 @@ class Semester < ApplicationRecord
 
   belongs_to :product
 
-  has_many :courses
+  has_many :courses, -> { order(created_at: :asc) }
 
   validates :name, presence: { message: _("A name is required.") }
   validates :description, presence: { message: _("A description is required.") }
