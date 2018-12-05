@@ -103,6 +103,6 @@ class Message < ApplicationRecord
   end
 
   def pinned
-    PinMessage.where(person_id: person.id, room_id: room.id).exists? || person.product_account?
+    PinMessage.where(person_id: person.id, room_id: room.id).exists? || person.product_account? || person.pin_messages_from?
   end
 end
