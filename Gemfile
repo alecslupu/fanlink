@@ -124,6 +124,7 @@ gem "oauth2"
 gem "oj" #json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem 'paperclip-meta'
+gem 'pgsearch'
 gem "postgresql-check"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
