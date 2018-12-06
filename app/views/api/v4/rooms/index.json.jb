@@ -1,7 +1,7 @@
 json = {}
 
 json[:rooms] = @rooms.map do |room|
-  Rails.cache.fetch ["v4", @req_source, room.id, room.updated_at] do
+  Rails.cache.fetch ["v4", "room", @req_source, room.id, room.updated_at.to_i] do
     render partial: @req_source, locals: { room: room }, handlers: "jb"
   end
 end

@@ -1,7 +1,5 @@
-json = Rails.cache.fetch ["v4", @person.id, @person.updated_at] do
-  {
-    person: render(partial: @req_source, locals: { person: @person }, handlers: "jb")
+{
+  person: Rails.cache.fetch(["v4", "person", @req_source, @person.id, @person.updated_at.to_i]) {
+    render(partial: @req_source, locals: { person: @person }, handlers: "jb")
   }
-end
-
-json
+}

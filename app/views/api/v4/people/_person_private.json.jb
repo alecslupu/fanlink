@@ -1,4 +1,4 @@
-json = Rails.cache.fetch ["v4", @req_source, person.id, person.updated_at] do
+json = Rails.cache.fetch ["v4", "person", @req_source, person.id, person.updated_at.to_i] do
   render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: 'jb' )
 end
 json[:email] = person.email

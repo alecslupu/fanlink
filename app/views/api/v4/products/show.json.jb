@@ -1,5 +1,5 @@
 {
-  product: Rails.cache.fetch(["v4", @req_source, @product.id, @product.updated_at]) {
+  product: Rails.cache.fetch(["v4", "product", @req_source, @product.id, @product.updated_at]) {
     render(partial: @req_source, locals: { product: @product }, handlers: "jb")
   }
 }
