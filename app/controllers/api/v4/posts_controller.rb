@@ -88,4 +88,14 @@ class Api::V4::PostsController < Api::V3::PostsController
     end
   end
 
+  def stats
+    if params.has_key?(:days) && params[:days].respond_to?(:to_i)
+      time = params[:days].to_i
+    else
+      time = 1
+    end
+    @posts = Post.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    return_the @posts, handler: 'jb'
+  end
+
 end

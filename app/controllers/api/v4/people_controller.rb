@@ -70,4 +70,14 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     end
   end
 
+  def stats
+    if params.has_key?(:days) && params[:days].respond_to?(:to_i)
+      time = params[:days].to_i
+    else
+      time = 1
+    end
+    @people = Person.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    return_the @people, handler: 'jb'
+  end
+
 end

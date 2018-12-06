@@ -1,5 +1,9 @@
 class Product < ApplicationRecord
+  include AttachmentSupport
+
   has_paper_trail
+
+  has_image_called :logo
 
   validates :name, length: { in: 3..60, message: _("Name must be between 3 and 60 characters.") }, uniqueness: { message: _("Product %{product_name} already exists.") % { product_name: name }}
 

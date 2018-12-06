@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181121081425) do
+ActiveRecord::Schema.define(version: 20181205160622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -576,6 +576,22 @@ ActiveRecord::Schema.define(version: 20181121081425) do
     t.datetime "updated_at", null: false
     t.boolean "can_have_supers", default: false, null: false
     t.integer "age_requirement", default: 0
+    t.string "logo_file_name"
+    t.string "logo_content_type"
+    t.integer "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string "color_primary", default: "#4B73D7"
+    t.string "color_primary_dark", default: "#4B73D7"
+    t.string "color_primary_66", default: "#A94B73D7"
+    t.string "color_primary_text", default: "#FFFFFFF"
+    t.string "color_secondary", default: "#CDE5FF"
+    t.string "color_secondary_text", default: "#000000"
+    t.string "color_tertiary", default: "#FFFFFF"
+    t.string "color_tertiary_text", default: "#000000"
+    t.string "color_accent", default: "#FFF537"
+    t.string "color_accent_50", default: "#FFF537"
+    t.string "color_accent_text", default: "#FFF537"
+    t.string "color_title_text", default: "#FFF537"
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end

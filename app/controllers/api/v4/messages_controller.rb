@@ -68,4 +68,14 @@ class Api::V4::MessagesController < Api::V3::MessagesController
       return_the @message, handler: 'jb', using: :show
     end
   end
+
+  def stats
+    if params.has_key?(:days) && params[:days].respond_to?(:to_i)
+      time = params[:days].to_i
+    else
+      time = 1
+    end
+    @messages = Mesage.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    return_the @messages, handler: 'jb'
+  end
 end
