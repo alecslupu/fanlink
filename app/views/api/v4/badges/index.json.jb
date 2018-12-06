@@ -9,7 +9,7 @@ json[:badges] = @badges.map do |badge|
     bac = (RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).exists? ? RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).first.total : 0)
   end
   b = {
-    badge: Rails.cache.fetch(["v4", "badge", @req_source, badge.id, badge.updated_at]) {
+    badge: Rails.cache.fetch(["v4", "badge", @req_source, badge.id, badge.updated_at.to_i, @lang]) {
       render partial: @req_source, locals: { badge: badge }, handlers: "jb"
     },
     badge_action_count: bac
