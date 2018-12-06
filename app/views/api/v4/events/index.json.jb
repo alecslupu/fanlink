@@ -1,7 +1,7 @@
 json = {}
 
 json[:events] = @events.map do |event|
-  ev = Rails.cache.fetch ["v4", @req_source, event.id, event.updated_at] do
+  ev = Rails.cache.fetch ["v4", "event", @req_source, event.id, event.updated_at] do
     render partial: @req_source, locals: { event: event, lang: @lang }, handlers: "jb"
   end
   ci = current_user.present? ? current_user.event_checkins.where(event_id: event.id).first : nil

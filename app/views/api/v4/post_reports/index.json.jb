@@ -1,7 +1,7 @@
 json = {}
 
 json[:post_reports] = @post_reports.map do |post_report|
-  Rails.cache.fetch ["v4", @req_source, post_report.id, post_report.updated_at] do
+  Rails.cache.fetch ["v4", "post_report", @req_source, post_report.id, post_report.updated_at] do
     render partial: @req_source, locals: { post_report: post_report }, handlers: "jb"
   end
 end

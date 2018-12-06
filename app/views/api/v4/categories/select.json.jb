@@ -1,7 +1,7 @@
 json = {}
 
 json[:categories] = @categories.map do |category|
-  Rails.cache.fetch ["v4", @req_source, category.id, category.updated_at] do
+  Rails.cache.fetch ["v4", "category", "select", @req_source, category.id, category.updated_at] do
     {
       id: category.id,
       name: category.name,

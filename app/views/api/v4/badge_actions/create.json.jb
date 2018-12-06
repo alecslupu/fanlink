@@ -9,7 +9,7 @@ if @progress.present?
     end
   elsif @series_total >= @progress.reward.completion_requirement
     json[:badges_awarded] = Array.wrap(@progress.reward.badge).map do |badge|
-      Rails.cache.fetch ["v4", @req_source, badge.id, badge.updated_at, @lang] do
+      Rails.cache.fetch ["v4", "badge", @req_source, badge.id, badge.updated_at, @lang] do
         render partial: "api/v4/badges/#{@req_source}", locals: { badge: badge }, renders: 'jb'
       end
     end

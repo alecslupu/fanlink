@@ -1,4 +1,4 @@
-json = Rails.cache.fetch ["v4", @post.id, @post.updated_at] do
+json = Rails.cache.fetch ["v4", "post", @req_source, @post.id, @post.updated_at] do
   {
     post: render(partial: @req_source, locals: { post: @post }, handlers: "jb")
   }
