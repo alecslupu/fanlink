@@ -3,7 +3,7 @@ json = {}
 
 json[:badges] = @badges.map do |badge|
   bac = 0
-  if badge.rewards.present?
+  if badge.reward.present?
     if badge.reward&.series.present?
       bac = (RewardProgress.where(person_id: for_user, series: badge.reward.series).exists? ? RewardProgress.where(person_id: for_user, series: badge.reward.series).sum(:total) : 0)
     else
