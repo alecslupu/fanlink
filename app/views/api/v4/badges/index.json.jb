@@ -3,10 +3,12 @@ json = {}
 
 json[:badges] = @badges.map do |badge|
   bac = 0
-  if badge.reward&.series.present?
-    bac = (RewardProgress.where(person_id: for_user, series: badge.reward.series).exists? ? RewardProgress.where(person_id: for_user, series: badge.reward.series).sum(:total) : 0)
-  else
-    bac = (RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).exists? ? RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).first.total : 0)
+  if badge.rewards.present?
+    if badge.reward&.series.present?
+      bac = (RewardProgress.where(person_id: for_user, series: badge.reward.series).exists? ? RewardProgress.where(person_id: for_user, series: badge.reward.series).sum(:total) : 0)
+    else
+      bac = (RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).exists? ? RewardProgress.where(person_id: for_user, reward_id: badge.reward.id).first.total : 0)
+    end
   end
   b = {
     badge: Rails.cache.fetch(["v4", "badge", @req_source, badge.id, badge.updated_at.to_i, @lang]) {
