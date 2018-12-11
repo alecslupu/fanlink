@@ -75,7 +75,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     else
       time = 1
     end
-    @messages = Mesage.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    @messages = Message.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
     return_the @messages, handler: 'jb'
   end
 end
