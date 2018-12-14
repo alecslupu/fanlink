@@ -1,6 +1,6 @@
 {
   people: @people.map {|person|
-    Rails.cache.fetch(["v4", "person", @req_source, person.id, person.updated_at.to_i]) {
+    Rails.cache.fetch(["v4", "person", "mini", person.id, person.updated_at.to_i]) {
       render partial: "api/v4/people/person_mini", locals: { person: person }, handlers: "jb"
     }
   }
