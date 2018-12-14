@@ -30,4 +30,8 @@ class Api::V4::ProductsController < Api::V3::ProductsController
       render_422(_("Update failed. Missing product object."))
     end
   end
+private
+  def product_params
+    params.require(:product).permit(:name, :internal_name, :enabled, :logo, :color_primary, :color_primary_dark, :color_primary_66, :color_primary_text, :color_secondary, :color_secondary_text, :color_tertiary, :color_tertiary_text, :color_accent, :color_accent_50, :color_accent_text, :color_title_text)
+  end
 end
