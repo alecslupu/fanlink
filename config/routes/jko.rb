@@ -229,4 +229,12 @@ JkoApi.routes self do
       end
     end
   end
+
+  version 5 do
+    resources :interests do
+      collection do
+        post "shared" => "interests#shared"
+      end
+    end
+  end
 end

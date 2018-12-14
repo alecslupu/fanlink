@@ -13,5 +13,8 @@ class AddProductConfigurationFields < ActiveRecord::Migration[5.1]
     add_column :products, :color_accent_50, :string, default: '#FFF537'
     add_column :products, :color_accent_text, :string, default: '#FFF537'
     add_column :products, :color_title_text, :string, default: '#FFF537'
+    add_column :products, :navigation_bar_style, :integer, default: 1
+    add_column :products, :status_bar_style, :integer, default: 1
+    add_column :products, :toolbar_style, :integer, default: 1
   end
 end

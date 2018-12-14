@@ -126,6 +126,7 @@ gem "paperclip", "~> 5.0.0"
 gem 'paperclip-meta'
 gem 'pg_search'
 gem "postgresql-check"
+gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"

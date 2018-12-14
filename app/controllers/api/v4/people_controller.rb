@@ -19,28 +19,33 @@ class Api::V4::PeopleController < Api::V3::PeopleController
   end
 
   def create
-    if !check_gender
-      render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
+    if params.has_key?(:person)
+      if !check_gender
+        render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
+      else
+        parms = person_params
+        if params[:facebook_auth_token].present?
+          @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
+          if @person.nil?
+            (render json: { errors: _("There was a problem contacting Facebook.") }, status: :service_unavailable) && return
+          end
+        else
+          @person = Person.create(person_params)
+        end
+        if @person.valid?
+          @person.do_auto_follows
+          auto_login(@person)
+          if @person.email.present?
+            @person.send_onboarding_email
+          end
+          return_the @person, handler: 'jb', using: :show
+        else
+          render_422 @person.errors
+        end
+      end
     else
-      parms = person_params
-      if params[:facebook_auth_token].present?
-        @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
-        if @person.nil?
-          (render json: { errors: _("There was a problem contacting Facebook.") }, status: :service_unavailable) && return
-        end
-      else
-        @person = Person.create(person_params)
-      end
-      if @person.valid?
-        @person.do_auto_follows
-        auto_login(@person)
-        if @person.email.present?
-          @person.send_onboarding_email
-        end
-        return_the @person, handler: 'jb', using: :show
-      else
-        render_422 @person.errors
-      end
+      render_422 _("Invalid submission.") if Rails.env.production?
+      render_422 _("Invalid submission. Please make sure you're submitting the form using person[form_field]") unless Rails.env.production?
     end
   end
 
