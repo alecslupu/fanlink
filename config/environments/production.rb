@@ -85,6 +85,9 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+
+  config.debug_exception_response_format = :api
+
   config.fanlink = {
     :aws => {
       hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',

@@ -33,6 +33,8 @@ Rails.application.configure do
   # This is the default, I'll leave it here as a reminder though.
   config.action_controller.action_on_unpermitted_parameters = false
 
+  config.debug_exception_response_format = :api
+
   # Enable threaded mode
   # config.threadsafe!
 

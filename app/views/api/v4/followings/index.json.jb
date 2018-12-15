@@ -5,19 +5,19 @@ if defined?(@followers)
     f = Rails.cache.fetch ["v4", "person", @req_source, follower.id, follower.updated_at.to_i] do
       render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: "jb"
     end
-    if fol = current_user && current_user.following_for_person(person)
+    if fol = current_user && current_user.following_for_person(follower)
       f[:following_id] = fol.id
     else
       f[:following_id] = nil
     end
-    following_for_person
+    f
   end
 else
   json[:following] = @following.map do |following|
     f = Rails.cache.fetch ["v4", "person", @req_source, following.id, following.updated_at.to_i] do
       render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: "jb"
     end
-    if fol = current_user && current_user.following_for_person(person)
+    if fol = current_user && current_user.following_for_person(following)
       f[:following_id] = fol.id
     else
       f[:following_id] = nil
