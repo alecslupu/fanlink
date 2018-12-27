@@ -3,6 +3,7 @@ class ApiController < ApplicationController
   include Rails::Pagination
   include Wisper::Publisher
   include JSONErrors
+  include Orderable
   # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   set_current_tenant_through_filter
@@ -31,8 +32,8 @@ class ApiController < ApplicationController
   #   to the current `params[:action]` value.
   #
   def return_the(obj, opts = {})
-    opts = { using: params[:action], handler: "jbuilder" }.merge(opts)
-
+    opts = { using: params[:action], handler: "jbuilder", postfix: "base" }.merge(opts)
+    # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller] #ActAsApi
     #
     # If `obj` doesn't know what `valid?` means then we're presumably
     # dealing with a simple Hash or something and such things are presumably
@@ -45,7 +46,20 @@ class ApiController < ApplicationController
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
       render_422(obj.errors)
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
-      render action: opts[:using], formats: %i[json], handlers: opts[:handler]
+      # if obj.class.included_modules.include?(ActsAsApi::Base::InstanceMethods) || obj.class.included_modules.include?(ActsAsApi::Collection)
+      #   respond_to do |format|
+      #     if opts[:root].nil?
+      #       format.xml  { render_for_api api_template(template, version, opts[:postfix]), xml: obj  }
+      #       format.json { render_for_api api_template(template, version, opts[:postfix]), json: obj }
+      #     else
+      #       format.xml  { render_for_api api_template(template, version, opts[:postfix]), xml: obj, root: opts[:root]  }
+      #       format.json { render_for_api api_template(template, version, opts[:postfix]), json: obj, root: opts[:root] }
+      #     end
+      #   end
+      # else
+      #   render action: opts[:using], formats: %i[json], handlers: opts[:handler]
+      # end
+      render action: opts[:using], formats: %i[json], handlers: opts[:handler] and return
     end
   end
 
@@ -57,6 +71,15 @@ protected
 
   def super_admin_only
     head :unauthorized unless current_user.role == "super_admin"
+  end
+
+  def api_template(controller = nil, version = :v2, using)
+    if controller.nil?
+      render_404(_("Not found."))
+    else
+      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}")
+      "#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}".to_sym
+    end
   end
 
   def check_banned

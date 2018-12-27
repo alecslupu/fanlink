@@ -1,6 +1,4 @@
 class Api::V3::ProductsController < Api::V2::ProductsController
-  before_action :super_admin_only
-
   def select
     @products = Product.all
     return_the @products

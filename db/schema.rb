@@ -343,6 +343,7 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -592,6 +593,9 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.string "color_accent_50", default: "#FFF537"
     t.string "color_accent_text", default: "#FFF537"
     t.string "color_title_text", default: "#FFF537"
+    t.integer "navigation_bar_style", default: 1
+    t.integer "status_bar_style", default: 1
+    t.integer "toolbar_style", default: 1
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end

@@ -1,7 +1,13 @@
 module JSONErrors
   extend ActiveSupport::Concern
-
+  # set_trace_func proc { |event, file, line, id, proc_binding, classname|
+  #   if !$pried && proc_binding && proc_binding.eval( "caller.size" ) > 200
+  #     $pried = true
+  #     proc_binding.pry
+  #   end
+  # }
   included do
+    # rescue_from SystemStackError                    with: :output_tracelog
     rescue_from StandardError,                      with: :render_500
     rescue_from NameError,                          with: :render_500
     rescue_from ActiveRecord::RecordInvalid,        with: :unprocessable_entity

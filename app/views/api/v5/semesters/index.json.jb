@@ -1,0 +1,9 @@
+json = {}
+
+json[:semesters] = @semesters.map do |semester|
+  Rails.cache.fetch ["v4", "semester", @req_source, semester.id, semester.updated_at.to_i] do
+    render partial: @req_source, locals: { semester: semester }, handlers: "jb"
+  end
+end
+
+json

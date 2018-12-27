@@ -1,0 +1,21 @@
+{
+
+  product: {
+    name: @product.name,
+    internal_name: @product.internal_name,
+    logo_url: @product.logo_url,
+    color_primary: @product.color_primary,
+    color_primary_text: @product.color_primary_text,
+    color_secondary: @product.color_secondary,
+    color_secondary_text: @product.color_secondary_text,
+    color_tertiary: @product.color_tertiary,
+    color_tertiary_text: @product.color_tertiary_text,
+    color_accent: @product.color_accent,
+    color_accent_text: @product.color_accent_text,
+    color_title_text: @product.color_title_text,
+    color_accessory: @product.color_accessory,
+    navigation_bar_style: @product.navigation_bar_style,
+    status_bar_style: @product.status_bar_style,
+    toolbar_style: @product.toolbar_style
+  }
+}

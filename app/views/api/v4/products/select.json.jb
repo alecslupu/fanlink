@@ -1,0 +1,11 @@
+pd = @products.map{  |prd|
+  {
+    id: prd.id
+    name: prd.name,
+    internal_name: prd.internal_name
+  }
+}
+
+{
+  products: pd
+}

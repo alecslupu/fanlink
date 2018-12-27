@@ -233,7 +233,12 @@ JkoApi.routes self do
   version 5 do
     resources :interests do
       collection do
-        post "shared" => "interests#shared"
+        get "shared" => "interests#shared"
+      end
+    end
+    resources :products do
+      collection do
+        get "config/:internal_name" => "products#setup"
       end
     end
   end

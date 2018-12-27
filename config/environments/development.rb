@@ -42,6 +42,10 @@ Rails.application.configure do
 
   config.debug_exception_response_format = :api
 
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  ActiveRecord::Base.logger = config.logger
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.

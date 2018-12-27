@@ -1,6 +1,6 @@
 {
   product: Rails.cache.fetch(["v4", "product", @req_source, @product.id, @product.updated_at]) {
-    render(partial: @req_source, locals: { product: @product }, handlers: "jb")
+    render(partial: @req_source, locals: { pd: @product }, handlers: "jb")
   }
 }
 

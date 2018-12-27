@@ -88,6 +88,7 @@ group :test do
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
+gem 'acts_as_api'
 gem "administrate", "~> 0.10.0" #git: "https://github.com/thoughtbot/administrate.git"
 
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
@@ -111,6 +112,7 @@ gem 'flag_shih_tzu'
 gem "gettext_i18n_rails"
 gem 'goldiloader'
 gem "google_places"
+gem 'has_scope'
 gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" #Facebook Graph API

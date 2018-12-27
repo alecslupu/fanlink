@@ -1,8 +1,11 @@
 class Post < ApplicationRecord
+  # acts_as_api
   include AttachmentSupport
   include Post::PortalFilters
   include Post::RealTime
   include TranslationThings
+
+  # include Post::Views
 
   enum status: %i[ pending published deleted rejected errored ]
 
@@ -40,7 +43,7 @@ class Post < ApplicationRecord
           where("posts.created_at >= ? and posts.created_at <= ?",
                 start_date.beginning_of_day, end_date.end_of_day)
         }
-  scope :for_tag, -> (tag) { joins(:tags).where("tags.name = ?", tag) }
+  scope :for_tag, -> (tag) { joins(:tags).where("lower(tags.name) = ?", tag.downcase) }
   scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {

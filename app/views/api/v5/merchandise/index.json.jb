@@ -1,0 +1,9 @@
+json = {}
+
+json[:merchandise] = @merchandise.map do |merchandise|
+  Rails.cache.fetch ["v4", "merchandise", @req_source, merchandise.id, merchandise.updated_at.to_i, @lang] do
+    render partial: @req_source, locals: { merchandise: merchandise, lang: @lang }, handlers: "jb"
+  end
+end
+
+json

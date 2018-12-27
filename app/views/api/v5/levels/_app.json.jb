@@ -1,0 +1,8 @@
+{
+  id: level.id.to_s,
+  name: level.name(@lang),
+  internal_name: level.internal_name,
+  description: level.description(@lang),
+  points: level.points,
+  picture_url: level.picture_url
+}

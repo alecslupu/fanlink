@@ -25,7 +25,13 @@ module AttachmentSupport
           #{name}.file? ? #{name}.url(:optimal) : nil
         end
         Paperclip.interpolates :product do |attachment, style|
-          attachment.instance.product.internal_name
+          Rails.logger.error(attachment.instance.class.to_s == "Product")
+          if attachment.instance.class.to_s == "Product"
+            Rails.logger.error(attachment.instance.class == "Product")
+            attachment.instance.internal_name
+          else
+            attachment.instance.product.internal_name
+          end
         end
         EOE
     end
@@ -41,7 +47,12 @@ module AttachmentSupport
           #{name}.file? ? #{name}.url : nil
         end
         Paperclip.interpolates :product do |attachment, style|
-          attachment.instance.product.internal_name
+          if attachment.instance.class.to_s == "Product"
+            Rails.logger.error(attachment.instance.class == "Product")
+            attachment.instance.internal_name
+          else
+            attachment.instance.product.internal_name
+          end
         end
       EOE
     end
@@ -53,7 +64,12 @@ module AttachmentSupport
           #{name}.file? ? #{name}.url : nil
         end
         Paperclip.interpolates :product do |attachment, style|
-          attachment.instance.product.internal_name
+          if attachment.instance.class.to_s == "Product"
+            Rails.logger.error(attachment.instance.class == "Product")
+            attachment.instance.internal_name
+          else
+            attachment.instance.product.internal_name
+          end
         end
       EOE
     end

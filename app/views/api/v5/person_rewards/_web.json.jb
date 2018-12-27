@@ -1,0 +1,6 @@
+{
+  id: reward.id,
+  source: reward.source,
+  deleted: reward.deleted,
+  reward: reward.reward
+}
