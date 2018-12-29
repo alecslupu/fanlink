@@ -7,7 +7,7 @@ if @req_source == 'web'
       person: {
         id: post.person.id,
         username: post.person.username
-      }
+      },
       body: post.body(@lang),
       status: post.status,
       comment_count: post.comments.size,

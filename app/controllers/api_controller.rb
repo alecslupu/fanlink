@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned
+  before_action :set_language, :set_product, :set_api_version, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned
   after_action :unset_person, :unset_app
 
   #
@@ -80,6 +80,11 @@ protected
       Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}")
       "#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}".to_sym
     end
+  end
+
+  def set_api_version
+    /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller]
+    @api_version = version
   end
 
   def check_banned

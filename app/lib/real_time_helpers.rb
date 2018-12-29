@@ -5,6 +5,18 @@ protected
     Firebase::Client.new(FIREBASE_URL, FIREBASE_KEY)
   end
 
+  def versioned_message_counter_path(membership, version)
+    "#{versioned_user_path(membership.person, version)}/message_counts/#{membership.room_id}"
+  end
+
+  def versioned_room_path(room, version)
+    "#{room.product.internal_name}/#{version}/rooms/#{room.id}"
+  end
+
+  def versioned_user_path(person, verion)
+    "#{person.product.internal_name}/#{version}/users/#{person.id}"
+  end
+
   def message_counter_path(membership)
     "#{user_path(membership.person)}/message_counts/#{membership.room_id}"
   end

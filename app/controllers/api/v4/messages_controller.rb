@@ -38,7 +38,8 @@ class Api::V4::MessagesController < Api::V3::MessagesController
       else
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
-          @message.post
+          Rails.logger.tagged("Message Controller"){ Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
+          @message.post(@api_version)
           broadcast(:message_created, @message.id, room.product_id)
           if room.private?
             room.increment_message_counters(current_user.id)

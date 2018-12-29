@@ -1,4 +1,4 @@
-class PostPostJob < Struct.new(:post_id)
+class PostPostJob < Struct.new(:post_id, :version)
   include RealTimeHelpers
 
   def perform
@@ -8,6 +8,9 @@ class PostPostJob < Struct.new(:post_id)
       payload = {}
       followers.each do |f|
         payload["#{user_path(f)}/last_post_id"] = post_id
+        if version.present?
+          payload["#{versioned_user_path(f, version)}/last_post_id"] = post_id
+        end
       end
       client.update("", payload)
     end
