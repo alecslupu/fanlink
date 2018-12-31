@@ -59,7 +59,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     if params.has_key?(:message)
       if @message.update_attributes(message_update_params)
         if @message.hidden
-          @message.delete_real_time
+          @message.delete_real_time(@api_version)
         end
         return_the @message, handler: 'jb', using: :show
       else

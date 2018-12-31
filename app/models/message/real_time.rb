@@ -1,10 +1,10 @@
 class Message
   module RealTime
-    def delete_real_time(version)
+    def delete_real_time(version = 0)
       Delayed::Job.enqueue(DeleteMessageJob.new(self.id, version))
     end
 
-    def post(version)
+    def post(version = 0)
       Delayed::Job.enqueue(PostMessageJob.new(self.id, version))
       push_mentions
     end
