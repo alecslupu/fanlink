@@ -7,7 +7,10 @@ class ClearMessageCounterJob < Struct.new(:room_id, :membership_id, :version)
     if room.private?
       client.set("#{user_path(room_membership.person)}/message_counts/#{room.id}", 0)
       if version.present?
-        client.set("#{versioned_user_path(room_membership.person, version)}/message_counts/#{room.id}", 0)
+        version.downto(1) {|v|
+          client.set("#{versioned_user_path(room_membership.person, v)}/message_counts/#{room.id}", 0)
+        }
+
       end
     end
   end

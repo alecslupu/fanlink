@@ -1144,6 +1144,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stackprof (0.2.12)
     text (1.3.1)
     thor (0.20.0)
     thread_safe (0.3.6)
@@ -1273,6 +1274,7 @@ DEPENDENCIES
   shoulda-matchers!
   simplecov
   sorcery
+  stackprof
   timber (~> 2.0)
   timecop
   turnip

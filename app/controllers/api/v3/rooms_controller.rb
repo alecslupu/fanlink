@@ -90,7 +90,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
     @room = Room.find(params[:id])
     if @room.created_by_id == current_user.id || current_user.some_admin?
       @room.deleted!
-      @room.delete_me
+      @room.delete_me(@api_version)
       head :ok
     else
       head :unauthorized

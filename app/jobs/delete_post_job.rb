@@ -10,7 +10,9 @@ class DeletePostJob < Struct.new(:post_id, :version)
         followers.each do |f|
           payload["#{user_path(f)}/deleted_post_id"] = post_id
           if version.present?
-            payload["#{versioned_user_path(f, version)}/deleted_post_id"] = post_id
+            version.downto(1) {|v|
+              payload["#{versioned_user_path(f, v)}/deleted_post_id"] = post_id
+            }
           end
         end
         client.update("", payload)

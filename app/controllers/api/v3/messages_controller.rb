@@ -133,7 +133,7 @@ class Api::V3::MessagesController < Api::V2::MessagesController
     if msg.person == current_user
       msg.hidden = true
       msg.save
-      msg.delete_real_time
+      msg.delete_real_time(@api_version)
       head :ok
     else
       head :unauthorized

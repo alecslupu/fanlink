@@ -122,7 +122,7 @@ class Api::V3::PostsController < Api::V2::PostsController
     post = Post.find(params[:id])
     if post.person == current_user || current_user.try(:some_admin?)
       post.deleted!
-      post.delete_real_time
+      post.delete_real_time(@api_version)
       head :ok
     else
       render_not_found

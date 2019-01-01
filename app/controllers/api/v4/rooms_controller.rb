@@ -22,7 +22,7 @@ class Api::V4::RoomsController < Api::V3::RoomsController
           end
         end
         @room.reload
-        @room.new_room
+        @room.new_room(@api_version)
       end
       return_the @room, handler: 'jb', using: :show
     else

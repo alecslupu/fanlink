@@ -67,7 +67,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         unless post_params["status"].present?
           @post.published!
         end
-        @post.post if @post.published?
+        @post.post(@api_version) if @post.published?
         broadcast(:post_created, current_user, @post)
         return_the @post, handler: 'jb', using: :show
       else

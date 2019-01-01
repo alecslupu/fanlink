@@ -10,11 +10,11 @@ protected
   end
 
   def versioned_room_path(room, version)
-    "#{room.product.internal_name}/#{version}/rooms/#{room.id}"
+    "#{room.product.internal_name}/v#{version}/rooms/#{room.id}"
   end
 
-  def versioned_user_path(person, verion)
-    "#{person.product.internal_name}/#{version}/users/#{person.id}"
+  def versioned_user_path(person, version)
+    "#{person.product.internal_name}/v#{version}/users/#{person.id}"
   end
 
   def message_counter_path(membership)

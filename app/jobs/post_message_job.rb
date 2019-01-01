@@ -8,7 +8,7 @@ class PostMessageJob < Struct.new(:message_id, :version)
       if message.room.public?
         msg = {
           id: message.id,
-          body: message.parse_content((version.present? ? version.sub("v", "").to_i : 0)),
+          body: message.parse_content((version.present? ? version : 0)),
           # picture_id: message.picture_id,
           create_time: message.create_time,
           picture_url: message.picture_url,
@@ -27,13 +27,17 @@ class PostMessageJob < Struct.new(:message_id, :version)
         }
         if version.present?
           Rails.logger.tagged("Post Message Job"){ Rails.logger.debug "Message #{message.id} created. Pushing message to version: #{version} path: #{versioned_room_path(message.room, version)}/last_message" } unless Rails.env.production?
-          client.set("#{versioned_room_path(message.room, version)}/last_message", msg)
+          version.downto(1) {|v|
+            client.set("#{versioned_room_path(message.room, v)}/last_message", msg)
+          }
         end
         client.set("#{room_path(message.room)}/last_message_id", message.id) # Remove with V5
       else
         client.set("#{room_path(message.room)}/last_message_id", message.id)
         if version.present?
-          client.set("#{versioned_room_path(message.room, version)}/last_message_id", message.id)
+          version.downto(1) {|v|
+            client.set("#{versioned_room_path(message.room, v)}/last_message_id", message.id)
+          }
         end
       end
     end
