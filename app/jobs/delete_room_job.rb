@@ -7,7 +7,7 @@ class DeleteRoomJob < Struct.new(:room_id, :version)
     c = client
     room.room_memberships.each do |m|
       payload[message_counter_path(m)] = 0
-      payload["#{user_path(m.person, version)}/deleted_room_id"] = m.room_id
+      payload["#{user_path(m.person)}/deleted_room_id"] = m.room_id
       if version.present?
         version.downto(1) {|v|
           payload[versioned_message_counter_path(m, v)] = 0
