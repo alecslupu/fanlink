@@ -2,7 +2,7 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
   def index
     person = (params[:person_id].present?) ? Person.find(params[:person_id]) : current_user
     if person == current_user
-      update_relationship_count(current_user) # FLAPI-89
+      update_relationship_count(current_user, @api_version) # FLAPI-89
     end
     @relationships = Relationship.friended.for_person(person)
     if person == current_user
@@ -23,13 +23,13 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
       if @relationship
         if @relationship.requested? && @relationship.requested_by == requested_to # there was request o/s from this user to us
           @relationship.friended!
-          update_relationship_count(current_user)
+          update_relationship_count(current_user, @api_version)
           @relationship.friend_request_accepted_push
         end
       else
         @relationship = Relationship.create(requested_by_id: current_user.id, requested_to_id: requested_to.id)
         if @relationship.valid?
-          update_relationship_count(@relationship.requested_to)
+          update_relationship_count(@relationship.requested_to, @api_version)
           @relationship.friend_request_received_push
           return_the @relationship, handler: 'jb', using: :show
         else
@@ -52,7 +52,7 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
           if new_status == "friended"
             if old_status == "requested" && @relationship.requested_to == current_user
               @relationship.friended!
-              update_relationship_count(current_user)
+              update_relationship_count(current_user, @api_version)
               @relationship.friend_request_accepted_push
             else
               can_status = false
@@ -60,14 +60,14 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
           elsif new_status == "denied"
             if old_status == "requested" && @relationship.requested_to == current_user
               @relationship.destroy
-              update_relationship_count(current_user)
+              update_relationship_count(current_user, @api_version)
             else
               can_status = false
             end
           else # withdrawn
             if old_status == "requested" && @relationship.requested_by == current_user
               @relationship.destroy
-              update_relationship_count(@relationship.requested_to)
+              update_relationship_count(@relationship.requested_to, @api_version)
             else
               can_status = false
             end
