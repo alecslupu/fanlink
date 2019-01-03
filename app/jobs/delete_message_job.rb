@@ -10,7 +10,6 @@ class DeleteMessageJob < Struct.new(:message_id, :version)
         version.downto(1) {|v|
           client.set("#{versioned_room_path(message.room, v)}/last_deleted_message_id", message.id)
         }
-
       end
     end
   end

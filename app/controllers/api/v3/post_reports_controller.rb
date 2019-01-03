@@ -123,7 +123,7 @@ class Api::V3::PostReportsController < Api::V2::PostReportsController
         post = @post_report.post
         if parms[:status] == "post_hidden"
           post.status = :deleted
-          if post.save && delete_post(post, post.person.followers)
+          if post.save && delete_post(post, post.person.followers, @api_version)
             head :ok
           else
             render_422(_("Invalid or missing status."))

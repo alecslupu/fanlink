@@ -9,7 +9,7 @@ class Api::V3::MessageReportsController < Api::V2::MessageReportsController
         @message_report.update(parms)
         if parms[:status] == "message_hidden"
           @message.hidden = true
-          if @message.save && delete_message(@message)
+          if @message.save && delete_message(@message, @api_version)
             head :ok
           end
         else
