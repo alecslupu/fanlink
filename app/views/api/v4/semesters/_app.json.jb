@@ -1,5 +1,5 @@
 
-{
+json = {
   id: semester.id,
   name: semester.name,
   description: semester.description,
