@@ -107,15 +107,12 @@ module Messaging
   end
 
   def update_relationship_count(requested_to, version = nil)
-    # client.set("#{user_path(requested_to)}/friend_request_count", requested_to.friend_request_count).response.status == 200
     payload = {}
-    to_be_notified.each do |p|
-      payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
-      if version.present?
-        version.downto(1) {|v|
-          ppayload["#{user_path(requested_to, v)}/friend_request_count"] = requested_to.friend_request_count
-        }
-      end
+    payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
+      }
     end
     client.update("", payload).response.status == 200
   end
