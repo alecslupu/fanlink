@@ -7,7 +7,7 @@
 module Admin
   class ApplicationController < Administrate::ApplicationController
     set_current_tenant_through_filter
-    before_action :require_login, :check_admin, :set_tenant, :set_paper_trail_whodunnit
+    before_action :require_login, :check_admin, :set_tenant, :set_paper_trail_whodunnit, :set_api_version
 
   # Override this value to specify the number of elements to display at a time
   # on index pages. Defaults to 20.
@@ -23,6 +23,10 @@ module Admin
 
     def check_super
       not_authenticated unless current_user.super_admin?
+    end
+
+    def set_api_version
+      @api_version = 5
     end
 
     def not_authenticated

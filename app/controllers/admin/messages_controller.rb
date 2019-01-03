@@ -16,7 +16,7 @@ module Admin
       @message = Message.find(params[:message_id])
       if @message.visible?
         @message.update_attribute(:hidden, true)
-        delete_message(@message)
+        delete_message(@message, @api_version)
         @message.message_reports.each do |report|
           report.message_hidden!
         end

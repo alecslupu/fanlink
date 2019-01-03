@@ -22,7 +22,7 @@ module Admin
       errored = false
       if message_report.status == "message_hidden"
         message.hidden = true
-        if message.save && delete_message(message)
+        if message.save && delete_message(message, @api_version)
           Rails.logger.debug("not errored")
           message_report.save
         else
