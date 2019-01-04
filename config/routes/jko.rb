@@ -33,6 +33,7 @@ JkoApi.routes self do
         get "list" => "posts#list"
         get "recommended" => "recommended_posts#index"
       end
+
       resources :post_comments, only: %i[ create destroy index ], path: :comments
       resources :post_reactions, only: %i[ create destroy index update ], path: :reactions
       get "share", on: :member
@@ -170,6 +171,10 @@ JkoApi.routes self do
     resources :portal_notifications
 
     resources :posts, except: %i[ new edit ] do
+      resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
+        resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ]
+      end
+
       collection do
         get "list" => "posts#list"
         get "recommended" => "recommended_posts#index"
@@ -177,6 +182,10 @@ JkoApi.routes self do
         get "category/:category_name" => "categories#posts"
       end
       get "share" => "posts#share"
+    end
+
+    resources :polls, only: %i[ index ] do
+      resources :poll_options, :controller => "poll_options", only: %i[ show index cast_vote ]
     end
 
     resources :quests, except: %i[ create index show update ] do

@@ -402,6 +402,18 @@ class Api::V3::PostsController < Api::V2::PostsController
     end
   end
 
+  def add_poll
+    puts params
+    Poll.create(params)
+
+    #       Connection.create(
+     #       from_member_id: target_from.id,
+      #      to_member_id: target_to.id,
+       #     rank: rank,
+        #    answered_survey: answered_survey
+    #)
+  end
+
   private
 
   def get_product

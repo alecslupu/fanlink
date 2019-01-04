@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -392,6 +392,7 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
+
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
@@ -406,6 +407,15 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.integer "interest_id", null: false
     t.index ["interest_id"], name: "idx_person_interests_interest"
     t.index ["person_id"], name: "idx_person_interests_person"
+  end
+
+  create_table "person_poll_options", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.integer "poll_option_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "idx_person_poll_options_person"
+    t.index ["poll_option_id"], name: "idx_person_poll_options_poll_option"
   end
 
   create_table "person_rewards", force: :cascade do |t|
@@ -423,6 +433,26 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.integer "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "poll_options", force: :cascade do |t|
+    t.text "description", null: false
+    t.integer "poll_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poll_id"], name: "idx_poll_options_poll"
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.text "description", null: false
+    t.integer "poll_type", null: false
+    t.integer "poll_type_id", null: false
+    t.datetime "start_date", null: false
+    t.integer "duration", default: 0, null: false
+    t.string "poll_status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
   end
 
   create_table "portal_accesses", force: :cascade do |t|
@@ -546,6 +576,7 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.string "video_job_id"
     t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
+
     t.index ["body"], name: "index_posts_on_body", using: :gin
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
@@ -681,6 +712,16 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.index ["reward_id"], name: "idx_quests_rewards"
     t.index ["starts_at"], name: "index_quests_on_starts_at"
     t.index ["status"], name: "index_quests_on_status"
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.text "app_name", null: false
+    t.text "server_ip", null: false
+    t.text "app_environment", null: false
+    t.text "user"
+    t.text "hashed_access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -866,6 +907,9 @@ ActiveRecord::Schema.define(version: 20181205160622) do
   add_foreign_key "person_interests", "interests", name: "fk_person_interests_interest"
   add_foreign_key "person_interests", "people", name: "fk_event_checkins_person"
   add_foreign_key "person_interests", "people", name: "fk_person_interests_person"
+  add_foreign_key "person_poll_options", "people", name: "fk_person_poll_options_person"
+  add_foreign_key "person_poll_options", "poll_options", name: "fk_person_poll_options_poll_option"
+  add_foreign_key "poll_options", "polls", name: "idx_poll_options_poll"
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
