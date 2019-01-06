@@ -38,6 +38,16 @@ json.cache! ["v3", post] do
   json.video_url post.video_url
   json.video_transcoded post.video_transcoded
   json.video_thumbnail post.video_thumbnail
+
+  if post.poll.present?
+    json.poll do
+      json.poll_id post.poll.id
+      json.description post.poll.description
+      json.start_date post.poll.start_date
+      json.duration post.poll.duration
+      json.poll_status post.poll.poll_status
+    end
+  end
 end
 
 if defined?(post_reaction) && post_reaction.present?

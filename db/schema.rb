@@ -447,7 +447,7 @@ ActiveRecord::Schema.define(version: 20190105173646) do
     t.integer "poll_type_id", null: false
     t.datetime "start_date", null: false
     t.integer "duration", default: 0, null: false
-    t.string "poll_status", null: false
+    t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
