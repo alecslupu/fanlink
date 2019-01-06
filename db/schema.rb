@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181205160622) do
+ActiveRecord::Schema.define(version: 20190105173646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -343,7 +343,6 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
-    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -449,7 +448,7 @@ ActiveRecord::Schema.define(version: 20181205160622) do
     t.integer "poll_type_id", null: false
     t.datetime "start_date", null: false
     t.integer "duration", default: 0, null: false
-    t.string "poll_status", null: false
+    t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true

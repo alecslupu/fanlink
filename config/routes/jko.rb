@@ -172,9 +172,10 @@ JkoApi.routes self do
 
     resources :posts, except: %i[ new edit ] do
       resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
-        resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ]
+        resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ] do
+          post "/cast_vote" => "poll_options#cast_vote"
+        end
       end
-
       collection do
         get "list" => "posts#list"
         get "recommended" => "recommended_posts#index"

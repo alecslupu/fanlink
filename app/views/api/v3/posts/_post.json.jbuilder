@@ -38,7 +38,7 @@ json.cache! ["v3", post] do
   json.video_url post.video_url
   json.video_transcoded post.video_transcoded
   json.video_thumbnail post.video_thumbnail
-  
+
   if post.poll.present?
     json.poll do
       json.poll_id post.poll.id
