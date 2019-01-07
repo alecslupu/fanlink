@@ -1,5 +1,7 @@
 #!/bin/sh
 # bin/entrypoint
+# export FIREBASE_KEY=$(cat /usr/src/app/fanlink-development.json)
+# export FIREBASE_KEY="$(cat /usr/src/app/fanlink-development.json)"
 echo "Running start up script..."
 
 cd /usr/src/app
@@ -35,6 +37,5 @@ else
     rm /usr/src/app/tmp/pids/server.pid
   fi
   echo "Starting server."
-  export FIREBASE_KEY=$(cat /usr/src/app/fanlink-development.json)
   bundle exec rails s -p 3000 -b 0.0.0.0
 fi

@@ -49,6 +49,7 @@ class Api::V1::MessagesController < ApiController
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
           @message.post
+          broadcast(:message_created, @message.id, @api_version)
           if room.private?
             room.increment_message_counters(current_user.id)
             @message.private_message_push

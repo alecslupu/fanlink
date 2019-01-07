@@ -2,7 +2,6 @@ json = {
   id: room.id.to_s,
   name: room.name(@lang),
   description: room.description(@lang),
-  owned: room.created_by_id == current_user.id,
   picture_url: room.picture_url,
   public: room.public
 }

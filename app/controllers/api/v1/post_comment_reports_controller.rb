@@ -35,6 +35,7 @@ class Api::V1::PostCommentReportsController < ApiController
     if post_comment.try(:product) == current_user.product
       post_comment_report = PostCommentReport.create(parms)
       if post_comment_report.valid?
+        broadcast(:post_comment_report_created, post_comment_report, @api_version)
         head :ok
       else
         render_error(_(post_comment_report.errors))

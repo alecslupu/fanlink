@@ -42,9 +42,9 @@ class ApiController < ApplicationController
     # everything else.
     #
     if obj.nil?
-      render_404(_("Not found."))
+      render_404(_("Not found.")) and return
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render_422(obj.errors)
+      render_422(obj.errors) and return
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       # if obj.class.included_modules.include?(ActsAsApi::Base::InstanceMethods) || obj.class.included_modules.include?(ActsAsApi::Collection)
       #   respond_to do |format|

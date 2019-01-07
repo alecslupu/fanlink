@@ -54,6 +54,9 @@ class Person < ApplicationRecord
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
+
+  after_commit :flush_cache
+
   scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
 
@@ -90,6 +93,12 @@ class Person < ApplicationRecord
   def self.canonicalize(username)
     StringUtil.search_ify(username)
   end
+
+
+  def self.cached_find(id)
+    Rails.cache.fetch([name, id]) { find(id) }
+  end
+
 
   #
   # Lookup a person via their username.
@@ -165,6 +174,10 @@ class Person < ApplicationRecord
 
   def to_s
     name || username
+  end
+
+  def flush_cache
+    Rails.cache.delete([self.class.name, id])
   end
 
   private

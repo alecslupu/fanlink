@@ -34,6 +34,7 @@ staging:
   <<: *default
   adapter: postgresql
   database: fanlink_staging
+  host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

@@ -199,7 +199,7 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
 
   # fload up doesn't work well at this point with nested tenancy type things like this (the post being only indirectly tenanted).
   def load_post
-    @post = Post.for_product(current_user.product).find(params[:post_id])
+    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:post_id])
     if @post.nil?
       render_not_found
     end

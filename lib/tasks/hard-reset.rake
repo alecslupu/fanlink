@@ -1,7 +1,7 @@
 namespace :db do
     desc 'Force a db:reset of database'
     task hard_reset: :environment do
-      if Rails.env.development?
+      unless Rails.env.production?
         conn = ActiveRecord::Base.connection
         # Terminate all connections except our current one
         conn.execute("SELECT

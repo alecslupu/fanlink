@@ -52,7 +52,7 @@ Rails.application.configure do
 
   config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
   config.eager_load = true
-  config.force_ssl = true
+  config.force_ssl = false
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger = Timber::Logger.new(STDOUT)

@@ -1,4 +1,9 @@
 class Api::V5::InterestsController < Api::V4::InterestsController
+  def index
+    @interests = Interest.interests(ActsAsTenant.current_tenant).order(order: :desc)
+    return_the @interests, handler: 'jb'
+  end
+
   def shared
     if params.has_key?(:interest_ids)
       interest_ids = params[:interest_ids].split(',')

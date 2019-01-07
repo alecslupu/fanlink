@@ -86,7 +86,7 @@ class Api::V1::PostsController < ApiController
         @post.published!
       end
       @post.post if @post.published?
-      broadcast(:post_created, current_user, @post)
+      broadcast(:post_created, current_user, @post, @api_version)
       return_the @post
     else
       render json: { errors: @post.errors.messages }, status: :unprocessable_entity
@@ -414,7 +414,7 @@ private
   end
 
   def load_post
-    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
+    @post = Post.cached_for_product(ActsAsTenant.current_tenant).find(params[:id])
   end
 
   def post_params

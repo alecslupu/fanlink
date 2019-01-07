@@ -24,7 +24,7 @@ Rails.application.configure do
     config.action_controller.enable_fragment_cache_logging = true
 
     #config.cache_store = :memory_store
-    config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes }
+    config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes.to_i }
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.seconds.to_i}"
     }
@@ -45,7 +45,9 @@ Rails.application.configure do
   logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  ActiveRecord::Base.logger = config.logger
+  ActiveSupport::Notifications.subscribe(/cache*+active_support/) do |name, start, finish, id, payload|
+    Rails.logger.debug ['cache:', name, finish - start, id, payload].join(' ')
+  end
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.

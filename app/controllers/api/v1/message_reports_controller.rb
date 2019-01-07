@@ -43,6 +43,7 @@ class Api::V1::MessageReportsController < ApiController
     else
       message_report = MessageReport.create(message_report_params)
       if message_report.valid?
+        broadcast(:message_report_created, message_report.id, @api_version)
         head :ok
       else
         render_error(message_report.errors)

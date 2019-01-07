@@ -1,6 +1,6 @@
 class PostReaction < ApplicationRecord
   belongs_to :post, touch: true
-  belongs_to :person, touch: true
+  belongs_to :person
 
   has_paper_trail
 
@@ -8,6 +8,12 @@ class PostReaction < ApplicationRecord
   validates :person, uniqueness: { scope: :post, message: _("You have already reacted to this post.") }
   validates :reaction, presence: { message: _("Reaction is required.") }
 
+
+  def self.group_reactions(post)
+    Rails.cache.fetch([post, "reactions"]){
+      PostReaction.where(post_id: post.id).group(:reaction).size
+    }
+  end
   private
 
     def check_emoji

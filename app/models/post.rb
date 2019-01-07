@@ -29,6 +29,8 @@ class Post < ApplicationRecord
   belongs_to :person, touch: true
   belongs_to :category, optional: true
 
+  after_commit :flush_cache
+
   normalize_attributes :starts_at, :ends_at
 
   validate :sensible_dates
@@ -56,13 +58,30 @@ class Post < ApplicationRecord
   end
 
   def comments
-    post_comments
+    Rails.cache.fetch([self, "post_comments"]) {
+      post_comments
+    }
   end
 
   def product
     person.product
   end
 
+  def cached_person
+    Person.cached_find(person_id)
+  end
+
+  def self.cached_for_person(person)
+    Rails.cache.fetch([name, person]) {
+      for_person(person)
+    }
+  end
+
+  def self.cached_for_product(product)
+    Rails.cache.fetch([name, product]) {
+      for_product(product)
+    }
+  end
   #
   # Process an Elastic Transcoder response notification.
   #
@@ -101,13 +120,31 @@ class Post < ApplicationRecord
     end
   end
 
+  def flush_cache
+    Rails.cache.delete([self.class.name, product])
+  end
+
 
   def reaction_breakdown
-    (post_reactions.count > 0) ? post_reactions.group(:reaction).count.sort_by { |r, c| r.to_i(16) }.to_h : nil
+    Rails.cache.fetch([cache_key, __method__]) {
+      (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |r, c| r.to_i(16) }.to_h : nil
+    }
+  end
+
+  def cached_reaction_count
+    Rails.cache.fetch([cache_key, __method__]) {
+      post_reactions.count
+    }
+  end
+
+  def cached_tags
+    Rails.cache.fetch([self, "tags"]) { tags }
   end
 
   def reactions
-    post_reactions
+    Rails.cache.fetch([self, "post_reactions"]){
+      post_reactions
+    }
   end
 
   def reported?

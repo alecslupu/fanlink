@@ -1,20 +1,23 @@
 json = {}
 if @req_source == 'web'
-  json[:posts] = @posts.map do |post|
+  json[:posts] = @posts.reject{|post| post.person.nil?}.map do |post|
     p = Rails.cache.fetch ["v5", "post", "web", post.id, post.updated_at.to_i] do
-    {
-      id: post.id,
-      person: {
-        id: post.person.id,
-        username: post.person.username
-      },
-      body: post.body(@lang),
-      status: post.status,
-      comment_count: post.comments.size,
-      create_time: post.created_at.to_s
-    }
-    end
-    p
+      {
+        id: post.id,
+        person: {
+          id: post.cached_person.id,
+          username: post.cached_person.username
+        },
+        body: post.body(@lang),
+        status: post.status,
+        comment_count: post.comments.size,
+        create_time: post.created_at.to_s
+      }
+      end
+      # p[:person] = Rails.cache.fetch ["v5", "post", @req_source, post.person.id, post.person.updated_at.to_i] do
+      #   render partial: "api/v5/people/#{@req_source}", locals: { person: post.person }
+      # end
+      p
   end
 else
   json[:posts] = @posts.map do |post|
@@ -32,7 +35,11 @@ else
     else
       p[:post_reaction] = nil
     end
-    idp[:post_reaction_counts] = post.reaction_breakdown
+    p[:post_reaction_counts] = post.reaction_breakdown
+    # p[:cached_reaction_counts] = post.cached_reaction_count
+    p[:person] = Rails.cache.fetch ["v5", "person", @req_source, post.cached_person.id, post.cached_person.updated_at.to_i] do
+      render partial: "api/v5/people/#{@req_source}", locals: { person: post.cached_person }
+    end
     p
   end
 end

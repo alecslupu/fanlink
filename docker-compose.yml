@@ -13,7 +13,7 @@ services:
       dockerfile: flapi.dev.dockerfile
       args:
         BUILD_ENV: ${RAILS_ENV}
-        FIREBASE_JSON_FILE_PATH: ${FIREBASE_JSON_FILE_PATH}
+        FIREBASE_JSON_FILE_PATH: ${FIREBASE_JSON_FILE}
     image: flapi:dev
     links:
       - postgres
@@ -25,31 +25,33 @@ services:
       # - elasticsearch
       - redis
     restart: unless-stopped
-    environment: &flapi-environment
-      RAILS_ENV: ${RAILS_ENV}
-      FANLINK_PG_USER: ${FANLINK_PG_USER}
-      FANLINK_PG_PASSWORD: ${FANLINK_PG_PASSWORD}
-      FANLINK_PG_HOST: ${FANLINK_PG_HOST}
-      FANLINK_ES_HOST: ${FANLINK_ES_HOST}
-      FIREBASE_CM_KEY: ${FIREBASE_CM_KEY}
-      FIREBASE_URL: ${FIREBASE_URL}
-      # FIREBASE_KEY: ${FIREBASE_KEY}
-      AWS_REGION: ${AWS_REGION}
-      AWS_BUCKET: ${AWS_BUCKET}
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-      MANDRILL_API_KEY: ${MANDRILL_API_KEY}
-      PAPERCLIP_SECRET: ${PAPERCLIP_SECRET}
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-      PORTAL_URL: ${PORTAL_URL}
-      REDIS_URL: ${REDIS_URL}
-      FANLINK_PROJECT_PATH: ${FANLINK_PROJECT_PATH}
+    # environment: &flapi-environment
+    #   RAILS_ENV: ${RAILS_ENV}
+    #   FANLINK_PG_USER: ${FANLINK_PG_USER}
+    #   FANLINK_PG_PASSWORD: ${FANLINK_PG_PASSWORD}
+    #   FANLINK_PG_HOST: ${FANLINK_PG_HOST}
+    #   FANLINK_ES_HOST: ${FANLINK_ES_HOST}
+    #   FIREBASE_CM_KEY: ${FIREBASE_CM_KEY}
+    #   FIREBASE_URL: ${FIREBASE_URL}
+    #   # FIREBASE_KEY: ${FIREBASE_KEY}
+    #   AWS_REGION: ${AWS_REGION}
+    #   AWS_BUCKET: ${AWS_BUCKET}
+    #   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    #   AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    #   MANDRILL_API_KEY: ${MANDRILL_API_KEY}
+    #   PAPERCLIP_SECRET: ${PAPERCLIP_SECRET}
+    #   SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    #   PORTAL_URL: ${PORTAL_URL}
+    #   REDIS_URL: ${REDIS_URL}
+    #   FANLINK_PROJECT_PATH: ${FANLINK_PROJECT_PATH}
 
     ports:
       - 3000:3000
     volumes:
       - app:/usr/src/app
       - gems:/gems
+    env_file:
+      - ./.env
   flapi-jobs:
     image: flapi:dev
     container_name: flapi-jobs
@@ -61,8 +63,10 @@ services:
       - postgres
       - flapi
     environment:
-      <<: *flapi-environment
+    #   <<: *flapi-environment
       QUEUE: default
+    env_file:
+      - ./.env
     volumes:
       - app:/usr/src/app
       - gems:/gems

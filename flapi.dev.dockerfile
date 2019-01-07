@@ -27,6 +27,8 @@ EXPOSE 3000
 
 WORKDIR /usr/src/app
 
+RUN export FIREBASE_KEY=$(echo "$(cat ${FIREBASE_JSON_FILE_PATH})")
+
 # RUN bundle install
 
 VOLUME /usr/src/app
