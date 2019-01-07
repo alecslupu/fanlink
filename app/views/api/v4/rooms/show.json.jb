@@ -4,5 +4,5 @@ json = {
   }
 }
 
-json[:room][:owned] = room.created_by_id == current_user.id
+json[:room][:owned] = @room.created_by_id == current_user.id
 json
