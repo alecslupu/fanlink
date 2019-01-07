@@ -5,6 +5,8 @@ class Api::V4::PostsController < Api::V3::PostsController
     else
       @posts = paginate Post.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
     end
+    @pinned = Post.where(id: Poll.select(:poll_type_id).where(poll_status: 1))
+    @posts = @pinned + @posts
     if params[:tag].present? || params[:categories].present?
       @posts = @posts.for_tag(params[:tag]) if params[:tag]
       @posts = @posts.for_category(params[:categories]) if params[:categories]
