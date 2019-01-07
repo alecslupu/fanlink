@@ -1,5 +1,7 @@
 json = {}
 
+json[:pinned] = @pinned
+
 json[:posts] = @posts.map do |post|
   p = Rails.cache.fetch ["v4", "post", @req_source, post.id, post.updated_at.to_i] do
     render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
