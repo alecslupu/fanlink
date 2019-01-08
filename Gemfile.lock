@@ -1260,7 +1260,7 @@ DEPENDENCIES
   pundit
   rack-cors
   rack-timeout
-  rails (~> 5)
+  rails (~> 5.1.4)
   redis
   redis-namespace
   redis-rails

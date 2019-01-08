@@ -1,28 +1,30 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
-    if @req_source == "web" && current_user.some_admin?
-      @posts = paginate apply_filters
+    if params[:promoted].present?
+      @posts = Post.visible.promoted.includes([:poll])
     else
-      @posts = paginate Post.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
-    end
-    @pinned = Post.where(id: Poll.select(:poll_type_id).where(poll_status: 1))
-    @posts = @pinned + @posts
-    if params[:tag].present? || params[:categories].present?
-      @posts = @posts.for_tag(params[:tag]) if params[:tag]
-      @posts = @posts.for_category(params[:categories]) if params[:categories]
-    elsif params[:person_id].present?
-      pid = params[:person_id].to_i
-      person = Person.find_by(id: pid)
-      if person
-        @posts = @posts.for_person(person)
+      if @req_source == "web" && current_user.some_admin?
+        @posts = paginate apply_filters
       else
-        render_422(_("Cannot find that person.")) && return
+        @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
       end
-    else
-      @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless @req_source == "web"
+      if params[:tag].present? || params[:categories].present?
+        @posts = @posts.for_tag(params[:tag]) if params[:tag]
+        @posts = @posts.for_category(params[:categories]) if params[:categories]
+      elsif params[:person_id].present?
+        pid = params[:person_id].to_i
+        person = Person.find_by(id: pid)
+        if person
+          @posts = @posts.for_person(person)
+        else
+          render_422(_("Cannot find that person.")) && return
+        end
+      else
+        @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless @req_source == "web"
+      end
     end
-    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    # @posts = @posts.includes([:category, :person])
+      @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    # @posts = @posts.includes([:person])
     return_the @posts, handler: 'jb'
   end
 
@@ -30,6 +32,11 @@ class Api::V4::PostsController < Api::V3::PostsController
     @posts = paginate apply_filters
     @posts = @posts.for_tag(params[:tag]) if params[:tag]
     @posts = @posts.for_categories(params[:categories]) if params[:categories]
+    return_the @posts, handler: 'jb'
+  end
+
+  def promoted
+    @posts = Post.promoted
     return_the @posts, handler: 'jb'
   end
 

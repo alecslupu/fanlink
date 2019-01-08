@@ -40,32 +40,4 @@ else
   json[:tag] = nil
 end
 
-if post.poll.present?
-  json[:poll] = 
-  {
-    id: post.poll.id,
-    name: post.poll.description,
-    start_date: post.poll.start_date,
-    duration: post.poll.duration
-  }
-  if post.poll.poll_options.present?
-    if post.poll.was_voted(current_user.id)
-      json[:poll_options] = @post.poll.poll_options.map do |poll_option|
-        {
-          id: poll_option.id,
-          name: poll_option.description,
-          votes: poll_option.votes
-        }
-      end
-    else
-      json[:poll_options] = @post.poll.poll_options.map do |poll_option|
-        {
-          id: poll_option.id,
-          name: poll_option.description
-        }
-      end
-    end
-  end
-end 
-
 json

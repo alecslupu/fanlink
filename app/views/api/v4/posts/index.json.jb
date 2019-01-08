@@ -1,7 +1,4 @@
 json = {}
-
-json[:pinned] = @pinned
-
 json[:posts] = @posts.map do |post|
   p = Rails.cache.fetch ["v4", "post", @req_source, post.id, post.updated_at.to_i] do
     render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
@@ -22,6 +19,22 @@ json[:posts] = @posts.map do |post|
   else
     p[:post_reaction_counts] = post.reaction_breakdown
   end
+  if post.poll.present?
+    p[:poll] = Rails.cache.fetch ["v4", "poll", @req_source, post.poll.id, post.poll.updated_at.to_i] do
+      render(partial: "api/v4/polls/#{@req_source}", locals: { poll: post.poll }, handlers: "jb")
+    end
+    p[:poll][:closed] = post.poll.closed?
+    if post.poll.poll_options.present?
+      p[:poll][:poll_options] = post.poll.poll_options.map do |option|
+        po = Rails.cache.fetch ["v4", "poll_options", @req_source, option.id, option.updated_at.to_i] do
+          render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
+        end
+        po[:voted] = option.voted?(current_user)
+        po[:votes] = option.votes if option.voted?(current_user) || post.poll.closed?
+        po
+      end
+    end
+  end 
   p
 end
 

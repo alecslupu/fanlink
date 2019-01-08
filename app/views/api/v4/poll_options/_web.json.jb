@@ -1,0 +1,6 @@
+{
+  id: option.id,
+  description: option.description,
+  created_at: option.created_at,
+  updated_at: option.updated_at
+}
