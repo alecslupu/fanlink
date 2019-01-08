@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190105173646) do
+ActiveRecord::Schema.define(version: 20190107230337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -391,7 +391,6 @@ ActiveRecord::Schema.define(version: 20190105173646) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
-
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
@@ -575,7 +574,7 @@ ActiveRecord::Schema.define(version: 20190105173646) do
     t.string "video_job_id"
     t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
-
+    t.boolean "pinned", default: false
     t.index ["body"], name: "index_posts_on_body", using: :gin
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
