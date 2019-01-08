@@ -39,6 +39,10 @@ class Post < ApplicationRecord
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
+  scope :promoted, -> {
+    joins(:poll).where("polls.poll_type = ? or pinned = true", Poll.poll_types['post'])
+  }
+
   scope :for_person, -> (person) { includes(:person).where(person: person) }
   scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
   scope :in_date_range, -> (start_date, end_date) {
@@ -50,8 +54,11 @@ class Post < ApplicationRecord
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
           published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
-                          Time.zone.now, Time.zone.now).includes(:category)
+                          Time.zone.now, Time.zone.now)
         }
+  scope :not_promoted, -> {
+    left_joins(:poll).merge(Poll.where(id: nil)).where(pinned: false)
+  }
 
   def cache_key
     [super, person.cache_key].join("/")
@@ -63,6 +70,10 @@ class Post < ApplicationRecord
 
   def product
     person.product
+  end
+
+  def pinned
+    poll.present?
   end
 
   #
@@ -127,7 +138,7 @@ class Post < ApplicationRecord
   end
 
   def published?
-    status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))
+    status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
   end
   private
 

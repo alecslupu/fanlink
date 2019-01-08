@@ -7,6 +7,10 @@ class Poll < ApplicationRecord
 
   validate :start_date_cannot_be_in_the_past
 
+  def closed?
+    start_date.beginning_of_day.to_time.to_i + duration <= Date.today.end_of_day.to_time.to_i
+  end
+
   def start_date_cannot_be_in_the_past
   	if start_date.present? && start_date < Date.today
   	  errors.add(:expiration_date, "can't be in the past")	

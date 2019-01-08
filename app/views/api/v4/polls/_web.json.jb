@@ -1,0 +1,8 @@
+{
+  id: poll.id,
+  description: poll.description,
+  start_date: poll.start_date,
+  duration: poll.duration,
+  created_at: poll.created_at,
+  updated_at: poll.updated_at
+}
