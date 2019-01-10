@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   include TranslationThings
 
   # include Post::Views
+  #TODO return posts based on user last login time
 
   enum status: %i[ pending published deleted rejected errored ]
 

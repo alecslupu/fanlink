@@ -61,6 +61,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rswag-specs"
   gem 'fuubar'
+  gem 'graphql'
 end
 
 group :development do
@@ -147,3 +148,5 @@ gem "uuidtools"
 gem 'wisper', '2.0.0'
 gem 'wisper-activejob'
 gem 'wisper-activerecord'
+
+gem 'graphiql-rails', group: :development
