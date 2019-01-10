@@ -5,7 +5,7 @@ class PollOption < ApplicationRecord
   has_many :people, through: :person_poll_options
   
   def voted?(person)
-    people.present? && people.find(person.id).exists?
+    people.present? && people.find(person.id).present?
   end
 
   def voters

@@ -1,0 +1,14 @@
+json = {}
+
+json[:polls] = @poll.poll_options.map do |poll|
+  Rails.cache.fetch ["v4", "poll", "show", @req_source, poll.id, poll.updated_at] do
+    {
+      id: poll.id,
+      name: poll.description,
+      numberOfVotes: poll.votes,
+      voted: poll.voted?(current_user)
+    }
+  end
+end
+
+json
