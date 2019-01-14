@@ -27,7 +27,7 @@ if @post.poll.present?
         render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
       end
       po[:voted] = option.voted?(current_user)
-      po[:votes] = option.votes if option.voted?(current_user) || @post.poll.closed?
+      po[:votes] = option.votes 
       po
     end
   end
