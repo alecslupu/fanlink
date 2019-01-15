@@ -26,8 +26,8 @@ if @post.poll.present?
       po = Rails.cache.fetch ["v4", "poll_options", @req_source, option.id, option.updated_at.to_i] do
         render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
       end
+      po[:numberOfVotes] = option.votes 
       po[:voted] = option.voted?(current_user)
-      po[:votes] = option.votes 
       po
     end
   end
