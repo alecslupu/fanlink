@@ -3,7 +3,7 @@ class Poll < ApplicationRecord
   enum poll_status: %i[ inactive active disabled ]
 
   belongs_to :post, foreign_key: "poll_type_id", foreign_type: "poll_type"
-  has_many :poll_options
+  has_many :poll_options, dependent: :destroy
 
   validate :start_date_cannot_be_in_the_past
 

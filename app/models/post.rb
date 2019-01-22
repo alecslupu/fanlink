@@ -26,7 +26,7 @@ class Post < ApplicationRecord
   has_many :post_reports, dependent: :destroy
   has_many :post_reactions
 
-  has_one :poll, -> { where("polls.poll_type = ?", Poll.poll_types["post"]) }, foreign_key: "poll_type_id"
+  has_one :poll, -> { where("polls.poll_type = ?", Poll.poll_types["post"]) }, foreign_key: "poll_type_id", dependent: :destroy
 
   belongs_to :person, touch: true
   belongs_to :category, optional: true
