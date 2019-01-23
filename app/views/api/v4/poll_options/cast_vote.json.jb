@@ -5,7 +5,7 @@ json[:polls] = @poll.poll_options.map do |poll|
     {
       id: poll.id,
       description: poll.description,
-      numberOfVotes: poll.votes,
+      numberOfVotes: poll.voters.count,
       voted: poll.voted?(current_user)
     }
   end
