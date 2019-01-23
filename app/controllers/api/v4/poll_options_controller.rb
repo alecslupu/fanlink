@@ -10,6 +10,11 @@ class Api::V4::PollOptionsController < Api::V3::PollOptionsController
       render_422 @vote.errors
     end
   end
+
+  def delete_votes
+    PersonPollOption.where(poll_option_id: params[:poll_option_id]).destroy_all
+    render json: {message: "votes deleted"}
+  end
 end
 
 
