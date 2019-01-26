@@ -174,6 +174,7 @@ JkoApi.routes self do
       resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
         resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ] do
           post "/cast_vote" => "poll_options#cast_vote"
+          delete "/delete_votes" => "poll_options#delete_votes"
         end
       end
       collection do

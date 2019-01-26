@@ -142,7 +142,7 @@ class Api::V3::PollOptionsController < ApiController
   def cast_vote
     @vote = PersonPollOption.create(person_id: current_user.id, poll_option_id: params[:poll_option_id])
     if @vote.valid?
-      return_the @vote
+      return_the @poll
     else
       render_422 @vote.errors
     end

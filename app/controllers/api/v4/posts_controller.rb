@@ -1,7 +1,7 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
     if params[:promoted].present?
-      @posts = Post.visible.promoted.includes([:poll])
+      @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
     else
       if @req_source == "web" && current_user.some_admin?
         @posts = paginate apply_filters
@@ -23,8 +23,8 @@ class Api::V4::PostsController < Api::V3::PostsController
         @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless @req_source == "web"
       end
     end
-      @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    # @posts = @posts.includes([:person])
+    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    #@posts = @posts.includes([:person])
     return_the @posts, handler: 'jb'
   end
 

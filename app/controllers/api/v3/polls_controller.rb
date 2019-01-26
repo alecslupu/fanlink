@@ -39,7 +39,7 @@ class Api::V3::PollsController < ApiController
     @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
     if @poll.valid?
       @poll.save
-      return_the @poll
+      return_the @poll, handler: 'jb', using: :show
     else
       render_422 @poll.errors
     end
