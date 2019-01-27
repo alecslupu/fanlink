@@ -1,6 +1,6 @@
 module Types
   class MessageType < Types::BaseObject
-    name "Post"
+    graphql_name "Post"
     description "User Created Posts"
     field :id, types.ID, null: false
     field :body, types.String
