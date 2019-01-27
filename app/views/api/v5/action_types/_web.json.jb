@@ -1,10 +1,5 @@
-json = {
-  id: action.id,
-  name: action.name,
-  internal_name: action.internal_name,
-  seconds_lag: action.seconds_lag,
-  created_at: action.created_at.to_s,
-  updated_at: action.updated_at.to_s
-}
-
+json = {}
+action.attributes.each do |attr_name, attr_value|
+  json[attr_name] = attr_value
+end
 json

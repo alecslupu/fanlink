@@ -1,17 +1,9 @@
 json = {}
 if @req_source == 'web'
-  json[:posts] = @posts.reject{|post| post.person.nil?}.map do |post|
-    {
-      id: post.id,
-      person: {
-        id: post.cached_person.id,
-        username: post.cached_person.username
-      },
-      body: post.body(@lang),
-      status: post.status,
-      comment_count: post.comments.size,
-      create_time: post.created_at.to_s
-    }
+  json[:posts] = @posts.map do |post|
+    p = Rails.cache.fetch ["v5", "post", @req_source, post.id, post.updated_at.to_i] do
+      render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
+    end
   end
 else
   json[:posts] = @posts.map do |post|

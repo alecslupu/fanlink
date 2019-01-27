@@ -1,15 +1,5 @@
-{
-  id: message_report.id,
-  poster: message_report.poster,
-  reporter: message_report.reporter,
-  reason: message_report.reason,
-  status: message_report.status,
-  created_at: message_report.created_at.to_s,
-  updated_at: message_report.updated_at.to_s,
-  message: {
-    id: message_report.message.id,
-    room_id: message_report.message.room_id,
-    body: message_report.message.body,
-    status: message_report.message.status
-  }
-}
+json = {}
+message_report.attributes.each do |attr_name, attr_value|
+  json[attr_name] = attr_value
+end
+json
