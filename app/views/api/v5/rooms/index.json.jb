@@ -1,9 +1,11 @@
 json = {}
 
 json[:rooms] = @rooms.map do |room|
-  Rails.cache.fetch ["v4", "room", @req_source, room.id, room.updated_at.to_i] do
+  r = Rails.cache.fetch ["v4", "room", @req_source, room.id, room.updated_at.to_i] do
     render partial: @req_source, locals: { room: room }, handlers: "jb"
   end
+  r[:picture_url] = room.picture_url if @req_source === "web"
+  r
 end
 
 json
