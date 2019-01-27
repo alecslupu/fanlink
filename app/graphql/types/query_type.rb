@@ -6,7 +6,8 @@ module Types
     field :posts, [Types::PostType], null: false do
       argument :page, Integer, required: false
       argument :per_page, Integer, required: false
-
+    end
+    
     def posts(page:, per_page:)
       Post.all
     end
