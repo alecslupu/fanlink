@@ -61,7 +61,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rswag-specs"
   gem 'fuubar'
-  gem 'graphql'
 end
 
 group :development do
@@ -118,6 +117,7 @@ gem 'flag_shih_tzu'
 gem "gettext_i18n_rails"
 gem 'goldiloader'
 gem "google_places"
+gem 'graphql'
 gem 'has_scope'
 gem "jko_api" # api versioning
 gem "kaminari"
