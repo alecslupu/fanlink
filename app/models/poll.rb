@@ -31,6 +31,6 @@ class Poll < ApplicationRecord
   private
 
   def add_end_date
-    self.end_date = start_date.to_datetime + duration.seconds/1000
+    self.end_date = start_date.to_datetime + duration.seconds
   end
 end
