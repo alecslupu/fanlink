@@ -43,7 +43,7 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-    joins(:poll).where("polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?", Poll.poll_types['post'], Time.now.beginning_of_day, Time.now.end_of_day)
+    joins(:poll).where("polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?", Poll.poll_types['post'], Time.now, Time.now)
   }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
