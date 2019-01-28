@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190107230337) do
+ActiveRecord::Schema.define(version: 20190127162419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -450,6 +450,7 @@ ActiveRecord::Schema.define(version: 20190107230337) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "end_date", default: "2019-01-27 16:29:38"
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
   end
 
@@ -711,16 +712,6 @@ ActiveRecord::Schema.define(version: 20190107230337) do
     t.index ["reward_id"], name: "idx_quests_rewards"
     t.index ["starts_at"], name: "index_quests_on_starts_at"
     t.index ["status"], name: "index_quests_on_status"
-  end
-
-  create_table "registrations", force: :cascade do |t|
-    t.text "app_name", null: false
-    t.text "server_ip", null: false
-    t.text "app_environment", null: false
-    t.text "user"
-    t.text "hashed_access"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "relationships", force: :cascade do |t|
