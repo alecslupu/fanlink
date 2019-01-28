@@ -7,6 +7,8 @@ class Poll < ApplicationRecord
 
   validate :start_date_cannot_be_in_the_past
 
+  before_validation :add_end_date
+
   def closed?
     start_date.beginning_of_day.to_time.to_i + duration <= Date.today.end_of_day.to_time.to_i
   end
@@ -24,5 +26,11 @@ class Poll < ApplicationRecord
       end
     end
     return false
+  end
+
+  private
+
+  def add_end_date
+    self.end_date = start_date.to_datetime + duration.seconds
   end
 end
