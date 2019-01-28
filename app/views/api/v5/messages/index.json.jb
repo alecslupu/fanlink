@@ -5,8 +5,8 @@ json[:messages] = Rails.cache.fetch ["v4", @messages, Message.maximum(:updated_a
     m = Rails.cache.fetch ["v5", "message", @req_source, message.id, message.updated_at.to_i] do
       render partial: @req_source, locals: { message: message }, handlers: "jb"
     end
-    m[:person] =  Rails.cache.fetch(["v5", "person", @req_source, @person.id, @person.updated_at.to_i]) do
-      render(partial: @req_source, locals: { person: @person }, handlers: "jb")
+    m[:person] =  Rails.cache.fetch(["v5", "person", @req_source, message.person.id, message.person.updated_at.to_i]) do
+      render(partial: @req_source, locals: { person: message.person }, handlers: "jb")
     end if @req_source === "web"
     m
   end
