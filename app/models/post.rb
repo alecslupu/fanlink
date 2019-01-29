@@ -43,7 +43,7 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-    joins(:poll).where("polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?", Poll.poll_types['post'], Time.now, Time.now)
+    joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true", Poll.poll_types['post'], Time.now, Time.now)
   }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
@@ -60,7 +60,7 @@ class Post < ApplicationRecord
                           Time.zone.now, Time.zone.now)
         }
   scope :not_promoted, -> {
-    left_joins(:poll).where("poll_type_id IS NULL or end_date < ?", Time.now.end_of_day)
+    left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()")
   }
 
   def cache_key

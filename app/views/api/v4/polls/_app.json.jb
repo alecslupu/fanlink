@@ -5,5 +5,6 @@
   description: poll.description,
   start_date: poll.start_date.to_s,
   duration: poll.duration,
+  end_date: poll.end_date.to_s,
   create_time: poll.created_at.to_s
 }

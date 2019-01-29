@@ -3,6 +3,7 @@
   description: poll.description,
   start_date: poll.start_date,
   duration: poll.duration,
+  end_date: poll.end_date,
   created_at: poll.created_at,
   updated_at: poll.updated_at
 }
