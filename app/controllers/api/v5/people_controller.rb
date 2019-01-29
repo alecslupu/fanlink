@@ -17,4 +17,9 @@ class Api::V5::PeopleController < Api::V4::PeopleController
       return_the @person, handler: 'jb'
     end
   end
+
+  def list
+    @people = Person.all
+    return_the @people, handler: 'jb'
+  end
 end

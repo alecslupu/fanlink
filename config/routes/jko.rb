@@ -252,5 +252,10 @@ JkoApi.routes self do
         get "config/:internal_name" => "products#setup"
       end
     end
+    resources :people do
+      collection do
+        get "list" => "people#list"
+      end
+    end
   end
 end
