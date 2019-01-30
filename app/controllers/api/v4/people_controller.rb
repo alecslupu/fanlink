@@ -1,7 +1,7 @@
 class Api::V4::PeopleController < Api::V3::PeopleController
   def index
     @people = paginate apply_filters
-    @people = @people.reject {|person| person==current_user}
+    @people = @people.reject {|person| person==current_user} unless params[:product_account_filter]
     return_the @people, handler: 'jb'
   end
 
