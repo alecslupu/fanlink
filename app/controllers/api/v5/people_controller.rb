@@ -10,7 +10,7 @@ class Api::V5::PeopleController < Api::V4::PeopleController
       render_not_found
     else
       if params.has_key?(:username)
-        @person = Person.where(username: params[:username]).first
+        @person = Person.for_username(params[:username])
       else
         @person = Person.find(params[:id])
       end
