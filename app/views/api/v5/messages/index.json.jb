@@ -7,6 +7,7 @@ json[:messages] = @messages.map do |message|
   if @req_source === "web"
     m[:person] = render partial: "person", locals: { person: message.person }, handlers: "jb"
     m[:picture_url] = message.picture_url
+    m[:audio_url] = message.audio_url
   end
   m
 end
