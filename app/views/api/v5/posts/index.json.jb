@@ -9,6 +9,7 @@ if @req_source == 'web'
       p[:picture_url] = post.picture_url
       p[:audio_url] = post.audio_url
       p[:video_url] = post.video_url if post.video_transcoded
+      p[:comment_count] = post.comment_count
     end
     p
   end
