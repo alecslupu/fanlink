@@ -4,6 +4,13 @@ if @req_source == 'web'
     p = Rails.cache.fetch ["v5", "post", @req_source, post.id, post.updated_at.to_i] do
       render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
     end
+    if @req_source === "web"
+      p[:person] = render partial: "person", locals: { person: post.person }, handlers: "jb"
+      p[:picture_url] = post.picture_url
+      p[:audio_url] = post.audio_url
+      p[:video_url] = post.video_url if post.video_transcoded
+    end
+    p
   end
 else
   json[:posts] = @posts.map do |post|
