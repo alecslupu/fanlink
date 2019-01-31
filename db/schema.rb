@@ -455,6 +455,7 @@ ActiveRecord::Schema.define(version: 20190131135229) do
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
+    t.index ["product_id"], name: "idx_polls_product"
   end
 
   create_table "portal_accesses", force: :cascade do |t|

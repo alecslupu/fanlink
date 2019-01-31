@@ -2,6 +2,7 @@ class AddProductToPoll < ActiveRecord::Migration[5.1]
   def change
   	add_column :polls, :product_id, :integer, null: false
   	add_foreign_key :polls, :products, name: "fk_polls_products", on_delete: :cascade
+    add_index :polls, %i[ product_id ], name: "idx_polls_product"
   end
   
   def up
