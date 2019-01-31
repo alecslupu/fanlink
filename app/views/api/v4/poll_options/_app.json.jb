@@ -1,4 +1,4 @@
 {
   id: option.id,
-  description: option.description
+  description: option.description(@lang)
 }

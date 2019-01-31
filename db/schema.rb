@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190127162419) do
+ActiveRecord::Schema.define(version: 20190131135229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -434,15 +434,16 @@ ActiveRecord::Schema.define(version: 20190127162419) do
   end
 
   create_table "poll_options", force: :cascade do |t|
-    t.text "description", null: false
+    t.text "description_old", default: "{}", null: false
     t.integer "poll_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["poll_id"], name: "idx_poll_options_poll"
   end
 
   create_table "polls", force: :cascade do |t|
-    t.text "description", null: false
+    t.text "description_old", default: "{}", null: false
     t.integer "poll_type", null: false
     t.integer "poll_type_id", null: false
     t.datetime "start_date", null: false
@@ -451,6 +452,8 @@ ActiveRecord::Schema.define(version: 20190127162419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "end_date", default: "2019-01-27 16:29:38"
+    t.jsonb "description", default: {}, null: false
+    t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
   end
 
@@ -900,6 +903,7 @@ ActiveRecord::Schema.define(version: 20190127162419) do
   add_foreign_key "person_poll_options", "people", name: "fk_person_poll_options_person"
   add_foreign_key "person_poll_options", "poll_options", name: "fk_person_poll_options_poll_option"
   add_foreign_key "poll_options", "polls", name: "idx_poll_options_poll"
+  add_foreign_key "polls", "products", name: "fk_polls_products", on_delete: :cascade
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
