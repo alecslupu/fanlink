@@ -1,0 +1,5 @@
+{
+  id: person.id,
+  username: person.username,
+  picture_url: person.picture_url
+}
