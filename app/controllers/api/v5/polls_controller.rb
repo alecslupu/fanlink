@@ -4,7 +4,9 @@ class Api::V5::PollsController < Api::V4::PollsController
   def create
     parms = poll_params
     @poll = Poll.create(parms)
-    @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
+    if poll_params.has_key?(:poll_type) && params.has_key?(params[poll_params[:poll_type]+"id"].to_sym])
+      @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
+    end
     if @poll.valid?
       @poll.save
       return_the @poll, handler: 'jb', using: :show
