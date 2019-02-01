@@ -247,6 +247,10 @@ JkoApi.routes self do
         get "shared" => "interests#shared"
       end
     end
+    resources :polls do
+      resources :poll_options, :controller => "poll_options", only: %i[ index create ]
+    end
+    resources :poll_options, only: %i[ show update cast_vote ]
     resources :products do
       collection do
         get "config/:internal_name" => "products#setup"
