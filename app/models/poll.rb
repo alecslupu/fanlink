@@ -7,7 +7,7 @@ class Poll < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  belongs_to :post, foreign_key: "poll_type_id", foreign_type: "poll_type"
+  belongs_to :post, foreign_key: "poll_type_id", foreign_type: "poll_type", optional: true
   has_many :poll_options, dependent: :destroy
 
   validate :start_date_cannot_be_in_the_past
@@ -22,7 +22,7 @@ class Poll < ApplicationRecord
 
   def start_date_cannot_be_in_the_past
   	if start_date.present? && start_date < Date.today
-  	  errors.add(:expiration_date, "can't be in the past")	
+  	  errors.add(:expiration_date, "can't be in the past")
   	end
   end
 
