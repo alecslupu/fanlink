@@ -134,7 +134,7 @@ private
   def poll_params
     Rails.logger.debug params[:poll][:description]
     Rails.logger.debug params[:poll][:description].class
-    if params[:poll][:description].is_a? Array
+    if params[:poll][:description].is_a? Hash
       params.require(:poll).permit(:start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: [:un, :en, :ro, :es])
     else 
       params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
