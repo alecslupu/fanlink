@@ -133,7 +133,7 @@ private
 
   def poll_params
     if params[:poll][:description].is_a? Array
-      params.require(:poll).permit(description: [:un, :en, :ro, :es], :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
+      params.require(:poll).permit(:start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: [:un, :en, :ro, :es])
     else 
       params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
     end
