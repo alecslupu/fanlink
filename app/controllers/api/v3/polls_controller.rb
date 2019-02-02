@@ -132,6 +132,11 @@ class Api::V3::PollsController < ApiController
 private
 
   def poll_params
-    params.require(:poll).permit(:description, description: [:un, :en, :ro, :es], :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
+    if params[:poll][:description].is_a? Array
+      params.require(:poll).permit(description: [:un, :en, :ro, :es], :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
+    else 
+      params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
+    end
   end
 end
+
