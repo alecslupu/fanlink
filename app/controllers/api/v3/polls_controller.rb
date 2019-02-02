@@ -132,6 +132,6 @@ class Api::V3::PollsController < ApiController
 private
 
   def poll_params
-    params.require(:poll).permit(:description, description: [] :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
+    params.require(:poll).permit(:description, description: [], :start_date, :duration, :poll_status, :poll_type, :poll_type_id)
   end
 end
