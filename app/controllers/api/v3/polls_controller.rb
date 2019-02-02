@@ -132,6 +132,7 @@ class Api::V3::PollsController < ApiController
 private
 
   def poll_params
+    Rails.logger.debug params[:poll][:description]
     if params[:poll][:description].is_a? Array
       params.require(:poll).permit(:start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: [:un, :en, :ro, :es])
     else 
