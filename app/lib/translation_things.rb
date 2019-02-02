@@ -72,6 +72,7 @@ module TranslationThings
 
           def #{name}=(val)
             h = {}
+            Rails.logger.info(val.is_a?(Hash))
             if val.is_a?(String)
               h[DEFAULT_LANG] = val
             elsif val.is_a?(Hash)
