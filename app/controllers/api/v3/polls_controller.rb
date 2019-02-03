@@ -1,5 +1,5 @@
 class Api::V3::PollsController < ApiController
-  load_up_the Poll, from: :id
+  load_up_the Poll, except: %i[ index create ]
   # **
   # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction
@@ -68,7 +68,7 @@ class Api::V3::PollsController < ApiController
   # *
 
   def destroy
-    if @post.person == current_user
+    if @post.person == current_user || current_user.some_admin?
       @poll.destroy
       head :ok
     else

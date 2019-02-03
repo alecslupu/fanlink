@@ -16,7 +16,7 @@ class Api::V5::PollsController < Api::V4::PollsController
   end
 
   def destroy
-    if @post.person == current_user
+    if current_user.some_admin?
       @poll.destroy
       head :ok
     else
@@ -27,7 +27,7 @@ class Api::V5::PollsController < Api::V4::PollsController
   def update
     if params.has_key?(:poll)
       if @poll.update_attributes(poll_params)
-        return_the @poll
+        return_the @poll, handler: 'jb', using: :show
       else
         render_422 @poll.errors
       end
