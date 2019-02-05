@@ -1,6 +1,6 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
-    if params[:promoted].present?
+    if params[:promoted].present? && params[:promoted] == "true"
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
     else
       if @req_source == "web" && current_user.some_admin?
