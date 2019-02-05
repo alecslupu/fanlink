@@ -242,15 +242,25 @@ JkoApi.routes self do
   end
 
   version 5 do
+    resources :categories do 
+      collection do
+        get "select" => "categories#select"
+      end
+    end
+    
     resources :interests do
       collection do
         get "shared" => "interests#shared"
       end
     end
     resources :polls do
-      resources :poll_options, :controller => "poll_options", only: %i[ index create ]
+      resources :poll_options, controller: "poll_options", only: %i[ index create ]
+      collection do
+        get "list" => "polls#list"
+        get "select" => "polls#select"
+      end
     end
-    resources :poll_options, only: %i[ show update cast_vote ]
+    resources :poll_options, only: %i[ show update destroy cast_vote ]
     resources :products do
       collection do
         get "config/:internal_name" => "products#setup"

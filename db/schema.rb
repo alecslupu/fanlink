@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190202004937) do
+ActiveRecord::Schema.define(version: 20190205210940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -400,6 +400,27 @@ ActiveRecord::Schema.define(version: 20190202004937) do
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
   end
 
+  create_table "permission_policies", force: :cascade do |t|
+    t.integer "action", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "category", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "interest", default: 0, null: false
+    t.integer "level", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "message", default: 0, null: false
+    t.integer "people", default: 0, null: false
+    t.integer "poll", default: 0, null: false
+    t.integer "portal_notification", default: 0, null: false
+    t.integer "post", default: 0, null: false
+    t.integer "product_beacon", default: 0, null: false
+    t.integer "product", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "room", default: 0, null: false
+    t.integer "education", default: 0, null: false
+  end
+
   create_table "person_interests", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "interest_id", null: false
@@ -759,6 +780,14 @@ ActiveRecord::Schema.define(version: 20190202004937) do
     t.index ["product_id"], name: "idx_rewards_product"
     t.index ["reward_type", "reward_type_id"], name: "unq_rewards_type_reward_type_id", unique: true
     t.index ["series"], name: "index_rewards_on_series", where: "(series IS NOT NULL)"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "internal_name", null: false
+    t.integer "role_enum", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|

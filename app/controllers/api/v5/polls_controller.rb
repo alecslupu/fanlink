@@ -40,4 +40,14 @@ class Api::V5::PollsController < Api::V4::PollsController
     @polls = paginate(Poll.all.order(created_at: :asc))
     return_the @polls, handler: 'jb'
   end
+
+  def select
+    @polls = Poll.pluck(:id, :description).map do |poll|
+      {
+        text: poll.description(@lang),
+        value: poll.id
+      }
+    end
+    return_the @polls, handler: 'jb'
+  end
 end

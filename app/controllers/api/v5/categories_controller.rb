@@ -13,4 +13,14 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
     @category = Category.find(params[:id])
     return_the @category, handler: 'jb'
   end
+
+  def select
+    @categories = Category.pluck(:id, :name).map do |category|
+      {
+        text: category.name,
+        value: category.id
+      }
+    end
+    return_the @categories, handler: 'jb'
+  end
 end

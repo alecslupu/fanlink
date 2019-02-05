@@ -129,6 +129,11 @@ class Api::V3::PollsController < ApiController
     return_the @polls
   end
 
+  def list
+    @polls = Poll.all
+    return @polls, handler: 'jb'
+  end
+
 private
 
   def poll_params
