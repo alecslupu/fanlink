@@ -43,8 +43,8 @@ class Api::V5::PollsController < Api::V4::PollsController
 
   def select
     polls = Poll.assignable
-    if poll.valid?
-      @polls = poll.map do |poll|
+    if polls.valid?
+      @polls = polls.map do |poll|
         {
           text: poll.description(@lang),
           value: poll.id
