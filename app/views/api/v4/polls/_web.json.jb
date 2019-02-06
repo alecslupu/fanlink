@@ -1,5 +1,5 @@
 {
-  id: poll.id,
+  id: poll.id.to_s,
   description: poll.description,
   start_date: poll.start_date,
   duration: poll.duration,
