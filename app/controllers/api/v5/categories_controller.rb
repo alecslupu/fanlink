@@ -13,4 +13,17 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
     @category = Category.find(params[:id])
     return_the @category, handler: 'jb'
   end
+
+  def select
+    @categories = Category.pluck(:id, :name).map do |category|
+      {
+        text: category[1],
+        value: category[0]
+      }
+    end
+    if @categories.valid?
+      render json: { categories: @categories } && return
+    end
+    render_error(@categories.error)
+  end
 end

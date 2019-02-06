@@ -40,4 +40,18 @@ class Api::V5::PollsController < Api::V4::PollsController
     @polls = paginate(Poll.all.order(created_at: :asc))
     return_the @polls, handler: 'jb'
   end
+
+  def select
+    @polls = Poll.all.map do |poll|
+      {
+        text: poll.description(@lang),
+        value: poll.id
+      }
+    end
+    if @polls.valid?
+      render json: {polls: @polls}
+      return
+    end
+    render_error(@polls.error)
+  end
 end
