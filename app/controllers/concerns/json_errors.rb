@@ -46,6 +46,7 @@ module JSONErrors
   def render_500(errors)
     logger.error errors.message
     logger.error errors.backtrace.join("\n")
+    Rollbar.error(errors)
     render json: { errors: { message: exception.message, backtrace: exception.backtrace }, data: {} }, status: 500 unless Rails.env.production?
     render json: {errors: errors.message}.to_json, status: 500 if Rails.env.production?
     return
