@@ -16,6 +16,10 @@ class Poll < ApplicationRecord
 
   has_manual_translated :description
 
+  scope :assignable, -> {
+    where(poll_type_id: nil).where("end_date > ?", Time.now)
+  }
+
   def closed?
     end_date.to_time.to_i <= Time.now.to_time.to_i
   end

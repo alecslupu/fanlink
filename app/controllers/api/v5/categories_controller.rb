@@ -15,15 +15,17 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
   end
 
   def select
-    @categories = Category.pluck(:id, :name).map do |category|
-      {
-        text: category[1],
-        value: category[0]
-      }
+    categories = Category.all
+    if categories.valid?
+      @categories = categories.map do |category|
+        {
+          text: category.name(@lang),
+          value: category.id
+        }
+      end
+      render json: {categories: @categories}
+      return
     end
-    if @categories.valid?
-      render json: { categories: @categories } && return
-    end
-    render_error(@categories.error)
+    render_422 categories.errors
   end
 end
