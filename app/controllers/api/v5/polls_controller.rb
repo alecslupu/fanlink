@@ -44,7 +44,7 @@ class Api::V5::PollsController < Api::V4::PollsController
   def select
     polls = Poll.assignable
     if poll.valid?
-      @polls = Poll.all.map do |poll|
+      @polls = poll.map do |poll|
         {
           text: poll.description(@lang),
           value: poll.id
@@ -53,6 +53,6 @@ class Api::V5::PollsController < Api::V4::PollsController
       render json: {polls: @polls}
       return
     end
-    render_422 @polls.errors
+    render_422 polls.errors
   end
 end
