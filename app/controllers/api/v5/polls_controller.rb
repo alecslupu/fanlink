@@ -42,12 +42,16 @@ class Api::V5::PollsController < Api::V4::PollsController
   end
 
   def select
-    @polls = Poll.pluck(:id, :description).map do |poll|
+    @polls = Poll.all.map do |poll|
       {
         text: poll.description(@lang),
         value: poll.id
       }
     end
-    return_the @polls, handler: 'jb'
+    if @polls.valid?
+      render json: {polls: @polls}
+      return
+    end
+    render_error(@polls.error)
   end
 end

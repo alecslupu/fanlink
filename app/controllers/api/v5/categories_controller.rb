@@ -17,10 +17,13 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
   def select
     @categories = Category.pluck(:id, :name).map do |category|
       {
-        text: category.name,
-        value: category.id
+        text: category[1],
+        value: category[0]
       }
     end
-    return_the @categories, handler: 'jb'
+    if @categories.valid?
+      render json: { categories: @categories } && return
+    end
+    render_error(@categories.error)
   end
 end
