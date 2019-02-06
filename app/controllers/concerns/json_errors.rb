@@ -36,16 +36,18 @@ module JSONErrors
 
     # Will be used once all the render_422 method are removed from the controllers
   def unprocessable_entity(exception)
+    errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
     logger.error exception.message
     logger.error exception.backtrace.join("\n")
-    render json: { errors: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 422 unless Rails.env.production?
+    render json: { errors: { message: exception.message, backtrace: exception.backtrace }, data: {} }, status: 422 unless Rails.env.production?
     render json: { errors: exception.record.errors.messages.values.flatten }, status: :unprocessable_entity if Rails.env.production?
   end
 
   def render_500(errors)
-    logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-    errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test? || errors.is_a?(String)
-    render json: {errors: errors.message}.to_json, status: 500
+    logger.error errors.message
+    logger.error errors.backtrace.join("\n")
+    render json: { errors: { message: exception.message, backtrace: exception.backtrace }, data: {} }, status: 500 unless Rails.env.production?
+    render json: {errors: errors.message}.to_json, status: 500 if Rails.env.production?
     return
   end
 
