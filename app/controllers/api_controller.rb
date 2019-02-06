@@ -61,7 +61,7 @@ class ApiController < ApplicationController
       # else
       #   render action: opts[:using], formats: %i[json], handlers: opts[:handler]
       # end
-      render action: opts[:using], formats: %i[json], handlers: opts[:handler] and return
+      render action: opts[:using], formats: %i[json], handlers: opts[:handler] && return
     end
   end
 
