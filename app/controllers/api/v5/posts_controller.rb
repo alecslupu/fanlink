@@ -27,6 +27,27 @@ class Api::V5::PostsController < Api::V4::PostsController
     return_the @posts, handler: 'jb'
   end
 
+  def create
+    if current_user.chat_banned?
+      render json: { errors: "You are banned." }, status: :unprocessable_entity
+    else
+      @post = Post.create(post_params.merge(person_id: current_user.id))
+      if @post.valid?
+        if params[:post].has_key?(:poll_id)
+          @poll = Poll.find(params[:post][:poll_id]).update_attributes(poll_type: Polls.poll_type["post"], poll_type_id: @post.id)
+        end
+        unless post_params["status"].present?
+          @post.published!
+        end
+        @post.post(@api_version) if @post.published?
+        broadcast(:post_created, current_user, @post)
+        return_the @post, handler: 'jb', using: :show
+      else
+        render_422 @post.errors
+      end
+    end
+  end
+
   def show
     if current_user.try(:some_admin?) && @req_source == "web"
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
