@@ -440,6 +440,7 @@ class Api::V3::PostsController < Api::V2::PostsController
 
   def post_params
     params.require(:post).permit(%i[ body audio picture video global starts_at ends_at repost_interval status priority notify_followers category_id ] +
-                                 ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended, :pinned] : []))
+      [body: {}]
+      + ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended, :pinned] : []))
   end
 end

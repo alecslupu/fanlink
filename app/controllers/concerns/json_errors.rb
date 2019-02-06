@@ -34,10 +34,12 @@ module JSONErrors
     render_errors(errors, 422)
   end
 
-    # Will be used once the alls to all the render_422 method are removed from the controllers
+    # Will be used once all the render_422 method are removed from the controllers
   def unprocessable_entity(exception)
-    render json: { errors: exception.record.errors.messages.values.flatten }, status: :unprocessable_entity
-    return
+    logger.error exception.message
+    logger.error exception.backtrace.join("\n")
+    render json: { errors: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 422 unless Rails.env.production?
+    render json: { errors: exception.record.errors.messages.values.flatten }, status: :unprocessable_entity if Rails.env.production?
   end
 
   def render_500(errors)
