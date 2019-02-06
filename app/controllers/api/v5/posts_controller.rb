@@ -34,7 +34,7 @@ class Api::V5::PostsController < Api::V4::PostsController
       @post = Post.create(post_params.merge(person_id: current_user.id))
       if @post.valid?
         if params[:post].has_key?(:poll_id)
-          @poll = Poll.find(params[:post][:poll_id]).update_attributes(poll_type: Poll.poll_type["post"], poll_type_id: @post.id)
+          @poll = Poll.find(params[:post][:poll_id]).update_attributes(poll_type: Poll.poll_types["post"], poll_type_id: @post.id)
         end
         unless post_params["status"].present?
           @post.published!
