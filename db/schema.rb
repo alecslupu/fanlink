@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190205210940) do
+ActiveRecord::Schema.define(version: 20190205214942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 20190205210940) do
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
+  end
+
+  create_table "api_keys", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.string "key", null: false
+    t.string "secret", null: false
   end
 
   create_table "assigned_push_notifications", force: :cascade do |t|
@@ -419,6 +425,9 @@ ActiveRecord::Schema.define(version: 20190205210940) do
     t.integer "reward", default: 0, null: false
     t.integer "room", default: 0, null: false
     t.integer "education", default: 0, null: false
+    t.string "permissable_type"
+    t.bigint "permissable_id"
+    t.index ["permissable_type", "permissable_id"], name: "permissable_policies"
   end
 
   create_table "person_interests", force: :cascade do |t|
@@ -650,6 +659,7 @@ ActiveRecord::Schema.define(version: 20190205210940) do
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
     t.string "color_accessory", default: "000000"
+    t.integer "features", default: 0, null: false
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end
