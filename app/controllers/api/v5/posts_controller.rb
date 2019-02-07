@@ -15,7 +15,7 @@ class Api::V5::PostsController < Api::V4::PostsController
         pid = params[:person_id].to_i
         person = Person.find_by(id: pid)
         if person
-          @posts = @posts.cached_for_person(person)
+          @posts = @posts.for_person(person)
         else
           render_422(_("Cannot find that person.")) && return
         end
