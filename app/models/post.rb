@@ -69,9 +69,7 @@ class Post < ApplicationRecord
   end
 
   def comments
-    Rails.cache.fetch([self, "post_comments"]) {
-      post_comments
-    }
+    post_comments
   end
 
   def product
