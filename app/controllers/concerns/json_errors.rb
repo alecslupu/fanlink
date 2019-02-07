@@ -34,7 +34,8 @@ module JSONErrors
     # errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
     # errors = Array.wrap(errors) unless errors.is_a?(Array)
     # render json: { errors: errors }, status: 422
-
+  end
+  
   def unprocessable_entity(exception)
     message = exception.messages.values.flatten if exception.instance_of? ActiveModel::Errors
     message ||= "Unable to process your request."
