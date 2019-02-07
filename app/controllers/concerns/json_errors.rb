@@ -1,73 +1,81 @@
 module JSONErrors
   extend ActiveSupport::Concern
+  # set_trace_func proc { |event, file, line, id, proc_binding, classname|
+  #   if !$pried && proc_binding && proc_binding.eval( "caller.size" ) > 200
+  #     $pried = true
+  #     proc_binding.pry
+  #   end
+  # }
   included do
-    unless Rails.application.config.consider_all_requests_local
-      rescue_from Exception, with: :render_error
-      rescue_from ActiveRecord::RecordNotFound,         with: :render_not_found
-      rescue_from ActiveRecord::RecordInvalid,          with: :unprocessable_entity
-      rescue_from ActionController::RoutingError,       with: :render_not_found
-      rescue_from ActionController::UnknownController,  with: :render_not_found
-      rescue_from Pundit::NotAuthorizedError,           with: :user_not_authorized
-      rescue_from ActionController::UnknownFormat,      with: :render_not_found
-    end
+    # rescue_from SystemStackError                    with: :output_tracelog
+    rescue_from StandardError,                      with: :render_500
+    rescue_from NameError,                          with: :render_500
+    rescue_from ActiveRecord::RecordInvalid,        with: :unprocessable_entity
+    rescue_from ActiveRecord::RecordNotFound,       with: :render_404
+    rescue_from ActionController::ParameterMissing, with: :render_400
+    rescue_from ActionController::RoutingError,     with: :render_404
+    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
   end
 
-  # Called by last route matching unmatched routes
-  # Raises RoutingError which will be rescued from in the same way as other exceptions.
-  def raise_not_found!
-    render nothing: true and return if params[:path] && params[:path] =~ /\A(assets|uploads|images)/
-    raise ActionController::RoutingError.new("No route matches #{params[:path]}")
+  def render_400(errors = "required parameters invalid")
+    render_errors(errors, 400)
   end
 
-  private
-
-  def render_not_found(exception)
-    render_exception exception, code: 404, message: 'Not Found Error'
+  def render_401(errors = "unauthorized access")
+    render_errors(errors, 401)
   end
-  
+
   def render_404(errors = "not found")
-    return
-    # render json: { errors: "Not found." }, status: :not_found
+    render json: { errors: "Not found." }, status: :not_found
   end
 
   def render_422(errors = "could not save data")
-    return
-    # errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
-    # errors = Array.wrap(errors) unless errors.is_a?(Array)
-    # render json: { errors: errors }, status: 422
+    errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
+    render_errors(errors, 422)
   end
 
+    # Will be used once the alls to all the render_422 method are removed from the controllers
   def unprocessable_entity(exception)
-    message = exception.messages.values.flatten if exception.instance_of? ActiveModel::Errors
-    message ||= "Unable to process your request."
-    render_exception exception, code: 422, message: message
+    render json: { errors: exception.record.errors.messages.values.flatten }, status: :unprocessable_entity
+    return
   end
 
-  def render_error(exception)
-    render_exception exception, code: 500, message: ['Server Error']
+  def render_500(errors)
+    logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
+    errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test? || errors.is_a?(String)
+    render json: {errors: errors.message}.to_json, status: 500
+    return
   end
 
-  def user_not_authorized(exception)
-    render_exception exception, code: 403, message: ['Not Authorized']
+  def render_503(errors = "service unavailable")
+    render_errors(errors, 503)
   end
 
-  def render_exception(exception, opts = {})
-    Rails.logger.error exception.message
-    Rails.logger.error exception.backtrace.join("\n")
-    level = case opts[:code]
-            when 401, 403
-            "info"
-            when 404
-              "warning"
-            when 422
-              "debug"
-            when 500
-              "critical"
-            else
-              "error"
+  def render_errors(errors, status = 400)
+    errors = Array.wrap(errors) unless errors.is_a?(Array)
+    if status == 500
+      # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
+      # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
+      Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
+    else
+      # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
+      Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
     end
-    Rollbar.log(level, exception)
-    opts[:message] = Array.wrap(opts[:message]) unless opts[:message].is_a?(Array)
-    render json: { errors: opts[:message] }, status: opts[:code]
+    data = {
+      errors: errors
+    }
+    render json: data, status: status
+    return
+  end
+
+
+  def render_object_errors(obj, status = 400)
+    if obj.is_a?(ActiveRecord::Base) # ActiveModel::Model for Mongoid
+      render_object_errors(obj.errors, status)
+    elsif obj.is_a?(ActiveModel::Errors)
+      render_errors(obj.full_messages, status)
+    else
+      render_errors(obj, status)
+    end
   end
 end
