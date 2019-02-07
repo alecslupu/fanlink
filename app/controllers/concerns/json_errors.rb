@@ -24,6 +24,7 @@ module JSONErrors
   def render_not_found(exception)
     render_exception exception, code: 404, message: 'Not Found Error'
   end
+  
   def render_404(errors = "not found")
     return
     # render json: { errors: "Not found." }, status: :not_found
@@ -35,7 +36,7 @@ module JSONErrors
     # errors = Array.wrap(errors) unless errors.is_a?(Array)
     # render json: { errors: errors }, status: 422
   end
-  
+
   def unprocessable_entity(exception)
     message = exception.messages.values.flatten if exception.instance_of? ActiveModel::Errors
     message ||= "Unable to process your request."
