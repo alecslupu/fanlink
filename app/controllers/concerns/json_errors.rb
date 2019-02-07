@@ -67,7 +67,7 @@ module JSONErrors
               "error"
     end
     Rollbar.log(level, exception)
-    opts[:message] = Array.wrap(opts[:message]) unless opt[:message].is_a?(Array)
+    opts[:message] = Array.wrap(opts[:message]) unless opts[:message].is_a?(Array)
     render json: { errors: opts[:message] }, status: opts[:code]
   end
 end
