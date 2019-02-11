@@ -1,5 +1,5 @@
 {
-  interest: Rails.cache.fetch(["v4", "interests", @req_source, @interest.id, @interest.updated_at.to_i, @lang]) {
+  interest: Rails.cache.fetch(["v5", "interests", @req_source, @interest.id, @interest.updated_at.to_i, @lang]) {
     render(partial: @req_source, locals: { interest: @interest, lang: @lang }, handlers: "jb")
   }
 }
