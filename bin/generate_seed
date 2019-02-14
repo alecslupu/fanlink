@@ -1,0 +1,37 @@
+#!/bin/sh
+# This generates seeds from an imported database. The numbers represent where the table falls in the 'stack'. 01 is reserved for Products as everything depends on a product id or has a parent that depends on a product id.
+
+#Levels:
+# 01 Products
+# 02 Models that have a relationship directly with products
+# 03 Models that have a relationship with a model that falls in to the 02 level
+# 0N Models that continue down the relationship stack. Each 0N desgination means it is the N in the chain of relationships. Example: 01 Product, 02 Quest, 03 Step, 04 Quest Activty, 05 Activity Type
+
+
+bundle exec rake db:seed:dump MODEL=Product FILE=db/seeds/01_products.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Person FILE=db/seeds/02_people.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=ActionType FILE=db/seeds/01_action_types.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Post FILE=db/seeds/03_posts.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=PostComment FILE=db/seeds/04_comments.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=ActivityType FILE=db/seeds/05_activity_types.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=ApiKey FILE=db/seeds/03_api_keys.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=AssignedPushNotification FILE=db/seeds/03_assigned_push_notification.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=AssignedRewards FILE=db/seeds/03_assigned_rewards.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=BadgeAction FILE=db/seeds/03_badge_actions.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=BadgeAward FILE=db/seeds/03_badge_awards.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Badge FILE=db/seeds/02_badges.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Block FILE=db/seeds/03_blocks.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Caetegory FILE=db/seeds/02_categories.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Contest FILE=db/seeds/02_contests.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Coupon FILE=db/seeds/02_coupons.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Course FILE=db/seeds/03_courses.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=EventCheckin FILE=db/seeds/03_event_checkins.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Event FILE=db/seeds/02_events.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Following FILE=db/seeds/03_followings.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=HackedMetric FILE=db/seeds/03_hacked_metrics.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Interest FILE=db/seeds/02_interests.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Lesson FILE=db/seeds/04_lessons.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=LevelProgress FILE=db/seeds/03_level_progresses.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Level FILE=db/seeds/02_levels.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=Merchandise FILE=db/seeds/02_merchandise.rb EXCLUDE=
+bundle exec rake db:seed:dump MODEL=MessageMention FILE=db/seeds/03_message_mentions.rb EXCLUDE=

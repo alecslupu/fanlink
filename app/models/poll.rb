@@ -31,12 +31,12 @@ class Poll < ApplicationRecord
   end
 
   def was_voted(person_id)
-    self.poll_options.each do |po|
+    poll_options.each do |po|
       if PersonPollOption.find_by(person_id: person_id, poll_option_id: po.id)
         return true
       end
     end
-    return false
+    false
   end
 
   private
