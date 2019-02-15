@@ -1,0 +1,2 @@
+class CertcoursePage < ApplicationRecord
+end
