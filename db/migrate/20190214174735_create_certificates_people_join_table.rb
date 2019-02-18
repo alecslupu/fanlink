@@ -1,7 +1,7 @@
 class CreateCertificatesPeopleJoinTable < ActiveRecord::Migration[5.1]
   def change
     create_join_table :certificates, :people do |t|
-      t.string :full_name, default: ""
+      t.string :full_name, default: "", null: false
       t.datetime :issued_date
       t.integer :validity_duration, default: 0, null: false
       t.integer :amount_paid, default: 0, null: false
@@ -14,6 +14,7 @@ class CreateCertificatesPeopleJoinTable < ActiveRecord::Migration[5.1]
       t.string :purchased_sku
       t.string :issued_certificate_image_url
       t.string :issued_certificate_pdf_url
+      t.string :unique_id
       t.index [:certificate_id, :people_id]
       t.index [:people_id, :certificate_id]
 
