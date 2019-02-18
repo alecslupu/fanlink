@@ -6,5 +6,6 @@ class CreateImagePages < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :image_pages, %i[ certcourse_page ], name: "idx_image_page_certcourse_page"
   end
 end

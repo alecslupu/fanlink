@@ -7,5 +7,6 @@ class CreateAnswers < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :answers, %i[ quiz_page ], name: "idx_answers_quiz_page"
   end
 end

@@ -6,5 +6,6 @@ class CreateVideoPages < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :video_pages, %i[ certcourse_page ], name: "idx_video_page_certcourse_page"
   end
 end
