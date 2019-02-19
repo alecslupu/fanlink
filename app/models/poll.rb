@@ -11,6 +11,7 @@ class Poll < ApplicationRecord
   has_many :poll_options, dependent: :destroy
 
   validate :start_date_cannot_be_in_the_past
+  validate :description_cannot_be_empty
 
   before_validation :add_end_date
 
@@ -25,9 +26,15 @@ class Poll < ApplicationRecord
   end
 
   def start_date_cannot_be_in_the_past
-  	if start_date.present? && start_date < Date.today
-  	  errors.add(:expiration_date, "can't be in the past")
+  	if start_date.present? && start_date < Time.now
+  	  errors.add(:expiration_date, "poll can't start in the past")
   	end
+  end
+
+  def description_cannot_be_empty
+    if !description.present? || description.empty?
+      errors.add(:description_error, "description can't be empty")
+    end
   end
 
   def was_voted(person_id)
