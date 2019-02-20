@@ -185,6 +185,16 @@ ActiveRecord::Schema.define(version: 20190215181646) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "certificate_certcourses", force: :cascade do |t|
+    t.integer "certificate_id"
+    t.integer "certcourse_id"
+    t.integer "order", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
+    t.index ["certificate_id"], name: "idx_certificate_certcourses_certificate"
+  end
+
   create_table "certificates", force: :cascade do |t|
     t.string "long_name", null: false
     t.string "short_name", null: false
@@ -203,16 +213,6 @@ ActiveRecord::Schema.define(version: 20190215181646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "idx_certificates_room"
-  end
-
-  create_table "certificates_certcourses", force: :cascade do |t|
-    t.integer "certificate_id"
-    t.integer "certcourse_id"
-    t.integer "order", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["certcourse_id"], name: "idx_certificates_certcourses_certcourse"
-    t.index ["certificate_id"], name: "idx_certificates_certcourses_certificate"
   end
 
   create_table "contests", force: :cascade do |t|
@@ -1267,9 +1267,9 @@ ActiveRecord::Schema.define(version: 20190215181646) do
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
   add_foreign_key "certcourse_pages", "certcourses", name: "fk_certcourse_pages_certcourse"
+  add_foreign_key "certificate_certcourses", "certcourses", name: "fk_certificate_certcourses_certcourse"
+  add_foreign_key "certificate_certcourses", "certificates", name: "fk_certificate_certcourses_certificate"
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
-  add_foreign_key "certificates_certcourses", "certcourses", name: "fk_certificates_certcourses_certcourse"
-  add_foreign_key "certificates_certcourses", "certificates", name: "fk_certificates_certcourses_certificate"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
   add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"

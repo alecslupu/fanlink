@@ -221,6 +221,10 @@ JkoApi.routes self do
   end
 
   version 4 do
+    #to be modified
+    resources :certificates do
+      resources :certcourses 
+    end
     resources :messages, except: %i[ create index show update ] do
       collection do
         get "stats" => "messages#stats"
