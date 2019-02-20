@@ -4,7 +4,6 @@ class CreateQuizPages < ActiveRecord::Migration[5.1]
       t.integer :certcourse_page_id
       t.boolean :is_optional, default: false
       t.string :quiz_text, default: "", null: false
-      t.string :color_hex, default: "#000000", null: false
       t.integer :wrong_answer_page_id
 
       t.timestamps

@@ -4,6 +4,7 @@ class CreateCertcoursePages < ActiveRecord::Migration[5.1]
       t.integer :certcourse_id
       t.integer :order, default: 0, null: false
       t.integer :duration, default: 0, null: false
+      t.string :background_color_hex, default: "#000000", null: false
 
       t.timestamps
     end
