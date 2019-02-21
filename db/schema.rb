@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190215181646) do
+ActiveRecord::Schema.define(version: 20190221122435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20190215181646) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20190215181646) do
 
   create_table "certcourse_pages", force: :cascade do |t|
     t.integer "certcourse_id"
-    t.integer "order", default: 0, null: false
+    t.integer "certcourse_page_order", default: 0, null: false
     t.integer "duration", default: 0, null: false
     t.string "background_color_hex", default: "#000000", null: false
     t.datetime "created_at", null: false
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20190215181646) do
   create_table "certificate_certcourses", force: :cascade do |t|
     t.integer "certificate_id"
     t.integer "certcourse_id"
-    t.integer "order", null: false
+    t.integer "certcourse_order", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(version: 20190215181646) do
     t.string "long_name", null: false
     t.string "short_name", null: false
     t.text "description", default: "", null: false
-    t.integer "order", null: false
+    t.integer "certificate_order", null: false
     t.string "color_hex", default: "#000000", null: false
     t.integer "status", default: 0, null: false
     t.integer "room_id", null: false
@@ -610,11 +610,7 @@ ActiveRecord::Schema.define(version: 20190215181646) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
     t.datetime "end_date", default: "2019-02-07 13:06:14"
-=======
-    t.datetime "end_date", default: "2019-02-11 05:50:10"
->>>>>>> staging
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
