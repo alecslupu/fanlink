@@ -48,19 +48,6 @@ class ApiController < ApplicationController
       render_422(obj.errors) and return
       # return
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
-      # if obj.class.included_modules.include?(ActsAsApi::Base::InstanceMethods) || obj.class.included_modules.include?(ActsAsApi::Collection)
-      #   respond_to do |format|
-      #     if opts[:root].nil?
-      #       format.xml  { render_for_api api_template(template, version, opts[:postfix]), xml: obj  }
-      #       format.json { render_for_api api_template(template, version, opts[:postfix]), json: obj }
-      #     else
-      #       format.xml  { render_for_api api_template(template, version, opts[:postfix]), xml: obj, root: opts[:root]  }
-      #       format.json { render_for_api api_template(template, version, opts[:postfix]), json: obj, root: opts[:root] }
-      #     end
-      #   end
-      # else
-      #   render action: opts[:using], formats: %i[json], handlers: opts[:handler]
-      # end
       render action: opts[:using], formats: %i[json], handlers: opts[:handler] && return
     end
   end

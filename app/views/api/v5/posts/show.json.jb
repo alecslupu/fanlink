@@ -22,13 +22,13 @@ else
 end
 if @post.poll.present?
   json[:post][:poll] = Rails.cache.fetch ["v5", "poll", @req_source, @post.poll.id, @post.poll.updated_at.to_i] do
-    render(partial: "api/v4/polls/#{@req_source}", locals: { poll: @post.poll }, handlers: "jb")
+    render(partial: "api/v5/polls/#{@req_source}", locals: { poll: @post.poll }, handlers: "jb")
   end
   json[:post][:poll][:closed] = @post.poll.closed?
   if @post.poll.poll_options.present?
     json[:post][:poll][:poll_options] = @post.poll.poll_options.map do |option|
       po = Rails.cache.fetch ["v5", "poll_options", @req_source, option.id, option.updated_at.to_i] do
-        render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
+        render(partial: "api/v5/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
       end
       po[:voted] = option.voted?(current_user)
       po[:votes] = option.votes if option.voted?(current_user) || @post.poll.closed?

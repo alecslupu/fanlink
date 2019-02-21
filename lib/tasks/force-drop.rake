@@ -16,6 +16,7 @@ namespace :db do
   # Invoke a task now all connections are gone
         Rake::Task['db:drop'].invoke
         Rake::Task['db:create'].invoke
+        Rake::Task['db:schema:load'].invoke
   p "Forced a db:drop for environment #{Rails.env}"
       else
         p "Sorry I cannot db:drop db on this environment: #{Rails.env}"
