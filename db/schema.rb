@@ -519,7 +519,7 @@ ActiveRecord::Schema.define(version: 20190215181646) do
   create_table "person_certcourses", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "certcourse_id", null: false
-    t.integer "last_completed_page_id", default: 0, null: false
+    t.integer "last_completed_page_id"
     t.boolean "is_completed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

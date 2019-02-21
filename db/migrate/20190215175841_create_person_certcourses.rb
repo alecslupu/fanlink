@@ -3,7 +3,7 @@ class CreatePersonCertcourses < ActiveRecord::Migration[5.1]
   	create_table :person_certcourses do |t|
   	  t.integer :person_id, null: false
       t.integer :certcourse_id, null: false
-  	  t.integer :last_completed_page_id, default: 0, null: false
+  	  t.integer :last_completed_page_id
   	  t.boolean :is_completed, default: false
 
       t.timestamps
