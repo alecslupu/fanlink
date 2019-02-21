@@ -1,0 +1,8 @@
+json = {
+  id: certcourse_page.id,
+  course_id: certcourse_page.certcourse_page_order,
+  order: certcourse_page.certcourse_page_order,
+  timer: certcourse_page.duration,
+  background_color_hex: certcourse_page.background_color_hex
+}
+json
