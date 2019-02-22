@@ -7,7 +7,7 @@ class Api::V4::CertcoursesController < ApiController
   end
 
   def show
-    @certificate = Certcourse.find(params[:id])
+    @certcourse = Certcourse.find(params[:id])
     return_the @certcourse, handler: 'jb'
   end
 end

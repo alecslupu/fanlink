@@ -1,6 +1,26 @@
-{
-  certcourse: Rails.cache.fetch(["v4", "certcourse", @req_source, @certcourse.id, @certcourse.updated_at.to_i]) {
-    render(partial: @req_source, locals: { certcourse: @certcourse }, handlers: "jb")
-  }
-}
+json = {}
+json[:certcourse] = Rails.cache.fetch ["v4", "post", @req_source, @certcourse.id, @certcourse.updated_at.to_i] do
+  render(partial: @req_source, locals: { certcourse: @certcourse }, handlers: "jb")
+end
 
+if @certcourse.certcourse_pages.present?
+  json[:certcourse][:certcourse_page] = @certcourse.certcourse_pages.map do |ccp|
+	cpc = Rails.cache.fetch ["v4", "certcourse_page", @req_source, ccp.id, ccp.updated_at.to_i] do
+	  render(partial: "api/v4/certcourse_pages/#{@req_source}", locals: { certcourse_page: ccp }, handlers: "jb")
+	end
+	if ccp.quiz_page.present?
+	  cpc[:quiz] = Rails.cache.fetch ["v4", "quiz_page", @req_source, ccp.quiz_page.id, ccp.quiz_page.updated_at.to_i] do
+	    render(partial: "api/v4/quiz_pages/#{@req_source}", locals: { quiz_page: ccp.quiz_page }, handlers: "jb")
+	  end
+	  cpc[:quiz][:answers] = ccp.quiz_page.answers.map do |answer|
+	    Rails.cache.fetch ["v4", "answer", @req_source, ccp.id, answer.updated_at.to_i] do
+	  	  render(partial: "api/v4/answers/#{@req_source}", locals: { answer: answer }, handlers: "jb")
+	    end
+	  end
+	end
+	cpc
+  end
+end
+
+
+json

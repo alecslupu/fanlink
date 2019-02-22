@@ -1,0 +1,5 @@
+json = {
+  description: answer.description,
+  is_correct: answer.is_correct
+}
+json
