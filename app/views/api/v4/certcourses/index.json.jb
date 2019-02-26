@@ -4,15 +4,6 @@ json[:certcourses] = @certcourses.map do |certcourse|
   crtcrs = Rails.cache.fetch ["v4", "certcourse", @req_source, certcourse.id, certcourse.updated_at.to_i] do
     render partial: @req_source, locals: { certcourse: certcourse }, handlers: "jb"
   end
-  if certcourse.certcourse_pages.present?
-	crtcrs[:certcourse_pages] = certcourse.certcourse_pages.map do |certcourse_page|
-	  ccp = Rails.cache.fetch ["v4", "certcourse_page", @req_source, certcourse_page.id, certcourse_page.updated_at.to_i] do
-	    render(partial: "api/v4/certcourse_page/#{@req_source}", locals: { certcourse_page: certcourse_page }, handlers: "jb")
-	  end
-	  ccp
-	end
-  end
-  crtcrs
 end
 
 json

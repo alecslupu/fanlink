@@ -1,0 +1,6 @@
+json = {
+  id: answer.id,
+  description: answer.description,
+  is_correct: answer.is_correct
+}
+json

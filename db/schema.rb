@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190221122435) do
+ActiveRecord::Schema.define(version: 20190226173811) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -533,7 +533,7 @@ ActiveRecord::Schema.define(version: 20190221122435) do
     t.string "full_name", default: "", null: false
     t.datetime "issued_date"
     t.integer "validity_duration", default: 0, null: false
-    t.integer "amount_paid", default: 0, null: false
+    t.bigint "amount_paid", default: 0, null: false
     t.string "currency", default: "", null: false
     t.boolean "fee_waived", default: false
     t.datetime "purchased_waived_date"

@@ -1,6 +1,6 @@
 class Api::V4::CertificatesController < ApiController
   def index
-    @certificates = paginate Certificate.all
+    @certificates = paginate Certificate.order("certificate_order")
     return_the @certificates, handler: 'jb'
   end
 

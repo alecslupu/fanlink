@@ -1,0 +1,7 @@
+json = {
+  id: quiz_page.id,
+  is_optional: quiz_page.is_optional,
+  type: "single_answer",
+  wrong_answer_page_id: quiz_page.wrong_answer_page_id
+}
+json
