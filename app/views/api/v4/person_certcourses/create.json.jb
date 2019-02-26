@@ -1,0 +1,6 @@
+{
+  certificate: Rails.cache.fetch(["v4", "certcourse", @req_source, @certcourse.id, @certcourse.updated_at.to_i]) {
+  	render(partial: "api/v4/certcourses/#{@req_source}", locals: { certcourse: @certcourse }, handlers: "jb")
+  }
+}
+
