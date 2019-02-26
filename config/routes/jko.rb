@@ -226,6 +226,7 @@ JkoApi.routes self do
       resources :certcourses 
     end
     resources :person_certificates
+    resources :person_certcourses
     resources :messages, except: %i[ create index show update ] do
       collection do
         get "stats" => "messages#stats"
