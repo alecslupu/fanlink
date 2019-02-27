@@ -1,6 +1,7 @@
 json = {
   id: answer.id,
-  description: answer.description,
-  is_correct: answer.is_correct
+  text: answer.description,
+  is_correct: answer.is_correct,
+  is_selected: false
 }
 json
