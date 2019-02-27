@@ -10,7 +10,7 @@ json = {
   sku_ios: certificate.sku_ios,
   is_free: certificate.is_free,
   is_completed: false,
-  is_purchased: true,
+  is_purchased: !certificate.person_certificates.blank?,
   certificate_image_url: certificate.template_image_url
 }
 json
