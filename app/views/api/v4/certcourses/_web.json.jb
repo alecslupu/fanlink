@@ -7,7 +7,7 @@ json = {
   description: certcourse.description,
   duration: certcourse.duration,
   color_hex: certcourse.color_hex,
-  page_count: certcourse.page_count,
+  page_count: certcourse.certcourse_pages.count,
   is_completed: certcourse.is_completed,
   last_completed_page_id: 0,
   copyright_text: certcourse.copyright_text
