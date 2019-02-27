@@ -9,7 +9,7 @@ json = {
   color_hex: certcourse.color_hex,
   page_count: certcourse.certcourse_pages.count,
   is_completed: certcourse.is_completed,
-  last_completed_page_id: 0,
+  last_completed_page_id: certcourse.person_certcourses.first.last_completed_page_id,
   copyright_text: certcourse.copyright_text
 }
 json
