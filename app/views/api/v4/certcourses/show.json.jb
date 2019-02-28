@@ -1,10 +1,7 @@
 json = {}
-json[:certcourse] = Rails.cache.fetch ["v4", "post", @req_source, @certcourse.id, @certcourse.updated_at.to_i] do
-  render(partial: @req_source, locals: { certcourse: @certcourse }, handlers: "jb")
-end
 
 if @certcourse.certcourse_pages.present?
-  json[:certcourse][:certcourse_pages] = @certcourse.certcourse_pages.map do |ccp|
+  json[:certcourse_pages] = @certcourse.certcourse_pages.map do |ccp|
 	cpc = Rails.cache.fetch ["v4", "certcourse_page", @req_source, ccp.id, ccp.updated_at.to_i] do
 	  render(partial: "api/v4/certcourse_pages/#{@req_source}", locals: { certcourse_page: ccp }, handlers: "jb")
 	end
