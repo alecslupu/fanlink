@@ -67,6 +67,10 @@ class ApiController < ApplicationController
 
 protected
 
+  def web_request?
+    @req_source == :web
+  end
+
   def admin_only
     head :unauthorized unless current_user.some_admin?
   end

@@ -4,7 +4,7 @@ class Api::V3::LessonsController < ApiController
   load_up_the Course, from: :course_id, only: %i[ index create ]
 
   def index
-    if @req_source == "web"
+    if web_request?
       @lessons = paginate(@course.lessons.where(deleted: false)).order(created_at: :asc)
     else
       @lessons = paginate(@course.lessons.available.where(deleted: false)).order(created_at: :asc)

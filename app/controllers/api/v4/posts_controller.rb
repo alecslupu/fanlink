@@ -3,7 +3,7 @@ class Api::V4::PostsController < Api::V3::PostsController
     if params[:promoted].present? && params[:promoted] == "true"
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
     else
-      if @req_source == "web" && current_user.some_admin?
+      if web_request? && current_user.some_admin?
         @posts = paginate apply_filters
       else
         @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
@@ -20,7 +20,7 @@ class Api::V4::PostsController < Api::V3::PostsController
           render_422(_("Cannot find that person.")) && return
         end
       else
-        @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless @req_source == "web"
+        @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless web_request?
       end
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
@@ -41,7 +41,7 @@ class Api::V4::PostsController < Api::V3::PostsController
   end
 
   def show
-    if current_user.try(:some_admin?) && @req_source == "web"
+    if current_user.try(:some_admin?) && web_request?
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
     else
       @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
