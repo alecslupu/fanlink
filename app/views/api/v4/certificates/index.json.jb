@@ -2,7 +2,7 @@ json = {}
 
 json[:certificates] = @certificates.map do |certificate|
   Rails.cache.fetch ["v4", "certificate", @req_source, certificate.id, certificate.updated_at.to_i] do
-    render partial: @req_source, locals: { certificate: certificate }, handlers: "jb"
+    render partial: @req_source, locals: { certificate: certificate, user: @current_user, pc: certificate.person_certificates }, handlers: "jb"
   end
 end
 
