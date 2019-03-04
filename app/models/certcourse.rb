@@ -8,4 +8,6 @@ class Certcourse < ApplicationRecord
   has_many :certcourse_pages
 
   enum status: %i[entry live]
+
+  scope :live_status, -> {where(status: "live")}
 end

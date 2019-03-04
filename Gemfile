@@ -150,3 +150,5 @@ gem 'wisper-activejob'
 gem 'wisper-activerecord'
 
 gem 'graphiql-rails', group: :development
+
+gem 'prawn'

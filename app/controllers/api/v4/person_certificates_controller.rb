@@ -1,9 +1,15 @@
 class Api::V4::PersonCertificatesController < ApiController
+  require 'prawn'
+
   def create
     @person_certificate = PersonCertificate.find_by(certificate_id: params[:certificate_id],person_id: @current_user.id)
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
+        Prawn::Document.generate('hello.pdf') do
+          draw_text "Blabla", :at => [100,100], size: 48
+        end
+        @current_user.send_certificate_email
         @certificate = Certificate.find(params[:certificate_id])
         return_the @certificate, handler: 'jb'
       else

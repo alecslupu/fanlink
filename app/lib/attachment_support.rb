@@ -69,5 +69,21 @@ module AttachmentSupport
         end
       EOE
     end
+
+    def has_file_called(name)
+      has_attached_file name, default_url: nil
+      class_eval <<-EOE
+        def #{name}_url
+          #{name}.file? ? #{name}.url : nil
+        end
+        Paperclip.interpolates :product do |attachment, style|
+          if attachment.instance.class.to_s == "Product"
+            attachment.instance.internal_name
+          else
+            attachment.instance.product.internal_name
+          end
+        end
+      EOE
+    end
   end
 end
