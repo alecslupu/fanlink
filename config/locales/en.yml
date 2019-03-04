@@ -242,6 +242,7 @@ en:
   administrate:
     actions:
       show: "Show"
+      new: "New"
   date:
     formats:
       default: "%d/%m/%Y %H:%M:%S"
