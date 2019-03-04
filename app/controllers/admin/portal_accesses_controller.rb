@@ -25,5 +25,13 @@ module Admin
         page: Administrate::Page::Form.new(dashboard, resource),
       }
     end
+
+    protected
+
+    # Workaround to fix FLAPI-708, FLAPI-718
+    def set_current_tenant(current_tenant_object)
+      nil
+    end
+
   end
 end
