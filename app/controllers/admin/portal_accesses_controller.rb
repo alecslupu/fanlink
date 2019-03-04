@@ -28,9 +28,12 @@ module Admin
 
     protected
 
-    # Workaround to fix FLAPI-708, FLAPI-718
-    def set_current_tenant(current_tenant_object)
-      nil
+    def scoped_resource
+      unless ActsAsTenant.current_tenant.nil?
+        return super.joins(:person).where(people: { product_id: ActsAsTenant.current_tenant.id })
+      end
+
+      super
     end
 
   end
