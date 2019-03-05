@@ -43,27 +43,7 @@ module Admin
     def render_not_found
       render file: "public/404.html", status: :not_found, layout: false
     end
-
-    # TODO: I think this could be refactored to a smaller and concise version
-    #  Please check the below proposal
-    def set_tenant
-      product = nil
-      if params[:product_internal_name].present?
-        product = Product.find_by(internal_name: params[:product_internal_name])
-      else
-        if current_user.super_admin? && (cookies[:product_id].to_i > 0)
-          product = Product.find_by(id: cookies[:product_id].to_i)
-        end
-        product = current_user.product if product.nil?
-      end
-      if product.present?
-        set_current_tenant(product)
-        cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
-      else
-        head :not_found
-      end
-    end
-=begin
+    
     def set_tenant
       # we always start from current_user's product
       product = current_user.product
@@ -79,7 +59,6 @@ module Admin
         head :not_found
       end
     end
-=end
 
   end
 end
