@@ -1,7 +1,7 @@
 class Certificate < ApplicationRecord
   include AttachmentSupport
 
-  has_file_called :pdf
+  has_image_called :template_image
   
   belongs_to :room, optional: true
 
@@ -15,4 +15,7 @@ class Certificate < ApplicationRecord
 
   scope :live_status, -> {where(status: "live")}
 
+  def product
+  	Product.find_by(internal_name: "cannapp")
+  end
 end

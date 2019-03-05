@@ -1,8 +1,8 @@
 class PersonCertificate < ApplicationRecord
   include AttachmentSupport
 
-  has_image_called :picture
-  has_file_called :pdf
+  has_image_called :issued_certificate_image
+  has_image_called :issued_certificate_pdf
 
   belongs_to :person
   belongs_to :certificate

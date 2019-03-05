@@ -24,6 +24,7 @@ module AttachmentSupport
         def #{name}_optimal_url
           #{name}.file? ? #{name}.url(:optimal) : nil
         end
+        binding.pry
         Paperclip.interpolates :product do |attachment, style|
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
@@ -55,22 +56,6 @@ module AttachmentSupport
     end
 
     def has_video_called(name)
-      has_attached_file name, default_url: nil
-      class_eval <<-EOE
-        def #{name}_url
-          #{name}.file? ? #{name}.url : nil
-        end
-        Paperclip.interpolates :product do |attachment, style|
-          if attachment.instance.class.to_s == "Product"
-            attachment.instance.internal_name
-          else
-            attachment.instance.product.internal_name
-          end
-        end
-      EOE
-    end
-
-    def has_file_called(name)
       has_attached_file name, default_url: nil
       class_eval <<-EOE
         def #{name}_url

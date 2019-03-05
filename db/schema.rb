@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190304124018) do
+ActiveRecord::Schema.define(version: 20190305135750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20190304124018) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -194,10 +194,13 @@ ActiveRecord::Schema.define(version: 20190304124018) do
     t.string "sku_android", default: "", null: false
     t.integer "validity_duration", default: 0, null: false
     t.integer "access_duration", default: 0, null: false
-    t.string "template_image_url"
     t.boolean "certificate_issuable", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "template_image_file_name"
+    t.string "template_image_content_type"
+    t.integer "template_image_file_size"
+    t.datetime "template_image_updated_at"
     t.index ["room_id"], name: "idx_certificates_room"
   end
 
@@ -301,9 +304,12 @@ ActiveRecord::Schema.define(version: 20190304124018) do
 
   create_table "image_pages", force: :cascade do |t|
     t.integer "certcourse_page_id"
-    t.string "image_url", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["certcourse_page_id"], name: "idx_image_pages_certcourse_page"
   end
 
@@ -527,11 +533,17 @@ ActiveRecord::Schema.define(version: 20190304124018) do
     t.string "purchased_order_id"
     t.integer "purchased_platform", default: 0, null: false
     t.string "purchased_sku"
-    t.string "issued_certificate_image_url"
-    t.string "issued_certificate_pdf_url"
     t.string "unique_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "issued_certificate_image_file_name"
+    t.string "issued_certificate_image_content_type"
+    t.integer "issued_certificate_image_file_size"
+    t.datetime "issued_certificate_image_updated_at"
+    t.string "issued_certificate_pdf_file_name"
+    t.string "issued_certificate_pdf_content_type"
+    t.integer "issued_certificate_pdf_file_size"
+    t.datetime "issued_certificate_pdf_updated_at"
     t.index ["certificate_id"], name: "idx_person_certificates_certificate"
     t.index ["person_id"], name: "idx_person_certificates_person"
   end
@@ -1034,9 +1046,12 @@ ActiveRecord::Schema.define(version: 20190304124018) do
 
   create_table "video_pages", force: :cascade do |t|
     t.integer "certcourse_page_id"
-    t.string "video_url", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "video_file_name"
+    t.string "video_content_type"
+    t.integer "video_file_size"
+    t.datetime "video_updated_at"
     t.index ["certcourse_page_id"], name: "idx_video_pages_certcourse_page"
   end
 
