@@ -17,5 +17,12 @@ module Admin
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
+    protected
+
+    def scoped_resource
+      return super.where( product_id: ActsAsTenant.current_tenant.id) unless ActsAsTenant.current_tenant.nil?
+
+      super
+    end
   end
 end
