@@ -24,7 +24,6 @@ module AttachmentSupport
         def #{name}_optimal_url
           #{name}.file? ? #{name}.url(:optimal) : nil
         end
-        binding.pry
         Paperclip.interpolates :product do |attachment, style|
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
