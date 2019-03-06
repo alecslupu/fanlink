@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190226173811) do
+ActiveRecord::Schema.define(version: 20190306021710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20190226173811) do
     t.integer "certificate_order", null: false
     t.string "color_hex", default: "#000000", null: false
     t.integer "status", default: 0, null: false
-    t.integer "room_id", null: false
+    t.integer "room_id"
     t.boolean "is_free", default: false
     t.string "sku_ios", default: "", null: false
     t.string "sku_android", default: "", null: false
@@ -301,9 +301,9 @@ ActiveRecord::Schema.define(version: 20190226173811) do
 
   create_table "image_pages", force: :cascade do |t|
     t.integer "certcourse_page_id"
-    t.string "image_url", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
     t.index ["certcourse_page_id"], name: "idx_image_pages_certcourse_page"
   end
 

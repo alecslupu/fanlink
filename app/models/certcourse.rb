@@ -8,4 +8,6 @@ class Certcourse < ApplicationRecord
   has_many :certcourse_pages
 
   enum status: %i[entry live]
+
+  validates :long_name, :short_name, :description, :color_hex, :status, :duration, :copyright_text, presence: true
 end
