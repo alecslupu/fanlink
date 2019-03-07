@@ -11,7 +11,7 @@ if @certcourse.certcourse_pages.present?
 	  end
 	  cpc[:quiz][:answers] = ccp.quiz_page.answers.map do |answer|
 	    Rails.cache.fetch ["v4", "answer", @req_source, ccp.id, answer.updated_at.to_i] do
-	  	  render(partial: "api/v4/answers/#{@req_source}", locals: { answer: answer }, handlers: "jb")
+	  	  render(partial: "api/v4/answers/#{@req_source}", locals: { answer: answer, person: current_user }, handlers: "jb")
 	    end
 	  end
 	end

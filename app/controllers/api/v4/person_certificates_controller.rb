@@ -1,10 +1,13 @@
 class Api::V4::PersonCertificatesController < ApiController
+  load_up_the Certificate, from: :certificate_id
+
   def create
     @person_certificate = PersonCertificate.find_by(certificate_id: params[:certificate_id],person_id: @current_user.id)
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
-        @certificate = Certificate.find(params[:certificate_id])
+        @person_certificate.issued_certificate_image = @certificate.template_image
+        @current_user.send_certificate_email
         return_the @certificate, handler: 'jb'
       else
         render_422(_("User already completed the full name"))

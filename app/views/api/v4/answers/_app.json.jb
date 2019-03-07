@@ -2,6 +2,6 @@ json = {
   id: answer.id,
   text: answer.description,
   is_correct: answer.is_correct,
-  is_selected: false
+  is_selected: answer.is_selected(person)
 }
 json
