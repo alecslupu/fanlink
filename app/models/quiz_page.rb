@@ -9,7 +9,7 @@ class QuizPage < ApplicationRecord
 
   def set_certcourse_page_content_type
   	page = CertcoursePage.find(self.certcourse_page_id)
-  	page.content_type = "image"
+  	page.content_type = "quiz"
   	page.save
   end
 end
