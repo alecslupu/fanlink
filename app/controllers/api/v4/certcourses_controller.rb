@@ -7,7 +7,7 @@ class Api::V4::CertcoursesController < ApiController
   end
 
   def show
-    @certcourse = Certcourse.find(params[:id]).order("certcourse_page_order")
+    @certcourse = Certcourse.find(params[:id])
     return_the @certcourse, handler: 'jb'
   end
 end
