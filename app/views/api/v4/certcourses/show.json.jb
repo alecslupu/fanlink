@@ -1,7 +1,7 @@
 json = {}
 
 if @certcourse.certcourse_pages.present?
-  json[:certcourse_pages] = @certcourse.certcourse_pages.map do |ccp|
+  json[:certcourse_pages] = @certcourse.certcourse_pages.order("certcourse_page_order").map do |ccp|
 	cpc = Rails.cache.fetch ["v4", "certcourse_page", @req_source, ccp.id, ccp.updated_at.to_i] do
 	  render(partial: "api/v4/certcourse_pages/#{@req_source}", locals: { certcourse_page: ccp }, handlers: "jb")
 	end
