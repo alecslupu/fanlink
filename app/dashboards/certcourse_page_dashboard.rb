@@ -9,6 +9,7 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     certcourse: Field::BelongsTo,
+    quiz_type: Field::Select.with_options(collection: CertcoursePage.new.quiz_type),
     quiz_page: Field::HasOne,
     video_page: Field::HasOne,
     image_page: Field::HasOne,
@@ -52,6 +53,7 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :certcourse,
+    :quiz_type,
     :certcourse_page_order,
     :duration,
     :background_color_hex,
