@@ -10,7 +10,7 @@ class VideoPage < ApplicationRecord
   after_save :set_certcourse_page_content_type
 
   def product
-  	Product.find_by(internal_name: "cannapp")
+  	Product.find_by(internal_name: "caned")
   end
  
   private
