@@ -1,12 +1,18 @@
 class ImagePage < ApplicationRecord
   include AttachmentSupport
 
-  has_image_called :image
+  has_course_image_called :image
   validates_attachment_presence :image
   
   belongs_to :certcourse_page
 
-  before_save :set_certcourse_page_content_type
+  after_save :set_certcourse_page_content_type
+
+  def product
+    Product.find_by(internal_name: "cannapp")
+  end
+
+  private
 
   def set_certcourse_page_content_type
   	page = CertcoursePage.find(self.certcourse_page_id)
