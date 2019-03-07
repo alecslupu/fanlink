@@ -5,11 +5,7 @@ class CertcoursePage < ApplicationRecord
   has_one :video_page
   has_one :image_page
 
-  def content_type
-  	return 'quiz' if quiz_page.present? 
-  	return 'video' if video_page.present?
-  	return 'image' if image_page.present?
-  end
+  validates_uniqueness_of :certcourse_page_order, scope: %i[ id certcourse_id ]
 
   def media_url
   	unless quiz_page.present?

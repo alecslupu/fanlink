@@ -11,6 +11,8 @@ class Certificate < ApplicationRecord
   has_many :person_certificates
   has_many :people, through: :person_certificates, dependent: :destroy
 
+  validates_uniqueness_of :certificate_order
+
   enum status: %i[entry live]
 
   scope :live_status, -> {where(status: "live")}
