@@ -1,6 +1,6 @@
 json = {
   id: certcourse_page.id,
-  course_id: certcourse_page.certcourse.id,
+  course_id: certcourse_page.certcourse_id,
   order: certcourse_page.certcourse_page_order,
   content_type: certcourse_page.content_type,
   timer: certcourse_page.duration,
