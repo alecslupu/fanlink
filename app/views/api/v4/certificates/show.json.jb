@@ -1,5 +1,5 @@
 {
-  certificate: Rails.cache.fetch(["v4", "certificate", @req_source, @certificate.id, @certificate.updated_at.to_i]) {
+  certificate: {
     render(partial: @req_source, locals: { certificate: @certificate }, handlers: "jb")
   }
 }

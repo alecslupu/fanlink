@@ -223,10 +223,13 @@ JkoApi.routes self do
   version 4 do
     #to be modified
     resources :certificates do
-      resources :certcourses 
+      resources :certcourses, only:[:index]
     end
-    resources :person_certificates
-    resources :person_certcourses
+    resources :certcourses, only: [:show, :create]
+    resources :person_certificates, only: [:create]
+    resources :person_certcourses, only: [:create]
+    resources :video_pages, only: [:create]
+    resources :image_pages, only: [:create]
     resources :messages, except: %i[ create index show update ] do
       collection do
         get "stats" => "messages#stats"

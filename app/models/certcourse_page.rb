@@ -5,6 +5,9 @@ class CertcoursePage < ApplicationRecord
   def quiz_type
     [VideoPage, ImagePage, QuizPage].collect {|a| a.model_name.name }
   end
+
+  validates_uniqueness_of :certcourse_page_order, scope: %i[ certcourse_id ]
+
   #
   # has_one :quiz_page
   # has_one :video_page
