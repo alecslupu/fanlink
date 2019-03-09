@@ -29,9 +29,9 @@ gem "coffee-rails", "~> 4.2"
 gem "jbuilder", "~> 2.5"
 gem "jb"
 # Use Redis adapter to run Action Cable in production
-gem 'redis'
-gem 'redis-namespace'
-gem 'redis-rails'
+gem "redis"
+gem "redis-namespace"
+gem "redis-rails"
 
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
@@ -41,12 +41,12 @@ gem 'redis-rails'
 #
 
 group :production, :staging do
-  gem 'newrelic_rpm'
+  gem "newrelic_rpm"
 end
 
 group :staging, :development, :test do
-  gem 'derailed_benchmarks'
-  gem 'stackprof'
+  gem "derailed_benchmarks"
+  gem "stackprof"
   gem "bullet"
 end
 
@@ -54,13 +54,13 @@ group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry-byebug'
+  gem "pry-byebug"
   gem "dotenv-rails"
   gem "faker"
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "rswag-specs"
-  gem 'fuubar'
+  gem "fuubar"
 end
 
 group :development do
@@ -74,30 +74,31 @@ group :development do
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require:"ap"
-  gem "apigen", :path => 'lib/gems/apigen'
-  gem 'memory_profiler'
+  gem "apigen", :path => "lib/gems/apigen"
+  gem "memory_profiler"
   gem "delayed_job_web"
 #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+  gem "rubocop-rails"
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
+  gem "cucumber-rails", require: false
   gem "database_cleaner", require: false
   gem "simplecov", require: false
   gem "timecop"
   gem "webmock"
-  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
-  gem 'wisper-rspec', require: false
-  gem 'json_schemer'
+  gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
+  gem "wisper-rspec", require: false
+  gem "json_schemer"
   gem "turnip", require: false
 end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
-gem 'acts_as_api'
+gem "acts_as_api"
 gem "administrate", "~> 0.10.0" #git: "https://github.com/thoughtbot/administrate.git"
 
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
-gem 'administrate-field-hidden', '~> 0.0.3'
+gem "administrate-field-hidden", "~> 0.0.3"
 
 # For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
 # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
@@ -113,12 +114,12 @@ gem "email_validator"
 gem "fcm" #Firebase Cloud Messaging
 gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
-gem 'flag_shih_tzu'
+gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
-gem 'goldiloader'
+gem "goldiloader"
 gem "google_places"
-gem 'graphql'
-gem 'has_scope'
+gem "graphql"
+gem "has_scope"
 gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" #Facebook Graph API
@@ -131,8 +132,8 @@ gem "paper_trail"
 gem "oauth2"
 gem "oj" #json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
-gem 'paperclip-meta'
-gem 'pg_search'
+gem "paperclip-meta"
+gem "pg_search"
 gem "postgresql-check"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
@@ -142,11 +143,11 @@ gem "rollbar"
 # gem "rubocop-rails"
 gem "rubocop-rails_config"
 gem "sorcery"
-gem 'timber', '~> 2.0'
+gem "timber", "~> 2.0"
 gem "unicode_utils"
 gem "uuidtools"
-gem 'wisper', '2.0.0'
-gem 'wisper-activejob'
-gem 'wisper-activerecord'
+gem "wisper", "2.0.0"
+gem "wisper-activejob"
+gem "wisper-activerecord"
 
-gem 'graphiql-rails', group: :development
+gem "graphiql-rails", group: :development
