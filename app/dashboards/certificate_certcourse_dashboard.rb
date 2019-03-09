@@ -50,6 +50,6 @@ class CertificateCertcourseDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   def display_resource(certificate_certcourse)
-    certificate_certcourse.short_nam
+    certificate_certcourse.certcourse.short_name
   end
 end

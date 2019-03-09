@@ -25,10 +25,10 @@ class CertificateDashboard < Administrate::BaseDashboard
     sku_android: Field::String,
     validity_duration: Field::Number,
     access_duration: Field::Number,
-    template_image_url: Field::String,
     certificate_issuable: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    template_image: PaperclipField,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -53,6 +53,7 @@ class CertificateDashboard < Administrate::BaseDashboard
     :long_name,
     :short_name,
     :description,
+    :template_image,
     :certificate_order,
     :color_hex,
     :status,
@@ -61,7 +62,6 @@ class CertificateDashboard < Administrate::BaseDashboard
     :sku_android,
     :validity_duration,
     :access_duration,
-    :template_image_url,
     :certificate_issuable,
     :created_at,
     :updated_at,
@@ -75,6 +75,7 @@ class CertificateDashboard < Administrate::BaseDashboard
     :short_name,
     :description,
     :room,
+    :template_image,
     :certificate_order,
     :color_hex,
     :status,
@@ -83,7 +84,6 @@ class CertificateDashboard < Administrate::BaseDashboard
     :sku_android,
     :validity_duration,
     :access_duration,
-    :template_image_url,
     :certificate_issuable,
   ].freeze
 
