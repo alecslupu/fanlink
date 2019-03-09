@@ -5,6 +5,8 @@ class CertcoursePage < ApplicationRecord
   has_one :video_page
   has_one :image_page
 
+  validates_uniqueness_of :certcourse_page_order, scope: %i[ certcourse_id ]
+
   def content_type
     return "quiz" if quiz_page.present?
     return "video" if video_page.present?

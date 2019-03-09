@@ -6,11 +6,11 @@ json = {
   description: certificate.description,
   color_hex: certificate.color_hex,
   chat_room_id: certificate.room_id,
-  sku_android: pc.find_by(person_id: user.id, purchased_platform: "android").present? ? pc.find_by(person_id: user.id, purchased_platform: "android").purchased_sku : "",
-  sku_ios: pc.find_by(person_id: user.id, purchased_platform: "ios").present? ? pc.find_by(person_id: user.id, purchased_platform: "ios").purchased_sku : "",
+  sku_android: certificate.sku_android,
+  sku_ios: certificate.sku_ios,
   is_free: certificate.is_free,
-  is_completed: pc.find_by(person_id: user.id).present? ? !pc.first.issued_date.nil? : false,
-  is_purchased: pc.find_by(person_id: user.id).present? || certificate.is_free,
+  is_completed: pc.for_person(user).present? ? !pc.for_person(user).last.issued_date.nil? : false,
+  is_purchased: pc.for_person(user).present?,
   certificate_image_url: certificate.template_image_url
 }
 json
