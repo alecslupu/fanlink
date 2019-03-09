@@ -8,6 +8,9 @@ class CertcoursePage < ApplicationRecord
 
   validates_uniqueness_of :certcourse_page_order, scope: %i[ certcourse_id ]
 
+  def product
+    @product ||= Product.where(internal_name: "caned").first!
+  end
   #
   # has_one :quiz_page
   # has_one :video_page

@@ -1,0 +1,20 @@
+Certificate.create!(
+  id: 1,
+  long_name: "Canabis first certificate",
+  short_name: "Canabis",
+  description: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sollicitudin vestibulum est, vitae commodo libero. In ipsum eros, tincidunt lobortis viverra sed, ultricies ac sapien. Nulla vel quam ac libero faucibus facilisis quis eget tortor. In eget gravida libero. Mauris interdum dignissim nulla vel iaculis. Nam ut purus consectetur, dapibus eros at, convallis nunc. Mauris accumsan scelerisque sapien id condimentum. ",
+  certificate_order: 1,
+  color_hex: "#00FF00",
+  status: 'live',
+  room_id: nil,
+  is_free: true,
+  sku_ios: "sku_ios_value",
+  sku_android: "sku_android_value",
+  validity_duration: 180*24*3600,
+  access_duration: 150*24*3600,
+  certificate_issuable: true,
+  template_image_file_name: nil,
+  template_image_content_type: nil,
+  template_image_file_size: nil,
+  template_image_updated_at: nil
+)
