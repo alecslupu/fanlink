@@ -39,6 +39,7 @@ class CertificateDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :short_name,
+    :certificate_order,
     :status,
     :certcourses,
   ].freeze
