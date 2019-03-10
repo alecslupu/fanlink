@@ -14,6 +14,8 @@ class AnswerDashboard < Administrate::BaseDashboard
     is_correct: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    question: Field::String,
+    certcourse_name: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -22,8 +24,9 @@ class AnswerDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :quiz_page,
     :id,
+    :certcourse_name,
+    :question,
     :description,
     :is_correct,
   ].freeze
