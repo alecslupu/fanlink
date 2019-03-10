@@ -31,6 +31,8 @@ By default, it renders:
         <%= render "flashes" -%>
         <%= yield %>
       </main>
+    </div>
+    <div class="app-container">
       <% if current_user.present? %>
         <% if Rails.env.staging? %>
           <div class="admin-warning">
