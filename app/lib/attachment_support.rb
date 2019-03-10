@@ -109,7 +109,11 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-            attachment.instance.product.internal_name
+            if attachment.instance.product.nil?
+              "caned"
+            else
+              attachment.instance.product.internal_name
+            end
           end
         end
         EOE

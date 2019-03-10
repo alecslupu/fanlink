@@ -12,7 +12,8 @@ class ImagePageDashboard < Administrate::BaseDashboard
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    image_url: Field::String,
+    image: PaperclipField,
+
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -32,9 +33,9 @@ class ImagePageDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :certcourse_page,
     :id,
+    :image,
     :created_at,
     :updated_at,
-    :image_url,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -42,7 +43,7 @@ class ImagePageDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :certcourse_page,
-    :image_url,
+    :image,
   ].freeze
 
   # Overwrite this method to customize how image pages are displayed
