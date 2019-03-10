@@ -1,29 +1,13 @@
 # TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person, version = nil)
-    payload = {}
-    payload["#{user_path(person)}/message_counts/#{room.id}"] = 0
-    if version.present?
-      version.downto(1) {|v|
-        payload["#{user_path(person, v)}/message_counts/#{room.id}"] = 0
-      }
-    end
-    client.update("", payload).response.status == 200
+    post_generic_message :user_path, person, "message_counts/#{room.id}", 0, version
   end
 
   def delete_message(message, version = nil)
-    if message.hidden
-      payload = {}
-      payload["#{room_path(message.room)}/last_deleted_message_id"] = message.id
-      if version.present?
-        version.downto(1) {|v|
-          payload["#{room_path(message.room, v)}/last_deleted_message_id"] = message.id
-        }
-      end
-      client.update("", payload).response.status == 200
-    else
-      false
-    end
+    return false unless message.hidden?
+
+    post_generic_message :room_path, message.room, :last_deleted_message_id, message.id, version
   end
 
   def delete_post(post, to_be_notified, version = nil)
@@ -52,14 +36,7 @@ module Messaging
   end
 
   def delete_room_for_member(room, member, version = nil)
-    payload = {}
-    payload["#{user_path(member)}/deleted_room_id"] = room.id
-    if version.present?
-      version.downto(1) {|v|
-        payload["#{user_path(member, v)}/deleted_room_id"] = room.id
-      }
-    end
-    client.update("", payload).response.status == 200
+    post_generic_message :user_path, member, :deleted_room_id, room.id, version
   end
 
   def new_private_room(room, version = nil)
@@ -120,14 +97,7 @@ module Messaging
 private
 
   def add_room_for_member(room, member, version = nil)
-    payload = {}
-    payload["#{user_path(member)}/new_room_id"] = room.id
-    if version.present?
-      version.downto(1) {|v|
-        payload["#{user_path(member, v)}/new_room_id"] = room.id
-      }
-    end
-    client.update("", payload).response.status == 200
+    post_generic_message :user_path, member, :new_room_id, room.id, version
   end
 
   def client
@@ -163,12 +133,17 @@ private
   end
 
   def post_private_message(msg, version = nil)
-    payload = {}
-    payload["#{room_path(msg.room)}/last_message_id"] = msg.id
+    post_generic_message :room_path, msg.room, :last_message_id, msg.id, version
+  end
+
+  def post_generic_message(app_path, app_path_param, payload_arg, message, version = nil)
+    generic_path = Rails.application.routes.url_helpers.send(app_path, app_path_param, version: nil)
+    payload["#{generic_path}/#{payload_arg}"] = message
     if version.present?
-      version.downto(1) {|v|
-        payload["#{room_path(msg.room, v)}/last_message_id"] = msg.id
-      }
+      version.downto(1) do |v|
+        version_path = Rails.application.routes.url_helpers.send(app_path, app_path_param, version: v)
+        version["#{version_path}/#{payload_arg}"] = message
+      end
     end
     client.update("", payload).response.status == 200
   end
