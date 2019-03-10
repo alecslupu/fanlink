@@ -47,23 +47,22 @@ class CertificateDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :room,
-    :certificate_certcourses,
-    :certcourses,
     :id,
     :long_name,
     :short_name,
     :description,
-    :template_image,
+    :certificate_certcourses,
     :certificate_order,
     :color_hex,
     :status,
     :is_free,
     :sku_ios,
     :sku_android,
+    :room,
     :validity_duration,
     :access_duration,
     :certificate_issuable,
+    :template_image,
     :created_at,
     :updated_at,
   ].freeze

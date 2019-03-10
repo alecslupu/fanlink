@@ -21,6 +21,6 @@ class Certificate < ApplicationRecord
   scope :live_status, -> { where(status: "live") }
 
   def product
-    Product.find_by(internal_name: "cannapp")
+    Product.find_by(internal_name: "caned")
   end
 end

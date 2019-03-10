@@ -19,6 +19,7 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
     background_color_hex: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    content_type: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +28,10 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :id,
     :certcourse,
+    :content_type,
+    :certcourse_page_order,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
