@@ -9,5 +9,7 @@ class Certcourse < ApplicationRecord
 
   enum status: %i[entry live]
 
-  scope :live_status, -> {where(status: "live")}
+  validates :long_name, :short_name, :description, :color_hex, :status, :duration, :copyright_text, presence: true
+
+  scope :live_status, -> { where(status: "live") }
 end
