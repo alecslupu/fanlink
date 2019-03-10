@@ -30,14 +30,14 @@ By default, it renders:
       <main class="main-content" role="main">
         <%= render "flashes" -%>
         <%= yield %>
-        <% if current_user.present? %>
-          <% if Rails.env.staging? %>
-            <div class="admin-warning">
-              This is a staging server which exists for development and testing only. Any data is subject to deletion at any time without notice.
-            </div>
-          <% end %>
-        <% end %>
       </main>
+      <% if current_user.present? %>
+        <% if Rails.env.staging? %>
+          <div class="admin-warning">
+            This is a staging server which exists for development and testing only. Any data is subject to deletion at any time without notice.
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <%= render "javascript" %>
   </body>
