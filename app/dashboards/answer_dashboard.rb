@@ -8,7 +8,7 @@ class AnswerDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    quiz_page: Field::BelongsTo,
+    certcourse_page: Field::BelongsTo,
     id: Field::Number,
     description: Field::String,
     is_correct: Field::Boolean,
@@ -34,7 +34,7 @@ class AnswerDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :quiz_page,
+    :certcourse_page,
     :id,
     :description,
     :is_correct,
@@ -46,7 +46,7 @@ class AnswerDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :quiz_page,
+    :certcourse_page,
     :description,
     :is_correct,
   ].freeze
