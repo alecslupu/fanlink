@@ -10,7 +10,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     certcourse: Field::BelongsTo,
     id: Field::Number,
-    video_url: Field::String,
+    attachment_url: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -23,7 +23,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :certcourse,
     :id,
-    :video_url,
+    :attachment_url,
     :created_at,
   ].freeze
 
@@ -32,7 +32,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :certcourse,
     :id,
-    :video_url,
+    :attachment_url,
     :created_at,
     :updated_at,
   ].freeze
@@ -42,7 +42,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :certcourse,
-    :video_url,
+    :attachment_url,
   ].freeze
 
   # Overwrite this method to customize how video pages are displayed
