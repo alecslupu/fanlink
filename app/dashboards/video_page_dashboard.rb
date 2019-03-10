@@ -8,7 +8,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    certcourse_page: Field::BelongsTo,
+    certcourse: Field::BelongsTo,
     id: Field::Number,
     video_url: Field::String,
     created_at: Field::DateTime,
@@ -21,7 +21,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :certcourse_page,
+    :certcourse,
     :id,
     :video_url,
     :created_at,
@@ -30,7 +30,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :certcourse_page,
+    :certcourse,
     :id,
     :video_url,
     :created_at,
@@ -41,7 +41,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :certcourse_page,
+    :certcourse,
     :video_url,
   ].freeze
 

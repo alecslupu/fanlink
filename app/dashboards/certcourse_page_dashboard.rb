@@ -10,7 +10,7 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     certcourse: Field::BelongsTo,
     quiz_type: Field::Select.with_options(collection: CertcoursePage.new.quiz_type),
-    quiz_page: Field::HasOne,
+    certcourse_page: Field::HasMany,
     video_page: Field::HasOne,
     image_page: Field::HasOne,
     id: Field::Number,
@@ -28,16 +28,13 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :certcourse,
-    :quiz_page,
-    :video_page,
-    :image_page,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :certcourse,
-    :quiz_page,
+    :certcourse_page,
     :video_page,
     :image_page,
     :id,

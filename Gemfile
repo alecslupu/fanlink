@@ -77,7 +77,7 @@ group :development do
   gem "apigen", :path => "lib/gems/apigen"
   gem "memory_profiler"
   gem "delayed_job_web"
-#   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+  #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "rubocop-rails"
 end
 

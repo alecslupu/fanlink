@@ -14,6 +14,7 @@ class Certificate < ApplicationRecord
   has_many :people, through: :person_certificates, dependent: :destroy
 
   validates_uniqueness_of :certificate_order
+  validates_attachment_presence :template_image
 
   enum status: %i[entry live]
 
