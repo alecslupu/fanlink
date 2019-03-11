@@ -3,6 +3,8 @@ class ImagePage < ApplicationRecord
 
   has_course_image_called :image
   validates_attachment_presence :image
+
+  validates_uniqueness_of :certcourse_page_id
   
   belongs_to :certcourse_page
 
@@ -20,3 +22,4 @@ class ImagePage < ApplicationRecord
   	page.save
   end
 end
+
