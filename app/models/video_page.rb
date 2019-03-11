@@ -6,7 +6,7 @@ class VideoPage < ApplicationRecord
   do_not_validate_attachment_file_type :video
 
   validates_uniqueness_of :certcourse_page_id
-	
+
   belongs_to :certcourse_page
 
   validate :just_me
@@ -17,14 +17,6 @@ class VideoPage < ApplicationRecord
   end
 
   private
-
-  def just_me
-    x = CertcoursePage.find(certcourse_page.id)
-    child = x.child
-    if child && child != self
-      errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
-    end
-  end
 
   def just_me
     x = CertcoursePage.find(certcourse_page.id)
