@@ -8,7 +8,7 @@ json = {
   duration: certcourse.duration,
   color_hex: certcourse.color_hex,
   page_count: certcourse.certcourse_pages.count,
-  is_completed: certcourse.person_certcourses.for_person(person).present? ? certcourse.person_certcourses.for_person(person).last.last_completed_page_id == certcourse.certcourse_pages.order("certcourse_page_order").last.certcourse_page_order : false ,
+  is_completed: certcourse.person_certcourses.for_person(person).present? ? certcourse.person_certcourses.for_person(person).last.last_completed_page_id == certcourse.certcourse_pages.order("certcourse_page_order").last.id : false ,
   last_completed_page_id: certcourse.person_certcourses.for_person(person).present? ? certcourse.person_certcourses.for_person(person).last.last_completed_page_id : 0,
   copyright_text: certcourse.copyright_text
 }
