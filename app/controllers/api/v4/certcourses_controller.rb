@@ -10,4 +10,10 @@ class Api::V4::CertcoursesController < ApiController
     @certcourse = Certcourse.find(params[:id])
     return_the @certcourse, handler: 'jb'
   end
+
+  def destroy
+    @person_certificate = PersonCertcourse.find_by(person_id: @current_user.id, certcourse_id: params[:id])
+    @person_certificate.destroy
+    render json: { message: _("Deleted") }
+  end
 end
