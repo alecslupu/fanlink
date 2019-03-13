@@ -48,21 +48,22 @@ class Api::V5::PostsController < Api::V4::PostsController
     end
   end
 
-  def show
-    if current_user.try(:some_admin?) && @req_source == "web"
-      @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
-    else
-      @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
-      if @post.person != current_user
-        @post = @post.visible?
-      end
-    end
-
-    if @post.nil?
-      render_not_found
-    else
-      @post_reaction = @post.reactions.find_by(person: current_user)
-      return_the @post, handler: 'jb', using: :show
-    end
-  end
+  # TODO Remove as duplicate of Api::V4::PostsController#show
+  # def show
+  #   if current_user.try(:some_admin?) && @req_source == "web"
+  #     @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
+  #   else
+  #     @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
+  #     if @post.person != current_user
+  #       @post = @post.visible?
+  #     end
+  #   end
+  #
+  #   if @post.nil?
+  #     render_not_found
+  #   else
+  #     @post_reaction = @post.reactions.find_by(person: current_user)
+  #     return_the @post, handler: 'jb', using: :show
+  #   end
+  # end
 end
