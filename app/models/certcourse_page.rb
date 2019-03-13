@@ -1,5 +1,5 @@
 class CertcoursePage < ApplicationRecord
-  belongs_to :certcourse
+  belongs_to :certcourse, counter_cache: true
 
   has_one :quiz_page
   has_one :video_page

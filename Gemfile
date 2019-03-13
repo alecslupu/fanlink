@@ -150,4 +150,6 @@ gem "wisper", "2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
+gem 'rmagick'
+
 gem "graphiql-rails", group: :development
