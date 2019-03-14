@@ -28,7 +28,7 @@ private
     elsif content.match?(/@\w{3,26}/i)
       content.scanm(/@(\w{3,26})/i).each {|mention|
         person = Person.find_by(username_canonical: Person.canonicalize(mention[1]), product_id: product_id)
-        if person && !MessageMention.where(messsage_id: msg_id, person_id: person.id).exists?
+        if person && !MessageMention.where(message_id: msg_id, person_id: person.id).exists?
           mentions << person
         end
       }
