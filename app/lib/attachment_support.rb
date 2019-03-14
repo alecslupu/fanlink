@@ -83,7 +83,7 @@ module AttachmentSupport
         }
 
         validates_attachment name,
-          content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+          content_type: { content_type: ["image/jpeg", "image/gif", "image/png", "application/pdf"] },
           size: { in: 0..5.megabytes }
 
         class_eval <<-EOE
