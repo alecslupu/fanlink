@@ -13,6 +13,8 @@ class Certificate < ApplicationRecord
 
   validates_uniqueness_of :certificate_order
 
+  validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
+
   enum status: %i[entry live]
 
   scope :live_status, -> {where(status: "live")}
