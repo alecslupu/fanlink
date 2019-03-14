@@ -151,6 +151,6 @@ class Api::V3::PollOptionsController < ApiController
 private
 
   def poll_option_params
-    params.require(:poll_option).permit(:description)
+    params.require(:poll_option).permit(:description, description: {})
   end
 end

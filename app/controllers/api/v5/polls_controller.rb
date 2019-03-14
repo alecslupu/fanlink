@@ -2,19 +2,15 @@ class Api::V5::PollsController < Api::V4::PollsController
 
 
   def create
-    parms = poll_params
-    @poll = Poll.create(parms)
-    if poll_params.has_key?(:poll_type) && params.has_key?(params[:poll][:poll_type]+"_id".to_sym)
-      @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
-    end
-    if @poll.valid?
-      @poll.save
-      return_the @poll, handler: 'jb', using: :show
-    else
-      render_422 @poll.errors
-    end
+    # parms = poll_params
+    @poll = Poll.create(poll_params)
+    # if poll_params.has_key?(:poll_type) && params.has_key?(params[:poll][:poll_type]+"_id".to_sym)
+    #   @poll.update_attributes(poll_type_id: params[params[:poll][:poll_type]+"_id"])
+    #   # @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
+    # end
+    return_the @poll, handler: 'jb'
   end
-
+  
   def destroy
     if current_user.some_admin?
       @poll.destroy

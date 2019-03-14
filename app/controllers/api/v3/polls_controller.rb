@@ -131,14 +131,12 @@ class Api::V3::PollsController < ApiController
 
   def list
     @polls = Poll.all
-    return @polls, handler: 'jb'
+    return_the @polls, handler: 'jb'
   end
 
 private
 
   def poll_params
-    Rails.logger.debug params[:poll][:description]
-    Rails.logger.debug params[:poll][:description].class
     params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: {})
   end
 end

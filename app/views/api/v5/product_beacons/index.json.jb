@@ -1,7 +1,7 @@
 json = {}
 
 json[:beacons] = @product_beacons.map do |beacon|
-  Rails.cache.fetch ["v4", "beacon", @req_source, beacon.id, beacon.updated_at] do
+  Rails.cache.fetch ["v5", "beacon", @req_source, beacon.id, beacon.updated_at] do
     render partial: @req_source, locals: { beacon: beacon }, handlers: "jb"
   end
 end

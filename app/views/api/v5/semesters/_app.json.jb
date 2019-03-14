@@ -8,7 +8,7 @@
 }
 
 json[:courses] = semester.courses.reject { |course| course.deleted }.map do |course|
-  render partial: "api/v4/courses/#{@req_source}", locals: { course: course }, handlers: "jb"
+  render partial: "api/v5/courses/#{@req_source}", locals: { course: course }, handlers: "jb"
 end
 
 json

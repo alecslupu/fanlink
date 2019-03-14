@@ -11,6 +11,15 @@ namespace :admin do
 
   # end
 
+  resources :certificates
+  resources :certcourses
+  resources :certificate_certcourses
+  resources :certcourse_pages
+  resources :quiz_pages
+  resources :image_pages
+  resources :video_pages
+  resources :answers
+
   resources :action_types
   # resources :activity_types
   resources :badges
@@ -40,7 +49,6 @@ namespace :admin do
   # resources :quest_activities
   # resources :quest_completions
   # resources :steps
-
 
   get ":product_internal_name/login" => "sessions#new"
   post "login" => "sessions#create"
