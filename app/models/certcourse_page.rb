@@ -1,11 +1,14 @@
 class CertcoursePage < ApplicationRecord
+  acts_as_tenant(:product)
+  belongs_to :product
+
   belongs_to :certcourse
 
   has_one :quiz_page
   has_one :video_page
   has_one :image_page
 
-  validates_uniqueness_of :certcourse_page_order, scope: %i[ certcourse_id ]
+  validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
 
   def content_type
     return "quiz" if quiz_page.present?
