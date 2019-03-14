@@ -1,0 +1,6 @@
+{
+  certificate: {
+    render(partial: @req_source, locals: { certificate: @certificate }, handlers: "jb")
+  }
+}
+

@@ -1,5 +1,5 @@
 {
-  room: Rails.cache.fetch(["v4", "room", @req_source, @room.id, @room.updated_at.to_i]) {
+  room: Rails.cache.fetch(["v5", "room", @req_source, @room.id, @room.updated_at.to_i]) {
     render(partial: @req_source, locals: { room: @room }, handlers: "jb")
   }
 }

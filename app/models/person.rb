@@ -54,9 +54,14 @@ class Person < ApplicationRecord
   has_many :person_poll_options
   has_many :poll_options, through: :person_poll_options, dependent: :destroy
 
+  has_many :person_certificates
+  has_many :certificates, through: :person_certificates, dependent: :destroy
+
+  has_many :person_certcourses
+  has_many :certcourses, through: :person_certcourses, dependent: :destroy
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
-
 
   after_commit :flush_cache
 
