@@ -12,7 +12,7 @@ class Api::V4::PersonCertcoursesController < ApiController
       if params[:answer_id].present? && Answer.find(params[:answer_id]).is_correct
         @person_certcourse.last_completed_page_id = params[:page_id]
       else
-        @person_certcourse.last_completed_page_id = @certcourse_page.quiz_page.wrong_answer_page_id
+        @person_certcourse.last_completed_page_id = CertcoursePage.where("id < ? AND certcourse_id = ?", @certcourse_page.quiz_page.wrong_answer_page_id, person_certcourses_params[:certcourse_id]).order("certcourse_page_order").last.id
       end
     else 
       @person_certcourse.last_completed_page_id = params[:page_id]
