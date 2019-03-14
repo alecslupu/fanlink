@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  acts_as_tenant(:product)
+  belongs_to :product
   belongs_to :quiz_page
 
   def is_selected(person)

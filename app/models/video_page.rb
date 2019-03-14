@@ -1,5 +1,7 @@
 class VideoPage < ApplicationRecord
   include AttachmentSupport
+  acts_as_tenant(:product)
+  belongs_to :product
 
   has_video_called :video
   validates_attachment_presence :video

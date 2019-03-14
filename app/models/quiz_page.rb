@@ -1,4 +1,6 @@
 class QuizPage < ApplicationRecord
+  acts_as_tenant(:product)
+  belongs_to :product
   belongs_to :certcourse_page
 
   has_many :answers

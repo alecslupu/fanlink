@@ -1,4 +1,7 @@
 class Certcourse < ApplicationRecord
+  acts_as_tenant(:product)
+  belongs_to :product
+
   has_many :certificate_certcourses
   has_many :certificates, through: :certificate_certcourses, dependent: :destroy
 

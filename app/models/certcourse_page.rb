@@ -1,4 +1,7 @@
 class CertcoursePage < ApplicationRecord
+  acts_as_tenant(:product)
+  belongs_to :product
+
   belongs_to :certcourse
 
   has_one :quiz_page

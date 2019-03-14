@@ -1,11 +1,13 @@
 class ImagePage < ApplicationRecord
   include AttachmentSupport
+  acts_as_tenant(:product)
+  belongs_to :product
 
   has_course_image_called :image
   validates_attachment_presence :image
 
   validates_uniqueness_of :certcourse_page_id
-  
+
   belongs_to :certcourse_page
   has_course_image_called :image
 
@@ -33,4 +35,3 @@ class ImagePage < ApplicationRecord
     page.save
   end
 end
-
