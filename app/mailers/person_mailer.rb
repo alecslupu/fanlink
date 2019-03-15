@@ -32,7 +32,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
         content: Paperclip.io_adapters.for(certificate.issued_certificate_pdf),
         name: certificate.issued_certificate_pdf_image_name,
         type: "application/pdf"
-      }
+      },
       #to: { email: person.email, name: person.name }
       to: { email: "am@flink.to", name: person.name }
     )
