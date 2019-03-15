@@ -20,7 +20,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
     )
   end
 
-  def send_certificate(person)
+  def send_certificate(person, certificate)
     mandrill_mail(
       template: "#{person.product.internal_name}-password-reset",
       subject: "%{name} - Your certificate" % { name: person.name },
@@ -28,6 +28,11 @@ class PersonMailer < MandrillMailer::TemplateMailer
         link: "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{person.product.internal_name}/#{person.name}",
         name: person.name
       },
+      attachments: {
+        content: Paperclip.io_adapters.for(certificate.issued_certificate_pdf),
+        name: certificate.issued_certificate_pdf_image_name,
+        type: "application/pdf"
+      }
       #to: { email: person.email, name: person.name }
       to: { email: "am@flink.to", name: person.name }
     )

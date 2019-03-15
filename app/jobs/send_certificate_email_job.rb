@@ -1,7 +1,7 @@
 class SendCertificateEmailJob < Struct.new(:person_id)
   def perform
     person = Person.find(person_id)
-    PersonMailer.send_certificate(person).deliver
+    PersonMailer.send_certificate(person, certificate).deliver
   end
   def error(job, exception)
     if exception.is_a?(Mandrill::UnknownTemplateError)
