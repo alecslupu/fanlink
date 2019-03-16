@@ -5,7 +5,7 @@ class Api::V4::PollOptionsController < Api::V3::PollOptionsController
       render json: {error: "already voted on this poll"}
     elsif @vote.valid?
       @vote.save
-      return_the @vote, handler: 'jb', using: :cast_vote
+      return_the @vote, handler: tpl_handler, using: :cast_vote
     else
       render_422 @vote.errors
     end
@@ -14,6 +14,12 @@ class Api::V4::PollOptionsController < Api::V3::PollOptionsController
   def delete_votes
     PersonPollOption.where(poll_option_id: params[:poll_option_id]).destroy_all
     render json: {message: "votes deleted"}
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 end
 

@@ -9,12 +9,12 @@ class Api::V3::CoursesController < ApiController
     else
       @courses = paginate(@semester.courses.available.where(deleted: false).order(created_at: :asc).includes(:lessons))
     end
-    return_the @courses, handler: "jb"
+    return_the @courses, handler: tpl_handler
   end
 
   def show
     @course = Course.includes(:lessons).find(params[:id])
-    return_the @course, handler: "jb"
+    return_the @course, handler: tpl_handler
   end
 
   def create
@@ -22,14 +22,14 @@ class Api::V3::CoursesController < ApiController
     if @course.valid?
       broadcast(:course_created, current_user, @course)
     end
-    return_the @course, handler: "jb"
+    return_the @course, handler: tpl_handler
   end
 
   def update
     if @course.update(course_params)
       broadcast(:course_updated, current_user, @course)
     end
-    return_the @course, handler: "jb"
+    return_the @course, handler: tpl_handler
   end
 
   def destroy
@@ -42,6 +42,12 @@ class Api::V3::CoursesController < ApiController
     else
       render_not_found
     end
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 
   private

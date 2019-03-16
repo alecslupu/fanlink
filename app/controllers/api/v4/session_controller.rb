@@ -4,7 +4,7 @@ class Api::V4::SessionController < Api::V3::SessionController
       if @person.terminated
         return head :unauthorized
       else
-        return_the @person, handler: 'jb'
+        return_the @person, handler: tpl_handler
       end
     else
       render_not_found
@@ -30,6 +30,12 @@ class Api::V4::SessionController < Api::V3::SessionController
       end
       return render_422 _("Invalid login.") if @person.nil?
     end
-    return_the @person, handler: 'jb'
+    return_the @person, handler: tpl_handler
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 end

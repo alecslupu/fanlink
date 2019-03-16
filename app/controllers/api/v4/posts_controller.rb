@@ -25,19 +25,19 @@ class Api::V4::PostsController < Api::V3::PostsController
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
     #@posts = @posts.includes([:person])
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
   end
 
   def list
     @posts = paginate apply_filters
     @posts = @posts.for_tag(params[:tag]) if params[:tag]
     @posts = @posts.for_categories(params[:categories]) if params[:categories]
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
   end
 
   def promoted
     @posts = Post.promoted
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
   end
 
   def show
@@ -53,7 +53,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       render_not_found
     else
       @post_reaction = @post.reactions.find_by(person: current_user)
-      return_the @post, handler: 'jb', using: :show
+      return_the @post, handler: tpl_handler, using: :show
     end
   end
 
@@ -63,7 +63,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       render_422(_("Missing or invalid product."))
     else
       @post = Post.for_product(product).visible.find(params[:post_id])
-      return_the @post, handler: 'jb'
+      return_the @post, handler: tpl_handler
     end
   end
 
@@ -78,7 +78,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         end
         @post.post(@api_version) if @post.published?
         broadcast(:post_created, current_user, @post)
-        return_the @post, handler: 'jb', using: :show
+        return_the @post, handler: tpl_handler, using: :show
       else
         render_422 @post.errors
       end
@@ -88,12 +88,12 @@ class Api::V4::PostsController < Api::V3::PostsController
   def update
     if params.has_key?(:post)
       if @post.update_attributes(post_params)
-        return_the @post, handler: 'jb', using: :show
+        return_the @post, handler: tpl_handler, using: :show
       else
         render_422 @post.errors
       end
     else
-      return_the @post, handler: 'jb', using: :show
+      return_the @post, handler: tpl_handler, using: :show
     end
   end
 
@@ -104,7 +104,13 @@ class Api::V4::PostsController < Api::V3::PostsController
       time = 1
     end
     @posts = Post.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 
 end

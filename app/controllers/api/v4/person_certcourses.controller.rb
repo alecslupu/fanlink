@@ -19,13 +19,17 @@ class Api::V4::PersonCertcoursesController < ApiController
     end
     if @person_certcourse.valid?
   	  @person_certcourse.save
-      return_the @person_certcourse, handler: 'jb'
+      return_the @person_certcourse, handler: tpl_handler
     else
       render_422(_("Something went wrong."))
     end
   end
 
-  private
+  protected
+
+  def tpl_handler
+    :jb
+  end
 
   def person_certcourses_params
     params.require(:person_certcourse).permit(%i[ certcourse_id ])

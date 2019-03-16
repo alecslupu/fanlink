@@ -2,7 +2,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
   def index
     @people = paginate apply_filters
     @people = @people.reject {|person| person==current_user} unless params[:product_account_filter]
-    return_the @people, handler: 'jb'
+    return_the @people, handler: tpl_handler
   end
 
   def show
@@ -14,7 +14,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
       else
         @person = Person.find(params[:id])
       end
-      return_the @person, handler: 'jb'
+      return_the @person, handler: tpl_handler
     end
   end
 
@@ -38,7 +38,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
           if @person.email.present?
             @person.send_onboarding_email
           end
-          return_the @person, handler: 'jb', using: :show
+          return_the @person, handler: tpl_handler, using: :show
         else
           render_422 @person.errors
         end
@@ -64,14 +64,14 @@ class Api::V4::PeopleController < Api::V3::PeopleController
             cookies.delete :_fanlink_session
             return render_401 _("Your account has been banned.")
           else
-            return_the @person, handler: 'jb', using: :show
+            return_the @person, handler: tpl_handler, using: :show
           end
         else
           render_not_found
         end
       end
     else
-      return_the @person, handler: 'jb', using: :show
+      return_the @person, handler: tpl_handler, using: :show
     end
   end
 
@@ -82,7 +82,13 @@ class Api::V4::PeopleController < Api::V3::PeopleController
       time = 1
     end
     @people = Person.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
-    return_the @people, handler: 'jb'
+    return_the @people, handler: tpl_handler
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 
 end

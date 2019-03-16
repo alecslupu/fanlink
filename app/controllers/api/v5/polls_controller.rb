@@ -8,7 +8,7 @@ class Api::V5::PollsController < Api::V4::PollsController
     #   @poll.update_attributes(poll_type_id: params[params[:poll][:poll_type]+"_id"])
     #   # @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
     # end
-    return_the @poll, handler: 'jb'
+    return_the @poll, handler: tpl_handler
   end
   
   def destroy
@@ -23,18 +23,18 @@ class Api::V5::PollsController < Api::V4::PollsController
   def update
     if params.has_key?(:poll)
       if @poll.update_attributes(poll_params)
-        return_the @poll, handler: 'jb', using: :show
+        return_the @poll, handler: tpl_handler, using: :show
       else
         render_422 @poll.errors
       end
     else
-      return_the @poll, handler: 'jb', using: :show
+      return_the @poll, handler: tpl_handler, using: :show
     end
   end
 
   def index
     @polls = paginate(Poll.all.order(created_at: :asc))
-    return_the @polls, handler: 'jb'
+    return_the @polls, handler: tpl_handler
   end
 
   def select
@@ -45,5 +45,11 @@ class Api::V5::PollsController < Api::V4::PollsController
       }
     end
     render json: {polls: @polls}
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 end

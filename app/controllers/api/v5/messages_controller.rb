@@ -7,7 +7,7 @@ class Api::V5::MessagesController < Api::V4::MessagesController
       msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
       @messages = paginate(msgs.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
       clear_count(room) if room.private?
-      return_the @messages, handler: 'jb'
+      return_the @messages, handler: tpl_handler
     end
   end
 
@@ -20,7 +20,7 @@ class Api::V5::MessagesController < Api::V4::MessagesController
       if @message.hidden
         render_not_found
       else
-        return_the @message, handler: 'jb'
+        return_the @message, handler: tpl_handler
       end
     end
   end

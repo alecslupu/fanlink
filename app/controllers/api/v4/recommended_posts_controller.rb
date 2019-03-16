@@ -6,6 +6,12 @@ class Api::V4::RecommendedPostsController < Api::V3::RecommendedPostsController
       @posts = paginate Post.for_product(ActsAsTenant.current_tenant).visible.where(recommended: true).order(created_at: :desc)
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
+  end
+
+  protected
+
+  def tpl_handler
+    'jb'
   end
 end

@@ -2,7 +2,7 @@ class Api::V5::PeopleController < Api::V4::PeopleController
   def index
     @people = paginate apply_filters
     @people = @people.reject {|person| person==current_user}
-    return_the @people, handler: 'jb'
+    return_the @people, handler: tpl_handler
   end
 
   def show
@@ -14,12 +14,12 @@ class Api::V5::PeopleController < Api::V4::PeopleController
       else
         @person = Person.find(params[:id])
       end
-      return_the @person, handler: 'jb'
+      return_the @person, handler: tpl_handler
     end
   end
 
   def list
     @people = Person.all
-    return_the @people, handler: 'jb'
+    return_the @people, handler: tpl_handler
   end
 end

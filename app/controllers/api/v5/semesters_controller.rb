@@ -5,11 +5,17 @@ class Api::V5::SemestersController < Api::V4::SemestersController
     else
       @semesters = paginate(Semester.available.where(deleted: false).includes(courses: :lessons)).order(created_at: :asc)
     end
-    return_the @semesters, handler: "jb"
+    return_the @semesters, handler: tpl_handler
   end
 
   def show
     @semester = Semester.includes(courses: :lessons).find(params[:id])
-    return_the @semester, handler: "jb"
+    return_the @semester, handler: tpl_handler
+  end
+
+  protected
+
+  def tpl_handler
+    "jb"
   end
 end
