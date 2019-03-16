@@ -9,6 +9,10 @@ class PaperclipVideoField < Administrate::Field::Base
     data.url
   end
 
+  def content_type
+    data.content_type
+  end
+
   def to_s
     data
   end
