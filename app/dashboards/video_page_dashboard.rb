@@ -13,7 +13,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
     video_url: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    video: PaperclipField,
+    video: PaperclipVideoField,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
