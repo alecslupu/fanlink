@@ -17,6 +17,8 @@ class Certificate < ApplicationRecord
   validates_uniqueness_to_tenant :certificate_order
   validates_attachment_presence :template_image
 
+  validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
+
   enum status: %i[entry live]
   validates :long_name, :short_name, :description, :certificate_order, :status, :sku_ios, :sku_android, :validity_duration, :access_duration, presence: true
 

@@ -225,7 +225,7 @@ JkoApi.routes self do
     resources :certificates do
       resources :certcourses, only:[:index]
     end
-    resources :certcourses, only: [:show, :create]
+    resources :certcourses, only: [:show, :create, :destroy]
     resources :person_certificates, only: [:create]
     resources :person_certcourses, only: [:create]
     resources :video_pages, only: [:create]

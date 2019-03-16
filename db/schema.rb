@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190313184556) do
+ActiveRecord::Schema.define(version: 20190314075901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "content_type"
+    t.integer "certcourse_pages_count", default: 0
     t.integer "product_id", null: false
     t.index ["certcourse_id"], name: "idx_certcourse_pages_certcourse"
     t.index ["product_id"], name: "idx_certcourse_pages_product"
@@ -555,6 +556,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.string "issued_certificate_pdf_content_type"
     t.integer "issued_certificate_pdf_file_size"
     t.datetime "issued_certificate_pdf_updated_at"
+    t.string "receipt_id"
     t.index ["certificate_id"], name: "idx_person_certificates_certificate"
     t.index ["person_id"], name: "idx_person_certificates_person"
   end

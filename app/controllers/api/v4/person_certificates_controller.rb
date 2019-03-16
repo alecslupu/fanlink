@@ -1,4 +1,7 @@
 class Api::V4::PersonCertificatesController < ApiController
+  require 'rmagick'
+  include Magick
+
   load_up_the Certificate, from: :certificate_id
 
   def create
@@ -6,8 +9,7 @@ class Api::V4::PersonCertificatesController < ApiController
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
-        @person_certificate.issued_certificate_image = @certificate.template_image
-        @current_user.send_certificate_email
+        save_edited_files_to_paperclip(@person_certificate,@certificate)
         return_the @certificate, handler: 'jb'
       else
         render_422(_("User already completed the full name"))
@@ -28,7 +30,21 @@ class Api::V4::PersonCertificatesController < ApiController
 
   private
 
+  def save_edited_files_to_paperclip(person_certificate, certificate)
+    full_name = person_certificate.full_name
+    image = ImageList.new(Paperclip.io_adapters.for(certificate.template_image).path)
+    canvas = ImageList.new
+    text = Draw.new
+    canvas.new_image(3840,2160,Magick::TextureFill.new(image))
+    text.annotate(canvas, 0,0,2000,1000, full_name)
+    jpeg_file = Tempfile.new(['certificate_image','.jpg'])
+    canvas.write(jpeg_file.path)
+    pdf_file = Tempfile.new(['certificate_pdf','.pdf'])
+    canvas.write(pdf_file.path)
+    person_certificate.update_attributes(issued_certificate_image: jpeg_file,issued_certificate_pdf: pdf_file)
+  end
+
   def person_certificate_params
-    params.require(:person_certificate).permit(%i[ certificate_id purchased_order_id amount_paid currency purchased_sku purchased_platform full_name ])
+    params.require(:person_certificate).permit(%i[ certificate_id purchased_order_id amount_paid currency purchased_sku purchased_platform receipt_id full_name ])
   end
 end

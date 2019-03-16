@@ -20,6 +20,11 @@ class Api::V4::CertificatesController < ApiController
     render json: { message: _("Deleted") }
   end
 
+  def send_certificate
+    @person_certificate = Certificate.find(params[:id]).for_person(@current_user)
+    @current_user.send_certificate_email(@person_certificate)
+  end
+
   private
 
   def certificate_params
