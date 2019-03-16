@@ -30,7 +30,7 @@ class Api::V3::InterestsController < ApiController
   end
 
   def create
-    if current_user.some_admin?
+    if some_admin?
       @interest = Interest.create(interest_params)
       if @interest.valid?
         return_the @interest
@@ -44,7 +44,7 @@ class Api::V3::InterestsController < ApiController
 
   def update
     if params.has_key?(:interest)
-      if current_user.some_admin?
+      if some_admin?
         if @interest.update_attributes(interest_params)
           return_the @interest
         else
@@ -59,7 +59,7 @@ class Api::V3::InterestsController < ApiController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @interest.destroy
       head :ok
     else

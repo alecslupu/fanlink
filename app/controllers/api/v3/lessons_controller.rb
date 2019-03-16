@@ -32,7 +32,7 @@ class Api::V3::LessonsController < ApiController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @lesson.update(deleted: true)
         head :ok
       else

@@ -32,7 +32,7 @@ class Api::V3::SemestersController < ApiController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @semester.update(deleted: true)
         head :ok
       else

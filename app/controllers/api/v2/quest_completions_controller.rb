@@ -243,7 +243,7 @@ class Api::V2::QuestCompletionsController < ApiController
 
 # def destroy
 #     quest_completion = QuestCompletion.find(params[:id])
-#     if current_user.some_admin?
+#     if some_admin?
 #       quest_completion.deleted!
 #       head :ok
 #     else

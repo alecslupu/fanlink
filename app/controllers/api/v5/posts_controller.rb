@@ -3,7 +3,7 @@ class Api::V5::PostsController < Api::V4::PostsController
     if params[:promoted].present?
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
     else
-      if web_request? && current_user.some_admin?
+      if web_request? && some_admin?
         @posts = paginate apply_filters
       else
         @posts = paginate Post.visible.unblocked(current_user.blocked_people).order(created_at: :desc)

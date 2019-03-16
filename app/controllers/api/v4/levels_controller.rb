@@ -23,7 +23,7 @@ class Api::V4::LevelsController < Api::V3::LevelsController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @level.update(deleted: true)
         head :ok
       else
