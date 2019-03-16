@@ -1,5 +1,5 @@
 {
-  course: Rails.cache.fetch(["v4", "course", @req_source, @course.id, @course.updated_at.to_i]) {
+  course: Rails.cache.fetch(["v5", "course", @req_source, @course.id, @course.updated_at.to_i]) {
     render(partial: @req_source, locals: { course: @course }, handlers: "jb")
   }
 }

@@ -25,5 +25,16 @@ module Admin
         page: Administrate::Page::Form.new(dashboard, resource),
       }
     end
+
+    protected
+
+    def scoped_resource
+      unless ActsAsTenant.current_tenant.nil?
+        return super.joins(:person).where(people: { product_id: ActsAsTenant.current_tenant.id })
+      end
+
+      super
+    end
+
   end
 end

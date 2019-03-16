@@ -30,6 +30,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    models:
+      certcourse: Course
   controllers:
     v1:
       badge_actions:
@@ -242,6 +245,7 @@ en:
   administrate:
     actions:
       show: "Show"
+      new: "New"
   date:
     formats:
       default: "%d/%m/%Y %H:%M:%S"
