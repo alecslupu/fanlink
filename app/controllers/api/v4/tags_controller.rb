@@ -3,7 +3,7 @@ class Api::V4::TagsController < Api::V3::TagsController
     if params[:tag_name].present?
       @posts = paginate Post.visible.for_tag(params[:tag_name])
       return_the @posts, handler: 'jb'
-    elsif current_user.some_admin? && @req_source == 'web'
+    elsif some_admin? && web_request?
       @tags = paginate Tag.all
       return_the @tags, handler: 'jb'
     else

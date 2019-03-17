@@ -2,7 +2,7 @@ class Api::V4::QuestsController < Api::V3::QuestsController
   # load_up_the Quest, only: %i[ update ]
 
   # def index
-  #   if current_user.some_admin? && @req_source == 'web'
+  #   if some_admin? && web_request?
   #     @quests = paginate apply_filters, handler: 'jb'
   #     return_the @quests
   #   else
@@ -19,7 +19,7 @@ class Api::V4::QuestsController < Api::V3::QuestsController
   # def show
   #   @quest = Quest.find(params[:id]).includes(:rewards, steps: [:quest_activities])
 
-  #   render_404 if (!@current_user.some_admin? || !current_user.tester) && !@quest.active? && !@quest.running?
+  #   render_404 if (!some_admin? || !current_user.tester) && !@quest.active? && !@quest.running?
 
   #   return_the @quest, handler: "jb"
   # end
