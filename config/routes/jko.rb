@@ -18,6 +18,7 @@ JkoApi.routes self do
     resources :people, only: %i[ create index show update ] do
       member do
         patch "change_password"
+        post "send_certificate" 
       end
       collection do
         post "password_forgot" => "password_resets#create"
