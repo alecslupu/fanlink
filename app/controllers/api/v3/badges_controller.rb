@@ -30,7 +30,7 @@ class Api::V3::BadgesController < Api::V2::BadgesController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if current_user.super_admin? && param[:force] == "1"
         @badge.destroy
         head :ok

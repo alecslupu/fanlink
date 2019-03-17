@@ -88,7 +88,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   # *
   def destroy
     @room = Room.find(params[:id])
-    if @room.created_by_id == current_user.id || current_user.some_admin?
+    if @room.created_by_id == current_user.id || some_admin?
       @room.deleted!
       @room.delete_me(@api_version)
       head :ok
@@ -161,7 +161,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   def update
     @room = Room.find(params[:id])
     if params.has_key?(:room)
-      if current_user.some_admin?
+      if some_admin?
         if @room.update_attributes(room_params)
           return_the @room
         else

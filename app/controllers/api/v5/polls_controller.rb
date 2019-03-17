@@ -12,7 +12,7 @@ class Api::V5::PollsController < Api::V4::PollsController
   end
   
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @poll.destroy
       head :ok
     else

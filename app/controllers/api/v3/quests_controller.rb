@@ -396,7 +396,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
   # *
   def destroy
     quest = Quest.find(params[:id])
-    if current_user.some_admin?
+    if some_admin?
       quest.deleted!
       head :ok
     else

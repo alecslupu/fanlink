@@ -40,7 +40,7 @@ class Api::V3::AssignedRewardsController < ApiController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @assigned = AssignedReward.find(params[:id])
       if @assigned.update(deleted: true)
         head :ok
