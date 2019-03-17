@@ -32,7 +32,7 @@ class Api::V3::RewardsController < ApiController
 
   def destroy
     reward = Reward.find(params[:id])
-    if current_user.some_admin?
+    if some_admin?
       if reward.update(deleted: true)
         head :ok
       else

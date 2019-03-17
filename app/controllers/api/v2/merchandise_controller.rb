@@ -24,7 +24,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @merchandise.deleted = true
       @merchandise.save
       head :ok

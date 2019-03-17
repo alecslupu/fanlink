@@ -5,7 +5,7 @@ class Api::V4::InterestsController < Api::V3::InterestsController
   end
 
   def create
-    if current_user.some_admin?
+    if some_admin?
       @interest = Interest.create(interest_params)
       if @interest.valid?
         return_the @interest, handler: tpl_handler, using: :show
@@ -19,7 +19,7 @@ class Api::V4::InterestsController < Api::V3::InterestsController
 
   def update
     if params.has_key?(:interest)
-      if current_user.some_admin?
+      if some_admin?
         if @interest.update_attributes(interest_params)
           return_the @interest, handler: tpl_handler, using: :show
         else

@@ -187,7 +187,7 @@ class Api::V3::MerchandiseController < Api::V2::MerchandiseController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @merchandise.update(deleted: true)
         head :ok
       else

@@ -266,7 +266,7 @@ class Api::V3::EventsController < Api::V2::EventsController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @event.update(deleted: true)
         head :ok
       else

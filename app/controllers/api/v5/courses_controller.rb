@@ -1,6 +1,6 @@
 class Api::V5::CoursesController < Api::V4::CoursesController
   def index
-    if @req_source == "web"
+    if web_request?
       @courses = paginate(@semester.courses.where(deleted: false).includes(:lessons)).order(created_at: :asc)
     else
       @courses = paginate(@semester.courses.available.where(deleted: false).order(created_at: :asc).includes(:lessons))
