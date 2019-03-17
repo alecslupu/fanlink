@@ -85,4 +85,8 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     return_the @people, handler: 'jb'
   end
 
+  def send_certificate
+    current_user.send_certificate_email(params[:certificate_id])
+    render json: { message: _("Email sent") }
+  end
 end
