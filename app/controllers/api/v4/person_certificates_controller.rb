@@ -41,9 +41,9 @@ class Api::V4::PersonCertificatesController < ApiController
     text.annotate(canvas,0,0,1200,1400, full_name){self.pointsize = 100}
     jpeg_file = Tempfile.new(['certificate_image','.jpg'])
     canvas.write(jpeg_file.path)
-    pdf_file = Tempfile.new(['certificate_pdf','.pdf'])
-    canvas.write(pdf_file.path)
-    person_certificate.update_attributes(issued_certificate_image: jpeg_file,issued_certificate_pdf: pdf_file)
+    #pdf_file = Tempfile.new(['certificate_pdf','.pdf'])
+    #canvas.write(pdf_file.path)
+    person_certificate.update_attributes(issued_certificate_image: jpeg_file)#,issued_certificate_pdf: pdf_file)
   end
 
   def person_certificate_params
