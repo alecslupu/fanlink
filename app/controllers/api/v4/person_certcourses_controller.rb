@@ -18,7 +18,7 @@ class Api::V4::PersonCertcoursesController < ApiController
       @person_certcourse.last_completed_page_id = params[:page_id]
     end
     if @person_certcourse.valid?
-  	  @person_certcourse.save
+      @person_certcourse.save
       return_the @person_certcourse, handler: 'jb'
     else
       render_422(_("Something went wrong."))

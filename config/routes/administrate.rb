@@ -19,6 +19,12 @@ namespace :admin do
   resources :image_pages
   resources :video_pages
   resources :answers
+  resources :person_certcourses do
+    member do
+      post :reset_progress
+      post :forget
+    end
+  end
 
   resources :action_types
   # resources :activity_types
