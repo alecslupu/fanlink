@@ -56,11 +56,28 @@ RSpec.describe ActionType, type: :model do
         expect(act_type.errors[:base]).not_to be_empty
       end
     end
+    describe "#in_use?" do
+      it "is false upon initialization" do
+        act_type = create(:action_type)
+        expect(act_type.in_use?).to be_falsey
+      end
+      it "marked as used when associated badges exists" do
+        act_type = create(:action_type)
+        act_type.badges = create_list(:badge, 3)
+        expect(act_type.in_use?).to be_truthy
+      end
+      it "marked as used when associated badges exists" do
+        act_type = create(:action_type)
+        act_type.badge_actions = create_list(:badge_action,2)
+        expect(act_type.in_use?).to be_truthy
+      end
+    end
   end
   context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#has_many" do
         should have_many(:badges)
+        should have_many(:badge_actions)
         should have_many(:assigned_rewards)
         should have_many(:rewards).through(:assigned_rewards)
       end
