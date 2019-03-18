@@ -22,7 +22,8 @@ class PersonMailer < MandrillMailer::TemplateMailer
 
   def send_certificate(person, certificate)
     mandrill_mail(
-      template: "#{person.product.internal_name}-certificate",
+      #template: "#{person.product.internal_name}-certificate",
+      template: "test-certificate",
       subject: "%{name} - Your certificate" % { name: person.name },
       vars: {
         link: "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{person.product.internal_name}/#{person.name}",
