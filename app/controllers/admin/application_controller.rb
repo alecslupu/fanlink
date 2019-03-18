@@ -26,6 +26,10 @@ module Admin
       not_authenticated unless (current_user.super_admin? || some_admin?)
     end
 
+    def some_admin?
+      current_user.try(:some_admin?)
+    end
+
     def check_super
       not_authenticated unless current_user.super_admin?
     end
