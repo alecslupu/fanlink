@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20190319151357) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true, null: false
+    t.integer "badge_actions_count"
+    t.integer "badges_count"
     t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
     t.index ["name"], name: "unq_action_types_name", unique: true
   end
@@ -33,8 +35,8 @@ ActiveRecord::Schema.define(version: 20190319151357) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
