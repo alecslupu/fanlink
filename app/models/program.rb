@@ -1,2 +1,2 @@
-class Program < ApplicationRecord
-end
+# class Program < ApplicationRecord
+# end
