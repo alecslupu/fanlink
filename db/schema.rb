@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190314075901) do
+ActiveRecord::Schema.define(version: 20190319151357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20190314075901) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -158,7 +158,6 @@ ActiveRecord::Schema.define(version: 20190314075901) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "content_type"
-    t.integer "certcourse_pages_count", default: 0
     t.integer "product_id", null: false
     t.index ["certcourse_id"], name: "idx_certcourse_pages_certcourse"
     t.index ["product_id"], name: "idx_certcourse_pages_product"
@@ -176,6 +175,7 @@ ActiveRecord::Schema.define(version: 20190314075901) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.integer "certcourse_pages_count", default: 0
     t.index ["product_id"], name: "idx_certcourses_product"
   end
 
