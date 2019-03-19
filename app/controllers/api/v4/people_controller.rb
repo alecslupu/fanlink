@@ -86,7 +86,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
   end
 
   def send_certificate
-    current_user.send_certificate_email(params[:certificate_id])
+    current_user.send_certificate_email(params[:certificate_id], params[:email_address])
     render json: { message: _("Email sent") }
   end
 end

@@ -20,7 +20,8 @@ class PersonMailer < MandrillMailer::TemplateMailer
     )
   end
 
-  def send_certificate(person, certificate)
+  def send_certificate(person, certificate, email)
+    to_email = email.nil? ? person.email : email
     mandrill_mail(
       #template: "#{person.product.internal_name}-certificate",
       template: "test-certificate",
@@ -34,7 +35,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
         name: certificate.issued_certificate_pdf_image_name,
         type: "application/pdf"
       },
-      to: { email: person.email, name: person.name }
+      to: { email: to_email, name: person.name }
     )
   end
 
