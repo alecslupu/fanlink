@@ -3,6 +3,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   def create
     @person_certcourse = PersonCertcourse.find_or_create_by(certcourse_id: person_certcourses_params[:certcourse_id],person_id: @current_user.id)
   	@certcourse_page = CertcoursePage.find(params[:page_id])
+    @certcourse = Certcourse.find(person_certcourses_params[:certcourse_id])
     if @certcourse_page.content_type == "quiz"
       if params[:quiz_page_id].present?
         PersonQuiz.create(person_id: @current_user.id, quiz_page_id: params[:quiz_page_id], answer_id: params[:answer_id])
@@ -16,6 +17,9 @@ class Api::V4::PersonCertcoursesController < ApiController
       end
     else 
       @person_certcourse.last_completed_page_id = params[:page_id]
+    end
+    if @certcourse.certcourse_pages.order("certcourse_page_order").last.id == @person_certcourse.last_completed_page_id
+      @person_certcourse.is_completed = true
     end
     if @person_certcourse.valid?
       @person_certcourse.save
