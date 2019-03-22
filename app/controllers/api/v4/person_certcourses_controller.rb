@@ -10,7 +10,7 @@ class Api::V4::PersonCertcoursesController < ApiController
       else
         PersonQuiz.create(person_id: @current_user.id, quiz_page_id: @certcourse_page.quiz_page.id, answer_id: params[:answer_id])
       end
-      if params[:answer_id].present? && Answer.find(params[:answer_id]).is_correct
+      if (params[:answer_id].present? && Answer.find(params[:answer_id]).is_correct) || @certcourse_page.quiz_page.is_optional
         @person_certcourse.last_completed_page_id = params[:page_id]
       else
         last_certcourse_page = CertcoursePage.where("id < ? AND certcourse_id = ?", @certcourse_page.quiz_page.wrong_answer_page_id, person_certcourses_params[:certcourse_id]).order("certcourse_page_order").last
