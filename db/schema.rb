@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190317161104) do
+ActiveRecord::Schema.define(version: 20190322195543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,7 +160,6 @@ ActiveRecord::Schema.define(version: 20190317161104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "content_type"
-    t.integer "certcourse_pages_count", default: 0
     t.integer "product_id", null: false
     t.index ["certcourse_id"], name: "idx_certcourse_pages_certcourse"
     t.index ["product_id"], name: "idx_certcourse_pages_product"
@@ -178,6 +177,7 @@ ActiveRecord::Schema.define(version: 20190317161104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.integer "certcourse_pages_count", default: 0
     t.index ["product_id"], name: "idx_certcourses_product"
   end
 
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20190317161104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.index ["certcourse_id", "certificate_id"], name: "idx_uniq_cid_cid", unique: true
     t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
     t.index ["certificate_id"], name: "idx_certificate_certcourses_certificate"
     t.index ["product_id"], name: "idx_certificate_certcourses_product"
@@ -530,6 +531,7 @@ ActiveRecord::Schema.define(version: 20190317161104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["certcourse_id"], name: "idx_person_certcourses_certcourse"
+    t.index ["person_id", "certcourse_id"], name: "idx_uniq_pc_pid_cid2", unique: true
     t.index ["person_id"], name: "idx_person_certcourses_person"
   end
 
@@ -559,7 +561,9 @@ ActiveRecord::Schema.define(version: 20190317161104) do
     t.integer "issued_certificate_pdf_file_size"
     t.datetime "issued_certificate_pdf_updated_at"
     t.string "receipt_id"
+    t.boolean "is_completed", default: false
     t.index ["certificate_id"], name: "idx_person_certificates_certificate"
+    t.index ["person_id", "certificate_id"], name: "idx_uniq_pc_pid_cid", unique: true
     t.index ["person_id"], name: "idx_person_certificates_person"
   end
 

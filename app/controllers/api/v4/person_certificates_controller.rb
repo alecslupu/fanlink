@@ -10,6 +10,8 @@ class Api::V4::PersonCertificatesController < ApiController
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
         save_edited_files_to_paperclip(@person_certificate,@certificate)
+        @person_certificate.issued_certificate_image = @certificate.template_image
+        @person_certificate.save
         return_the @certificate, handler: 'jb'
       else
         render_422(_("User already completed the full name"))
@@ -36,7 +38,7 @@ class Api::V4::PersonCertificatesController < ApiController
     canvas = ImageList.new
     text = Draw.new
     canvas.new_image(3840,2160,Magick::TextureFill.new(image))
-    text.annotate(canvas, 0,0,2000,1000, full_name)
+    text.annotate(canvas,0,0,1200,1400, full_name){self.pointsize = 100}
     jpeg_file = Tempfile.new(['certificate_image','.jpg'])
     canvas.write(jpeg_file.path)
     pdf_file = Tempfile.new(['certificate_pdf','.pdf'])

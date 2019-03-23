@@ -20,9 +20,11 @@ class PersonMailer < MandrillMailer::TemplateMailer
     )
   end
 
-  def send_certificate(person, certificate)
+  def send_certificate(person, certificate, email)
+    to_email = email.nil? ? person.email : email
     mandrill_mail(
-      template: "#{person.product.internal_name}-password-reset",
+      #template: "#{person.product.internal_name}-certificate",
+      template: "test-certificate",
       subject: "%{name} - Your certificate" % { name: person.name },
       vars: {
         link: "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{person.product.internal_name}/#{person.name}",
@@ -33,8 +35,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
         name: certificate.issued_certificate_pdf_image_name,
         type: "application/pdf"
       },
-      #to: { email: person.email, name: person.name }
-      to: { email: "am@flink.to", name: person.name }
+      to: { email: to_email, name: person.name }
     )
   end
 
