@@ -911,6 +911,7 @@ GEM
       addressable
       faraday
       json (>= 1.8)
+    libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -1051,6 +1052,7 @@ GEM
       redis-store (>= 1.2, < 2)
     redis-store (1.5.0)
       redis (>= 2.2, < 5)
+    ref (2.0.0)
     regexp_parser (0.5.0)
     request_store (1.4.1)
       rack (>= 1.4)
@@ -1154,6 +1156,9 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.12)
     text (1.3.1)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -1287,6 +1292,7 @@ DEPENDENCIES
   simplecov
   sorcery
   stackprof
+  therubyracer
   timber (~> 2.0)
   timecop
   turnip
