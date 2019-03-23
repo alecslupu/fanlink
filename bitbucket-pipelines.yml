@@ -4,7 +4,9 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - export DATABASE_URL=postgresql://test_user:test_user_password@localhost/pipelines
+          - export FANLINK_PG_USER=test_user
+          - export FANLINK_PG_PASSWORD=test_user_password
+          - export FANLINK_PG_HOST=localhost
           - bundle install
           - rake db:setup
           - rake db:test:prepare
@@ -17,6 +19,6 @@ definitions:
     postgres:
       image: postgres
       environment:
-        POSTGRES_DB: pipelines
+        POSTGRES_DB: fanlink_test
         POSTGRES_USER: test_user
         POSTGRES_PASSWORD: test_user_password
