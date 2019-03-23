@@ -166,8 +166,8 @@ RSpec.describe Person, type: :model do
     it "should not let you destroy a person who has reported a message" do
       person = create(:person)
       create(:message_report, person: person)
-      expect(person.destroy).to be_falsey
-      expect(person).to exist_in_database
+      expect(person.destroy).to be_truthy
+      expect(person).not_to exist_in_database
     end
   end
 

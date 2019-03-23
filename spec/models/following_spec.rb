@@ -8,9 +8,7 @@ RSpec.describe Following, type: :model do
   end
 
   context "Valid" do
-    it "should create a valid following" do
-      expect(create(:following)).to be_valid
-    end
+    it  { expect(create(:following)).to be_valid }
   end
 
   describe "#follower_id" do

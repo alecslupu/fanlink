@@ -1,11 +1,13 @@
 require "rails_helper"
 
 RSpec.describe ActivityType, type: :model do
+
   context "Validation" do
-    it do
-      should validate_presence_of(:quest_activity).with_message("must exist")
-      should validate_presence_of(:atype).with_message(" is not a valid activity type.")
-    end
+    subject { build(:activity_type) }
+
+    it { should validate_presence_of(:quest_activity).with_message("must exist") }
+    it { should validate_presence_of(:atype).with_message(" is not a valid activity type.") }
+    it { should validate_inclusion_of(:atype).in_array(%w(beacon image audio post activity_code)) }
   end
   context "Associations" do
     describe "#belongs_to" do
@@ -19,9 +21,7 @@ RSpec.describe ActivityType, type: :model do
       should define_enum_for(:atype).with(%i[ beacon image audio post activity_code ])
     end
   end
-  context "#valid?" do
-    it "should create a valid activity type" do
-      expect(create(:activity_type)).to be_valid
-    end
+  context "Valid factory" do
+    it { expect(create(:activity_type)).to be_valid }
   end
 end
