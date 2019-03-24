@@ -15,7 +15,17 @@ RSpec.describe MessageReport, type: :model do
     subject { create(:message_report) }
     it { is_expected.to define_enum_for(:status).with(MessageReport.statuses.keys) }
     it { should validate_length_of(:reason).is_at_most(500).with_message(_("Reason cannot be longer than 500 characters.")) }
-    it { should validate_inclusion_of(:status).in_array(MessageReport.statuses.keys) }
+
+    context "validates inclusion" do
+      it do
+        MessageReport.statuses.keys.each do |status|
+          expect(build(:message_report, status: status)).to be_valid
+        end
+
+        expect{ build(:message_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
+      end
+    end
+
   end
 
   describe "scopes" do

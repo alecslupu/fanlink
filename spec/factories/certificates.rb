@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :certificate do
+    product { create(:product) }
+
     long_name { Faker::Lorem.name }
     short_name { Faker::Lorem.sentence(4) }
     description { Faker::Lorem.paragraph }
