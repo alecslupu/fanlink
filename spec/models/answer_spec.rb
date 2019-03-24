@@ -7,7 +7,8 @@ RSpec.describe Answer, type: :model do
   end
 
   context "Associations" do
-
+    it { should belong_to(:product) }
+    it { should belong_to(:quiz_page) }
   end
 
   context "Methods" do

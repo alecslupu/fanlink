@@ -7,7 +7,7 @@ RSpec.describe ActivityType, type: :model do
 
     it { should validate_presence_of(:quest_activity).with_message("must exist") }
     it { should validate_presence_of(:atype).with_message(" is not a valid activity type.") }
-    it { should validate_inclusion_of(:atype).in_array(%w(beacon image audio post activity_code)) }
+    it { should validate_inclusion_of(:atype).in_array(%i(beacon image audio post activity_code)) }
   end
   context "Associations" do
     describe "#belongs_to" do
