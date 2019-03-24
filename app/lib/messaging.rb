@@ -28,11 +28,7 @@ module Messaging
   end
 
   def delete_room(room, version = nil)
-    if room.public
-      delete_public_room(room, version)
-    else
-      delete_private_room(room)
-    end
+    room.public? ? delete_public_room(room, version) : delete_private_room(room)
   end
 
   def delete_room_for_member(room, member, version = nil)
@@ -169,10 +165,10 @@ private
       }
     }
     payload = {}
-    payload["#{room_path(msg.room)}/last_message"] = message.as_json
+    payload["#{room_path(message.room)}/last_message"] = message.as_json
     if version.present?
       version.downto(1) {|v|
-        payload["#{room_path(msg.room)}/last_message"] = msg
+        payload["#{room_path(message.room)}/last_message"] = msg
       }
     end
     client.update("", payload).response.status == 200

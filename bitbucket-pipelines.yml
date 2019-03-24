@@ -1,0 +1,28 @@
+image: ruby:2.5.1
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - bundler
+        script: # Modify the commands below to build your repository.
+          - export FANLINK_PG_USER=test_user
+          - export FANLINK_PG_PASSWORD=test_user_password
+          - export FANLINK_PG_HOST=localhost
+          - bundle install --path vendor/bundle
+          - rake db:setup
+          - rake db:test:prepare
+          - rspec
+        services:
+          - postgres
+ 
+definitions:
+  services:
+    postgres:
+      image: postgres
+      environment:
+        POSTGRES_DB: fanlink_test
+        POSTGRES_USER: test_user
+        POSTGRES_PASSWORD: test_user_password
+  caches:
+    bundler: vendor/bundle

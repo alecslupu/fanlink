@@ -11,12 +11,21 @@ module MessagingHelpers
   end
 
   class FBStub
+    def new
+    end
     def delete(k)
     end
     def set(k, v)
     end
-    def update(es, pl)
+
+    def update(path, data, query={})
+      process :patch, path, data, query
     end
+
+    def process(verb, path, data=nil, query={})
+      return Response.new
+    end
+
   end
 
   class Implementer

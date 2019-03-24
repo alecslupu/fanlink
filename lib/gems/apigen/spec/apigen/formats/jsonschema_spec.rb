@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'apigen/formats/jsonschema'
-require 'apigen/formats/example'
+require_relative 'example'
 require 'json'
 
 describe Apigen::Formats::JsonSchema::Draft7 do

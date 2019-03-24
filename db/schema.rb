@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20190324163331) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true, null: false
+    t.integer "badge_actions_count"
+    t.integer "badges_count"
     t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
     t.index ["name"], name: "unq_action_types_name", unique: true
   end
@@ -607,6 +609,7 @@ ActiveRecord::Schema.define(version: 20190324163331) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "description", default: {}, null: false
+    t.integer "person_poll_options_count"
     t.index ["poll_id"], name: "idx_poll_options_poll"
   end
 

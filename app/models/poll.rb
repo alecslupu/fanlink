@@ -26,9 +26,9 @@ class Poll < ApplicationRecord
   end
 
   def start_date_cannot_be_in_the_past
-  	if start_date.present? && start_date < Time.now
-  	  errors.add(:expiration_date, "poll can't start in the past")
-  	end
+    if start_date.present? && start_date < Time.now
+      errors.add(:expiration_date, "poll can't start in the past")
+    end
   end
 
   def description_cannot_be_empty
@@ -38,12 +38,7 @@ class Poll < ApplicationRecord
   end
 
   def was_voted(person_id)
-    poll_options.each do |po|
-      if PersonPollOption.find_by(person_id: person_id, poll_option_id: po.id)
-        return true
-      end
-    end
-    false
+    PersonPollOption.where(person_id: person_id, poll_option_id: poll_option_ids).count > 0
   end
 
   private
