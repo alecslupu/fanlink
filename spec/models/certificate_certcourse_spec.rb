@@ -7,6 +7,10 @@ RSpec.describe CertificateCertcourse, type: :model do
   end
 
   context "Validation" do
+    describe "Uniqueness" do
+      subject { create(:certificate_certcourse) }
+      it { should validate_uniqueness_of(:certcourse_id).scoped_to(:certificate_id) }
+    end
     it "uniqueness to tenant" do
       cc = create(:certificate_certcourse)
       cc2 = build(:certificate_certcourse,

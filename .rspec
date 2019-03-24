@@ -2,3 +2,5 @@
 -r turnip/rspec
 --format Fuubar
 --color
+--format html
+--out rspec_results.html

@@ -95,4 +95,17 @@ RSpec.describe Room, type: :model do
   #     expect(room).to be_valid
   #   end
   # end
+  #
+
+  describe ".private?" do
+    it "returns true" do
+      room = create(:room, public: false)
+      expect(room.private?).to be_truthy
+    end
+
+    it "returns false" do
+      room = create(:room, public: true)
+      expect(room.private?).to be_falsey
+    end
+  end
 end

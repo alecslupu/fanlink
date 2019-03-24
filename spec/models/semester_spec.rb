@@ -1,4 +1,8 @@
 RSpec.describe Semester, type: :model do
+  context "Valid factory" do
+    it { expect(create(:semester)).to be_valid }
+  end
+
   context "Associations" do
     describe "should belong to" do
       it "#product" do
@@ -14,11 +18,6 @@ RSpec.describe Semester, type: :model do
   end
 
   context "Validation" do
-    describe "should create a valid semester" do
-      it do
-        expect(create(:semester)).to be_valid
-      end
-    end
 
     describe "should validate presense of" do
       it "#name" do
@@ -76,6 +75,33 @@ RSpec.describe Semester, type: :model do
         semester.end_date = semester.start_date - 1.day
         expect(semester).not_to be_valid
         expect(semester.errors[:end_date]).not_to be_empty
+      end
+    end
+  end
+
+  context "scopes" do
+    describe "available" do
+      context "not return future events" do
+        it do
+          sem = create(:semester, start_date: 2.days.from_now)
+          test = Semester.available
+          expect(test.count).to eq(0)
+        end
+      end
+      context "not returns passed semesters" do
+        it do
+          sem = create(:semester, start_date: 3.days.ago , end_date: 2.days.ago)
+          test = Semester.available
+          expect(test.count).to eq(0)
+        end
+      end
+      context "returns any started semester" do
+        it do
+          sem = create(:semester, start_date: 3.days.ago)
+          test = Semester.available
+          expect(test.count).to eq(1)
+          expect(test).to include(sem)
+        end
       end
     end
   end
