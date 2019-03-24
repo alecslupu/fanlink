@@ -10,8 +10,8 @@ pipelines:
           - export FANLINK_PG_PASSWORD=test_user_password
           - export FANLINK_PG_HOST=localhost
           - bundle install --path vendor/bundle
-          - rake db:setup
-          - rake db:test:prepare
+          - bundle exec rake db:setup
+          - bundle exec rake db:test:prepare
           - rspec
         services:
           - postgres
