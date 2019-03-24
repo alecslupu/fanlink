@@ -12,7 +12,7 @@ pipelines:
           - bundle install --path vendor/bundle
           - bundle exec rake db:setup
           - bundle exec rake db:test:prepare
-          - RAILS_ENV=test rspec .
+          - bundle exec rspec .
         services:
           - postgres
  
