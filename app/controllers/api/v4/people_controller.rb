@@ -54,7 +54,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
       if !check_gender
         render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
-        if @person == current_user || current_user.some_admin? || current_user.product_account
+        if @person == current_user || some_admin? || current_user.product_account
           if person_params.has_key?(:terminated) && @person.some_admin?
             return render_422 _("You cannot ban administative accounts.")
           end
@@ -85,4 +85,8 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     return_the @people, handler: 'jb'
   end
 
+  def send_certificate
+    current_user.send_certificate_email(params[:certificate_id], params[:email_address])
+    render json: { message: _("Email sent") }
+  end
 end

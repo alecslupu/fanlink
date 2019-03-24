@@ -218,7 +218,7 @@ class Api::V2::ActivityTypesController < ApiController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @activity_type.deleted = true
       @activity_type.save
       head :ok

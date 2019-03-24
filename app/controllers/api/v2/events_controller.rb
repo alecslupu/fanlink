@@ -160,7 +160,7 @@ class Api::V2::EventsController < Api::V1::EventsController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @event.deleted = true
       @event.save
       head :ok
