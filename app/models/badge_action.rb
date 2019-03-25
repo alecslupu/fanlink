@@ -1,5 +1,5 @@
 class BadgeAction < ApplicationRecord
-  belongs_to :action_type
+  belongs_to :action_type, counter_cache: true
   belongs_to :person, touch: true
 
   normalize_attributes :identifier

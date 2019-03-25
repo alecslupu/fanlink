@@ -170,7 +170,8 @@ class Api::V1::PostsController < ApiController
         if person
           @posts = Post.visible.for_person(person).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
         else
-          render_error("Cannot find that person.") && return
+          render_error("Cannot find that person.")
+          return
         end
       else
         @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)

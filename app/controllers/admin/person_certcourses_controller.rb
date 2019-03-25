@@ -21,7 +21,8 @@ module Admin
     def reset_progress
       if requested_resource
         PersonQuiz.where(person_id: requested_resource.person_id).destroy_all
-        if requested_resource.update({last_completed_page_id: 0, is_completed: false})
+        if requested_resource.update({last_completed_page_id: nil, is_completed: false})
+          update_certification_status(requested_resource.certcourse.certificate_ids, requested_resource.person_id)
           flash[:notice] = translate_with_resource("reset.success")
         else
           flash[:error] = requested_resource.errors.full_messages.join("<br/>")
@@ -41,5 +42,19 @@ module Admin
       end
       redirect_to action: :index
     end
+    
+  private
+
+  def update_certification_status(certificate_ids, user_id)
+    # TODO find a better way to write this
+    # TODO move it in a job
+    PersonCertificate.where(person_id: user_id, certificate_id: certificate_ids).find_each do |c|
+      c.is_completed = PersonCertcourse.select(:is_completed).
+        where(person_id: user_id, certcourse_id: c.certificate.certcourse_ids).
+        pluck(:is_completed).inject(true, :&)
+      c.save!
+    end
+  end
+  
   end
 end

@@ -8,9 +8,7 @@ RSpec.describe Badge, type: :model do
   end
 
   context "Validation" do
-    it "should create a valid badge" do
-      expect(create(:badge)).to be_valid
-    end
+    it { expect(create(:badge)).to be_valid }
   end
 
   describe "#action_count_earned_by" do

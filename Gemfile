@@ -21,7 +21,7 @@ gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem "therubyracer", platforms: :ruby
+gem "therubyracer", platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails", "~> 4.2"
@@ -79,7 +79,7 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem "rubocop-rails"
+  gem "rubocop-rails_config"
 end
 
 group :test do
@@ -146,8 +146,6 @@ gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
 gem "rollbar"
-# gem "rubocop-rails"
-gem "rubocop-rails_config"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
