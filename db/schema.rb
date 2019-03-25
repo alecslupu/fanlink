@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190322195543) do
+ActiveRecord::Schema.define(version: 20190323104200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -616,6 +616,7 @@ ActiveRecord::Schema.define(version: 20190322195543) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "description", default: {}, null: false
+    t.integer "person_poll_options_count"
     t.index ["poll_id"], name: "idx_poll_options_poll"
   end
 

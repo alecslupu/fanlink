@@ -5,5 +5,6 @@ FactoryBot.define do
     person { create(:person) }
     message { create(:message) }
     reason { Faker::Lorem.paragraph(2) }
+    status { "pending" }
   end
 end
