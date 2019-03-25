@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   mount RailsAdmin::Engine => '/admin_portal', as: 'rails_admin'
 
   if Rails.env.development?

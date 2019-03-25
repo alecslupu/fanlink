@@ -29,17 +29,16 @@ RailsAdmin.config do |config|
   config.model 'Certificate' do
     navigation_label 'Courseware'
   end
-  # config.model 'Post' do
-  #   navigation_label 'Courses related'
-  #
-  # end
-  #
+
   %w(Certcourse CertcoursePage CertificateCertcourse Answer ImagePage PersonCertcourse PersonCertificate PersonQuiz QuizPage VideoPage).each do |model|
     config.included_models << model
     config.model model do
       parent Certificate
     end
   end
+
+  config.parent_controller = 'RailsAdminController'
+
   #
   # %w(PostComment PostReaction PostReport PostCommentReport PostTag).each do |model|
   #   config.model model do
@@ -47,10 +46,6 @@ RailsAdmin.config do |config|
   #   end
   # end
   #
-
-
-
-#
 #   ### Popular gems integration
 #
 #   ## == Devise ==
@@ -58,7 +53,11 @@ RailsAdmin.config do |config|
 #   #   warden.authenticate! scope: :user
 #   # end
 #   # config.current_user_method(&:current_user)
-#
+
+  config.authenticate_with do
+    # Use sorcery's before filter to auth users
+    require_login
+  end
 #   ## == Cancan ==
 #   # config.authorize_with :cancan
 #
