@@ -78,7 +78,7 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem "rubocop-rails"
+  gem "rubocop-rails_config"
 end
 
 group :test do
@@ -140,8 +140,6 @@ gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
 gem "rollbar"
-# gem "rubocop-rails"
-gem "rubocop-rails_config"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
