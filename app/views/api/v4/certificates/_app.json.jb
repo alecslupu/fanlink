@@ -12,6 +12,6 @@ json = {
   is_free: certificate.is_free,
   is_completed: person_certificate.present? ? !person_certificate.last.issued_date.nil? : false,
   is_purchased: person_certificate.present?,
-  certificate_image_url: certificate.template_image_url
+  certificate_image_url: person_certificate.last.full_name.blank? ? nil : person_certificate.last.issued_certificate_image.url
 }
 json
