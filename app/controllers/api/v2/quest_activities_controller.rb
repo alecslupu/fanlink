@@ -269,7 +269,7 @@ class Api::V2::QuestActivitiesController < ApiController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @quest_activity.deleted = true
       @quest_activity.save
       head :ok

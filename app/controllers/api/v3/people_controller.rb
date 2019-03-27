@@ -272,7 +272,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       if !check_gender
         render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
-        if @person == current_user || current_user.some_admin? || current_user.product_account
+        if @person == current_user || some_admin? || current_user.product_account
           if person_params.has_key?(:terminated) && @person.some_admin?
             return render_422 _("You cannot ban administative accounts.")
           end
@@ -298,7 +298,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       @person = Person.find(params[:id])
       @person.destroy
       head :ok
-    elsif current_user.some_admin?
+    elsif some_admin?
       @person.update(deleted: true)
       head :ok
     else
@@ -330,6 +330,6 @@ private
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password do_not_message_me ] +
                                    ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended pin_messages_from auto_follow ] : []) +
-                                   ((current_user.present? && current_user.some_admin?) ? %i[ chat_banned role tester product_account designation terminated terminated_reason ] : []))
+                                   ((current_user.present? && some_admin?) ? %i[ chat_banned role tester product_account designation terminated terminated_reason ] : []))
   end
 end
