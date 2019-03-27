@@ -11,7 +11,7 @@ json = {
   sku_android: certificate.sku_android,
   sku_ios: certificate.sku_ios,
   is_free: certificate.is_free,
-  is_completed: person_certificate.present? ? !last_person_certificate.issued_date.nil? : false,
+  is_completed: person_certificate.present? ? !last_person_certificate.is_completed? : false,
   is_purchased: person_certificate.present?,
   certificate_image_url: last_person_certificate.nil? ? nil : (last_person_certificate.full_name.blank? ? nil : person_certificate.last.issued_certificate_image.url)
 }
