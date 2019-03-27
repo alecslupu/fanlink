@@ -2,7 +2,7 @@ json = {}
 
 if defined?(@followers)
   json[:followers] = @followers.map do |follower|
-    f = Rails.cache.fetch ["v5", "person", @req_source, follower.id, follower.updated_at.to_i] do
+    f = Rails.cache.fetch current_user.cache_key_follow_person("v5", @req_source, current_user, follower)  do
       render partial: "api/v5/people/#{@req_source}", locals: { person: follower }, handlers: "jb"
     end
     if fol = current_user && current_user.following_for_person(follower)
@@ -14,7 +14,7 @@ if defined?(@followers)
   end
 else
   json[:following] = @following.map do |following|
-    f = Rails.cache.fetch ["v5", "person", @req_source, following.id, following.updated_at.to_i] do
+    f = Rails.cache.fetch current_user.cache_key_follow_person("v5", @req_source, current_user, following) do
       render partial: "api/v5/people/#{@req_source}", locals: { person: following }, handlers: "jb"
     end
     if fol = current_user && current_user.following_for_person(following)
