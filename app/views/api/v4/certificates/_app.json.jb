@@ -1,5 +1,4 @@
-person_certificate = pc.for_person(user)
-last_person_certificate = person_certificate.last
+person_certificate = pc.for_person(user).first_or_initialize
 json = {
   id: certificate.id,
   order: certificate.certificate_order,
@@ -11,8 +10,8 @@ json = {
   sku_android: certificate.sku_android,
   sku_ios: certificate.sku_ios,
   is_free: certificate.is_free,
-  is_completed: person_certificate.present? ? !last_person_certificate.is_completed? : false,
-  is_purchased: person_certificate.present?,
-  certificate_image_url: last_person_certificate.nil? ? nil : (last_person_certificate.full_name.blank? ? nil : person_certificate.last.issued_certificate_image.url)
+  is_completed: person_certificate.is_completed?,
+  is_purchased: person_certificate.persisted?,
+  certificate_image_url: (person_certificate.last.issued_certificate_image.url rescue nil)
 }
 json
