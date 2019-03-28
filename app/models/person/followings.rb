@@ -8,7 +8,7 @@ class Person
 
   module Followings
     def cache_key_follow_person(ver, app_source, user, person)
-      [ver, "person", app_source, user,  person.id, person.updated_at.to_i]
+      [ver, "person", app_source, user.id,  person.id, person.updated_at.to_i]
     end
 
     def do_auto_follows
