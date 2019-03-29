@@ -14,7 +14,7 @@ pipelines:
           - bundle exec rspec .
         services:
           - postgres
- 
+
 definitions:
   services:
     postgres:
