@@ -1,9 +1,9 @@
 class PollOption < ApplicationRecord
 include TranslationThings
 
-	belongs_to :poll
+  belongs_to :poll
 
-	has_many :person_poll_options
+  has_many :person_poll_options
   has_many :people, through: :person_poll_options, dependent: :destroy
 
   validates :description, uniqueness: {scope: :poll_id}
@@ -19,9 +19,9 @@ include TranslationThings
     people
   end
 
-	def votes
-	  PersonPollOption.where(poll_option_id: self.id).count
-	end
+  def votes
+    person_poll_options.size
+  end
 
   def description_cannot_be_empty
     if !description.present? || description.empty?

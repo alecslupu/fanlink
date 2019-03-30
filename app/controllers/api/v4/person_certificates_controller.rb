@@ -9,8 +9,8 @@ class Api::V4::PersonCertificatesController < ApiController
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
-        save_edited_files_to_paperclip(@person_certificate,@certificate)
-        return_the @certificate, handler: tpl_handler
+        @person_certificate.reload.write_files
+        return_the @certificate, handler: 'jb'
       else
         render_422(_("User already completed the full name"))
       end
@@ -33,7 +33,7 @@ class Api::V4::PersonCertificatesController < ApiController
   def tpl_handler
     :jb
   end
-  
+
   def save_edited_files_to_paperclip(person_certificate, certificate)
     full_name = person_certificate.full_name
     image = ImageList.new(Paperclip.io_adapters.for(certificate.template_image).path)

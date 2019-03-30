@@ -14,6 +14,8 @@ class Api::V4::CertificatesController < ApiController
     return_the @certificate, handler: tpl_handler, using: :show
   end
 
+  # TODO move it to PersonCertificate# destroy method
+  # TODO Assess if is required in prod
   def destroy
     @person_certificate = PersonCertificate.find_by(person_id: @current_user.id, certificate_id: params[:id])
     @person_certificate.destroy

@@ -11,7 +11,7 @@ class Badge < ApplicationRecord
   has_paper_trail
   acts_as_tenant(:product)
 
-  belongs_to :action_type
+  belongs_to :action_type, counter_cache: true
 
   has_image_called :picture
 
