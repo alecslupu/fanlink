@@ -1250,6 +1250,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jko_api
   json_schemer
+  jwt
   kaminari
   koala
   listen (>= 3.0.5, < 3.2)

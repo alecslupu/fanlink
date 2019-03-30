@@ -1,6 +1,4 @@
-{
-  certificate: {
-    render(partial: @req_source, locals: { certificate: @certificate }, handlers: "jb")
-  }
-}
+json = {}
 
+json[:certificates] =  render partial: @req_source, locals: { certificate: certificate, user: @current_user }, handlers: "jb"
+json

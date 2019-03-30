@@ -23,7 +23,7 @@ JkoApi.routes self do
         post "password_forgot" => "password_resets#create"
         post "password_reset" => "password_resets#update"
         get "recommended" => "recommended_people#index"
-        post "send_certificate" 
+        post "send_certificate"
       end
     end
     get "post_comments/list" => "post_comments#list"
@@ -222,6 +222,10 @@ JkoApi.routes self do
   end
 
   version 4 do
+    resources :session, only: %i[ create index ] do
+      post :token, on: :collection
+    end
+
     #to be modified
     resources :certificates do
       resources :certcourses, only:[:index]
@@ -252,12 +256,12 @@ JkoApi.routes self do
   end
 
   version 5 do
-    resources :categories do 
+    resources :categories do
       collection do
         get "select" => "categories#select"
       end
     end
-    
+
     resources :interests do
       collection do
         get "shared" => "interests#shared"

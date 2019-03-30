@@ -6,4 +6,22 @@ class ApplicationController < ActionController::Base
     head :ok
   end
   skip_before_action :require_login, only: %i[ status ]
+
+  protected
+  def require_login
+    authenticate!
+    super
+  end
+
+  def authenticate!
+    begin
+      payload, header = TokenProvider.valid?(token)
+      user = Person.find_by(id: payload['user_id'])
+      auto_login(user) unless user.terminated?
+    end
+  end
+
+  def token
+    @jwt_token ||= request.headers['Authorization'].split(' ').last
+  end
 end
