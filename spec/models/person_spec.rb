@@ -166,8 +166,8 @@ RSpec.describe Person, type: :model do
     it "should not let you destroy a person who has reported a message" do
       person = create(:person)
       create(:message_report, person: person)
-      expect(person.destroy).to be_falsey
-      expect(person).to exist_in_database
+      expect(person.destroy).to be_truthy
+      expect(person).not_to exist_in_database
     end
   end
 
@@ -416,6 +416,53 @@ RSpec.describe Person, type: :model do
         tok = "1234567"
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: [:id]).and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.for_facebook_auth_token(tok)).to be_nil
+      end
+    end
+  end
+
+  describe '.to_s' do
+    context "name" do
+      it do
+        person = build(:person, name: 'John')
+        expect(person.to_s).to eq('John')
+      end
+    end
+    context "username" do
+      it do
+        person = build(:person, name: nil, username: 'John')
+        expect(person.to_s).to eq('John')
+      end
+    end
+  end
+  describe '.reset_password_to' do
+    context "it is invalid" do
+      it do
+        person = create(:person, reset_password_token: 'reset_password_token')
+        expect(person).to be_valid
+        person.reset_password_to('small')
+        expect(person).not_to be_valid
+        expect(person.reset_password_token).to be_nil
+        expect(person.reload.reset_password_token).to eq('reset_password_token')
+      end
+    end
+    context "it is valid clears reset_password_token" do
+      it do
+        person = create(:person, reset_password_token: 'reset_password_token')
+        expect(person).to be_valid
+        person.reset_password_to('invalid')
+        expect(person).to be_valid
+        expect(person.reset_password_token).to be_nil
+      end
+    end
+  end
+  describe ".set_password_token!" do
+    context "it sets a new password token" do
+      it do
+        person = create(:person)
+        expect(person.reset_password_token).to be_nil
+        person.set_password_token!
+        expect(person.reset_password_token).not_to be_nil
+
       end
     end
   end

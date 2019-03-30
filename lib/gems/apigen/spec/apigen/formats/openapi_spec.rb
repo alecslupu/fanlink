@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'apigen/formats/openapi'
-require 'apigen/formats/example'
+require_relative 'example'
 require 'yaml'
 
 describe Apigen::Formats::OpenAPI::V3 do

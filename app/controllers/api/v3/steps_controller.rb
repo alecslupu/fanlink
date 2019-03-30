@@ -224,7 +224,7 @@ class Api::V3::StepsController < Api::V2::StepsController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @step.update(deleted: true)
         head :ok
       else

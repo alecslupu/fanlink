@@ -3,7 +3,7 @@ class Api::V3::SemestersController < ApiController
   load_up_the Semester, only: %i[ update destroy ]
 
   def index
-    if @req_source == "web"
+    if web_request?
       @semesters = paginate(Semester.where(deleted: false).includes(courses: :lessons)).order(created_at: :asc)
     else
       @semesters = paginate(Semester.available.where(deleted: false).includes(courses: :lessons)).order(created_at: :asc)
@@ -32,7 +32,7 @@ class Api::V3::SemestersController < ApiController
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @semester.update(deleted: true)
         head :ok
       else
