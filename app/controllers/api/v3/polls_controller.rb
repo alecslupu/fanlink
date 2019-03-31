@@ -140,4 +140,3 @@ private
     params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: {})
   end
 end
-
