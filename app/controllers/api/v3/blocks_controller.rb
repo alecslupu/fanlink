@@ -41,5 +41,4 @@ class Api::V3::BlocksController < Api::V2::BlocksController
       render_422 @block.errors
     end
   end
-
 end
