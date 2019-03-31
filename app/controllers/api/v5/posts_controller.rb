@@ -47,7 +47,6 @@ class Api::V5::PostsController < Api::V4::PostsController
       end
     end
   end
-
   def show
     if current_user.try(:some_admin?) && web_request?
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
