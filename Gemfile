@@ -97,6 +97,8 @@ end
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "acts_as_api"
 gem "administrate", "~> 0.11.0" #git: "https://github.com/thoughtbot/administrate.git"
+gem 'administrate-field-belongs_to_search'
+
 
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-hidden", "~> 0.0.3"
