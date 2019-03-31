@@ -12,4 +12,3 @@
   reward: (badge.reward.present? ? badge.reward : nil),
   assigned_rewards: (badge.assigned_rewards.present? ? badge.assigned_rewards : nil)
 }
-

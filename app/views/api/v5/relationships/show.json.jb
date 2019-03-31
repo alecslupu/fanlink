@@ -3,4 +3,3 @@
     render(partial: @req_source, locals: { relationship: @relationship }, handlers: "jb")
   }
 }
-
