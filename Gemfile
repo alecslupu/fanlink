@@ -151,3 +151,7 @@ gem "wisper-activerecord"
 gem 'rmagick'
 
 gem "graphiql-rails", group: :development
+
+
+gem 'prawn'
+
