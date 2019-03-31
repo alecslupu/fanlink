@@ -15,12 +15,12 @@ class Api::V4::PersonCertificatesController < ApiController
         render_422(_("User already completed the full name"))
       end
     else
-    	@person_certificate = PersonCertificate.new(person_certificate_params)
-    	@person_certificate.person_id = @current_user.id
-    	@person_certificate.unique_id = Digest::SHA1.hexdigest(person_certificate_params.to_s)
-    	if @person_certificate.valid?
-    	  @person_certificate.save
-    	  @certificate = Certificate.find(person_certificate_params[:certificate_id])
+      @person_certificate = PersonCertificate.new(person_certificate_params)
+      @person_certificate.person_id = @current_user.id
+      @person_certificate.unique_id = Digest::SHA1.hexdigest(person_certificate_params.to_s)
+      if @person_certificate.valid?
+        @person_certificate.save
+        @certificate = Certificate.find(person_certificate_params[:certificate_id])
         return_the @certificate, handler: 'jb'
       else
         render_422(_("Something went wrong."))

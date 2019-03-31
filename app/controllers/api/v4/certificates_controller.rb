@@ -1,7 +1,7 @@
 class Api::V4::CertificatesController < ApiController
   def create
-  	@certificate = Certificate.create(certificate_params)
-  	return_the @certificate, handler: 'jb', using: :show
+    @certificate = Certificate.create(certificate_params)
+    return_the @certificate, handler: 'jb', using: :show
   end
 
   def index
