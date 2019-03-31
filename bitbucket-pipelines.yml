@@ -2,12 +2,11 @@ image: ruby:2.5.1
 
 pipelines:
   default:
+    - step
+        script:
+          - gem install bundler
     - step:
         script: # Modify the commands below to build your repository.
-          - export FANLINK_PG_USER=test_user
-          - export FANLINK_PG_PASSWORD=test_user_password
-          - export FANLINK_PG_HOST=localhost
-          - gem install bundler
           - bundle install
           - bundle exec rake db:setup
           - bundle exec rake db:test:prepare
