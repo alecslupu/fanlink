@@ -1,5 +1,4 @@
 class Api::V2::PostsController < Api::V1::PostsController
-
   # **
   # @api {get} /posts Get paginated posts.
   # @apiName GetPosts
@@ -50,5 +49,4 @@ class Api::V2::PostsController < Api::V1::PostsController
     @posts = @posts.for_category(params[:category]) if params[:category]
     return_the @posts
   end
-
 end

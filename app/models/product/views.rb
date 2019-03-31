@@ -8,17 +8,17 @@ module Product::Views
       template.add :internal_name
     end
 
-    api_accessible :product_v3, :extend => :product_v2 do |t|
+    api_accessible :product_v3, extend: :product_v2 do |t|
     end
 
-    api_accessible :product_v4, :extend => :product_v3 do |t|
+    api_accessible :product_v4, extend: :product_v3 do |t|
     end
 
 
-    api_accessible :product_v5, :extend => :product_v4 do |t|
+    api_accessible :product_v5, extend: :product_v4 do |t|
     end
 
-    api_accessible :product_v5_setup, :extend => :product_v5 do |template|
+    api_accessible :product_v5_setup, extend: :product_v5 do |template|
       template.add :logo_url
       template.add :color_primary
       template.add :color_primary_text
