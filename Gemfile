@@ -80,6 +80,7 @@ group :development do
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem 'rubocop-rails'
   gem "rubocop-rails_config"
+  gem 'guard-rspec'
 end
 
 group :test do
