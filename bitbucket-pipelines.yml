@@ -5,7 +5,7 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - gem install bundler
-          - bundle install --path vendor/bundle
+          - bundle install
           - RAILS_ENV=test bundle exec rake db:setup
           - RAILS_ENV=test bundle exec rake db:test:prepare
           - RAILS_ENV=test bundle exec rspec . 
@@ -20,5 +20,3 @@ definitions:
         POSTGRES_DB: fanlink_test
         POSTGRES_USER: test_user
         POSTGRES_PASSWORD: test_user_password
-  caches:
-    bundler: vendor/bundle
