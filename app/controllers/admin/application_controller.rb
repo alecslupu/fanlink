@@ -23,7 +23,11 @@ module Admin
     end
 
     def check_admin
-      not_authenticated unless (current_user.super_admin? || current_user.some_admin?)
+      not_authenticated unless (current_user.super_admin? || some_admin?)
+    end
+
+    def some_admin?
+      current_user.try(:some_admin?)
     end
 
     def check_super

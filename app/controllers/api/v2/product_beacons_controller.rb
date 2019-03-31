@@ -284,7 +284,7 @@ class Api::V2::ProductBeaconsController < ApiController
 
   def destroy
     beacon = ProductBeacon.for_id_or_pid(params[:id])
-    if current_user.some_admin?
+    if some_admin?
       beacon.deleted = true
       head :ok
     else

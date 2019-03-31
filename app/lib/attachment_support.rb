@@ -28,11 +28,7 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-            if attachment.instance.product.nil?
-              "caned"
-            else
               attachment.instance.product.internal_name
-            end
           end
         end
         EOE
@@ -52,11 +48,7 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-            if attachment.instance.product.nil?
-              "caned"
-            else
               attachment.instance.product.internal_name
-            end
           end
         end
       EOE
@@ -72,11 +64,7 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-            if attachment.instance.product.nil?
-              "caned"
-            else
               attachment.instance.product.internal_name
-            end
           end
         end
       EOE
@@ -93,10 +81,9 @@ module AttachmentSupport
         convert_options: {
           optimal: "-quality 90 -strip",
         }
-
-      validates_attachment name,
-        content_type: {content_type: ["image/jpeg", "image/gif", "image/png"]},
-        size: {in: 0..5.megabytes}
+        validates_attachment name,
+          content_type: { content_type: ["image/jpeg", "image/gif", "image/png", "application/pdf"] },
+          size: { in: 0..5.megabytes }
 
       class_eval <<-EOE
         def #{name}_url
@@ -109,11 +96,7 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-            if attachment.instance.product.nil?
-              "caned"
-            else
               attachment.instance.product.internal_name
-            end
           end
         end
         EOE

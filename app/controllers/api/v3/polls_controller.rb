@@ -68,7 +68,7 @@ class Api::V3::PollsController < ApiController
   # *
 
   def destroy
-    if @post.person == current_user || current_user.some_admin?
+    if @post.person == current_user || some_admin?
       @poll.destroy
       head :ok
     else

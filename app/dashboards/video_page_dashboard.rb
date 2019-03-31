@@ -13,6 +13,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
     video_url: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    video: PaperclipVideoField,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -32,7 +33,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :certcourse_page,
     :id,
-    :video_url,
+    :video,
     :created_at,
     :updated_at,
   ].freeze
@@ -42,7 +43,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :certcourse_page,
-    :video_url,
+    :video,
   ].freeze
 
   # Overwrite this method to customize how video pages are displayed

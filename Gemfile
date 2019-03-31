@@ -21,7 +21,7 @@ gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem "therubyracer", platforms: :ruby
+gem "therubyracer", platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails", "~> 4.2"
@@ -78,7 +78,7 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem "rubocop-rails"
+  gem "rubocop-rails_config"
 end
 
 group :test do
@@ -95,7 +95,7 @@ end
 
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "acts_as_api"
-gem "administrate", "~> 0.10.0" #git: "https://github.com/thoughtbot/administrate.git"
+gem "administrate", "~> 0.11.0" #git: "https://github.com/thoughtbot/administrate.git"
 
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-hidden", "~> 0.0.3"
@@ -140,8 +140,6 @@ gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
 gem "rollbar"
-# gem "rubocop-rails"
-gem "rubocop-rails_config"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
@@ -149,5 +147,7 @@ gem "uuidtools"
 gem "wisper", "2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
+
+gem 'rmagick'
 
 gem "graphiql-rails", group: :development

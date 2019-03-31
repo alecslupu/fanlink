@@ -1,18 +1,18 @@
 FactoryBot.define do
   factory :certificate do
-    long_name { "MyString" }
-    short_name { "MyString" }
-    description { "" }
-    order { 1 }
-    color_text { "MyString" }
+    product { create(:product) }
+
+    long_name { Faker::Lorem.name }
+    short_name { Faker::Lorem.sentence(4) }
+    description { Faker::Lorem.paragraph }
+    color_hex { Faker::Color.hex_color }
     status { 1 }
     room { nil }
+    certificate_order { 1 }
     is_free { false }
-    sku_ios { "MyString" }
-    sku_android { "MyString" }
-    duration { 1 }
-    image_filename { "MyString" }
-    certificate_issued { false }
-    unique_id { "MyString" }
+    sku_ios { Faker::Code.ean(13) }
+    sku_android { Faker::Code.ean(13) }
+    template_image_file_name { Faker::File.file_name }
+    certificate_issuable { false }
   end
 end
