@@ -4,7 +4,7 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - gem install --install-dir ./vendor/bundler bundler -bindir ./vendor/bundler/bin/
+          - gem install --install-dir ./vendor/bundler bundler
           - ./vendor/bundler/bin/bundle install --path vendor/bundle
           - ./vendor/bundler/bin/bundle exec rake db:setup
           - ./vendor/bundler/bin/bundle exec rake db:test:prepare
