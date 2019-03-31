@@ -78,6 +78,7 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+  gem "rubocop-rails"
   gem "rubocop-rails_config"
 end
 
@@ -153,3 +154,7 @@ gem "wisper-activerecord"
 gem 'rmagick'
 
 gem "graphiql-rails", group: :development
+
+
+gem 'prawn'
+

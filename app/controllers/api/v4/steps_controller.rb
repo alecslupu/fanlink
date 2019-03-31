@@ -1,5 +1,4 @@
 class Api::V4::StepsController < Api::V3::StepsController
-
   # def index
   #   @steps = @quest.steps.order(created_at: :asc)
   #   return_the @steps, handler: 'jb'

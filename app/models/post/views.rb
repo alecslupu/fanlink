@@ -23,23 +23,23 @@ module Post::Views
       t.add :post_comments_count
     end
 
-    api_accessible :post_v2_base, :extend => :post_v1_base do |t|
+    api_accessible :post_v2_base, extend: :post_v1_base do |t|
     end
 
-    api_accessible :post_v3_base, :extend => :post_v2_base do |t|
+    api_accessible :post_v3_base, extend: :post_v2_base do |t|
     end
 
-    api_accessible :post_v4_base, :extend => :post_v3_base do |t|
+    api_accessible :post_v4_base, extend: :post_v3_base do |t|
       t.add :video_url
       t.add :video_transcoded
       t.add :video_thumbnail
     end
 
-    api_accessible :post_v5_base, :extend => :post_v4_base do |t|
+    api_accessible :post_v5_base, extend: :post_v4_base do |t|
     end
 
     def around_api_response(api_template)
-      Rails.cache.fetch("api_response_#{self.class.to_s}_#{id}_#{api_template.to_s}_#{updated_at}", :expires_in => 1.hour) do
+      Rails.cache.fetch("api_response_#{self.class.to_s}_#{id}_#{api_template.to_s}_#{updated_at}", expires_in: 1.hour) do
         yield
       end
     end

@@ -1,9 +1,8 @@
 class Api::V4::PersonCertcoursesController < ApiController
-
   # TODO refactor!!!!!!
   def create
     @person_certcourse = PersonCertcourse.find_or_create_by(certcourse_id: person_certcourses_params[:certcourse_id],person_id: @current_user.id)
-  	@certcourse_page = CertcoursePage.find(params[:page_id])
+    @certcourse_page = CertcoursePage.find(params[:page_id])
     @certcourse = Certcourse.find(person_certcourses_params[:certcourse_id])
     if @certcourse_page.content_type == "quiz"
       if params[:quiz_page_id].present?
@@ -17,7 +16,7 @@ class Api::V4::PersonCertcoursesController < ApiController
         last_certcourse_page = CertcoursePage.where("id < ? AND certcourse_id = ?", @certcourse_page.quiz_page.wrong_answer_page_id, person_certcourses_params[:certcourse_id]).order("certcourse_page_order").last
         @person_certcourse.last_completed_page_id = last_certcourse_page.present? ? last_certcourse_page.id : nil
       end
-    else 
+    else
       @person_certcourse.last_completed_page_id = params[:page_id]
     end
     if @certcourse.certcourse_pages.order("certcourse_page_order").last.id == @person_certcourse.last_completed_page_id

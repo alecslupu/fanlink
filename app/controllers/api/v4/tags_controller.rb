@@ -10,5 +10,4 @@ class Api::V4::TagsController < Api::V3::TagsController
       render_422 _("Parameter tag_name is required.")
     end
   end
-
 end

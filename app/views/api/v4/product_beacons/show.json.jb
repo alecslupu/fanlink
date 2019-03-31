@@ -3,4 +3,3 @@
     render(partial: @req_source, locals: { beacon: @product_beacon }, handlers: "jb")
   }
 }
-
