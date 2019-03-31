@@ -68,7 +68,7 @@ module Flaws
   #
   def self.sns_confirm(topic_arn, token)
     raise ArgumentError.new('Missing token for subscription confirmation') if(token.blank?)
-    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret).confirm_subscription(:topic_arn => topic_arn, :token => token)
+    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret).confirm_subscription(topic_arn: topic_arn, token: token)
   end
 
   def self.transcoding_queue?
@@ -101,7 +101,7 @@ module Flaws
     to_output_name = output_name_for(filename)
 
     if (width < SIZER[:w] && height < SIZER[:h])
-      Aws::S3::Client.new.delete_object(:bucket => Rails.configuration.fanlink[:aws][:s3_bucket], :key => to_output_name[SIZER])
+      Aws::S3::Client.new.delete_object(bucket: Rails.configuration.fanlink[:aws][:s3_bucket], key: to_output_name[SIZER])
     else
       data = data.merge("presets" => SIZER[:id])
     end
@@ -110,15 +110,15 @@ module Flaws
       secret_access_key: secret,
     )
     transcoder.create_job(
-      :pipeline_id => pipeline_id,
-      :input => {:key => filename},
-      :outputs => presets.map(&to_output),
+      pipeline_id: pipeline_id,
+      input: {key: filename},
+      outputs: presets.map(&to_output),
       #:playlists => [{
       #  :name => "#{video_directory_for(filename)}/v",
       #  :format => "HLSv3",
       #  :output_keys => presets.select(&playlists).map(&to_output_name),
       #}],
-      :user_metadata => data,
+      user_metadata: data,
     ).job
   end
 
@@ -175,7 +175,7 @@ module Flaws
     #hls_entry = [] if (presets.all? { |p| !p[:playlist] })
 
     non_hls = lambda { |p| !p[:playlist] }
-    to_summary = lambda { |p| {:type => p[:mime], :src => "#{s3_server}#{directory}/#{basename}-#{p[:name]}"} }
+    to_summary = lambda { |p| {type: p[:mime], src: "#{s3_server}#{directory}/#{basename}-#{p[:name]}"} }
     #hls_entry + presets.select(&non_hls).map(&to_summary)
     presets.select(&non_hls).map(&to_summary)
   end

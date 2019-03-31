@@ -15,5 +15,4 @@ class Api::V5::RelationshipsController < Api::V4::RelationshipsController
     @relationship = current_user.relationships.find(params[:id])
     return_the @relationship, handler: 'jb'
   end
-
 end

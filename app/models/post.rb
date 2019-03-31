@@ -29,7 +29,7 @@ class Post < ApplicationRecord
 
   has_one :poll, -> { where("polls.poll_type = ?", Poll.poll_types["post"]) }, foreign_key: "poll_type_id", dependent: :destroy
   has_many :poll_options, through: :poll
-  
+
   belongs_to :person, touch: true
   belongs_to :category, optional: true
 
@@ -39,7 +39,7 @@ class Post < ApplicationRecord
 
   validate :sensible_dates
 
-  after_create :start_transcoding, :if => :video_file_name
+  after_create :start_transcoding, if: :video_file_name
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
@@ -103,7 +103,7 @@ class Post < ApplicationRecord
     # We assume that the post has been deleted if we can't find it.
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
-    p = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
+    p = self.find_by(id: msg["userMetadata"]["post_id"].to_i)
     return if (!p)
 
     if (msg["userMetadata"]["sizer"])
@@ -111,7 +111,7 @@ class Post < ApplicationRecord
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
       job = Flaws.finish_transcoding(p.video.path,
                                      width, height,
-                                     :post_id => p.id.to_s)
+                                     post_id: p.id.to_s)
       p.video_job_id = job.id
       p.save!
       p.send(:start_listener)

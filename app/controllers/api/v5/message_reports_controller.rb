@@ -3,5 +3,4 @@ class Api::V5::MessageReportsController < Api::V4::MessageReportsController
     @message_reports = paginate apply_filters
     return_the @message_reports
   end
-
 end
