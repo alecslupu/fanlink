@@ -14,14 +14,21 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate!
-    begin
-      payload, header = TokenProvider.valid?(token)
-      user = Person.find_by(id: payload['user_id'])
-      auto_login(user) unless user.terminated?
-    end
+    return if authorization_header.nil?
+    payload, header = TokenProvider.valid?(token)
+    user = Person.find_by(id: payload['user_id'])
+    auto_login(user) unless user.terminated?
   end
 
   def token
-    @jwt_token ||= request.headers['Authorization'].split(' ').last
+    @jwt_token ||= (authorization_header.split(' ').last)
   end
+
+  private
+
+  def authorization_header
+    request.headers['Authorization']
+  end
+
+
 end
