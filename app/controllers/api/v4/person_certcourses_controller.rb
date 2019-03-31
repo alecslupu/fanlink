@@ -2,7 +2,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   # TODO refactor!!!!!!
   def create
     @person_certcourse = PersonCertcourse.find_or_create_by(certcourse_id: person_certcourses_params[:certcourse_id],person_id: @current_user.id)
-  	@certcourse_page = CertcoursePage.find(params[:page_id])
+    @certcourse_page = CertcoursePage.find(params[:page_id])
     @certcourse = Certcourse.find(person_certcourses_params[:certcourse_id])
     if @certcourse_page.content_type == "quiz"
       if params[:quiz_page_id].present?
