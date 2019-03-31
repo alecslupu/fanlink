@@ -40,5 +40,4 @@ private
   def portal_params
     params.require(:portal_notifications).permit(:body, :send_me_at, :sent_status)
   end
-
 end

@@ -1,5 +1,4 @@
 class PostTranscoderJob < Struct.new(:post_id)
-
   def perform
     post = Post.find(post_id)
     job = Flaws.start_transcoding(post.video.path, post_id: post.id.to_s)

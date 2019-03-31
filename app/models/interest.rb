@@ -11,5 +11,4 @@ class Interest < ApplicationRecord
   validates :title, presence: { message: "Title is required" }
 
   scope :interests, -> (product) { where(product_id: product.id, parent_id: nil).order(order: :desc) }
-
 end
