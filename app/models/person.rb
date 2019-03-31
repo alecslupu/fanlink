@@ -43,7 +43,7 @@ class Person < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :pin_messages, dependent: :destroy
 
-  has_many :private_rooms, through: :room_memberships
+  has_many :private_rooms, through: :room_memberships, source: :room
   has_many :pinned_to, through: :pin_messages, source: :room
   has_one :portal_access, dependent: :destroy
 
