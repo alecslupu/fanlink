@@ -8,7 +8,7 @@ FactoryBot.define do
     color_hex { Faker::Color.hex_color }
     status { 1 }
     room { nil }
-    certificate_order { 1 }
+    certificate_order {  Faker::Number.unique(20).between(1, 500) }
     is_free { false }
     sku_ios { Faker::Code.ean(13) }
     sku_android { Faker::Code.ean(13) }
