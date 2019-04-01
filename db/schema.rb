@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190401200534) do
+ActiveRecord::Schema.define(version: 20190401215713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1091,6 +1091,8 @@ ActiveRecord::Schema.define(version: 20190401200534) do
     t.integer "package_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "product_id"
+    t.index ["product_id"], name: "index_trivia_games_on_product_id"
   end
 
   create_table "trivia_package_leaderboards", force: :cascade do |t|
@@ -1258,6 +1260,7 @@ ActiveRecord::Schema.define(version: 20190401200534) do
   add_foreign_key "trivia_available_answers", "trivia_questions"
   add_foreign_key "trivia_game_leaderboards", "people"
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
+  add_foreign_key "trivia_games", "products"
   add_foreign_key "trivia_package_leaderboards", "people"
   add_foreign_key "trivia_package_leaderboards", "trivia_packages"
   add_foreign_key "trivia_packages", "trivia_games"

@@ -20,6 +20,8 @@ class Product < ApplicationRecord
   has_many :levels, dependent: :restrict_with_error
   has_many :polls, dependent: :restrict_with_error
 
+  has_many :trivia_games, class_name: "Trivia::Game", dependent: :restrict_with_error
+
   scope :enabled, -> { where(enabled: true) }
 
   def people_count
