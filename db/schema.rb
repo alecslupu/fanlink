@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190401194843) do
+ActiveRecord::Schema.define(version: 20190401195347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1061,6 +1061,17 @@ ActiveRecord::Schema.define(version: 20190401194843) do
     t.index ["trivia_question_id"], name: "index_trivia_available_answers_on_trivia_question_id"
   end
 
+  create_table "trivia_game_leaderboards", force: :cascade do |t|
+    t.bigint "trivia_game_id"
+    t.integer "nb_points"
+    t.integer "position"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_trivia_game_leaderboards_on_person_id"
+    t.index ["trivia_game_id"], name: "index_trivia_game_leaderboards_on_trivia_game_id"
+  end
+
   create_table "trivia_games", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -1211,6 +1222,8 @@ ActiveRecord::Schema.define(version: 20190401194843) do
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
   add_foreign_key "trivia_available_answers", "trivia_questions"
+  add_foreign_key "trivia_game_leaderboards", "people"
+  add_foreign_key "trivia_game_leaderboards", "trivia_games"
   add_foreign_key "trivia_packages", "trivia_games"
   add_foreign_key "trivia_questions", "trivia_packages"
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
