@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190323104200) do
+ActiveRecord::Schema.define(version: 20190401193926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1051,6 +1051,38 @@ ActiveRecord::Schema.define(version: 20190323104200) do
     t.index ["product_id"], name: "idx_tag_products"
   end
 
+  create_table "trivia_games", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "name"
+    t.text "description"
+    t.integer "package_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trivia_packages", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "question_count"
+    t.bigint "trivia_game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trivia_game_id"], name: "index_trivia_packages_on_trivia_game_id"
+  end
+
+  create_table "trivia_questions", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "points"
+    t.bigint "trivia_package_id"
+    t.integer "time_limit"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trivia_package_id"], name: "index_trivia_questions_on_trivia_package_id"
+  end
+
   create_table "urls", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "displayed_url", null: false
@@ -1168,6 +1200,8 @@ ActiveRecord::Schema.define(version: 20190323104200) do
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
+  add_foreign_key "trivia_packages", "trivia_games"
+  add_foreign_key "trivia_questions", "trivia_packages"
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

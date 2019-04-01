@@ -4,7 +4,7 @@ class CreateTriviaGames < ActiveRecord::Migration[5.1]
       t.datetime :start_date
       t.datetime :end_date
       t.string :name
-      t.test :description
+      t.text :description
       t.integer :package_count
 
       t.timestamps

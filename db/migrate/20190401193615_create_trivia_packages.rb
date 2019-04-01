@@ -4,7 +4,7 @@ class CreateTriviaPackages < ActiveRecord::Migration[5.1]
       t.datetime :start_date
       t.datetime :end_date
       t.integer :question_count
-      t.belongs_to :game_id, foreign_key: true
+      t.belongs_to :trivia_game, foreign_key: true
 
       t.timestamps
     end
