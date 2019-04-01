@@ -13,6 +13,7 @@ namespace :admin do
   #
   namespace :trivia do
     resources :games
+    resources :questions
     resources :packages
   end
 
