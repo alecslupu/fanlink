@@ -10,6 +10,7 @@ class Trivia::GameDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     trivia_packages: Field::HasMany.with_options(class_name: "Trivia::Package"),
     trivia_game_leaderboards: Field::HasMany.with_options(class_name: "Trivia::GameLeaderboard"),
+    product: Field::BelongsToSearch.with_options(class_name: "Product"),
     id: Field::Number,
     start_date: Field::DateTime,
     end_date: Field::DateTime,
@@ -26,8 +27,8 @@ class Trivia::GameDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :trivia_packages,
-    :trivia_game_leaderboards,
+    # :trivia_packages,
+    # :trivia_game_leaderboards,
     :id,
     :start_date,
   ].freeze
@@ -35,8 +36,8 @@ class Trivia::GameDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :trivia_packages,
-    :trivia_game_leaderboards,
+    # :trivia_packages,
+    # :trivia_game_leaderboards,
     :id,
     :start_date,
     :end_date,
@@ -51,13 +52,14 @@ class Trivia::GameDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :trivia_packages,
-    :trivia_game_leaderboards,
+    # :trivia_packages,
+    # :trivia_game_leaderboards,
+    :product,
     :start_date,
     :end_date,
     :name,
     :description,
-    :package_count,
+    # :package_count,
   ].freeze
 
   # Overwrite this method to customize how games are displayed

@@ -30,7 +30,6 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :trivia_package,
     :trivia_available_answers,
-    :trivia_answers,
     :id,
   ].freeze
 
@@ -39,7 +38,6 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :trivia_package,
     :trivia_available_answers,
-    :trivia_answers,
     :id,
     :start_date,
     :end_date,
@@ -56,12 +54,9 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :trivia_package,
-    :trivia_available_answers,
-    :trivia_answers,
     :start_date,
     :end_date,
     :points,
-    :trivia_package_id,
     :time_limit,
     :type,
   ].freeze
