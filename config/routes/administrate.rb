@@ -10,6 +10,11 @@ namespace :admin do
   # api_version(:module => "Api::V3::Admin", :path => {:value => "v3"}, :header => {:name => "Accept", :value => "application/vnd.api.v3+json"}, :defaults => {:format => :json}) do
 
   # end
+  #
+  namespace :trivia do
+    resources :games
+  end
+
 
   resources :certificates
   resources :certcourses
