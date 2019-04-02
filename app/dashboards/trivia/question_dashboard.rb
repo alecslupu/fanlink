@@ -14,10 +14,12 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
     id: Field::Number,
     start_date: Field::DateTime,
     end_date: Field::DateTime,
-    points: Field::Number,
+    complexity: Field::Number,
     trivia_package_id: Field::Number,
     time_limit: Field::Number,
     type: Field::String,
+    question_order: Field::Number,
+    status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -30,6 +32,7 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :trivia_package,
     :trivia_available_answers,
+    :trivia_answers,
     :id,
   ].freeze
 
@@ -38,13 +41,16 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :trivia_package,
     :trivia_available_answers,
+    :trivia_answers,
     :id,
     :start_date,
     :end_date,
-    :points,
+    :complexity,
     :trivia_package_id,
     :time_limit,
     :type,
+    :question_order,
+    :status,
     :created_at,
     :updated_at,
   ].freeze
@@ -54,11 +60,16 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :trivia_package,
+    :trivia_available_answers,
+    :trivia_answers,
     :start_date,
     :end_date,
-    :points,
+    :complexity,
+    :trivia_package_id,
     :time_limit,
     :type,
+    :question_order,
+    :status,
   ].freeze
 
   # Overwrite this method to customize how questions are displayed

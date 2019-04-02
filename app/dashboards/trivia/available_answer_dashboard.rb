@@ -14,6 +14,7 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
     name: Field::String,
     hint: Field::String,
     is_correct: Field::Boolean,
+    status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -39,6 +40,7 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
     :name,
     :hint,
     :is_correct,
+    :status,
     :created_at,
     :updated_at,
   ].freeze
@@ -52,6 +54,7 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
     :name,
     :hint,
     :is_correct,
+    :status,
   ].freeze
 
   # Overwrite this method to customize how available answers are displayed

@@ -16,6 +16,7 @@ namespace :admin do
     resources :available_answers
     resources :questions
     resources :packages
+    resources :prizes
   end
 
 
