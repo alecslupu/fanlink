@@ -14,8 +14,6 @@ ActiveRecord::Schema.define(version: 20190401215713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
-  enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -1022,24 +1020,6 @@ ActiveRecord::Schema.define(version: 20190401215713) do
     t.index ["step_id"], name: "index_step_unlocks_on_step_id"
   end
 
-  create_table "steps", force: :cascade do |t|
-    t.integer "quest_id", null: false
-    t.text "display"
-    t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "int_unlocks", default: [], null: false, array: true
-    t.integer "initial_status", default: 0, null: false
-    t.integer "reward_id"
-    t.integer "delay_unlock", default: 0
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }
-    t.text "unlocks"
-    t.datetime "unlocks_at"
-    t.index ["int_unlocks"], name: "index_steps_on_int_unlocks", using: :gin
-    t.index ["quest_id"], name: "index_steps_on_quest_id"
-    t.index ["reward_id"], name: "idx_steps_rewards"
-  end
-
   create_table "tags", force: :cascade do |t|
     t.text "name", null: false
     t.integer "product_id", null: false
@@ -1236,10 +1216,8 @@ ActiveRecord::Schema.define(version: 20190401215713) do
   add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
   add_foreign_key "push_notifications", "products", name: "fk_push_notifications_products", on_delete: :cascade
   add_foreign_key "quest_activities", "rewards", name: "fk_quest_activities_rewards"
-  add_foreign_key "quest_activities", "steps", name: "fk_activities_steps"
   add_foreign_key "quest_completed", "people", name: "fk_quest_completeds_people"
   add_foreign_key "quest_completed", "quests", name: "fk_quest_completeds_quests"
-  add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
   add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
@@ -1252,9 +1230,6 @@ ActiveRecord::Schema.define(version: 20190401215713) do
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
-  add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
-  add_foreign_key "steps", "quests", name: "fk_steps_quests"
-  add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
   add_foreign_key "trivia_answers", "people"
   add_foreign_key "trivia_answers", "trivia_questions"
   add_foreign_key "trivia_available_answers", "trivia_questions"
