@@ -8,8 +8,8 @@ class PersonCertificateDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    person: Field::BelongsTo,
-    certificate: Field::BelongsTo,
+    person: Field::BelongsToSearch,
+    certificate: Field::BelongsToSearch,
     id: Field::Number,
     full_name: Field::String,
     issued_date: Field::DateTime,

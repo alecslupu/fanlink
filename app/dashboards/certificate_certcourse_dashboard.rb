@@ -8,8 +8,8 @@ class CertificateCertcourseDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    certificate: Field::BelongsTo,
-    certcourse: Field::BelongsTo,
+    certificate: Field::BelongsToSearch,
+    certcourse: Field::BelongsToSearch,
     id: Field::Number,
     certcourse_order: Field::Number,
     created_at: Field::DateTime,
