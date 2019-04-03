@@ -10,10 +10,10 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     trivia_question: Field::BelongsTo.with_options(class_name: "Trivia::Question"),
     id: Field::Number,
-    trivia_question_id: Field::Number,
     name: Field::String,
     hint: Field::String,
     is_correct: Field::Boolean,
+    status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -26,7 +26,6 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :trivia_question,
     :id,
-    :trivia_question_id,
     :name,
   ].freeze
 
@@ -35,10 +34,10 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :trivia_question,
     :id,
-    :trivia_question_id,
     :name,
     :hint,
     :is_correct,
+    :status,
     :created_at,
     :updated_at,
   ].freeze
@@ -48,10 +47,10 @@ class Trivia::AvailableAnswerDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :trivia_question,
-    :trivia_question_id,
     :name,
     :hint,
     :is_correct,
+    :status,
   ].freeze
 
   # Overwrite this method to customize how available answers are displayed

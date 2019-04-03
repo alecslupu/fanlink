@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190401215713) do
+ActiveRecord::Schema.define(version: 20190402205724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -607,6 +607,9 @@ ActiveRecord::Schema.define(version: 20190401215713) do
     t.integer "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["person_id", "room_id"], name: "index_pin_messages_on_person_id_and_room_id"
+    t.index ["person_id"], name: "index_pin_messages_on_person_id"
+    t.index ["room_id"], name: "index_pin_messages_on_room_id"
   end
 
   create_table "poll_options", force: :cascade do |t|
@@ -1096,6 +1099,20 @@ ActiveRecord::Schema.define(version: 20190401215713) do
     t.index ["trivia_game_id"], name: "index_trivia_packages_on_trivia_game_id"
   end
 
+  create_table "trivia_prizes", force: :cascade do |t|
+    t.bigint "trivia_game_id"
+    t.integer "status", default: 0, null: false
+    t.text "description"
+    t.integer "position", default: 1, null: false
+    t.string "photo_file_name"
+    t.string "photo_file_size"
+    t.string "photo_content_type"
+    t.string "photo_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trivia_game_id"], name: "index_trivia_prizes_on_trivia_game_id"
+  end
+
   create_table "trivia_question_leaderboards", force: :cascade do |t|
     t.bigint "trivia_question_id"
     t.integer "nb_points"
@@ -1239,6 +1256,7 @@ ActiveRecord::Schema.define(version: 20190401215713) do
   add_foreign_key "trivia_package_leaderboards", "people"
   add_foreign_key "trivia_package_leaderboards", "trivia_packages"
   add_foreign_key "trivia_packages", "trivia_games"
+  add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
   add_foreign_key "trivia_questions", "trivia_packages"

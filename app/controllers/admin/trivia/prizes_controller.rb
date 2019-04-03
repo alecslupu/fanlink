@@ -1,18 +1,18 @@
 module Admin
-  class Trivia::GamesController < Admin::ApplicationController
+  class Trivia::PrizesController < Admin::ApplicationController
     # To customize the behavior of this controller,
     # you can overwrite any of the RESTful actions. For example:
     #
     # def index
     #   super
-    #   @resources = Trivia::Game.
+    #   @resources = Trivia::Prize.
     #     page(params[:page]).
     #     per(10)
     # end
 
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
-    #   Trivia::Game.find_by!(slug: param)
+    #   Trivia::Prize.find_by!(slug: param)
     # end
 
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions

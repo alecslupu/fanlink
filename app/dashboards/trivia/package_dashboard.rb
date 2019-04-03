@@ -9,12 +9,14 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     trivia_game: Field::BelongsTo.with_options(class_name: "Trivia::Game"),
-    # trivia_questions: Field::HasMany.with_options(class_name: "Trivia::Question"),
+    trivia_questions: Field::HasMany.with_options(class_name: "Trivia::Question"),
     id: Field::Number,
     start_date: Field::DateTime,
     end_date: Field::DateTime,
     question_count: Field::Number,
-    trivia_game_id: Field::Number,
+    leaderboard_size: Field::Number,
+    package_order: Field::Number,
+    status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -26,7 +28,7 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :trivia_game,
-    # :trivia_questions,
+    :trivia_questions,
     :id,
     :start_date,
   ].freeze
@@ -35,11 +37,14 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :trivia_game,
-    # :trivia_questions,
+    :trivia_questions,
     :id,
     :start_date,
     :end_date,
     :question_count,
+    :leaderboard_size,
+    :package_order,
+    :status,
     :created_at,
     :updated_at,
   ].freeze
@@ -49,9 +54,13 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :trivia_game,
-    # :trivia_questions,
+    :trivia_questions,
     :start_date,
-    :end_date,
+    # :end_date,
+    :question_count,
+    :leaderboard_size,
+    :package_order,
+    :status,
   ].freeze
 
   # Overwrite this method to customize how packages are displayed
