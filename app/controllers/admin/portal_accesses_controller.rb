@@ -35,6 +35,5 @@ module Admin
 
       super
     end
-
   end
 end

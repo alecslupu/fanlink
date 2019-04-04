@@ -33,5 +33,4 @@ class Api::V2::NotificationDeviceIdsController < Api::V1::NotificationDeviceIdsC
       render_error("Missing device_id")
     end
   end
-
 end

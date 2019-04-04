@@ -2,7 +2,7 @@ class EventCheckin < ApplicationRecord
   belongs_to :event
   belongs_to :person, touch: true
 
-  validates_uniqueness_of :event_id, :scope => :person_id
+  validates_uniqueness_of :event_id, scope: :person_id
 
   validate :product_match
   def product_match

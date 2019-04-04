@@ -107,6 +107,11 @@ GEM
       momentjs-rails (~> 2.8)
       sass-rails (~> 5.0)
       selectize-rails (~> 0.6)
+    administrate-field-belongs_to_search (0.6.0)
+      administrate (>= 0.3, < 1.0)
+      jbuilder (~> 2)
+      rails (>= 4.2, < 6.0)
+      selectize-rails (~> 0.6)
     administrate-field-hidden (0.0.3)
       administrate (< 1.0.0)
       rails (>= 4.2)
@@ -1132,6 +1137,9 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.6)
+    rubocop-rails (1.5.0)
+      railties (>= 3.0)
+      rubocop (~> 0.53)
     rubocop-rails_config (0.4.4)
       railties (>= 3.0)
       rubocop (~> 0.58)
@@ -1241,6 +1249,7 @@ DEPENDENCIES
   acts_as_api
   acts_as_tenant
   administrate (~> 0.11.0)
+  administrate-field-belongs_to_search
   administrate-field-enum!
   administrate-field-hidden (~> 0.0.3)
   administrate-field-paperclip!
@@ -1314,6 +1323,7 @@ DEPENDENCIES
   rollbar
   rspec-rails
   rswag-specs
+  rubocop-rails
   rubocop-rails_config
   sass-rails (~> 5.0)
   seed_dump
@@ -1340,3 +1350,4 @@ RUBY VERSION
 
 BUNDLED WITH
    2.0.1
+
