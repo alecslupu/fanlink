@@ -26,10 +26,10 @@ describe Apigen::Formats::JsonSchema::Draft7 do
           "person": {
             "oneOf": [
               {
-                "$ref": "#/definitions/user"
+                "$ref": "./user.json"
               },
               {
-                "$ref": "#/definitions/admin"
+                "$ref": "./admin.json"
               }
             ]
           },
@@ -41,7 +41,7 @@ describe Apigen::Formats::JsonSchema::Draft7 do
                 "format": "int32"
               },
               "profile": {
-                "$ref": "#/definitions/user_profile"
+                "$ref": "./user_profile.json"
               },
               "has_super_powers": {
                 "type": "string",

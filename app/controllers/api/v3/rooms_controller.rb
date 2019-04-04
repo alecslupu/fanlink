@@ -51,8 +51,8 @@ class Api::V3::RoomsController < Api::V2::RoomsController
     @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
       if !@room.public
-        blocks_with = current_user.blocks_with.map { |b| b.id }
-        members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
+        blocks_with = current_user.blocks_with.map(&:id)
+        members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map(&:to_i) : []
         members_ids << current_user.id
         members_ids.uniq.each do |i|
           unless blocks_with.include?(i)

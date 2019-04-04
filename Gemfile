@@ -78,8 +78,9 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem "rubocop-rails"
+  gem 'rubocop-rails'
   gem "rubocop-rails_config"
+  gem 'guard-rspec'
 end
 
 group :test do
@@ -154,7 +155,6 @@ gem "wisper-activerecord"
 gem 'rmagick'
 
 gem "graphiql-rails", group: :development
-
-
+# Use Json Web Token (JWT) for token based authentication
+gem 'jwt'
 gem 'prawn'
-
