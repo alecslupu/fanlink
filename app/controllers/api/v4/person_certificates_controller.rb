@@ -9,8 +9,8 @@ class Api::V4::PersonCertificatesController < ApiController
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
-        @person_certificate.reload.write_files
-        return_the @certificate, handler: 'jb'
+        @person_certificate.write_files
+        return_the @certificate.reload, handler: 'jb'
       else
         render_422(_("User already completed the full name"))
       end
