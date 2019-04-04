@@ -2,6 +2,7 @@ module Person::Trivia
 
   extend ActiveSupport::Concern
   included do
+    has_many :trivia_participantions, :class_name => 'Trivia::Participant', dependent: destroy
     has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
     has_many :trivia_package_leaderboards, class_name: "Trivia::PackageLeaderboard"
     has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
