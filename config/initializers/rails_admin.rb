@@ -7,7 +7,7 @@ RailsAdmin.config do |config|
 
   config.included_models = %w(
     Certificate
-
+    Trivia::Game
 
     ActionType
     Badge
@@ -25,9 +25,29 @@ RailsAdmin.config do |config|
     Room
   )
 
+  config.model "Trivia::Game" do
+    navigation_label "Trivia"
+  end
 
-  config.model 'Certificate' do
-    navigation_label 'Courseware'
+  %w(
+    Trivia::Package
+    Trivia::AvailableAnswer
+    Trivia::GameLeaderboard
+    Trivia::PackageLeaderboard
+    Trivia::Participant
+    Trivia::Prize
+    Trivia::Question
+    Trivia::QuestionLeaderboard
+    Trivia::Answer
+  ).each do |model|
+    config.included_models << model
+    config.model model do
+      parent Trivia::Game
+    end
+  end
+
+  config.model "Certificate" do
+    navigation_label "Courseware"
   end
 
   %w(Certcourse CertcoursePage CertificateCertcourse Answer ImagePage PersonCertcourse PersonCertificate PersonQuiz QuizPage VideoPage).each do |model|
@@ -37,7 +57,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.parent_controller = 'RailsAdminController'
+  config.parent_controller = "RailsAdminController"
 
   #
   # %w(PostComment PostReaction PostReport PostCommentReport PostTag).each do |model|
