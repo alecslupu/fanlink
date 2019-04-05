@@ -1,7 +1,6 @@
 json = {
   id: certcourse.id,
   certificate_id: @certificate.id,
-  is_issuable: @certificate.certificate_issuable,
   order: certcourse.certificate_certcourses.first.certcourse_order,
   long_name: certcourse.long_name,
   short_name: certcourse.short_name,
