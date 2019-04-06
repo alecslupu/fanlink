@@ -1,11 +1,11 @@
 class Api::V4::Trivia::GameLeaderboardsController < ApiController
   def index
-    @leaderboard = paginate(::Trivia::GameLeaderboard.all)
-    return_the @leaderboard, handler: 'jb'
+    @leaderboard = paginate(::Trivia::Game.find(params[:game_id]).leaderboards)
+    return_the @leaderboard, handler: :jb
   end
 
   def me
-    @leaderboard  = ::Trivia::GameLeaderboard.where(person_id: current_user.id).last
-    return_the @leaderboard, handler: 'jb'
+    @leaderboard  = ::Trivia::Game.find(params[:game_id]).leaderboards.where(person_id: current_user.id).last
+    return_the @leaderboard, handler: :jb
   end
 end
