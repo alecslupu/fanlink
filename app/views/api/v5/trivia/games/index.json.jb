@@ -1,0 +1,4 @@
+json = {}
+
+json[:games] = render partial: @req_source, collection: @games, as: :game, handler: :jb
+json
