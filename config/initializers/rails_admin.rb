@@ -30,10 +30,10 @@ RailsAdmin.config do |config|
   end
 
   %w(
-    Trivia::Package
+    Trivia::QuestionPackage
     Trivia::AvailableAnswer
     Trivia::GameLeaderboard
-    Trivia::PackageLeaderboard
+    Trivia::QuestionPackageLeaderboard
     Trivia::Participant
     Trivia::Prize
     Trivia::Question

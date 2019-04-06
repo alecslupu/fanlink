@@ -3,7 +3,7 @@ module Person::Trivia
 
   included do
     has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
-    has_many :trivia_package_leaderboards, class_name: "Trivia::PackageLeaderboard"
+    has_many :trivia_package_leaderboards, class_name: "Trivia::QuestionPackageLeaderboard"
     has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
     has_many :trivia_answers, class_name: "Trivia::Answer"
     has_many :trivia_participantions, class_name: "Trivia::Participant"

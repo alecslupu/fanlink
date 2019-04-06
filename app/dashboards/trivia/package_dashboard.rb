@@ -67,6 +67,6 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # across all pages of the admin dashboard.
   #
   # def display_resource(package)
-  #   "Trivia::Package ##{package.id}"
+  #   "Trivia::QuestionPackage ##{package.id}"
   # end
 end

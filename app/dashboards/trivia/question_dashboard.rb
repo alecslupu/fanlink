@@ -8,7 +8,7 @@ class Trivia::QuestionDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    trivia_package: Field::BelongsTo.with_options(class_name: "Trivia::Package"),
+    trivia_package: Field::BelongsTo.with_options(class_name: "Trivia::QuestionPackage"),
     trivia_available_answers: Field::HasMany.with_options(class_name: "Trivia::AvailableAnswer"),
     trivia_answers: Field::HasMany.with_options(class_name: "Trivia::Answer"),
     id: Field::Number,

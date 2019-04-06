@@ -10,7 +10,7 @@ class Trivia::GameDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     product: Field::BelongsTo,
     room: Field::BelongsTo,
-    trivia_packages: Field::HasMany.with_options(class_name: "Trivia::Package"),
+    trivia_packages: Field::HasMany.with_options(class_name: "Trivia::QuestionPackage"),
     trivia_prizes: Field::HasMany.with_options(class_name: "Trivia::Prize"),
     trivia_game_leaderboards: Field::HasMany.with_options(class_name: "Trivia::GameLeaderboard"),
     id: Field::Number,
