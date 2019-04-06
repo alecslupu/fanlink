@@ -4,6 +4,7 @@ class Trivia::Prize < ApplicationRecord
   has_attached_file :photo
 
   enum status: %i[draft published locked closed]
+  enum prize_type: %i[digital physical]
 
   scope :published, -> { where(status: [:published, :locked]) }
 end

@@ -9,6 +9,6 @@ module Trivia
 
     enum status: %i[draft published locked closed]
 
-    scope :recent, -> { where(status: [:published, :locked, :closed]) }
+    scope :recent, -> { where(status: [:published, :locked, :closed]).where(start_date: 30.days.ago.beginning_of_day..DateTime::Infinity.new) }
   end
 end

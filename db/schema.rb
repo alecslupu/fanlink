@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404161403) do
+ActiveRecord::Schema.define(version: 20190406061118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1061,6 +1061,7 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.integer "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_correct", default: false
     t.index ["person_id"], name: "index_trivia_answers_on_person_id"
     t.index ["trivia_question_id"], name: "index_trivia_answers_on_trivia_question_id"
   end
@@ -1155,6 +1156,8 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.string "photo_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "delivered", default: false
+    t.integer "prize_type", default: 0
     t.index ["trivia_game_id"], name: "index_trivia_prizes_on_trivia_game_id"
   end
 
