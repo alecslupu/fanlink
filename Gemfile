@@ -58,6 +58,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "faker"
   gem "rspec-rails"
+  gem 'rails-controller-testing'
   gem "factory_bot_rails"
   gem "rswag-specs"
   gem "fuubar"
