@@ -9,6 +9,5 @@ class CertificateCertcourse < ApplicationRecord
   scope :for_certcourse, -> (certcourse) { where(certcourse_id: certcourse.id) }
 
   validates_uniqueness_of :certcourse_id, scope: :certificate_id
-
-  validates_uniqueness_to_tenant :certcourse_order, scope: %i[ certificate_id certcourse_id ]
+  validates_uniqueness_of :certcourse_order, scope: :certificate_id
 end
