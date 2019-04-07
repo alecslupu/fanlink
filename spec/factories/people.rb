@@ -8,5 +8,9 @@ FactoryBot.define do
     name { Faker::Name.name }
     password { "badpassword" }
     birthdate { "2000-01-01" }
+
+    factory :recommended_person do
+      recommended { true }
+    end
   end
 end
