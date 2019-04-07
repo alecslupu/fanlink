@@ -62,6 +62,8 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rswag-specs"
   gem "fuubar"
+  gem 'rubocop-rails'
+  gem "rubocop-rails_config"
 end
 
 group :development do
@@ -80,8 +82,6 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem 'rubocop-rails'
-  gem "rubocop-rails_config"
   gem 'guard-rspec'
 end
 
