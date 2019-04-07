@@ -2,7 +2,7 @@ require "faker"
 
 FactoryBot.define do
   factory :interest do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     title { Faker::ProgrammingLanguage.name }
   end
 end

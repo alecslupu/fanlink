@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :certificate do
-    product { create(:product) }
+    product { current_product }
 
     long_name { Faker::Lorem.name }
     short_name { Faker::Lorem.sentence(4) }
