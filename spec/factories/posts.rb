@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :post do
-    person_id { create(:person).id }
+    person { create(:person) }
     body { "MyText" }
     global { false }
   end
