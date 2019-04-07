@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :category do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     sequence(:name) { |n| "Category #{n}" }
     color { "#FFFFFF" }
     role { 0 }

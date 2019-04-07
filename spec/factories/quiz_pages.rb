@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :quiz_page do
-    product { ActsAsTenant.current_tenant || Product.first || create(:product) }
+    product { current_product}
     certcourse_page { create(:certcourse_page) }
     is_optional { false }
     quiz_text { "MyString" }

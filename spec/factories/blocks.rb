@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :block do
-    blocker_id { create(:person).id }
-    blocked_id { create(:person).id }
+    blocker { create(:person) }
+    blocked { create(:person) }
   end
 end
