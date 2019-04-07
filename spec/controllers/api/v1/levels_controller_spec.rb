@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::LevelsController, type: :controller do
 
+  before(:each) do
+    logout
+  end
   describe "#index" do
     it "should return all levels" do
       person = create(:person)

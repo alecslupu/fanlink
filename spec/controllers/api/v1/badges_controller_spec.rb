@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::BadgesController, type: :controller do
 
+  before(:each) do
+    logout
+  end
   describe "#index" do
     it "should return all badges for a passed in person" do
       person = create(:person)

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
+  before(:each) do
+    logout
+  end
 
   describe "#create" do
     it "should make someone a member if current user owns the room" do

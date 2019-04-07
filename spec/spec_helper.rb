@@ -122,6 +122,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
   config.after(:each) do
+    logout
     DatabaseCleaner.clean
   end
 
