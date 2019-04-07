@@ -12,5 +12,9 @@ FactoryBot.define do
     factory :recommended_person do
       recommended { true }
     end
+
+    factory :admin_user do
+      role { :admin }
+    end
   end
 end
