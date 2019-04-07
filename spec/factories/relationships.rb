@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :relationship do
-    requested { create(:person) }
-    requested { create(:person) }
+    requested_by { create(:person) }
+    requested_to { create(:person) }
   end
 end
