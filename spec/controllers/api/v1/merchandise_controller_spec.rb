@@ -45,10 +45,11 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
     end
     it "should not get merchandise from a different product" do
       person = create(:person)
+      merchandise = create(:merchandise, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
-        merchandise = create(:merchandise, product: create(:product))
+        login_as(person)
         get :show, params: { id: merchandise.id }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(404)
       end
     end
   end
