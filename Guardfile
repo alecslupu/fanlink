@@ -76,7 +76,8 @@ guard 'brakeman', run_on_start: true do
   watch('Gemfile')
 end
 
-guard :rubocop, cli: %w( app/ config/ lib/ spec/ --format html -o ./rubocop.html), launchy: './rubocop.html' do
+# , launchy: './rubocop.html'
+guard :rubocop, cli: %w( app/ config/ lib/ spec/ --format html -o ./rubocop.html) do
     watch(%r{^app/.+\.rb$})
     watch(%r{^config/.+\.rb$})
     watch(%r{^lib/.+\.rb$})
