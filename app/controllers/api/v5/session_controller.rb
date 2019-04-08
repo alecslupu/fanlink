@@ -4,7 +4,7 @@ class Api::V5::SessionController < Api::V4::SessionController
       if @person.terminated
         return head :unauthorized
       else
-        return_the @person, handler: 'jb'
+        return_the @person, handler: tpl_handler
       end
     else
       render_not_found

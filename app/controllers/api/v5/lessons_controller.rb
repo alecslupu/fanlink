@@ -5,10 +5,10 @@ class Api::V5::LessonsController < Api::V4::LessonsController
     else
       @lessons = paginate(@course.lessons.available.where(deleted: false)).order(created_at: :asc)
     end
-    return_the @lessons, handler: "jb"
+    return_the @lessons, handler: tpl_handler
   end
 
   def show
-    return_the @lesson, handler: "jb"
+    return_the @lesson, handler: tpl_handler
   end
 end

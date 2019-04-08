@@ -1,4 +1,4 @@
-if !atype.deleted
+unless atype.deleted
   json.id atype.id
   json.activity_id atype.activity_id
   json.type atype.atype

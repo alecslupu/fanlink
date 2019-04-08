@@ -9,11 +9,11 @@ class Api::V3::LessonsController < ApiController
     else
       @lessons = paginate(@course.lessons.available.where(deleted: false)).order(created_at: :asc)
     end
-    return_the @lessons, handler: "jb"
+    return_the @lessons, handler: tpl_handler
   end
 
   def show
-    return_the @lesson, handler: "jb"
+    return_the @lesson, handler: tpl_handler
   end
 
   def create
@@ -21,14 +21,14 @@ class Api::V3::LessonsController < ApiController
     if @lesson.valid?
       broadcast(:lesson_created, current_user, @lesson)
     end
-    return_the @lesson, handler: "jb"
+    return_the @lesson, handler: tpl_handler
   end
 
   def update
     if @lesson.update(lesson_params)
       broadcast(:lesson_updated, current_user, @lesson)
     end
-    return_the @lesson, handler: "jb"
+    return_the @lesson, handler: tpl_handler
   end
 
   def destroy
@@ -43,7 +43,13 @@ class Api::V3::LessonsController < ApiController
     end
   end
 
-private
+  protected
+
+  def tpl_handler
+    :jb
+  end
+
+  private
 
   def lesson_params
     params.require(:lesson).permit(:name, :description, :start_date, :end_date, :video)
