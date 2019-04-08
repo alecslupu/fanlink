@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :post do
     person { create(:person) }
-    body { "MyText" }
+    body { Faker::Lorem.paragraph }
     global { false }
 
     factory :recommended_post do

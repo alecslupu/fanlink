@@ -2,10 +2,45 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
   describe "#create" do
-    it "should create a new post comment report"
-    it "should not create a report if not logged in"
+    let(:reason) {"I don't like you"}
+    it "should create a new post comment report" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        post_comment = create(:post_comment, post: create(:post))
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
+        expect(response).to be_success
+
+        report = PostCommentReport.last
+        expect(report.post_comment).to eq(post_comment)
+        expect(report.person).to eq(person)
+        expect(report.reason).to eq(reason)
+      end
+    end
+
+    it "should not create a report if not logged in" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        post_comment = create(:post_comment, post: create(:post))
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
+        expect(response).to be_unauthorized
+      end
+    end
+
     it "should not create a report for a post comment from a different product"
+    # do
+    #   flink_post =  create(:post, person: create(:person))
+    #   post_comment = create(:post_comment, post: flink_post)
+    #   person = create(:person, product: create(:product))
+    #   ActsAsTenant.with_tenant(person.product) do
+    #     login_as(person)
+    #     post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
+    #     expect(response).to be_not_found
+    #   end
+    # end
   end
+
+
 
   describe "#index" do
     it "should get all reports but only for correct product"
