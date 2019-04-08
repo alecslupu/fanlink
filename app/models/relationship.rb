@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: relationships
+#
+#  id              :bigint(8)        not null, primary key
+#  requested_by_id :integer          not null
+#  requested_to_id :integer          not null
+#  status          :integer          default("requested"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class Relationship < ApplicationRecord
   include Relationship::RealTime
   enum status: %i[ requested friended ]
