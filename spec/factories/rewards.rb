@@ -19,7 +19,7 @@
 
 FactoryBot.define do
   factory :reward do
-    product { current_product}
+    product { current_product }
     sequence(:name) { |n| "Reward #{n}" }
     sequence(:internal_name) { |n| "reward_#{n}" }
 

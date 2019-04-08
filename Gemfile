@@ -82,7 +82,11 @@ group :development do
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+  gem 'launchy'
   gem 'guard-rspec'
+  gem 'guard-rubocop'
+  gem 'guard-brakeman'
+  gem 'guard-annotate'
 end
 
 group :test do

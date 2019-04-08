@@ -14,7 +14,7 @@
 
 FactoryBot.define do
   factory :quiz_page do
-    product { current_product}
+    product { current_product }
     certcourse_page { create(:certcourse_page) }
     is_optional { false }
     quiz_text { "MyString" }
