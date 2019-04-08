@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: certcourses
+#
+#  id                     :bigint(8)        not null, primary key
+#  long_name              :string           not null
+#  short_name             :string           not null
+#  description            :text             default(""), not null
+#  color_hex              :string           default("#000000"), not null
+#  status                 :integer          default("entry"), not null
+#  duration               :integer          default(0), not null
+#  is_completed           :boolean          default(FALSE)
+#  copyright_text         :text             default(""), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  product_id             :integer          not null
+#  certcourse_pages_count :integer          default(0)
+#
+
 FactoryBot.define do
   factory :certcourse do
     product { current_product }

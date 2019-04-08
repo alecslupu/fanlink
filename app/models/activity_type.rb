@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: activity_types
+#
+#  id          :bigint(8)        not null, primary key
+#  activity_id :integer          not null
+#  atype_old   :text
+#  value       :jsonb            not null
+#  deleted     :boolean          default(FALSE), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  atype       :integer          default("beacon"), not null
+#
+
 class ActivityType < ApplicationRecord
   include ActivityType::Beacon
   include ActivityType::Post

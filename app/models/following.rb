@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: followings
+#
+#  id          :bigint(8)        not null, primary key
+#  follower_id :integer          not null
+#  followed_id :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Following < ApplicationRecord
   belongs_to :follower, class_name: "Person", touch: true
   belongs_to :followed, class_name: "Person", touch: true

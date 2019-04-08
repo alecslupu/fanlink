@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: answers
+#
+#  id           :bigint(8)        not null, primary key
+#  quiz_page_id :integer
+#  description  :string           default(""), not null
+#  is_correct   :boolean          default(FALSE)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  product_id   :integer          not null
+#
+
 class Answer < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
