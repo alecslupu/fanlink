@@ -1,6 +1,4 @@
 class Api::V5::PollsController < Api::V4::PollsController
-
-
   def create
     # parms = poll_params
     @poll = Poll.create(poll_params)
@@ -10,7 +8,7 @@ class Api::V5::PollsController < Api::V4::PollsController
     # end
     return_the @poll, handler: tpl_handler
   end
-  
+
   def destroy
     if some_admin?
       @poll.destroy

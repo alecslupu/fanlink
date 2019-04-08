@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :certificate do
-    product { create(:product) }
+    product { current_product }
 
     long_name { Faker::Lorem.name }
     short_name { Faker::Lorem.sentence(4) }
@@ -8,7 +8,7 @@ FactoryBot.define do
     color_hex { Faker::Color.hex_color }
     status { 1 }
     room { nil }
-    certificate_order { 1 }
+    certificate_order {  Faker::Number.unique(20).between(1, 500) }
     is_free { false }
     sku_ios { Faker::Code.ean(13) }
     sku_android { Faker::Code.ean(13) }

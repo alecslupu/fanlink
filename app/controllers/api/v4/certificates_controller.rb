@@ -1,7 +1,7 @@
 class Api::V4::CertificatesController < ApiController
   def create
-  	@certificate = Certificate.create(certificate_params)
-  	return_the @certificate, handler: tpl_handler, using: :show
+    @certificate = Certificate.create(certificate_params)
+    return_the @certificate, handler: tpl_handler, using: :show
   end
 
   def index
@@ -29,13 +29,13 @@ class Api::V4::CertificatesController < ApiController
 
   protected
 
-  def tpl_handler
-    'jb'
-  end
+    def tpl_handler
+      'jb'
+    end
 
   private
 
-  def certificate_params
-    params.require(:certificate).permit(%i[ long_name short_name description certificate_order template_image ])
-  end
+    def certificate_params
+      params.require(:certificate).permit(%i[ long_name short_name description certificate_order template_image ])
+    end
 end

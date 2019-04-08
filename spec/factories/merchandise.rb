@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :merchandise do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     name { "MyText" }
     description { "MyText" }
     price { "$14.00" }

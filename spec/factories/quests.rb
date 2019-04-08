@@ -2,7 +2,7 @@ require "faker"
 
 FactoryBot.define do
   factory :quest do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     name { "Quest 1" }
     internal_name { "quest_1" }
     description { Faker::Lorem.paragraph }

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  mount RailsAdmin::Engine => '/admin_portal', as: 'rails_admin'
+
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end

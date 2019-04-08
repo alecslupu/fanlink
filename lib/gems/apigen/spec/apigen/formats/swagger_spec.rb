@@ -24,6 +24,7 @@ describe Apigen::Formats::Swagger::V2 do
       schemes:
       - http
       - https
+      tags: []
       consumes:
       - application/json
       produces:

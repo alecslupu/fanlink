@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :certcourse do
-    product { ActsAsTenant.current_tenant || Product.first || create(:product) }
+    product { current_product }
     long_name { Faker::Lorem.name }
     short_name { Faker::Lorem.sentence(4) }
     description { Faker::Lorem.paragraph }

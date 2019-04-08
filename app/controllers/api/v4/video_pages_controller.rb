@@ -1,6 +1,6 @@
 class Api::V4::VideoPagesController < ApiController
   def create
-  	@image = VideoPage.create(video_params)
+    @image = VideoPage.create(video_params)
   end
 
   def video_params

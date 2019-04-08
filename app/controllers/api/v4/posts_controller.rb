@@ -112,5 +112,4 @@ class Api::V4::PostsController < Api::V3::PostsController
   def tpl_handler
     :jb
   end
-
 end

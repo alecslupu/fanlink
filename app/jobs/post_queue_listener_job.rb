@@ -33,5 +33,4 @@ class PostQueueListenerJob < Struct.new(:job_id, :attempts)
   def give_up
     raise "Cannot find #{self.job_id} in SQS and I tried really really hard."
   end
-
 end

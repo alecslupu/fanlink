@@ -21,10 +21,12 @@ describe Apigen::Formats::OpenAPI::V3 do
           name: ''
       servers:
       - url: http://localhost
+        description: Local Development
+      tags: []
       paths:
         "/users":
           get:
-            operationId: list_users
+            operationId: List Users
             parameters:
             - in: query
               name: include_admin
@@ -65,7 +67,7 @@ describe Apigen::Formats::OpenAPI::V3 do
                       - list
             description: Returns a list of users
           post:
-            operationId: create_user
+            operationId: Create User
             parameters: []
             responses:
               '200':
@@ -112,7 +114,7 @@ describe Apigen::Formats::OpenAPI::V3 do
                 password: foobar123
         "/users/{id}":
           put:
-            operationId: update_user
+            operationId: Update User
             parameters:
             - in: path
               name: id
@@ -152,7 +154,7 @@ describe Apigen::Formats::OpenAPI::V3 do
                 name: Frank
                 captcha: AB123
           delete:
-            operationId: delete_user
+            operationId: Delete User
             parameters:
             - in: path
               name: id

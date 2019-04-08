@@ -14,7 +14,7 @@ require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
-require 'json_schemer'
+require "json_schemer"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -102,6 +102,8 @@ RSpec.configure do |config|
   # end of the spec run, to help surface which specs are running
   # particularly slow.
   config.profile_examples = 10
+=end
+  config.seed = 1234
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -114,11 +116,14 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-=end
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+  end
+  config.after(:each) do
+    logout
+    DatabaseCleaner.clean
   end
 
   config.around(:each) do |example|
@@ -131,7 +136,7 @@ RSpec.configure do |config|
   config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers
-  config.include JsonHelpers, type: :request
+  config.include JsonHelpers, type: :controller
 
   config.include Sorcery::TestHelpers::Rails::Controller#, type: :request
   config.include Sorcery::TestHelpers::Rails::Integration #, type: :request
@@ -139,7 +144,7 @@ RSpec.configure do |config|
   config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
 
 
-  config.before :each, type: :request do
+  config.before :each, type: :controller do
     @json = nil
     vmatch = /V([0-9]).*\:\:/.match(self.class.name)
     @api_version = "v#{vmatch[1]}"

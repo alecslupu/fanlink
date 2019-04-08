@@ -58,9 +58,12 @@ group :development, :test do
   gem "dotenv-rails"
   gem "faker"
   gem "rspec-rails"
+  gem 'rails-controller-testing'
   gem "factory_bot_rails"
   gem "rswag-specs"
   gem "fuubar"
+  gem 'rubocop-rails'
+  gem "rubocop-rails_config"
 end
 
 group :development do
@@ -74,11 +77,12 @@ group :development do
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require:"ap"
+  #
   gem "apigen", :path => "lib/gems/apigen"
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem "rubocop-rails_config"
+  gem 'guard-rspec'
 end
 
 group :test do
@@ -93,17 +97,22 @@ group :test do
   gem "turnip", require: false
 end
 
+# greg is saying that is not suporting V Rails 5.2.
 gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "acts_as_api"
-gem "administrate", "~> 0.11.0" #git: "https://github.com/thoughtbot/administrate.git"
 
+gem "administrate", "~> 0.11.0" #git: "https://github.com/thoughtbot/administrate.git"
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-hidden", "~> 0.0.3"
-
+gem "administrate-field-belongs_to_search"
 # For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
 # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
 # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
+
+
+gem "rails_admin", "1.3.0"
+
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
@@ -120,6 +129,7 @@ gem "goldiloader"
 gem "google_places"
 gem "graphql"
 gem "has_scope"
+# greg is saying that is not suporting V Rails 5.2.
 gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" #Facebook Graph API
@@ -148,10 +158,10 @@ gem "wisper", "2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
-gem 'rmagick'
+gem "rmagick"
 
 gem "graphiql-rails", group: :development
 
-
+# Use Json Web Token (JWT) for token based authentication
+gem 'jwt'
 gem 'prawn'
-

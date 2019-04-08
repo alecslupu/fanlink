@@ -11,10 +11,11 @@ RSpec.describe CertificateCertcourse, type: :model do
       cc = create(:certificate_certcourse)
       cc2 = build(:certificate_certcourse,
                    product: cc.product,
-                   certcourse: cc.certcourse,
+                   certcourse: create(:certcourse),
                    certificate: cc.certificate,
-                    certcourse_order: cc.certcourse_order
+                   certcourse_order: cc.certcourse_order
       )
+      #   validates_uniqueness_to_tenant :certcourse_order, scope: %i[ certificate_id certcourse_id ]
       expect(cc2.valid?).to be_falsey
       cc2.certcourse_order += 1
       expect(cc2.valid?).to be_truthy
@@ -41,13 +42,11 @@ RSpec.describe CertificateCertcourse, type: :model do
     end
     describe "for_certificate does not have value" do
       it do
-        pending "I could not make functional after few tries"
-        # list = create_list(:certificate_certcourse, 2)
-        # cc = list.first
-        # cc2 = list.last
-        # test = CertificateCertcourse.for_certificate(cc.certificate)
-        # expect(test.count).to eq(1)
-        # expect(test.first).not_to eq(cc2)
+        cc = create(:certificate_certcourse)
+        cc2 = create(:certificate_certcourse)
+        test = CertificateCertcourse.for_certificate(cc.certificate)
+        expect(test.count).to eq(1)
+        expect(test.first).not_to eq(cc2)
         true
       end
     end
@@ -60,14 +59,11 @@ RSpec.describe CertificateCertcourse, type: :model do
       end
 
       it "does not" do
-        pending "I could not make functional after few tries"
-        # list = create_list(:certificate_certcourse, 2)
-        # cc = list.first
-        # cc2 = list.last
-        # test = CertificateCertcourse.for_certcourse(cc.certcourse)
-        # expect(test.count).to eq(1)
-        # expect(test.first).not_to eq(cc2)
-        true
+        cc = create(:certificate_certcourse)
+        cc2 = create(:certificate_certcourse)
+        test = CertificateCertcourse.for_certcourse(cc.certcourse)
+        expect(test.count).to eq(1)
+        expect(test.first).not_to eq(cc2)
       end
     end
   end

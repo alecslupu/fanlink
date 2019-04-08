@@ -1,6 +1,6 @@
 module ProductHelpers
   def current_product
-    ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product)
+    ActsAsTenant.current_tenant || Product.first || create(:product)
   end
 end
 
