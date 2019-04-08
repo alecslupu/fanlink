@@ -2,9 +2,10 @@ class Answer < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
   belongs_to :quiz_page
+  has_many :user_answers, class_name: "PersonQuiz", dependent: :destroy
 
   def is_selected(person)
-    PersonQuiz.find_by(person_id: person.id, quiz_page_id: self.quiz_page.id, answer_id: self.id).present?
+    (is_correct || quiz_page.is_optional?) && user_answers.where(quiz_page_id: self.quiz_page_id, person_id: person.id).present?
   end
 
   def question
