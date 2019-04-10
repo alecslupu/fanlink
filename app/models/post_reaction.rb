@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: post_reactions
+#
+#  id        :bigint(8)        not null, primary key
+#  post_id   :integer          not null
+#  person_id :integer          not null
+#  reaction  :text             not null
+#
+
 class PostReaction < ApplicationRecord
   belongs_to :post, touch: true
   belongs_to :person

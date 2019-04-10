@@ -76,7 +76,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
 
   def index
     @quests = paginate(Quest.includes(:rewards, steps: [:quest_activities]).where.not(status: :deleted).order(created_at: :desc))
-    return_the @quests, handler: "jb"
+    return_the @quests, handler: tpl_handler
   end
 
   # **
@@ -404,7 +404,13 @@ class Api::V3::QuestsController < Api::V2::QuestsController
     end
   end
 
-private
+  protected
+
+  def tpl_handler
+    :jb
+  end
+
+  private
   def apply_filters
     quests = Quest.where.not(status: :deleted).order(created_at: :desc)
     params.each do |p, v|

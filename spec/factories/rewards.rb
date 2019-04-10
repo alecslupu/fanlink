@@ -1,6 +1,25 @@
+# == Schema Information
+#
+# Table name: rewards
+#
+#  id                     :bigint(8)        not null, primary key
+#  product_id             :integer          not null
+#  name                   :jsonb            not null
+#  internal_name          :text             not null
+#  reward_type            :integer          default("badge"), not null
+#  reward_type_id         :integer          not null
+#  series                 :text
+#  completion_requirement :integer          default(1), not null
+#  points                 :integer          default(0)
+#  status                 :integer          default("active"), not null
+#  deleted                :boolean          default(FALSE)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+
 FactoryBot.define do
   factory :reward do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     sequence(:name) { |n| "Reward #{n}" }
     sequence(:internal_name) { |n| "reward_#{n}" }
 

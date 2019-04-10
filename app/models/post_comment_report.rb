@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: post_comment_reports
+#
+#  id              :bigint(8)        not null, primary key
+#  post_comment_id :integer          not null
+#  person_id       :integer          not null
+#  reason          :text
+#  status          :integer          default("pending"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class PostCommentReport < ApplicationRecord
   include PostCommentReport::PortalFilters
   enum status: %i[ pending no_action_needed comment_hidden ]

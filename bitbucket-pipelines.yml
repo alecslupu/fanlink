@@ -3,12 +3,14 @@ image: ruby:2.5.1
 pipelines:
   default:
     - step:
+        caches:
+          - bundler
         script: # Modify the commands below to build your repository.
           - gem install bundler
-          - bundle install
+          - bundle install --path vendor/bundle
           - RAILS_ENV=test bundle exec rake db:setup
           - RAILS_ENV=test bundle exec rake db:test:prepare
-          - RAILS_ENV=test bundle exec rspec . 
+          - RAILS_ENV=test bundle exec rspec spec
         services:
           - postgres
 
@@ -20,3 +22,6 @@ definitions:
         POSTGRES_DB: fanlink_test
         POSTGRES_USER: test_user
         POSTGRES_PASSWORD: test_user_password
+
+  caches:
+    bundler: vendor/bundle

@@ -1,6 +1,17 @@
+# == Schema Information
+#
+# Table name: urls
+#
+#  id            :bigint(8)        not null, primary key
+#  product_id    :integer          not null
+#  displayed_url :text             not null
+#  protected     :boolean          default(FALSE)
+#  deleted       :boolean          default(FALSE)
+#
+
 FactoryBot.define do
   factory :url do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     sequence(:displayed_url) { |n| "http://example.com/#{n}" }
   end
 end
