@@ -33,12 +33,6 @@ class Api::V4::SessionController < Api::V3::SessionController
     return_the @person, handler: tpl_handler
   end
 
-  protected
-
-  def tpl_handler
-    :jb
-  end
-
   def token
     user = Person.can_login?(params[:email_or_username])
     if user = Person.authenticate(params[:email_or_username], params[:password])
@@ -47,6 +41,12 @@ class Api::V4::SessionController < Api::V3::SessionController
     else
       return render_422 _("Invalid login.")
     end
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 
 end
