@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190406201911) do
+ActiveRecord::Schema.define(version: 20190410223019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1157,20 +1157,6 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.index ["trivia_package_id"], name: "index_trivia_question_package_leaderboards_on_trivia_package_id"
   end
 
-  create_table "trivia_question_packages", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.integer "question_count"
-    t.bigint "trivia_game_id"
-    t.integer "leaderboard_size", default: 100
-    t.integer "package_order", default: 1, null: false
-    t.integer "status", default: 0, null: false
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["trivia_game_id"], name: "index_trivia_question_packages_on_trivia_game_id"
-  end
-
   create_table "trivia_questions", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -1183,6 +1169,20 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trivia_package_id"], name: "index_trivia_questions_on_trivia_package_id"
+  end
+
+  create_table "trivia_rounds", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "question_count"
+    t.bigint "trivia_game_id"
+    t.integer "leaderboard_size", default: 100
+    t.integer "package_order", default: 1, null: false
+    t.integer "status", default: 0, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trivia_game_id"], name: "index_trivia_rounds_on_trivia_game_id"
   end
 
   create_table "urls", force: :cascade do |t|
@@ -1315,9 +1315,9 @@ ActiveRecord::Schema.define(version: 20190406201911) do
   add_foreign_key "trivia_question_leaderboards", "people"
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
   add_foreign_key "trivia_question_package_leaderboards", "people"
-  add_foreign_key "trivia_question_package_leaderboards", "trivia_question_packages", column: "trivia_package_id"
-  add_foreign_key "trivia_question_packages", "trivia_games"
-  add_foreign_key "trivia_questions", "trivia_question_packages", column: "trivia_package_id"
+  add_foreign_key "trivia_question_package_leaderboards", "trivia_rounds", column: "trivia_package_id"
+  add_foreign_key "trivia_questions", "trivia_rounds", column: "trivia_package_id"
+  add_foreign_key "trivia_rounds", "trivia_games"
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

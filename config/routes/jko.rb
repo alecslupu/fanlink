@@ -258,7 +258,7 @@ JkoApi.routes self do
       resources :games, only: [ :index ] do
         resources :prizes, only: [ :index ]
 
-        resources :packages, only: [ :index ] do
+        resources :rounds, only: [ :index ] do
           resources :package_leaderboards, path: :leaderboard, only: [ :index ] do
             get :me, on: :collection
           end
