@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe Trivia::QuestionPackage, type: :model do
+RSpec.describe Trivia::Round, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end
