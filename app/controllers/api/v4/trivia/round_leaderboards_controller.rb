@@ -1,4 +1,4 @@
-class Api::V4::Trivia::PackageLeaderboardsController < ApiController
+class Api::V4::Trivia::RoundLeaderboardsController < ApiController
 
   def index
     @leaderboard = paginate(package)
@@ -12,7 +12,7 @@ class Api::V4::Trivia::PackageLeaderboardsController < ApiController
 
   protected
     def package
-      @package ||= ::Trivia::Game.find(params[:game_id]).question_packages.published.find(params[:package_id]).leaderboards
+      @package ||= ::Trivia::Game.find(params[:game_id]).rounds.published.find(params[:package_id]).leaderboards
     end
 
 end
