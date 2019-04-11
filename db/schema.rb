@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190406201911) do
+ActiveRecord::Schema.define(version: 20190411173434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1165,13 +1165,13 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "complexity", default: 1
     t.index ["trivia_game_id"], name: "index_trivia_question_packages_on_trivia_game_id"
   end
 
   create_table "trivia_questions", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "complexity", default: 1
     t.bigint "trivia_package_id"
     t.integer "time_limit"
     t.string "type"
@@ -1179,6 +1179,7 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "question_interval", default: 5
     t.index ["trivia_package_id"], name: "index_trivia_questions_on_trivia_package_id"
   end
 
