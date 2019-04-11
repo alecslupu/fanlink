@@ -5,6 +5,7 @@ class CreateTriviaAnswers < ActiveRecord::Migration[5.1]
       t.belongs_to :trivia_question, foreign_key: true
       t.string :answered
       t.integer :time
+      t.boolean :is_correct, default: false
 
       t.timestamps
     end

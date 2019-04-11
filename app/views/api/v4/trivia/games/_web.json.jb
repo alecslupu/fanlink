@@ -5,7 +5,7 @@ json = {
   long_name: game.long_name,
   short_name: game.short_name,
   description: game.description,
-  package_count: game.rounds.size,
+  round_count: game.rounds.size,
   question_count: game.rounds.sum(:question_count),
   leaderboard_size: game.leaderboard_size,
   prize_count: game.prizes.size,

@@ -9,7 +9,8 @@ class CreateTriviaPrizes < ActiveRecord::Migration[5.1]
       t.string :photo_file_size
       t.string :photo_content_type
       t.string :photo_updated_at
-
+      t.boolean :is_delivered, default: false
+      t.integer :prize_type, default: 0
       t.timestamps
     end
   end

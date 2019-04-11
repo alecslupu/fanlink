@@ -1,7 +1,7 @@
-class CreateTriviaPackageLeaderboards < ActiveRecord::Migration[5.1]
+class CreateTriviaRoundLeaderboards < ActiveRecord::Migration[5.1]
   def change
-    create_table :trivia_package_leaderboards do |t|
-      t.belongs_to :trivia_package, foreign_key: true
+    create_table :trivia_round_leaderboards do |t|
+      t.belongs_to :trivia_round, foreign_key: true
       t.integer :nb_points
       t.integer :position
       t.belongs_to :person, foreign_key: true
