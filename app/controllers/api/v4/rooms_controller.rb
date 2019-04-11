@@ -1,12 +1,12 @@
 class Api::V4::RoomsController < Api::V3::RoomsController
   def index
     @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics.order(order: :desc)
-    return_the @rooms, handler: 'jb'
+    return_the @rooms, handler: tpl_handler
   end
 
   def show
     @room = Room.find(params[:id])
-    return_the @room, handler: 'jb'
+    return_the @room, handler: tpl_handler
   end
 
   def create
@@ -24,7 +24,7 @@ class Api::V4::RoomsController < Api::V3::RoomsController
         @room.reload
         @room.new_room(@api_version)
       end
-      return_the @room, handler: 'jb', using: :show
+      return_the @room, handler: tpl_handler, using: :show
     else
       render_422 @room.errors
     end
@@ -35,7 +35,7 @@ class Api::V4::RoomsController < Api::V3::RoomsController
     if params.has_key?(:room)
       if some_admin?
         if @room.update_attributes(room_params)
-          return_the @room, handler: 'jb', using: :show
+          return_the @room, handler: tpl_handler, using: :show
         else
           render_422(@room.errors)
         end
@@ -43,13 +43,19 @@ class Api::V4::RoomsController < Api::V3::RoomsController
         head :unauthorized
       else
         if @room.update_attribute(:name, room_params[:name])
-          return_the @room, handler: 'jb', using: :show
+          return_the @room, handler: tpl_handler, using: :show
         else
           render_422 @room.errors
         end
       end
     else
-      return_the @room, handler: 'jb', using: :show
+      return_the @room, handler: tpl_handler, using: :show
     end
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 end

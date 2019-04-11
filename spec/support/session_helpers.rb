@@ -1,5 +1,6 @@
 module SessionHelpers
   def login_as(person)
+    raise "You need to provide a Person object" unless person.is_a?(Person)
     ApplicationController.send :define_method, :current_user do
       person
     end
@@ -27,7 +28,7 @@ module Sorcery
         def login_user_post(user, password, product)
           page.driver.post(sessions_url, { email_or_username: user, password: password, product: product })
         end
-  
+
         def logout_user_get
           page.driver.get(logout_url)
         end

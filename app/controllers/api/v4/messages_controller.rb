@@ -7,13 +7,13 @@ class Api::V4::MessagesController < Api::V3::MessagesController
       msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
       @messages = paginate(msgs.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
       clear_count(room) if room.private?
-      return_the @messages, handler: 'jb'
+      return_the @messages, handler: tpl_handler
     end
   end
 
   def list
     @messages = paginate apply_filters
-    return_the @messages, handler: 'jb'
+    return_the @messages, handler: tpl_handler
   end
 
   def show
@@ -25,7 +25,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
       if @message.hidden
         render_not_found
       else
-        return_the @message, handler: 'jb'
+        return_the @message, handler: tpl_handler
       end
     end
   end
@@ -45,7 +45,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
             room.increment_message_counters(current_user.id)
             @message.private_message_push
           end
-          return_the @message, handler: 'jb', using: :show
+          return_the @message, handler: tpl_handler, using: :show
         else
           render_422 @message.errors
         end
@@ -61,12 +61,12 @@ class Api::V4::MessagesController < Api::V3::MessagesController
         if @message.hidden
           @message.delete_real_time(@api_version)
         end
-        return_the @message, handler: 'jb', using: :show
+        return_the @message, handler: tpl_handler, using: :show
       else
         render_422 @message.errors
       end
     else
-      return_the @message, handler: 'jb', using: :show
+      return_the @message, handler: tpl_handler, using: :show
     end
   end
 
@@ -77,6 +77,12 @@ class Api::V4::MessagesController < Api::V3::MessagesController
       time = 1
     end
     @messages = Message.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
-    return_the @messages, handler: 'jb'
+    return_the @messages, handler: tpl_handler
+  end
+
+  protected
+
+  def tpl_handler
+    :jb
   end
 end

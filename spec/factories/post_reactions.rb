@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: post_reactions
+#
+#  id        :bigint(8)        not null, primary key
+#  post_id   :integer          not null
+#  person_id :integer          not null
+#  reaction  :text             not null
+#
+
 require "faker"
 
 FactoryBot.define do

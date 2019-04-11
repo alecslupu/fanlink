@@ -14,7 +14,7 @@ require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
-require 'json_schemer'
+require "json_schemer"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -121,6 +121,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
+  config.after(:each) do
+    logout
+    DatabaseCleaner.clean
+  end
 
   config.around(:each) do |example|
     DatabaseCleaner.cleaning do
@@ -132,7 +136,7 @@ RSpec.configure do |config|
   config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers
-  config.include JsonHelpers, type: :request
+  config.include JsonHelpers, type: :controller
 
   config.include Sorcery::TestHelpers::Rails::Controller#, type: :request
   config.include Sorcery::TestHelpers::Rails::Integration #, type: :request
@@ -140,7 +144,7 @@ RSpec.configure do |config|
   config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
 
 
-  config.before :each, type: :request do
+  config.before :each, type: :controller do
     @json = nil
     vmatch = /V([0-9]).*\:\:/.match(self.class.name)
     @api_version = "v#{vmatch[1]}"
