@@ -1,0 +1,15 @@
+json = {
+  trivia_game_id: game.id,
+  start_date: game.start_date,
+  end_date: game.end_date,
+  long_name: game.long_name,
+  short_name: game.short_name,
+  description: game.description,
+  package_count: game.question_packages.size,
+  question_count: game.question_packages.sum(:question_count),
+  leaderboard_size: game.leaderboard_size,
+  prize_count: game.prizes.size,
+  room_id: game.room_id,
+  channel_id: game.uuid
+}
+json
