@@ -253,6 +253,23 @@ JkoApi.routes self do
         get "stats" => "posts#stats"
       end
     end
+
+    namespace :trivia do
+      resources :games, only: [ :index ] do
+        resources :prizes, only: [ :index ]
+
+        resources :packages, only: [ :index ] do
+          resources :package_leaderboards, path: :leaderboard, only: [ :index ] do
+            get :me, on: :collection
+          end
+        end
+        resources :game_leaderboards, path: :leaderboard, only: [ :index ] do
+          get :me, on: :collection
+        end
+
+      end
+    end
+
   end
 
   version 5 do

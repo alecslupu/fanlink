@@ -1,0 +1,9 @@
+json = {
+  id: package.id,
+  trivia_game_id: package.trivia_game_id,
+  start_date:  package.start_date,
+  end_date:  package.end_date,
+  package_order: package.package_order,
+  question_size: package.trivia_questions.size
+}
+json
