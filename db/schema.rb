@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404161403) do
+ActiveRecord::Schema.define(version: 20190406201911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
+  enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -1023,6 +1025,24 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.index ["step_id"], name: "index_step_unlocks_on_step_id"
   end
 
+  create_table "steps", force: :cascade do |t|
+    t.integer "quest_id", null: false
+    t.text "display"
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "int_unlocks", default: [], null: false, array: true
+    t.integer "initial_status", default: 0, null: false
+    t.integer "reward_id"
+    t.integer "delay_unlock", default: 0
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }
+    t.text "unlocks"
+    t.datetime "unlocks_at"
+    t.index ["int_unlocks"], name: "index_steps_on_int_unlocks", using: :gin
+    t.index ["quest_id"], name: "index_steps_on_quest_id"
+    t.index ["reward_id"], name: "idx_steps_rewards"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.text "name", null: false
     t.integer "product_id", null: false
@@ -1041,6 +1061,7 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.integer "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_correct", default: false
     t.index ["person_id"], name: "index_trivia_answers_on_person_id"
     t.index ["trivia_question_id"], name: "index_trivia_answers_on_trivia_question_id"
   end
@@ -1049,7 +1070,8 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.bigint "trivia_question_id"
     t.string "name"
     t.string "hint"
-    t.boolean "is_correct"
+    t.boolean "is_correct", default: false, null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trivia_question_id"], name: "index_trivia_available_answers_on_trivia_question_id"
@@ -1059,6 +1081,7 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.bigint "trivia_game_id"
     t.integer "nb_points"
     t.integer "position"
+    t.integer "average_time", default: 0
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1069,34 +1092,19 @@ ActiveRecord::Schema.define(version: 20190404161403) do
   create_table "trivia_games", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string "name"
-    t.text "description"
+    t.text "description", default: "", null: false
     t.integer "package_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "long_name", null: false
+    t.string "short_name", null: false
+    t.bigint "room_id"
     t.bigint "product_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }
+    t.integer "status", default: 0, null: false
+    t.integer "leaderboard_size", default: 100
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_trivia_games_on_product_id"
-  end
-
-  create_table "trivia_package_leaderboards", force: :cascade do |t|
-    t.bigint "trivia_package_id"
-    t.integer "nb_points"
-    t.integer "position"
-    t.bigint "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_trivia_package_leaderboards_on_person_id"
-    t.index ["trivia_package_id"], name: "index_trivia_package_leaderboards_on_trivia_package_id"
-  end
-
-  create_table "trivia_packages", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.integer "question_count"
-    t.bigint "trivia_game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["trivia_game_id"], name: "index_trivia_packages_on_trivia_game_id"
+    t.index ["room_id"], name: "index_trivia_games_on_room_id"
   end
 
   create_table "trivia_participants", force: :cascade do |t|
@@ -1119,6 +1127,8 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.string "photo_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "delivered", default: false
+    t.integer "prize_type", default: 0
     t.index ["trivia_game_id"], name: "index_trivia_prizes_on_trivia_game_id"
   end
 
@@ -1132,13 +1142,41 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.index ["trivia_question_id"], name: "index_trivia_question_leaderboards_on_trivia_question_id"
   end
 
+  create_table "trivia_question_package_leaderboards", force: :cascade do |t|
+    t.bigint "trivia_package_id"
+    t.integer "nb_points"
+    t.integer "position"
+    t.bigint "person_id"
+    t.integer "average_time", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_trivia_question_package_leaderboards_on_person_id"
+    t.index ["trivia_package_id"], name: "index_trivia_question_package_leaderboards_on_trivia_package_id"
+  end
+
+  create_table "trivia_question_packages", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer "question_count"
+    t.bigint "trivia_game_id"
+    t.integer "leaderboard_size", default: 100
+    t.integer "package_order", default: 1, null: false
+    t.integer "status", default: 0, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trivia_game_id"], name: "index_trivia_question_packages_on_trivia_game_id"
+  end
+
   create_table "trivia_questions", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "points"
+    t.integer "complexity", default: 1
     t.bigint "trivia_package_id"
     t.integer "time_limit"
     t.string "type"
+    t.integer "question_order", default: 1, null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trivia_package_id"], name: "index_trivia_questions_on_trivia_package_id"
@@ -1242,8 +1280,10 @@ ActiveRecord::Schema.define(version: 20190404161403) do
   add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
   add_foreign_key "push_notifications", "products", name: "fk_push_notifications_products", on_delete: :cascade
   add_foreign_key "quest_activities", "rewards", name: "fk_quest_activities_rewards"
+  add_foreign_key "quest_activities", "steps", name: "fk_activities_steps"
   add_foreign_key "quest_completed", "people", name: "fk_quest_completeds_people"
   add_foreign_key "quest_completed", "quests", name: "fk_quest_completeds_quests"
+  add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
   add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
@@ -1256,21 +1296,25 @@ ActiveRecord::Schema.define(version: 20190404161403) do
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
+  add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
+  add_foreign_key "steps", "quests", name: "fk_steps_quests"
+  add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
   add_foreign_key "trivia_answers", "people"
   add_foreign_key "trivia_answers", "trivia_questions"
   add_foreign_key "trivia_available_answers", "trivia_questions"
   add_foreign_key "trivia_game_leaderboards", "people"
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
   add_foreign_key "trivia_games", "products"
-  add_foreign_key "trivia_package_leaderboards", "people"
-  add_foreign_key "trivia_package_leaderboards", "trivia_packages"
-  add_foreign_key "trivia_packages", "trivia_games"
+  add_foreign_key "trivia_games", "rooms"
   add_foreign_key "trivia_participants", "people"
   add_foreign_key "trivia_participants", "trivia_games"
   add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
-  add_foreign_key "trivia_questions", "trivia_packages"
+  add_foreign_key "trivia_question_package_leaderboards", "people"
+  add_foreign_key "trivia_question_package_leaderboards", "trivia_question_packages", column: "trivia_package_id"
+  add_foreign_key "trivia_question_packages", "trivia_games"
+  add_foreign_key "trivia_questions", "trivia_question_packages", column: "trivia_package_id"
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end
