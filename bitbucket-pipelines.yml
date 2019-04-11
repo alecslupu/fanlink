@@ -6,6 +6,7 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - gem install bundler
           - bundle install
+          - RAILS_ENV=test bundle exec rake db:reset
           - RAILS_ENV=test bundle exec rake db:setup
           - RAILS_ENV=test bundle exec rake db:test:prepare
           - RAILS_ENV=test bundle exec rspec . 
