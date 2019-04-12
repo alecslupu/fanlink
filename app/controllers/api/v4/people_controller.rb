@@ -85,14 +85,14 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     return_the @people, handler: tpl_handler
   end
 
+  def send_certificate
+    current_user.send_certificate_email(params[:certificate_id], params[:email_address])
+    render json: { message: _("Email sent") }
+  end
+
   protected
 
   def tpl_handler
     :jb
-  end
-
-  def send_certificate
-    current_user.send_certificate_email(params[:certificate_id], params[:email_address])
-    render json: { message: _("Email sent") }
   end
 end
