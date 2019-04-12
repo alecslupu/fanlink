@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :trivia_package, class: 'QuestionPackage' do
+  factory :trivia_round, class: "Trivia::Round" do
     start_date { "2019-04-01 22:36:15" }
     end_date { "2019-04-01 22:36:15" }
     question_count { 1 }
