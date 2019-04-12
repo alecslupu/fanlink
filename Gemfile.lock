@@ -821,6 +821,7 @@ GEM
     email_validator (1.6.0)
       activemodel
     erubi (1.8.0)
+    erubis (2.7.0)
     excon (0.62.0)
     execjs (2.7.0)
     factory_bot (4.11.1)
@@ -1312,6 +1313,7 @@ DEPENDENCIES
   derailed_benchmarks
   dotenv-rails
   email_validator
+  erubis
   factory_bot_rails
   faker
   fcm
