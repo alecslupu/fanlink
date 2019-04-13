@@ -16,10 +16,10 @@ RSpec.describe ActivityType, type: :model do
     context "validates inclusion" do
       it do
         ActivityType.atypes.keys.each do |status|
-          expect(build(:activity_type, atype: status)).to  be_valid
+          expect(build(:activity_type, atype: status)).to be_valid
         end
 
-        expect{ build(:activity_type, atype: :invalid_status_form_spec) }.to raise_error(/is not a valid atype/)
+        expect { build(:activity_type, atype: :invalid_status_form_spec) }.to raise_error(/is not a valid atype/)
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe ActivityType, type: :model do
   context "Associations" do
     describe "#belongs_to" do
       it do
-        should belong_to(:quest_activity).with_foreign_key('activity_id').touch(true)
+        should belong_to(:quest_activity).with_foreign_key("activity_id").touch(true)
       end
     end
   end

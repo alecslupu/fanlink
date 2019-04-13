@@ -2,7 +2,7 @@
 # alleast a name must be provided to the generator
 module Fanlink
   class VueGenerator < Rails::Generators::NamedBase
-    source_root File.expand_path('../templates', __FILE__)
+    source_root File.expand_path("../templates", __FILE__)
 
     # if you remember all the public methods will be executed in the defined order
 
@@ -31,47 +31,47 @@ module Fanlink
     end
 
     private
-    # Here are some helper methods which are used in the templates
-    # they are pretty easy to understand
+      # Here are some helper methods which are used in the templates
+      # they are pretty easy to understand
 
-    # splits the name reports/new
-    # ['reports', 'new']
-    def parts
-      name.split('/')
-    end
-
-    # create js file name for reports/new
-    # ReportsNew
-    def js_file_name
-      name = ""
-      parts.each do |part|
-        name += part.titleize
+      # splits the name reports/new
+      # ['reports', 'new']
+      def parts
+        name.split("/")
       end
-      name
-    end
 
-    def vue_component_kebab_name
-      name = ""
-      parts.each do |part|
-        name += part + '-'
+      # create js file name for reports/new
+      # ReportsNew
+      def js_file_name
+        name = ""
+        parts.each do |part|
+          name += part.titleize
+        end
+        name
       end
-      # remove the trailing '-'
-      name + 'view'
-    end
 
-    def vue_component_snippet
-      """
-      <#{vue_component_kebab_name}>
-      </#{vue_component_kebab_name}>
-      """
-    end
+      def vue_component_kebab_name
+        name = ""
+        parts.each do |part|
+          name += part + "-"
+        end
+        # remove the trailing '-'
+        name + "view"
+      end
 
-    def javascript_pack_tag_snippet
-      "<%= javascript_pack_tag '#{name}' %>"
-    end
+      def vue_component_snippet
+        """
+        <#{vue_component_kebab_name}>
+        </#{vue_component_kebab_name}>
+        """
+      end
 
-    def stylesheet_pack_tag_snippet
-      "<%= stylesheet_pack_tag '#{name}' %>"
-    end
+      def javascript_pack_tag_snippet
+        "<%= javascript_pack_tag '#{name}' %>"
+      end
+
+      def stylesheet_pack_tag_snippet
+        "<%= stylesheet_pack_tag '#{name}' %>"
+      end
   end
 end

@@ -1,9 +1,9 @@
-api_version(:module => "Api::V4", :header => {:name => "Accept", :value => "application/vnd.api.v4+json"}, :defaults => {:format => :json}) do
-  resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
+api_version(module: "Api::V4", header: { name: "Accept", value: "application/vnd.api.v4+json" }, defaults: { format: :json }) do
+  resources :activities, controller: "quest_activities", only: %i[ update show destroy ] do
     collection do
       post "complete" => "reward_progresses#create"
     end
-    resources :types, :controller => "activity_types", only: %i[ create index ]
+    resources :types, controller: "activity_types", only: %i[ create index ]
   end
   resources :activity_types, only: %i[ show update destroy ] do
     collection do
@@ -13,7 +13,7 @@ api_version(:module => "Api::V4", :header => {:name => "Accept", :value => "appl
   resources :assigned_rewards, only: %i[ create ]
   resources :badge_actions, only: %i[ create ]
   resources :badges, except: %i[ destroy ]
-  resources :beacons, :controller => "product_beacons" do
+  resources :beacons, controller: "product_beacons" do
     collection do
       get "list" => "product_beacons#list"
       get "select" => "product_beacons#index"
@@ -25,7 +25,7 @@ api_version(:module => "Api::V4", :header => {:name => "Accept", :value => "appl
       get "select" => "category#index"
     end
   end
-  resources :completions, :controller => "quest_completions", only: %i[ index update show ] do
+  resources :completions, controller: "quest_completions", only: %i[ index update show ] do
     collection do
       get "list" => "quest_completions#list"
     end
@@ -75,7 +75,7 @@ api_version(:module => "Api::V4", :header => {:name => "Accept", :value => "appl
   end
   resources :quests do
     resources :steps, only: %i[ create index ]
-    resources :completions, :controller => "quest_completions", only: %i[ create index ]
+    resources :completions, controller: "quest_completions", only: %i[ create index ]
     collection do
       get "list" => "quests#list"
       get "select" => "quests#index"
@@ -99,8 +99,8 @@ api_version(:module => "Api::V4", :header => {:name => "Accept", :value => "appl
     end
   end
   resources :steps, only: %i[ show update destroy ] do
-    resources :activities, :controller => "quest_activities", only: %i[ create index ]
-    resources :completions, :controller => "quest_completions", only: %i[ create index ]
+    resources :activities, controller: "quest_activities", only: %i[ create index ]
+    resources :completions, controller: "quest_completions", only: %i[ create index ]
     collection do
       post "complete" => "reward_progresses#create"
     end

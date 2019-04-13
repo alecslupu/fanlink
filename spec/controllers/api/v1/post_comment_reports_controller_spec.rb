@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
   describe "#create" do
-    let(:reason) {"I don't like you"}
+    let(:reason) { "I don't like you" }
     it "should create a new post comment report" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do

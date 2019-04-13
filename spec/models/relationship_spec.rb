@@ -90,7 +90,7 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
-  #TODO this should be renamed friendships or made to return persons
+  # TODO this should be renamed friendships or made to return persons
   describe "#friends" do
     it "should get all friendships of a person" do
       per = create(:person)

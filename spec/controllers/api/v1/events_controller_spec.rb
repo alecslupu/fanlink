@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V1::EventsController, type: :controller do
 
@@ -7,7 +7,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       person = create(:person)
 
       3.times do
-        create(:event, product: create(:product) )
+        create(:event, product: create(:product))
       end
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)

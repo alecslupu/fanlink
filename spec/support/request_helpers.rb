@@ -37,5 +37,4 @@ private
     end
     new_args
   end
-
 end

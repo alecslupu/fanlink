@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
@@ -9,7 +9,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         login_as(person)
         qp = create(:quiz_page, is_optional: false)
         wrong_answers = create_list(:wrong_answers, 4, quiz_page: qp)
-        create( :correct_answer, quiz_page: qp )
+        create(:correct_answer, quiz_page: qp)
         create(:person_quiz, person: person, answer_id: wrong_answers.first.id, quiz_page: qp)
 
         get :show, params: { id: qp.certcourse_page_id }
@@ -29,7 +29,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         login_as(person)
         qp = create(:quiz_page, is_optional: false)
         wrong_answers = create_list(:wrong_answers, 4, quiz_page: qp)
-        correct_answer = create( :correct_answer, quiz_page: qp )
+        correct_answer = create(:correct_answer, quiz_page: qp)
         create(:person_quiz, person: person, answer_id: correct_answer.id, quiz_page: qp)
 
         get :show, params: { id: qp.certcourse_page_id }
@@ -51,4 +51,3 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
     end
   end
 end
-

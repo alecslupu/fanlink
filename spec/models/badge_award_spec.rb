@@ -43,11 +43,11 @@ RSpec.describe BadgeAward, type: :model do
     it "adds error message" do
       person = create(:person)
       old_tenant = ActsAsTenant.current_tenant
-      ActsAsTenant.current_tenant= create(:product)
+      ActsAsTenant.current_tenant = create(:product)
       badge = create(:badge, action_type: create(:action_type))
-      event_checkin = build(:badge_award, badge: badge , person: person)
+      event_checkin = build(:badge_award, badge: badge, person: person)
       expect(event_checkin).not_to be_valid
-      ActsAsTenant.current_tenant= old_tenant
+      ActsAsTenant.current_tenant = old_tenant
     end
     it "passes" do
       product = create(:product)
