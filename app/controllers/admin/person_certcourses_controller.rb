@@ -44,14 +44,13 @@ module Admin
     end
 
   private
-
     def update_certification_status(certificate_ids, user_id)
       # TODO find a better way to write this
       # TODO move it in a job
       PersonCertificate.where(person_id: user_id, certificate_id: certificate_ids).find_each do |c|
-        c.is_completed = PersonCertcourse.select(:is_completed).
-          where(person_id: user_id, certcourse_id: c.certificate.certcourse_ids).
-          pluck(:is_completed).inject(true, :&)
+        person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: c.certificate.certcourse_ids).pluck(:is_completed)
+        # raise ({c_size: c.certificate.certcourse_ids.size, p_size: person_certcourses.size, pc: person_certcourses}).inspect
+        c.is_completed = (c.certificate.certcourses.size == person_certcourses.size) && person_certcourses.inject(true, :&)
         c.save!
       end
     end
