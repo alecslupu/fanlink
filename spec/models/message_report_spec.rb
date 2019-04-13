@@ -22,7 +22,7 @@ RSpec.describe MessageReport, type: :model do
           expect(build(:message_report, status: status)).to be_valid
         end
 
-        expect{ build(:message_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
+        expect { build(:message_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
       end
     end
 
@@ -62,10 +62,10 @@ RSpec.describe MessageReport, type: :model do
     end
   end
 
-  describe 'valid_status?' do
-    it {expect(MessageReport.valid_status?("pending")).to be_truthy }
-    it {expect(MessageReport.valid_status?('no_action_needed')).to be_truthy }
-    it {expect(MessageReport.valid_status?('message_hidden')).to be_truthy }
-    it {expect(MessageReport.valid_status?('no_status')).to be_falsey }
+  describe "valid_status?" do
+    it { expect(MessageReport.valid_status?("pending")).to be_truthy }
+    it { expect(MessageReport.valid_status?("no_action_needed")).to be_truthy }
+    it { expect(MessageReport.valid_status?("message_hidden")).to be_truthy }
+    it { expect(MessageReport.valid_status?("no_status")).to be_falsey }
   end
 end

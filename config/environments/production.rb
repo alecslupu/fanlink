@@ -57,8 +57,8 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
-  #config.cache_store = :mem_cache_store
-  #config.cache_store = :memory_store
+  # config.cache_store = :mem_cache_store
+  # config.cache_store = :memory_store
   config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes }
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
@@ -90,13 +90,13 @@ Rails.application.configure do
   config.debug_exception_response_format = :api
 
   config.fanlink = {
-    :aws => {
-      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
-      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
-      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
-      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
-      s3_bucket: ENV['AWS_BUCKET'],
-      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
+    aws: {
+      hls_server: "http://d9f7ufze0iovw.cloudfront.net/",
+      rtmp_server: "rtmp://s153hddjp1ltg0.cloudfront.net/",
+      transcoder_key: ENV["AWS_TRANSCODER_KEY"],
+      transcoder_secret: ENV["AWS_TRANSCODER_SECRET"],
+      s3_bucket: ENV["AWS_BUCKET"],
+      transcoder_pipeline_id: ENV["AWS_PIPELINE_ID"],
     }
   }
 

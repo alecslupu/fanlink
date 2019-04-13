@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V1::FollowingsController, type: :controller do
 
@@ -76,7 +76,7 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
         followee2 = create(:person)
         followee1.follow(followed)
         followee2.follow(followed)
-        create(:person) #someone not following
+        create(:person) # someone not following
         get :index, params: { followed_id: followed.id.to_s }
         expect(response).to be_success
         expect(json["followers"].map { |f| f["id"].to_i }.sort).to eq([followee1.id, followee2.id].sort)
@@ -90,7 +90,7 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
         followed2 = create(:person)
         follower.follow(followed1)
         follower.follow(followed2)
-        create(:person) #someone not follower
+        create(:person) # someone not follower
         get :index, params: { follower_id: follower.id.to_s }
         expect(response).to be_success
         expect(json["following"].map { |f| f["id"].to_i }.sort).to eq([followed1.id, followed2.id].sort)
@@ -103,7 +103,7 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
         login_as(person)
         followees = create_list(:following, 2, follower: person)
 
-        create(:person) #someone not follower
+        create(:person) # someone not follower
         get :index
         expect(response).to be_success
         expect(json["following"].map { |f| f["id"].to_i }.sort).to eq(followees.map(&:followed_id).sort)

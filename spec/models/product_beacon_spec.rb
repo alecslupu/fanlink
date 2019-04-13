@@ -27,7 +27,7 @@ RSpec.describe ProductBeacon, type: :model do
         expect(product_beacon.uuid).to eq("38a95016-ba21-4b1b-94ab-7cbe276c7306")
       end
     end
-    describe '.for_id_or_pid' do
+    describe ".for_id_or_pid" do
       it "uses the id" do
         beacon = create(:product_beacon)
         tested = ProductBeacon.for_id_or_pid(beacon.id)

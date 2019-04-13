@@ -22,7 +22,7 @@ class Api::V5::SemestersController < Api::V4::SemestersController
 
   protected
 
-  def tpl_handler
-    "jb"
-  end
+    def tpl_handler
+      "jb"
+    end
 end

@@ -31,7 +31,7 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

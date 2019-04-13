@@ -33,7 +33,7 @@ class Api::V4::PortalNotificationsController < Api::V3::PortalNotificationsContr
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

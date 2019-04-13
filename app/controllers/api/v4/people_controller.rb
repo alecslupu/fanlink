@@ -1,7 +1,7 @@
 class Api::V4::PeopleController < Api::V3::PeopleController
   def index
     @people = paginate apply_filters
-    @people = @people.reject {|person| person==current_user} unless params[:product_account_filter]
+    @people = @people.reject { |person| person == current_user } unless params[:product_account_filter]
     return_the @people, handler: tpl_handler
   end
 
@@ -85,14 +85,14 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     return_the @people, handler: tpl_handler
   end
 
-  protected
-
-  def tpl_handler
-    :jb
-  end
-
   def send_certificate
     current_user.send_certificate_email(params[:certificate_id], params[:email_address])
     render json: { message: _("Email sent") }
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

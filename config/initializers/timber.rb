@@ -21,4 +21,3 @@ config.integrations.rack.http_events.collapse_into_single_event = true
 #
 # For a full list of configuration options see:
 # http://www.rubydoc.info/github/timberio/timber-ruby/Timber/Config
-

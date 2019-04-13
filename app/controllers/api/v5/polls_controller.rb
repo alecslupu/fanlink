@@ -42,12 +42,12 @@ class Api::V5::PollsController < Api::V4::PollsController
         value: poll.id
       }
     end
-    render json: {polls: @polls}
+    render json: { polls: @polls }
   end
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

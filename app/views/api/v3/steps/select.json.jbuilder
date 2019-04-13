@@ -5,7 +5,7 @@ json.steps do
         if step.display?
           json.display step.display
         else
-          json.display "Step #{step.id.to_s}"
+          json.display "Step #{step.id}"
         end
       end
     end

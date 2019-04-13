@@ -25,6 +25,7 @@ module Apigen
 
     def type(shape = nil, &block)
       return @type unless shape
+
       if shape.is_a?(Array)
         @type = []
         shape.each do |s|
@@ -37,6 +38,7 @@ module Apigen
 
     def self.type(shape = nil, &block)
       return type if shape.nil?
+
       case shape
       when :object
         object = ObjectType.new
@@ -56,6 +58,7 @@ module Apigen
         enum
       else
         raise "A block should not be provided with :#{shape}." if block_given?
+
         primary_or_reference_type(shape)
       end
     end
@@ -75,11 +78,13 @@ module Apigen
                 "Use `type :model_type [block]` to assign a type to :#{@name}."
               end
       raise error unless error.nil?
+
       model_registry.check_type @type
     end
 
     def update_object_properties(&block)
       raise "#{@name} is not an object type" unless @type.is_a? ObjectType
+
       @type.instance_eval(&block)
     end
 

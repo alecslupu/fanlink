@@ -182,11 +182,11 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   end
 
   private
-  def room_params
-    allowed_params = [ :name, :picture, member_ids: [] ]
-    if current_user.admin? || current_user.product_account? || current_user.super_admin?
-      allowed_params += [ :description, :public, :order ]
+    def room_params
+      allowed_params = [ :name, :picture, member_ids: [] ]
+      if current_user.admin? || current_user.product_account? || current_user.super_admin?
+        allowed_params += [ :description, :public, :order ]
+      end
+      params.require(:room).permit(allowed_params)
     end
-    params.require(:room).permit(allowed_params)
-  end
 end

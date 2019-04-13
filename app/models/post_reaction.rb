@@ -20,7 +20,7 @@ class PostReaction < ApplicationRecord
 
 
   def self.group_reactions(post)
-    Rails.cache.fetch([post, "reactions"]){
+    Rails.cache.fetch([post, "reactions"]) {
       PostReaction.where(post_id: post.id).group(:reaction).size
     }
   end

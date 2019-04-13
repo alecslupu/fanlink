@@ -7,7 +7,7 @@ module Types
       argument :page, Integer, required: false
       argument :per_page, Integer, required: false
     end
-    
+
     def posts(page:, per_page:)
       Post.all
     end

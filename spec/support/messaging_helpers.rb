@@ -18,14 +18,13 @@ module MessagingHelpers
     def set(k, v)
     end
 
-    def update(path, data, query={})
+    def update(path, data, query = {})
       process :patch, path, data, query
     end
 
-    def process(verb, path, data=nil, query={})
-      return Response.new
+    def process(verb, path, data = nil, query = {})
+      Response.new
     end
-
   end
 
   class Implementer

@@ -1,4 +1,4 @@
-include ActionView::Helpers::TextHelper #truncate
+include ActionView::Helpers::TextHelper # truncate
 include PushHelpers
 
 describe "Push" do

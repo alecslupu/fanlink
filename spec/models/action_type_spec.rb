@@ -68,7 +68,7 @@ RSpec.describe ActionType, type: :model do
       end
       it "marked as used when associated badges exists" do
         act_type = create(:action_type)
-        act_type.badge_actions = create_list(:badge_action,2)
+        act_type.badge_actions = create_list(:badge_action, 2)
         expect(act_type.in_use?).to be_truthy
       end
     end

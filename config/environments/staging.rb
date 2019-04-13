@@ -1,4 +1,4 @@
-#require "json"
+# require "json"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -62,13 +62,13 @@ Rails.application.configure do
   end
 
   config.fanlink = {
-    :aws => {
-      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
-      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
-      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
-      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
-      s3_bucket: ENV['AWS_BUCKET'],
-      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
+    aws: {
+      hls_server: "http://d9f7ufze0iovw.cloudfront.net/",
+      rtmp_server: "rtmp://s153hddjp1ltg0.cloudfront.net/",
+      transcoder_key: ENV["AWS_TRANSCODER_KEY"],
+      transcoder_secret: ENV["AWS_TRANSCODER_SECRET"],
+      s3_bucket: ENV["AWS_BUCKET"],
+      transcoder_pipeline_id: ENV["AWS_PIPELINE_ID"],
     }
   }
 

@@ -13,7 +13,7 @@ class Person
     def determine_level(points)
       Level.where(product_id: product.id).where("points <= ?", points).order(points: :desc).first
     end
-    
+
     def level
       level_earned.as_json(only: %i[ id name internal_name points ], methods: %i[ picture_url ])
     end

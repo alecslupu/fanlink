@@ -22,7 +22,7 @@ RSpec.describe PostCommentReport, type: :model do
           expect(build(:post_comment_report, status: status)).to be_valid
         end
 
-        expect{ build(:post_comment_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
+        expect { build(:post_comment_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
       end
     end
 
@@ -65,11 +65,11 @@ RSpec.describe PostCommentReport, type: :model do
     end
   end
 
-  describe 'valid_status?' do
-    it {expect(PostCommentReport.valid_status?("pending")).to be_truthy }
-    it {expect(PostCommentReport.valid_status?('no_action_needed')).to be_truthy }
-    it {expect(PostCommentReport.valid_status?('comment_hidden')).to be_truthy }
-    it {expect(PostCommentReport.valid_status?('no_status')).to be_falsey }
+  describe "valid_status?" do
+    it { expect(PostCommentReport.valid_status?("pending")).to be_truthy }
+    it { expect(PostCommentReport.valid_status?("no_action_needed")).to be_truthy }
+    it { expect(PostCommentReport.valid_status?("comment_hidden")).to be_truthy }
+    it { expect(PostCommentReport.valid_status?("no_status")).to be_falsey }
   end
 
 end

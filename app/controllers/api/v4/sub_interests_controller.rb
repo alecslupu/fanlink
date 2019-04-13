@@ -6,7 +6,7 @@ class Api::V4::SubInterestsController < Api::V3::SubInterestsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

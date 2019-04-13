@@ -34,7 +34,7 @@ class Api::V4::MerchandiseController < Api::V3::MerchandiseController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

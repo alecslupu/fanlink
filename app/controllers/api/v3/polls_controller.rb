@@ -36,7 +36,7 @@ class Api::V3::PollsController < ApiController
   def create
     parms = poll_params
     @poll = Poll.create(parms)
-    @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
+    @poll.poll_type_id = params[params[:poll][:poll_type] + "_id"]
     if @poll.valid?
       @poll.save
       return_the @poll, handler: tpl_handler, using: :show
@@ -136,11 +136,11 @@ class Api::V3::PollsController < ApiController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 
-  def poll_params
-    params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: {})
-  end
+    def poll_params
+      params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: {})
+    end
 end

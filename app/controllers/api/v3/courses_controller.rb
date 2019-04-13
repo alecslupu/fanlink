@@ -46,13 +46,13 @@ class Api::V3::CoursesController < ApiController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 
   private
 
-  def course_params
-    params.require(:course).permit(:name, :description, :start_date, :end_date)
-  end
+    def course_params
+      params.require(:course).permit(:name, :description, :start_date, :end_date)
+    end
 end

@@ -11,10 +11,11 @@
 #  updated_at             :datetime         not null
 #
 
-class PersonCertcourse < ApplicationRecord
-  belongs_to :person
-  belongs_to :certcourse
-  validates_uniqueness_of :certcourse_id, scope: :person_id
+FactoryBot.define do
+  factory :person_certcourse do
 
-  scope :for_person, -> (person) { where(person_id: person.id) }
+    person { create(:person) }
+    certcourse { create(:certcourse) }
+
+  end
 end

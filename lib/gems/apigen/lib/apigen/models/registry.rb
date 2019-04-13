@@ -19,6 +19,7 @@ module Apigen
                 'You must pass a block when calling `model`.'
               end
       raise error unless error.nil?
+
       model = Apigen::Model.new name
       model.instance_eval(&block)
       @models[model.name] = model

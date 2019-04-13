@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V2::NotificationDeviceIdsController, type: :controller do
   describe "#create" do

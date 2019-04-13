@@ -1,5 +1,5 @@
 namespace :db do
-    desc 'Force a db:reset of database'
+    desc "Force a db:reset of database"
     task hard_reset: :environment do
       unless Rails.env.production?
         conn = ActiveRecord::Base.connection
@@ -13,10 +13,10 @@ namespace :db do
                       AND datname = 'fanlink_development';")
         # Close the connection behind us
         ActiveRecord::Base.connection.close
-  # Invoke a task now all connections are gone
-        Rake::Task['db:reset'].invoke
-        Rake::Task['db:migrate'].invoke
-  p "Forced a db:reset for environment #{Rails.env}"
+        # Invoke a task now all connections are gone
+        Rake::Task["db:reset"].invoke
+        Rake::Task["db:migrate"].invoke
+        p "Forced a db:reset for environment #{Rails.env}"
       else
         p "Sorry I cannot db:reset db on this environment: #{Rails.env}"
       end

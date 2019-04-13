@@ -29,6 +29,7 @@ module Apigen
 
     def explain(&block)
       raise 'You must pass a block to `explain`.' unless block_given?
+
       instance_eval(&block)
     end
 

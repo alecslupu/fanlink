@@ -28,7 +28,7 @@ class Api::V4::ActionTypesController < Api::V3::ActionTypesController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end
