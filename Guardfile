@@ -68,22 +68,22 @@ guard :rspec, cmd: "bundle exec rspec" do
     Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
   end
 end
-
-guard 'brakeman', run_on_start: true do
-  watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
-  watch(%r{^config/.+\.rb$})
-  watch(%r{^lib/.+\.rb$})
-  watch('Gemfile')
-end
-
-# , launchy: './rubocop.html'
-guard :rubocop, cli: %w( app/ config/ lib/ spec/ --format html -o ./rubocop.html) do
-    watch(%r{^app/.+\.rb$})
-    watch(%r{^config/.+\.rb$})
-    watch(%r{^lib/.+\.rb$})
-    watch(%r{^spec/.+\.rb$})
-    watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
-end
+#
+# guard 'brakeman', run_on_start: true do
+#   watch(%r{^app/.+\.(erb|haml|rhtml|rb)$})
+#   watch(%r{^config/.+\.rb$})
+#   watch(%r{^lib/.+\.rb$})
+#   watch('Gemfile')
+# end
+#
+# # , launchy: './rubocop.html'
+# guard :rubocop, cli: %w( app/ config/ lib/ spec/ --format html -o ./rubocop.html) do
+#     watch(%r{^app/.+\.rb$})
+#     watch(%r{^config/.+\.rb$})
+#     watch(%r{^lib/.+\.rb$})
+#     watch(%r{^spec/.+\.rb$})
+#     watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
+# end
 
 guard 'annotate' do
   watch( 'db/schema.rb' )
