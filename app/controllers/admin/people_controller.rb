@@ -19,10 +19,10 @@ module Admin
     # for more information
     protected
 
-    def scoped_resource
-      return super.where( product_id: ActsAsTenant.current_tenant.id) unless ActsAsTenant.current_tenant.nil?
+      def scoped_resource
+        return super.where(product_id: ActsAsTenant.current_tenant.id) unless ActsAsTenant.current_tenant.nil?
 
-      super
-    end
+        super
+      end
   end
 end

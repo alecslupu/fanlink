@@ -21,7 +21,7 @@ class Api::V4::CertcoursesController < ApiController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

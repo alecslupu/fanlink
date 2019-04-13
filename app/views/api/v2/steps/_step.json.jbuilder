@@ -9,7 +9,7 @@ if !step.deleted
   if step.display?
     json.display step.display
   else
-    json.display "Step #{step.id.to_s}"
+    json.display "Step #{step.id}"
   end
   if step.quest_completions.exists?
     if step.quest_completions.count == step.quest_activities.count

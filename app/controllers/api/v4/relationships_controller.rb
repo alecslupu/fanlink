@@ -98,7 +98,7 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

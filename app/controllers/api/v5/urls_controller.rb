@@ -14,7 +14,7 @@ class Api::V5::UrlsController < Api::V4::UrlsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

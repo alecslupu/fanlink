@@ -38,7 +38,7 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

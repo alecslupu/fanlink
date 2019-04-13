@@ -157,7 +157,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
 
   def index
     @people = paginate apply_filters
-    @people = @people.reject {|person| person==current_user}
+    @people = @people.reject { |person| person == current_user }
     return_the @people
   end
 
@@ -316,7 +316,7 @@ private
     people = Person.order(created_at: :desc)
     params.each do |p, v|
       if p.end_with?("_filter") && Person.respond_to?(p)
-        people = people.send(p,v, current_user)
+        people = people.send(p, v, current_user)
       end
     end
     people

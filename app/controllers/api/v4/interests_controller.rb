@@ -35,7 +35,7 @@ class Api::V4::InterestsController < Api::V3::InterestsController
 
   protected
 
-  def tpl_handler
-    'jb'
-  end
+    def tpl_handler
+      "jb"
+    end
 end

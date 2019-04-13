@@ -32,7 +32,7 @@ class Api::V4::RewardProgressesController < Api::V3::RewardProgressesController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

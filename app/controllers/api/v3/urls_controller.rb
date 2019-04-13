@@ -1,3 +1,3 @@
 class Api::V3::UrlsController < ApiController
-private
+  private
 end

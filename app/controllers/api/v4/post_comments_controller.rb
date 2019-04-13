@@ -25,7 +25,7 @@ class Api::V4::PostCommentsController < Api::V3::PostCommentsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

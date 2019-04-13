@@ -32,8 +32,7 @@ module StringUtil
   end
 
   #
-  #  Returns the string with our tags stripped out. 
+  #  Returns the string with our tags stripped out.
   def self.tag_cleaner(s)
-
   end
 end

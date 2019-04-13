@@ -21,6 +21,7 @@ module Apigen
       # Declares the output type.
       def type(type = nil, &block)
         return @type unless type
+
         @type = Apigen::Model.type type, &block
       end
 

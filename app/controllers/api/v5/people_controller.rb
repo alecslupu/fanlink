@@ -1,7 +1,7 @@
 class Api::V5::PeopleController < Api::V4::PeopleController
   def index
     @people = paginate apply_filters
-    @people = @people.reject {|person| person==current_user}
+    @people = @people.reject { |person| person == current_user }
     return_the @people, handler: tpl_handler
   end
 

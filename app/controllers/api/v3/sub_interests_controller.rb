@@ -23,7 +23,7 @@ class Api::V3::SubInterestsController < ApiController
   #
   # *
   def index
-      @sub_interests = SubInterest.all
-      return_the @sub_interests
+    @sub_interests = SubInterest.all
+    return_the @sub_interests
   end
 end

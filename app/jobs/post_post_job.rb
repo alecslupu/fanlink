@@ -9,7 +9,7 @@ class PostPostJob < Struct.new(:post_id, :version)
       followers.each do |f|
         payload["#{user_path(f)}/last_post_id"] = post_id
         if version.present?
-          version.downto(1) {|v|
+          version.downto(1) { |v|
             payload["#{versioned_user_path(f, v)}/last_post_id"] = post_id
           }
         end

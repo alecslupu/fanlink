@@ -27,7 +27,7 @@ class MessageReport < ApplicationRecord
 
   normalize_attributes :reason
 
-  scope :for_product, -> (product) { joins(message: :room).where( rooms: { product_id: product.id } ) }
+  scope :for_product, -> (product) { joins(message: :room).where(rooms: { product_id: product.id }) }
 
   def create_time
     created_at.to_s

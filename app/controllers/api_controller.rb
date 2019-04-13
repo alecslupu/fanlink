@@ -42,10 +42,10 @@ class ApiController < ApplicationController
     # everything else.
     #
     if obj.nil?
-      render_404(_("Not found.")) and return
+      render_404(_("Not found.")) && (return)
       # return
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render_422(obj.errors) and return
+      render_422(obj.errors) && (return)
       # return
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       render action: opts[:using], formats: %i[json], handlers: opts[:handler] && return
@@ -74,8 +74,8 @@ protected
     if controller.nil?
       render_404(_("Not found."))
     else
-      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}")
-      "#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}".to_sym
+      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version}_#{using}")
+      "#{controller.to_s.downcase.singularize}_#{version}_#{using}".to_sym
     end
   end
 

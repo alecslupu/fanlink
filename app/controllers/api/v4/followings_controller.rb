@@ -20,7 +20,7 @@ class Api::V4::FollowingsController < Api::V3::FollowingsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

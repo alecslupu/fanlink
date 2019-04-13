@@ -37,7 +37,7 @@ class Api::V4::ProductBeaconsController < Api::V3::ProductBeaconsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

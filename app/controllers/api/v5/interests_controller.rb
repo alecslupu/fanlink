@@ -6,7 +6,7 @@ class Api::V5::InterestsController < Api::V4::InterestsController
 
   def shared
     if params.has_key?(:interest_ids)
-      interest_ids = params[:interest_ids].split(',')
+      interest_ids = params[:interest_ids].split(",")
       if interest_ids.length.between? 3, 5
         @people = Person.joins(:interests).where(interests: { id: interest_ids })
         return_the @people, handler: tpl_handler

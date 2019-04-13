@@ -6,7 +6,7 @@ class Api::V4::PostReportsController < Api::V3::PostReportsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

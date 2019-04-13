@@ -73,7 +73,7 @@ class PortalAccessDashboard < Administrate::BaseDashboard
   ].freeze
 
   def permitted_attributes
-    #,, create a class method for this
+    # ,, create a class method for this
     super + [:post_read, :post_update, :post_delete, :chat_read, :chat_update, :chat_delete, :event_read, :event_update, :event_delete, :merchandise_read, :merchandise_update, :merchandise_delete, :user_read, :user_update, :user_delete, :badge_read, :badge_update, :badge_delete, :reward_read, :reward_update, :reward_delete, :quest_read, :quest_update, :quest_delete, :beacon_read, :beacon_update, :beacon_delete, :reporting_read, :reporting_update, :reporting_delete, :interest_read, :interest_update, :interest_delete]
   end
 

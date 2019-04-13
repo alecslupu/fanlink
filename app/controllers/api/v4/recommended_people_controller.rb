@@ -6,7 +6,7 @@ class Api::V4::RecommendedPeopleController < Api::V3::RecommendedPeopleControlle
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end
