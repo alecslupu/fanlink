@@ -34,7 +34,6 @@
 #
 
 class Product < ApplicationRecord
-  # acts_as_api
   include AttachmentSupport
   # include Product::Views
   has_paper_trail

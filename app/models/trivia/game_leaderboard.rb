@@ -7,7 +7,6 @@
 #  nb_points      :integer
 #  position       :integer
 #  average_time   :integer          default(0)
-#  integer        :integer          default(0)
 #  person_id      :bigint(8)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

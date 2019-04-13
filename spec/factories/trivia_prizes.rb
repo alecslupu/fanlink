@@ -11,15 +11,15 @@
 #  photo_file_size    :string
 #  photo_content_type :string
 #  photo_updated_at   :string
+#  is_delivered       :boolean          default(FALSE)
+#  prize_type         :integer          default("digital")
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  delivered          :boolean          default(FALSE)
-#  prize_type         :integer          default("digital")
 #
 
 FactoryBot.define do
   factory :trivia_prize, class: "Trivia::Prize" do
-    game { nil }
+    game { create(:trivia_game) }
     status { 1 }
     description { "MyText" }
     position { 1 }

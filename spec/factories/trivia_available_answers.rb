@@ -14,7 +14,7 @@
 
 FactoryBot.define do
   factory :trivia_available_answer, class: "Trivia::AvailableAnswer" do
-    trivia_question { nil }
+    question { create(:trivia_question) }
     name { "MyString" }
     hint { "MyString" }
     is_correct { false }

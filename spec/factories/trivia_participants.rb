@@ -11,7 +11,7 @@
 
 FactoryBot.define do
   factory :trivia_participant, class: "Trivia::Participant" do
-    person { nil }
-    trivia_game { nil }
+    person { create(:person) }
+    game { create(:trivia_game) }
   end
 end

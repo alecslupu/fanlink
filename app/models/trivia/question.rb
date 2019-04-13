@@ -5,14 +5,14 @@
 #  id                :bigint(8)        not null, primary key
 #  start_date        :datetime
 #  end_date          :datetime
-#  trivia_package_id :bigint(8)
+#  trivia_round_id   :bigint(8)
 #  time_limit        :integer
 #  type              :string
 #  question_order    :integer          default(1), not null
 #  status            :integer          default("draft"), not null
+#  question_interval :integer          default(5)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  question_interval :integer          default(5)
 #
 
 class Trivia::Question < ApplicationRecord

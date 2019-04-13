@@ -8,12 +8,12 @@
 #  question_count   :integer
 #  trivia_game_id   :bigint(8)
 #  leaderboard_size :integer          default(100)
-#  package_order    :integer          default(1), not null
+#  round_order      :integer          default(1), not null
 #  status           :integer          default("draft"), not null
 #  uuid             :uuid
+#  complexity       :integer          default(1)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  complexity       :integer          default(1)
 #
 
 FactoryBot.define do
@@ -21,6 +21,6 @@ FactoryBot.define do
     start_date { "2019-04-01 22:36:15" }
     end_date { "2019-04-01 22:36:15" }
     question_count { 1 }
-    game_id { nil }
+    game { create(:trivia_game) }
   end
 end

@@ -11,10 +11,10 @@
 #  photo_file_size    :string
 #  photo_content_type :string
 #  photo_updated_at   :string
+#  is_delivered       :boolean          default(FALSE)
+#  prize_type         :integer          default("digital")
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  delivered          :boolean          default(FALSE)
-#  prize_type         :integer          default("digital")
 #
 
 class Trivia::Prize < ApplicationRecord

@@ -179,7 +179,7 @@ class Person < ApplicationRecord
   end
 
   def device_tokens
-    notification_device_ids.map { |ndi| ndi.device_identifier }
+    notification_device_ids.map(&:device_identifier)
   end
 
   #

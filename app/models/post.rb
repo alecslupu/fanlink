@@ -36,14 +36,10 @@
 #
 
 class Post < ApplicationRecord
-  # acts_as_api
   include AttachmentSupport
   include Post::PortalFilters
   include Post::RealTime
   include TranslationThings
-
-  # include Post::Views
-  # TODO return posts based on user last login time
 
   enum status: %i[ pending published deleted rejected errored ]
 
@@ -116,12 +112,12 @@ class Post < ApplicationRecord
   def cached_person
     Person.cached_find(person_id)
   end
-
-  def self.cached_for_person(person)
-    Rails.cache.fetch([name, person]) {
-      for_person(person)
-    }
-  end
+  #
+  # def self.cached_for_person(person)
+  #   Rails.cache.fetch([name, person]) {
+  #     for_person(person)
+  #   }
+  # end
 
   def self.cached_for_product(product)
     Rails.cache.fetch([name, product]) {

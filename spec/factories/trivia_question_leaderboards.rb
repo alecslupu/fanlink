@@ -12,8 +12,8 @@
 
 FactoryBot.define do
   factory :trivia_question_leaderboard, class: "Trivia::QuestionLeaderboard" do
-    trivia_question { nil }
+    question { create(:trivia_question) }
     nb_points { 1 }
-    person { nil }
+    person { create(:person) }
   end
 end

@@ -5,9 +5,8 @@
 #  id               :bigint(8)        not null, primary key
 #  start_date       :datetime
 #  end_date         :datetime
-#  name             :string
 #  description      :text             default(""), not null
-#  package_count    :integer
+#  round_count      :integer
 #  long_name        :string           not null
 #  short_name       :string           not null
 #  room_id          :bigint(8)
@@ -23,8 +22,10 @@ FactoryBot.define do
   factory :trivia_game, class: "Trivia::Game" do
     start_date { "2019-04-01 22:34:36" }
     end_date { "2019-04-01 22:34:36" }
-    name { "MyString" }
+    long_name { "MyString" }
+    short_name { "MyString" }
     description { "" }
-    package_count { 1 }
+    product { create(:product) }
+    room { create(:room) }
   end
 end
