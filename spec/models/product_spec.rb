@@ -15,6 +15,10 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe "#people_count" do
+    pending
+  end
+
   describe "#name" do
     it "should accept a good name format" do
       appl = create(:product, name: "My App")
@@ -76,5 +80,4 @@ RSpec.describe Product, type: :model do
       expect(prod.to_s).to eq(prod.internal_name)
     end
   end
-
 end

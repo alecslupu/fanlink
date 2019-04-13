@@ -1,23 +1,24 @@
 require "rails_helper"
 
-RSpec.describe CertcoursePage, type: :model do
-
-  context "Valid factory" do
-    it { expect(create(:certcourse_page)).to be_valid }
-  end
+RSpec.describe Poll, type: :model do
 
   # TODO: auto-generated
-  describe "#content_type" do
+  describe "#closed?" do
     pending
   end
 
   # TODO: auto-generated
-  describe "#media_url" do
+  describe "#start_date_cannot_be_in_the_past" do
     pending
   end
 
   # TODO: auto-generated
-  describe "#child" do
+  describe "#description_cannot_be_empty" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#was_voted" do
     pending
   end
 

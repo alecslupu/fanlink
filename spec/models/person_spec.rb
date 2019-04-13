@@ -466,4 +466,148 @@ RSpec.describe Person, type: :model do
       end
     end
   end
+
+
+  # TODO: auto-generated
+  describe "#canonicalize" do
+    it "works" do
+      username = double("username")
+      result = Person.canonicalize(username)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_find" do
+    it "works" do
+      person = create(:person)
+      result = Person.cached_find(person.id)
+      expect(result).to eq(person)
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#for_username" do
+    it "works" do
+      person = create(:person)
+      result = Person.for_username(person.username)
+      expect(result).to eq(person)
+    end
+  end
+
+  # TODO: auto-generated
+  describe "#can_login?" do
+    it "works" do
+      person = create(:person)
+      result = Person.can_login?(person.email)
+      expect(result).to be_truthy
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#device_tokens" do
+    it "works" do
+      person = Person.new
+      result = person.device_tokens
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#named_like" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#current_user" do
+    it "works" do
+      person = create(:person)
+      Person.current_user = (person)
+      result = Person.current_user
+      expect(result).to eq(person)
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#current_user=" do
+    it "works" do
+      user = double("user")
+      result = Person.current_user = (user)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reset_password_to" do
+    it "works" do
+      person = Person.new
+      password = double("password")
+      result = person.reset_password_to(password)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#set_password_token!" do
+    it "works" do
+      person = build(:person)
+      result = person.set_password_token!
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#permissions" do
+    it "works" do
+      person = Person.new
+      result = person.permissions
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#roles_for_select" do
+    it "works" do
+      person = Person.new
+      result = person.roles_for_select
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#some_admin?" do
+    it "works" do
+      person = Person.new
+      result = person.some_admin?
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#to_s" do
+    it "works" do
+      person = build(:person)
+      result = person.to_s
+      expect(result).to eq(person.name)
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#flush_cache" do
+    # Why do we need to have the model know about it?
+    pending
+  end
+
 end

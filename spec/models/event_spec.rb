@@ -39,4 +39,12 @@ RSpec.describe Event, type: :model do
       expect(event.errors[:starts_at]).not_to be_blank
     end
   end
+
+
+  # TODO: auto-generated
+  describe "#place_info" do
+    pending
+  end
+
+
 end
