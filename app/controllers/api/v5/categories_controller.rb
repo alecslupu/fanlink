@@ -27,6 +27,6 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
         value: category.id
       }
     end
-    render json: {categories: @categories}
+    render json: { categories: @categories }
   end
 end

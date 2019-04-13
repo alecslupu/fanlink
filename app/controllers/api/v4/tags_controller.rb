@@ -13,8 +13,7 @@ class Api::V4::TagsController < Api::V3::TagsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
-
+    def tpl_handler
+      :jb
+    end
 end

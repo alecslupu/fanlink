@@ -24,7 +24,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       end
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    #@posts = @posts.includes([:person])
+    # @posts = @posts.includes([:person])
     return_the @posts, handler: tpl_handler
   end
 
@@ -109,7 +109,7 @@ class Api::V4::PostsController < Api::V3::PostsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

@@ -6,7 +6,7 @@ class Api::V4::PostCommentReportsController < Api::V3::PostCommentReportsControl
 
   protected
 
-  def tpl_handler
-    'jb'
-  end
+    def tpl_handler
+      "jb"
+    end
 end

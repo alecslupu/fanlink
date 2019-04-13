@@ -30,12 +30,12 @@ class Api::V4::UrlsController < Api::V3::UrlsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 
   private
-  def url_params
-    params.require(:url).permit(:displayed_url, :protected)
-  end
+    def url_params
+      params.require(:url).permit(:displayed_url, :protected)
+    end
 end

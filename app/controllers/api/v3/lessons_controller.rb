@@ -45,13 +45,13 @@ class Api::V3::LessonsController < ApiController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 
   private
 
-  def lesson_params
-    params.require(:lesson).permit(:name, :description, :start_date, :end_date, :video)
-  end
+    def lesson_params
+      params.require(:lesson).permit(:name, :description, :start_date, :end_date, :video)
+    end
 end

@@ -2,11 +2,11 @@ require "simplecov"
 require "pry"
 
 SimpleCov.start "rails" do
-  add_filter "app/channels" #nothing here
-  add_filter "app/controllers/admin" #administrate stuff
+  add_filter "app/channels" # nothing here
+  add_filter "app/controllers/admin" # administrate stuff
   add_filter "app/dashboards"
   add_filter "app/fields"
-  add_filter "app/jobs" #nothing here
+  add_filter "app/jobs" # nothing here
 end
 
 require File.expand_path("../../config/environment", __FILE__)
@@ -138,8 +138,8 @@ RSpec.configure do |config|
   config.include RequestHelpers
   config.include JsonHelpers, type: :controller
 
-  config.include Sorcery::TestHelpers::Rails::Controller#, type: :request
-  config.include Sorcery::TestHelpers::Rails::Integration #, type: :request
+  config.include Sorcery::TestHelpers::Rails::Controller# , type: :request
+  config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
   config.include RSpec::Rails::RequestExampleGroup, type: :request
   config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
 

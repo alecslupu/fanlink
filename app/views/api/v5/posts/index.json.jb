@@ -1,8 +1,8 @@
 json = {}
-if @req_source == 'web'
+if @req_source == "web"
   json[:posts] = @posts.map do |post|
     p = Rails.cache.fetch ["v5", "post", @req_source, post.id, post.updated_at.to_i] do
-      render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
+      render partial: @req_source, locals: { post: post,  post_reaction: @post_reactions[post.id] }
     end
     p[:person] = render partial: "person", locals: { person: post.person }, handlers: "jb"
     p[:picture_url] = post.picture_url
@@ -14,7 +14,7 @@ if @req_source == 'web'
 else
   json[:posts] = @posts.map do |post|
     p = Rails.cache.fetch ["v5", "post", @req_source, post.id, post.updated_at.to_i] do
-      render partial: @req_source, locals: {post: post,  post_reaction: @post_reactions[post.id] }
+      render partial: @req_source, locals: { post: post,  post_reaction: @post_reactions[post.id] }
     end
     if defined?(@post_reactions[post.id]) && @post_reactions[post.id].present?
       p[:post_reaction] =

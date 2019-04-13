@@ -26,6 +26,6 @@ class ProductBeacon < ApplicationRecord
 
   # default_scope { order(created_at: :desc) }
   def self.for_id_or_pid(id)
-    where(id: id).or(where( beacon_pid: id))
+    where(id: id).or(where(beacon_pid: id))
   end
 end

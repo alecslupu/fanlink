@@ -1,5 +1,5 @@
 json = Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, person) do
-  render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: 'jb' )
+  render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: "jb")
 end
 json[:email] = person.email
 json[:product] = {
@@ -11,13 +11,13 @@ json[:product] = {
 if person.level_progresses.empty?
   json[:level_progress] = nil
 else
-  json[:level_progress] = render(partial: "api/v4/level_progresses/#{@req_source}", collection: person.level_progresses, as: :level, handlers: 'jb')
+  json[:level_progress] = render(partial: "api/v4/level_progresses/#{@req_source}", collection: person.level_progresses, as: :level, handlers: "jb")
 end
 
 if person.person_rewards.empty?
   json[:rewards] = nil
 else
-  json[:rewards] = render(partial: "api/v4/person_rewards/#{@req_source}", collection: person.person_rewards, as: :reward, handlers: 'jb')
+  json[:rewards] = render(partial: "api/v4/person_rewards/#{@req_source}", collection: person.person_rewards, as: :reward, handlers: "jb")
 end
 
 if person.blocked_people.empty?

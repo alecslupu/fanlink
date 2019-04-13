@@ -31,7 +31,7 @@ class Api::V1::SessionController < ApiController
   def index
     if @person = current_user
       if @person.terminated
-        return head :unauthorized
+        head :unauthorized
       else
         return_the @person
       end

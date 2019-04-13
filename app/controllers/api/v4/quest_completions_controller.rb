@@ -47,7 +47,7 @@ class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

@@ -55,7 +55,7 @@ class Api::V4::RoomsController < Api::V3::RoomsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

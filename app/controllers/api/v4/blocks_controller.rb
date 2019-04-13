@@ -14,7 +14,7 @@ class Api::V4::BlocksController < Api::V3::BlocksController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

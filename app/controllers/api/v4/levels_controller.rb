@@ -36,12 +36,12 @@ class Api::V4::LevelsController < Api::V3::LevelsController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 
   private
-  def level_params
-    params.require(:level).permit(:name, :internal_name, :description, :picture, :points)
-  end
+    def level_params
+      params.require(:level).permit(:name, :internal_name, :description, :picture, :points)
+    end
 end

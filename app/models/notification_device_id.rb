@@ -19,5 +19,5 @@ class NotificationDeviceId < ApplicationRecord
 
   validates :device_identifier,
             uniqueness: { message: _("That device id is already registered.") },
-            presence: { message: _("Device identifier is required.")}
+            presence: { message: _("Device identifier is required.") }
 end

@@ -7,11 +7,11 @@ RSpec.describe EventCheckin, type: :model do
       it "adds error message" do
         person = create(:person)
         old_tenant = ActsAsTenant.current_tenant
-        ActsAsTenant.current_tenant= create(:product)
+        ActsAsTenant.current_tenant = create(:product)
         event = create(:event)
         event_checkin = build(:event_checkin, event: event, person: person)
         expect(event_checkin).not_to be_valid
-        ActsAsTenant.current_tenant= old_tenant
+        ActsAsTenant.current_tenant = old_tenant
       end
       it "passes" do
         product = create(:product)

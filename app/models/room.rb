@@ -24,7 +24,7 @@ class Room < ApplicationRecord
   include Room::RealTime
   include TranslationThings
 
-  #replicated_model
+  # replicated_model
 
   enum status: %i[ inactive active deleted ]
 
@@ -47,7 +47,7 @@ class Room < ApplicationRecord
 
   has_paper_trail
 
-  validates :picture, absence: { message: _("Private rooms may not have pictures.")}, if: Proc.new { |r| !r.public? }
+  validates :picture, absence: { message: _("Private rooms may not have pictures.") }, if: Proc.new { |r| !r.public? }
   scope :privates_for_person, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false) }
   scope :publics, -> { where(public: true) }
   scope :privates, -> { where(public: false) }

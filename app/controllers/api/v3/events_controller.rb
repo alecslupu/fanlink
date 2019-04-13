@@ -279,12 +279,12 @@ class Api::V3::EventsController < Api::V2::EventsController
 
   protected
 
-  def tpl_handler
-    "jb"
-  end
+    def tpl_handler
+      "jb"
+    end
 
   private
-  def event_params
-    params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier, :longitude, :latitude)
-  end
+    def event_params
+      params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier, :longitude, :latitude)
+    end
 end

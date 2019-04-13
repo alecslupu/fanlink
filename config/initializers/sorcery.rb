@@ -222,7 +222,7 @@ Rails.application.config.sorcery.configure do |config|
     # change default salt attribute.
     # Default: `:salt`
     #
-    #user.salt_attribute_name =
+    # user.salt_attribute_name =
 
     # how many times to apply encryption to the password.
     # Default: `nil`
@@ -442,7 +442,7 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `:uid`
     #
     # user.provider_uid_attribute_name =
-    #user.reset_password_mailer = PersonMailer
+    # user.reset_password_mailer = PersonMailer
   end
 
   # This line must come after the 'user config' block.

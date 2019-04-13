@@ -14,8 +14,8 @@ module AttachmentSupport
         }
 
       validates_attachment name,
-        content_type: {content_type: ["image/jpeg", "image/gif", "image/png"]},
-        size: {in: 0..5.megabytes}
+        content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+        size: { in: 0..5.megabytes }
 
       class_eval <<-EOE
         def #{name}_url
@@ -37,8 +37,8 @@ module AttachmentSupport
     def has_audio_called(name)
       has_attached_file name, default_url: nil
       validates_attachment name,
-        content_type: {content_type: ["audio/mpeg", "audio/mp4", "audio/aac", "audio/x-aac"]},
-        size: {in: 0..10.megabytes}
+        content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/aac", "audio/x-aac"] },
+        size: { in: 0..10.megabytes }
 
       class_eval <<-EOE
         def #{name}_url

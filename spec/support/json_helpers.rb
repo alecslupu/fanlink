@@ -127,9 +127,9 @@ module JsonHelpers
     post["tags"].each do |idx, tag|
       post["tags"][idx] = tag.compact
     end unless post["tags"].nil?
-    post["post_reaction_counts"] = nil #Not easily testable via json schema validation
+    post["post_reaction_counts"] = nil # Not easily testable via json schema validation
     post["post_reaction"] = post["post_reaction"].compact unless  post["post_reaction"].nil?
- 
+
     schema.valid?(post.compact)
   end
 
@@ -163,7 +163,7 @@ module JsonHelpers
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_report_response.json"))
 
     # puts schema.validate(post_report.compact).to_a
-    
+
     schema.valid?(post_report.compact)
   end
 

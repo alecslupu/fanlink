@@ -45,11 +45,11 @@ class Api::V3::SemestersController < ApiController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 
-  def semester_params
-    params.require(:semester).permit(:name, :description, :start_date, :end_date)
-  end
+    def semester_params
+      params.require(:semester).permit(:name, :description, :start_date, :end_date)
+    end
 end

@@ -10,7 +10,7 @@ class FriendRequestReceivedPushJob < Struct.new(:relationship_id)
     end
   end
 
-  #,,, not sure why this doesn't catch.
+  # ,,, not sure why this doesn't catch.
   def error(job, exception)
     Rails.logger.tagged("[Friend Request Received]") { Rails.logger.error exception.inspect }
     if exception.is_a?(ActiveRecord::RecordNotFound)

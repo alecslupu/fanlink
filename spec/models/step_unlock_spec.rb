@@ -12,7 +12,7 @@ RSpec.describe StepUnlock, type: :model do
       end
     end
   end
-  
+
   context "Validation" do
     describe "should create a valid step unlock" do
       it do

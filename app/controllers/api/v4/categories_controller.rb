@@ -40,7 +40,7 @@ class Api::V4::CategoriesController < Api::V3::CategoriesController
 
   protected
 
-  def tpl_handler
-    :jb
-  end
+    def tpl_handler
+      :jb
+    end
 end

@@ -420,36 +420,36 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  describe '.to_s' do
+  describe ".to_s" do
     context "name" do
       it do
-        person = build(:person, name: 'John')
-        expect(person.to_s).to eq('John')
+        person = build(:person, name: "John")
+        expect(person.to_s).to eq("John")
       end
     end
     context "username" do
       it do
-        person = build(:person, name: nil, username: 'John')
-        expect(person.to_s).to eq('John')
+        person = build(:person, name: nil, username: "John")
+        expect(person.to_s).to eq("John")
       end
     end
   end
-  describe '.reset_password_to' do
+  describe ".reset_password_to" do
     context "it is invalid" do
       it do
-        person = create(:person, reset_password_token: 'reset_password_token')
+        person = create(:person, reset_password_token: "reset_password_token")
         expect(person).to be_valid
-        person.reset_password_to('small')
+        person.reset_password_to("small")
         expect(person).not_to be_valid
         expect(person.reset_password_token).to be_nil
-        expect(person.reload.reset_password_token).to eq('reset_password_token')
+        expect(person.reload.reset_password_token).to eq("reset_password_token")
       end
     end
     context "it is valid clears reset_password_token" do
       it do
-        person = create(:person, reset_password_token: 'reset_password_token')
+        person = create(:person, reset_password_token: "reset_password_token")
         expect(person).to be_valid
-        person.reset_password_to('invalid')
+        person.reset_password_to("invalid")
         expect(person).to be_valid
         expect(person.reset_password_token).to be_nil
       end

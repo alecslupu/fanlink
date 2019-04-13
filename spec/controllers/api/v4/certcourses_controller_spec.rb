@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
@@ -43,10 +43,8 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
           expect(selected_answer["is_selected"]).not_to be_nil
           expect(selected_answer["id"]).to eq(value.id)
         end
-
-
+        
       end
     end
   end
 end
-

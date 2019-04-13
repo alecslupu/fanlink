@@ -21,7 +21,7 @@ module Admin
     def reset_progress
       if requested_resource
         PersonQuiz.where(person_id: requested_resource.person_id).destroy_all
-        if requested_resource.update({last_completed_page_id: nil, is_completed: false})
+        if requested_resource.update(last_completed_page_id: nil, is_completed: false)
           update_certification_status(requested_resource.certcourse.certificate_ids, requested_resource.person_id)
           flash[:notice] = translate_with_resource("reset.success")
         else
@@ -54,6 +54,5 @@ module Admin
         c.save!
       end
     end
-
   end
 end

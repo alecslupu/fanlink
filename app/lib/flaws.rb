@@ -8,17 +8,17 @@ module Flaws
   # as we care about).
   #
   VIDEO_PRESETS = [
-    {id: "1542983455511-yqngpd", mime: "video/mp4", name: "v-1080p.mp4", w: 1920, h: 1080, thumbnails: true},
-    {id: "1351620000001-000010", mime: "video/mp4", name: "v-720p.mp4", w: 1280, h: 720},
-    {id: "1351620000001-000020", mime: "video/mp4", name: "v.mp4", w: 854, h: 480, always: true},
-    {id: "1351620000001-000040", mime: "video/mp4", name: "v-360p.mp4", w: 640, h: 320, always: true},
-    {id: "1351620000001-000061", mime: "video/mp4", name: "v-240p.mp4", w: 320, h: 240, always: true},
-  # We are not using streaming just yet
-  #{id: "1351620000001-200010", mime: "application/x-mpegurl", name: "v-hls20M", w: 1024, h: 768, playlist: true},
-  #{id: "1351620000001-200020", mime: "application/x-mpegurl", name: "v-hls15M", w: 960, h: 640, playlist: true},
-  #{id: "1351620000001-200030", mime: "application/x-mpegurl", name: "v-hls10M", w: 640, h: 432, playlist: true},
-  #{id: "1351620000001-200040", mime: "application/x-mpegurl", name: "v-hls600k", w: 480, h: 320, playlist: true},
-  #{id: "1351620000001-200050", mime: "application/x-mpegurl", name: "v-hls400k", w: 400, h: 288, always: true, playlist: true},
+    { id: "1542983455511-yqngpd", mime: "video/mp4", name: "v-1080p.mp4", w: 1920, h: 1080, thumbnails: true },
+    { id: "1351620000001-000010", mime: "video/mp4", name: "v-720p.mp4", w: 1280, h: 720 },
+    { id: "1351620000001-000020", mime: "video/mp4", name: "v.mp4", w: 854, h: 480, always: true },
+    { id: "1351620000001-000040", mime: "video/mp4", name: "v-360p.mp4", w: 640, h: 320, always: true },
+    { id: "1351620000001-000061", mime: "video/mp4", name: "v-240p.mp4", w: 320, h: 240, always: true },
+    # We are not using streaming just yet
+    # {id: "1351620000001-200010", mime: "application/x-mpegurl", name: "v-hls20M", w: 1024, h: 768, playlist: true},
+    # {id: "1351620000001-200020", mime: "application/x-mpegurl", name: "v-hls15M", w: 960, h: 640, playlist: true},
+    # {id: "1351620000001-200030", mime: "application/x-mpegurl", name: "v-hls10M", w: 640, h: 432, playlist: true},
+    # {id: "1351620000001-200040", mime: "application/x-mpegurl", name: "v-hls600k", w: 480, h: 320, playlist: true},
+    # {id: "1351620000001-200050", mime: "application/x-mpegurl", name: "v-hls400k", w: 400, h: 288, always: true, playlist: true},
   ]
   SIZER = VIDEO_PRESETS.first
 
@@ -67,7 +67,7 @@ module Flaws
   #   If AWS doesn't like the token.
   #
   def self.sns_confirm(topic_arn, token)
-    raise ArgumentError.new('Missing token for subscription confirmation') if(token.blank?)
+    raise ArgumentError.new("Missing token for subscription confirmation") if (token.blank?)
     Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret).confirm_subscription(topic_arn: topic_arn, token: token)
   end
 
@@ -85,7 +85,7 @@ module Flaws
 
     transcoder.create_job(
       pipeline_id: pipeline_id,
-      input: {key: filename},
+      input: { key: filename },
       outputs: [SIZER].map(&to_output),
       user_metadata: data.merge('sizer': "t"),
     ).job
@@ -111,13 +111,13 @@ module Flaws
     )
     transcoder.create_job(
       pipeline_id: pipeline_id,
-      input: {key: filename},
+      input: { key: filename },
       outputs: presets.map(&to_output),
       #:playlists => [{
       #  :name => "#{video_directory_for(filename)}/v",
       #  :format => "HLSv3",
       #  :output_keys => presets.select(&playlists).map(&to_output_name),
-      #}],
+      # }],
       user_metadata: data,
     ).job
   end
@@ -145,7 +145,7 @@ module Flaws
   #   The raw exception (if any) from the transcoder.
   #
   def self.extract_from_transcoding_queue(&block)
-    unpack = lambda { |m| {rh: m.receipt_handle, body: JSON.parse(JSON.parse(m.body)["Message"])} }
+    unpack = lambda { |m| { rh: m.receipt_handle, body: JSON.parse(JSON.parse(m.body)["Message"]) } }
     the_one = lambda { |m| block[m[:body]] }
     sqs = Aws::SQS::Client.new(access_key_id: key, secret_access_key: secret)
     if (msg = sqs.receive_message(queue_url: queue_url, max_number_of_messages: 10).messages.map(&unpack).find(&the_one))
@@ -171,55 +171,55 @@ module Flaws
     basename = File.basename(filename, File.extname(filename))
 
     presets = VIDEO_PRESETS.select { |p| preset_ids.include?(p[:id]) }
-    #hls_entry = [{:type => "application/x-mpegurl", :src => "#{hls_server}videos/#{directory}/v.m3u8"}]
-    #hls_entry = [] if (presets.all? { |p| !p[:playlist] })
+    # hls_entry = [{:type => "application/x-mpegurl", :src => "#{hls_server}videos/#{directory}/v.m3u8"}]
+    # hls_entry = [] if (presets.all? { |p| !p[:playlist] })
 
     non_hls = lambda { |p| !p[:playlist] }
-    to_summary = lambda { |p| {type: p[:mime], src: "#{s3_server}#{directory}/#{basename}-#{p[:name]}"} }
-    #hls_entry + presets.select(&non_hls).map(&to_summary)
+    to_summary = lambda { |p| { type: p[:mime], src: "#{s3_server}#{directory}/#{basename}-#{p[:name]}" } }
+    # hls_entry + presets.select(&non_hls).map(&to_summary)
     presets.select(&non_hls).map(&to_summary)
   end
 
   private
 
-  def self.output_name_for(filename)
-    basename = File.basename(filename, File.extname(filename))
-    dirname = File.dirname(filename).gsub("original", "transcoded")
-    -> (p) { "#{dirname}/#{basename}-#{p[:name]}" }
-  end
+    def self.output_name_for(filename)
+      basename = File.basename(filename, File.extname(filename))
+      dirname = File.dirname(filename).gsub("original", "transcoded")
+      -> (p) { "#{dirname}/#{basename}-#{p[:name]}" }
+    end
 
-  def self.thumbnail_name_for(filename)
-    basename = File.basename(filename, File.extname(filename))
-    -> (p) { "thumbnails/#{basename}" }
-  end
+    def self.thumbnail_name_for(filename)
+      basename = File.basename(filename, File.extname(filename))
+      -> (p) { "thumbnails/#{basename}" }
+    end
 
-  def self.outputter_for(filename)
-    output_name = output_name_for(filename)
-    thumbnail_name = thumbnail_name_for(filename)
-    -> (p) {
-      {key: output_name[p], preset_id: p[:id]}.merge(
-        p[:thumbnails] ? {thumbnail_pattern: "#{thumbnail_name[p]}-{count}"} : {}).merge(
-        p[:playlist] ? {segment_duration: "10"} : {})
-    }
-  end
+    def self.outputter_for(filename)
+      output_name = output_name_for(filename)
+      thumbnail_name = thumbnail_name_for(filename)
+      -> (p) {
+        { key: output_name[p], preset_id: p[:id] }.merge(
+          p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}).merge(
+            p[:playlist] ? { segment_duration: "10" } : {})
+      }
+    end
 
-  def self.video_directory_for(filename)
-    File.dirname(filename).gsub("original", "transcoded")
-  end
+    def self.video_directory_for(filename)
+      File.dirname(filename).gsub("original", "transcoded")
+    end
 
-  def self.key
-    Rails.configuration.fanlink[:aws][:transcoder_key]
-  end
+    def self.key
+      Rails.configuration.fanlink[:aws][:transcoder_key]
+    end
 
-  def self.secret
-    Rails.configuration.fanlink[:aws][:transcoder_secret]
-  end
+    def self.secret
+      Rails.configuration.fanlink[:aws][:transcoder_secret]
+    end
 
-  def self.pipeline_id
-    Rails.configuration.fanlink[:aws][:transcoder_pipeline_id]
-  end
+    def self.pipeline_id
+      Rails.configuration.fanlink[:aws][:transcoder_pipeline_id]
+    end
 
-  def self.queue_url
-    Rails.configuration.fanlink[:aws][:transcoder_queue_url]
-  end
+    def self.queue_url
+      Rails.configuration.fanlink[:aws][:transcoder_queue_url]
+    end
 end

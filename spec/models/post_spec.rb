@@ -13,8 +13,8 @@ RSpec.describe Post, type: :model do
     @followed1_post1 = create(:post, created_at: created_in_range - 1.minute, person: @followed1)
     @followed1_post2 = create(:post, created_at: created_in_range, person: @followed1)
     @followed2_post1 = create(:post, created_at: created_in_range + 1.minute, person: @followed2)
-    @before_range = create(:post, created_at: @start_date - 1.day, person: @followed1) #before range
-    create(:post, created_at: @end_date + 1.day) #after range
+    @before_range = create(:post, created_at: @start_date - 1.day, person: @followed1) # before range
+    create(:post, created_at: @end_date + 1.day) # after range
   end
 
   context "Valid" do
