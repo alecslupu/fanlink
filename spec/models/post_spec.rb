@@ -95,4 +95,139 @@ RSpec.describe Post, type: :model do
       expect(post.errors[:starts_at]).not_to be_empty
     end
   end
+
+
+
+  # TODO: auto-generated
+  describe "#cache_key" do
+    it "works" do
+      post = build(:post)
+      result = post.cache_key
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#comments" do
+    it "works" do
+      post = Post.new
+      result = post.comments
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#product" do
+    it "works" do
+      post = build(:post)
+      result = post.product
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_person" do
+    it "works" do
+      post = build(:post)
+      result = post.cached_person
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_for_person" do
+    it "works" do
+      person = double("person")
+      result = Post.cached_for_person(person)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_for_product" do
+    it "works" do
+      post = create(:post)
+      product = post.product
+      result = Post.cached_for_product(product)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#process_et_response" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#video_thumbnail" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#flush_cache" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reaction_breakdown" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_reaction_count" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_tags" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reactions" do
+    it "works" do
+      post = create(:post)
+      result = post.reactions
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reported?" do
+    it "works" do
+      post = Post.new
+      result = post.reported?
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#visible?" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#start_listener" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#published?" do
+    it "works" do
+      post = Post.new
+      result = post.published?
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+
 end

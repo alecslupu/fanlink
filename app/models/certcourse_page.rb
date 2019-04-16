@@ -37,7 +37,7 @@ class CertcoursePage < ApplicationRecord
     unless quiz_page.present?
       "media url"
     else
-      null
+      nil
     end
   end
 

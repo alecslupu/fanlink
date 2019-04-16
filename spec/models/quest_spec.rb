@@ -47,6 +47,12 @@ RSpec.describe Quest, type: :model do
     end
   end
 
+  context "Methods" do
+    describe "#running?" do
+      pending
+    end
+  end
+
   context "Filters" do
     it "#id_filter" do
     end

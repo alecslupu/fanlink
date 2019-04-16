@@ -46,4 +46,27 @@ RSpec.describe PortalNotification, type: :model do
       expect(notif.errors[:send_me_at]).not_to be_empty
     end
   end
+
+
+  # TODO: auto-generated
+  describe "#ignore_translation_lang?" do
+    it "works" do
+      portal_notification = PortalNotification.new
+      field = double("field")
+      lang = double("lang")
+      result = portal_notification.ignore_translation_lang?(field, lang)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#push_topics" do
+    it "works" do
+      portal_notification = PortalNotification.new
+      result = portal_notification.push_topics
+      expect(result).not_to be_nil
+    end
+    pending
+  end
 end
