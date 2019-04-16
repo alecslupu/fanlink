@@ -17,5 +17,4 @@ if @certcourse.certcourse_pages.present?
   end
 end
 
-
 json

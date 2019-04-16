@@ -33,6 +33,6 @@
 
 FactoryBot.define do
   factory :person_certificate do
-    
+
   end
 end
