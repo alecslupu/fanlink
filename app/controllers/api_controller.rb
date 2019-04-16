@@ -42,10 +42,10 @@ class ApiController < ApplicationController
     # everything else.
     #
     if obj.nil?
-      render_404(_("Not found.")) and return
+      render_404(_("Not found.")) && (return)
       # return
     elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render_422(obj.errors) and return
+      render_422(obj.errors) && (return)
       # return
     elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
       render action: opts[:using], formats: %i[json], handlers: opts[:handler] && return
@@ -54,8 +54,16 @@ class ApiController < ApplicationController
 
 protected
 
+  def some_admin?
+    current_user.try(:some_admin?)
+  end
+
+  def web_request?
+    @req_source == :web
+  end
+
   def admin_only
-    head :unauthorized unless current_user.some_admin?
+    head :unauthorized unless some_admin?
   end
 
   def super_admin_only
@@ -66,8 +74,8 @@ protected
     if controller.nil?
       render_404(_("Not found."))
     else
-      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}")
-      "#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}".to_sym
+      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version}_#{using}")
+      "#{controller.to_s.downcase.singularize}_#{version}_#{using}".to_sym
     end
   end
 
@@ -171,11 +179,8 @@ protected
 
   def set_app
     @device = find_device_type
-    if @device.to_s == "web"
-      @req_source = @device.to_s
-    else
-      @req_source = "app"
-    end
+    @req_source = "app"
+    @req_source = @device.to_s if @device.to_s == "web"
   end
 
   def unset_app

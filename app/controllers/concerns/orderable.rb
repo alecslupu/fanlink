@@ -16,16 +16,16 @@ module Orderable
     #
     ordering = {}
     if params[:sortBy]
-      sort_order = { 'asc' => :asc, 'desc' => :desc }
-      sort_sign = 'asc'
+      sort_order = { "asc" => :asc, "desc" => :desc }
+      sort_sign = "asc"
       if params.has_key?(:descending) && params[:descending]
-        sort_sign = 'desc'
+        sort_sign = "desc"
       end
       model = controller_name.classify.constantize
       if model.attribute_names.include?(params[:sortBy])
         ordering[params[:sortBy]] = sort_order[sort_sign]
       end
     end
-    return ordering
+    ordering
   end
 end

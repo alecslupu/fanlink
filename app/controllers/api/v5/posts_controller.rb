@@ -3,7 +3,7 @@ class Api::V5::PostsController < Api::V4::PostsController
     if params[:promoted].present?
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
     else
-      if @req_source == "web" && current_user.some_admin?
+      if web_request? && some_admin?
         @posts = paginate apply_filters
       else
         @posts = paginate Post.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
@@ -20,11 +20,11 @@ class Api::V5::PostsController < Api::V4::PostsController
           render_422(_("Cannot find that person.")) && return
         end
       else
-        @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless @req_source == "web"
+        @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless web_request?
       end
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
   end
 
   def create
@@ -41,15 +41,14 @@ class Api::V5::PostsController < Api::V4::PostsController
         end
         @post.post(@api_version) if @post.published?
         broadcast(:post_created, current_user, @post)
-        return_the @post, handler: 'jb', using: :show
+        return_the @post, handler: tpl_handler, using: :show
       else
         render_422 @post.errors
       end
     end
   end
-
   def show
-    if current_user.try(:some_admin?) && @req_source == "web"
+    if current_user.try(:some_admin?) && web_request?
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
     else
       @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
@@ -62,7 +61,7 @@ class Api::V5::PostsController < Api::V4::PostsController
       render_not_found
     else
       @post_reaction = @post.reactions.find_by(person: current_user)
-      return_the @post, handler: 'jb', using: :show
+      return_the @post, handler: tpl_handler, using: :show
     end
   end
 end

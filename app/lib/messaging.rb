@@ -4,7 +4,7 @@ module Messaging
     payload = {}
     payload["#{user_path(person)}/message_counts/#{room.id}"] = 0
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{user_path(person, v)}/message_counts/#{room.id}"] = 0
       }
     end
@@ -16,7 +16,7 @@ module Messaging
       payload = {}
       payload["#{room_path(message.room)}/last_deleted_message_id"] = message.id
       if version.present?
-        version.downto(1) {|v|
+        version.downto(1) { |v|
           payload["#{room_path(message.room, v)}/last_deleted_message_id"] = message.id
         }
       end
@@ -34,7 +34,7 @@ module Messaging
       to_be_notified.each do |p|
         payload["#{user_path(p)}/deleted_post_id"] = post.id
         if version.present?
-          version.downto(1) {|v|
+          version.downto(1) { |v|
             payload["#{user_path(p, v)}/deleted_post_id"] = post.id
           }
         end
@@ -44,18 +44,14 @@ module Messaging
   end
 
   def delete_room(room, version = nil)
-    if room.public
-      delete_public_room(room, version)
-    else
-      delete_private_room(room)
-    end
+    room.public? ? delete_public_room(room, version) : delete_private_room(room)
   end
 
   def delete_room_for_member(room, member, version = nil)
     payload = {}
     payload["#{user_path(member)}/deleted_room_id"] = room.id
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{user_path(member, v)}/deleted_room_id"] = room.id
       }
     end
@@ -84,7 +80,7 @@ module Messaging
       to_be_notified.each do |p|
         payload["#{user_path(p)}/last_post_id"] = post.id
         if version.present?
-          version.downto(1) {|v|
+          version.downto(1) { |v|
             payload["#{user_path(p, v)}/last_post_id"] = post.id
           }
         end
@@ -98,7 +94,7 @@ module Messaging
     room.room_memberships.each do |mem|
       payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
       if version.present?
-        version.downto(1) {|v|
+        version.downto(1) { |v|
           payload[message_counter_path(mem, v)] = mem.message_count + 1 unless mem.person == except_user
         }
       end
@@ -110,7 +106,7 @@ module Messaging
     payload = {}
     payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
       }
     end
@@ -123,7 +119,7 @@ private
     payload = {}
     payload["#{user_path(member)}/new_room_id"] = room.id
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{user_path(member, v)}/new_room_id"] = room.id
       }
     end
@@ -147,7 +143,7 @@ private
 
   def delete_room_key(room, version = nil)
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         client.delete(room_path(room, v))
       }
     end
@@ -166,7 +162,7 @@ private
     payload = {}
     payload["#{room_path(msg.room)}/last_message_id"] = msg.id
     if version.present?
-      version.downto(1) {|v|
+      version.downto(1) { |v|
         payload["#{room_path(msg.room, v)}/last_message_id"] = msg.id
       }
     end
@@ -194,10 +190,10 @@ private
       }
     }
     payload = {}
-    payload["#{room_path(msg.room)}/last_message"] = message.as_json
+    payload["#{room_path(message.room)}/last_message"] = message.as_json
     if version.present?
-      version.downto(1) {|v|
-        payload["#{room_path(msg.room)}/last_message"] = msg
+      version.downto(1) { |v|
+        payload["#{room_path(message.room)}/last_message"] = msg
       }
     end
     client.update("", payload).response.status == 200

@@ -213,7 +213,7 @@ class Api::V2::StepsController < ApiController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       @step.deleted = true
       @step.save
       head :ok

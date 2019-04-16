@@ -23,6 +23,7 @@ JkoApi.routes self do
         post "password_forgot" => "password_resets#create"
         post "password_reset" => "password_resets#update"
         get "recommended" => "recommended_people#index"
+        post "send_certificate"
       end
     end
     get "post_comments/list" => "post_comments#list"
@@ -57,8 +58,8 @@ JkoApi.routes self do
 
     resources :merchandise, only: %i[ create update destroy ]
 
-    resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
-      resources :types, :controller => "activity_types", only: %i[ create index ]
+    resources :activities, controller: "quest_activities", only: %i[ update show destroy ] do
+      resources :types, controller: "activity_types", only: %i[ create index ]
     end
 
 
@@ -73,7 +74,7 @@ JkoApi.routes self do
       get "badges" => "badges#index"
     end
 
-    resources :beacons, :controller => "product_beacons" do
+    resources :beacons, controller: "product_beacons" do
       collection do
         get "list" => "product_beacons#list"
         get "select" => "product_beacons#index"
@@ -94,21 +95,21 @@ JkoApi.routes self do
 
     resources :quests do
       resources :steps, only: %i[ create index ]
-      resources :completions, :controller => "quest_completions", only: %i[ create index ]
+      resources :completions, controller: "quest_completions", only: %i[ create index ]
       collection do
         get "list" => "quests#list"
         get "select" => "quests#index"
       end
     end
 
-    resources :completions, :controller => "quest_completions", only: %i[ index update show ] do
+    resources :completions, controller: "quest_completions", only: %i[ index update show ] do
       collection do
         get "list" => "quest_completions#list"
       end
     end
     resources :steps, only: %i[ show update destroy ] do
-      resources :activities, :controller => "quest_activities", only: %i[ create index ]
-      resources :completions, :controller => "quest_completions", only: %i[ create index ]
+      resources :activities, controller: "quest_activities", only: %i[ create index ]
+      resources :completions, controller: "quest_completions", only: %i[ create index ]
     end
     resources :tags, only: %i[ index ]
   end
@@ -121,7 +122,7 @@ JkoApi.routes self do
       end
     end
 
-    resources :activities, :controller => "quest_activities", except: %i[ create index show update ] do
+    resources :activities, controller: "quest_activities", except: %i[ create index show update ] do
       collection do
         post "complete" => "reward_progresses#create"
       end
@@ -171,8 +172,8 @@ JkoApi.routes self do
     resources :portal_notifications
 
     resources :posts, except: %i[ new edit ] do
-      resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
-        resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ] do
+      resources :polls,  controller: "polls", only: %i[ create update destroy ] do
+        resources :poll_options, controller: "poll_options", only: %i[ create update list destroy ] do
           post "/cast_vote" => "poll_options#cast_vote"
           delete "/delete_votes" => "poll_options#delete_votes"
         end
@@ -187,7 +188,7 @@ JkoApi.routes self do
     end
 
     resources :polls, only: %i[ index ] do
-      resources :poll_options, :controller => "poll_options", only: %i[ show index cast_vote ]
+      resources :poll_options, controller: "poll_options", only: %i[ show index cast_vote ]
     end
 
     resources :quests, except: %i[ create index show update ] do
@@ -221,11 +222,15 @@ JkoApi.routes self do
   end
 
   version 4 do
-    #to be modified
-    resources :certificates do
-      resources :certcourses, only:[:index]
+    resources :session, only: %i[ create index ] do
+      post :token, on: :collection
     end
-    resources :certcourses, only: [:show, :create]
+
+    # to be modified
+    resources :certificates do
+      resources :certcourses, only: [:index]
+    end
+    resources :certcourses, only: [:show, :create, :destroy]
     resources :person_certificates, only: [:create]
     resources :person_certcourses, only: [:create]
     resources :video_pages, only: [:create]
@@ -251,12 +256,12 @@ JkoApi.routes self do
   end
 
   version 5 do
-    resources :categories do 
+    resources :categories do
       collection do
         get "select" => "categories#select"
       end
     end
-    
+
     resources :interests do
       collection do
         get "shared" => "interests#shared"

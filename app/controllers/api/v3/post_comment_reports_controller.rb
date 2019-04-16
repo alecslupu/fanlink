@@ -121,7 +121,7 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
         @post_comment_report.update(parms)
         if parms[:status] == "comment_hidden"
           @comment.hidden = true
-          if @comment.save 
+          if @comment.save
             head :ok
           end
         else
@@ -137,7 +137,7 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
     end
   end
 
-private
+protected
 
   def apply_filters
     post_comment_reports = PostCommentReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)

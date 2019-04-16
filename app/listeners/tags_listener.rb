@@ -1,5 +1,5 @@
 class TagsListener
-  def self.post_created(user, post)
+  def self.post_created(user, post, api_version = 0)
     if post.body.present?
       tags = post.body.scan(/\B#(\p{Word}+)\w*/i)
       if !tags.empty?

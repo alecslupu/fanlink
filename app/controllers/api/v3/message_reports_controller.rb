@@ -25,5 +25,4 @@ class Api::V3::MessageReportsController < Api::V2::MessageReportsController
       render_error(_("Update failed. Missing message_report object."))
     end
   end
-
 end

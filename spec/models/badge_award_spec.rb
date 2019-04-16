@@ -1,16 +1,13 @@
 RSpec.describe BadgeAward, type: :model do
-  context "Valid" do
-    it "should create a valid badge_award" do
-      expect(create(:badge_award)).to be_valid
-    end
+
+  context "Valid factory" do
+    it { expect(create(:badge_award)).to be_valid }
   end
-  
+
   context "Associations" do
     describe "#belongs_to" do
-      it "should belong to a badge" do
-      end
-      it "should belong to and touch a person record" do
-      end
+      it { should belong_to(:badge) }
+      it { should belong_to(:person).touch(true) }
     end
   end
 
@@ -41,13 +38,22 @@ RSpec.describe BadgeAward, type: :model do
     end
   end
 
-  describe "product match" do
-    it "should not let you award a badge from the wrong product" do
-      product = create(:product)
+
+  describe "#product_match" do
+    it "adds error message" do
       person = create(:person)
+      old_tenant = ActsAsTenant.current_tenant
+      ActsAsTenant.current_tenant = create(:product)
+      badge = create(:badge, action_type: create(:action_type))
+      event_checkin = build(:badge_award, badge: badge, person: person)
+      expect(event_checkin).not_to be_valid
+      ActsAsTenant.current_tenant = old_tenant
+    end
+    it "passes" do
+      product = create(:product)
+      person = create(:person, product: product)
       badge = create(:badge, product: product, action_type: create(:action_type))
-      ba = BadgeAward.new(person_id: person.id, badge_id: badge.id)
-      expect(ba).not_to be_valid
+      expect(build(:badge_award, badge: badge, person: person)).to be_valid
     end
   end
 end

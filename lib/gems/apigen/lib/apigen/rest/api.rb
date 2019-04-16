@@ -13,6 +13,7 @@ module Apigen
     def self.api(&block)
       api = Api.new
       raise 'You must a block when calling `api`.' unless block_given?
+
       api.instance_eval(&block)
       api.validate
       api
@@ -45,7 +46,7 @@ module Apigen
         @tags = []
         @servers = [
           {
-            'url' =>'http://localhost',
+            'url' => 'http://localhost',
             'description' => 'Local Development'
           }
         ]
@@ -62,6 +63,7 @@ module Apigen
                   'You must pass a block when calling `endpoint`.'
                 end
         raise error unless error.nil?
+
         endpoint = Endpoint.new name
         @endpoints << endpoint
         endpoint.instance_eval(&block)
@@ -75,10 +77,11 @@ module Apigen
 
       def set_tags(name, description, externalDocs)
         return @tags unless name && description
+
         @tags[name] << {
-          :name => name,
-          :description => description,
-          :externalDocs => externalDocs
+          name: name,
+          description: description,
+          externalDocs: externalDocs
         }
       end
 

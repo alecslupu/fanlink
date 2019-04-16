@@ -37,7 +37,7 @@ class Api::V1::BadgesController < ApiController
   # *
   def index
     @badges = Badge.all
-    @badges_awarded = @person.badge_awards.map { |ba| ba.badge }
+    @badges_awarded = @person.badge_awards.map(&:badge)
     @badge_action_counts = @person.badge_actions.group(:action_type_id).count
     return_the @badges
   end

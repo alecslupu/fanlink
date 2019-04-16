@@ -8,12 +8,11 @@ class Api::V5::RelationshipsController < Api::V4::RelationshipsController
     if person == current_user
       @relationships += Relationship.pending_to_person(person)
     end
-    return_the @relationships, handler: 'jb'
+    return_the @relationships, handler: tpl_handler
   end
 
   def show
     @relationship = current_user.relationships.find(params[:id])
-    return_the @relationship, handler: 'jb'
+    return_the @relationship, handler: tpl_handler
   end
-
 end

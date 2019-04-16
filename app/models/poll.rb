@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: polls
+#
+#  id           :bigint(8)        not null, primary key
+#  poll_type    :integer
+#  poll_type_id :integer
+#  start_date   :datetime         not null
+#  duration     :integer          default(0), not null
+#  poll_status  :integer          default("inactive"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  end_date     :datetime         default(Mon, 28 Jan 2019 16:43:52 UTC +00:00)
+#  description  :jsonb            not null
+#  product_id   :integer          not null
+#
+
 class Poll < ApplicationRecord
   include TranslationThings
 
@@ -26,9 +43,9 @@ class Poll < ApplicationRecord
   end
 
   def start_date_cannot_be_in_the_past
-  	if start_date.present? && start_date < Time.now
-  	  errors.add(:expiration_date, "poll can't start in the past")
-  	end
+    if start_date.present? && start_date < Time.now
+      errors.add(:expiration_date, "poll can't start in the past")
+    end
   end
 
   def description_cannot_be_empty
@@ -38,17 +55,12 @@ class Poll < ApplicationRecord
   end
 
   def was_voted(person_id)
-    poll_options.each do |po|
-      if PersonPollOption.find_by(person_id: person_id, poll_option_id: po.id)
-        return true
-      end
-    end
-    false
+    PersonPollOption.where(person_id: person_id, poll_option_id: poll_option_ids).count > 0
   end
 
   private
 
-  def add_end_date
-    self.end_date = start_date.to_datetime + duration.seconds
-  end
+    def add_end_date
+      self.end_date = start_date.to_datetime + duration.seconds
+    end
 end

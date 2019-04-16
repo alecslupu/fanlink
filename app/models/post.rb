@@ -1,3 +1,40 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id                   :bigint(8)        not null, primary key
+#  person_id            :integer          not null
+#  body_text_old        :text
+#  global               :boolean          default(FALSE), not null
+#  starts_at            :datetime
+#  ends_at              :datetime
+#  repost_interval      :integer          default(0), not null
+#  status               :integer          default("pending"), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#  body                 :jsonb            not null
+#  priority             :integer          default(0), not null
+#  recommended          :boolean          default(FALSE), not null
+#  notify_followers     :boolean          default(FALSE), not null
+#  audio_file_name      :string
+#  audio_content_type   :string
+#  audio_file_size      :integer
+#  audio_updated_at     :datetime
+#  category_id          :integer
+#  video_file_name      :string
+#  video_content_type   :string
+#  video_file_size      :integer
+#  video_updated_at     :datetime
+#  video_job_id         :string
+#  video_transcoded     :jsonb            not null
+#  post_comments_count  :integer          default(0)
+#  pinned               :boolean          default(FALSE)
+#
+
 class Post < ApplicationRecord
   # acts_as_api
   include AttachmentSupport
@@ -6,7 +43,7 @@ class Post < ApplicationRecord
   include TranslationThings
 
   # include Post::Views
-  #TODO return posts based on user last login time
+  # TODO return posts based on user last login time
 
   enum status: %i[ pending published deleted rejected errored ]
 
@@ -29,7 +66,7 @@ class Post < ApplicationRecord
 
   has_one :poll, -> { where("polls.poll_type = ?", Poll.poll_types["post"]) }, foreign_key: "poll_type_id", dependent: :destroy
   has_many :poll_options, through: :poll
-  
+
   belongs_to :person, touch: true
   belongs_to :category, optional: true
 
@@ -39,12 +76,12 @@ class Post < ApplicationRecord
 
   validate :sensible_dates
 
-  after_create :start_transcoding, :if => :video_file_name
+  after_create :start_transcoding, if: :video_file_name
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-    left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types['post'], Time.now, Time.now)
+    left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
   }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
@@ -103,7 +140,7 @@ class Post < ApplicationRecord
     # We assume that the post has been deleted if we can't find it.
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
-    p = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
+    p = self.find_by(id: msg["userMetadata"]["post_id"].to_i)
     return if (!p)
 
     if (msg["userMetadata"]["sizer"])
@@ -111,7 +148,7 @@ class Post < ApplicationRecord
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
       job = Flaws.finish_transcoding(p.video.path,
                                      width, height,
-                                     :post_id => p.id.to_s)
+                                     post_id: p.id.to_s)
       p.video_job_id = job.id
       p.save!
       p.send(:start_listener)
@@ -152,7 +189,7 @@ class Post < ApplicationRecord
   end
 
   def reactions
-    Rails.cache.fetch([self, "post_reactions"]){
+    Rails.cache.fetch([self, "post_reactions"]) {
       post_reactions
     }
   end
@@ -168,53 +205,53 @@ class Post < ApplicationRecord
   def start_listener
     return if (!Flaws.transcoding_queue?)
     Rails.logger.error("Listening to #{self.video_job_id}")
-    Delayed::Job.enqueue(PostQueueListenerJob.new(self.video_job_id), {run_at: 30.seconds.from_now})
+    Delayed::Job.enqueue(PostQueueListenerJob.new(self.video_job_id), run_at: 30.seconds.from_now)
   end
 
   def published?
-    status == "published" && ((starts_at == nil || starts_at <  Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
+    status == "published" && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
   end
   private
 
-  def start_transcoding
-    # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
-    return if (self.video_job_id || Rails.env.test?)
-    Delayed::Job.enqueue(PostTranscoderJob.new(self.id), {run_at: 1.minutes.from_now})
-    true
-  end
+    def start_transcoding
+      # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
+      return if (self.video_job_id || Rails.env.test?)
+      Delayed::Job.enqueue(PostTranscoderJob.new(self.id), run_at: 1.minutes.from_now)
+      true
+    end
 
-  def merge_new_videos(new_videos)
-    by_src = -> (e) { e[:src] }
-    by_m3u8 = -> (e) { e[:src].to_s.end_with?("v.m3u8") }
+    def merge_new_videos(new_videos)
+      by_src = -> (e) { e[:src] }
+      by_m3u8 = -> (e) { e[:src].to_s.end_with?("v.m3u8") }
 
-    m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
-    m3u8 + the_rest.sort_by(&by_src)
-  end
+      m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
+      m3u8 + the_rest.sort_by(&by_src)
+    end
 
-  #
-  # Mark this video as having been transcoded. The SQS DJ and SNS
-  # listener use this to tell the Post that it is all finished.
-  #
-  def youve_been_transcoded!(preset_ids)
-    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.path, preset_ids))
-    self.video_job_id = nil
-    self.save!
-  end
+    #
+    # Mark this video as having been transcoded. The SQS DJ and SNS
+    # listener use this to tell the Post that it is all finished.
+    #
+    def youve_been_transcoded!(preset_ids)
+      self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.path, preset_ids))
+      self.video_job_id = nil
+      self.save!
+    end
 
-  def adjust_priorities
-    if priority > 0 && saved_change_to_attribute?(:priority)
-      same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
-      if same_priority.count > 0
-        person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |p|
-          p.increment!(:priority)
+    def adjust_priorities
+      if priority > 0 && saved_change_to_attribute?(:priority)
+        same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
+        if same_priority.count > 0
+          person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |p|
+            p.increment!(:priority)
+          end
         end
       end
     end
-  end
 
-  def sensible_dates
-    if starts_at.present? && ends_at.present? && starts_at > ends_at
-      errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
+    def sensible_dates
+      if starts_at.present? && ends_at.present? && starts_at > ends_at
+        errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
+      end
     end
-  end
 end

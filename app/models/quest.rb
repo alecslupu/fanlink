@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: quests
+#
+#  id                   :bigint(8)        not null, primary key
+#  product_id           :integer          not null
+#  event_id             :integer
+#  name_text_old        :text
+#  internal_name        :text             not null
+#  description_text_old :text
+#  status               :integer          default("active"), not null
+#  starts_at            :datetime         not null
+#  ends_at              :datetime
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#  picture_meta         :text
+#  name                 :jsonb            not null
+#  description          :jsonb            not null
+#  reward_id            :integer
+#
+
 class Quest < ApplicationRecord
   include AttachmentSupport
   include TranslationThings
@@ -15,7 +40,7 @@ class Quest < ApplicationRecord
 
   has_many :assigned_rewards, as: :assigned
 
-  has_many :rewards, through: :assigned_rewards #, source: :assigned, source_type: "Quest"
+  has_many :rewards, through: :assigned_rewards # , source: :assigned, source_type: "Quest"
 
   has_many :steps, -> { order(created_at: :asc) }, dependent: :destroy, inverse_of: :quest
   #   has_many :quest_completions, dependent: :destroy

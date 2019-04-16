@@ -6,12 +6,12 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
     @categories = @categories.for_staff if current_user.staff?
     @categories = @categories.for_user if current_user.normal?
     @categories = @categories.for_product_account if current_user.product_account?
-    return_the @categories, handler: 'jb'
+    return_the @categories, handler: tpl_handler
   end
 
   def show
     @category = Category.find(params[:id])
-    return_the @category, handler: 'jb'
+    return_the @category, handler: tpl_handler
   end
 
   def select
@@ -27,6 +27,6 @@ class Api::V5::CategoriesController < Api::V4::CategoriesController
         value: category.id
       }
     end
-    render json: {categories: @categories}
+    render json: { categories: @categories }
   end
 end

@@ -23,7 +23,7 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    #config.cache_store = :memory_store
+    # config.cache_store = :memory_store
     config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes.to_i }
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.seconds.to_i}"
@@ -46,7 +46,7 @@ Rails.application.configure do
   logger.formatter = config.log_formatter
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
   ActiveSupport::Notifications.subscribe(/cache*+active_support/) do |name, start, finish, id, payload|
-    Rails.logger.debug ['cache:', name, finish - start, id, payload].join(' ')
+    Rails.logger.debug ["cache:", name, finish - start, id, payload].join(" ")
   end
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
@@ -63,17 +63,17 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  config.web_console.whitelisted_ips = '172.16.0.0/12'
+  config.web_console.whitelisted_ips = "172.16.0.0/12"
 
   config.fanlink = {
-    :aws => {
-      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
-      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
-      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
-      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
-      s3_bucket: ENV['AWS_BUCKET'],
-      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
-      transcoder_queue_url: 'https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-development-video',
+    aws: {
+      hls_server: "http://d9f7ufze0iovw.cloudfront.net/",
+      rtmp_server: "rtmp://s153hddjp1ltg0.cloudfront.net/",
+      transcoder_key: ENV["AWS_TRANSCODER_KEY"],
+      transcoder_secret: ENV["AWS_TRANSCODER_SECRET"],
+      s3_bucket: ENV["AWS_BUCKET"],
+      transcoder_pipeline_id: ENV["AWS_PIPELINE_ID"],
+      transcoder_queue_url: "https://sqs.us-east-1.amazonaws.com/390209539631/fanlink-development-video",
 
 
     }
@@ -87,7 +87,7 @@ Rails.application.configure do
 
   config.after_initialize do
     Bullet.enable = true
-    #Bullet.bullet_logger = true
+    # Bullet.bullet_logger = true
     Bullet.rails_logger = true
   end
 

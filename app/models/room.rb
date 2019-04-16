@@ -1,9 +1,30 @@
+# == Schema Information
+#
+# Table name: rooms
+#
+#  id                   :bigint(8)        not null, primary key
+#  product_id           :integer          not null
+#  name_text_old        :text
+#  created_by_id        :integer
+#  status               :integer          default("inactive"), not null
+#  public               :boolean          default(FALSE), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#  name                 :jsonb            not null
+#  description          :jsonb            not null
+#  order                :integer          default(0), not null
+#
+
 class Room < ApplicationRecord
   include AttachmentSupport
   include Room::RealTime
   include TranslationThings
 
-  #replicated_model
+  # replicated_model
 
   enum status: %i[ inactive active deleted ]
 
@@ -26,7 +47,7 @@ class Room < ApplicationRecord
 
   has_paper_trail
 
-  validates :picture, absence: { message: _("Private rooms may not have pictures.")}, if: Proc.new { |r| !r.public? }
+  validates :picture, absence: { message: _("Private rooms may not have pictures.") }, if: Proc.new { |r| !r.public? }
   scope :privates_for_person, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false) }
   scope :publics, -> { where(public: true) }
   scope :privates, -> { where(public: false) }

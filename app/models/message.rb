@@ -1,10 +1,32 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id                   :bigint(8)        not null, primary key
+#  person_id            :integer          not null
+#  room_id              :integer          not null
+#  body                 :text
+#  hidden               :boolean          default(FALSE), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  status               :integer          default("pending"), not null
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#  audio_file_name      :string
+#  audio_content_type   :string
+#  audio_file_size      :integer
+#  audio_updated_at     :datetime
+#
+
 class Message < ApplicationRecord
   include AttachmentSupport
   include Message::FilterrificImpl
   include Message::PortalFilters
   include Message::RealTime
 
-  #replicated_model
+  # replicated_model
 
   enum status: %i[ pending posted ]
 
@@ -32,7 +54,7 @@ class Message < ApplicationRecord
   scope :reported_action_needed, -> { joins(:message_reports).where("message_reports.status = ?", MessageReport.statuses[:pending]) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> { where(hidden: false) }
-  scope :room_date_range, -> (from,to) { where("messages.created_at BETWEEN ? AND ?", from, to)}
+  scope :room_date_range, -> (from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],
@@ -75,27 +97,27 @@ class Message < ApplicationRecord
     !hidden
   end
 
-  def parse_content(version=4)
+  def parse_content(version = 4)
     mmeta = []
     if body.present?
       if version <= 3
         if body.match?(/\[([A-Za-z0-9])\|/i)
           body.gsub!(/\[m\|(.+?)\]/i, '@\1')
-          body.gsub!(/\[q\|([^\|\]]*)\]/i){|m| "\u201C#{$1}\u201D"}
+          body.gsub!(/\[q\|([^\|\]]*)\]/i) { |m| "\u201C#{$1}\u201D" }
         end
         if body.match?(/[^\u201C]*@\w{3,26}[^\u201D]*/i)
           mod_body = body
-          body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each {|m|
-            person = Person.where(username: m[1].sub('@', '')).first
+          body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each { |m|
+            person = Person.where(username: m[1].sub("@", "")).first
             if person.present?
               # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
-              mmeta << { id: MessageMention.maximum(:id) + rand(200-1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
+              mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
               mod_body = mod_body.sub(m[1], "a" * m[1].size)
             end
           }
         end
-      # else
-      #   body.gsub!(/(@([A-Za-z0-9]+))/) { |m| m.gsub!($1, "[m|#{$2}]")}
+        # else
+        #   body.gsub!(/(@([A-Za-z0-9]+))/) { |m| m.gsub!($1, "[m|#{$2}]")}
       end
     end
     self.mention_meta = mmeta

@@ -1,9 +1,27 @@
+# == Schema Information
+#
+# Table name: quiz_pages
+#
+#  id                   :bigint(8)        not null, primary key
+#  certcourse_page_id   :integer
+#  is_optional          :boolean          default(FALSE)
+#  quiz_text            :string           default(""), not null
+#  wrong_answer_page_id :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  product_id           :integer          not null
+#
+
 FactoryBot.define do
   factory :quiz_page do
-    certcourse_page { nil }
+    product { current_product }
+    certcourse_page { create(:certcourse_page) }
     is_optional { false }
     quiz_text { "MyString" }
-    color_text { "MyString" }
     wrong_answer_page_id { 1 }
+    after :create do |page|
+      create :correct_answer, quiz_page: page
+      create_list :answer, 3, quiz_page: page   # has_many
+    end
   end
 end

@@ -8,7 +8,9 @@ class CertificateDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    room: Field::BelongsTo,
+    # room: Field::BelongsTo,
+    room: Field::BelongsToSearch,
+
     certificate_certcourses: Field::HasMany,
     certcourses: Field::HasMany,
     person_certificates: Field::HasMany,
@@ -90,7 +92,7 @@ class CertificateDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how certificates are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(certificate)
-  #   "Certificate ##{certificate.id}"
-  # end
+  def display_resource(certificate)
+    "#{certificate.short_name}"
+  end
 end

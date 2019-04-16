@@ -76,7 +76,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
 
   def index
     @quests = paginate(Quest.includes(:rewards, steps: [:quest_activities]).where.not(status: :deleted).order(created_at: :desc))
-    return_the @quests, handler: "jb"
+    return_the @quests, handler: tpl_handler
   end
 
   # **
@@ -396,7 +396,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
   # *
   def destroy
     quest = Quest.find(params[:id])
-    if current_user.some_admin?
+    if some_admin?
       quest.deleted!
       head :ok
     else
@@ -404,28 +404,34 @@ class Api::V3::QuestsController < Api::V2::QuestsController
     end
   end
 
-private
-  def apply_filters
-    quests = Quest.where.not(status: :deleted).order(created_at: :desc)
-    params.each do |p, v|
-      if p.end_with?("_filter") && Quest.respond_to?(p)
-        quests = quests.send(p, v)
-      end
+  protected
+
+    def tpl_handler
+      :jb
     end
-    quests
-  end
 
-  def load_quest
-    @quest = Quest.where(product_id: ActsAsTenant.current_tenant.id).find(params[:id]).order(created_at: :desc)
-  end
+  private
+    def apply_filters
+      quests = Quest.where.not(status: :deleted).order(created_at: :desc)
+      params.each do |p, v|
+        if p.end_with?("_filter") && Quest.respond_to?(p)
+          quests = quests.send(p, v)
+        end
+      end
+      quests
+    end
 
-  def quest_params
-    params.require(:quest).permit(:event_id, :name, :internal_name, :description, :picture, :status, :starts_at, :ends_at,
-      steps_attributes: [ :id, :unlocks, :display, :initial_status, :delay_unlock, :uuid,
-        quest_activities_attributes: [ :id, :description, :hint, :picture,
-          activity_types_attributes: [ :id, :atype, { value: [ :id, :description ] } ]
+    def load_quest
+      @quest = Quest.where(product_id: ActsAsTenant.current_tenant.id).find(params[:id]).order(created_at: :desc)
+    end
+
+    def quest_params
+      params.require(:quest).permit(:event_id, :name, :internal_name, :description, :picture, :status, :starts_at, :ends_at,
+        steps_attributes: [ :id, :unlocks, :display, :initial_status, :delay_unlock, :uuid,
+          quest_activities_attributes: [ :id, :description, :hint, :picture,
+            activity_types_attributes: [ :id, :atype, { value: [ :id, :description ] } ]
+          ]
         ]
-      ]
-    )
-  end
+      )
+    end
 end

@@ -1,5 +1,3 @@
 {
   person: render(partial: "api/v5/people/person_private", locals: { person: @person })
 }
-
-

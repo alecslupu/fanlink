@@ -28,13 +28,12 @@ module Admin
 
     protected
 
-    def scoped_resource
-      unless ActsAsTenant.current_tenant.nil?
-        return super.joins(:person).where(people: { product_id: ActsAsTenant.current_tenant.id })
+      def scoped_resource
+        unless ActsAsTenant.current_tenant.nil?
+          return super.joins(:person).where(people: { product_id: ActsAsTenant.current_tenant.id })
+        end
+
+        super
       end
-
-      super
-    end
-
   end
 end

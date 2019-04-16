@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'apigen/formats/swagger'
-require 'apigen/formats/example'
+require_relative 'example'
 require 'yaml'
 
 describe Apigen::Formats::Swagger::V2 do
@@ -24,6 +24,7 @@ describe Apigen::Formats::Swagger::V2 do
       schemes:
       - http
       - https
+      tags: []
       consumes:
       - application/json
       produces:

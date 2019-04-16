@@ -1,17 +1,17 @@
 class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
   def index
     @completions = apply_filters_for_user
-    return_the @completions, handler: 'jb'
+    return_the @completions, handler: tpl_handler
   end
 
   def list
     @completions = paginate apply_filters
-    return_the @completions, handler: 'jb'
+    return_the @completions, handler: tpl_handler
   end
 
   def show
     @completion = QuestCompletion.find(params[:id])
-    return_the @completion, handler: 'jb'
+    return_the @completion, handler: tpl_handler
   end
 
   def create
@@ -26,7 +26,7 @@ class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
 
     if @completion.valid?
       broadcast(:completion_created, current_user, @completion)
-      return_the @completion, handler: 'jb', using: :show
+      return_the @completion, handler: tpl_handler, using: :show
     else
       render_422 @completion.errors
     end
@@ -36,12 +36,18 @@ class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
     if params.has_key?(:quest_completion)
       @completion = QuestCompletion.find(params[:id])
       if @completion.update_attributes(completion_params)
-        return_the @completion, handler: 'jb', using: :show
+        return_the @completion, handler: tpl_handler, using: :show
       else
         render_422 @completion.errors
       end
     else
-      return_the @completion, handler: 'jb', using: :show
+      return_the @completion, handler: tpl_handler, using: :show
     end
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

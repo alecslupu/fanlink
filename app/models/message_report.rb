@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: message_reports
+#
+#  id         :bigint(8)        not null, primary key
+#  message_id :integer          not null
+#  person_id  :integer          not null
+#  reason     :text
+#  status     :integer          default("pending"), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class MessageReport < ApplicationRecord
   include MessageReport::PortalFilters
 
@@ -9,10 +22,12 @@ class MessageReport < ApplicationRecord
   has_paper_trail
 
   validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
+  validates_inclusion_of :status, in: MessageReport.statuses.keys, message: _("%{value} is not a valid status type.")
+
 
   normalize_attributes :reason
 
-  scope :for_product, -> (product) { joins(message: :room).where("rooms.product_id = ?", product.id) }
+  scope :for_product, -> (product) { joins(message: :room).where(rooms: { product_id: product.id }) }
 
   def create_time
     created_at.to_s

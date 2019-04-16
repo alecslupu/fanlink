@@ -6,13 +6,8 @@ RSpec.describe Relationship, type: :model do
 
   context "Associations" do
     describe "should belong to" do
-      it "#requested_by" do
-        should belong_to(:requested_by).class_name("Person").touch(true)
-      end
-
-      it "#requested_to" do
-        should belong_to(:requested_to).class_name("Person").touch(true)
-      end
+      it { should belong_to(:requested_by).class_name("Person").touch(true) }
+      it { should belong_to(:requested_to).class_name("Person").touch(true) }
     end
   end
 
@@ -63,7 +58,39 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
-  #TODO this should be renamed friendships or made to return persons
+  describe ".person_involved?" do
+    it "is checking requested by" do
+      person = create(:person)
+      rel = create(:relationship, requested_by: person)
+      expect(rel.person_involved?(person)).to be_truthy
+    end
+    it "is checking requested by to be false" do
+      person = create(:person)
+      rel = create(:relationship)
+      expect(rel.person_involved?(person)).to be_falsey
+    end
+    it "is checking requested to" do
+      person = create(:person)
+      rel = create(:relationship, requested_to: person)
+      expect(rel.person_involved?(person)).to be_truthy
+    end
+  end
+  describe ".for_person" do
+    it "should get one relationship between two people" do
+      rel = create(:relationship)
+      relationships = Relationship.for_person(rel.requested_by)
+      expect(relationships.count).to eq(1)
+      expect(relationships.first).to eq(rel)
+    end
+    it "should get one relationship between two people" do
+      rel = create(:relationship)
+      relationships = Relationship.for_person(rel.requested_to)
+      expect(relationships.count).to eq(1)
+      expect(relationships.first).to eq(rel)
+    end
+  end
+
+  # TODO this should be renamed friendships or made to return persons
   describe "#friends" do
     it "should get all friendships of a person" do
       per = create(:person)

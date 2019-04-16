@@ -17,6 +17,7 @@ module Apigen
       # Declares the input type.
       def type(type = nil, &block)
         return @type unless type
+
         @type = Apigen::Model.type type, &block
       end
 

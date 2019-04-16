@@ -4,17 +4,17 @@ class Api::V3::CoursesController < ApiController
   load_up_the Semester, from: :semester_id, only: %i[ index create ]
 
   def index
-    if @req_source == "web"
+    if web_request?
       @courses = paginate(@semester.courses.where(deleted: false).includes(:lessons)).order(created_at: :asc)
     else
       @courses = paginate(@semester.courses.available.where(deleted: false).order(created_at: :asc).includes(:lessons))
     end
-    return_the @courses, handler: "jb"
+    return_the @courses, handler: tpl_handler
   end
 
   def show
     @course = Course.includes(:lessons).find(params[:id])
-    return_the @course, handler: "jb"
+    return_the @course, handler: tpl_handler
   end
 
   def create
@@ -22,18 +22,18 @@ class Api::V3::CoursesController < ApiController
     if @course.valid?
       broadcast(:course_created, current_user, @course)
     end
-    return_the @course, handler: "jb"
+    return_the @course, handler: tpl_handler
   end
 
   def update
     if @course.update(course_params)
       broadcast(:course_updated, current_user, @course)
     end
-    return_the @course, handler: "jb"
+    return_the @course, handler: tpl_handler
   end
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @course.update(deleted: true)
         head :ok
       else
@@ -44,9 +44,15 @@ class Api::V3::CoursesController < ApiController
     end
   end
 
+  protected
+
+    def tpl_handler
+      :jb
+    end
+
   private
 
-  def course_params
-    params.require(:course).permit(:name, :description, :start_date, :end_date)
-  end
+    def course_params
+      params.require(:course).permit(:name, :description, :start_date, :end_date)
+    end
 end

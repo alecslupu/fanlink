@@ -1,17 +1,17 @@
 RSpec.describe ActionType, type: :model do
+
+  context "Valid factory" do
+    it { expect(build(:action_type)).to be_valid }
+  end
   context "Validation" do
     subject { create(:action_type) }
     describe "#presence" do
-      it do
-        should validate_presence_of(:internal_name).with_message(_("Internal name is required."))
-        should validate_presence_of(:name).with_message(_("Name is required."))
-      end
+      it { should validate_presence_of(:internal_name).with_message(_("Internal name is required.")) }
+      it { should validate_presence_of(:name).with_message(_("Name is required.")) }
     end
     describe "#length" do
-      it do
-        should validate_length_of(:internal_name).is_at_least(3).is_at_most(26).with_message(_("Internal name must be between 3 and 26 characters."))
-        should validate_length_of(:name).is_at_least(3).is_at_most(36).with_message(_("Name must be between 3 and 36 characters."))
-      end
+      it { should validate_length_of(:internal_name).is_at_least(3).is_at_most(26).with_message(_("Internal name must be between 3 and 26 characters.")) }
+      it { should validate_length_of(:name).is_at_least(3).is_at_most(36).with_message(_("Name must be between 3 and 36 characters.")) }
     end
     describe "#uniqueness" do
       it "should check for uniqueness of name and internal_name" do
@@ -56,19 +56,31 @@ RSpec.describe ActionType, type: :model do
         expect(act_type.errors[:base]).not_to be_empty
       end
     end
+    describe "#in_use?" do
+      it "is false upon initialization" do
+        act_type = create(:action_type)
+        expect(act_type.in_use?).to be_falsey
+      end
+      it "marked as used when associated badges exists" do
+        act_type = create(:action_type)
+        act_type.badges = create_list(:badge, 3)
+        expect(act_type.in_use?).to be_truthy
+      end
+      it "marked as used when associated badges exists" do
+        act_type = create(:action_type)
+        act_type.badge_actions = create_list(:badge_action, 2)
+        expect(act_type.in_use?).to be_truthy
+      end
+    end
   end
   context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#has_many" do
         should have_many(:badges)
+        should have_many(:badge_actions)
         should have_many(:assigned_rewards)
         should have_many(:rewards).through(:assigned_rewards)
       end
-    end
-  end
-  context "#valid?" do
-    it "should create a valid action type" do
-      expect(create(:action_type)).to be_valid
     end
   end
 end

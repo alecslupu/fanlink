@@ -18,7 +18,7 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
             if @progress.present? && @progress.save
               @series_total = RewardProgress.where(person_id: current_user.id, series: @action_type.internal_name).sum(:total) || @progress.total
               broadcast(:reward_progress_created, current_user, @progress, @series_total)
-              return_the @progress, handler: 'jb'
+              return_the @progress, handler: tpl_handler
             else
               if @progress.blank?
                 render json: { errors: { base: _("Reward does not exist for that action type.") } }, status: :not_found
@@ -35,4 +35,10 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
       end
     end
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

@@ -276,7 +276,7 @@ class Api::V3::QuestActivitiesController < Api::V2::QuestActivitiesController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @quest_activity.update(deleted: true)
         head :ok
       else

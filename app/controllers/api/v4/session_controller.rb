@@ -2,9 +2,9 @@ class Api::V4::SessionController < Api::V3::SessionController
   def index
     if @person = current_user
       if @person.terminated
-        return head :unauthorized
+        head :unauthorized
       else
-        return_the @person, handler: 'jb'
+        return_the @person, handler: tpl_handler
       end
     else
       render_not_found
@@ -30,6 +30,22 @@ class Api::V4::SessionController < Api::V3::SessionController
       end
       return render_422 _("Invalid login.") if @person.nil?
     end
-    return_the @person, handler: 'jb'
+    return_the @person, handler: tpl_handler
   end
+
+  def token
+    user = Person.can_login?(params[:email_or_username])
+    if user = Person.authenticate(params[:email_or_username], params[:password])
+      data = { token: ::TokenProvider.issue_token(user_id: user.id) }
+      render json: data, status: 200
+    else
+      return render_422 _("Invalid login.")
+    end
+  end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

@@ -1,5 +1,4 @@
 class Api::V2::PostsController < Api::V1::PostsController
-
   # **
   # @api {get} /posts Get paginated posts.
   # @apiName GetPosts
@@ -39,7 +38,8 @@ class Api::V2::PostsController < Api::V1::PostsController
       if person
         @posts = paginate(Post.visible.for_person(person).order(created_at: :desc))
       else
-        render_error("Cannot find that person.") && return
+        render_error("Cannot find that person.")
+        return
       end
     else
       @posts = paginate(Post.visible.following_and_own(current_user).order(created_at: :desc))
@@ -49,5 +49,4 @@ class Api::V2::PostsController < Api::V1::PostsController
     @posts = @posts.for_category(params[:category]) if params[:category]
     return_the @posts
   end
-
 end

@@ -1,9 +1,33 @@
+# == Schema Information
+#
+# Table name: badges
+#
+#  id                   :bigint(8)        not null, primary key
+#  product_id           :integer          not null
+#  name_text_old        :text
+#  internal_name        :text             not null
+#  action_type_id       :integer
+#  action_requirement   :integer          default(1), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  point_value          :integer          default(0), not null
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
+#  description_text_old :text
+#  name                 :jsonb            not null
+#  description          :jsonb            not null
+#  issued_from          :datetime
+#  issued_to            :datetime
+#
+
 FactoryBot.define do
   factory :badge do
-    product { ActsAsTenant.current_tenant || Product.first || FactoryBot.create(:product) }
+    product { current_product }
     sequence(:name) { |n| "Action #{n}" }
     sequence(:internal_name) { |n| "action_#{n}" }
-    action_type { FactoryBot.create(:action_type) }
+    action_type { create(:action_type) }
     point_value { 10 }
   end
 end
