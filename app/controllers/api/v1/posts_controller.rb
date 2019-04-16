@@ -388,14 +388,6 @@ class Api::V1::PostsController < ApiController
 
 private
 
-  def get_product
-    product = nil
-    if params[:product].present?
-      product = Product.find_by(internal_name: params[:product])
-    end
-    product
-  end
-
   def apply_filters
     posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|

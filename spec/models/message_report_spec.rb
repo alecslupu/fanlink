@@ -68,4 +68,34 @@ RSpec.describe MessageReport, type: :model do
     it { expect(MessageReport.valid_status?("message_hidden")).to be_truthy }
     it { expect(MessageReport.valid_status?("no_status")).to be_falsey }
   end
+
+
+  # TODO: auto-generated
+  describe "#create_time" do
+    it "works" do
+      message_report = build(:message_report)
+      result = message_report.create_time
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#poster" do
+    it "works" do
+      message_report = build(:message_report)
+      result = message_report.poster
+      expect(result).to eq(message_report.message.person)
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reporter" do
+    it "works" do
+      message_report = build(:message_report)
+      expect(message_report.reporter).to eq(message_report.person)
+    end
+  end
+
 end

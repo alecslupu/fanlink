@@ -46,4 +46,23 @@ RSpec.describe Answer, type: :model do
   context "Valid factory" do
     it { expect(create(:answer)).to be_valid }
   end
+
+  # TODO: auto-generated
+  describe "#question" do
+    it "works" do
+      answer = build(:answer)
+      expect(answer.question).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#certcourse_name" do
+    it "works" do
+      answer = build(:answer)
+      expect(answer.certcourse_name).not_to be_nil
+    end
+    pending
+  end
+
 end
