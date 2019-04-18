@@ -47,4 +47,15 @@ RSpec.describe PostReport, type: :model do
       expect(report.errors[:reason]).not_to be_empty
     end
   end
+
+  describe "#create_time" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#valid_status?" do
+    pending
+  end
+
+
 end

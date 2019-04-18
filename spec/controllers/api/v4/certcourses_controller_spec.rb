@@ -2,6 +2,17 @@ require "rails_helper"
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
+  # TODO: auto-generated
+  describe "GET index" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "DELETE destroy" do
+    pending
+  end
+
+
   describe "#show" do
     it "does not display as selected the wrong_answers" do
       person = create(:person)

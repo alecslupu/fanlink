@@ -1,22 +1,34 @@
 require "rails_helper"
 
 RSpec.describe Api::V2::ProductBeaconsController, type: :controller do
-  describe "#list" do
+
+  # TODO: auto-generated
+  describe "GET index" do
     pending
   end
-  describe "#index" do
+
+  # TODO: auto-generated
+  describe "GET list" do
     pending
   end
-  describe "#show" do
+
+  # TODO: auto-generated
+  describe "GET show" do
     pending
   end
-  describe "#create" do
+
+  # TODO: auto-generated
+  describe "POST create" do
     pending
   end
-  describe "#update" do
+
+  # TODO: auto-generated
+  describe "PUT update" do
     pending
   end
-  describe "#destroy" do
+
+  # TODO: auto-generated
+  describe "DELETE destroy" do
     pending
   end
 end

@@ -44,4 +44,9 @@ RSpec.describe PostReaction, type: :model do
       expect(reaction.errors[:reaction]).not_to be_empty
     end
   end
+
+  # TODO: auto-generated
+  describe "#group_reactions" do
+    pending
+  end
 end

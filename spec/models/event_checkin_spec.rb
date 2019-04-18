@@ -29,4 +29,10 @@ RSpec.describe EventCheckin, type: :model do
       end
     end
   end
+
+  # TODO: auto-generated
+  describe "#product_match" do
+    pending
+  end
+
 end

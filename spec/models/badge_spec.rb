@@ -74,7 +74,7 @@ RSpec.describe Badge, type: :model do
     end
   end
 
-  describe "current" do
+  describe "current?" do
     let(:current_time) { Time.now }
     it "should not be current if before issued_from with no issued_to" do
       badge = create(:badge, issued_from: current_time + 1.minute)
@@ -187,4 +187,5 @@ RSpec.describe Badge, type: :model do
       expect(create(:badge)).to be_valid
     end
   end
+
 end
