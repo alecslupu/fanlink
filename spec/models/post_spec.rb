@@ -128,25 +128,16 @@ RSpec.describe Post, type: :model do
     pending
   end
 
-  # TODO: auto-generated
-  describe "#cached_person" do
-    it "works" do
-      post = build(:post)
-      result = post.cached_person
-      expect(result).not_to be_nil
-    end
-    pending
-  end
-
-  # TODO: auto-generated
-  describe "#cached_for_person" do
-    it "works" do
-      person = double("person")
-      result = Post.cached_for_person(person)
-      expect(result).not_to be_nil
-    end
-    pending
-  end
+  # # TODO: auto-generated
+  # describe "#cached_person" do
+  #   it "works" do
+  #     post = build(:post)
+  #     result = post.cached_person
+  #     expect(result).not_to be_nil
+  #   end
+  #   pending
+  # end
+  #
 
   # TODO: auto-generated
   describe "#cached_for_product" do

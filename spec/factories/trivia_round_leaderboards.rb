@@ -15,8 +15,9 @@
 FactoryBot.define do
   factory :trivia_round_leaderboard, class: "Trivia::RoundLeaderboard" do
     round { create(:trivia_round) }
-    nb_points { 1 }
-    position { 1 }
+    nb_points { Faker::Number.between(0, 10000) }
+    position { Faker::Number.between(0, 10000) }
+    average_time { Faker::Number.decimal(0, 6)}
     person { create(:person) }
   end
 end

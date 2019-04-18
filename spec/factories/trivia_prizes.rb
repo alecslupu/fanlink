@@ -20,8 +20,8 @@
 FactoryBot.define do
   factory :trivia_prize, class: "Trivia::Prize" do
     game { create(:trivia_game) }
-    status { 1 }
-    description { "MyText" }
-    position { 1 }
+    description { Faker::Lorem.paragraph }
+    sequence(:position) { |n| n }
+    prize_type { :digital }
   end
 end

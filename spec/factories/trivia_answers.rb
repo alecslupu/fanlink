@@ -18,5 +18,14 @@ FactoryBot.define do
     question { create(:trivia_question) }
     answered { "MyString" }
     time { 1 }
+
+
+    factory :correct_trivia_answer do
+
+    end
+
+    factory :wrong_trivia_answer do
+
+    end
   end
 end

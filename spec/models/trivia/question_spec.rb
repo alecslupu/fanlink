@@ -15,4 +15,12 @@ RSpec.describe Trivia::Question, type: :model do
     end
   end
   pending "add some examples to (or delete) #{__FILE__}"
+
+  context "complete round" do
+    it "" do
+      round = create :trivia_question
+
+      expect(round.available_answers.size).to eq(4)
+    end
+  end
 end

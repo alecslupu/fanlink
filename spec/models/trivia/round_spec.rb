@@ -16,4 +16,19 @@ RSpec.describe Trivia::Round, type: :model do
   end
 
   pending "add some examples to (or delete) #{__FILE__}"
+
+  context "complete round" do
+    it "" do
+      round = create :trivia_round
+
+      expect(round.questions.size).to eq(10)
+    end
+  end
+
+  context "past round" do
+    it "has a full leaderboard" do
+      round = create :past_trivia_round
+      expect(round.leaderboards.size).to eq(round.leaderboard_size)
+    end
+  end
 end

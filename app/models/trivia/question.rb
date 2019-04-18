@@ -13,6 +13,7 @@
 #  question_interval :integer          default(5)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  title             :text
 #
 
 class Trivia::Question < ApplicationRecord

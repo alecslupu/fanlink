@@ -13,6 +13,7 @@
 #  question_interval :integer          default(5)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  title             :text
 #
 
 FactoryBot.define do
@@ -21,5 +22,11 @@ FactoryBot.define do
     end_date { "2019-04-01 22:39:26" }
     round { create(:trivia_round) }
     time_limit { 1 }
+    title { Faker::Lorem.question(10)}
+
+    after :create do |question|
+      create :correct_trivia_available_answer, question: question
+      create :wrong_trivia_available_answer, 3, question: question
+    end
   end
 end

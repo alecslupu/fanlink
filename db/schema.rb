@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404161403) do
+ActiveRecord::Schema.define(version: 20190418210823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1153,6 +1153,7 @@ ActiveRecord::Schema.define(version: 20190404161403) do
     t.integer "question_interval", default: 5
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "title"
     t.index ["trivia_round_id"], name: "index_trivia_questions_on_trivia_round_id"
   end
 
