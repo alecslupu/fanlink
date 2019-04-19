@@ -49,12 +49,12 @@ describe "Push" do
       from_person = create(:person)
       ActsAsTenant.with_tenant(from_person.product) do
         rec2 = create(:person)
-        tokens = @tokens.sort
+        tokens = @tokens
         tokens << create(:notification_device_id, person: rec2).device_identifier
         room = create(:room)
         room.members << @person << rec2
         msg = create(:message, room: room, person_id: from_person.id)
-        expect_any_instance_of(FBCMStub).to receive(:send).with(tokens,
+        expect_any_instance_of(FBCMStub).to receive(:send).with(tokens.sort,
                                                                 get_options(from_person.username,
                                                                             truncate(msg.body),
                                                                             "message_received",
