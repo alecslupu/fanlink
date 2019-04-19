@@ -26,7 +26,7 @@ FactoryBot.define do
     end
 
     factory :wrong_trivia_available_answer do
-      is_correct {false }
+      is_correct { false }
     end
 
   end
