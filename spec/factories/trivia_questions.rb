@@ -27,6 +27,15 @@ FactoryBot.define do
     after :create do |question|
       create :correct_trivia_available_answer, question: question
       create_list :wrong_trivia_available_answer, 3, question: question
+
+      create_list :correct_trivia_answer, 20, question: question
+      create_list :wrong_trivia_answer, 20, question: question
+
+      question.trivia_answers.find_each do |ta|
+        create :trivia_question_leaderboard, person: ta.person,  question: question
+      end
+
+
     end
   end
 end

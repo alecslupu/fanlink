@@ -17,15 +17,14 @@ FactoryBot.define do
     person { create(:person) }
     question { create(:trivia_question) }
     answered { "MyString" }
-    time { 1 }
-
+    time { Faker::Number.between 1, 2000 }
 
     factory :correct_trivia_answer do
-
+      answered { question.available_answers.first.name }
     end
 
     factory :wrong_trivia_answer do
-
+      answered { "a wrong answer" }
     end
   end
 end

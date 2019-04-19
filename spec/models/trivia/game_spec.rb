@@ -22,6 +22,7 @@ RSpec.describe Trivia::Game, type: :model do
       ActsAsTenant.with_tenant(create(:product)) do
         create(:full_trivia_game)
 
+        
         last_game = Trivia::Game.last
         expect(last_game.rounds.size).to eq(7)
         expect(last_game.prizes.size).to eq(3)
