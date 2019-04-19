@@ -49,7 +49,7 @@ describe "Push" do
       from_person = create(:person)
       ActsAsTenant.with_tenant(from_person.product) do
         rec2 = create(:person)
-        tokens = @tokens
+        tokens = @tokens.sort
         tokens << create(:notification_device_id, person: rec2).device_identifier
         room = create(:room)
         room.members << @person << rec2
