@@ -24,6 +24,7 @@ class CertcoursePage < ApplicationRecord
   has_one :image_page
 
   validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
+  validates :duration, numericality: { greater_than: 0 }
 
   def content_type
     return "quiz" if quiz_page.present?
