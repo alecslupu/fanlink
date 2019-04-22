@@ -40,7 +40,7 @@ class QuizPage < ApplicationRecord
         errors.add(:base, :mandatory_checks, message: _("Mandatory quizes require a wrong answer page."))
       else
         wrong_page = CertcoursePage.find(wrong_answer_page_id)
-        if wrong_page.order >= certcourse_page.order
+        if wrong_page.certcourse_page_order >= certcourse_page.certcourse_page_order
           errors.add(:base, :mandatory_checks, message: _("Wrong page needs to come before this page."))
         end
       end

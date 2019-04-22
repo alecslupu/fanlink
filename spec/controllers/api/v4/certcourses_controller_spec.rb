@@ -18,7 +18,13 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        qp = create(:quiz_page, is_optional: false)
+        cp1 = create(:certcourse_page, certcourse_page_order: 1)
+        cp2 = create(:certcourse_page, certcourse_page_order: 2)
+        qp = create(:quiz_page,
+          is_optional: false,
+          certcourse_page: cp2,
+          wrong_answer_page_id: cp1.id
+          )
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
 
         get :show, params: { id: qp.certcourse_page_id }
@@ -36,7 +42,13 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        qp = create(:quiz_page, is_optional: false)
+        cp1 = create(:certcourse_page, certcourse_page_order: 1)
+        cp2 = create(:certcourse_page, certcourse_page_order: 2)
+        qp = create(:quiz_page,
+          is_optional: false,
+          certcourse_page: cp2,
+          wrong_answer_page_id: cp1.id
+          )
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
         get :show, params: { id: qp.certcourse_page_id }
