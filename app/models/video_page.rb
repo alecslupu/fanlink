@@ -29,10 +29,6 @@ class VideoPage < ApplicationRecord
   validate :just_me
   after_save :set_certcourse_page_content_type
 
-  def product
-    Product.find_by(internal_name: "caned")
-  end
-
   private
 
     def just_me
