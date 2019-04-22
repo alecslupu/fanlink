@@ -82,7 +82,7 @@ private
       options[:data][:notification_type] = type
       options[:data][:priority] = "high"
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
-      resp = push_client.send(tokens, options)
+      resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
     end
   end
