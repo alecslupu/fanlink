@@ -18,7 +18,7 @@ FactoryBot.define do
     certcourse_page { create(:certcourse_page) }
     is_optional { false }
     quiz_text { "MyString" }
-    wrong_answer_page_id { 1 }
+    wrong_answer_page_id {}
     after :create do |page|
       create :correct_answer, quiz_page: page
       create_list :answer, 3, quiz_page: page   # has_many
