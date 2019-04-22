@@ -256,6 +256,9 @@ JkoApi.routes self do
 
     namespace :trivia do
       resources :games, only: [ :index ] do
+        get :scheduled, on: :collection
+        get :past, on: :collection
+
         resources :prizes, only: [ :index ]
 
         resources :rounds, only: [ :index ] do
