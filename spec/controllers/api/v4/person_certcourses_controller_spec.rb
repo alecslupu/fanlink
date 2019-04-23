@@ -8,7 +8,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        quiz_page = create(:quiz_page, is_optional: true)
+        quiz_page = create(:quiz_page)
 
         post :create, params: { person_certcourse: {
           certcourse_id: quiz_page.certcourse_page.certcourse.id
@@ -33,7 +33,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page, is_optional: true)
+          quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
 
           create(:person_certcourse, person: person, certcourse: certcourse)
 
@@ -60,7 +60,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page, is_optional: true)
+          quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
 
           create(:person_certcourse, person: person, certcourse: certcourse)
 
@@ -87,7 +87,7 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
 
           create(:person_certificate, certificate: certificate, person: person, is_completed: false)
           certcourse_page = create(:certcourse_page, certcourse: certcourse)
-          quiz_page = create(:quiz_page, certcourse_page: certcourse_page, is_optional: true)
+          quiz_page = create(:quiz_page, certcourse_page: certcourse_page)
 
           create(:person_certcourse, person: person, certcourse: certcourse)
 
