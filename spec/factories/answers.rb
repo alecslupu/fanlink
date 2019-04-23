@@ -13,7 +13,7 @@
 
 FactoryBot.define do
   factory :answer do
-    quiz_page { create(:quiz_page, is_optional: true) }
+    quiz_page { create(:quiz_page) }
     product { current_product }
     is_correct { false }
     description { "MyString" }
