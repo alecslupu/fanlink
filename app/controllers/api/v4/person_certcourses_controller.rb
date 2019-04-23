@@ -29,7 +29,7 @@ class Api::V4::PersonCertcoursesController < ApiController
 
   def register_regress
     certcourse_pages.each do |cp|
-      next if cp.certcourse_page_order < last_certcourse_page.certcourse_page_order
+      next if last_certcourse_page && cp.certcourse_page_order < last_certcourse_page.certcourse_page_order
       break if cp.certcourse_page_order > certcourse_page.certcourse_page_order
       next if cp.quiz?
 
