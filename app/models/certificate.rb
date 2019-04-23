@@ -49,9 +49,14 @@ class Certificate < ApplicationRecord
   enum status: %i[entry live]
   validates :long_name, :short_name, :description, :certificate_order, :status, :sku_ios, :sku_android, :validity_duration, :access_duration, presence: true
 
+  validates :validity_duration, numericality: { greater_than: 0 }
+  validates :access_duration, numericality: { greater_than: 0 }
+
   scope :live_status, -> { where(status: "live") }
 
   def title
     short_name
   end
+
+  private
 end

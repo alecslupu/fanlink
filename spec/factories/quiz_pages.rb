@@ -14,11 +14,29 @@
 
 FactoryBot.define do
   factory :quiz_page do
+
+    transient do
+      that_is_mandatory { true }
+    end
+
+
     product { current_product }
-    certcourse_page { create(:certcourse_page) }
-    is_optional { false }
     quiz_text { "MyString" }
-    wrong_answer_page_id { 1 }
+    wrong_answer_page_id {}
+
+    before :create do |qp, evalutator|
+      if evalutator.that_is_mandatory
+        cp1 = create(:certcourse_page, certcourse_page_order: 1)
+        cp2 = create(:certcourse_page, certcourse_page_order: 2)
+        qp.certcourse_page = cp2
+        qp.wrong_answer_page_id = cp1.id
+        qp.is_optional = false
+      else
+        qp.certcourse_page = create(:certcourse_page)
+        qp.is_optional = true
+      end
+    end
+
     after :create do |page|
       create :correct_answer, quiz_page: page
       create_list :answer, 3, quiz_page: page   # has_many
