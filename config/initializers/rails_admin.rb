@@ -1,3 +1,4 @@
+require Rails.root.join('app/lib/rails_admin/extensions/pundit/authorization_adapter.rb')
 RailsAdmin.config do |config|
 
   config.main_app_name = ["Cool app", "BackOffice"]
@@ -52,18 +53,17 @@ RailsAdmin.config do |config|
   #   # config.authenticate_with do
   #   #   warden.authenticate! scope: :user
   #   # end
-  #   # config.current_user_method(&:current_user)
 
   config.authenticate_with do
     # Use sorcery's before filter to auth users
     require_login
   end
+  config.current_user_method(&:current_user)
   #   ## == Cancan ==
-  #   # config.authorize_with :cancan
+  #   config.authorize_with :cancan
   #
   #   ## == Pundit ==
-  #   # config.authorize_with :pundit
-  #
+  config.authorize_with :pundit
   #   ## == PaperTrail ==
   #   # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
   #
