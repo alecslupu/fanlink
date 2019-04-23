@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190323104200) do
+ActiveRecord::Schema.define(version: 20190423130204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +240,16 @@ ActiveRecord::Schema.define(version: 20190323104200) do
     t.text "url"
     t.boolean "deleted", default: false
     t.index ["product_id"], name: "index_coupons_on_product_id"
+  end
+
+  create_table "course_page_progresses", force: :cascade do |t|
+    t.boolean "passed", default: false
+    t.bigint "certcourse_page_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certcourse_page_id"], name: "index_course_page_progresses_on_certcourse_page_id"
+    t.index ["person_id"], name: "index_course_page_progresses_on_person_id"
   end
 
   create_table "courses", force: :cascade do |t|
