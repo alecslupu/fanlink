@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190406201911) do
+ActiveRecord::Schema.define(version: 20190423130204) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
-  enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -240,6 +240,16 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.text "url"
     t.boolean "deleted", default: false
     t.index ["product_id"], name: "index_coupons_on_product_id"
+  end
+
+  create_table "course_page_progresses", force: :cascade do |t|
+    t.boolean "passed", default: false
+    t.bigint "certcourse_page_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certcourse_page_id"], name: "index_course_page_progresses_on_certcourse_page_id"
+    t.index ["person_id"], name: "index_course_page_progresses_on_person_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -609,9 +619,6 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.integer "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id", "room_id"], name: "index_pin_messages_on_person_id_and_room_id"
-    t.index ["person_id"], name: "index_pin_messages_on_person_id"
-    t.index ["room_id"], name: "index_pin_messages_on_room_id"
   end
 
   create_table "poll_options", force: :cascade do |t|
@@ -1035,7 +1042,7 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.integer "initial_status", default: 0, null: false
     t.integer "reward_id"
     t.integer "delay_unlock", default: 0
-    t.uuid "uuid"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.text "unlocks"
     t.datetime "unlocks_at"
     t.index ["int_unlocks"], name: "index_steps_on_int_unlocks", using: :gin
@@ -1082,7 +1089,6 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.integer "nb_points"
     t.integer "position"
     t.integer "average_time", default: 0
-    t.integer "integer", default: 0
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1093,7 +1099,6 @@ ActiveRecord::Schema.define(version: 20190406201911) do
   create_table "trivia_games", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string "name"
     t.text "description", default: "", null: false
     t.integer "package_count"
     t.string "long_name", null: false
@@ -1150,7 +1155,6 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.integer "position"
     t.bigint "person_id"
     t.integer "average_time", default: 0
-    t.integer "integer", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_trivia_question_package_leaderboards_on_person_id"
@@ -1168,13 +1172,13 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "complexity", default: 1
     t.index ["trivia_game_id"], name: "index_trivia_question_packages_on_trivia_game_id"
   end
 
   create_table "trivia_questions", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "complexity", default: 1
     t.bigint "trivia_package_id"
     t.integer "time_limit"
     t.string "type"
@@ -1182,6 +1186,7 @@ ActiveRecord::Schema.define(version: 20190406201911) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "question_interval", default: 5
     t.index ["trivia_package_id"], name: "index_trivia_questions_on_trivia_package_id"
   end
 
