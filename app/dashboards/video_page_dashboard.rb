@@ -8,7 +8,7 @@ class VideoPageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    certcourse_page: Field::BelongsTo,
+    certcourse_page: Field::BelongsToSearch,
     id: Field::Number,
     video_url: Field::String,
     created_at: Field::DateTime,

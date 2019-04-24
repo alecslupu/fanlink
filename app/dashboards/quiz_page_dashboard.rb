@@ -8,7 +8,7 @@ class QuizPageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    certcourse_page: Field::BelongsTo,
+    certcourse_page: Field::BelongsToSearch,
     answers: Field::HasMany,
     id: Field::Number,
     is_optional: Field::Boolean,
