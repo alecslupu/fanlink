@@ -19,7 +19,6 @@ module Admin
     # for more information
 
     def reset_progress
-      requested_resource = PersonCertcourse.new
       if requested_resource
         PersonQuiz.where(
           person_id: requested_resource.person_id
