@@ -11,6 +11,6 @@
 #
 
 class CoursePageProgress < ApplicationRecord
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, touch: true
   belongs_to :person
 end
