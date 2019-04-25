@@ -1,4 +1,8 @@
 class ProductPolicy < ApplicationPolicy
+
+  def show?
+    true
+  end
   class Scope < ApplicationPolicy::Scope
     def resolve
       if ("admin" == user.product.internal_name)

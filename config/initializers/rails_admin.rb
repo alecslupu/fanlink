@@ -1,5 +1,14 @@
-require Rails.root.join('app/lib/rails_admin/extensions/pundit/authorization_adapter.rb')
+require Rails.root.join("app/lib/rails_admin/extensions/pundit/authorization_adapter.rb")
+require Rails.root.join("app/lib/rails_admin/config/actions/select_product_dashboard.rb")
+require Rails.root.join("app/lib/rails_admin/config/actions/select_product_action.rb")
 RailsAdmin.config do |config|
+
+  RailsAdmin::Config::Actions.register(
+    Fanlink::RailsAdmin::Config::Actions::SelectProductDashboard
+  )
+  RailsAdmin::Config::Actions.register(
+    Fanlink::RailsAdmin::Config::Actions::SelectProductAction
+  )
 
   config.main_app_name = ["Cool app", "BackOffice"]
   # or something more dynamic
@@ -72,20 +81,24 @@ RailsAdmin.config do |config|
   #   ## == Gravatar integration ==
   #   ## To disable Gravatar integration in Navigation Bar set to false
   #   # config.show_gravatar = true
+
+  config.actions do
+  #   dashboard do
+  #     custom_key :base_dashboard
+  #   end                     # mandatory
+  #   index                         # mandatory
+  #   new
+  #   export
+  #   bulk_delete
+  #   show
+  #   edit
+  #   delete
+  #   show_in_app
+    select_product_dashboard
+    select_product_action
   #
-  #   config.actions do
-  #     dashboard                     # mandatory
-  #     index                         # mandatory
-  #     new
-  #     export
-  #     bulk_delete
-  #     show
-  #     edit
-  #     delete
-  #     show_in_app
-  #
-  #     ## With an audit adapter, you can add:
-  #     # history_index
-  #     # history_show
-  #   end
+  #   ## With an audit adapter, you can add:
+  #   # history_index
+  #   # history_show
+  end
 end

@@ -11,11 +11,11 @@ class ApplicationPolicy
   end
 
   def show?
-    false
+    true
   end
 
   def create?
-    false
+    true
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    true
   end
 
   def edit?
@@ -51,7 +51,18 @@ class ApplicationPolicy
   def dashboard?
     true
   end
+
+  def select_product_dashboard?
+    true
+  end
   # Rails admin
+
+
+  def select_product?
+    user && user.super_admin? && user.product.internal_name == 'admin'
+  end
+
+
   class Scope
     attr_reader :user, :scope
 

@@ -1,0 +1,18 @@
+<% if @products %>
+  <table clsss="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="shrink model-name">Products</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr class="<%= cycle("odd", "even") %> link action_type_links">
+          <td>
+            <span class="show"><a class="pjax" href="<%= dashboard_path %>select-product-id/?product_id=<%= product.id %>"><%= product %></a></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

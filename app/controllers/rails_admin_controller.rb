@@ -2,7 +2,6 @@ class RailsAdminController < ApplicationController
   set_current_tenant_through_filter
   before_action :require_login, :set_tenant
 
-
   def not_authenticated
     # Make sure that we reference the route from the main app.
     redirect_to("/admin/admin/login") && (return)
@@ -18,7 +17,6 @@ class RailsAdminController < ApplicationController
   end
 
   protected
-
 
   def set_tenant
     # we always start from current_user's product
