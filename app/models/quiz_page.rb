@@ -23,7 +23,7 @@ class QuizPage < ApplicationRecord
   validates :quiz_text, presence: true
   after_save :set_certcourse_page_content_type
 
-  validate :mandatory_checks,  if: Proc.new { |p| !p.is_optional }
+  validate :mandatory_checks,  unless: Proc.new { |p| p.is_optional }
 
   private
 
