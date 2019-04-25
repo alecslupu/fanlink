@@ -8,7 +8,7 @@ class ImagePageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    certcourse_page: Field::BelongsToSearch,
+    certcourse_page: Field::BelongsTo.with_options(order: :id),
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,

@@ -8,7 +8,7 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    certcourse: Field::BelongsToSearch,
+    certcourse: Field::BelongsTo.with_options(order: :short_name),
     quiz_page: Field::HasOne,
     video_page: Field::HasOne,
     image_page: Field::HasOne,
