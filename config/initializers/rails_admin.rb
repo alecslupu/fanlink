@@ -1,51 +1,12 @@
-require Rails.root.join("app/lib/rails_admin/extensions/pundit/authorization_adapter.rb")
-require Rails.root.join("app/lib/rails_admin/config/actions/select_product_dashboard.rb")
-require Rails.root.join("app/lib/rails_admin/config/actions/select_product_action.rb")
-RailsAdmin.config do |config|
+Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
+Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
 
-  RailsAdmin::Config::Actions.register(
-    Fanlink::RailsAdmin::Config::Actions::SelectProductDashboard
-  )
-  RailsAdmin::Config::Actions.register(
-    Fanlink::RailsAdmin::Config::Actions::SelectProductAction
-  )
+RailsAdmin.config do |config|
 
   config.main_app_name = ["Cool app", "BackOffice"]
   # or something more dynamic
   config.main_app_name = Proc.new { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
-
-
-  config.included_models = %w(
-    Certificate
-
-
-    ActionType
-    Badge
-    Event
-    Level
-    Merchandise
-    Message
-    MessageReport
-    Person
-    PortalAccess
-    PortalNotification
-    Post
-    PostReport
-    Product
-    Room
-  )
-
-
-  config.model "Certificate" do
-    navigation_label "Courseware"
-  end
-
-  %w(Certcourse CertcoursePage CertificateCertcourse Answer ImagePage PersonCertcourse PersonCertificate PersonQuiz QuizPage VideoPage).each do |model|
-    config.included_models << model
-    config.model model do
-      parent Certificate
-    end
-  end
 
   config.parent_controller = "RailsAdminController"
 
