@@ -16,7 +16,8 @@ RSpec.describe Answer, type: :model do
     describe ".is_selected" do
       it "returns false when a wrong_answer is provided" do
         person = create(:person)
-        qp = create(:quiz_page, is_optional: false)
+        qp = create(:quiz_page, that_is_mandatory: true)
+
         wrong_answer = create(:wrong_answers, quiz_page: qp)
         create(:person_quiz, person: person, answer_id: wrong_answer.id, quiz_page: qp)
 
@@ -25,7 +26,7 @@ RSpec.describe Answer, type: :model do
       end
       it "return false if the answer is correct, but not selected " do
         person = create(:person)
-        qp = create(:quiz_page, is_optional: false)
+        qp = create(:quiz_page, that_is_mandatory: true)
         correct_answer = create(:correct_answer, quiz_page: qp)
 
         expect(correct_answer.is_selected(person)).to be_falsey
@@ -33,7 +34,7 @@ RSpec.describe Answer, type: :model do
       end
       it "returns true if the correct answer is provided " do
         person = create(:person)
-        qp = create(:quiz_page, is_optional: false)
+        qp = create(:quiz_page, that_is_mandatory: true)
         correct_answer = create(:correct_answer, quiz_page: qp)
         create(:person_quiz, person: person, answer_id: correct_answer.id, quiz_page: qp)
 

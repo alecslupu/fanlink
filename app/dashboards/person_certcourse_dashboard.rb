@@ -8,8 +8,8 @@ class PersonCertcourseDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    person: Field::BelongsTo,
-    certcourse: Field::BelongsTo,
+    person: Field::BelongsToSearch,
+    certcourse: Field::BelongsToSearch,
     id: Field::Number,
     last_completed_page_id: Field::Number,
     is_completed: Field::Boolean,

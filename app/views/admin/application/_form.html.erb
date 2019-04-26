@@ -24,10 +24,12 @@ and renders all form fields for a resource's editable attributes.
       </h2>
 
       <ul>
-        <% errors.each do |e| %>
-          <li class="flash-error"><%= e %></li>
+        <% page.resource.errors.full_messages.each do |message| %>
+          <li class="flash-error"><%= message %></li>
         <% end %>
       </ul>
+
+
     </div>
   <% end %>
 
