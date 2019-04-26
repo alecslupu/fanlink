@@ -19,11 +19,19 @@ class QuizPage < ApplicationRecord
 
   has_many :answers
 
+  accepts_nested_attributes_for :answers
+
   validate :just_me
   validates :quiz_text, presence: true
   after_save :set_certcourse_page_content_type
 
   validate :mandatory_checks,  unless: Proc.new { |p| p.is_optional }
+
+  def to_s
+    quiz_text
+  end
+
+  alias :title :to_s
 
   private
 
