@@ -229,6 +229,10 @@ class Person < ApplicationRecord
     name || username
   end
 
+  def title
+    username
+  end
+
   def flush_cache
     Rails.cache.delete([self.class.name, id])
   end

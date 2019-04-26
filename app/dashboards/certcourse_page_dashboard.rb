@@ -26,37 +26,37 @@ class CertcoursePageDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :id,
-    :certcourse,
-    :content_type,
-    :certcourse_page_order,
-  ].freeze
+  # COLLECTION_ATTRIBUTES = [
+  #   :id,
+  #   :certcourse,
+  #   :content_type,
+  #   :certcourse_page_order,
+  # ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :certcourse,
-    :quiz_page,
-    :video_page,
-    :image_page,
-    :id,
-    :certcourse_page_order,
-    :duration,
-    :background_color_hex,
-    :created_at,
-    :updated_at,
-  ].freeze
+  # SHOW_PAGE_ATTRIBUTES = [
+  #   :certcourse,
+  #   :quiz_page,
+  #   :video_page,
+  #   :image_page,
+  #   :id,
+  #   :certcourse_page_order,
+  #   :duration,
+  #   :background_color_hex,
+  #   :created_at,
+  #   :updated_at,
+  # ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :certcourse,
-    :certcourse_page_order,
-    :duration,
-    :background_color_hex,
-  ].freeze
+  # FORM_ATTRIBUTES = [
+  #   :certcourse,
+  #   :certcourse_page_order,
+  #   :duration,
+  #   :background_color_hex,
+  # ].freeze
 
   # Overwrite this method to customize how certcourse pages are displayed
   # across all pages of the admin dashboard.

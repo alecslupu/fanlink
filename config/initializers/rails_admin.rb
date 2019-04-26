@@ -44,17 +44,7 @@ RailsAdmin.config do |config|
   #   # config.show_gravatar = true
 
   config.actions do
-  #   dashboard do
-  #     custom_key :base_dashboard
-  #   end                     # mandatory
-  #   index                         # mandatory
-  #   new
-  #   export
-  #   bulk_delete
-  #   show
-  #   edit
-  #   delete
-  #   show_in_app
+    all
     select_product_dashboard
     select_product_action
   #

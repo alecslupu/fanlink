@@ -40,58 +40,58 @@ class PersonDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :username,
-    :email,
-    :name,
-    :picture,
-    :role,
-    :created_at,
-    :notification_device_ids,
-  ].freeze
+  # COLLECTION_ATTRIBUTES = [
+  #   :username,
+  #   :email,
+  #   :name,
+  #   :picture,
+  #   :role,
+  #   :created_at,
+  #   :notification_device_ids,
+  # ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :id,
-    :username,
-    :email,
-    :name,
-    :picture,
-    :role,
-    :designation,
-    :do_not_message_me,
-    :pin_messages_from,
-    :auto_follow,
-    :chat_banned,
-    :product_account,
-    :recommended,
-    :facebookid,
-    :facebook_picture_url,
-    :created_at,
-    :updated_at,
-    :level_earned,
-    :badges,
-  ].freeze
+  # SHOW_PAGE_ATTRIBUTES = [
+  #   :id,
+  #   :username,
+  #   :email,
+  #   :name,
+  #   :picture,
+  #   :role,
+  #   :designation,
+  #   :do_not_message_me,
+  #   :pin_messages_from,
+  #   :auto_follow,
+  #   :chat_banned,
+  #   :product_account,
+  #   :recommended,
+  #   :facebookid,
+  #   :facebook_picture_url,
+  #   :created_at,
+  #   :updated_at,
+  #   :level_earned,
+  #   :badges,
+  # ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :username,
-    :email,
-    :name,
-    :picture,
-    :role,
-    :designation,
-    :do_not_message_me,
-    :pin_messages_from,
-    :auto_follow,
-    :chat_banned,
-    :product_account,
-    :recommended,
-    :password,
-  ].freeze
+  # FORM_ATTRIBUTES = [
+  #   :username,
+  #   :email,
+  #   :name,
+  #   :picture,
+  #   :role,
+  #   :designation,
+  #   :do_not_message_me,
+  #   :pin_messages_from,
+  #   :auto_follow,
+  #   :chat_banned,
+  #   :product_account,
+  #   :recommended,
+  #   :password,
+  # ].freeze
 
   # Overwrite this method to customize how people are displayed
   # across all pages of the admin dashboard.

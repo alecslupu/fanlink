@@ -38,56 +38,56 @@ class CertificateDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :id,
-    :short_name,
-    :certificate_order,
-    :status,
-    :certcourses,
-  ].freeze
+  # COLLECTION_ATTRIBUTES = [
+  #   :id,
+  #   :short_name,
+  #   :certificate_order,
+  #   :status,
+  #   :certcourses,
+  # ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :id,
-    :long_name,
-    :short_name,
-    :description,
-    :certificate_certcourses,
-    :certificate_order,
-    :color_hex,
-    :status,
-    :is_free,
-    :sku_ios,
-    :sku_android,
-    :room,
-    :validity_duration,
-    :access_duration,
-    :certificate_issuable,
-    :template_image,
-    :created_at,
-    :updated_at,
-  ].freeze
+  # SHOW_PAGE_ATTRIBUTES = [
+  #   :id,
+  #   :long_name,
+  #   :short_name,
+  #   :description,
+  #   :certificate_certcourses,
+  #   :certificate_order,
+  #   :color_hex,
+  #   :status,
+  #   :is_free,
+  #   :sku_ios,
+  #   :sku_android,
+  #   :room,
+  #   :validity_duration,
+  #   :access_duration,
+  #   :certificate_issuable,
+  #   :template_image,
+  #   :created_at,
+  #   :updated_at,
+  # ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :long_name,
-    :short_name,
-    :description,
-    :room,
-    :template_image,
-    :certificate_order,
-    :color_hex,
-    :status,
-    :is_free,
-    :sku_ios,
-    :sku_android,
-    :validity_duration,
-    :access_duration,
-    :certificate_issuable,
-  ].freeze
+  # FORM_ATTRIBUTES = [
+  #   :long_name,
+  #   :short_name,
+  #   :description,
+  #   :room,
+  #   :template_image,
+  #   :certificate_order,
+  #   :color_hex,
+  #   :status,
+  #   :is_free,
+  #   :sku_ios,
+  #   :sku_android,
+  #   :validity_duration,
+  #   :access_duration,
+  #   :certificate_issuable,
+  # ].freeze
 
   # Overwrite this method to customize how certificates are displayed
   # across all pages of the admin dashboard.

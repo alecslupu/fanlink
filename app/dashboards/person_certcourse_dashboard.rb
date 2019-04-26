@@ -22,34 +22,34 @@ class PersonCertcourseDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :person,
-    :certcourse,
-    :id,
-    :last_completed_page_id,
-  ].freeze
+  # COLLECTION_ATTRIBUTES = [
+  #   :person,
+  #   :certcourse,
+  #   :id,
+  #   :last_completed_page_id,
+  # ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :person,
-    :certcourse,
-    :id,
-    :last_completed_page_id,
-    :is_completed,
-    :created_at,
-    :updated_at,
-  ].freeze
+  # SHOW_PAGE_ATTRIBUTES = [
+  #   :person,
+  #   :certcourse,
+  #   :id,
+  #   :last_completed_page_id,
+  #   :is_completed,
+  #   :created_at,
+  #   :updated_at,
+  # ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :person,
-    :certcourse,
-    :last_completed_page_id,
-    :is_completed,
-  ].freeze
+  # FORM_ATTRIBUTES = [
+  #   :person,
+  #   :certcourse,
+  #   :last_completed_page_id,
+  #   :is_completed,
+  # ].freeze
 
   # Overwrite this method to customize how person certcourses are displayed
   # across all pages of the admin dashboard.

@@ -41,72 +41,72 @@ class PersonCertificateDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = [
-    :person,
-    :certificate,
-    :id,
-    :full_name,
-  ].freeze
+  # COLLECTION_ATTRIBUTES = [
+  #   :person,
+  #   :certificate,
+  #   :id,
+  #   :full_name,
+  # ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :person,
-    :certificate,
-    :id,
-    :full_name,
-    :issued_date,
-    :validity_duration,
-    :amount_paid,
-    :currency,
-    :fee_waived,
-    :purchased_waived_date,
-    :access_duration,
-    :purchased_order_id,
-    :purchased_platform,
-    :purchased_sku,
-    :unique_id,
-    :created_at,
-    :updated_at,
-    :issued_certificate_image_file_name,
-    :issued_certificate_image_content_type,
-    :issued_certificate_image_file_size,
-    :issued_certificate_image_updated_at,
-    :issued_certificate_pdf_file_name,
-    :issued_certificate_pdf_content_type,
-    :issued_certificate_pdf_file_size,
-    :issued_certificate_pdf_updated_at,
-    :receipt_id,
-  ].freeze
+  # SHOW_PAGE_ATTRIBUTES = [
+  #   :person,
+  #   :certificate,
+  #   :id,
+  #   :full_name,
+  #   :issued_date,
+  #   :validity_duration,
+  #   :amount_paid,
+  #   :currency,
+  #   :fee_waived,
+  #   :purchased_waived_date,
+  #   :access_duration,
+  #   :purchased_order_id,
+  #   :purchased_platform,
+  #   :purchased_sku,
+  #   :unique_id,
+  #   :created_at,
+  #   :updated_at,
+  #   :issued_certificate_image_file_name,
+  #   :issued_certificate_image_content_type,
+  #   :issued_certificate_image_file_size,
+  #   :issued_certificate_image_updated_at,
+  #   :issued_certificate_pdf_file_name,
+  #   :issued_certificate_pdf_content_type,
+  #   :issued_certificate_pdf_file_size,
+  #   :issued_certificate_pdf_updated_at,
+  #   :receipt_id,
+  # ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
-  FORM_ATTRIBUTES = [
-    :person,
-    :certificate,
-    :full_name,
-    :issued_date,
-    :validity_duration,
-    :amount_paid,
-    :currency,
-    :fee_waived,
-    :purchased_waived_date,
-    :access_duration,
-    :purchased_order_id,
-    :purchased_platform,
-    :purchased_sku,
-    :unique_id,
-    :issued_certificate_image_file_name,
-    :issued_certificate_image_content_type,
-    :issued_certificate_image_file_size,
-    :issued_certificate_image_updated_at,
-    :issued_certificate_pdf_file_name,
-    :issued_certificate_pdf_content_type,
-    :issued_certificate_pdf_file_size,
-    :issued_certificate_pdf_updated_at,
-    :receipt_id,
-  ].freeze
+  # FORM_ATTRIBUTES = [
+  #   :person,
+  #   :certificate,
+  #   :full_name,
+  #   :issued_date,
+  #   :validity_duration,
+  #   :amount_paid,
+  #   :currency,
+  #   :fee_waived,
+  #   :purchased_waived_date,
+  #   :access_duration,
+  #   :purchased_order_id,
+  #   :purchased_platform,
+  #   :purchased_sku,
+  #   :unique_id,
+  #   :issued_certificate_image_file_name,
+  #   :issued_certificate_image_content_type,
+  #   :issued_certificate_image_file_size,
+  #   :issued_certificate_image_updated_at,
+  #   :issued_certificate_pdf_file_name,
+  #   :issued_certificate_pdf_content_type,
+  #   :issued_certificate_pdf_file_size,
+  #   :issued_certificate_pdf_updated_at,
+  #   :receipt_id,
+  # ].freeze
 
   # Overwrite this method to customize how person certificates are displayed
   # across all pages of the admin dashboard.

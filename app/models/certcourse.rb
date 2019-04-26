@@ -38,4 +38,10 @@ class Certcourse < ApplicationRecord
   validates :duration, numericality: { greater_than: 0 }
 
   scope :live_status, -> { where(status: "live") }
+
+  def to_s
+    short_name
+  end
+
+  alias :title :to_s
 end

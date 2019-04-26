@@ -4,6 +4,9 @@ RailsAdmin.config do |config|
   config.model "Answer" do
     parent "Certificate"
 
+    show do
+      exclude_fields :user_answers
+    end
     list do
       exclude_fields :product, :user_answers, :created_at, :updated_at
     end
