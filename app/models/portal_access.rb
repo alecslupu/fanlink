@@ -20,6 +20,7 @@
 class PortalAccess < ApplicationRecord
   include FlagShihTzu
 
+  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 
   has_flags 1 => :post_read,

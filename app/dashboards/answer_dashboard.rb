@@ -8,7 +8,7 @@ class AnswerDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    quiz_page: Field::BelongsTo,
+    quiz_page: Field::BelongsToSearch,
     id: Field::Number,
     description: Field::String,
     is_correct: Field::Boolean,
