@@ -19,8 +19,16 @@ class QuizPage < ApplicationRecord
 
   has_many :answers
 
+  accepts_nested_attributes_for :answers
+
   validate :just_me
   after_save :set_certcourse_page_content_type
+
+  def to_s
+    quiz_text
+  end
+
+  alias :title :to_s
 
   private
 
