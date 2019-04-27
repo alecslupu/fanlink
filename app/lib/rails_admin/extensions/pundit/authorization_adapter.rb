@@ -59,8 +59,8 @@ module RailsAdmin
         private
 
         def policy(record)
-        #   @controller.send(:policy, record)
-        # rescue ::Pundit::NotDefinedError
+          @controller.send(:policy, record)
+        rescue ::Pundit::NotDefinedError
           ::ApplicationPolicy.new(@controller.send(:pundit_user), record)
         end
 

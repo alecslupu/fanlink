@@ -1,5 +1,6 @@
 Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/fields/types/*.rb")].each { |f| require f }
 Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
 
 RailsAdmin.config do |config|
