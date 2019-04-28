@@ -3,7 +3,6 @@ RailsAdmin.config do |config|
 
   config.model ActionType do
     list do
-      scopes [:unscoped]
       items_per_page 100
       sort_by :name
 
