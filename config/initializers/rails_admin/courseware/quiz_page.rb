@@ -11,7 +11,7 @@ RailsAdmin.config do |config|
       fields :id, :certcourse_page, :answers, :is_optional
     end
     show do
-      fields :certcourse_page, :answers, :id, :is_optional, :quiz_text, :wrong_answer_page_id
+      fields :id, :certcourse_page, :answers, :is_optional, :quiz_text, :wrong_answer_page_id
     end
   end
 end

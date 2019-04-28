@@ -15,15 +15,3 @@ RailsAdmin.config do |config|
     end
   end
 end
-# require "administrate/base_dashboard"
-#
-# class VideoPageDashboard < Administrate::BaseDashboard
-#   ATTRIBUTE_TYPES = {
-#     certcourse_page: Field::BelongsTo.with_options(order: :id),
-#     id: Field::Number,
-#     video_url: Field::String,
-#     created_at: Field::DateTime,
-#     updated_at: Field::DateTime,
-#     video: PaperclipVideoField,
-#   }.freeze
-# end

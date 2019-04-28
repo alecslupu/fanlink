@@ -15,7 +15,6 @@ namespace :admin do
   resources :certcourses
   resources :certificate_certcourses
   resources :certcourse_pages
-  resources :quiz_pages
   resources :image_pages
   resources :person_certificates
   resources :person_certcourses do
