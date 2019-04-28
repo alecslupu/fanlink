@@ -12,6 +12,5 @@ RailsAdmin.config do |config|
     show do
       fields :id, :certcourse_page, :image
     end
-
   end
 end

@@ -5,8 +5,15 @@ RailsAdmin.config do |config|
     parent "Certificate"
 
     show do
-      fields :certificate_certcourses, :certificates, :certcourse_pages, :id, :long_name, :short_name, :description
-      fields :color_hex, :status, :duration, :is_completed, :copyright_text, :created_at, :updated_at
+      fields :id,
+             :long_name,
+             :short_name,
+             :description,
+             :color_hex,
+             :status,
+             :duration,
+             :is_completed,
+             :copyright_text
     end
     edit do
       fields :long_name, :short_name, :description, :color_hex, :status, :duration, :is_completed, :copyright_text

@@ -5,14 +5,26 @@ RailsAdmin.config do |config|
     parent "Certificate"
 
     show do
-      fields :certcourse, :quiz_page, :video_page, :image_page, :id, :certcourse_page_order, :duration
-      fields :background_color_hex, :created_at, :updated_at
+      fields :id,
+             :certcourse,
+             :quiz_page,
+             :video_page,
+             :image_page,
+             :certcourse_page_order,
+             :duration,
+             :background_color_hex
     end
     edit do
-      fields :certcourse, :certcourse_page_order, :duration, :background_color_hex
+      fields :certcourse,
+             :certcourse_page_order,
+             :duration,
+             :background_color_hex
     end
     list do
-      fields :id, :certcourse, :content_type, :certcourse_page_order
+      fields :id,
+             :certcourse,
+             :content_type,
+             :certcourse_page_order
     end
   end
 end

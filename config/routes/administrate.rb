@@ -11,11 +11,6 @@ namespace :admin do
 
   # end
 
-  resources :certificates
-  resources :certcourses
-  resources :certificate_certcourses
-  resources :certcourse_pages
-  resources :image_pages
   resources :person_certificates
   resources :person_certcourses do
     member do

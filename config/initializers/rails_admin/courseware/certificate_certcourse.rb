@@ -10,7 +10,7 @@ RailsAdmin.config do |config|
       fields :certificate, :certcourse, :certcourse_order
     end
     show do
-      fields :id, :certificate, :certcourse, :certcourse_order, :created_at, :updated_at
+      fields :id, :certificate, :certcourse, :certcourse_order
     end
   end
 end
