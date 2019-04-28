@@ -12,27 +12,25 @@ RailsAdmin.config do |config|
     edit do
       field :name, :translated
       field :description, :translated
-      fields   :internal_name,
-               :picture,
-               :action_type,
-               :action_requirement,
-               :point_value,
-               :issued_from,
-               :issued_to
+      fields :internal_name,
+             :picture,
+             :action_type,
+             :action_requirement,
+             :point_value,
+             :issued_from,
+             :issued_to
     end
     show do
-      fields   :id,
-               :action_type,
-               :name,
-               :internal_name,
-               :description,
-               :action_requirement,
-               :point_value,
-               :picture,
-               :issued_from,
-               :issued_to,
-               :created_at,
-               :updated_at
+      fields :id,
+             :action_type,
+             :name,
+             :internal_name,
+             :description,
+             :action_requirement,
+             :point_value,
+             :picture,
+             :issued_from,
+             :issued_to
     end
   end
 end

@@ -38,5 +38,12 @@ RailsAdmin.config do |config|
         read_only true
       end
     end
+    show do
+      fields :id,
+             :name,
+             :internal_name,
+             :active,
+             :seconds_lag
+    end
   end
 end

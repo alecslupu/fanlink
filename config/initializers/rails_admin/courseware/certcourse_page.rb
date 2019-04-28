@@ -21,6 +21,7 @@ RailsAdmin.config do |config|
              :background_color_hex
     end
     list do
+      scopes [ nil, :quizes, :videos, :images ]
       fields :id,
              :certcourse,
              :content_type,
