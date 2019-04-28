@@ -16,7 +16,6 @@ namespace :admin do
     get "unhide" => "messages#unhide"
   end
   resources :message_reports, only: %i[ index update ]
-  resources :people
   resources :portal_accesses
   resources :portal_notifications
   resources :posts
@@ -28,7 +27,6 @@ namespace :admin do
     end
   end
   # resources :product_beacons
-  resources :rooms
 
   # resources :quests
   # resources :quest_activities
