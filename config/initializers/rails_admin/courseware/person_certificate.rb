@@ -4,10 +4,7 @@ RailsAdmin.config do |config|
     parent "Certificate"
 
     list do
-      fields :person,
-             :certificate,
-             :id,
-             :full_name
+      fields :id, :person, :certificate, :full_name
     end
 
     edit do
@@ -36,9 +33,9 @@ RailsAdmin.config do |config|
              :receipt_id
     end
     show do
-      fields :person,
+      fields :id,
+             :person,
              :certificate,
-             :id,
              :full_name,
              :issued_date,
              :validity_duration,
@@ -51,8 +48,6 @@ RailsAdmin.config do |config|
              :purchased_platform,
              :purchased_sku,
              :unique_id,
-             :created_at,
-             :updated_at,
              :issued_certificate_image_file_name,
              :issued_certificate_image_content_type,
              :issued_certificate_image_file_size,

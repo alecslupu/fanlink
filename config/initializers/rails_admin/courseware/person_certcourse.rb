@@ -4,13 +4,20 @@ RailsAdmin.config do |config|
     parent "Certificate"
 
     edit do
-      fields :person, :certcourse, :last_completed_page_id, :is_completed
+      fields :person,
+             :certcourse,
+             :last_completed_page_id,
+             :is_completed
     end
     list do
       fields :id, :person, :certcourse, :last_completed_page_id
     end
     show do
-      fields :id, :person, :certcourse, :last_completed_page_id, :is_completed
+      fields :id,
+             :person,
+             :certcourse,
+             :last_completed_page_id,
+             :is_completed
     end
   end
 end

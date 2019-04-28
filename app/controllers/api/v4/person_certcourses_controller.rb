@@ -18,7 +18,7 @@ class Api::V4::PersonCertcoursesController < ApiController
     @person_certcourse.is_completed = last_step?
 
     if @person_certcourse.save
-      update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
+      PersonCertificate.update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
       return_the @person_certcourse, handler: "jb"
     else
       render_422(_("Something went wrong."))
@@ -76,16 +76,6 @@ class Api::V4::PersonCertcoursesController < ApiController
     @certcoursepage ||= CertcoursePage.find(params[:page_id])
   end
 
-  def update_certification_status(certificate_ids, user_id)
-      # TODO find a better way to write this
-      # TODO move it in a job
-      PersonCertificate.where(person_id: user_id, certificate_id: certificate_ids).find_each do |c|
-        person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: c.certificate.certcourse_ids).pluck(:is_completed)
-        # raise ({c_size: c.certificate.certcourse_ids.size, p_size: person_certcourses.size, pc: person_certcourses}).inspect
-        c.is_completed = (c.certificate.certcourses.size == person_certcourses.size) && person_certcourses.inject(true, :&)
-        c.save!
-      end
-    end
 
     def person_certcourses_params
       params.require(:person_certcourse).permit(%i[ certcourse_id ])

@@ -1,4 +1,5 @@
 Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/actions/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/fields/types/*.rb")].each { |f| require f }
 Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
@@ -48,6 +49,12 @@ RailsAdmin.config do |config|
     all
     select_product_dashboard
     select_product_action
+    forget_action do
+      only [ "PersonCertcourse" ]
+    end
+    reset_progress_action do
+      only [ "PersonCertcourse" ]
+    end
   #
   #   ## With an audit adapter, you can add:
   #   # history_index

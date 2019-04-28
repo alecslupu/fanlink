@@ -11,14 +11,6 @@ namespace :admin do
 
   # end
 
-  resources :person_certificates
-  resources :person_certcourses do
-    member do
-      post :reset_progress
-      post :forget
-    end
-  end
-
   resources :action_types
   # resources :activity_types
   resources :badges
