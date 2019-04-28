@@ -3,13 +3,15 @@ RailsAdmin.config do |config|
   config.model "Person" do
     configure :level_earned do
     end
+
+    configure :password do
+    end
     list do
       fields :username,
              :email,
              :name,
              :picture,
              :role,
-             :created_at,
              :notification_device_ids
     end
     show do

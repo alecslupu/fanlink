@@ -2,6 +2,8 @@ RailsAdmin.config do |config|
   config.included_models.push("Post")
 
   config.model Post do
+    configure :reported do
+    end
     list do
       fields :person,
              :body,
@@ -11,9 +13,12 @@ RailsAdmin.config do |config|
              :ends_at,
              :repost_interval,
              :status,
-             :priority,
-             :reported?,
-             :created_at
+             :priority
+      field :reported do
+        pretty_value do
+          bindings[:object].reported?
+        end
+      end
     end
     show do
       fields :person,
