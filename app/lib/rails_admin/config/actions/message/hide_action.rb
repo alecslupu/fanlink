@@ -1,8 +1,8 @@
 module RailsAdmin
   module Config
     module Actions
-      module CourseWare
-        class ResetProgressAction < RailsAdmin::Config::Actions::Base
+      module Message
+        class HideAction < RailsAdmin::Config::Actions::Base
           RailsAdmin::Config::Actions.register(self)
 
           register_instance_option :member do
@@ -10,29 +10,23 @@ module RailsAdmin
           end
 
           register_instance_option :http_methods do
-            [:get, :delete]
+            [:get, :post]
           end
 
           register_instance_option :route_fragment do
-            :reset_progress_action
+            :hide_action
           end
 
           register_instance_option :controller do
             proc do
-              PersonQuiz.where(
-                person_id: @object.person_id
-              ).destroy_all
-              CoursePageProgress.where(
-                person_id: @object.person_id,
-                certcourse_page_id: @object.certcourse.certcourse_page_ids
-              ).destroy_all
-              @object.last_completed_page_id = nil
-              @object.is_completed = false
+              include Messaging unless defined?("delete_message")
+              @object.hidden = true
               changes = @object.changes
               if @object.save
                 @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
-                PersonCertificate.update_certification_status(@object.certcourse.certificate_ids, @object.person_id)
-                flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.reset.done'))
+                delete_message(@object, @api_version)
+                @object.message_reports.each(&:message_hidden!)
+                flash[:notice] = t("admin.flash.successful", name: @model_config.label, action: t("admin.actions.update.done"))
               else
                 flash[:error] = @object.errors.full_messages.join("<br/>")
               end
@@ -41,7 +35,7 @@ module RailsAdmin
           end
 
           register_instance_option :link_icon do
-            "icon-refresh"
+            "icon-off"
           end
         end
       end

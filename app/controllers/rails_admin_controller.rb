@@ -3,7 +3,7 @@ class RailsAdminController < ApplicationController
   include ::Pundit
 
   set_current_tenant_through_filter
-  before_action :require_login, :set_tenant, :reload_rails_admin
+  before_action :require_login, :set_tenant, :set_api_version, :reload_rails_admin
 
 
   def not_authenticated
@@ -21,6 +21,10 @@ class RailsAdminController < ApplicationController
   end
 
   protected
+
+  def set_api_version
+    @api_version = 5
+  end
 
   def set_tenant
     # we always start from current_user's product

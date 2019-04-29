@@ -37,7 +37,7 @@ RailsAdmin.config do |config|
   #   ## == Pundit ==
   config.authorize_with :pundit
   #   ## == PaperTrail ==
-  #   # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, "Person", "PaperTrail::Version" # PaperTrail >= 3.0.0
   #
   #   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
   #
@@ -46,18 +46,28 @@ RailsAdmin.config do |config|
   #   # config.show_gravatar = true
 
   config.actions do
-    all
-    select_product_dashboard
-    select_product_action
     forget_action do
       only [ "PersonCertcourse" ]
     end
     reset_progress_action do
       only [ "PersonCertcourse" ]
+  end
+    hide_message_action do
+      only [ "MessageReport" ]
     end
-  #
-  #   ## With an audit adapter, you can add:
-  #   # history_index
-  #   # history_show
+    reanalyze_action do
+      only [ "MessageReport" ]
+    end
+    ignore_action do
+      only [ "MessageReport" ]
+    end
+    hide_action do
+      only [ "Message" ]
+    end
+    unhide_action do
+      only [ "Message" ]
+    end
+    select_product_dashboard
+    select_product_action
   end
 end
