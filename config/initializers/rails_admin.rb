@@ -1,10 +1,12 @@
 Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/actions/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/fields/types/*.rb")].each { |f| require f }
 Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
 
 RailsAdmin.config do |config|
 
-  config.main_app_name = ["Cool app", "BackOffice"]
+  config.main_app_name = ["Fan link", "BackOffice"]
   # or something more dynamic
   config.main_app_name = Proc.new { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
 
@@ -35,7 +37,7 @@ RailsAdmin.config do |config|
   #   ## == Pundit ==
   config.authorize_with :pundit
   #   ## == PaperTrail ==
-  #   # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, "Person", "PaperTrail::Version" # PaperTrail >= 3.0.0
   #
   #   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
   #
@@ -44,22 +46,28 @@ RailsAdmin.config do |config|
   #   # config.show_gravatar = true
 
   config.actions do
-  #   dashboard do
-  #     custom_key :base_dashboard
-  #   end                     # mandatory
-  #   index                         # mandatory
-  #   new
-  #   export
-  #   bulk_delete
-  #   show
-  #   edit
-  #   delete
-  #   show_in_app
+    forget_action do
+      only [ "PersonCertcourse" ]
+    end
+    reset_progress_action do
+      only [ "PersonCertcourse" ]
+  end
+    hide_message_action do
+      only [ "MessageReport" ]
+    end
+    reanalyze_action do
+      only [ "MessageReport" ]
+    end
+    ignore_action do
+      only [ "MessageReport" ]
+    end
+    hide_action do
+      only [ "Message" ]
+    end
+    unhide_action do
+      only [ "Message" ]
+    end
     select_product_dashboard
     select_product_action
-  #
-  #   ## With an audit adapter, you can add:
-  #   # history_index
-  #   # history_show
   end
 end

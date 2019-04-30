@@ -30,4 +30,9 @@ class Answer < ApplicationRecord
   def certcourse_name
     quiz_page.certcourse_page.certcourse.short_name
   end
+
+  def to_s
+    description
+  end
+  alias :title :to_s
 end

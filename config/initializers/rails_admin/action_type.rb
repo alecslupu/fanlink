@@ -1,9 +1,8 @@
 RailsAdmin.config do |config|
   config.included_models.push("ActionType")
 
-  config.model ActionType do
+  config.model "ActionType" do
     list do
-      scopes [:unscoped]
       items_per_page 100
       sort_by :name
 
@@ -38,6 +37,13 @@ RailsAdmin.config do |config|
       field :badges_count do
         read_only true
       end
+    end
+    show do
+      fields :id,
+             :name,
+             :internal_name,
+             :active,
+             :seconds_lag
     end
   end
 end

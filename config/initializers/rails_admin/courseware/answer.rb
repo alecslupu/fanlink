@@ -4,11 +4,27 @@ RailsAdmin.config do |config|
   config.model "Answer" do
     parent "Certificate"
 
+    configure :question do
+    end
+    configure :certcourse_name do
+    end
+    show do
+      fields :quiz_page,
+            :id,
+            :description,
+            :is_correct
+    end
     list do
-      exclude_fields :product, :user_answers, :created_at, :updated_at
+      fields :id,
+            :certcourse_name,
+            :question,
+            :description,
+            :is_correct
     end
     edit do
-      exclude_fields :product, :user_answers
+      fields :quiz_page,
+            :description,
+            :is_correct
     end
 
     nested do

@@ -41,7 +41,7 @@ class ApplicationPolicy
   end
 
   def show_in_app?
-    true
+    false
   end
 
   def history?
@@ -56,7 +56,6 @@ class ApplicationPolicy
     true
   end
   # Rails admin
-
 
   def select_product?
     user && user.super_admin? && user.product.internal_name == 'admin'

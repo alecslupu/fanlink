@@ -24,6 +24,11 @@ class CertcoursePage < ApplicationRecord
   has_one :image_page
   has_many :course_page_progresses
 
+  scope :quizes, -> { joins(:quiz_page) }
+  scope :videos, -> { joins(:video_page) }
+  scope :images, -> { joins(:image_page) }
+
+
   validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
   validates :duration, numericality: { greater_than: 0 }
 

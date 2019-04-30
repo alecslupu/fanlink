@@ -78,7 +78,7 @@ class Message < ApplicationRecord
   end
 
   def name
-    person.name
+    person.try(:name)
   end
 
   def product
