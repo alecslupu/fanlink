@@ -18,14 +18,29 @@ RailsAdmin.config do |config|
       fields :certcourse,
              :certcourse_page_order,
              :duration,
-             :background_color_hex
+             :background_color_hex,
+             :quiz_page,
+             :video_page,
+             :image_page
     end
+
     list do
       scopes [ nil, :quizes, :videos, :images ]
       fields :id,
              :certcourse,
              :content_type,
              :certcourse_page_order
+    end
+
+    nested do
+      [:quiz_page, :image_page, :video_page].each do |configured_model|
+        field configured_model do
+          visible do
+            bindings[:object].persisted?
+          end
+        end
+      end
+      exclude_fields :certcourse
     end
   end
 end

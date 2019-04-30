@@ -36,6 +36,8 @@ class QuizPage < ApplicationRecord
   private
 
     def just_me
+      return if certcourse_page.new_record?
+
       x = CertcoursePage.find(certcourse_page.id)
       child = x.child
       if child && child != self

@@ -12,5 +12,9 @@ RailsAdmin.config do |config|
     show do
       fields :id, :certcourse_page, :image
     end
+
+    nested do
+      exclude_fields :certcourse_page
+    end
   end
 end
