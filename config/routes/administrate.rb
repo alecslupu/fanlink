@@ -33,10 +33,6 @@ namespace :admin do
   # resources :quest_completions
   # resources :steps
 
-  get ":product_internal_name/login" => "sessions#new"
-  post "login" => "sessions#create"
-  get "logout" => "sessions#destroy"
-  get ":product_internal_name" => "sessions#login_redirect"
 
   # get ":product_internal_name/beacons" => "productbeacons#index"
   # get ":product_internal_name/beacons/:id" => "productbeacons#show"

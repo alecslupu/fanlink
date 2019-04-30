@@ -15,6 +15,13 @@ class PortalNotification < ApplicationRecord
   include PortalNotification::RealTime
   include TranslationThings
 
+
+  attr_accessor :trigger_admin_notification
+  after_commit -> { enqueue_push }, on: :create, if: proc { |record| record.trigger_admin_notification }
+  after_commit -> { update_push }, on: :update, if: proc { |record|
+    record.trigger_admin_notification == true && record.previous_changes.keys.include?("send_me_at")
+  }
+
   # specify languages not used for respective fields
   IGNORE_TRANSLATION_LANGS = { body: ["un"] }
 
