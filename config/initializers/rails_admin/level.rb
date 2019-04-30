@@ -1,7 +1,7 @@
 RailsAdmin.config do |config|
   config.included_models.push("Level")
 
-  config.model Level do
+  config.model "Level" do
 
     list do
       fields :id,

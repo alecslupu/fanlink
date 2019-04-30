@@ -1,7 +1,7 @@
 RailsAdmin.config do |config|
   config.included_models.push("Event")
 
-  config.model Event do
+  config.model "Event" do
 
     list do
       fields :id,

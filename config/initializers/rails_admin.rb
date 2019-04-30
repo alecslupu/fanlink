@@ -6,7 +6,7 @@ Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require 
 
 RailsAdmin.config do |config|
 
-  config.main_app_name = ["Cool app", "BackOffice"]
+  config.main_app_name = ["Fan link", "BackOffice"]
   # or something more dynamic
   config.main_app_name = Proc.new { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
 

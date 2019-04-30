@@ -1,6 +1,6 @@
 RailsAdmin.config do |config|
   config.included_models.push("Product")
-  config.model Product do
+  config.model "Product" do
     configure :people_count do
     end
     list do

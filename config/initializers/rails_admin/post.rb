@@ -1,7 +1,7 @@
 RailsAdmin.config do |config|
   config.included_models.push("Post")
 
-  config.model Post do
+  config.model "Post" do
     configure :reported do
     end
     list do

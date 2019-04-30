@@ -1,6 +1,6 @@
 RailsAdmin.config do |config|
   config.included_models.push("Room")
-  config.model Room do
+  config.model "Room" do
     configure :name_un do
     end
     list do
