@@ -1,8 +1,8 @@
 module Admin
-  class SessionsController < RailsAdminController
+  class SessionsController < Admin::ApplicationController
     set_current_tenant_through_filter
 
-    skip_before_action :require_login, :set_tenant
+    skip_before_action :require_login, :check_admin, :set_tenant
 
     def create
       product = nil
@@ -16,8 +16,8 @@ module Admin
         person = Person.find_by(query)
         person = login(person.email, params[:password]) if person
         if person
-          # check_admin
-          redirect_to rails_admin_path unless performed?
+          check_admin
+          redirect_to admin_people_path unless performed?
         else
           flash[:alert] = "Login failed"
           redirect_to admin_path(product_internal_name: product.internal_name)
