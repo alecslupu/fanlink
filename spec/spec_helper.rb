@@ -6,7 +6,9 @@ SimpleCov.start "rails" do
   add_filter "app/controllers/admin" # administrate stuff
   add_filter "app/dashboards"
   add_filter "app/fields"
-  add_filter "app/jobs" # nothing here
+  # add_group "jobs", "app/jobs" # nothing here
+  add_group "listeners", "app/listeners" # nothing here
+  add_group "policies", "app/policies" # nothing here
 end
 
 require File.expand_path("../../config/environment", __FILE__)
