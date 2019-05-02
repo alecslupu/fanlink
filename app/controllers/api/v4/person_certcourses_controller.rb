@@ -1,7 +1,6 @@
 class Api::V4::PersonCertcoursesController < ApiController
   def create
-    @person_certcourse = certcourse.person_certcourses.where(person_id: current_user.id).first_or_create!
-    @person_certcourse.last_completed_page_id = params[:page_id]
+    register_certcourse_progress
 
     if certcourse_page.quiz?
       save_user_answer
@@ -9,23 +8,36 @@ class Api::V4::PersonCertcoursesController < ApiController
         register_progress
       else
         register_regress
-        @person_certcourse.last_completed_page_id = last_certcourse_page.try(:id)
+        register_certcourse_regress
       end
     else
       register_progress
     end
 
-    @person_certcourse.is_completed = last_step?
 
-    if @person_certcourse.save
-      update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
-      return_the @person_certcourse, handler: "jb"
+    if person_certcourse.save
+      update_certification_status(person_certcourse.certcourse.certificate_ids, current_user.id)
+      return_the person_certcourse, handler: "jb"
     else
       render_422(_("Something went wrong."))
     end
   end
 
   private
+
+  def register_certcourse_progress
+    person_certcourse.last_completed_page_id = params[:page_id]
+    person_certcourse.is_completed = last_step?
+  end
+
+  def register_certcourse_regress
+    person_certcourse.last_completed_page_id = last_certcourse_page.try(:id)
+    person_certcourse.is_completed = false
+  end
+
+  def person_certcourse
+    @person_certcourse = certcourse.person_certcourses.where(person_id: current_user.id).first_or_create!
+  end
 
   def register_regress
     certcourse_pages.each do |cp|
@@ -53,7 +65,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def last_step?
-    certcourse_pages.last.id == @person_certcourse.last_completed_page_id
+    certcourse_pages.last.id == person_certcourse.last_completed_page_id
   end
 
   def last_certcourse_page
