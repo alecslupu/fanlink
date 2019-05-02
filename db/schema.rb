@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190418210823) do
+ActiveRecord::Schema.define(version: 20190502191345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +240,16 @@ ActiveRecord::Schema.define(version: 20190418210823) do
     t.text "url"
     t.boolean "deleted", default: false
     t.index ["product_id"], name: "index_coupons_on_product_id"
+  end
+
+  create_table "course_page_progresses", force: :cascade do |t|
+    t.boolean "passed", default: false
+    t.bigint "certcourse_page_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certcourse_page_id"], name: "index_course_page_progresses_on_certcourse_page_id"
+    t.index ["person_id"], name: "index_course_page_progresses_on_person_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -1090,8 +1100,6 @@ ActiveRecord::Schema.define(version: 20190418210823) do
   end
 
   create_table "trivia_games", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
     t.text "description", default: "", null: false
     t.integer "round_count"
     t.string "long_name", null: false
@@ -1103,6 +1111,8 @@ ActiveRecord::Schema.define(version: 20190418210823) do
     t.integer "leaderboard_size", default: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "start_date"
+    t.integer "end_date"
     t.index ["product_id"], name: "index_trivia_games_on_product_id"
     t.index ["room_id"], name: "index_trivia_games_on_room_id"
   end
@@ -1143,17 +1153,17 @@ ActiveRecord::Schema.define(version: 20190418210823) do
   end
 
   create_table "trivia_questions", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
     t.bigint "trivia_round_id"
     t.integer "time_limit"
     t.string "type"
     t.integer "question_order", default: 1, null: false
     t.integer "status", default: 0, null: false
-    t.integer "question_interval", default: 5
+    t.integer "cooldown_period", default: 5
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "title"
+    t.integer "start_date"
+    t.integer "end_date"
     t.index ["trivia_round_id"], name: "index_trivia_questions_on_trivia_round_id"
   end
 
@@ -1170,8 +1180,6 @@ ActiveRecord::Schema.define(version: 20190418210823) do
   end
 
   create_table "trivia_rounds", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
     t.integer "question_count"
     t.bigint "trivia_game_id"
     t.integer "leaderboard_size", default: 100
@@ -1181,6 +1189,8 @@ ActiveRecord::Schema.define(version: 20190418210823) do
     t.integer "complexity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "start_date"
+    t.integer "end_date"
     t.index ["trivia_game_id"], name: "index_trivia_rounds_on_trivia_game_id"
   end
 

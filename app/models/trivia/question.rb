@@ -2,19 +2,20 @@
 #
 # Table name: trivia_questions
 #
-#  id                :bigint(8)        not null, primary key
-#  start_date        :datetime
-#  end_date          :datetime
-#  trivia_round_id   :bigint(8)
-#  time_limit        :integer
-#  type              :string
-#  question_order    :integer          default(1), not null
-#  status            :integer          default("draft"), not null
-#  question_interval :integer          default(5)
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  title             :text
+#  id              :bigint(8)        not null, primary key
+#  trivia_round_id :bigint(8)
+#  time_limit      :integer
+#  type            :string
+#  question_order  :integer          default(1), not null
+#  status          :integer          default("draft"), not null
+#  cooldown_period :integer          default(5)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  title           :text
+#  start_date      :integer
+#  end_date        :integer
 #
+
 module Trivia
 
   class Question < ApplicationRecord
@@ -26,11 +27,11 @@ module Trivia
 
     def compute_gameplay_parameters
       self.end_date = self.start_date + self.time_limit
-      save!
+      self.save!
     end
 
     def end_date_with_cooldown
-      self.end_date + self.question_interval.seconds
+      self.end_date + self.cooldown_period.seconds
     end
 
     def set_order(index)

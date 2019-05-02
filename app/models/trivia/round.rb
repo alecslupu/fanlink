@@ -3,8 +3,6 @@
 # Table name: trivia_rounds
 #
 #  id               :bigint(8)        not null, primary key
-#  start_date       :datetime
-#  end_date         :datetime
 #  question_count   :integer
 #  trivia_game_id   :bigint(8)
 #  leaderboard_size :integer          default(100)
@@ -14,7 +12,10 @@
 #  complexity       :integer          default(1)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  start_date       :integer
+#  end_date         :integer
 #
+
 module Trivia
 
   class Round < ApplicationRecord

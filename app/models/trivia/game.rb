@@ -3,8 +3,6 @@
 # Table name: trivia_games
 #
 #  id               :bigint(8)        not null, primary key
-#  start_date       :datetime
-#  end_date         :datetime
 #  description      :text             default(""), not null
 #  round_count      :integer
 #  long_name        :string           not null
@@ -16,6 +14,8 @@
 #  leaderboard_size :integer          default(100)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  start_date       :integer
+#  end_date         :integer
 #
 
 module Trivia
@@ -38,13 +38,14 @@ module Trivia
 
     def compute_gameplay_parameters
       date_to_set = self.start_date
+
       self.rounds.each_with_index do |round, index|
         round.start_date = date_to_set
         round.set_order(1 + index)
         round.compute_gameplay_parameters
         date_to_set = round.end_date_with_cooldown
       end
-      self.end_date = self.rounds.reload.last.end_date
+      self.end_date = date_to_set
       self.save
     end
 

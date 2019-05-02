@@ -64,7 +64,10 @@ RSpec.describe Trivia::Round, type: :model do
         value = (3..10).to_a.sample
 
         question = round.reload.questions.first(value).last
-        expect(question.start_date).to be_within(1.seconds).of round.start_date + (6 * (value-1)).seconds
+
+        result = round.start_date + (5 * (value-1)).seconds
+
+        expect(question.start_date - result).to eq(0)
         expect(question.question_order).to eq(value)
       end
       it "sets the end date correctly on round" do
@@ -77,15 +80,16 @@ RSpec.describe Trivia::Round, type: :model do
       end
     end
     describe ".end_date_with_cooldown" do
-
       it "has the method" do
         expect(Trivia::Round.new.respond_to?(:end_date_with_cooldown)).to eq(true)
       end
       it "sets the end date" do
-        time = DateTime.now
+        time = DateTime.now.to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
-        expect(round.end_date_with_cooldown).to eq(time + 15.seconds)
+        # 46 = 10*1 seconds duration + 9*6 timeouts
+        result = time + 46.seconds
+        expect(round.end_date_with_cooldown - result).to eq(0)
       end
     end
 
