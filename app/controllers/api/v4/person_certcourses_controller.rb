@@ -16,7 +16,7 @@ class Api::V4::PersonCertcoursesController < ApiController
 
 
     if person_certcourse.save
-      update_certification_status(person_certcourse.certcourse.certificate_ids, current_user.id)
+      update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
       return_the person_certcourse, handler: "jb"
     else
       render_422(_("Something went wrong."))
