@@ -4,16 +4,16 @@ class Api::V4::PersonCertcoursesController < ApiController
 
     if certcourse_page.quiz?
       save_user_answer
-      if is_correct_answer?
+      if any_answer_allowed?
         register_progress
       else
         register_regress
-        register_certcourse_regress
       end
+
+      register_certcourse_regress unless is_correct_answer?
     else
       register_progress
     end
-
 
     if @person_certcourse.save
       update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
@@ -36,7 +36,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def person_certcourse
-    @person_certcourse = certcourse.person_certcourses.where(person_id: current_user.id).first_or_create!
+    @person_certcourse ||= certcourse.person_certcourses.where(person_id: current_user.id).first_or_create!
   end
 
   def register_regress
@@ -72,8 +72,12 @@ class Api::V4::PersonCertcoursesController < ApiController
     @last_certcourse_page ||= certcourse_pages.where('id < ?', certcourse_page.quiz_page.wrong_answer_page_id).last
   end
 
+  def any_answer_allowed?
+    is_correct_answer? || certcourse_page.quiz_page.is_optional?
+  end
+
   def is_correct_answer?
-    (params[:answer_id].present? && Answer.find(params[:answer_id]).is_correct?) || certcourse_page.quiz_page.is_optional?
+    (params[:answer_id].present? && Answer.find(params[:answer_id]).is_correct?)
   end
 
   def certcourse
