@@ -15,7 +15,8 @@
 
 FactoryBot.define do
   factory :image_page do
-    certcourse_page { nil }
-    video_url { "MyString" }
+    certcourse_page { create(:certcourse_page) }
+    product { current_product }
+    image { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
   end
 end
