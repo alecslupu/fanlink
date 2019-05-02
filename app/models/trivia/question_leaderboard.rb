@@ -9,8 +9,10 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
+module Trivia
 
-class Trivia::QuestionLeaderboard < ApplicationRecord
-  belongs_to :question, class_name: "Trivia::Question", foreign_key: :trivia_question_id
-  belongs_to :person, class_name: "Person"
+  class QuestionLeaderboard < ApplicationRecord
+    belongs_to :question, class_name: "Trivia::Question", foreign_key: :trivia_question_id
+    belongs_to :person, class_name: "Person"
+  end
 end

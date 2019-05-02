@@ -48,5 +48,13 @@ RSpec.describe Trivia::Question, type: :model do
         expect(question.end_date_with_cooldown).to eq(time + 15.seconds)
       end
     end
+
+    describe ".set_order" do
+      it "has the method" do
+        expect(Trivia::Question.new.respond_to?(:set_order)).to eq(true)
+      end
+    end
+
+
   end
 end

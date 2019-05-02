@@ -16,14 +16,16 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
+module Trivia
 
-class Trivia::Prize < ApplicationRecord
-  belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+  class Prize < ApplicationRecord
+    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
-  has_attached_file :photo
+    has_attached_file :photo
 
-  enum status: %i[draft published locked closed]
-  enum prize_type: %i[digital physical]
+    enum status: %i[draft published locked closed]
+    enum prize_type: %i[digital physical]
 
-  scope :published, -> { where(status: [:published, :locked]) }
+    scope :published, -> { where(status: [:published, :locked]) }
+  end
 end

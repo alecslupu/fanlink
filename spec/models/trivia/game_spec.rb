@@ -29,5 +29,52 @@ RSpec.describe Trivia::Game, type: :model do
       end
     end
   end
+
+  context "scheduled round" do
+    describe ".compute_gameplay_parameters" do
+      it "has the method" do
+        expect(Trivia::Game.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
+      end
+      it "sets the start_date of a question" do
+        time = DateTime.now
+        game = create(:full_trivia_game, start_date: time)
+        game.compute_gameplay_parameters
+        round = game.reload.rounds.first
+        expect(round.start_date).to be_within(1.seconds).of game.start_date
+        expect(round.round_order).to eq(1)
+      end
+
+      it "sets the second question at the right interval" do
+        time = DateTime.now
+        game = create(:full_trivia_game, start_date: time)
+        game.compute_gameplay_parameters
+        round = game.reload.rounds.first(2).last
+        expect(round.start_date).to be_within(1.seconds).of game.start_date + 6.seconds
+        expect(round.round_order).to eq(2)
+
+      end
+
+      it "sets any question at the right interval" do
+        time = DateTime.now
+        game = create(:full_trivia_game, start_date: time)
+        game.compute_gameplay_parameters
+
+        value = (3..10).to_a.sample
+
+        round = game.reload.rounds.first(value).last
+        expect(round.start_date).to be_within(1.seconds).of game.start_date + (6 * (value-1)).seconds
+        expect(round.question_order).to eq(value)
+      end
+      it "sets the end date correctly on round" do
+        time = DateTime.now
+        game = create(:full_trivia_game, start_date: time)
+        game.compute_gameplay_parameters
+
+        round = game.reload.rounds.last
+        expect(game.end_date).to be_within(1.seconds).of round.end_date
+      end
+    end
+  end
+
 end
 

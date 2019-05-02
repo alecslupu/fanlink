@@ -76,5 +76,23 @@ RSpec.describe Trivia::Round, type: :model do
         expect(round.end_date).to be_within(1.seconds).of question.end_date
       end
     end
+    describe ".end_date_with_cooldown" do
+
+      it "has the method" do
+        expect(Trivia::Round.new.respond_to?(:end_date_with_cooldown)).to eq(true)
+      end
+      it "sets the end date" do
+        time = DateTime.now
+        round = create(:future_trivia_round, start_date: time)
+        round.compute_gameplay_parameters
+        expect(round.end_date_with_cooldown).to eq(time + 15.seconds)
+      end
+    end
+
+    describe ".set_order" do
+      it "has the method" do
+        expect(Trivia::Round.new.respond_to?(:set_order)).to eq(true)
+      end
+    end
   end
 end

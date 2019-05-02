@@ -34,5 +34,19 @@ module Trivia
     scope :scheduled, -> { enabled.order(id: :desc).where(start_date: DateTime.now..DateTime::Infinity.new) }
     scope :running, -> { enabled.order(start_date: :asc).where(start_date:  DateTime.new(2001,2,3)...DateTime.now).
       where(end_date: DateTime.now..DateTime::Infinity.new ) }
+
+
+    def compute_gameplay_parameters
+      date_to_set = self.start_date
+      self.rounds.each_with_index do |round, index|
+        round.start_date = date_to_set
+        round.set_order(1 + index)
+        round.compute_gameplay_parameters
+        date_to_set = round.end_date_with_cooldown
+      end
+      self.end_date = self.rounds.reload.last.end_date
+      self.save
+    end
+
   end
 end
