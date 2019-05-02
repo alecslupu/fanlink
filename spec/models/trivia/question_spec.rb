@@ -23,4 +23,30 @@ RSpec.describe Trivia::Question, type: :model do
       expect(round.available_answers.size).to eq(4)
     end
   end
+  context "scheduled round" do
+    describe ".compute_gameplay_parameters" do
+      it "has the method" do
+        expect(Trivia::Question.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
+      end
+      it "sets the end date" do
+        time = DateTime.now
+        question = create(:trivia_question, start_date: time, time_limit:10)
+        question.compute_gameplay_parameters
+        expect(question.end_date).to eq(time + 10.seconds)
+      end
+    end
+
+    describe ".end_date_with_cooldown" do
+
+      it "has the method" do
+        expect(Trivia::Question.new.respond_to?(:end_date_with_cooldown)).to eq(true)
+      end
+      it "sets the end date" do
+        time = DateTime.now
+        question = create(:trivia_question, start_date: time, time_limit: 10, question_interval: 5)
+        question.compute_gameplay_parameters
+        expect(question.end_date_with_cooldown).to eq(time + 15.seconds)
+      end
+    end
+  end
 end

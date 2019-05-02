@@ -28,7 +28,7 @@ FactoryBot.define do
     uuid { Faker::Crypto.sha1 }
     product { current_product }
     room { create(:room) }
-    leaderboard_size { 50 }
+    leaderboard_size { 5 }
 
 
     factory :full_trivia_game do
