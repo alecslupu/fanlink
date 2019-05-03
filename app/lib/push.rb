@@ -91,6 +91,7 @@ private
   module_function :do_push
 
   def push_with_retry(options, tokens)
+    resp = nil
     begin
       retries ||= 0
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
@@ -101,6 +102,7 @@ private
       disconnect
       retry if (retries += 1) < 2
     end
+    resp
   end
 
   def do_topic_push(topic, msg)
