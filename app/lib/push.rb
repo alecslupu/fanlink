@@ -95,7 +95,7 @@ private
     begin
       retries ||= 0
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
-      resp = push_client.send(tokens, options)
+      resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
     rescue Errno::EPIPE
       # FLAPI-839
