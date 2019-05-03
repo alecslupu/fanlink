@@ -36,4 +36,20 @@ RSpec.describe PostComment, type: :model do
       expect(cmt).not_to be_valid
     end
   end
+
+
+  # TODO: auto-generated
+  describe "#mentions" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#mentions=" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#product" do
+    pending
+  end
 end

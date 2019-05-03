@@ -23,6 +23,17 @@ as defined by the routes in the `admin/` namespace
       <%= link_to "Select Product", select_form_admin_products_path, class: 'button' %>
       <hr/>
     <% end %>
+
+    <div style="margin-top: 25px;">
+      <p><strong>New Admin</strong></p>
+    </div>
+    <%= link_to "Rails admin", rails_admin_path %>
+
+    <div style="margin-top: 25px;">
+      <p><strong><hr></strong></p>
+    </div>
+
+
     <% courses = ['certificates', 'certcourses', 'certificate_certcourses', 'certcourse_pages', 'answers', 'quiz_pages', 'image_pages', 'video_pages', 'person_certcourses', 'person_certificates'] %>
     <% titles = {"certcourses" => "Courses", "certcourse_pages" => "Course Pages"} %>
     <% exceptions = courses + ['sessions'] %>

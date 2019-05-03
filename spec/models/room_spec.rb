@@ -56,7 +56,7 @@ RSpec.describe Room, type: :model do
       end
     end
 
-    describe "#is_member" do
+    describe "#is_member?" do
       let(:member) { create(:person) }
       let(:non_member) { create(:person) }
       let(:room) { create(:room, public: false) }
@@ -68,6 +68,9 @@ RSpec.describe Room, type: :model do
         expect(room.is_member?(non_member)).to be_falsey
       end
     end
+    describe "#private?" do
+      pending
+    end
   end
 
   context "Enumeration" do
@@ -75,6 +78,7 @@ RSpec.describe Room, type: :model do
       should define_enum_for(:status).with([:inactive, :active, :deleted])
     end
   end
+
 
   # There is no validation currently in the model for these tests
   # describe "#name" do

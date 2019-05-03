@@ -43,6 +43,12 @@ module Fanlink
         s3_protocol: :https
     }
 
+
+    config.paperclip_defaults = {
+      path: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension',
+      url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
+    } if Rails.env.test?
+
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
 
 

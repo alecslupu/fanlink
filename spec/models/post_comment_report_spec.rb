@@ -72,4 +72,13 @@ RSpec.describe PostCommentReport, type: :model do
     it { expect(PostCommentReport.valid_status?("no_status")).to be_falsey }
   end
 
+  # TODO: auto-generated
+  describe "#create_time" do
+    it "works" do
+      post_comment_report = PostCommentReport.new
+      result = post_comment_report.create_time
+      expect(result).not_to be_nil
+    end
+    pending
+  end
 end

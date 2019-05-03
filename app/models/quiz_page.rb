@@ -19,16 +19,40 @@ class QuizPage < ApplicationRecord
 
   has_many :answers
 
+  accepts_nested_attributes_for :answers
+
   validate :just_me
+  validates :quiz_text, presence: true
   after_save :set_certcourse_page_content_type
+
+  validate :mandatory_checks,  unless: Proc.new { |p| p.is_optional }
+
+  def to_s
+    quiz_text
+  end
+
+  alias :title :to_s
 
   private
 
     def just_me
+      return if certcourse_page.new_record?
+
       x = CertcoursePage.find(certcourse_page.id)
       child = x.child
       if child && child != self
         errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+      end
+    end
+
+    def mandatory_checks
+      if wrong_answer_page_id.nil?
+        errors.add(:base, :mandatory_checks, message: _("Mandatory quizes require a wrong answer page."))
+      else
+        wrong_page = CertcoursePage.find(wrong_answer_page_id)
+        if wrong_page.certcourse_page_order >= certcourse_page.certcourse_page_order
+          errors.add(:base, :mandatory_checks, message: _("Wrong page needs to come before this page."))
+        end
       end
     end
 

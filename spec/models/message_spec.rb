@@ -114,4 +114,94 @@ RSpec.describe Message, type: :model do
     end
   end
 
+  # TODO: auto-generated
+  describe "#as_json" do
+    it "works" do
+      message = build(:message)
+      result = message.as_json
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#create_time" do
+    it "works" do
+      message = Message.new
+      result = message.create_time
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#mentions" do
+    it "works" do
+      message = Message.new
+      result = message.mentions
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#mentions=" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#name" do
+    it "works" do
+      message = build(:message)
+      expect(message.name).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#product" do
+    it "works" do
+      message = build(:message)
+      expect(message.product).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reported?" do
+    it "works" do
+      message = build(:message)
+      expect(message.reported?).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#username" do
+    it "works" do
+      message = build(:message)
+      expect(message.username).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#visible?" do
+    it "works" do
+      message = build(:message)
+      expect(message.visible?).to be_truthy
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#parse_content" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#pinned" do
+    pending
+  end
+
 end

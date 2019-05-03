@@ -29,13 +29,10 @@ class VideoPage < ApplicationRecord
   validate :just_me
   after_save :set_certcourse_page_content_type
 
-  def product
-    Product.find_by(internal_name: "caned")
-  end
-
   private
 
     def just_me
+      return if certcourse_page.new_record?
       x = CertcoursePage.find(certcourse_page.id)
       child = x.child
       if child && child != self

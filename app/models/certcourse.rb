@@ -29,12 +29,21 @@ class Certcourse < ApplicationRecord
 
   has_many :certcourse_pages
 
+  accepts_nested_attributes_for :certcourse_pages
+
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 
   enum status: %i[entry live]
 
   validates :long_name, :short_name, :description, :color_hex, :status, :duration, :copyright_text, presence: true
   validates_format_of :color_hex, with: /\A#(?:[A-F0-9]{3}){1,2}\z/i
+  validates :duration, numericality: { greater_than: 0 }
 
   scope :live_status, -> { where(status: "live") }
+
+  def to_s
+    short_name
+  end
+
+  alias :title :to_s
 end

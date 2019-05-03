@@ -2,12 +2,23 @@ require "rails_helper"
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
+  # TODO: auto-generated
+  describe "GET index" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "DELETE destroy" do
+    pending
+  end
+
+
   describe "#show" do
     it "does not display as selected the wrong_answers" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        qp = create(:quiz_page, is_optional: false)
+        qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
 
         get :show, params: { id: qp.certcourse_page_id }
@@ -25,7 +36,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        qp = create(:quiz_page, is_optional: false)
+        qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
         get :show, params: { id: qp.certcourse_page_id }

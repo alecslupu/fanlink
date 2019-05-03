@@ -17,6 +17,8 @@ class Answer < ApplicationRecord
   belongs_to :quiz_page
   has_many :user_answers, class_name: "PersonQuiz", dependent: :destroy
 
+  validates :description, presence: true
+
   def is_selected(person)
     (is_correct || quiz_page.is_optional?) && user_answers.where(quiz_page_id: self.quiz_page_id, person_id: person.id).present?
   end
@@ -28,4 +30,9 @@ class Answer < ApplicationRecord
   def certcourse_name
     quiz_page.certcourse_page.certcourse.short_name
   end
+
+  def to_s
+    description
+  end
+  alias :title :to_s
 end
