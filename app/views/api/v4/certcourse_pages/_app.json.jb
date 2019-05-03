@@ -6,8 +6,6 @@ json = {
   timer: certcourse_page.duration,
   media_url: certcourse_page.content_type == "image" ? certcourse_page.image_page.image_url : (certcourse_page.content_type == "video" ? certcourse_page.video_page.video_url : ""),
   media_url_large: certcourse_page.content_type == "image" ? certcourse_page.image_page.image.url(:large) : "",
-  background_color_hex: certcourse_page.background_color_hex,
-  passed: certcourse_page.course_page_progresses.where(person_id: current_user.id).first_or_initialize.passed,
-  is_passed: certcourse_page.course_page_progresses.where(person_id: current_user.id).first_or_initialize.passed
+  background_color_hex: certcourse_page.background_color_hex
 }
 json
