@@ -91,16 +91,18 @@ private
   module_function :do_push
 
   def push_with_retry(options, tokens)
+    resp = nil
     begin
       retries ||= 0
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
-      resp = push_client.send(tokens, options)
+      resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
       retry if (retries += 1) < 2
     end
+    resp
   end
 
   def do_topic_push(topic, msg)
