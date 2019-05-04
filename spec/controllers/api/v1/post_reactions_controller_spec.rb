@@ -33,7 +33,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
     it "should not create a reaction for a post from a different product" do
       person = create(:person, product: create(:product))
       p = create(:post, person: person)
-      person = create(:person)
+      person = create(:person, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         expect {
@@ -108,12 +108,12 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         expect(post_reaction_json(json["post_reaction"])).to be true
       end
     end
-    it "should change the reaction to a post if not logged in" do
+    it "should not change the reaction to a post if not logged in" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         reaction = create(:post_reaction, person: person, reaction: @reaction)
         patch :update, params: { id: reaction.id, post_id: reaction.post_id, post_reaction: { reaction: "1F601" } }
-        expect(response).to be_not_found
+        expect(response).to be_unauthorized
         expect(reaction.reload.reaction).to eq(@reaction)
       end
     end
