@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "badge_action_count": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "badge": {
+      "$ref": "./badge_response.json"
+    }
+  },
+  "required": [
+    "badge_action_count",
+    "badge"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
