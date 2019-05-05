@@ -31,8 +31,8 @@ class Api::V1::PostCommentReportsController < ApiController
 
   def create
     parms = post_comment_report_params
-    post_comment = PostComment.find(parms["post_comment_id"])
-    if post_comment.try(:product) == current_user.product
+    post_comment = PostComment.for_product(ActsAsTenant.current_tenant).find(parms["post_comment_id"])
+    if post_comment.product == current_user.product
       post_comment_report = PostCommentReport.create(parms)
       if post_comment_report.valid?
         broadcast(:post_comment_report_created, post_comment_report, @api_version)
