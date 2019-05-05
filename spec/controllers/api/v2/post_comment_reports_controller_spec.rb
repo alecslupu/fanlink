@@ -59,7 +59,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         login_as(admin)
         5.times do |n|
-          create(:post_comment_report, status: PostCommentReport.statuses.keys.sample )
+          create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
         get :index, params: { page: 1, per_page: 2 }
         expect(response).to be_success
@@ -75,7 +75,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         login_as(admin)
         5.times do |n|
-          create(:post_comment_report, status: PostCommentReport.statuses.keys.sample )
+          create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
         get :index, params: { page: 2, per_page: 2 }
         expect(response).to be_success
@@ -91,7 +91,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         login_as(admin)
         5.times do |n|
-          create(:post_comment_report, status: PostCommentReport.statuses.keys.sample )
+          create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
 
         get :index, params: { status_filter: "pending" }

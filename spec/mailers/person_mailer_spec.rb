@@ -1,21 +1,21 @@
 # -*- encoding: utf-8 -*-
 
-require 'spec_helper'
+require "spec_helper"
 
 describe PersonMailer do
 
   # TODO: auto-generated
-  describe '#onboarding' do
+  describe "#onboarding" do
     pending
   end
 
   # TODO: auto-generated
-  describe '#reset_password' do
+  describe "#reset_password" do
     pending
   end
 
   # TODO: auto-generated
-  describe '#send_certificate' do
+  describe "#send_certificate" do
     pending
   end
 

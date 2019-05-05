@@ -524,7 +524,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         original_username = other.username
         login_as(person)
         new_username = "thisbetterbeunique"
-        patch :update, params: {id: other.id, person: { username: new_username } }
+        patch :update, params: { id: other.id, person: { username: new_username } }
         expect(response).to be_not_found
         oth = other.reload
         expect(oth.username).to eq(original_username)
@@ -536,7 +536,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         rec_person = create(:person)
         expect(rec_person.recommended).to be_falsey
         login_as(person)
-        patch :update, params: {id: rec_person.id, person: { recommended: true } }
+        patch :update, params: { id: rec_person.id, person: { recommended: true } }
         expect(response).to be_success
         expect(rec_person.reload.recommended).to be_truthy
       end
@@ -547,7 +547,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         rec_person = create(:person)
         expect(rec_person.recommended).to be_falsey
         login_as(person)
-        patch :update, params: {id: rec_person.id, person: { recommended: true } }
+        patch :update, params: { id: rec_person.id, person: { recommended: true } }
         expect(response).to be_success
         expect(rec_person.reload.recommended).to be_truthy
       end

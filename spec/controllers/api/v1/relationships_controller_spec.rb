@@ -94,7 +94,7 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
     it "should not unfriend a friend who only has a request" do
       person1 = create(:person)
       ActsAsTenant.with_tenant(person1.product) do
-      rel = create(:relationship, requested_by: create(:person), requested_to: person1)
+        rel = create(:relationship, requested_by: create(:person), requested_to: person1)
         login_as(person1)
         delete :destroy, params: { id: rel.id }
         expect(response).to be_not_found

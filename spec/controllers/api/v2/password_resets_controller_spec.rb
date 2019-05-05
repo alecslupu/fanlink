@@ -13,7 +13,7 @@ RSpec.describe Api::V2::PasswordResetsController, type: :controller do
         expect(person.reload.reset_password_token).not_to be_nil
         expect(email_sent(template: "#{person.product.internal_name}-password-reset",
                           to_values: { email: person.email, name: person.name },
-                          merge_vars:  { link: "https://#{MandrillMailer::config.default_url_options[:host]}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
+                          merge_vars:  { link: "https://#{MandrillMailer.config.default_url_options[:host]}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
                                          name: person.name })
         ).to_not be_nil
       end
@@ -40,7 +40,7 @@ RSpec.describe Api::V2::PasswordResetsController, type: :controller do
         expect(person.reload.reset_password_token).not_to be_nil
         expect(email_sent(template: "#{person.product.internal_name}-password-reset",
                           to_values: { email: person.email, name: person.name },
-                          merge_vars:  { link: "https://#{MandrillMailer::config.default_url_options[:host]}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
+                          merge_vars:  { link: "https://#{MandrillMailer.config.default_url_options[:host]}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
                                          name: person.name })
         ).to_not be_nil
       end
