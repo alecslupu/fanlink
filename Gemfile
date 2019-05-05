@@ -87,6 +87,7 @@ group :development do
   gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
+  gem "guard-rubycritic"
 end
 
 group :test do
