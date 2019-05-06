@@ -31,7 +31,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def register_certcourse_regress
-    person_certcourse.last_completed_page_id = last_certcourse_page.try(:id)
+    person_certcourse.last_completed_page_id = last_certcourse_page.id
     person_certcourse.is_completed = false
   end
 
@@ -69,7 +69,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def last_certcourse_page
-    @last_certcourse_page ||= certcourse_pages.where('id < ?', certcourse_page.quiz_page.wrong_answer_page_id).last
+    @last_certcourse_page ||= certcourse_pages.where('id <= ?', certcourse_page.quiz_page.wrong_answer_page_id).last
   end
 
   def any_answer_allowed?
