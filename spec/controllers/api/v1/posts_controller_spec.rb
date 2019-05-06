@@ -157,26 +157,6 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     let(:created_in_range) { Date.parse("2018-01-02").end_of_day }
     let(:from) { "2018-01-01" }
     let(:to) { "2018-01-03" }
-    # let!(:post11) {create(:post, person: @followee1, status: :published, created_at: created_in_range - 1.hour)}
-    # let!(:post12) {create(:post, person: @followee1, status: :published, created_at: created_in_range - 30.minutes)}
-    # let!(:post21) {create(:post, person: @followee2, status: :published, created_at: created_in_range)}
-    # let!(:post22) {create(:post, person: @followee2, status: :published, created_at: created_in_range + 30.minutes)}
-    # let!(:postloggedin) {create(:post, person: @person, status: :published, created_at: created_in_range + 31.minutes)}
-    # let!(:postnofollow) {create(:post, person: @nonfollowee, status: :published, created_at: created_in_range)}
-    # let!(:postrejected) {create(:post, person: @followee1, status: :rejected, created_at: created_in_range)}
-    # let!(:postexpired) {create(:post, person: @followee2, status: :published, ends_at: Time.zone.now - 1.hour, created_at: created_in_range)}
-    # let!(:postpredates) {create(:post, person: @followee1, status: :published, created_at: Date.parse("2017-12-31"))}
-    # let!(:postpremature) {create(:post, person: @followee2, status: :published, starts_at: Time.now + 1.hour, created_at: created_in_range)}
-
-    # before(:each) do
-    #   @product = Product.first || create(:product)
-    #   @person = create(:person, product: @product)
-    #   followee1 = create(:person)
-    #   followee2 = create(:person)
-    #   @nonfollowee = create(:person, product: @person.product)
-    #   person.follow(@followee1)
-    #   person.follow(@followee2)
-    # end
     it "should get a list of posts for a date range without limit" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
