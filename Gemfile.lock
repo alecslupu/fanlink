@@ -1023,6 +1023,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    paperclip-dimension-validator (0.1.1)
+      paperclip (>= 4.0.0)
     paperclip-meta (3.1.0)
       paperclip (>= 5.0)
     parallel (1.14.0)
@@ -1351,6 +1353,7 @@ DEPENDENCIES
   oj
   paper_trail
   paperclip (~> 5.0.0)
+  paperclip-dimension-validator
   paperclip-meta
   pg (~> 0.18)
   pg_search
