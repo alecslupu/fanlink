@@ -11,7 +11,7 @@ class CertificateDashboard < Administrate::BaseDashboard
     # room: Field::BelongsToSearch,
     room: Field::BelongsToSearch,
 
-    certificate_certcourses: Field::HasMany,
+    certificate_certcourses: Field::HasMany.with_options(order: :certcourse_order),
     certcourses: Field::HasMany,
     person_certificates: Field::HasMany,
     people: Field::HasMany,
