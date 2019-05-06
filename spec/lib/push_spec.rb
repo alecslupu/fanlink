@@ -54,7 +54,7 @@ describe "Push" do
         room = create(:room)
         room.members << @person << rec2
         msg = create(:message, room: room, person_id: from_person.id)
-        expect_any_instance_of(FBCMStub).to receive(:send).with(tokens,
+        expect_any_instance_of(FBCMStub).to receive(:send).with(tokens.sort,
                                                                 get_options(from_person.username,
                                                                             truncate(msg.body),
                                                                             "message_received",
