@@ -12,7 +12,7 @@ class CertcourseDashboard < Administrate::BaseDashboard
     certificates: Field::HasMany,
     person_certcourses: Field::HasMany,
     people: Field::HasMany,
-    certcourse_pages: Field::HasMany,
+    certcourse_pages: Field::HasMany.with_options(order: :certcourse_page_order),
     id: Field::Number,
     long_name: Field::String,
     short_name: Field::String,
