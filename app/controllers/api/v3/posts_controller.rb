@@ -170,7 +170,7 @@ class Api::V3::PostsController < Api::V2::PostsController
       if person
         @posts = paginate(Post.visible.for_person(person).unblocked(current_user.blocked_people).order(created_at: :desc))
       else
-        render_422(_("Cannot find that person.")) && return
+        render_422(_("Cannot find that person."))
       end
     else
       @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
