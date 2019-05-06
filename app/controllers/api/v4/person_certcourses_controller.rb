@@ -8,9 +8,9 @@ class Api::V4::PersonCertcoursesController < ApiController
         register_progress
       else
         register_regress
+        register_certcourse_regress unless is_correct_answer?
       end
 
-      register_certcourse_regress unless is_correct_answer?
     else
       register_progress
     end
