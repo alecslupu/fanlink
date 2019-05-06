@@ -7,9 +7,9 @@ class Api::V4::PersonCertcoursesController < ApiController
       if any_answer_allowed?
         register_progress
 
-        register_certcourse_regress unless certcourse_page.quiz_page.is_optional?
       else
         register_regress
+        register_certcourse_regress unless certcourse_page.quiz_page.is_optional?
       end
 
     else
