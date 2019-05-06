@@ -42,7 +42,7 @@ class Api::V4::PersonCertcoursesController < ApiController
 
   def register_regress
     certcourse_pages.each do |cp|
-      next if last_certcourse_page && cp.certcourse_page_order <= last_certcourse_page.certcourse_page_order
+      next if last_certcourse_page && cp.certcourse_page_order < last_certcourse_page.certcourse_page_order
       break if cp.certcourse_page_order > certcourse_page.certcourse_page_order
       next if cp.quiz?
 
@@ -93,8 +93,7 @@ class Api::V4::PersonCertcoursesController < ApiController
     @certcoursepage ||= CertcoursePage.find(params[:page_id])
   end
 
-
-    def person_certcourses_params
-      params.require(:person_certcourse).permit(%i[ certcourse_id ])
-    end
+  def person_certcourses_params
+    params.require(:person_certcourse).permit(%i[ certcourse_id ])
+  end
 end
