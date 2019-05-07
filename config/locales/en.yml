@@ -257,3 +257,9 @@ en:
       missing_invalid_status: "Invalid or missing status."
       missing_invalid_date: "Missing or invalid date(s)"
       invalid_dates: "Invalid date(s)"
+  admin:
+    actions:
+      select_product_dashboard:
+        title: Select Product
+        menu: Select Product
+        breadcrumb: Select Product

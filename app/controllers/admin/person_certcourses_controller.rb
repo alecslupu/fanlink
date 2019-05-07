@@ -20,7 +20,13 @@ module Admin
 
     def reset_progress
       if requested_resource
-        PersonQuiz.where(person_id: requested_resource.person_id).destroy_all
+        PersonQuiz.where(
+          person_id: requested_resource.person_id
+        ).destroy_all
+        CoursePageProgress.where(
+          person_id: requested_resource.person_id,
+          certcourse_page_id: requested_resource.certcourse.certcourse_page_ids
+        ).destroy_all
         if requested_resource.update(last_completed_page_id: nil, is_completed: false)
           update_certification_status(requested_resource.certcourse.certificate_ids, requested_resource.person_id)
           flash[:notice] = translate_with_resource("reset.success")
@@ -34,6 +40,10 @@ module Admin
     def forget
       if requested_resource
         PersonQuiz.where(person_id: requested_resource.person_id).destroy_all
+        CoursePageProgress.where(
+          person_id: requested_resource.person_id,
+          certcourse_page_id: requested_resource.certcourse.certcourse_page_ids
+        ).destroy_all
         if requested_resource.destroy
           flash[:notice] = translate_with_resource("destroy.success")
         else

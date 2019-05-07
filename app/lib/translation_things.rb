@@ -115,7 +115,7 @@ module TranslationThings
         LANGS.keys.each do |lang|
           translation_things_module.module_eval(%Q{
             def #{name}_#{lang}
-              #{name}(#{lang})
+              #{name}("#{lang}")
             end
 
             def #{name}_#{lang}=(val)

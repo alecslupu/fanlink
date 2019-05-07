@@ -1,61 +1,14 @@
+Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/actions/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
+Dir[Rails.root.join("app/lib/rails_admin/config/fields/types/*.rb")].each { |f| require f }
+Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
+
 RailsAdmin.config do |config|
 
-  config.main_app_name = ["Cool app", "BackOffice"]
+  config.main_app_name = ["Fan link", "BackOffice"]
   # or something more dynamic
   config.main_app_name = Proc.new { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
-
-
-  config.included_models = %w(
-    Certificate
-    Trivia::Game
-
-    ActionType
-    Badge
-    Event
-    Level
-    Merchandise
-    Message
-    MessageReport
-    Person
-    PortalAccess
-    PortalNotification
-    Post
-    PostReport
-    Product
-    Room
-  )
-
-  config.model "Trivia::Game" do
-    navigation_label "Trivia"
-  end
-
-  %w(
-    Trivia::QuestionPackage
-    Trivia::AvailableAnswer
-    Trivia::GameLeaderboard
-    Trivia::QuestionPackageLeaderboard
-    Trivia::Participant
-    Trivia::Prize
-    Trivia::Question
-    Trivia::QuestionLeaderboard
-    Trivia::Answer
-  ).each do |model|
-    config.included_models << model
-    config.model model do
-      parent Trivia::Game
-    end
-  end
-
-  config.model "Certificate" do
-    navigation_label "Courseware"
-  end
-
-  %w(Certcourse CertcoursePage CertificateCertcourse Answer ImagePage PersonCertcourse PersonCertificate PersonQuiz QuizPage VideoPage).each do |model|
-    config.included_models << model
-    config.model model do
-      parent Certificate
-    end
-  end
 
   config.parent_controller = "RailsAdminController"
 
@@ -72,40 +25,49 @@ RailsAdmin.config do |config|
   #   # config.authenticate_with do
   #   #   warden.authenticate! scope: :user
   #   # end
-  #   # config.current_user_method(&:current_user)
 
   config.authenticate_with do
     # Use sorcery's before filter to auth users
     require_login
   end
+  config.current_user_method(&:current_user)
   #   ## == Cancan ==
-  #   # config.authorize_with :cancan
+  #   config.authorize_with :cancan
   #
   #   ## == Pundit ==
-  #   # config.authorize_with :pundit
-  #
+  config.authorize_with :pundit
   #   ## == PaperTrail ==
-  #   # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+  config.audit_with :paper_trail, "Person", "PaperTrail::Version" # PaperTrail >= 3.0.0
   #
   #   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
   #
   #   ## == Gravatar integration ==
   #   ## To disable Gravatar integration in Navigation Bar set to false
   #   # config.show_gravatar = true
-  #
-  #   config.actions do
-  #     dashboard                     # mandatory
-  #     index                         # mandatory
-  #     new
-  #     export
-  #     bulk_delete
-  #     show
-  #     edit
-  #     delete
-  #     show_in_app
-  #
-  #     ## With an audit adapter, you can add:
-  #     # history_index
-  #     # history_show
-  #   end
+
+  config.actions do
+    forget_action do
+      only [ "PersonCertcourse" ]
+    end
+    reset_progress_action do
+      only [ "PersonCertcourse" ]
+    end
+    hide_message_action do
+      only [ "MessageReport" ]
+    end
+    reanalyze_action do
+      only [ "MessageReport" ]
+    end
+    ignore_action do
+      only [ "MessageReport" ]
+    end
+    hide_action do
+      only [ "Message" ]
+    end
+    unhide_action do
+      only [ "Message" ]
+    end
+    select_product_dashboard
+    select_product_action
+  end
 end

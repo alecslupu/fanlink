@@ -101,6 +101,8 @@ class Person < ApplicationRecord
   has_many :person_certificates
   has_many :certificates, through: :person_certificates, dependent: :destroy
 
+  has_many :course_page_progresses, dependent: :destroy
+
   has_many :person_certcourses
   has_many :certcourses, through: :person_certcourses, dependent: :destroy
 
@@ -227,6 +229,10 @@ class Person < ApplicationRecord
 
   def to_s
     name || username
+  end
+
+  def title
+    username
   end
 
   def flush_cache

@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "follower": {
+      "$ref": "./person_response.json"
+    },
+    "followed": {
+      "$ref": "./person_response.json"
+    }
+  },
+  "required": [
+    "follower"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
