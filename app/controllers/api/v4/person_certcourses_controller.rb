@@ -70,7 +70,11 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def last_certcourse_page
-    @last_certcourse_page ||= certcourse_pages.where('id < ?', certcourse_page.quiz_page.wrong_answer_page_id).last
+    @last_certcourse_page ||= certcourse_pages.where("certcourse_page_order < ?", wrong_page_position).last
+  end
+
+  def wrong_page_position
+    @wrong_page_position ||= certcourse_pages.where(id: certcourse_page.quiz_page.wrong_answer_page_id).first.certcourse_page_order || 0
   end
 
   def any_answer_allowed?
@@ -86,7 +90,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def certcourse_pages
-    certcourse.certcourse_pages.order("certcourse_page_order")
+    certcourse.certcourse_pages.order(:certcourse_page_order)
   end
 
   def certcourse_page
