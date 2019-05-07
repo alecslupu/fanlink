@@ -2,9 +2,6 @@ require "rails_helper"
 
 RSpec.describe Api::V1::FollowingsController, type: :controller do
 
-  before(:each) do
-    logout
-  end
   describe "#create" do
     it "should 401 if not logged in" do
       followee = create(:person)

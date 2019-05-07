@@ -96,3 +96,8 @@ guard 'annotate' do
   # with the ":routes => true" option
   #watch( 'config/routes.rb' )
 end
+
+guard "rubycritic" do
+  watch(%r{^app/(.+)\.rb$})
+  watch(%r{^lib/(.+)\.rb$})
+end

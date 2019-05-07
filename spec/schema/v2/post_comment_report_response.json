@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "post_comment_id": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "commenter": {
+      "type": "string"
+    },
+    "reporter": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

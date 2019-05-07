@@ -5,46 +5,6 @@ class Api::V3::PeopleController < Api::V2::PeopleController
   skip_before_action :require_login, only: %i[ create ]
   skip_before_action :require_login, :set_product, only: %i[ public ]
 
-
-  # **
-  # @api {patch} /people/:id/change_password Change your password.
-  # @apiName ChangePassword
-  # @apiGroup People
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to change the logged in user's password.
-  #
-  # @apiParam (path) {Object} id
-  #   The person id.
-  # @apiParam (body) {Object} person
-  #   The person's information.
-  # @apiParam (body) {String} person.current_password
-  #   Current password.
-  # @apiParam (body) {String} [person.new_password]
-  #   New password.
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok or 422
-  # *
-
-  def change_password
-    if @person == current_user
-      if @person.valid_password?(person_params[:current_password])
-        @person.password = person_params[:new_password]
-        if @person.save
-          head :ok
-        else
-          render_422 @person.errors
-        end
-      else
-        render_422(_("The password is incorrect"))
-      end
-    else
-      render_not_found
-    end
-  end
-
   # **
   # @api {post} /people Create person.
   # @apiName CreatePerson
@@ -311,20 +271,6 @@ class Api::V3::PeopleController < Api::V2::PeopleController
   end
 
 private
-
-  def apply_filters
-    people = Person.order(created_at: :desc)
-    params.each do |p, v|
-      if p.end_with?("_filter") && Person.respond_to?(p)
-        people = people.send(p, v, current_user)
-      end
-    end
-    people
-  end
-
-  def check_gender
-    params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
-  end
 
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code

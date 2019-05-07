@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
 
-require 'spec_helper'
+require "spec_helper"
 
 describe PostPushNotificationJob, group: :jobs do
 
   # TODO: auto-generated
-  describe '#perform' do
+  describe "#perform" do
     pending
   end
 
   # TODO: auto-generated
-  describe '#error' do
+  describe "#error" do
     pending
   end
 
