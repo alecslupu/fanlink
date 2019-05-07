@@ -32,7 +32,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def register_certcourse_regress
-    person_certcourse.last_completed_page_id = last_certcourse_page.id
+    person_certcourse.last_completed_page_id = last_certcourse_page.try(:id)
     person_certcourse.is_completed = false
   end
 
@@ -41,11 +41,8 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def register_regress
-    certcourse_pages.each do |cp|
-      next if last_certcourse_page && cp.certcourse_page_order < last_certcourse_page.certcourse_page_order
-      break if cp.certcourse_page_order > certcourse_page.certcourse_page_order
+    certcourse_pages.where("certcourse_page_order > ?", last_certcourse_page.try(:certcourse_page_order).to_i ).each do |cp|
       next if cp.quiz?
-
       update_progress(cp, false)
     end
   end
@@ -70,7 +67,11 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def last_certcourse_page
-    @last_certcourse_page ||= certcourse_pages.where('id <= ?', certcourse_page.quiz_page.wrong_answer_page_id).last
+    @last_certcourse_page ||= certcourse_pages.where("certcourse_page_order < ?", wrong_page_position).last
+  end
+
+  def wrong_page_position
+    @wrong_page_position ||= certcourse_pages.where(id: certcourse_page.quiz_page.wrong_answer_page_id).first.certcourse_page_order || 0
   end
 
   def any_answer_allowed?
@@ -86,7 +87,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def certcourse_pages
-    certcourse.certcourse_pages.order("certcourse_page_order")
+    certcourse.certcourse_pages.order(:certcourse_page_order)
   end
 
   def certcourse_page
