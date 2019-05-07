@@ -58,11 +58,11 @@ group :development, :test do
   gem "dotenv-rails"
   gem "faker"
   gem "rspec-rails"
-  gem 'rails-controller-testing'
+  gem "rails-controller-testing"
   gem "factory_bot_rails"
   gem "rswag-specs"
   gem "fuubar"
-  gem 'rubocop-rails'
+  gem "rubocop-rails"
   gem "rubocop-rails_config"
 end
 
@@ -76,17 +76,18 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "lol_dba"
   gem "seed_dump"
-  gem "awesome_print", require:"ap"
+  gem "awesome_print", require: "ap"
   #
-  gem "apigen", :path => "lib/gems/apigen"
+  gem "apigen", path: "lib/gems/apigen"
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-  gem 'launchy'
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
-  gem 'guard-brakeman'
-  gem 'guard-annotate'
+  gem "launchy"
+  gem "guard-rspec"
+  gem "guard-rubocop"
+  gem "guard-brakeman"
+  gem "guard-annotate"
+  gem "guard-rubycritic"
 end
 
 group :test do
@@ -102,10 +103,10 @@ group :test do
 end
 
 # greg is saying that is not suporting V Rails 5.2.
-gem "acts_as_tenant" #, git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
+gem "acts_as_tenant" # , git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "acts_as_api"
 
-gem "administrate", "~> 0.11.0" #git: "https://github.com/thoughtbot/administrate.git"
+gem "administrate", "~> 0.11.0" # git: "https://github.com/thoughtbot/administrate.git"
 gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
 gem "administrate-field-hidden", "~> 0.0.3"
 gem "administrate-field-belongs_to_search"
@@ -124,7 +125,7 @@ gem "aws-sdk"
 gem "countries"
 gem "delayed_job_active_record"
 gem "email_validator"
-gem "fcm" #Firebase Cloud Messaging
+gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "flag_shih_tzu"
@@ -136,7 +137,7 @@ gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
 gem "jko_api" # api versioning
 gem "kaminari"
-gem "koala" #Facebook Graph API
+gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
 gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandrill"
@@ -144,7 +145,7 @@ gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandril
 gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
-gem "oj" #json opt recommended with rollbar
+gem "oj" # json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem "paperclip-meta"
 gem 'paperclip-dimension-validator'
@@ -168,8 +169,8 @@ gem "rmagick"
 gem "graphiql-rails", group: :development
 
 # Use Json Web Token (JWT) for token based authentication
-gem 'jwt'
-gem 'prawn'
+gem "jwt"
+gem "prawn"
 
 
-gem 'erubis'
+gem "erubis"

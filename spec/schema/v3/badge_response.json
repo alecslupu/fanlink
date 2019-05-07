@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "internal_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "picture_url": {
+      "type": "string"
+    },
+    "action_requirement": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "point_value": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

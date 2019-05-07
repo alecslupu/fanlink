@@ -23,6 +23,7 @@ class PostComment < ApplicationRecord
   has_many :post_comment_mentions, dependent: :destroy
 
   scope :visible, -> { where(hidden: false) }
+  scope :for_product, -> (product) { joins(:post => :person).where(people: {product_id: product.id}) }
 
   def mentions
     post_comment_mentions
