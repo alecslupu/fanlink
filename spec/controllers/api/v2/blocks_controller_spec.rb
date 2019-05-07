@@ -2,9 +2,6 @@ require "rails_helper"
 
 RSpec.describe Api::V2::BlocksController, type: :controller do
 
-  before(:each) do
-    logout
-  end
   describe "#create" do
     it "should block person" do
       blocker = create(:person)

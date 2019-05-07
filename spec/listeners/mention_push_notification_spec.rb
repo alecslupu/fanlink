@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-require 'spec_helper'
+require "spec_helper"
 
 describe MentionPushNotification do
 
   # TODO: auto-generated
-  describe '#message_created' do
+  describe "#message_created" do
     pending
   end
 
