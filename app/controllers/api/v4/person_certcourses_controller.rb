@@ -70,7 +70,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def last_certcourse_page
-    @last_certcourse_page ||= certcourse_pages.where('id <= ?', certcourse_page.quiz_page.wrong_answer_page_id).last
+    @last_certcourse_page ||= certcourse_pages.where('id < ?', certcourse_page.quiz_page.wrong_answer_page_id).last
   end
 
   def any_answer_allowed?
