@@ -3,8 +3,6 @@
 # Table name: trivia_games
 #
 #  id               :bigint(8)        not null, primary key
-#  start_date       :datetime
-#  end_date         :datetime
 #  description      :text             default(""), not null
 #  round_count      :integer
 #  long_name        :string           not null
@@ -16,6 +14,8 @@
 #  leaderboard_size :integer          default(100)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  start_date       :integer
+#  end_date         :integer
 #
 
 FactoryBot.define do
@@ -28,7 +28,7 @@ FactoryBot.define do
     uuid { Faker::Crypto.sha1 }
     product { current_product }
     room { create(:room) }
-    leaderboard_size { 50 }
+    leaderboard_size { 5 }
 
 
     factory :full_trivia_game do

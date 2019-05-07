@@ -11,8 +11,9 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
-
-class Trivia::GameLeaderboard < ApplicationRecord
-  belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
-  belongs_to :person, class_name: "Person"
+module Trivia
+  class GameLeaderboard < ApplicationRecord
+    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+    belongs_to :person, class_name: "Person"
+  end
 end
