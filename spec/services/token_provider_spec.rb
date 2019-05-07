@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
 
-require 'spec_helper'
+require "spec_helper"
 
 describe TokenProvider do
 
   # TODO: auto-generated
-  describe '#issue_token' do
+  describe "#issue_token" do
     pending
   end
 
   # TODO: auto-generated
-  describe '#valid?' do
+  describe "#valid?" do
     pending
   end
 

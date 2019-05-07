@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "string"
+    },
+    "picture_url": {
+      "type": "string"
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "picture_url": {
+          "type": "string"
+        }
+      },
+      "required": [
+
+      ]
+    }
+  },
+  "required": [
+
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

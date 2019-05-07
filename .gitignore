@@ -18,7 +18,8 @@ docs/**/*.json
 !/tmp/.keep
 !/doc/.keep
 !/docs/.keep
-
+/test_uploads/*
+!/test_uploads/.gitkeep
 *.dump*
 
 /node_modules
