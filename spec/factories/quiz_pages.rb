@@ -19,14 +19,13 @@ FactoryBot.define do
       that_is_mandatory { true }
     end
 
-
     product { current_product }
     quiz_text { "MyString" }
     wrong_answer_page_id {}
 
     before :create do |qp, evalutator|
       if evalutator.that_is_mandatory
-        cp1 = create(:certcourse_page, certcourse_page_order: 1)
+        cp1 = create(:certcourse_page, certcourse_page_order: 1, image_page: create(:image_page))
         cp2 = create(:certcourse_page, certcourse_page_order: 2)
         qp.certcourse_page = cp2
         qp.wrong_answer_page_id = cp1.id
