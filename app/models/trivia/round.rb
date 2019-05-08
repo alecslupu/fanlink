@@ -44,6 +44,11 @@ module Trivia
       self.end_date
     end
 
+    # administrate fallback
+    def game_id
+      trivia_game_id
+    end
+
     def set_order(index)
       self.round_order = index
       self.save

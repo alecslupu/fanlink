@@ -15,7 +15,7 @@ namespace :admin do
     resources :games
     resources :available_answers
     resources :questions
-    resources :packages
+    resources :rounds
     resources :prizes
   end
 

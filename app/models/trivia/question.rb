@@ -25,6 +25,11 @@ module Trivia
     has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id
     enum status: %i[draft published locked closed]
 
+    # administrate falback
+    def round_id
+      trivia_round_id
+    end
+
     def compute_gameplay_parameters
       self.end_date = self.start_date + self.time_limit
       self.save!
