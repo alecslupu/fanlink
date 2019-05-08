@@ -26,6 +26,10 @@ module Trivia
     enum status: %i[draft published locked closed]
     enum prize_type: %i[digital physical]
 
+    def game_id
+      trivia_game_id
+    end
+
     scope :published, -> { where(status: [:published, :locked]) }
   end
 end

@@ -10,7 +10,6 @@ class Trivia::PrizeDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     game: Field::BelongsTo.with_options(class_name: "Trivia::Game"),
     id: Field::Number,
-    trivia_game: Field::BelongsTo.with_options(class_name: "Trivia::Game"),
     status: Field::Enum,
     description: Field::Text,
     position: Field::Number,
@@ -30,7 +29,7 @@ class Trivia::PrizeDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :game,
     :id,
-    :trivia_game_id,
+    # :trivia_game_id,
     :status,
   ].freeze
 
@@ -39,7 +38,7 @@ class Trivia::PrizeDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :game,
     :id,
-    :trivia_game,
+    :game,
     :status,
     :description,
     :position,
@@ -56,7 +55,6 @@ class Trivia::PrizeDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :game,
-    :trivia_game,
     :status,
     :description,
     :position,
