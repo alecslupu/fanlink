@@ -51,7 +51,7 @@ RailsAdmin.config do |config|
     end
     reset_progress_action do
       only [ "PersonCertcourse" ]
-  end
+    end
     hide_message_action do
       only [ "MessageReport" ]
     end

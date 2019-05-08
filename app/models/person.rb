@@ -51,6 +51,9 @@ class Person < ApplicationRecord
   include Person::Mailing
   include Person::Profile
   include Person::Relationships
+
+  include Person::Trivia
+
   include TranslationThings
   authenticates_with_sorcery!
 
@@ -69,7 +72,6 @@ class Person < ApplicationRecord
   belongs_to :product
 
   has_image_called :picture
-
   has_many :message_reports, dependent: :destroy
   has_many :notification_device_ids, dependent: :destroy
   has_many :post_reactions, dependent: :destroy
@@ -179,7 +181,7 @@ class Person < ApplicationRecord
   end
 
   def device_tokens
-    notification_device_ids.map { |ndi| ndi.device_identifier }
+    notification_device_ids.map(&:device_identifier)
   end
 
   #

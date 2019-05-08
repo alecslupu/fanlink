@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
 
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-  end
 
   post "/graphql", to: "graphql#execute"
 
@@ -16,6 +13,8 @@ Rails.application.routes.draw do
   # draw :v3
   draw :jko
 
+  draw :trivia unless Rails.env.production?
+
   post "/aws/video_transcoded" => "aws#video_transcoded"
 
   get "/status" => "application#status"
@@ -23,7 +22,9 @@ Rails.application.routes.draw do
   # TODO: move the password reset controller update out of the api
   post "/people/password_reset" => "api/v1/password_resets#update"
   draw :administrate
+
   if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
   end
 end

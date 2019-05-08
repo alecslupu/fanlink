@@ -34,7 +34,6 @@
 #
 
 class Product < ApplicationRecord
-  # acts_as_api
   include AttachmentSupport
   # include Product::Views
   has_paper_trail
@@ -54,6 +53,8 @@ class Product < ApplicationRecord
   has_many :events, dependent: :restrict_with_error
   has_many :levels, dependent: :restrict_with_error
   has_many :polls, dependent: :restrict_with_error
+
+  has_many :trivia_games, class_name: "Trivia::Game", dependent: :restrict_with_error
 
   scope :enabled, -> { where(enabled: true) }
 

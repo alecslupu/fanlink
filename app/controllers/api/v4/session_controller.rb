@@ -35,8 +35,8 @@ class Api::V4::SessionController < Api::V3::SessionController
 
   def token
     user = Person.can_login?(params[:email_or_username])
-    if user = Person.authenticate(params[:email_or_username], params[:password])
-      data = { token: ::TokenProvider.issue_token(user_id: user.id) }
+    if login(user.email, params[:password])
+      data = { token: ::TokenProvider.issue_token( user_id: user.id ) }
       render json: data, status: 200
     else
       return render_422 _("Invalid login.")

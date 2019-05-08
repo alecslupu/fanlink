@@ -1,0 +1,2 @@
+json = render partial: @req_source, locals: { leaderboard: @leaderboard }, handler: "jb"
+json
