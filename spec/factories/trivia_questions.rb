@@ -25,15 +25,24 @@ FactoryBot.define do
     cooldown_period { 4 }
     title { Faker::Lorem.question(10)}
 
-    after :create do |question|
+    transient do
+      with_leaderboard {false}
+      with_answers {false}
+    end
+
+    after :create do |question, options|
       create :correct_trivia_available_answer, question: question
       create_list :wrong_trivia_available_answer, 3, question: question
 
-      create_list :correct_trivia_answer, 3, question: question
-      create_list :wrong_trivia_answer, 3, question: question
+      if options.with_answers || options.with_leaderboard
+        create_list :correct_trivia_answer, 3, question: question
+        create_list :wrong_trivia_answer, 3, question: question
+      end
 
-      question.trivia_answers.find_each do |ta|
-        create :trivia_question_leaderboard, person: ta.person,  question: question
+      if options.with_leaderboard
+        question.trivia_answers.find_each do |ta|
+          create :trivia_question_leaderboard, person: ta.person,  question: question
+        end
       end
     end
   end

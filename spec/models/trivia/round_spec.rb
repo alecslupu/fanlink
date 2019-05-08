@@ -27,7 +27,7 @@ RSpec.describe Trivia::Round, type: :model do
 
   context "past round" do
     it "has a full leaderboard" do
-      round = create :past_trivia_round
+      round = create :past_trivia_round, with_leaderboard: true
       expect(round.leaderboards.size).to eq(round.leaderboard_size)
     end
   end
