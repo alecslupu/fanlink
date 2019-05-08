@@ -29,6 +29,7 @@
 #  issued_certificate_pdf_updated_at     :datetime
 #  receipt_id                            :string
 #  is_completed                          :boolean          default(FALSE)
+#  token                                 :string(10)
 #
 
 FactoryBot.define do
