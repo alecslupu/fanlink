@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class Trivia::PackageDashboard < Administrate::BaseDashboard
+class Trivia::RoundDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,17 +8,18 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    trivia_game: Field::BelongsTo.with_options(class_name: "Trivia::Game"),
-    trivia_questions: Field::HasMany.with_options(class_name: "Trivia::Question"),
+    game: Field::BelongsTo.with_options(class_name: "Trivia::Game"),
+    questions: Field::HasMany.with_options(class_name: "Trivia::Question"),
     id: Field::Number,
     start_date: Field::DateTime,
     end_date: Field::DateTime,
     question_count: Field::Number,
     leaderboard_size: Field::Number,
-    package_order: Field::Number,
+    round_order: Field::Number,
     status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    complexity: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,24 +28,26 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :trivia_game,
-    :trivia_questions,
+    :game,
+    :questions,
     :id,
     :start_date,
+    :complexity
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :trivia_game,
-    :trivia_questions,
+    :game,
+    :questions,
     :id,
     :start_date,
     :end_date,
     :question_count,
     :leaderboard_size,
-    :package_order,
+    :round_order,
     :status,
+    :complexity,
     :created_at,
     :updated_at,
   ].freeze
@@ -53,13 +56,13 @@ class Trivia::PackageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :trivia_game,
-    :trivia_questions,
+    :game,
+    :questions,
     :start_date,
-    # :end_date,
+    :complexity,
     :question_count,
     :leaderboard_size,
-    :package_order,
+    :round_order,
     :status,
   ].freeze
 

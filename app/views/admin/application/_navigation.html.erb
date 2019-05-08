@@ -54,16 +54,16 @@ as defined by the routes in the `admin/` namespace
     <div style="margin-top: 25px;">
       <p><strong><hr></strong></p>
     </div>
-    <% courses = %w(trivia/games trivia/packages trivia/questions trivia/available_answers trivia/prizes) %>
+    <% trivia = %w(trivia/games trivia/rounds trivia/questions trivia/available_answers trivia/prizes) %>
     <% titles = {"certcourses" => "Courses", "certcourse_pages" => "Course Pages"} %>
-    <% exceptions = courses + ['sessions'] %>
+    <% exceptions = courses + trivia + ['sessions'] %>
     <div style="margin-top: 25px;">
       <p><strong>Trivia</strong></p>
     </div>
     <div style="margin-top: 25px;">
       <p><strong><hr></strong></p>
     </div>
-    <% courses.each do |name| %>
+    <% trivia.each do |name| %>
       <% resource = Administrate::Namespace.new(namespace).resources.detect {|e| e.resource == name } %>
       <% title = titles[name] || display_resource_name(resource).titleize %>
       <%= link_to(
