@@ -42,12 +42,13 @@ Rails.application.configure do
 
   config.debug_exception_response_format = :api
 
-  logger           = ActiveSupport::Logger.new(STDOUT)
-  logger.formatter = config.log_formatter
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  ActiveSupport::Notifications.subscribe(/cache*+active_support/) do |name, start, finish, id, payload|
-    Rails.logger.debug ["cache:", name, finish - start, id, payload].join(" ")
-  end
+  # logger           = ActiveSupport::Logger.new(STDOUT)
+  # logger.formatter = config.log_formatter
+  # config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  # ActiveSupport::Notifications.subscribe(/cache*+active_support/) do |name, start, finish, id, payload|
+  #   Rails.logger.debug ["cache:", name, finish - start, id, payload].join(" ")
+  # end
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.

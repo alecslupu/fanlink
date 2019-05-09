@@ -172,5 +172,4 @@ gem "graphiql-rails", group: :development
 gem "jwt"
 gem "prawn"
 
-
 gem "erubis"
