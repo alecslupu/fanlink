@@ -20,6 +20,9 @@
 
 module Trivia
   class Game < ApplicationRecord
+    include AttachmentSupport
+    has_attached_file :picture
+
     acts_as_tenant(:product)
     belongs_to :product, class_name: "Product"
     belongs_to :room, class_name: "Room"
