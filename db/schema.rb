@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190502191345) do
+ActiveRecord::Schema.define(version: 20190510173726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1106,13 +1106,16 @@ ActiveRecord::Schema.define(version: 20190502191345) do
     t.string "short_name", null: false
     t.bigint "room_id"
     t.bigint "product_id"
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.integer "status", default: 0, null: false
     t.integer "leaderboard_size", default: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "start_date"
     t.integer "end_date"
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["product_id"], name: "index_trivia_games_on_product_id"
     t.index ["room_id"], name: "index_trivia_games_on_room_id"
   end
@@ -1183,9 +1186,7 @@ ActiveRecord::Schema.define(version: 20190502191345) do
     t.integer "question_count"
     t.bigint "trivia_game_id"
     t.integer "leaderboard_size", default: 100
-    t.integer "round_order", default: 1, null: false
     t.integer "status", default: 0, null: false
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.integer "complexity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
