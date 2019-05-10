@@ -15,7 +15,6 @@ class Trivia::RoundDashboard < Administrate::BaseDashboard
     end_date: Field::DateTime,
     question_count: Field::Number,
     leaderboard_size: Field::Number,
-    round_order: Field::Number,
     status: Field::Enum,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -45,7 +44,6 @@ class Trivia::RoundDashboard < Administrate::BaseDashboard
     :end_date,
     :question_count,
     :leaderboard_size,
-    :round_order,
     :status,
     :complexity,
     :created_at,
@@ -62,7 +60,6 @@ class Trivia::RoundDashboard < Administrate::BaseDashboard
     :complexity,
     :question_count,
     :leaderboard_size,
-    :round_order,
     :status,
   ].freeze
 
