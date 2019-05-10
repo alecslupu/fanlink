@@ -7,7 +7,6 @@
 #  trivia_game_id   :bigint(8)
 #  leaderboard_size :integer          default(100)
 #  status           :integer          default("draft"), not null
-#  uuid             :uuid
 #  complexity       :integer          default(1)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
@@ -46,11 +45,6 @@ module Trivia
     # administrate fallback
     def game_id
       trivia_game_id
-    end
-
-    def set_order(index)
-      self.round_order = index
-      self.save
     end
   end
 end

@@ -148,6 +148,7 @@ gem "oauth2"
 gem "oj" # json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem "paperclip-meta"
+gem 'paperclip-dimension-validator'
 gem "pg_search"
 gem "postgresql-check"
 gem "pundit"
