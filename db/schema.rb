@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510173726) do
+ActiveRecord::Schema.define(version: 20190510180331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1089,7 +1089,7 @@ ActiveRecord::Schema.define(version: 20190510173726) do
 
   create_table "trivia_game_leaderboards", force: :cascade do |t|
     t.bigint "trivia_game_id"
-    t.integer "nb_points"
+    t.integer "points"
     t.integer "position"
     t.integer "average_time", default: 0
     t.bigint "person_id"
@@ -1147,7 +1147,7 @@ ActiveRecord::Schema.define(version: 20190510173726) do
 
   create_table "trivia_question_leaderboards", force: :cascade do |t|
     t.bigint "trivia_question_id"
-    t.integer "nb_points"
+    t.integer "points"
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1172,7 +1172,7 @@ ActiveRecord::Schema.define(version: 20190510173726) do
 
   create_table "trivia_round_leaderboards", force: :cascade do |t|
     t.bigint "trivia_round_id"
-    t.integer "nb_points"
+    t.integer "points"
     t.integer "position"
     t.bigint "person_id"
     t.integer "average_time", default: 0
