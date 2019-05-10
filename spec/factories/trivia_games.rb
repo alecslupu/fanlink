@@ -28,7 +28,6 @@ FactoryBot.define do
     long_name { Faker::Lorem.words(10) }
     short_name { Faker::Lorem.words(3) }
     description { Faker::Lorem.paragraph  }
-    uuid { Faker::Crypto.sha1 }
     product { current_product }
     room { create(:room) }
     leaderboard_size { 5 }
