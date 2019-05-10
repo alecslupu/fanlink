@@ -29,6 +29,7 @@ module Trivia
     has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id
     has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id
     has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id
+    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id
 
     enum status: %i[draft published locked closed]
 

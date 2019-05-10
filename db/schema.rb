@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510180331) do
+ActiveRecord::Schema.define(version: 20190510181847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1195,6 +1195,16 @@ ActiveRecord::Schema.define(version: 20190510180331) do
     t.index ["trivia_game_id"], name: "index_trivia_rounds_on_trivia_game_id"
   end
 
+  create_table "trivia_subscribers", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "trivia_game_id"
+    t.boolean "subscribed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_trivia_subscribers_on_person_id"
+    t.index ["trivia_game_id"], name: "index_trivia_subscribers_on_trivia_game_id"
+  end
+
   create_table "urls", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "displayed_url", null: false
@@ -1328,6 +1338,8 @@ ActiveRecord::Schema.define(version: 20190510180331) do
   add_foreign_key "trivia_round_leaderboards", "people"
   add_foreign_key "trivia_round_leaderboards", "trivia_rounds"
   add_foreign_key "trivia_rounds", "trivia_games"
+  add_foreign_key "trivia_subscribers", "people"
+  add_foreign_key "trivia_subscribers", "trivia_games"
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end
