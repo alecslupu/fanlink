@@ -4,6 +4,8 @@ JkoApi.routes self do
       resources :games, only: [ :index ] do
         get :completed, on: :collection
 
+        resource :subscription, except: [ :new, :edit ]
+
         resources :prizes, only: [ :index ]
 
         resources :rounds, only: [ :index ] do
