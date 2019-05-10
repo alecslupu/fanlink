@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190502191345) do
+ActiveRecord::Schema.define(version: 20190510171705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1183,7 +1183,6 @@ ActiveRecord::Schema.define(version: 20190502191345) do
     t.integer "question_count"
     t.bigint "trivia_game_id"
     t.integer "leaderboard_size", default: 100
-    t.integer "round_order", default: 1, null: false
     t.integer "status", default: 0, null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.integer "complexity", default: 1

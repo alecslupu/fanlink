@@ -23,7 +23,7 @@ module Trivia
     acts_as_tenant(:product)
     belongs_to :product, class_name: "Product"
     belongs_to :room, class_name: "Room"
-    has_many :rounds, -> { order("round_order") }, class_name: "Round", foreign_key: :trivia_game_id
+    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id
     has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id
     has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id
 
@@ -41,7 +41,6 @@ module Trivia
 
       self.rounds.each_with_index do |round, index|
         round.start_date = date_to_set
-        round.set_order(1 + index)
         round.compute_gameplay_parameters
         date_to_set = round.end_date_with_cooldown
       end

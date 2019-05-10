@@ -92,11 +92,5 @@ RSpec.describe Trivia::Round, type: :model do
         expect(round.end_date_with_cooldown - result).to eq(0)
       end
     end
-
-    describe ".set_order" do
-      it "has the method" do
-        expect(Trivia::Round.new.respond_to?(:set_order)).to eq(true)
-      end
-    end
   end
 end
