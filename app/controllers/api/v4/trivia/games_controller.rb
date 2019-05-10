@@ -1,16 +1,11 @@
 class Api::V4::Trivia::GamesController < ApiController
   def index
-    @games = paginate(::Trivia::Game.running)
+    @games = paginate(::Trivia::Game.upcomming)
     return_the @games, handler: :jb
   end
 
-  def scheduled
-    @games = paginate(::Trivia::Game.scheduled)
-    return_the @games, handler: :jb
-  end
-
-  def past
-    @games = paginate(::Trivia::Game.past)
+  def completed
+    @games = paginate(::Trivia::Game.completed)
     return_the @games, handler: :jb
   end
 end

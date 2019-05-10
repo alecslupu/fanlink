@@ -33,10 +33,8 @@ module Trivia
     enum status: %i[draft published locked closed]
 
     scope :enabled, -> { where(status: [ :published, :locked, :closed ]) }
-    scope :past, -> { enabled.order(end_date: :desc).where(end_date: DateTime.new(2001,2,3)..DateTime.now) }
-    scope :scheduled, -> { enabled.order(id: :desc).where(start_date: DateTime.now..DateTime::Infinity.new) }
-    scope :running, -> { enabled.order(start_date: :asc).where(start_date:  DateTime.new(2001,2,3)...DateTime.now).
-      where(end_date: DateTime.now..DateTime::Infinity.new ) }
+    scope :completed, -> { enabled.order(end_date: :desc).where(end_date: DateTime.new(2001,2,3)..DateTime.now) }
+    scope :upcomming, -> { enabled.order(:start_date).where(end_date: DateTime.now..DateTime::Infinity.new) }
 
 
     def compute_gameplay_parameters
