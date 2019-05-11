@@ -173,10 +173,15 @@ gem "prawn"
 gem "erubis"
 
 group :development, :test do
-    gem "rspec-rails-swagger"
-    gem "apigen", path: "lib/gems/apigen"
-    gem "rswag-specs"
+    # gem "rspec-rails-swagger"
+    # gem "apigen", path: "lib/gems/apigen"
+    # gem "rswag-specs"
 end
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
+
+group :test do
+    gem 'rspec-rails'
+    gem 'rswag-specs'
+end

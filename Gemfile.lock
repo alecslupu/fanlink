@@ -42,11 +42,6 @@ GIT
       excon (>= 0.16.0, < 1.0)
       json (>= 1.7.7, <= 2.1)
 
-PATH
-  remote: lib/gems/apigen
-  specs:
-    apigen (0.0.11)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -1199,9 +1194,6 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-rails-swagger (0.1.5)
-      rails (>= 3.1)
-      rspec-rails (~> 3.0)
     rspec-support (3.8.0)
     rswag-api (2.0.5)
       railties (>= 3.1, < 6.0)
@@ -1357,7 +1349,6 @@ DEPENDENCIES
   administrate-field-hidden (~> 0.0.3)
   administrate-field-paperclip!
   api-pagination
-  apigen!
   attribute_normalizer
   awesome_print
   aws-sdk
@@ -1435,7 +1426,6 @@ DEPENDENCIES
   rmagick
   rollbar
   rspec-rails
-  rspec-rails-swagger
   rswag-api
   rswag-specs
   rswag-ui

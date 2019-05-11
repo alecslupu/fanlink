@@ -6,8 +6,9 @@ Rswag::Ui.configure do |c|
   # NOTE: If you're using rspec-api to expose Swagger files (under swagger_root) as JSON endpoints,
   # then the list below should correspond to the relative paths for those endpoints
 
-  c.swagger_endpoint '/api-docs/v4/open_api.json', 'API V4 Docs'
-  c.swagger_endpoint '/api-docs/v3/open_api.json', 'API V3 Docs'
-  c.swagger_endpoint '/api-docs/v2/open_api.json', 'API V2 Docs'
-  c.swagger_endpoint '/api-docs/v1/open_api.json', 'API V1 Docs'
+  c.swagger_endpoint '/api-docsv4/swagger.json', 'API V4 Docs'
+  c.swagger_endpoint '/api-docs/v3/swagger.json', 'API V3 Docs'
+  c.swagger_endpoint '/api-docs/v2/swagger.json', 'API V2 Docs'
+  c.swagger_endpoint '/api-docs/v1/swagger.json', 'API V1 Docs'
+
 end
