@@ -16,7 +16,9 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i - 100)
         }}
         schema ref: "#/definitions/trivia_games_list"
-        run_test!
+        run_test! do |response|
+          expect(response.body).to eq("")
+        end
       end
       response "401", "unauthorized" do
         let(:user) { create(:person, terminated: true) }
@@ -24,7 +26,9 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i - 100)
         }}
-        run_test!
+        run_test! do |response|
+          expect(response.body).to eq("")
+        end
 
       end
     end
@@ -43,7 +47,9 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i + 100)
         }}
-        run_test!
+        run_test! do |response|
+          expect(response.body).to eq("")
+        end
       end
 
       response "401", "unauthorized" do
@@ -52,7 +58,9 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i - 100)
         }}
-        run_test!
+        run_test! do |response|
+          expect(response.body).to eq("")
+        end
       end
     end
   end
