@@ -30,6 +30,7 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
     end
   end
 
+
   path "/trivia/games" do
     get "displays future and on going games" do
       tags "Trivia"
