@@ -47,6 +47,18 @@ RSpec.configure do |config|
       },
       paths: {},
       definitions: {
+        trivia_games_list: {
+          type: :object,
+          properties: {
+            games: {
+              type: :array,
+              items: {
+                "$ref" => "#/definitions/trivia_game"
+              }
+            }
+          },
+          required: ["games"]
+        },
         trivia_game: {
           type: :object,
           properties: {

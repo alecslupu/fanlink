@@ -182,6 +182,5 @@ gem "rswag-api"
 gem "rswag-ui"
 
 group :test do
-    gem 'rspec-rails'
     gem 'rswag-specs'
 end
