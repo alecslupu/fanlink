@@ -65,6 +65,14 @@ class PersonCertificate < ApplicationRecord
     end
   end
 
+  def generate_token!(attempts = 0)
+    raise "Could not acquire a unique id after 10 attempts" if attempts == 10
+    charlist =  "A".upto("Z").to_a + 0.upto(9).to_a - %w(L O 0 1)
+    self.unique_id = 10.times.collect { charlist.sample }.join
+    token_exists = self.class.where(unique_id: unique_id).exists?
+    generate_token! 1+attempts if token_exists
+  end
+
   def write_files
     require "rmagick"
     require "prawn"
@@ -73,13 +81,34 @@ class PersonCertificate < ApplicationRecord
 
     txt = Draw.new
 
-    img.annotate(txt, 0, 0, 0, -100, full_name) {
+    img.annotate(txt, 0, 0, 0, -250, full_name) {
       txt.gravity = Magick::CenterGravity
       txt.pointsize = 100
       txt.stroke = "#FFFFFF"
       txt.fill = "#000000"
       txt.font_weight = Magick::BoldWeight
     }
+
+    txt = Draw.new
+    img.annotate(txt, 0,0,150, 150, "https://can-ed.com/check/#{unique_id}") do
+      txt.gravity = Magick::SouthEastGravity
+      txt.pointsize = 50
+      txt.stroke = "#FFFFFF"
+      txt.fill = "#4d4d4d"
+      txt.font_weight = Magick::BoldWeight
+    end
+
+    completed_date = (issued_date.to_datetime rescue DateTime.now ).strftime("%B %d, %Y")
+    txt = Draw.new
+    img.annotate(txt, 0,0,225, 250, completed_date) do
+      txt.gravity = Magick::NorthEastGravity
+      txt.pointsize = 60
+      txt.stroke = "#FFFFFF"
+      txt.fill = "#4d4d4d"
+      txt.font_weight = Magick::BoldWeight
+    end
+
+
     img.format = "jpeg"
 
     jpeg_file = Tempfile.new(%w(certificate_image .jpg))

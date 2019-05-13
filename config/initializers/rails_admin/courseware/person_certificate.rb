@@ -48,14 +48,8 @@ RailsAdmin.config do |config|
              :purchased_platform,
              :purchased_sku,
              :unique_id,
-             :issued_certificate_image_file_name,
-             :issued_certificate_image_content_type,
-             :issued_certificate_image_file_size,
-             :issued_certificate_image_updated_at,
-             :issued_certificate_pdf_file_name,
-             :issued_certificate_pdf_content_type,
-             :issued_certificate_pdf_file_size,
-             :issued_certificate_pdf_updated_at,
+             :issued_certificate_image,
+             :issued_certificate_pdf,
              :receipt_id
     end
   end
