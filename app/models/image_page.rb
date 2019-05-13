@@ -30,6 +30,10 @@ class ImagePage < ApplicationRecord
   after_save :set_certcourse_page_content_type
   validate :just_me
 
+  def course_name
+    certcourse_page.certcourse.to_s
+  end
+
   private
 
     def just_me
