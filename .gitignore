@@ -12,7 +12,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-/doc/
+/doc/open_api/
 docs/**/*.json
 !/log/.keep
 !/tmp/.keep
@@ -91,7 +91,6 @@ build-iPhoneSimulator/
 ## Documentation cache and generated files:
 /.yardoc/
 /_yardoc/
-/doc/
 /rdoc/
 
 ## Environment normalization:
