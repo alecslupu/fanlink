@@ -1,0 +1,9 @@
+json = {
+  id: package.id,
+  trivia_game_id: package.trivia_game_id,
+  start_date:  (package.start_date.to_i rescue nil),
+  end_date:  (package.end_date rescue nil),
+  question_size: package.questions.size,
+  complexity: package.complexity
+}
+json

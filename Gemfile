@@ -60,7 +60,6 @@ group :development, :test do
   gem "rspec-rails"
   gem "rails-controller-testing"
   gem "factory_bot_rails"
-  gem "rswag-specs"
   gem "fuubar"
   gem "rubocop-rails"
   gem "rubocop-rails_config"
@@ -78,7 +77,6 @@ group :development do
   gem "seed_dump"
   gem "awesome_print", require: "ap"
   #
-  gem "apigen", path: "lib/gems/apigen"
   gem "memory_profiler"
   gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
@@ -148,7 +146,7 @@ gem "oauth2"
 gem "oj" # json opt recommended with rollbar
 gem "paperclip", "~> 5.0.0"
 gem "paperclip-meta"
-gem 'paperclip-dimension-validator'
+gem "paperclip-dimension-validator"
 gem "pg_search"
 gem "postgresql-check"
 gem "pundit"
@@ -172,5 +170,17 @@ gem "graphiql-rails", group: :development
 gem "jwt"
 gem "prawn"
 
-
 gem "erubis"
+
+group :development, :test do
+    # gem "rspec-rails-swagger"
+    # gem "apigen", path: "lib/gems/apigen"
+    # gem "rswag-specs"
+end
+# Gemfile
+gem "rswag-api"
+gem "rswag-ui"
+
+group :test do
+    gem 'rswag-specs'
+end

@@ -8,9 +8,10 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - gem install bundler
           - bundle install --path vendor/bundle
+          - RAILS_ENV=test bundle exec rake db:reset
           - RAILS_ENV=test bundle exec rake db:setup
           - RAILS_ENV=test bundle exec rake db:test:prepare
-          - RAILS_ENV=test bundle exec rspec spec
+          - RAILS_ENV=test bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
         services:
           - postgres
 

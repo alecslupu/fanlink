@@ -19,6 +19,12 @@
 
 class Reward < ApplicationRecord
   include TranslationThings
+  # TODO dunno what those are used for
+  include Reward::Badges
+  include Reward::Contests
+  include Reward::Coupons
+  include Reward::Urls
+  # EOF dunno what those are used for
   enum reward_type: %i[ badge url coupon ]
   enum status: %i[ active inactive ]
 
