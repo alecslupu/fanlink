@@ -43,7 +43,7 @@ class Certificate < ApplicationRecord
 
   validates_uniqueness_to_tenant :certificate_order
   validates_attachment_presence :template_image
-  # validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
+  validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
 
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 
