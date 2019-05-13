@@ -1,4 +1,9 @@
-json = {}
+json = { games: [] }
+@games.each do |game|
+  result = render partial: @req_source, game: game, handler: :jb
+  result[:user_enroled] = game.subscribers.first_or_initialize.persisted?
+  result[:user_notification] = game.subscribers.first_or_initialize.subscribed?
+  json[:games].push(result)
+end
 
-json[:games] = render partial: @req_source, collection: @games, as: :game, handler: :jb
 json

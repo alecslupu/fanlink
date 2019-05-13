@@ -41,7 +41,6 @@ RSpec.describe Trivia::Game, type: :model do
         game.compute_gameplay_parameters
         round = game.reload.rounds.first
         expect(round.start_date).to be_within(1.seconds).of game.start_date
-        expect(round.round_order).to eq(1)
       end
 
       it "sets any question at the right interval" do

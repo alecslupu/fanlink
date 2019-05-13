@@ -4,7 +4,7 @@
 #
 #  id             :bigint(8)        not null, primary key
 #  trivia_game_id :bigint(8)
-#  nb_points      :integer
+#  points         :integer
 #  position       :integer
 #  average_time   :integer          default(0)
 #  person_id      :bigint(8)
@@ -15,7 +15,7 @@
 FactoryBot.define do
   factory :trivia_game_leaderboard, class: "Trivia::GameLeaderboard" do
     game { create(:trivia_game) }
-    nb_points { 1 }
+    points { 1 }
     position { 1 }
     person { create(:person) }
   end

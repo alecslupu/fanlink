@@ -4,11 +4,12 @@
 #
 #  id                 :bigint(8)        not null, primary key
 #  trivia_question_id :bigint(8)
-#  nb_points          :integer
+#  points             :integer
 #  person_id          :bigint(8)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
+
 module Trivia
 
   class QuestionLeaderboard < ApplicationRecord

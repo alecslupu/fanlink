@@ -4,7 +4,7 @@
 #
 #  id              :bigint(8)        not null, primary key
 #  trivia_round_id :bigint(8)
-#  nb_points       :integer
+#  points          :integer
 #  position        :integer
 #  person_id       :bigint(8)
 #  average_time    :integer          default(0)
@@ -15,7 +15,7 @@
 FactoryBot.define do
   factory :trivia_round_leaderboard, class: "Trivia::RoundLeaderboard" do
     round { create(:trivia_round) }
-    nb_points { Faker::Number.between(0, 10000) }
+    points { Faker::Number.between(0, 10000) }
     position { Faker::Number.between(0, 10000) }
     average_time { Faker::Number.decimal(0, 6)}
     person { create(:person) }
