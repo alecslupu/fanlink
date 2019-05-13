@@ -41,7 +41,7 @@ module JSONErrors
   end
 
   def render_500(errors)
-    unless (Rails.env.test? && ENV['ROLLBAR_ENABLED'])
+    unless (Rails.env.test? && ENV["ROLLBAR_ENABLED"])
       logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)
       errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) }  unless errors.is_a?(String)
     end
