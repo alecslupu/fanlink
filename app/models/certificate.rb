@@ -53,6 +53,9 @@ class Certificate < ApplicationRecord
   validates :validity_duration, numericality: { greater_than: 0 }
   validates :access_duration, numericality: { greater_than: 0 }
 
+  validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
+  validate :certificate_order_validation
+
   scope :live_status, -> { where(status: "live") }
 
   def title
@@ -60,4 +63,8 @@ class Certificate < ApplicationRecord
   end
 
   private
+  def certificate_order_validation
+    maxvalue = self.class.where(product_id: self.product_id).maximum(:certificate_order).to_i
+    errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % { size: maxvalue, value: maxvalue })) unless certificate_order.to_i >= maxvalue
+  end
 end
