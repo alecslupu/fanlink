@@ -28,6 +28,11 @@ class QuizPage < ApplicationRecord
   validate :mandatory_checks,  unless: Proc.new { |p| p.is_optional }
   validate :answer_checks
 
+
+  def course_name
+    certcourse_page.certcourse.to_s
+  end
+
   def to_s
     quiz_text
   end
