@@ -35,7 +35,6 @@ FactoryBot.define do
     color_hex { Faker::Color.hex_color }
     status { 1 }
     room { nil }
-    certificate_order {  Faker::Number.unique(20).between(1, 500) }
     validity_duration {  Faker::Number.unique(20).between(1, 500) }
     access_duration {  Faker::Number.unique(20).between(1, 500) }
     is_free { false }
@@ -43,5 +42,6 @@ FactoryBot.define do
     sku_android { Faker::Code.ean(13) }
     template_image_file_name { Faker::File.file_name }
     certificate_issuable { false }
+    sequence(:certificate_order) {|n| n }
   end
 end
