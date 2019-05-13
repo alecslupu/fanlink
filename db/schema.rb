@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190509200508) do
+ActiveRecord::Schema.define(version: 20190510181847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1089,7 +1089,7 @@ ActiveRecord::Schema.define(version: 20190509200508) do
 
   create_table "trivia_game_leaderboards", force: :cascade do |t|
     t.bigint "trivia_game_id"
-    t.integer "nb_points"
+    t.integer "points"
     t.integer "position"
     t.integer "average_time", default: 0
     t.bigint "person_id"
@@ -1106,7 +1106,6 @@ ActiveRecord::Schema.define(version: 20190509200508) do
     t.string "short_name", null: false
     t.bigint "room_id"
     t.bigint "product_id"
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.integer "status", default: 0, null: false
     t.integer "leaderboard_size", default: 100
     t.datetime "created_at", null: false
@@ -1148,7 +1147,7 @@ ActiveRecord::Schema.define(version: 20190509200508) do
 
   create_table "trivia_question_leaderboards", force: :cascade do |t|
     t.bigint "trivia_question_id"
-    t.integer "nb_points"
+    t.integer "points"
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1173,7 +1172,7 @@ ActiveRecord::Schema.define(version: 20190509200508) do
 
   create_table "trivia_round_leaderboards", force: :cascade do |t|
     t.bigint "trivia_round_id"
-    t.integer "nb_points"
+    t.integer "points"
     t.integer "position"
     t.bigint "person_id"
     t.integer "average_time", default: 0
@@ -1187,15 +1186,23 @@ ActiveRecord::Schema.define(version: 20190509200508) do
     t.integer "question_count"
     t.bigint "trivia_game_id"
     t.integer "leaderboard_size", default: 100
-    t.integer "round_order", default: 1, null: false
     t.integer "status", default: 0, null: false
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }
     t.integer "complexity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "start_date"
     t.integer "end_date"
     t.index ["trivia_game_id"], name: "index_trivia_rounds_on_trivia_game_id"
+  end
+
+  create_table "trivia_subscribers", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "trivia_game_id"
+    t.boolean "subscribed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_trivia_subscribers_on_person_id"
+    t.index ["trivia_game_id"], name: "index_trivia_subscribers_on_trivia_game_id"
   end
 
   create_table "urls", force: :cascade do |t|
@@ -1331,6 +1338,8 @@ ActiveRecord::Schema.define(version: 20190509200508) do
   add_foreign_key "trivia_round_leaderboards", "people"
   add_foreign_key "trivia_round_leaderboards", "trivia_rounds"
   add_foreign_key "trivia_rounds", "trivia_games"
+  add_foreign_key "trivia_subscribers", "people"
+  add_foreign_key "trivia_subscribers", "trivia_games"
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

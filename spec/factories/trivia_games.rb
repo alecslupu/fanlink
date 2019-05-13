@@ -2,20 +2,23 @@
 #
 # Table name: trivia_games
 #
-#  id               :bigint(8)        not null, primary key
-#  description      :text             default(""), not null
-#  round_count      :integer
-#  long_name        :string           not null
-#  short_name       :string           not null
-#  room_id          :bigint(8)
-#  product_id       :bigint(8)
-#  uuid             :uuid
-#  status           :integer          default("draft"), not null
-#  leaderboard_size :integer          default(100)
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  start_date       :integer
-#  end_date         :integer
+#  id                   :bigint(8)        not null, primary key
+#  description          :text             default(""), not null
+#  round_count          :integer
+#  long_name            :string           not null
+#  short_name           :string           not null
+#  room_id              :bigint(8)
+#  product_id           :bigint(8)
+#  status               :integer          default("draft"), not null
+#  leaderboard_size     :integer          default(100)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  start_date           :integer
+#  end_date             :integer
+#  picture_file_name    :string
+#  picture_content_type :string
+#  picture_file_size    :integer
+#  picture_updated_at   :datetime
 #
 
 FactoryBot.define do
@@ -25,7 +28,6 @@ FactoryBot.define do
     long_name { Faker::Lorem.words(10) }
     short_name { Faker::Lorem.words(3) }
     description { Faker::Lorem.paragraph  }
-    uuid { Faker::Crypto.sha1 }
     product { current_product }
     room { create(:room) }
     leaderboard_size { 5 }

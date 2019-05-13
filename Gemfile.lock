@@ -42,11 +42,6 @@ GIT
       excon (>= 0.16.0, < 1.0)
       json (>= 1.7.7, <= 2.1)
 
-PATH
-  remote: lib/gems/apigen
-  specs:
-    apigen (0.0.11)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -1048,6 +1043,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    paperclip-dimension-validator (0.1.1)
+      paperclip (>= 4.0.0)
     paperclip-meta (3.1.0)
       paperclip (>= 5.0)
     parallel (1.14.0)
@@ -1198,9 +1195,14 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    rswag-api (2.0.5)
+      railties (>= 3.1, < 6.0)
     rswag-specs (2.0.5)
       activesupport (>= 3.1, < 6.0)
       json-schema (~> 2.2)
+      railties (>= 3.1, < 6.0)
+    rswag-ui (2.0.5)
+      actionpack (>= 3.1, < 6.0)
       railties (>= 3.1, < 6.0)
     rubocop (0.66.0)
       jaro_winkler (~> 1.5.1)
@@ -1347,7 +1349,6 @@ DEPENDENCIES
   administrate-field-hidden (~> 0.0.3)
   administrate-field-paperclip!
   api-pagination
-  apigen!
   attribute_normalizer
   awesome_print
   aws-sdk
@@ -1403,6 +1404,7 @@ DEPENDENCIES
   oj
   paper_trail
   paperclip (~> 5.0.0)
+  paperclip-dimension-validator
   paperclip-meta
   pg (~> 0.18)
   pg_search
@@ -1424,7 +1426,9 @@ DEPENDENCIES
   rmagick
   rollbar
   rspec-rails
+  rswag-api
   rswag-specs
+  rswag-ui
   rubocop-rails
   rubocop-rails_config
   sass-rails (~> 5.0)
