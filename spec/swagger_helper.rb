@@ -62,7 +62,7 @@ RSpec.configure do |config|
         trivia_game: {
           type: :object,
           properties: {
-              trivia_game_id: {type: :integer},
+              id: {type: :integer},
               start_date:{type: :integer},
               end_date:{type: :integer},
               long_name: {type: :string},

@@ -33,18 +33,7 @@
           "200": {
             "description": "displays completed games",
             "schema": {
-              "type": "object",
-              "properties": {
-                "games": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/trivia_game"
-                  }
-                }
-              },
-              "required": [
-                "games"
-              ]
+              "$ref": "#/definitions/trivia_games_list"
             }
           },
           "401": {
@@ -73,18 +62,7 @@
           "200": {
             "description": "displays future and on going games",
             "schema": {
-              "type": "object",
-              "properties": {
-                "games": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/trivia_game"
-                  }
-                }
-              },
-              "required": [
-                "games"
-              ]
+              "$ref": "#/definitions/trivia_games_list"
             }
           },
           "401": {
@@ -95,10 +73,24 @@
     }
   },
   "definitions": {
+    "trivia_games_list": {
+      "type": "object",
+      "properties": {
+        "games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/trivia_game"
+          }
+        }
+      },
+      "required": [
+        "games"
+      ]
+    },
     "trivia_game": {
       "type": "object",
       "properties": {
-        "trivia_game_id": {
+        "id": {
           "type": "integer"
         },
         "start_date": {

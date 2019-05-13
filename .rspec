@@ -3,4 +3,3 @@
 --format Fuubar
 --color
 --order mtime
---exclude-pattern "spec/requests/**/*_spec.rb"
