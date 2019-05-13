@@ -2,8 +2,9 @@ JkoApi.routes self do
   version 4 do
     namespace :trivia do
       resources :games, only: [ :index ] do
-        get :scheduled, on: :collection
-        get :past, on: :collection
+        get :completed, on: :collection
+
+        resource :subscription, except: [ :new, :edit ]
 
         resources :prizes, only: [ :index ]
 

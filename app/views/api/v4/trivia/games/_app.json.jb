@@ -1,5 +1,5 @@
 json = {
-  trivia_game_id: game.id,
+  id: game.id,
   start_date: (game.start_date.to_i rescue nil),
   end_date: (game.end_date.to_i rescue nil),
   long_name: game.long_name,
@@ -10,6 +10,7 @@ json = {
   leaderboard_size: game.leaderboard_size,
   prize_count: game.prizes.size,
   room_id: game.room_id,
-  channel_id: game.uuid
+  channel_id: game.uuid,
+  picture: game.picture.url
 }
 json
