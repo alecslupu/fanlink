@@ -67,7 +67,7 @@ class PersonCertificate < ApplicationRecord
 
   def generate_token!(attempts = 0)
     raise "Could not acquire a unique id after 10 attempts" if attempts == 10
-    charlist =  "A".upto("Z").to_a + 0.upto(9).to_a - %w(L O 0 1)
+    charlist = "A".upto("Z").to_a + 0.upto(9).to_a.map(&:to_s) - %w(L O 0 1 Z 2)
     self.unique_id = 10.times.collect { charlist.sample }.join
     token_exists = self.class.where(unique_id: unique_id).exists?
     generate_token! 1+attempts if token_exists
