@@ -36,9 +36,13 @@ FactoryBot.define do
       end
     end
 
+    before :create do |page|
+      page.answers << build(:correct_answer, quiz_page: page)
+      page.answers << build_list(:answer, 3, quiz_page: page)
+    end
+
     after :create do |page|
-      create :correct_answer, quiz_page: page
-      create_list :answer, 3, quiz_page: page   # has_many
+      page.answers.map(&:save)
     end
   end
 end
