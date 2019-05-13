@@ -3,12 +3,15 @@ RailsAdmin.config do |config|
   config.model "VideoPage" do
     parent "Certificate"
 
+    configure :course_name do
+    end
+
     edit do
       field :certcourse_page
       field :video, :paperclip
     end
     list do
-      fields :id, :certcourse_page, :video, :created_at
+      fields :id, :course_name, :video, :created_at
     end
     show do
       fields :id, :certcourse_page, :video
