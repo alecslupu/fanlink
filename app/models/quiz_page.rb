@@ -19,7 +19,7 @@ class QuizPage < ApplicationRecord
 
   has_many :answers
 
-  accepts_nested_attributes_for :answers
+  accepts_nested_attributes_for :answers, allow_destroy: true
 
   validate :just_me
   validates :quiz_text, presence: true
