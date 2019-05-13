@@ -1,16 +1,19 @@
 class Api::V4::Trivia::GamesController < ApiController
   def index
-    @games = paginate(::Trivia::Game.running)
-    return_the @games, handler: :jb
+    @games = data_source.upcomming
+    # return_the @games, handler: :jb, using: :index
+    render :index, handler: :jb
   end
 
-  def scheduled
-    @games = paginate(::Trivia::Game.scheduled)
-    return_the @games, handler: :jb
+  def completed
+    @games = data_source.completed
+    render :index, handler: :jb
   end
 
-  def past
-    @games = paginate(::Trivia::Game.past)
-    return_the @games, handler: :jb
+
+  protected
+
+  def data_source
+    ::Trivia::Game.includes(:subscribers).where(trivia_subscribers: { person_id: current_user.id })
   end
 end

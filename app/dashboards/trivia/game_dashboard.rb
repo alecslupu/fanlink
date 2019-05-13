@@ -20,7 +20,6 @@ class Trivia::GameDashboard < Administrate::BaseDashboard
     round_count: Field::Number,
     long_name: Field::String,
     short_name: Field::String,
-    uuid: Field::String.with_options(searchable: false),
     status: Field::String.with_options(searchable: false),
     leaderboard_size: Field::Number,
     created_at: Field::DateTime,

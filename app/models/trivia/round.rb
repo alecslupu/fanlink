@@ -7,7 +7,6 @@
 #  trivia_game_id   :bigint(8)
 #  leaderboard_size :integer          default(100)
 #  status           :integer          default("draft"), not null
-#  uuid             :uuid
 #  complexity       :integer          default(1)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

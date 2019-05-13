@@ -10,6 +10,5 @@ json = {
   leaderboard_size: game.leaderboard_size,
   prize_count: game.trivia_prizes.size,
   room_id: game.room_id,
-  channel_id: game.uuid
 }
 json
