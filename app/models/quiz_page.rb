@@ -36,8 +36,11 @@ class QuizPage < ApplicationRecord
   def to_s
     quiz_text
   end
-
   alias :title :to_s
+
+  def is_mandatory?
+    !is_optional?
+  end
 
   private
 
@@ -52,13 +55,11 @@ class QuizPage < ApplicationRecord
     end
 
     def answer_checks
-      corect_answers = answers.reject{|x| !x.is_correct}.size
-      errors.add(:base, _("You need at least one correct answer. The changes have not been saved. Please refresh and try again")) if corect_answers.zero?
-      # # FLAPI-876 [RailsAdmin] add validation for optional quizzes not to have more than one correct answer
-      # # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
-      # if answers.where(is_correct: true).size > 1
-      #   # FLAPI-876
-      # end
+      correct_answers = answers.reject{|x| !x.is_correct}.size
+      errors.add(:base, _("You need at least one correct answer. The changes have not been saved. Please refresh and try again")) if correct_answers.zero?
+      # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
+      errors.add(:base, _("Mandatory quizzes should have ONLY ONE correct answer")) if correct_answers > 1 && is_mandatory?
+
     end
 
     def mandatory_checks
