@@ -54,7 +54,7 @@ class Certificate < ApplicationRecord
   validates :access_duration, numericality: { greater_than: 0 }
 
   validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
-  # validate :certificate_order_validation, on: :create
+  # validate :certificate_order_validation, if: :certificate_order_changed?
 
   scope :live_status, -> { where(status: "live") }
 
