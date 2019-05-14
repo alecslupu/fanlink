@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_api_version, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned
+  before_action :set_language, :set_product, :set_api_version, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned, :set_default_format
   after_action :unset_person, :unset_app
 
   #
@@ -32,7 +32,7 @@ class ApiController < ApplicationController
   #   to the current `params[:action]` value.
   #
   def return_the(obj, opts = {})
-    opts = { using: params[:action], handler: "jbuilder", postfix: "base" }.merge(opts)
+    opts = { using: params[:action], handler: "jbuilder", postfix: "base"}.merge(opts)
     # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller] #ActAsApi
     #
     # If `obj` doesn't know what `valid?` means then we're presumably
@@ -53,6 +53,9 @@ class ApiController < ApplicationController
   end
 
 protected
+  def set_default_format
+    request.format = :json
+  end
 
   def some_admin?
     current_user.try(:some_admin?)
@@ -147,9 +150,7 @@ protected
         if request.headers["X-Current-Product"].present?
           product = Product.find_by(internal_name: request.headers["X-Current-Product"])
         else
-          if params[:product]
-            product = Product.find_by(internal_name: params[:product])
-          end
+          product = Product.find_by(internal_name: params[:product]) if params[:product]
           product = current_user.try(:product) if product.nil?
         end
       end

@@ -1,0 +1,138 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "description": "...",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/trivia/games/completed": {
+      "get": {
+        "summary": "displays completed games",
+        "tags": [
+          "Trivia"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "displays completed games",
+            "schema": {
+              "$ref": "#/definitions/trivia_games_list"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          }
+        }
+      }
+    },
+    "/trivia/games": {
+      "get": {
+        "summary": "displays future and on going games",
+        "tags": [
+          "Trivia"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "displays future and on going games",
+            "schema": {
+              "$ref": "#/definitions/trivia_games_list"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "trivia_games_list": {
+      "type": "object",
+      "properties": {
+        "games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/trivia_game"
+          }
+        }
+      },
+      "required": [
+        "games"
+      ]
+    },
+    "trivia_game": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "start_date": {
+          "type": "integer"
+        },
+        "end_date": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "round_count": {
+          "type": "integer"
+        },
+        "question_count": {
+          "type": "integer"
+        },
+        "leaderboard_size": {
+          "type": "integer"
+        },
+        "prize_count": {
+          "type": "integer"
+        },
+        "room_id": {
+          "type": "integer"
+        },
+        "user_enroled": {
+          "type": "boolean"
+        },
+        "user_notification": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "trivia_game_id"
+      ]
+    }
+  }
+}

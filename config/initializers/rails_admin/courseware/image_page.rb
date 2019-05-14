@@ -3,11 +3,14 @@ RailsAdmin.config do |config|
   config.model "ImagePage" do
     parent "Certificate"
 
+    configure :course_name do
+    end
+
     edit do
       fields :certcourse_page, :image
     end
     list do
-      fields :id, :certcourse_page, :image, :created_at
+      fields :id, :course_name, :image, :created_at
     end
     show do
       fields :id, :certcourse_page, :image

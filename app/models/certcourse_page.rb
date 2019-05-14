@@ -24,9 +24,9 @@ class CertcoursePage < ApplicationRecord
   has_one :image_page
   has_many :course_page_progresses
 
-  accepts_nested_attributes_for :quiz_page
-  accepts_nested_attributes_for :video_page
-  accepts_nested_attributes_for :image_page
+  accepts_nested_attributes_for :quiz_page, allow_destroy: true
+  accepts_nested_attributes_for :video_page, allow_destroy: true
+  accepts_nested_attributes_for :image_page, allow_destroy: true
 
   scope :quizes, -> { joins(:quiz_page) }
   scope :videos, -> { joins(:video_page) }
