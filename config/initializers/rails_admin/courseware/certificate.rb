@@ -27,9 +27,13 @@ RailsAdmin.config do |config|
              :short_name,
              :description,
              :room,
-             :template_image,
-             :certificate_order,
-             :color_hex,
+             :template_image
+      field :certificate_order do
+        help do
+          "Last order set-up is: #{abstract_model.model.certificate_order_max_value}. You may set any value, but setting an already used value, will result in error"
+        end
+      end
+      fields :color_hex,
              :status,
              :is_free,
              :sku_ios,
