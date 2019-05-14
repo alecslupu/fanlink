@@ -47,8 +47,8 @@ class QuizPage < ApplicationRecord
     end
 
     def answer_checks
-      coreect_answers = answers.reject{|x| !x.is_correct}.size
-      errors.add(:base, _("You need at least one correct answer")) if coreect_answers.zero?
+      corect_answers = answers.reject{|x| !x.is_correct}.size
+      errors.add(:base, _("You need at least one correct answer")) if corect_answers.zero?
       # # FLAPI-876 [RailsAdmin] add validation for optional quizzes not to have more than one correct answer
       # # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
       # if answers.where(is_correct: true).size > 1
@@ -57,7 +57,6 @@ class QuizPage < ApplicationRecord
     end
 
     def mandatory_checks
-
       if wrong_answer_page_id.nil?
         errors.add(:base, :mandatory_checks, message: _("Mandatory quizes require a wrong answer page."))
       else
