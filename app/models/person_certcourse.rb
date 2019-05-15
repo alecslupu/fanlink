@@ -12,6 +12,8 @@
 #
 
 class PersonCertcourse < ApplicationRecord
+  has_paper_trail
+
   belongs_to :person
   belongs_to :certcourse
   validates_uniqueness_of :certcourse_id, scope: :person_id
