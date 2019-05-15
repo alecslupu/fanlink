@@ -26,6 +26,8 @@
 #
 
 class Certificate < ApplicationRecord
+  has_paper_trail
+
   include AttachmentSupport
 
   has_image_called :template_image

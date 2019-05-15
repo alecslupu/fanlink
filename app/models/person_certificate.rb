@@ -32,6 +32,8 @@
 #
 
 class PersonCertificate < ApplicationRecord
+  has_paper_trail
+
   include AttachmentSupport
 
   has_course_image_called :issued_certificate_image
@@ -48,7 +50,7 @@ class PersonCertificate < ApplicationRecord
   scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: "ios") }
 
   def product
-    Product.find(14)
+    person.product
   end
 
   include Magick
