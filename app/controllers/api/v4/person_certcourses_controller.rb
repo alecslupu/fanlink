@@ -16,6 +16,7 @@ class Api::V4::PersonCertcoursesController < ApiController
       register_progress
     end
 
+
     if @person_certcourse.save
       PersonCertificate.update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
       return_the @person_certcourse, handler: "jb"
@@ -87,7 +88,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def certcourse_pages
-    certcourse.certcourse_pages.order(:certcourse_page_order)
+    certcourse.certcourse_pages
   end
 
   def certcourse_page

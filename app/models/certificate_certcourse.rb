@@ -23,4 +23,6 @@ class CertificateCertcourse < ApplicationRecord
 
   validates_uniqueness_of :certcourse_id, scope: :certificate_id
   validates_uniqueness_of :certcourse_order, scope: :certificate_id
+
+  validates :certcourse_order, presence: true, numericality: { greater_than: 0 }
 end
