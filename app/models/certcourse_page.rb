@@ -62,7 +62,7 @@ class CertcoursePage < ApplicationRecord
   protected
   def single_child_validator
     errors.add(:base, _("You cannot add a question and a video or imaage on the same certcourse")) if quiz_page.present? && (video_page.present? || image_page.present?)
-    errors.add(:base, _("You cannot add an image and a video or question on the same certcourse")) if image_page.present? && (quiz_page.present? || image_page.present?)
+    errors.add(:base, _("You cannot add an image and a video or question on the same certcourse")) if image_page.present? && (quiz_page.present? || video_page.present?)
     errors.add(:base, _("You cannot add a video and a question or imaage on the same certcourse")) if video_page.present? && (quiz_page.present? || image_page.present?)
   end
 end

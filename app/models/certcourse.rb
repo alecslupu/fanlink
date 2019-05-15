@@ -41,9 +41,18 @@ class Certcourse < ApplicationRecord
 
   scope :live_status, -> { where(status: "live") }
 
+  validate :children_not_empty, if: :status_changed? && :live?
+
   def to_s
     short_name
   end
 
   alias :title :to_s
+
+  protected
+  def children_not_empty
+    unless certcourse_pages.inject(true) { |default, cp| default && cp.child.present? }
+      errors.add(:base, _("Cannot publish, at least one children is empty"))
+    end
+  end
 end
