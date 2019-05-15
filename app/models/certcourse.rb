@@ -27,9 +27,9 @@ class Certcourse < ApplicationRecord
   has_many :person_certcourses
   has_many :people, through: :person_certcourses, dependent: :destroy
 
-  has_many :certcourse_pages
+  has_many :certcourse_pages, -> { order(:certcourse_page_order) }
 
-  accepts_nested_attributes_for :certcourse_pages
+  accepts_nested_attributes_for :certcourse_pages, allow_destroy: true
 
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 

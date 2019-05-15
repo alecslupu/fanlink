@@ -31,8 +31,9 @@ class CertcoursePage < ApplicationRecord
   scope :quizes, -> { joins(:quiz_page) }
   scope :videos, -> { joins(:video_page) }
   scope :images, -> { joins(:image_page) }
+  scope :ordered, -> { order(:certcourse_page_order) }
 
-  validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
+  # validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
   validates :duration, numericality: { greater_than: 0 }
 
   def content_type
