@@ -12,6 +12,8 @@
 #
 
 class Answer < ApplicationRecord
+  has_paper_trail
+
   acts_as_tenant(:product)
   belongs_to :product
   belongs_to :quiz_page
