@@ -1,4 +1,4 @@
 json = {}
 
-json[:packages] = render partial: @req_source, collection: @packages, as: :package, handler: :jb
+json[:rounds] = render partial: @req_source, collection: @packages, as: :package, handler: :jb
 json
