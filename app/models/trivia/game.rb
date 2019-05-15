@@ -52,6 +52,5 @@ module Trivia
       self.end_date = date_to_set
       self.save
     end
-
   end
 end

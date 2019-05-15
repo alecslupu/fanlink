@@ -1,5 +1,4 @@
 class Api::V4::Trivia::SubscriptionsController < ApiController
-
   def show
   end
 
@@ -11,5 +10,4 @@ class Api::V4::Trivia::SubscriptionsController < ApiController
 
   def create
   end
-
 end

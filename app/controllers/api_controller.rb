@@ -32,7 +32,7 @@ class ApiController < ApplicationController
   #   to the current `params[:action]` value.
   #
   def return_the(obj, opts = {})
-    opts = { using: params[:action], handler: "jbuilder", postfix: "base"}.merge(opts)
+    opts = { using: params[:action], handler: "jbuilder", postfix: "base" }.merge(opts)
     # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller] #ActAsApi
     #
     # If `obj` doesn't know what `valid?` means then we're presumably

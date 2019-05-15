@@ -17,7 +17,6 @@
 #  updated_at         :datetime         not null
 #
 module Trivia
-
   class Prize < ApplicationRecord
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
