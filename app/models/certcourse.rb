@@ -51,7 +51,7 @@ class Certcourse < ApplicationRecord
 
   protected
   def children_not_empty
-    unless certcourse_pages.inject(true) { |default, cp| default && cp.child.present? }
+    unless certcourse_pages.inject(true) { |default, cp| default && cp.child.present? && cp.child.valid? }
       errors.add(:base, _("Cannot publish, at least one children is empty"))
     end
   end
