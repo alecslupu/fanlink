@@ -15,7 +15,6 @@
 #
 
 module Trivia
-
   class Round < ApplicationRecord
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 

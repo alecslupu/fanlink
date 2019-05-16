@@ -17,7 +17,6 @@
 #
 
 module Trivia
-
   class Question < ApplicationRecord
     belongs_to :round, class_name: "Trivia::Round", counter_cache: :question_count, foreign_key: :trivia_round_id
     has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
