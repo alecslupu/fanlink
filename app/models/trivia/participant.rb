@@ -9,7 +9,6 @@
 #  updated_at     :datetime         not null
 #
 module Trivia
-
   class Participant < ApplicationRecord
     belongs_to :person
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id

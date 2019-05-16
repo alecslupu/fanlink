@@ -26,6 +26,8 @@
 #
 
 class Certificate < ApplicationRecord
+  has_paper_trail
+
   include AttachmentSupport
 
   has_image_called :template_image
@@ -54,7 +56,7 @@ class Certificate < ApplicationRecord
   validates :access_duration, numericality: { greater_than: 0 }
 
   validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
-  validate :certificate_order_validation, if: :certificate_order_changed?
+  # validate :certificate_order_validation, if: :certificate_order_changed?
 
   scope :live_status, -> { where(status: "live") }
 
@@ -62,9 +64,16 @@ class Certificate < ApplicationRecord
     short_name
   end
 
-  private
-  def certificate_order_validation
-    maxvalue = self.class.where(product_id: self.product_id).maximum(:certificate_order).to_i
-    errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % { size: maxvalue, value: maxvalue })) unless certificate_order.to_i >= maxvalue
+  def self.certificate_order_max_value
+    @maxvalue ||= maximum(:certificate_order).to_i
   end
+
+  def certificate_order_max_value
+    self.class.certificate_order_max_value
+  end
+
+  private
+    def certificate_order_validation
+      errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
+    end
 end

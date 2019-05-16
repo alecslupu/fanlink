@@ -1,6 +1,6 @@
 json = {
   id: leaderboard.id,
-  trivia_package_id: leaderboard.trivia_package_id,
+  round_id: leaderboard.trivia_package_id,
   points: leaderboard.points,
   position: leaderboard.position,
   average_time: leaderboard.average_time,

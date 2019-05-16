@@ -4,7 +4,12 @@ inherit_gem:
 
 
 AllCops:
-  TargetRubyVersion: 2.4.2
+  TargetRubyVersion: 2.5.1
+  Exclude:
+    - 'node_modules/**/*'
+    - 'db/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

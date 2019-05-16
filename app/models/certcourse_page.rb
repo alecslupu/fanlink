@@ -14,6 +14,7 @@
 #
 
 class CertcoursePage < ApplicationRecord
+  has_paper_trail
   acts_as_tenant(:product)
   belongs_to :product
 
@@ -31,9 +32,11 @@ class CertcoursePage < ApplicationRecord
   scope :quizes, -> { joins(:quiz_page) }
   scope :videos, -> { joins(:video_page) }
   scope :images, -> { joins(:image_page) }
+  scope :ordered, -> { order(:certcourse_page_order) }
 
-  validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
+  # validates_uniqueness_to_tenant :certcourse_page_order, scope: %i[ certcourse_id ]
   validates :duration, numericality: { greater_than: 0 }
+  validate :single_child_validator
 
   def content_type
     return "quiz" if quiz?
@@ -55,5 +58,12 @@ class CertcoursePage < ApplicationRecord
 
   def quiz?
     quiz_page.present?
+  end
+
+  protected
+  def single_child_validator
+    errors.add(:base, _("You cannot add a question and a video or imaage on the same certcourse")) if quiz_page.present? && (video_page.present? || image_page.present?)
+    errors.add(:base, _("You cannot add an image and a video or question on the same certcourse")) if image_page.present? && (quiz_page.present? || video_page.present?)
+    errors.add(:base, _("You cannot add a video and a question or imaage on the same certcourse")) if video_page.present? && (quiz_page.present? || image_page.present?)
   end
 end
