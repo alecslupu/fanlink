@@ -11,6 +11,7 @@
 #
 
 class CoursePageProgress < ApplicationRecord
+  has_paper_trail
   belongs_to :certcourse_page, touch: true
   belongs_to :person
 end

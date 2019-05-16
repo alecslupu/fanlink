@@ -41,8 +41,10 @@ module JSONErrors
   end
 
   def render_500(errors)
-    logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-    errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test? || errors.is_a?(String)
+    unless (Rails.env.test? && ENV["ROLLBAR_ENABLED"])
+      logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)
+      errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) }  unless errors.is_a?(String)
+    end
     render json: { errors: errors.message }.to_json, status: 500
     nil
   end

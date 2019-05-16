@@ -1,5 +1,4 @@
 class RailsAdminController < ApplicationController
-
   include ::Pundit
 
   set_current_tenant_through_filter
@@ -58,5 +57,4 @@ class RailsAdminController < ApplicationController
       # # Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| load f }
       # load("#{Rails.root}/config/initializers/rails_admin.rb")
     end
-
 end

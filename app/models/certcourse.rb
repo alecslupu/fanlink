@@ -18,6 +18,7 @@
 #
 
 class Certcourse < ApplicationRecord
+  has_paper_trail
   acts_as_tenant(:product)
   belongs_to :product
 
@@ -27,9 +28,9 @@ class Certcourse < ApplicationRecord
   has_many :person_certcourses
   has_many :people, through: :person_certcourses, dependent: :destroy
 
-  has_many :certcourse_pages
+  has_many :certcourse_pages, -> { order(:certcourse_page_order) }
 
-  accepts_nested_attributes_for :certcourse_pages
+  accepts_nested_attributes_for :certcourse_pages, allow_destroy: true
 
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 
@@ -41,9 +42,18 @@ class Certcourse < ApplicationRecord
 
   scope :live_status, -> { where(status: "live") }
 
+  validate :children_not_empty, if: :status_changed? && :live?
+
   def to_s
     short_name
   end
 
   alias :title :to_s
+
+  protected
+  def children_not_empty
+    unless certcourse_pages.inject(true) { |default, cp| default && cp.child.present? && cp.child.valid? }
+      errors.add(:base, _("Cannot publish, at least one children is empty"))
+    end
+  end
 end

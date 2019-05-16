@@ -56,9 +56,7 @@ module RailsAdmin
             if product_id > 0
               product = Product.find_by(id: product_id)
             end
-            if product.present?
-              cookies[:product_id] = product.id
-            end
+            cookies[:product_id] = product.id if product.present?
             redirect_to dashboard_url
           end
         end
