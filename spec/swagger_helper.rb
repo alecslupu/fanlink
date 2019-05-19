@@ -48,6 +48,12 @@ RSpec.configure do |config|
       },
       paths: {},
       definitions: {
+        session_jwt: {
+          type: :object,
+          properties: {
+            token:   { type: :string }
+          }
+        },
         person_mini: {
           type: :object,
           properties: {
@@ -57,6 +63,14 @@ RSpec.configure do |config|
             designation: { type: :string },
             facebook_picture_url:  { type: :string },
             badge_points:  { type: :integer }
+          }
+        },
+        trivia_user_subscribed: {
+          type: :object,
+          properties: {
+            game_id: { type: :integer },
+            person_id: { type: :integer },
+            subscribed: { type: :boolean }
           }
         },
         trivia_game_prize: {

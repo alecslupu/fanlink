@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190510181847) do
+ActiveRecord::Schema.define(version: 20190518173636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1120,15 +1120,6 @@ ActiveRecord::Schema.define(version: 20190510181847) do
     t.index ["room_id"], name: "index_trivia_games_on_room_id"
   end
 
-  create_table "trivia_participants", force: :cascade do |t|
-    t.bigint "person_id"
-    t.bigint "trivia_game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_trivia_participants_on_person_id"
-    t.index ["trivia_game_id"], name: "index_trivia_participants_on_trivia_game_id"
-  end
-
   create_table "trivia_prizes", force: :cascade do |t|
     t.bigint "trivia_game_id"
     t.integer "status", default: 0, null: false
@@ -1329,8 +1320,6 @@ ActiveRecord::Schema.define(version: 20190510181847) do
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
   add_foreign_key "trivia_games", "products"
   add_foreign_key "trivia_games", "rooms"
-  add_foreign_key "trivia_participants", "people"
-  add_foreign_key "trivia_participants", "trivia_games"
   add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
