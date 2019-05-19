@@ -16,6 +16,7 @@
 
 module Trivia
   class Round < ApplicationRecord
+    has_paper_trail
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
     has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id

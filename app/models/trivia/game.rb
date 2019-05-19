@@ -23,6 +23,8 @@
 
 module Trivia
   class Game < ApplicationRecord
+    has_paper_trail
+    attr_accessor :compute_gameplay
     include AttachmentSupport
     has_attached_file :picture
 
@@ -42,16 +44,15 @@ module Trivia
     scope :completed, -> { enabled.order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { enabled.order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
+    before_save do
+      self.compute_gameplay_parameters if compute_gameplay
+      self.compute_gameplay = false
+    end
 
     def compute_gameplay_parameters
-      date_to_set = self.start_date
-
-      self.rounds.each_with_index do |round, index|
-        round.start_date = date_to_set
-        round.compute_gameplay_parameters
-        date_to_set = round.end_date_with_cooldown
-      end
-      self.end_date = date_to_set
+      rounds.each.map(&:compute_gameplay_parameters)
+      self.start_date =  rounds.first.start_date
+      self.end_date = rounds.reload.last.end_date_with_cooldown
       self.save
     end
   end

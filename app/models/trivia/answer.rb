@@ -14,6 +14,7 @@
 
 module Trivia
   class Answer < ApplicationRecord
+    has_paper_trail
     belongs_to :person, class_name: "Person"
     belongs_to :question, class_name: "Trivia::Question", foreign_key: :trivia_question_id
   end

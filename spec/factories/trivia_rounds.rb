@@ -19,6 +19,8 @@ FactoryBot.define do
     game { create(:trivia_game) }
     leaderboard_size { game.leaderboard_size }
     status { :locked }
+    start_date { 30.minutes.ago   }
+    end_date { 10.minutes.from_now }
 
     transient do
       with_leaderboard { false }
