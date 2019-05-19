@@ -23,11 +23,11 @@ FactoryBot.define do
     round { create(:trivia_round) }
     time_limit { 1 }
     cooldown_period { 4 }
-    title { Faker::Lorem.question(10)}
+    title { Faker::Lorem.question(10) }
 
     transient do
-      with_leaderboard {false}
-      with_answers {false}
+      with_leaderboard { false }
+      with_answers { false }
     end
 
     after :create do |question, options|

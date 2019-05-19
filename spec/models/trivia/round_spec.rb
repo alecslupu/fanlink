@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::Round, type: :model do
 
@@ -65,7 +65,7 @@ RSpec.describe Trivia::Round, type: :model do
 
         question = round.reload.questions.first(value).last
 
-        result = round.start_date + (5 * (value-1)).seconds
+        result = round.start_date + (5 * (value - 1)).seconds
 
         expect(question.start_date - result).to eq(0)
         expect(question.question_order).to eq(value)

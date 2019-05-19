@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::Subscriber, type: :model do
   context "Valid factory" do

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
 
@@ -7,12 +7,12 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     it "destroys the subscription" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        subscriber = create(:trivia_subscriber, person: person )
+        subscriber = create(:trivia_subscriber, person: person)
         login_as(person)
 
         expect(Trivia::Subscriber.count).to eq(1)
         delete :destroy, params: { game_id: subscriber.trivia_game_id }
-        expect( Trivia::Subscriber.count).to eq(0)
+        expect(Trivia::Subscriber.count).to eq(0)
       end
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         post :create, params: { game_id: game.id }
 
         # expect(response.status).to eq(200)
-        expect( Trivia::Subscriber.count).to eq(1)
+        expect(Trivia::Subscriber.count).to eq(1)
       end
     end
   end

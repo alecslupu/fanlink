@@ -7,11 +7,11 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
       tags "Session"
       produces "application/vnd.api.v4+json"
 
-      consumes 'multipart/form-data'
+      consumes "multipart/form-data"
       parameter name: :email_or_username, in: :formData, type: :string
       parameter name: :password, in: :formData, type: :string
-      parameter name: 'X-App', in: :header, type: :string
-      parameter name: 'X-Current-Product', in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-App", in: :header, type: :string
+      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
 
       response "200", "" do
         let!(:user) { create(:person) }

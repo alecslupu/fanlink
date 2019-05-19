@@ -9,13 +9,13 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: 'X-Per-Page', :in => :header, :type => :integer
-      parameter name: 'X-Page', :in => :header, :type => :integer
-      parameter name: 'X-App', in: :header, type: :string
-      parameter name: 'X-Current-Product', in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Per-Page", in: :header, type: :integer
+      parameter name: "X-Page", in: :header, type: :integer
+      parameter name: "X-App", in: :header, type: :string
+      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
       response "200", "displays completed games" do
         let(:user) { create(:person) }
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token( user_id: user.id ) }" }
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id) }" }
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i - 100)
         }}
@@ -24,7 +24,7 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
       end
       response "401", "unauthorized" do
         let(:user) { create(:person, terminated: true) }
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token( user_id: user.id ) }" }
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id) }" }
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i - 100)
         }}
@@ -39,14 +39,14 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: 'X-Per-Page', :in => :header, :type => :integer
-      parameter name: 'X-Page', :in => :header, :type => :integer
-      parameter name: 'X-App', in: :header, type: :string
-      parameter name: 'X-Current-Product', in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Per-Page", in: :header, type: :integer
+      parameter name: "X-Page", in: :header, type: :integer
+      parameter name: "X-App", in: :header, type: :string
+      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
       response "200", "displays future and on going games" do
         schema "$ref": "#/definitions/trivia_games_list"
         let(:user) { create(:person) }
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token( user_id: user.id ) }" }
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id) }" }
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i + 100)
         }}
@@ -54,8 +54,8 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
       end
 
       response "401", "unauthorized" do
-        let(:user) { create(:person, terminated: true ) }
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token( user_id: user.id ) }" }
+        let(:user) { create(:person, terminated: true) }
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id) }" }
         let!(:games) { ActsAsTenant.with_tenant(user.product) {
           create_list(:trivia_game, 10, status: :published, end_date: DateTime.now.to_i - 100)
         }}

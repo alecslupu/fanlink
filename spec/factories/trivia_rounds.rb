@@ -26,7 +26,7 @@ FactoryBot.define do
 
     factory :started_trivia_round do
       start_date { 30.minutes.ago   }
-      end_date { 10.minutes.from_now}
+      end_date { 10.minutes.from_now }
     end
 
     factory :past_trivia_round do
