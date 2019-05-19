@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::Game, type: :model do
   context "Valid factory" do
@@ -68,4 +68,3 @@ RSpec.describe Trivia::Game, type: :model do
     end
   end
 end
-

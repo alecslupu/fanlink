@@ -23,16 +23,20 @@
 
 module Trivia
   class Game < ApplicationRecord
+    has_paper_trail
+    attr_accessor :compute_gameplay
     include AttachmentSupport
     has_attached_file :picture
 
     acts_as_tenant(:product)
-    belongs_to :product, class_name: "Product"
     belongs_to :room, class_name: "Room"
-    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id
     has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id
+    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id
     has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id
     has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id
+
+    accepts_nested_attributes_for :prizes, allow_destroy: true
+    accepts_nested_attributes_for :rounds, allow_destroy: true
 
     enum status: %i[draft published locked closed]
 
@@ -40,16 +44,15 @@ module Trivia
     scope :completed, -> { enabled.order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { enabled.order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
+    before_save do
+      self.compute_gameplay_parameters if compute_gameplay
+      self.compute_gameplay = false
+    end
 
     def compute_gameplay_parameters
-      date_to_set = self.start_date
-
-      self.rounds.each_with_index do |round, index|
-        round.start_date = date_to_set
-        round.compute_gameplay_parameters
-        date_to_set = round.end_date_with_cooldown
-      end
-      self.end_date = date_to_set
+      rounds.each.map(&:compute_gameplay_parameters)
+      self.start_date =  rounds.first.start_date
+      self.end_date = rounds.reload.last.end_date_with_cooldown
       self.save
     end
   end

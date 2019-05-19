@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::Question, type: :model do
   context "Valid factory" do
@@ -31,7 +31,7 @@ RSpec.describe Trivia::Question, type: :model do
       end
       it "sets the end date" do
         time = DateTime.now.to_i
-        question = create(:trivia_question, start_date: time, time_limit:10)
+        question = create(:trivia_question, start_date: time, time_limit: 10)
         question.compute_gameplay_parameters
         expect(question.end_date).to eq(time + 10.seconds)
       end

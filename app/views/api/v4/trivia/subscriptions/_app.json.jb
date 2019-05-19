@@ -1,0 +1,6 @@
+json = {
+  game_id: subscriber.id,
+  person_id: subscriber.person_id,
+  subscribed: subscriber.subscribed
+}
+json
