@@ -23,6 +23,8 @@ module Trivia
     has_many :leaderboards, class_name: "Trivia::QuestionLeaderboard", foreign_key: :trivia_question_id
     has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id
     enum status: %i[draft published locked closed]
+    accepts_nested_attributes_for :available_answers, allow_destroy: true
+
 
     # administrate falback
     def round_id

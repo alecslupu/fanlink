@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
 
-  # TODO: auto-generated
   describe "GET destroy" do
     it "destroys the subscription" do
       person = create(:person)
@@ -17,8 +16,6 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     end
   end
 
-
-  # TODO: auto-generated
   describe "GET show" do
     it "displays the resource" do
       person = create(:person)
@@ -33,7 +30,6 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     end
   end
 
-  # TODO: auto-generated
   describe "#create" do
     it "enroll an user in a trivia Game" do
       person = create(:person)
@@ -42,7 +38,7 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         login_as(person)
 
         expect(Trivia::Subscriber.count).to eq(0)
-        post :create, params: { game_id: game.id }
+        post :create, params: { game_id: game.id, subscribed: false }
 
         # expect(response.status).to eq(200)
         expect(Trivia::Subscriber.count).to eq(1)
@@ -50,7 +46,6 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     end
   end
 
-  # TODO: auto-generated
   describe "PUT update" do
     it "displays the resource" do
       person = create(:person)

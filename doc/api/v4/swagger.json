@@ -44,12 +44,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -96,12 +91,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -158,12 +148,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -214,12 +199,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -270,12 +250,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -322,12 +297,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -380,12 +350,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -448,12 +413,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -510,12 +470,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           }
         ],
         "responses": {
@@ -556,12 +511,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           },
           {
             "name": "game_id",
@@ -609,12 +559,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           },
           {
             "name": "game_id",
@@ -659,12 +604,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           },
           {
             "name": "game_id",
@@ -717,12 +657,7 @@
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string",
-            "enum": [
-              "web",
-              "app"
-            ],
-            "default": "app"
+            "type": "string"
           },
           {
             "name": "game_id",

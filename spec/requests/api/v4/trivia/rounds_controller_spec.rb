@@ -11,7 +11,7 @@ RSpec.describe "Api::V4::Trivia::RoundsController", type: :request, swagger_doc:
       parameter name: "X-Page", in: :header, type: :integer
       parameter name: :game_id, in: :path, type: :integer
       parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Current-Product", in: :header, type: :string
       response "200", "displays completed games" do
         let(:user) { create(:person) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id) }" }

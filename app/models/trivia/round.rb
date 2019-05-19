@@ -20,6 +20,7 @@ module Trivia
 
     has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id
     has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id
+    accepts_nested_attributes_for :questions, allow_destroy: true
 
     enum status: %i[draft published locked closed]
 

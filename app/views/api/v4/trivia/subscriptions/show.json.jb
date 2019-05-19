@@ -1,2 +1,2 @@
-json = render partial: @req_source, locals: { subscriber: @subscriber }, handler: :jb
+json = render partial: "app", locals: { subscriber: @subscriber }, handler: :jb
 json

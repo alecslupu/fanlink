@@ -7,7 +7,7 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
       parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Current-Product", in: :header, type: :string
       parameter name: :game_id, in: :path, type: :integer
       response "200", "displays completed games" do
         let(:user) { create(:person) }
@@ -41,7 +41,7 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       produces "application/vnd.api.v4+json"
 
       parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Current-Product", in: :header, type: :string
       parameter name: :game_id, in: :path, type: :integer
       response "204", "displays completed games" do
         let(:user) { create(:person) }
@@ -72,7 +72,7 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
       parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Current-Product", in: :header, type: :string
       parameter name: :game_id, in: :path, type: :integer
       parameter name: :subscribed, in: :formData, type: :boolean
       response "200", "displays completed games" do
@@ -105,7 +105,7 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
       parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string, enum: [:web, :app], default: :app
+      parameter name: "X-Current-Product", in: :header, type: :string
       parameter name: :game_id, in: :path, type: :integer
       parameter name: :subscribed, in: :formData, type: :boolean
 
