@@ -18,6 +18,7 @@
 #
 module Trivia
   class Prize < ApplicationRecord
+    has_paper_trail
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
     has_attached_file :photo

@@ -13,6 +13,53 @@
     }
   },
   "paths": {
+    "/session/token": {
+      "post": {
+        "summary": "generates a  valid JWT",
+        "tags": [
+          "Session"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "email_or_username",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/session_jwt"
+            }
+          },
+          "422": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/trivia/games/{game_id}/leaderboard/me": {
       "get": {
         "summary": "displays my possition leaderboard",
@@ -35,6 +82,16 @@
             "in": "path",
             "type": "integer",
             "required": true
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -82,6 +139,16 @@
             "in": "path",
             "type": "integer",
             "required": true
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -123,6 +190,16 @@
             "name": "X-Page",
             "in": "header",
             "type": "integer"
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -164,6 +241,16 @@
             "name": "X-Page",
             "in": "header",
             "type": "integer"
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -201,6 +288,16 @@
             "in": "path",
             "type": "integer",
             "required": true
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -244,6 +341,16 @@
             "in": "path",
             "type": "integer",
             "required": true
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -297,6 +404,16 @@
             "in": "path",
             "type": "integer",
             "required": true
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -344,6 +461,16 @@
             "in": "path",
             "type": "integer",
             "required": true
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -358,9 +485,218 @@
           }
         }
       }
+    },
+    "/trivia/games/{game_id}/subscription": {
+      "get": {
+        "summary": "Show the subscription information",
+        "tags": [
+          "Trivia"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "game_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "displays completed games",
+            "schema": {
+              "$ref": "#/definitions/trivia_user_subscribed"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "remove a subscription",
+        "tags": [
+          "Trivia"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "game_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "displays completed games"
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "updates the subscription information",
+        "tags": [
+          "Trivia"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "game_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "subscribed",
+            "in": "formData",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "displays completed games",
+            "schema": {
+              "$ref": "#/definitions/trivia_user_subscribed"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "creates the subscription information",
+        "tags": [
+          "Trivia"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "game_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "subscribed",
+            "in": "formData",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "displays completed games",
+            "schema": {
+              "$ref": "#/definitions/trivia_user_subscribed"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "session_jwt": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
     "person_mini": {
       "type": "object",
       "properties": {
@@ -381,6 +717,20 @@
         },
         "badge_points": {
           "type": "integer"
+        }
+      }
+    },
+    "trivia_user_subscribed": {
+      "type": "object",
+      "properties": {
+        "game_id": {
+          "type": "integer"
+        },
+        "person_id": {
+          "type": "integer"
+        },
+        "subscribed": {
+          "type": "boolean"
         }
       }
     },

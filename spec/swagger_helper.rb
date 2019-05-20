@@ -32,6 +32,41 @@ RSpec.configure do |config|
       }
 
     },
+    "v2/swagger.json" => {
+      swagger: "2.0",
+      info: {
+        title: "API V2",
+        version: "v2"
+      },
+      paths: {},
+
+      securityDefinitions: {
+        Bearer: {
+          description: "...",
+          type: :apiKey,
+          name: "Authorization",
+          in: :header
+        }
+      }
+
+    },
+    "v3/swagger.json" => {
+      swagger: "2.0",
+      info: {
+        title: "API V3",
+        version: "v3"
+      },
+      paths: {},
+
+      securityDefinitions: {
+        Bearer: {
+          description: "...",
+          type: :apiKey,
+          name: "Authorization",
+          in: :header
+        }
+      }
+    },
     "v4/swagger.json" => {
       swagger: "2.0",
       info: {
@@ -48,6 +83,12 @@ RSpec.configure do |config|
       },
       paths: {},
       definitions: {
+        session_jwt: {
+          type: :object,
+          properties: {
+            token:   { type: :string }
+          }
+        },
         person_mini: {
           type: :object,
           properties: {
@@ -57,6 +98,14 @@ RSpec.configure do |config|
             designation: { type: :string },
             facebook_picture_url:  { type: :string },
             badge_points:  { type: :integer }
+          }
+        },
+        trivia_user_subscribed: {
+          type: :object,
+          properties: {
+            game_id: { type: :integer },
+            person_id: { type: :integer },
+            subscribed: { type: :boolean }
           }
         },
         trivia_game_prize: {
@@ -166,8 +215,8 @@ RSpec.configure do |config|
           type: :object,
           properties: {
               id: { type: :integer },
-              start_date:{ type: :integer },
-              end_date:{ type: :integer },
+              start_date: { type: :integer },
+              end_date: { type: :integer },
               long_name: { type: :string },
               short_name: { type: :string },
               description: { type: :string },
@@ -179,7 +228,7 @@ RSpec.configure do |config|
               user_enroled: { type: :boolean },
               user_notification: { type: :boolean }
           },
-          required: ['trivia_game_id']
+          required: ["trivia_game_id"]
         }
       }
     }

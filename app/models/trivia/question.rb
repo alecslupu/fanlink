@@ -18,11 +18,14 @@
 
 module Trivia
   class Question < ApplicationRecord
+    has_paper_trail
     belongs_to :round, class_name: "Trivia::Round", counter_cache: :question_count, foreign_key: :trivia_round_id
     has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
     has_many :leaderboards, class_name: "Trivia::QuestionLeaderboard", foreign_key: :trivia_question_id
     has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id
     enum status: %i[draft published locked closed]
+    accepts_nested_attributes_for :available_answers, allow_destroy: true
+
 
     # administrate falback
     def round_id

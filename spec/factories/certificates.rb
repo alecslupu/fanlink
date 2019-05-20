@@ -42,6 +42,6 @@ FactoryBot.define do
     sku_android { Faker::Code.ean(13) }
     template_image_file_name { Faker::File.file_name }
     certificate_issuable { false }
-    sequence(:certificate_order) {|n| n }
+    sequence(:certificate_order) { |n| n }
   end
 end
