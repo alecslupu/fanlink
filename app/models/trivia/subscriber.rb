@@ -10,8 +10,10 @@
 #  updated_at     :datetime         not null
 #
 
-class Trivia::Subscriber < ApplicationRecord
-  has_paper_trail
-  belongs_to :person
-  belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+module Trivia
+  class Subscriber < ApplicationRecord
+    has_paper_trail
+    belongs_to :person
+    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+  end
 end

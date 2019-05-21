@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190518173636) do
+ActiveRecord::Schema.define(version: 20190521200724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1087,6 +1087,18 @@ ActiveRecord::Schema.define(version: 20190518173636) do
     t.index ["trivia_question_id"], name: "index_trivia_available_answers_on_trivia_question_id"
   end
 
+  create_table "trivia_available_questions", force: :cascade do |t|
+    t.string "title"
+    t.integer "cooldown_period"
+    t.integer "time_limit"
+    t.integer "status"
+    t.string "type"
+    t.integer "topic_id"
+    t.integer "complexity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "trivia_game_leaderboards", force: :cascade do |t|
     t.bigint "trivia_game_id"
     t.integer "points"
@@ -1148,16 +1160,15 @@ ActiveRecord::Schema.define(version: 20190518173636) do
 
   create_table "trivia_questions", force: :cascade do |t|
     t.bigint "trivia_round_id"
-    t.integer "time_limit"
     t.string "type"
     t.integer "question_order", default: 1, null: false
-    t.integer "status", default: 0, null: false
-    t.integer "cooldown_period", default: 5
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "title"
     t.integer "start_date"
     t.integer "end_date"
+    t.integer "time_limit"
+    t.integer "cooldown_period", default: 5
+    t.integer "available_question_id"
     t.index ["trivia_round_id"], name: "index_trivia_questions_on_trivia_round_id"
   end
 
@@ -1194,6 +1205,13 @@ ActiveRecord::Schema.define(version: 20190518173636) do
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_trivia_subscribers_on_person_id"
     t.index ["trivia_game_id"], name: "index_trivia_subscribers_on_trivia_game_id"
+  end
+
+  create_table "trivia_topics", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "urls", force: :cascade do |t|
@@ -1315,7 +1333,8 @@ ActiveRecord::Schema.define(version: 20190518173636) do
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
   add_foreign_key "trivia_answers", "people"
   add_foreign_key "trivia_answers", "trivia_questions"
-  add_foreign_key "trivia_available_answers", "trivia_questions"
+  add_foreign_key "trivia_available_answers", "trivia_available_questions", column: "trivia_question_id"
+  add_foreign_key "trivia_available_questions", "trivia_topics", column: "topic_id"
   add_foreign_key "trivia_game_leaderboards", "people"
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
   add_foreign_key "trivia_games", "products"
@@ -1323,6 +1342,7 @@ ActiveRecord::Schema.define(version: 20190518173636) do
   add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
+  add_foreign_key "trivia_questions", "trivia_available_questions", column: "available_question_id"
   add_foreign_key "trivia_questions", "trivia_rounds"
   add_foreign_key "trivia_round_leaderboards", "people"
   add_foreign_key "trivia_round_leaderboards", "trivia_rounds"

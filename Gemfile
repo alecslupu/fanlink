@@ -63,6 +63,7 @@ group :development, :test do
   gem "fuubar"
   gem "rubocop-rails"
   gem "rubocop-rails_config"
+  gem "rubocop-rspec"
 end
 
 group :development do

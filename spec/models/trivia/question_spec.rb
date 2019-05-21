@@ -8,7 +8,7 @@ RSpec.describe Trivia::Question, type: :model do
     describe "should verify associations haven't changed for" do
       it "#has_many" do
         should belong_to(:round)
-        should have_many(:available_answers)
+        should belong_to(:available_question)
         should have_many(:trivia_answers)
         should have_many(:leaderboards)
       end
