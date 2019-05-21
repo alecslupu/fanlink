@@ -16,5 +16,6 @@
 
 module Trivia
   class MultipleChoiceAvailableQuestion < AvailableQuestion
+    has_many :active_questions, class_name: "Trivia::MultipleChoiceQuestion", inverse_of: :available_question, foreign_key: :available_question_id
   end
 end
