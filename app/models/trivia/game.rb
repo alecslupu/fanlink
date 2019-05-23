@@ -29,14 +29,17 @@ module Trivia
     has_attached_file :picture
 
     acts_as_tenant(:product)
-    belongs_to :room, class_name: "Room"
-    has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id
-    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id
-    has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id
-    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id
+    belongs_to :room, class_name: "Room", optional: true
+    has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id, dependent: :destroy
 
     accepts_nested_attributes_for :prizes, allow_destroy: true
     accepts_nested_attributes_for :rounds, allow_destroy: true
+
+    validates :long_name, presence: true
+    validates :short_name, presence: true
 
     enum status: %i[draft published locked closed]
 
