@@ -67,6 +67,9 @@ RailsAdmin.config do |config|
     unhide_action do
       only [ "Message" ]
     end
+    generate_game_action do
+      only ["Trivia::Game"]
+    end
     select_product_dashboard
     select_product_action
   end

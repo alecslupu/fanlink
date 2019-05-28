@@ -55,6 +55,9 @@ class ApplicationPolicy
   def select_product_dashboard?
     true
   end
+  def generate_game_action?
+    false
+  end
   # Rails admin
 
   def select_product?
