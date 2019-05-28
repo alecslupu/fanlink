@@ -38,7 +38,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
           if @person.email.present?
             @person.send_onboarding_email
           end
-          return_the @person, handler: tpl_handler, using: :show
+          return_the @person, handler: tpl_handler
         else
           render_422 @person.errors
         end

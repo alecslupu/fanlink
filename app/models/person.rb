@@ -154,6 +154,9 @@ class Person < ApplicationRecord
     Rails.cache.fetch([name, id]) { find(id) }
   end
 
+  def jwt_token
+    ::TokenProvider.issue_token(user_id: self.id)
+  end
 
   #
   # Lookup a person via their username.
