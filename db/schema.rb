@@ -1160,14 +1160,14 @@ ActiveRecord::Schema.define(version: 20190521200724) do
 
   create_table "trivia_questions", force: :cascade do |t|
     t.bigint "trivia_round_id"
+    t.integer "time_limit"
     t.string "type"
     t.integer "question_order", default: 1, null: false
+    t.integer "cooldown_period", default: 5
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "start_date"
     t.integer "end_date"
-    t.integer "time_limit"
-    t.integer "cooldown_period", default: 5
     t.integer "available_question_id"
     t.index ["trivia_round_id"], name: "index_trivia_questions_on_trivia_round_id"
   end
