@@ -35,7 +35,9 @@ RailsAdmin.config do |config|
     Trivia::QuestionLeaderboard
     Trivia::RoundLeaderboard
     Trivia::Subscriber
+    Trivia::AvailableQuestion
     Trivia::Answer
+    Trivia::Topic
   ).each do |model|
     config.included_models << model
     config.model model do
