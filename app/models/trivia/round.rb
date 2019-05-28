@@ -17,10 +17,10 @@
 module Trivia
   class Round < ApplicationRecord
     has_paper_trail
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id, counter_cache: :round_count
 
-    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id
-    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id
+    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id, dependent: :destroy
+    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
 
     enum status: %i[draft published locked closed]
