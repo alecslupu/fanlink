@@ -30,5 +30,9 @@ FactoryBot.define do
       create :correct_trivia_available_answer, question: question
       create_list :wrong_trivia_available_answer, 3, question: question
     end
+
+    factory :trivia_multiple_choice_available_question, class: "Trivia::MultipleChoiceAvailableQuestion" do
+
+    end
   end
 end

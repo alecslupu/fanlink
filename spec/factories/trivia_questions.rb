@@ -42,5 +42,8 @@ FactoryBot.define do
         end
       end
     end
+
+    factory :trivia_multiple_choice_question, class: "Trivia::MultipleChoiceQuestion" do
+    end
   end
 end
