@@ -3,3 +3,4 @@ json[:person] = Rails.cache.fetch(["v4", "person", @req_source, @person.id, @per
   render(partial: "api/v4/people/#{@req_source}", locals: { person: @person }, handlers: "jb")
 }
 json[:person][:token] = @person.jwt_token
+json

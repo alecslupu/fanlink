@@ -1212,9 +1212,6 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.6)
-    rubocop-rails (1.5.0)
-      railties (>= 3.0)
-      rubocop (~> 0.53)
     rubocop-rails_config (0.4.4)
       railties (>= 3.0)
       rubocop (~> 0.58)
@@ -1431,7 +1428,6 @@ DEPENDENCIES
   rswag-api
   rswag-specs
   rswag-ui
-  rubocop-rails
   rubocop-rails_config
   rubocop-rspec
   sass-rails (~> 5.0)
