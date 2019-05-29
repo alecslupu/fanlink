@@ -10,7 +10,7 @@ json = {
   leaderboard_size: game.leaderboard_size,
   prize_count: game.prizes.size,
   room_id: game.room_id,
-  # channel_id: game.uuid,
+  channel_id: game.uuid,
   picture: game.picture.url
 }
 json
