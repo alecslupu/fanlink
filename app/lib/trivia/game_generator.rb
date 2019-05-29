@@ -1,23 +1,18 @@
-module Trivia
+  module Trivia
   class GameGenerator
+    attr_reader :game
+
     def initialize
     end
 
     def generate
-      @game = Trivia::Game.create!(
-        status: :draft,
-        leaderboard_size: 10,
-        long_name: "Generated Game #{DateTime.now.to_i}",
-        short_name: "Generated Game",
-        description: "Generated description for the game "
-      )
-
+      generate_game!
       questions = Trivia::MultipleChoiceAvailableQuestion.order("random()").first(100)
 
       5.times do |index|
-        @round = @game.rounds.build(
+        @round = game.rounds.build(
           status: :draft,
-          leaderboard_size: @game.leaderboard_size,
+          leaderboard_size: game.leaderboard_size,
           start_date: (1+index).hours.from_now,
           complexity: 1
         )
@@ -35,6 +30,25 @@ module Trivia
         end
         @round.save!
       end
+      self.promote!
+    end
+
+    def promote!
+      game.published!
+      game.rounds.reload.find_each(&:published!)
+      game.compute_gameplay_parameters
+    end
+
+    private
+
+    def generate_game!
+      @game ||= Trivia::Game.create!(
+        status: :draft,
+        leaderboard_size: 10,
+        long_name: "Generated Game #{DateTime.now.to_i}",
+        short_name: "Generated Game",
+        description: "Generated description for the game "
+      )
     end
   end
 end

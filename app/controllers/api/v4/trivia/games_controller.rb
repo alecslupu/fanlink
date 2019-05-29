@@ -14,6 +14,6 @@ class Api::V4::Trivia::GamesController < ApiController
   protected
 
   def data_source
-    ::Trivia::Game.includes(:subscribers).where(trivia_subscribers: { person_id: current_user.id })
+    ::Trivia::Game.includes(:subscribers).where(trivia_subscribers: { person_id: [ current_user.id, nil ] })
   end
 end
