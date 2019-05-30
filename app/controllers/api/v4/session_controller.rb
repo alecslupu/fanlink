@@ -35,7 +35,7 @@ class Api::V4::SessionController < Api::V3::SessionController
 
   def token
     user = Person.can_login?(params[:email_or_username])
-    if login(user.email, params[:password])
+    if user.present? && login(user.email, params[:password])
       data = { token: user.jwt_token }
       render json: data, status: 200
     else
