@@ -33,6 +33,7 @@ gem "redis"
 gem "redis-namespace"
 gem "redis-rails"
 
+gem "httparty", "0.16.4"
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
 
