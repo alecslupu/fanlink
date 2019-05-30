@@ -1385,6 +1385,7 @@ DEPENDENCIES
   guard-rubocop
   guard-rubycritic
   has_scope
+  httparty (= 0.16.4)
   jb
   jbuilder (~> 2.5)
   jko_api
