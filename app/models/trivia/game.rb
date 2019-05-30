@@ -61,7 +61,7 @@ module Trivia
     end
 
     def promote_status_changes
-      if status_changed? && published?
+      if saved_change_to_attribute?(:status) && published?
         Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
       end
     end
