@@ -37,7 +37,7 @@ class Api::V4::SessionController < Api::V3::SessionController
   end
 
   def token
-
+    @person = nil
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
       return render_422 _("Unable to find user from token. Likely a problem contacting Facebook.") if @person.nil?
@@ -47,7 +47,7 @@ class Api::V4::SessionController < Api::V3::SessionController
       @person = Person.can_login?(params[:email_or_username])
       if @person.present?
         return render_401 _("Your account has been banned.") if @person.terminated
-        @person = login(@person.email, params[:password])
+        @person = login(@person.email, params[:password]) if @person
       else
         return render_422 _("Invalid login.")
       end
