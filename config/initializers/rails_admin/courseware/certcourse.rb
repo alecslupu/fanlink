@@ -13,7 +13,8 @@ RailsAdmin.config do |config|
              :status,
              :duration,
              :is_completed,
-             :copyright_text
+             :copyright_text,
+             :certcourse_pages
     end
     edit do
       fields :long_name, :short_name, :description, :color_hex, :status, :duration, :is_completed, :copyright_text

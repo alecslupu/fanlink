@@ -47,16 +47,25 @@ module Trivia
     scope :completed, -> { enabled.order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { enabled.order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
+    after_save :promote_status_changes
     before_save do
       self.compute_gameplay_parameters if compute_gameplay
       self.compute_gameplay = false
     end
 
     def compute_gameplay_parameters
-      rounds.each.map(&:compute_gameplay_parameters)
-      self.start_date =  rounds.first.start_date
-      self.end_date = rounds.reload.last.end_date_with_cooldown
-      self.save
+      ActiveRecord::Base.transaction do
+        rounds.each.map(&:compute_gameplay_parameters)
+        self.start_date =  rounds.first.start_date
+        self.end_date = rounds.reload.last.end_date_with_cooldown
+        self.save
+      end
+    end
+
+    def promote_status_changes
+      if saved_change_to_attribute?(:status) && published?
+        Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
+      end
     end
   end
 end
