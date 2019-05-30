@@ -30,7 +30,6 @@
         end
         @round.save!
       end
-      self.promote!
     end
 
     def promote!

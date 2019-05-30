@@ -4,7 +4,7 @@ class AddTriviaGameLeaderboardFunction < ActiveRecord::Migration[5.1]
 CREATE OR REPLACE FUNCTION compute_trivia_game_leaderboard(game_id integer)
 RETURNS void AS $$
   BEGIN
-    INSERT INTO trivia_game_leaderboards (trivia_round_id, points, position, person_id, average_time, created_at, updated_at )
+    INSERT INTO trivia_game_leaderboards (trivia_game_id, points, position, person_id, average_time, created_at, updated_at )
     SELECT
       trivia_game_id,
       CASE
