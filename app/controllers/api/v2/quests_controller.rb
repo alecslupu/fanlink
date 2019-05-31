@@ -396,8 +396,8 @@ class Api::V2::QuestsController < ApiController
       render_not_found
     end
   end
+protected
 
-private
   def apply_filters
     quests = Quest.where.not(status: :deleted).order(created_at: :desc)
     params.each do |p, v|
@@ -411,6 +411,7 @@ private
   def load_quest
     @quest = Quest.where(product_id: ActsAsTenant.current_tenant.id).find(params[:id]).order(created_at: :desc)
   end
+  private
 
   def quest_params
     params.require(:quest).permit(:event_id, :name, :internal_name, :description, :picture, :status, :starts_at, :ends_at,

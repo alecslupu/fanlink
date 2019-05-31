@@ -1,45 +1,16 @@
 # TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person, version = nil)
-    payload = {}
-    payload["#{user_path(person)}/message_counts/#{room.id}"] = 0
-    if version.present?
-      version.downto(1) { |v|
-        payload["#{user_path(person, v)}/message_counts/#{room.id}"] = 0
-      }
-    end
+    payload = payload_clear_message_counter(person, room, version)
     client.update("", payload).response.status == 200
   end
 
   def delete_message(message, version = nil)
     if message.hidden
-      payload = {}
-      payload["#{room_path(message.room)}/last_deleted_message_id"] = message.id
-      if version.present?
-        version.downto(1) { |v|
-          payload["#{room_path(message.room, v)}/last_deleted_message_id"] = message.id
-        }
-      end
+      payload = payload_for_delete_message(message, version)
       client.update("", payload).response.status == 200
     else
       false
-    end
-  end
-
-  def delete_post(post, to_be_notified, version = nil)
-    if to_be_notified.empty?
-      true
-    else
-      payload = {}
-      to_be_notified.each do |p|
-        payload["#{user_path(p)}/deleted_post_id"] = post.id
-        if version.present?
-          version.downto(1) { |v|
-            payload["#{user_path(p, v)}/deleted_post_id"] = post.id
-          }
-        end
-      end
-      client.update("", payload).response.status == 200
     end
   end
 
@@ -48,13 +19,7 @@ module Messaging
   end
 
   def delete_room_for_member(room, member, version = nil)
-    payload = {}
-    payload["#{user_path(member)}/deleted_room_id"] = room.id
-    if version.present?
-      version.downto(1) { |v|
-        payload["#{user_path(member, v)}/deleted_room_id"] = room.id
-      }
-    end
+    payload = payload_for_delete_room_for_member(member, room, version)
     client.update("", payload).response.status == 200
   end
 
@@ -72,57 +37,154 @@ module Messaging
     end
   end
 
+  def delete_post(post, to_be_notified, version = nil)
+    if to_be_notified.empty?
+      true
+    else
+      payload = payload_for_delete_post(post, to_be_notified, version)
+      client.update("", payload).response.status == 200
+    end
+  end
+
   def post_post(post, to_be_notified, version = nil)
     if to_be_notified.empty?
       true
     else
-      payload = {}
-      to_be_notified.each do |p|
-        payload["#{user_path(p)}/last_post_id"] = post.id
-        if version.present?
-          version.downto(1) { |v|
-            payload["#{user_path(p, v)}/last_post_id"] = post.id
-          }
-        end
-      end
+      payload = payload_for_post_post(post, to_be_notified, version)
       client.update("", payload).response.status == 200
     end
   end
 
   def set_message_counters(room, except_user, version = nil)
-    payload = {}
-    room.room_memberships.each do |mem|
-      payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
-      if version.present?
-        version.downto(1) { |v|
-          payload[message_counter_path(mem, v)] = mem.message_count + 1 unless mem.person == except_user
-        }
-      end
-    end
+    payload = payload_for_set_message_counters(except_user, room, version)
     client.update("", payload).response.status == 200
   end
 
   def update_relationship_count(requested_to, version = nil)
-    payload = {}
-    payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
-    if version.present?
-      version.downto(1) { |v|
-        payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
-      }
-    end
+    payload = payload_for_update_relationship_count(requested_to, version)
     client.update("", payload).response.status == 200
   end
 
 private
 
-  def add_room_for_member(room, member, version = nil)
+  def payload_for_post_public_message(message, msg, version)
+    payload = {}
+    payload["#{room_path(message.room)}/last_message"] = message.as_json
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{room_path(message.room)}/last_message"] = msg
+      }
+    end
+    payload
+  end
+
+  def payload_for_post_private_message(msg, version)
+    payload = {}
+    payload["#{room_path(msg.room)}/last_message_id"] = msg.id
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{room_path(msg.room, v)}/last_message_id"] = msg.id
+      }
+    end
+    payload
+  end
+
+  def payload_for_delete_message(message, version)
+    payload = {}
+    payload["#{room_path(message.room)}/last_deleted_message_id"] = message.id
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{room_path(message.room, v)}/last_deleted_message_id"] = message.id
+      }
+    end
+    payload
+  end
+
+  def payload_for_update_relationship_count(requested_to, version)
+    payload = {}
+    payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{user_path(requested_to)}/friend_request_count"] = requested_to.friend_request_count
+      }
+    end
+    payload
+  end
+
+  def payload_for_set_message_counters(except_user, room, version)
+    payload = {}
+    room.room_memberships.each do |mem|
+      payload[message_counter_path(mem)] = mem.message_count + 1 unless mem.person == except_user
+      if version.present?
+        version.downto(1) {|v|
+          payload[message_counter_path(mem, v)] = mem.message_count + 1 unless mem.person == except_user
+        }
+      end
+    end
+    payload
+  end
+
+  def payload_for_post_post(post, to_be_notified, version)
+    payload = {}
+    to_be_notified.each do |p|
+      payload["#{user_path(p)}/last_post_id"] = post.id
+      if version.present?
+        version.downto(1) {|v|
+          payload["#{user_path(p, v)}/last_post_id"] = post.id
+        }
+      end
+    end
+    payload
+  end
+
+  def payload_for_delete_post(post, to_be_notified, version)
+    payload = {}
+    to_be_notified.each do |p|
+      payload["#{user_path(p)}/deleted_post_id"] = post.id
+      if version.present?
+        version.downto(1) {|v|
+          payload["#{user_path(p, v)}/deleted_post_id"] = post.id
+        }
+      end
+    end
+    payload
+  end
+
+  def payload_for_delete_room_for_member(member, room, version)
+    payload = {}
+    payload["#{user_path(member)}/deleted_room_id"] = room.id
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{user_path(member, v)}/deleted_room_id"] = room.id
+      }
+    end
+    payload
+  end
+
+  def payload_clear_message_counter(person, room, version)
+    payload = {}
+    payload["#{user_path(person)}/message_counts/#{room.id}"] = 0
+    if version.present?
+      version.downto(1) {|v|
+        payload["#{user_path(person, v)}/message_counts/#{room.id}"] = 0
+      }
+    end
+    payload
+  end
+
+  def payload_for_add_room_for_member(member, room, version)
     payload = {}
     payload["#{user_path(member)}/new_room_id"] = room.id
     if version.present?
-      version.downto(1) { |v|
+      version.downto(1) {|v|
         payload["#{user_path(member, v)}/new_room_id"] = room.id
       }
     end
+    payload
+  end
+
+  def add_room_for_member(room, member, version = nil)
+    payload = payload_for_add_room_for_member(member, room, version)
     client.update("", payload).response.status == 200
   end
 
@@ -159,13 +221,7 @@ private
   end
 
   def post_private_message(msg, version = nil)
-    payload = {}
-    payload["#{room_path(msg.room)}/last_message_id"] = msg.id
-    if version.present?
-      version.downto(1) { |v|
-        payload["#{room_path(msg.room, v)}/last_message_id"] = msg.id
-      }
-    end
+    payload = payload_for_post_private_message(msg, version)
     client.update("", payload).response.status == 200
   end
 
@@ -189,13 +245,7 @@ private
         picture_url: message.person.picture_url
       }
     }
-    payload = {}
-    payload["#{room_path(message.room)}/last_message"] = message.as_json
-    if version.present?
-      version.downto(1) { |v|
-        payload["#{room_path(message.room)}/last_message"] = msg
-      }
-    end
+    payload = payload_for_post_public_message(message, msg, version)
     client.update("", payload).response.status == 200
   end
 
