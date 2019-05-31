@@ -88,6 +88,50 @@ RSpec.configure do |config|
           properties: {
             token:   { type: :string }
           }
+      #     "person": {
+      #   "id": 6078,
+      #   "username": "cip1458",
+      #   "name": null,
+      #   "gender": "unspecified",
+      #   "city": null,
+      #   "country_code": null,
+      #   "birthdate": null,
+      #   "biography": null,
+      #   "picture_url": null,
+      #   "product_account": false,
+      #   "recommended": false,
+      #   "chat_banned": false,
+      #   "tester": false,
+      #   "terminated": false,
+      #   "terminated_reason": null,
+      #   "designation": null,
+      #   "role": "normal",
+      #   "do_not_message_me": false,
+      #   "pin_messages_from": false,
+      #   "auto_follow": false,
+      #   "num_followers": 0,
+      #   "num_following": 1,
+      #   "facebookid": null,
+      #   "facebook_picture_url": null,
+      #   "badge_points": 0,
+      #   "level": null,
+      #   "created_at": "2019-03-29T18:32:25Z",
+      #   "updated_at": "2019-05-31T12:19:01Z",
+      #   "following_id": null,
+      #   "email": "cr+1458@flink.to",
+      #   "product": {
+      #     "id": 14,
+      #     "internal_name": "caned",
+      #     "name": "Can Ed"
+      #   },
+      #   "level_progress": null,
+      #   "rewards": null,
+      #   "blocked_people": null,
+      #   "permissions": null,
+      #   "pin_messages_to": null,
+      #   "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2MDc4fQ.dBfZTuCl395ymehUU4hLDuIE7xQYj26evvIP_htMOMI"
+      # }
+
         },
         person_mini: {
           type: :object,
