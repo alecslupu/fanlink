@@ -769,6 +769,9 @@
         },
         "complexity": {
           "type": "integer"
+        },
+        "status": {
+          "type": "string"
         }
       }
     },
