@@ -126,7 +126,8 @@ RSpec.configure do |config|
             start_date:  { type: :integer },
             end_date:  { type: :integer },
             question_size: { type: :integer },
-            complexity: { type: :integer }
+            complexity: { type: :integer },
+            status: { type: :string }
           }
         },
         trivia_round_list: {
