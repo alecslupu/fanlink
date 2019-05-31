@@ -10,7 +10,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         p = create(:post, person: create(:person))
         reason = "I don't like you"
         post :create, params: { post_report: { post_id: p.id, reason: reason } }
-        expect(response).to be_success
+        expect(response).to be_successful
         report = PostReport.last
         expect(report.post).to eq(p)
         expect(report.person).to eq(person)
@@ -52,7 +52,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         login_as(admin)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_reports"].count).to eq(3)
       end
     end
@@ -62,7 +62,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         create_list(:post_report, 10)
         login_as(admin)
         get :index, params: { page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_reports"].count).to eq(2)
         expect(post_report_json(json["post_reports"].first)).to be true
         expect(post_report_json(json["post_reports"].last)).to be true
@@ -74,7 +74,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         create_list(:post_report, 10)
         login_as(admin)
         get :index, params: { page: 2, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_reports"].count).to eq(2)
         expect(post_report_json(json["post_reports"].first)).to be true
         expect(post_report_json(json["post_reports"].last)).to be true
@@ -90,7 +90,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
 
         login_as(admin)
         get :index, params: { status_filter: "pending" }
-        expect(response).to be_success
+        expect(response).to be_successful
         pending = PostReport.for_product(admin.product).where(status: :pending)
         reports_json = json["post_reports"]
         expect(reports_json.count).to eq(pending.count)
@@ -119,7 +119,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         other = create(:admin_user)
         login_as(other)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_reports"]).to be_empty
       end
     end
@@ -132,7 +132,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         report = create(:post_report)
         login_as(admin)
         patch :update, params: { id: report.id, post_report: { status: "no_action_needed" } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(report.reload.status).to eq("no_action_needed")
       end
     end

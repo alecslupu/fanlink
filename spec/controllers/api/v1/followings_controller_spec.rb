@@ -75,7 +75,7 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
         followee2.follow(followed)
         create(:person) # someone not following
         get :index, params: { followed_id: followed.id.to_s }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["followers"].map { |f| f["id"].to_i }.sort).to eq([followee1.id, followee2.id].sort)
       end
     end
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
         follower.follow(followed2)
         create(:person) # someone not follower
         get :index, params: { follower_id: follower.id.to_s }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["following"].map { |f| f["id"].to_i }.sort).to eq([followed1.id, followed2.id].sort)
       end
 
@@ -102,7 +102,7 @@ RSpec.describe Api::V1::FollowingsController, type: :controller do
 
         create(:person) # someone not follower
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["following"].map { |f| f["id"].to_i }.sort).to eq(followees.map(&:followed_id).sort)
       end
     end

@@ -9,7 +9,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
         expect {
           post :create, params: { product: person.product.internal_name, email_or_username: email }
         }.to change { MandrillMailer.deliveries.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.reset_password_token).not_to be_nil
         expect(email_sent(template: "#{person.product.internal_name}-password-reset",
                           to_values: { email: person.email, name: person.name },
@@ -25,7 +25,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
         expect {
           post :create, params: { product: person.product.internal_name, email_or_username: "really_forgetful@example.com" }
         }.to change { MandrillMailer.deliveries.count }.by(0)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.reset_password_token).to be_nil
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
         expect {
           post :create, params: { product: person.product.internal_name, email_or_username: username }
         }.to change { MandrillMailer.deliveries.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.reset_password_token).not_to be_nil
         expect(email_sent(template: "#{person.product.internal_name}-password-reset",
                           to_values: { email: person.email, name: person.name },
@@ -53,7 +53,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
         expect {
           post :create, params: { product: person.product.internal_name, email_or_username: "really_forgetful" }
         }.to change { MandrillMailer.deliveries.count }.by(0)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.reset_password_token).to be_nil
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
         new_password = "super_secret"
         person.set_password_token!
         post :update, params: { token: person.reset_password_token, password: new_password }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
     end

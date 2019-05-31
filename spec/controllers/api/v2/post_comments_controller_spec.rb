@@ -11,7 +11,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         expect {
           post :create, params: { post_id: po.id, post_comment: { body: "a comment" } }
         }.to change { po.comments.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_comment_json(json["post_comment"])).to be true
       end
     end
@@ -28,7 +28,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
               {
                 person_id: followee2.id, location: 1, length: 2 } ] } }
         }.to change { po.comments.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         comment = po.comments.last
         expect(comment.mentions.count).to eq(1)
         expect(post_comment_json(json["post_comment"])).to be true
@@ -50,7 +50,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
             { person_id: followee1.id, location: 11, length: 3 }
           ] } }
         }.to change { po.comments.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         comment = po.comments.last
         expect(comment.mentions.count).to eq(2)
         expect(post_comment_json(json["post_comment"])).to be true
@@ -90,7 +90,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin_user)
         expect(comment).to exist_in_database
         delete :destroy, params: { post_id: comment.post_id, id: comment.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(comment).not_to exist_in_database
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         expect(comment).to exist_in_database
         login_as(person)
         delete :destroy, params: { post_id: comment.post_id, id: comment.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(comment).not_to exist_in_database
       end
     end
@@ -158,7 +158,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
 
         pp = 2
         get :index, params: { post_id: po.id, page: 1, per_page: pp }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_comments"].count).to eq(pp)
         # expect(json["post_comments"].first).to eq(post_comment_json(@post.comments.visible.order(created_at: :desc).first))
         expect(post_comment_json(json["post_comments"].first)).to be true
@@ -172,7 +172,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         person.follow(followee2)
         po = create(:post, person: followee2)
         get :index, params: { post_id: po.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_comments"].count).to eq(0)
       end
     end
@@ -186,7 +186,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         5.times { |n| create(:post_comment, body: "some body that I made up #{n}") }
 
         get :list, params: { per_page: 2, page: 1 }
-        expect(response).to be_success
+        expect(response).to be_successful
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(2)
         # expect(pc_json.first).to eq(post_comment_list_json(@list_comments.last))
@@ -200,7 +200,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         5.times { |n| create(:post_comment, body: "some body that I made up #{n}") }
 
         get :list, params: { per_page: 2, page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(2)
         # expect(pc_json.first).to eq(post_comment_list_json(@list_comments[-3]))
@@ -214,7 +214,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         5.times { |n| create(:post_comment, body: "some body that I made up #{n}") }
         fragment = "made up 2"
         get :list, params: { body_filter: fragment }
-        expect(response).to be_success
+        expect(response).to be_successful
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(1)
         expect(pc_json.first["body"]).to include(fragment)
@@ -229,7 +229,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         person = people_list.sample
         get :list, params: { person_filter: person.username }
-        expect(response).to be_success
+        expect(response).to be_successful
         post_comments = PostComment.where(person_id: person.id)
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(post_comments.count)
@@ -245,7 +245,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         people = [people_list.first, people_list[1] ]
         get :list, params: { person_filter: "cuser11" }
-        expect(response).to be_success
+        expect(response).to be_successful
         post_comments = PostComment.where(person_id: people)
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(post_comments.count)
@@ -261,7 +261,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         person = people_list.sample
         get :list, params: { person_filter: person.email }
-        expect(response).to be_success
+        expect(response).to be_successful
         post_comments = PostComment.where(person_id: person.id)
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(post_comments.count)
@@ -277,7 +277,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         people = [people_list.first, people_list[1] ]
         get :list, params: { person_filter: "112@example" }
-        expect(response).to be_success
+        expect(response).to be_successful
         post_comments = PostComment.where(person_id: people)
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(post_comments.count)

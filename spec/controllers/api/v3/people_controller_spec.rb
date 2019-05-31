@@ -10,7 +10,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         patch :change_password,  params: { id: person.id, person: { current_password: current, new_password: new_password } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
     end

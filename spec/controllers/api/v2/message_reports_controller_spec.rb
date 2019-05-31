@@ -11,7 +11,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         login_as(person)
         message = create(:message, room: create(:public_active_room))
         post :create, params: { room_id: message.room_id,  message_report: { message_id: message.id, reason: reason } }
-        expect(response).to be_success
+        expect(response).to be_successful
         report = MessageReport.last
         expect(report.message).to eq(message)
         expect(report.person).to eq(person)
@@ -70,7 +70,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         reports = create_list(:message_report, 5, message: message)
 
         get :index, params: { room_id: message.room_id, status_filter: "pending" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["message_reports"].count).to eq(reports.size)
         expect(message_reports_json(json["message_reports"].first)).to be true
       end
@@ -83,7 +83,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         reports = create_list(:message_report, 5, message: message).reverse
 
         get :index, params: { room_id: message.room_id, status_filter: "pending", page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["message_reports"].count).to eq(2)
         expect(message_reports_json(json["message_reports"].first)).to be true
         expect(message_reports_json(json["message_reports"].last)).to be true
@@ -116,7 +116,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         get :index, params: { status_filter: "pending" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["message_reports"]).to be_empty
       end
     end
@@ -131,7 +131,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         login_as(person)
         patch :update, params: { id: report.id, message_report: { status: "no_action_needed" } }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(report.reload.status).to eq("no_action_needed")
       end
     end
