@@ -30,7 +30,7 @@ RETURNS void AS $$
         INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
       WHERE q.id  = $1 AND a.is_correct = 't'
     ) AS leaderboard;
-    SELECT pg_notify('leaderboard',  CONCAT('{"type": "question", "id": ', $1 ,'}'));
+    PERFORM pg_notify('leaderboard',  CONCAT('{"type": "question", "id": ', $1 ,'}'));
   END;
 $$
 LANGUAGE plpgsql;

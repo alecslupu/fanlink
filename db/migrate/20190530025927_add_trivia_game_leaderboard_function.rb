@@ -1,12 +1,12 @@
-class AddTriviaRoundLeaderboardFunction < ActiveRecord::Migration[5.1]
+class AddTriviaGameLeaderboardFunction < ActiveRecord::Migration[5.1]
   def up
     execute %Q(
-CREATE OR REPLACE FUNCTION compute_trivia_round_leaderboard(round_id integer)
+CREATE OR REPLACE FUNCTION compute_trivia_game_leaderboard(game_id integer)
 RETURNS void AS $$
   BEGIN
-    INSERT INTO trivia_round_leaderboards (trivia_round_id, points, position, person_id, average_time, created_at, updated_at )
+    INSERT INTO trivia_game_leaderboards (trivia_game_id, points, position, person_id, average_time, created_at, updated_at )
     SELECT
-      trivia_round_id,
+      trivia_game_id,
       CASE
         WHEN points >= 0 THEN points
         ELSE 0
@@ -18,7 +18,7 @@ RETURNS void AS $$
       updated_at
     FROM (
       SELECT
-        q.trivia_round_id,
+        r.trivia_game_id,
         r.complexity * ( r.leaderboard_size - ROW_NUMBER () OVER (ORDER BY AVG(a.time))) as points,
         ROW_NUMBER () OVER (ORDER BY AVG(a.time)) as position,
         a.person_id,
@@ -27,16 +27,16 @@ RETURNS void AS $$
       FROM trivia_questions q
         INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
         INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
-      WHERE q.trivia_round_id  = $1 AND a.is_correct = 't'
-      GROUP BY q.trivia_round_id,r.complexity, r.leaderboard_size, a.person_id
+      WHERE r.trivia_game_id  = $1 AND a.is_correct = 't'
+      GROUP BY r.trivia_game_id,r.complexity, r.leaderboard_size, a.person_id
     ) AS leaderboard;
-    SELECT pg_notify('leaderboard',  CONCAT('{"type": "round", "id": ', $1 ,'}'));
+    PERFORM pg_notify('leaderboard',  CONCAT('{"type": "game", "id": ', $1 ,'}'));
   END;
 $$
-LANGUAGE plpgsql;
-)
+LANGUAGE plpgsql;)
   end
+
   def down
-    execute %Q( DROP FUNCTION compute_trivia_round_leaderboard(integer); )
+    execute %Q( DROP FUNCTION compute_trivia_game_leaderboard(integer); )
   end
 end
