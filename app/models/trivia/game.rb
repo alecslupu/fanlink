@@ -60,7 +60,7 @@ module Trivia
         self.end_date = rounds.reload.last.end_date_with_cooldown
         self.save
         Delayed::Job.enqueue(::Trivia::LockGameJob.new(self.id), run_at: self.start_date - 10.minute)
-        Delayed::Job.enqueue(::Trivia::PublishGameJob.new(self.id), run_at: self.start_date)
+        Delayed::Job.enqueue(::Trivia::RunningGameJob.new(self.id), run_at: self.start_date)
         Delayed::Job.enqueue(::Trivia::CloseGameJob.new(self.id), run_at: self.end_date)
       end
     end
