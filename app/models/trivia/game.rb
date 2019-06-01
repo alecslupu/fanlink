@@ -49,8 +49,7 @@ module Trivia
 
     after_save :promote_status_changes
     before_save do
-      # binding.pry
-      self.compute_gameplay_parameters unless self.compute_gameplay.to_i.zero?
+      self.compute_gameplay_parameters if self.compute_gameplay && self.rounds.size > 0
       self.compute_gameplay = false
     end
 
@@ -64,9 +63,10 @@ module Trivia
     end
 
     def promote_status_changes
-      if saved_change_to_attribute?(:status) && published?
+      if saved_change_to_attribute?(:status) && locked?
         Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
       end
     end
   end
 end
+
