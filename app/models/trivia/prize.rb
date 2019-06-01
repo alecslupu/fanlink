@@ -21,7 +21,7 @@ module Trivia
     has_paper_trail
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
-    has_attached_file :photo
+    has_image_called :photo
 
     enum status: %i[draft published locked closed]
     enum prize_type: %i[digital physical]
