@@ -8,7 +8,7 @@
 #  description        :text
 #  position           :integer          default(1), not null
 #  photo_file_name    :string
-#  photo_file_size    :string
+#  photo_file_size    :integer
 #  photo_content_type :string
 #  photo_updated_at   :string
 #  is_delivered       :boolean          default(FALSE)
@@ -16,6 +16,7 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
+
 module Trivia
   class Prize < ApplicationRecord
     include AttachmentSupport
@@ -30,6 +31,10 @@ module Trivia
 
     def game_id
       trivia_game_id
+    end
+
+    def product
+      game.product
     end
 
     scope :visible, -> { where(status: [:published, :locked]) }
