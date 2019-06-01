@@ -26,7 +26,7 @@ module Trivia
     has_paper_trail
     attr_accessor :compute_gameplay
     include AttachmentSupport
-    has_attached_file :picture
+    has_image_called :picture
 
     acts_as_tenant(:product)
     belongs_to :room, class_name: "Room", optional: true
@@ -41,7 +41,7 @@ module Trivia
     validates :long_name, presence: true
     validates :short_name, presence: true
 
-    enum status: %i[draft published locked closed]
+    enum status: %i[draft published locked running closed]
 
     scope :enabled, -> { where(status: [ :published, :locked, :closed ]) }
     scope :completed, -> { enabled.order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
@@ -49,7 +49,7 @@ module Trivia
 
     after_save :promote_status_changes
     before_save do
-      self.compute_gameplay_parameters if compute_gameplay
+      self.compute_gameplay_parameters if self.compute_gameplay && self.rounds.size > 0
       self.compute_gameplay = false
     end
 
@@ -63,9 +63,10 @@ module Trivia
     end
 
     def promote_status_changes
-      if saved_change_to_attribute?(:status) && published?
+      if saved_change_to_attribute?(:status) && locked?
         Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
       end
     end
   end
 end
+

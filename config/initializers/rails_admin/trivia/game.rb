@@ -8,7 +8,10 @@ RailsAdmin.config do |config|
 
     navigation_label "Trivia"
     edit do
-      fields :short_name, :long_name, :description, :room, :status, :leaderboard_size, :picture
+      fields :short_name, :long_name, :description, :room, :leaderboard_size, :picture
+      field :status, :enum do
+        read_only { bindings[:object].persisted? }
+      end
       field :start_date, :unix_timestamp
       field :prizes do
         visible { bindings[:object].persisted? }
@@ -18,7 +21,7 @@ RailsAdmin.config do |config|
       end
 
       field :compute_gameplay, :boolean do
-
+        read_only { bindings[:object].persisted? }
       end
     end
     show do

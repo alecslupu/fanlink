@@ -30,6 +30,6 @@ module Trivia
       trivia_game_id
     end
 
-    scope :published, -> { where(status: [:published, :locked]) }
+    scope :visible, -> { where(status: [:published, :locked]) }
   end
 end
