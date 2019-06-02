@@ -43,9 +43,9 @@ module Trivia
 
     enum status: %i[draft published locked running closed]
 
-    scope :enabled, -> { where(status: [ :published, :locked, :closed ]) }
-    scope :completed, -> { enabled.order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
-    scope :upcomming, -> { enabled.order(:start_date).where("end_date > ?", DateTime.now.to_i) }
+    scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
+    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
+    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
     after_save :promote_status_changes
     before_save do
@@ -59,9 +59,9 @@ module Trivia
         self.start_date =  rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
         self.save
-        Delayed::Job.enqueue(::Trivia::LockGameJob.new(self.id), run_at: self.start_date - 10.minute)
-        Delayed::Job.enqueue(::Trivia::RunningGameJob.new(self.id), run_at: self.start_date)
-        Delayed::Job.enqueue(::Trivia::CloseGameJob.new(self.id), run_at: self.end_date)
+        Delayed::Job.enqueue(::Trivia::LockGameJob.new(self.id), run_at: Time.at(self.start_date) - 10.minute)
+        Delayed::Job.enqueue(::Trivia::RunningGameJob.new(self.id), run_at: Time.at(self.start_date))
+        Delayed::Job.enqueue(::Trivia::CloseGameJob.new(self.id), run_at: Time.at(self.end_date))
       end
     end
 
