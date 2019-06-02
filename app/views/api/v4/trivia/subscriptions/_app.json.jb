@@ -1,5 +1,5 @@
 json = {
-  game_id: subscriber.id,
+  game_id: subscriber.game_id,
   person_id: subscriber.person_id,
   subscribed: subscriber.subscribed
 }
