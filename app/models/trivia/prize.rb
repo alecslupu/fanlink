@@ -8,7 +8,7 @@
 #  description        :text
 #  position           :integer          default(1), not null
 #  photo_file_name    :string
-#  photo_file_size    :string
+#  photo_file_size    :integer
 #  photo_content_type :string
 #  photo_updated_at   :string
 #  is_delivered       :boolean          default(FALSE)
@@ -16,12 +16,15 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
+
 module Trivia
   class Prize < ApplicationRecord
+    include AttachmentSupport
+
     has_paper_trail
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
-    has_attached_file :photo
+    has_image_called :photo
 
     enum status: %i[draft published locked closed]
     enum prize_type: %i[digital physical]
@@ -30,6 +33,10 @@ module Trivia
       trivia_game_id
     end
 
-    scope :published, -> { where(status: [:published, :locked]) }
+    def product
+      game.product
+    end
+
+    scope :visible, -> { where(status: [:published, :locked]) }
   end
 end

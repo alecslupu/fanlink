@@ -15,7 +15,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         expect {
           post :create, params: { post_id: p.id,  post_reaction: { reaction: @reaction } }
         }.to change { p.reactions.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         # reaction = PostReaction.last
         expect(post_reaction_json(json["post_reaction"])).to be true
       end
@@ -66,7 +66,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         expect {
           delete :destroy, params: { post_id: reaction.post_id, id: reaction.id }
         }.to change { PostReaction.count }.by(-1)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(reaction).not_to exist_in_database
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         reaction = create(:post_reaction, person: person, reaction: "1F601")
         login_as(person)
         patch :update, params: { id: reaction.id, post_id: reaction.post_id, post_reaction: { reaction: @reaction } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(reaction.reload.reaction).to eq(@reaction)
         # expect(json["post_reaction"]).to eq(post_reaction_json(reaction))
         expect(post_reaction_json(json["post_reaction"])).to be true

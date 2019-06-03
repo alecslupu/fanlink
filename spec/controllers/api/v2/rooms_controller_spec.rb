@@ -20,7 +20,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         member = create(:person)
         n = "Some Room"
         post :create, params: { room: { name: n, member_ids: [ member.id.to_s ] } }
-        expect(response).to be_success
+        expect(response).to be_successful
         room = Room.last
         expect(room.name).to eq(n)
         expect(room.active?).to be_truthy
@@ -39,7 +39,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         person.block(member_blocked)
         expect(person.reload.blocked?(member_blocked)).to be_truthy
         post :create, params: { room: { name: "some roome", member_ids: [ member.id.to_s, member_blocked.id.to_s ] } }
-        expect(response).to be_success
+        expect(response).to be_successful
         room = Room.last
         members = room.members
         expect(members.count).to eq(2)
@@ -56,7 +56,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         room = create(:room, created_by: person)
         expect_any_instance_of(Room).not_to receive(:delete_me)
         delete :destroy, params: { id: room.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(room).not_to exist_in_database
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         expect_any_instance_of(Room).to receive(:delete_me)
         room.messages.create(person: person, body: "hi")
         delete :destroy, params: { id: room.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(room).to exist_in_database
         expect(room.reload.deleted?).to be_truthy
       end
@@ -105,7 +105,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         other_product_room = create(:room, public: true, status: :active, product: create(:product))
 
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         room_ids = json["rooms"].map { |r| r["id"] }
         expect(room_ids.sort).to eq(Room.publics.active.map { |pa| pa.id }.sort)
       end
@@ -128,7 +128,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
 
 
         get :index, params: { private: "false" }
-        expect(response).to be_success
+        expect(response).to be_successful
         room_ids = json["rooms"].map { |r| r["id"] }
         expect(room_ids.sort).to eq(Room.publics.active.map { |pa| pa.id }.sort)
       end
@@ -142,7 +142,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         private_room2 = create(:room, public: false, status: :active)
         private_room2.room_memberships.create(person_id: person.id)
         get :index, params: { private: "true" }
-        expect(response).to be_success
+        expect(response).to be_successful
         room_ids = json["rooms"].map { |r| r["id"] }
         expect(room_ids.sort).to eq([private_room.id, private_room2.id].sort)
       end
@@ -157,7 +157,7 @@ RSpec.describe Api::V2::RoomsController, type: :controller do
         private_room = create(:room, public: false, status: :active, created_by: person)
         new_name = "My Awesome Room"
         put :update, params: { id: private_room.id, room: { name: new_name } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["room"]["name"]).to eq(new_name)
         expect(private_room.reload.name).to eq(new_name)
       end

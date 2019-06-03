@@ -43,7 +43,7 @@ RSpec.describe Api::V2::BlocksController, type: :controller do
         to_be_blocked.follow(blocker)
         login_as(blocker)
         post :create, params: { block: { blocked_id: to_be_blocked.id } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(to_be_blocked.following?(blocker)).to be_falsey
       end
     end

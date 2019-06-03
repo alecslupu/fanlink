@@ -11,7 +11,7 @@ RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
         published_post = create(:published_post)
         login_as(person)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         posts = json["recommended_posts"].map { |p| p["id"].to_i }
         expect(posts.size).to eq(8)
         expect(posts).not_to include(published_post.id)
@@ -24,7 +24,7 @@ RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
         post_list = create_list(:recommended_post, 8, status: :published).reverse
         login_as(person)
         get :index, params: { page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         posts = json["recommended_posts"].map { |p| p["id"].to_i }
         expect(posts.size).to eq(2)
         expect(posts.sort).to eq([post_list[0].id, post_list[1].id].sort)
@@ -36,7 +36,7 @@ RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
         post_list = create_list(:recommended_post, 8, status: :published).reverse
         login_as(person)
         get :index, params: { page: 2, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         posts = json["recommended_posts"].map { |p| p["id"].to_i }
         expect(posts.size).to eq(2)
         expect(posts.sort).to eq([post_list[2].id, post_list[3].id].sort)

@@ -14,7 +14,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         body = "Do you like my body?"
         post :create, params: { post: { body: body } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.person).to eq(person)
         expect(post.body).to eq(body)
@@ -32,7 +32,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         prior = 123
         rpi = 1
         post :create, params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: "rejected", priority: prior } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.global).to be_truthy
         expect(post.starts_at).to eq(Time.parse(startat))
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect_any_instance_of(Post).to receive(:post)
         login_as(person)
         post :create, params: { post: { recommended: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.recommended).to be_truthy
       end
@@ -59,7 +59,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
         login_as(person)
         post :create, params: { post: { recommended: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.recommended).to be_falsey
       end
@@ -74,7 +74,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         prior = 123
         rpi = 1
         post :create, params: { post: { body: body, global: true, starts_at: startat, ends_at: endat, repost_interval: rpi, status: "rejected", priority: prior } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.global).to be_truthy
         expect(post.starts_at).to eq(Time.parse(startat))
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post :create, params: { post: { recommended: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.recommended).to be_truthy
       end
@@ -100,7 +100,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post :create, params: { post: { recommended: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         post = Post.last
         expect(post.recommended).to be_falsey
       end
@@ -124,7 +124,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         post = create(:post, person: person, status: :published)
         delete :destroy, params: { id: post.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post.reload.deleted?).to be_truthy
       end
     end
@@ -171,7 +171,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         post22 = create(:published_post, person: people.last, status: :published, created_at: created_in_range + 30.minutes)
         login_as(person)
         get :index, params: { from_date: from, to_date: to }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].map { |p| p["id"] }).to eq([postloggedin.id.to_s, post22.id.to_s, post21.id.to_s, post12.id.to_s, post11.id.to_s])
       end
     end
@@ -186,7 +186,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
         login_as(person)
         get :index, params: { from_date: from, to_date: to, limit: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].map { |p| p["id"] }).to eq([postloggedin.id.to_s, post22.id.to_s])
       end
     end
@@ -198,7 +198,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         person.block(blocked)
         login_as(person)
         get :index, params: { from_date: from, to_date: "2019-12-31" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].map { |p| p["id"] }).not_to include(post.id)
       end
     end
@@ -219,7 +219,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         post11.save
         login_as(person)
         get :index, params: { from_date: from, to_date: to }
-        expect(response).to be_success
+        expect(response).to be_successful
         post11_json = json["posts"].find { |p| p["id"] == post11.id.to_s }
         expect(post11_json["body"]).to eq(translation)
       end
@@ -286,7 +286,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
         login_as(person)
         get :index, params: { from_date: from, to_date: to, person_id: people.first.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].map { |p| p["id"] }).to eq([post12.id.to_s, post11.id.to_s])
       end
     end
@@ -317,7 +317,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
         get :list
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(10)
       end
     end
@@ -327,7 +327,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
         get :list, params: { page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(2)
         expect(post_list_json(json["posts"].first)).to be true
         expect(post_list_json(json["posts"].last)).to be true
@@ -339,7 +339,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
         get :list, params: { page: 2, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(2)
         expect(post_list_json(json["posts"].first)).to be true
         expect(post_list_json(json["posts"].last)).to be true
@@ -354,7 +354,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         person_id = Post.last.person_id
         get :list, params: { person_id_filter: person_id }
         posts = Post.where(person_id: person_id)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
       end
@@ -368,7 +368,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         person = Post.last.person
         get :list, params: { person_filter: person.username }
         posts = Post.where(person_id: person.id)
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
       end
@@ -389,7 +389,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         end
 
         get :list, params: { person_filter: "user11" }
-        expect(response).to be_success
+        expect(response).to be_successful
         posts = Post.where(person_id: people)
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
@@ -406,7 +406,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
                        create(:person, username: "user121", email: "user121@example.com")]
         person = people_list.sample
         get :list, params: { person_filter: person.email }
-        expect(response).to be_success
+        expect(response).to be_successful
         posts = Post.where(person_id: person.id)
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
@@ -423,7 +423,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
                        create(:person, username: "user121", email: "user121@example.com")]
         people = [people_list.first, people_list[1]]
         get :list, params: { person_filter: "112@example" }
-        expect(response).to be_success
+        expect(response).to be_successful
         posts = Post.where(person_id: people)
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
@@ -436,7 +436,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         post = Post.for_product(person.product).sample
         get :list, params: { body_filter: post.body }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(1)
         expect(json["posts"].first["id"]).to eq(post.id.to_s)
       end
@@ -448,7 +448,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         create(:post, body: "some body that I made up ", status: Post.statuses.keys.sample, created_at: 10.days.ago)
         login_as(person)
         get :list, params: { body_filter: "some body" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(1)
       end
     end
@@ -470,7 +470,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         10.times { |n| create(:post, created_at: (1 + n).days.ago) }
 
         get :list, params: { posted_after_filter: (7.days.ago).beginning_of_day.to_s }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(7)
       end
     end
@@ -482,7 +482,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         10.times { |n| create(:post, created_at: (1 + n).days.ago) }
 
         get :list, params: { posted_before_filter: 1.day.from_now.to_s }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(10)
       end
     end
@@ -493,7 +493,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         10.times { |n| create(:post, created_at: (1 + n).days.ago) }
 
         get :list, params: { posted_before_filter: (7.days.ago).beginning_of_day.to_s }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(3)
       end
     end
@@ -506,7 +506,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
         published_posts = Post.published
         get :list, params: { status_filter: "published" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(published_posts.count)
       end
     end
@@ -522,7 +522,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         time_to_use = (10.days.ago + 4.days).beginning_of_day
         posts = Post.where(person: people_list.first).where("created_at >= ?", time_to_use)
         get :list, params: { person_id_filter: people_list.first.id, posted_after_filter: time_to_use.to_s }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["posts"].count).to eq(posts.count)
       end
     end
@@ -534,7 +534,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
         post = post_list.first
         get :list, params: { id_filter: post.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         pjson = json["posts"]
         expect(pjson.count).to eq(1)
         expect(post_json(pjson.first)).to be true
@@ -565,7 +565,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
 
         get :share, params: { id: flinkpost.id, product: flinkpost.product.internal_name }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_share_json(json["post"])).to be true
       end
     end
@@ -603,7 +603,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         get :share, params: { product: flinkpost.product.internal_name, id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_share_json(json["post"])).to be true
       end
     end
@@ -629,7 +629,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"])).to be true
       end
     end
@@ -642,7 +642,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
           create(:post_reaction, post: flinkpost)
         end
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"])).to be true
       end
     end
@@ -653,7 +653,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
         reaction = create(:post_reaction, post: flinkpost, person: person)
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"], nil, reaction)).to be true
         expect(json["post"]["post_reaction"]).not_to be_nil
       end
@@ -668,7 +668,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost.body = { "en" => english }
         flinkpost.save
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post"]["body"]).to eq(english)
       end
     end
@@ -678,7 +678,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post"]["body"]).to eq(flinkpost.body(Post::DEFAULT_LANG))
       end
     end
@@ -693,7 +693,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost.save
         request.headers.add "Accept-Language", (lan + "-spa")
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post"]["body"]).to eq(translation)
       end
     end
@@ -706,7 +706,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
           create(:post_reaction, post: flinkpost)
         end
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"])).to be true
       end
     end
@@ -718,7 +718,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         reaction = create(:post_reaction, post: flinkpost, person: person)
 
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"], nil, reaction)).to be true
         expect(json["post"]["post_reaction"]).not_to be_nil
       end
@@ -748,7 +748,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person, starts_at: 1.hour.ago)
         get :show, params: { id: flinkpost.id }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"])).to be true
       end
     end
@@ -758,7 +758,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person, ends_at: 1.hour.from_now)
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"])).to be true
       end
     end
@@ -768,7 +768,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person, starts_at: Time.now - 1.hour, ends_at: Time.now + 1.hour)
         get :show, params: { id: flinkpost.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(post_json(json["post"])).to be true
       end
     end
@@ -829,7 +829,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
           repost_interval: repost_interval, status: status,
           ends_at: ends_at, priority: priority, recommended: true
         } }
-        expect(response).to be_success
+        expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.body).to eq(newbody)
         expect(flinkpost.global).to eq(global)
@@ -863,7 +863,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(flinkpost.recommended).to be_falsey
         patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
                                                    recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
-        expect(response).to be_success
+        expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_falsey
       end
@@ -876,7 +876,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(flinkpost.recommended).to be_falsey
         patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
                                                    recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
-        expect(response).to be_success
+        expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_truthy
       end

@@ -17,7 +17,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         body = "Do you like my body?"
         room = create(:room, public: true, status: :active)
         post :create, params: { room_id: room.id,  message: { body: body } }
-        expect(response).to be_success
+        expect(response).to be_successful
         msg = Message.last
         expect(msg.room).to eq(room)
         expect(msg.person).to eq(person)
@@ -45,7 +45,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
                                                 location: 14,
                                                 length: 4 } ]
              } }
-        expect(response).to be_success
+        expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(2)
         expect(msg.mentions.first.location).to eq(11)
@@ -87,7 +87,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(person)
         body = "Do you like my body?"
         post :create, params: { room_id: room.id, message: { body: body } }
-        expect(response).to be_success
+        expect(response).to be_successful
         msg = Message.last
         expect(msg.room).to eq(room)
         expect(msg.person).to eq(person)
@@ -114,7 +114,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
                                                            location: 14,
                                                            length: 4 } ]
              } }
-        expect(response).to be_success
+        expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(1)
         expect(json["message"]["mentions"].count).to eq(1)
@@ -178,7 +178,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         expect {
           post :create, params: { room_id: room.id, message: { body: body } }
         }.to change { Message.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
@@ -195,7 +195,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(person)
         msg = create(:message, person: person, room: private_room, body: "this is my body")
         delete :destroy, params: { room_id: private_room.id, id: msg.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(msg.reload.hidden).to be_truthy
       end
     end
@@ -209,7 +209,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(person)
         msg = create(:message, person: person, room: private_room, body: "this is my body")
         delete :destroy, params: { room_id: private_room.id, id: msg.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(msg.reload.hidden).to be_truthy
       end
     end
@@ -252,7 +252,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), nil).and_return(Message.order(created_at: :desc).where(id: [msg1.id, msg2.id]))
         expect_any_instance_of(Room).to_not receive(:increment_message_counters) # only for priv rooms
         get :index, params: { room_id: room.id,  from_date: from, to_date: to }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].map { |m| m["id"] }).to eq([msg2.id.to_s, msg1.id.to_s])
       end
     end
@@ -265,7 +265,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
 
         expect(Message).to receive(:for_date_range).with(room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg2.id]))
         get :index, params: { room_id: room.id,  from_date: from, to_date: to, limit: 1 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].map { |m| m["id"] }).to eq([msg2.id.to_s])
       end
     end
@@ -278,7 +278,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         person.block(blocked)
         blocked_msg = create(:message, person: blocked)
         get :index, params: { room_id: room.id,  from_date: from, to_date: "2019-12-01" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].map { |m| m["id"] }).not_to include(blocked_msg.id)
       end
     end
@@ -380,7 +380,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           expect(Message).to receive(:for_date_range).with(private_room, Date.parse(from), Date.parse(to), 1).and_return(Message.order(created_at: :desc).where(id: [msg.id]))
           expect_any_instance_of(Room).to receive(:clear_message_counter).with(private_room.room_memberships.where(person: person).first)
           get :index, params: { room_id: private_room.id,  from_date: from, to_date: to, limit: 1 }
-          expect(response).to be_success
+          expect(response).to be_successful
           # expect(json["messages"].first).to eq(message_json(msg))
           expect(message_json(json["messages"].first)).to be true
         end
@@ -422,7 +422,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
 
         toget = [msg1, msg2, msg12, msg13, msg14, msg3 ]
         get :list
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
       end
     end
@@ -442,7 +442,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         toget = [msg3, msg14]
         login_as(admin_person)
         get :list, params: { page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
         # expect(json["messages"].first).to eq(message_list_json(toget.first))
         # expect(json["messages"].last).to eq(message_list_json(toget.last))
@@ -466,7 +466,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
 
         toget = [msg3, msg14]
         get :list, params: { per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
         # expect(json["messages"].first).to eq(message_list_json(toget.first))
         # expect(json["messages"].last).to eq(message_list_json(toget.last))
@@ -490,7 +490,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
 
         toget = [msg13, msg12]
         get :list, params: { page: 2, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
         # expect(json["messages"].first).to eq(message_list_json(toget.first))
         # expect(json["messages"].last).to eq(message_list_json(toget.last))
@@ -513,7 +513,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(admin_person)
 
         get :list, params: { id_filter: msg1.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(1)
         # expect(json["messages"].first).to eq(message_list_json(msg1))
         expect(message_list_json(json["messages"].first)).to be true
@@ -534,7 +534,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(admin_person)
 
         get :list, params: { person_filter: "ship1" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(1)
         # expect(json["messages"].first).to eq(message_list_json(msg3))
         expect(message_list_json(json["messages"].first)).to be true
@@ -556,7 +556,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
 
         toget = [msg14, msg13, msg12, msg2, msg1 ]
         get :list, params: { room_id_filter: room1.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
         # expect(json["messages"].last).to eq(message_list_json(toget.last))
         # expect(json["messages"].first).to eq(message_list_json(toget.first))
@@ -578,7 +578,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         msg3 = create(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3")
         login_as(admin_person)
         get :list, params: { body_filter: "his is msg1" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(1)
         # expect(json["messages"].first).to eq(message_list_json(msg1))
         expect(message_list_json(json["messages"].first)).to be true
@@ -593,7 +593,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         login_as(admin_person)
         create(:message_report, message: msg1)
         get :list, params: { reported_filter: "Yes" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(1)
         # expect(json["messages"].first).to eq(message_list_json(msg1))
         expect(message_list_json(json["messages"].first)).to be true
@@ -628,7 +628,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         msg3 = create(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3")
         login_as(admin_person)
         get :list, params: { room_id_filter: room1.id, person_filter:  "essage1" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["messages"].count).to eq(1)
         # expect(json["messages"].first).to eq(message_list_json(msg1))
         expect(message_list_json(json["messages"].first)).to be true
@@ -644,7 +644,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         private_room.members << person << private_room.created_by
         msg = create(:message, room: private_room, body: "this is my body")
         get :show, params: { room_id: private_room.id, id: msg.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         # expect(json["message"]).to eq(message_json(msg))
         expect(message_json(json["message"])).to be true
       end
@@ -716,7 +716,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         msg = create(:message)
         expect(msg.hidden).to be_falsey
         patch :update, params: { id: msg.id, message: { hidden: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(msg.reload.hidden).to be_truthy
         # expect(json["message"]).to eq(message_list_json(msg))
         expect(message_list_json(json["message"])).to be true
@@ -730,7 +730,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         msg = create(:message, hidden: true)
         expect(msg.hidden).to be_truthy
         patch :update, params: { id: msg.id, message: { hidden: false } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(msg.reload.hidden).to be_falsey
         # expect(json["message"]).to eq(message_list_json(msg))
         expect(message_list_json(json["message"])).to be true

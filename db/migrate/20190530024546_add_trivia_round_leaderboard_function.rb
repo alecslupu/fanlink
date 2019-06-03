@@ -30,6 +30,7 @@ RETURNS void AS $$
       WHERE q.trivia_round_id  = $1 AND a.is_correct = 't'
       GROUP BY q.trivia_round_id,r.complexity, r.leaderboard_size, a.person_id
     ) AS leaderboard;
+    PERFORM pg_notify('leaderboard',  CONCAT('{"type": "round", "id": ', $1 ,'}'));
   END;
 $$
 LANGUAGE plpgsql;

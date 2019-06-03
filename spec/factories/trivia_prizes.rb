@@ -8,7 +8,7 @@
 #  description        :text
 #  position           :integer          default(1), not null
 #  photo_file_name    :string
-#  photo_file_size    :string
+#  photo_file_size    :integer
 #  photo_content_type :string
 #  photo_updated_at   :string
 #  is_delivered       :boolean          default(FALSE)

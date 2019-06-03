@@ -11,6 +11,6 @@ class Api::V4::Trivia::RoundLeaderboardsController < ApiController
 
   protected
     def package
-      @package ||= ::Trivia::Game.find(params[:game_id]).rounds.published.find(params[:round_id]).leaderboards
+      @package ||= ::Trivia::Game.find(params[:game_id]).rounds.visible.find(params[:round_id]).leaderboards
     end
 end

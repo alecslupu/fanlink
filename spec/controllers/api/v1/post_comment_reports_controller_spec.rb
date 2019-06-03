@@ -9,7 +9,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
         login_as(person)
         post_comment = create(:post_comment, post: create(:post))
         post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
-        expect(response).to be_success
+        expect(response).to be_successful
 
         report = PostCommentReport.last
         expect(report.post_comment).to eq(post_comment)
@@ -50,7 +50,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
         login_as(admin)
         5.times  { create(:post_comment_report) }
         get :index, params: { page: 1, per_page: 100 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_comment_reports"].count).to eq(5)
       end
     end
@@ -62,7 +62,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
           create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
         get :index, params: { page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_comment_reports"].count).to eq(2)
         # expect(json["post_comment_reports"].first).to eq(post_comment_report_json(@index_reports.last))
         # expect(json["post_comment_reports"].last).to eq(post_comment_report_json(@index_reports[-2]))
@@ -78,7 +78,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
           create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
         get :index, params: { page: 2, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_comment_reports"].count).to eq(2)
         # expect(json["post_comment_reports"].first).to eq(post_comment_report_json(@index_reports[-3]))
         # expect(json["post_comment_reports"].last).to eq(post_comment_report_json(@index_reports[-4]))
@@ -95,7 +95,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
         end
 
         get :index, params: { status_filter: "pending" }
-        expect(response).to be_success
+        expect(response).to be_successful
         pending = PostCommentReport.for_product(admin.product).where(status: :pending)
         expect(json["post_comment_reports"].count).to eq(pending.count)
         expect(json["post_comment_reports"].map { |rj| rj["id"] }.sort).to eq(pending.map { |pr| pr.id.to_s }.sort)
@@ -121,7 +121,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
         other = create(:admin_user, product: create(:product))
         login_as(other)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["post_comment_reports"]).to be_empty
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe Api::V1::PostCommentReportsController, type: :controller do
         admin = create(:admin_user)
         login_as(admin)
         patch :update, params: { id: report.id,  post_comment_report: { status: "no_action_needed" } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(report.reload.status).to eq("no_action_needed")
       end
     end

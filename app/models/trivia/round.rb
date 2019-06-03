@@ -23,9 +23,9 @@ module Trivia
     has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
 
-    enum status: %i[draft published locked closed]
+    enum status: %i[draft published locked running closed]
 
-    scope :published, -> { where(status: [:published, :locked, :closed]) }
+    scope :visible, -> { where(status: [:published, :locked, :closed]) }
 
     def compute_gameplay_parameters
       date_to_set = self.start_date

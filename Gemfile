@@ -177,12 +177,8 @@ gem "erubis"
 group :development, :test do
     # gem "rspec-rails-swagger"
     # gem "apigen", path: "lib/gems/apigen"
-    # gem "rswag-specs"
+    gem "rswag-specs"
 end
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
-
-group :test do
-    gem 'rswag-specs'
-end

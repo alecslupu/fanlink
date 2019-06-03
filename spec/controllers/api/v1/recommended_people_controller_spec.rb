@@ -9,7 +9,7 @@ RSpec.describe Api::V1::RecommendedPeopleController, type: :controller do
         login_as(person)
         recommended = create_list(:recommended_person, 2)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         people = json["recommended_people"].map { |p| p["id"].to_i }
         expect(people.size).to eq(2)
         expect(people.sort).to eq(recommended.map(&:id))
@@ -20,7 +20,7 @@ RSpec.describe Api::V1::RecommendedPeopleController, type: :controller do
       ActsAsTenant.with_tenant(recomended.first.product) do
         login_as(recomended.first)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         people = json["recommended_people"].map { |p| p["id"].to_i }
         expect(people.size).to eq(1)
         expect(people.first).to eq(recomended.last.id)
@@ -34,7 +34,7 @@ RSpec.describe Api::V1::RecommendedPeopleController, type: :controller do
         person.follow(followee)
         login_as(person)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         people = json["recommended_people"].map { |p| p["id"].to_i }
         expect(people.size).to eq(2)
         expect(people.sort).to eq(recommended.map(&:id))
@@ -47,7 +47,7 @@ RSpec.describe Api::V1::RecommendedPeopleController, type: :controller do
         login_as(person)
         recommended = create_list(:recommended_person, 2)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         people = json["recommended_people"].map { |p| p["id"].to_i }
         expect(people.size).to eq(2)
         expect(people.sort).to eq(recommended.map(&:id))
