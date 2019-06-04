@@ -12,6 +12,5 @@ RSpec.describe Trivia::Answer, type: :model do
       end
     end
   end
-  pending "add some examples to (or delete) #{__FILE__}"
 end
 

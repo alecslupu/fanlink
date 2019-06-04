@@ -15,6 +15,6 @@ class HackedMetric < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  has_many :action_types
-  has_many :people
+  belongs_to :action_type
+  belongs_to :person
 end

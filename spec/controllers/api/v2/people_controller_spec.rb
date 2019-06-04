@@ -61,7 +61,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
   end
 
   describe "#create" do
-    it "should sign up new user with email, username, and password, profile fields and send onboarding email" do
+    it "should sign up new user with email, username, and password, profile fields and send onboarding email", :run_delayed_jobs do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect_any_instance_of(Person).to receive(:do_auto_follows)
@@ -87,7 +87,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       end
     end
 
-    it "should sign up new user with FB auth token and send onboarding email" do
+    it "should sign up new user with FB auth token and send onboarding email", :run_delayed_jobs do
       tok = "1234"
       username = "newuser#{Time.now.to_i}"
       product = create(:product)

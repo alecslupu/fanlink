@@ -14,7 +14,13 @@ RSpec.describe Trivia::Question, type: :model do
       end
     end
   end
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe ".round_id" do
+    it "matches the trivia round id" do
+      round = create :trivia_question
+      expect(round.round_id).to eq(round.trivia_round_id)
+    end
+  end
 
   context "complete round" do
     it "" do

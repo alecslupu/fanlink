@@ -610,4 +610,28 @@ RSpec.describe Person, type: :model do
     pending
   end
 
+  describe "#send_onboarding_email" do
+    it "enqueues an onboarding email" do
+      expect(Delayed::Job.count).to eq 0
+      person = create(:person)
+      person.send_onboarding_email
+      expect(Delayed::Job.count).to eq 1
+    end
+  end
+  describe "#send_password_reset_email" do
+    it "enqueues an password reset email" do
+      expect(Delayed::Job.count).to eq 0
+      person = create(:person)
+      person.send_password_reset_email
+      expect(Delayed::Job.count).to eq 1
+    end
+  end
+  describe "#send_certificate_email" do
+    it "enqueues an onboarding email" do
+      expect(Delayed::Job.count).to eq 0
+      pc = create(:person_certificate)
+      pc.person.send_certificate_email(pc.certificate_id,pc.person.email)
+      expect(Delayed::Job.count).to eq 1
+    end
+  end
 end
