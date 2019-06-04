@@ -7,7 +7,7 @@
 
     def generate
       generate_game!
-      questions = Trivia::MultipleChoiceAvailableQuestion.order("random()").first(100)
+      questions = Trivia::AvailableQuestion.order("random()").first(100)
 
       5.times do |index|
         @round = game.rounds.build(
@@ -20,10 +20,9 @@
         10.times do |index|
           available_question = questions.pop
 
-          MultipleChoiceQuestion.create!(
+          available_question.active_questions.create(
             round: @round,
             question_order: 1 + index,
-            available_question: available_question,
             time_limit: available_question.time_limit,
             cooldown_period: available_question.cooldown_period,
           )
