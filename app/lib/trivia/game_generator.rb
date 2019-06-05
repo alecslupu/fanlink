@@ -7,8 +7,6 @@
 
     def generate
       generate_game!
-      questions = Trivia::AvailableQuestion.order("random()").first(100)
-
       5.times do |index|
         @round = game.rounds.build(
           status: :draft,
@@ -16,7 +14,8 @@
           start_date: (1+index).hours.from_now,
           complexity: 1
         )
-
+        questions = Trivia::AvailableQuestion.order("random()").first(100)
+        
         50.times do |index|
           available_question = questions.pop
 
