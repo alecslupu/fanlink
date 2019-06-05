@@ -17,14 +17,14 @@
           complexity: 1
         )
 
-        10.times do |index|
+        50.times do |index|
           available_question = questions.pop
 
           available_question.active_questions.create(
             round: @round,
             question_order: 1 + index,
-            time_limit: available_question.time_limit,
-            cooldown_period: available_question.cooldown_period,
+            time_limit: available_question.time_limit + 10,
+            cooldown_period: available_question.cooldown_period + 10,
           )
         end
         @round.save!
