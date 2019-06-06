@@ -25,7 +25,7 @@ module Trivia
 
     enum status: %i[draft published locked running closed]
 
-    scope :visible, -> { where(status: [:published, :locked, :closed]) }
+    scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
 
     def compute_gameplay_parameters
       date_to_set = self.start_date

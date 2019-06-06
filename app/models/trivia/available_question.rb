@@ -23,15 +23,35 @@ module Trivia
     enum status: %i[draft published locked closed]
     accepts_nested_attributes_for :available_answers, allow_destroy: true
 
+
+    validates :time_limit, numericality: { greater_than: 0 },
+                           presence: true
+
+    validates :cooldown_period, numericality: { greater_than: 5 },
+                                presence: true
+
+    validates :complexity, numericality: { greater_than: 0 },
+                           presence: true
+
+    validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
+                Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
+                Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
+              ),  message: "%{value} is not a valid type" }
     rails_admin do
       edit do
-        include_all_fields
-
+        fields :title, :cooldown_period, :time_limit, :topic, :complexity, :status
         field :type, :enum do
           enum do
-            Trivia::AvailableQuestion.descendants.map(&:name)
+            [
+              ["Single Choice",   "Trivia::SingleChoiceAvailableQuestion"],
+              ["Multiple Choice", "Trivia::MultipleChoiceAvailableQuestion"],
+              ["Picture Choice", "Trivia::PictureAvailableQuestion"],
+              ["True or False", "Trivia::BooleanChoiceAvailableQuestion"],
+              ["Fill in the blanks", "Trivia::HangmanAvailableQuestion"],
+            ]
           end
         end
+        field :available_answers
       end
     end
   end

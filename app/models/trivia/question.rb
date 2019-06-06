@@ -24,6 +24,18 @@ module Trivia
     has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id, dependent: :destroy
     has_many :available_answers, through: :available_question, source: :available_answers
 
+
+    validates :time_limit, numericality: { greater_than: 0 },
+              presence: true
+
+    validates :cooldown_period, numericality: { greater_than: 5 },
+              presence: true
+
+    validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
+                Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
+                Trivia::BooleanChoiceAQuestion Trivia::HangmanQuestion
+              ),  message: "%{value} is not a valid type" }
+
     # administrate falback
     def round_id
       trivia_round_id

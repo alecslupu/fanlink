@@ -28,7 +28,7 @@ module Trivia
       edit do
         fields :short_name, :long_name, :description, :room, :leaderboard_size, :picture
         field :status, :enum do
-          read_only { bindings[:object].persisted? }
+          # read_only { bindings[:object].persisted? }
         end
         field :start_date, :unix_timestamp
         field :prizes do
