@@ -22,5 +22,17 @@ module Trivia
 
     enum status: %i[draft published locked closed]
     accepts_nested_attributes_for :available_answers, allow_destroy: true
+
+    rails_admin do
+      edit do
+        include_all_fields
+
+        field :type, :enum do
+          enum do
+            Trivia::AvailableQuestion.descendants.map(&:name)
+          end
+        end
+      end
+    end
   end
 end

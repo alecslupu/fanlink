@@ -23,6 +23,34 @@
 
 module Trivia
   class Game < ApplicationRecord
+
+    rails_admin do
+      edit do
+        fields :short_name, :long_name, :description, :room, :leaderboard_size, :picture
+        field :status, :enum do
+          read_only { bindings[:object].persisted? }
+        end
+        field :start_date, :unix_timestamp
+        field :prizes do
+          visible { bindings[:object].persisted? }
+        end
+        field :rounds do
+          visible { bindings[:object].persisted? }
+        end
+
+        field :compute_gameplay, :boolean do
+          read_only { bindings[:object].persisted? }
+        end
+      end
+      show do
+        fields :short_name, :long_name, :description, :room, :status, :leaderboard_size, :picture
+        field :start_date, :unix_timestamp
+        fields :prizes, :rounds
+      end
+    end
+
+    scope :for_product, -> (product) { where(product_id: product.id) }
+
     has_paper_trail
     attr_accessor :compute_gameplay
     include AttachmentSupport
