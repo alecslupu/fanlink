@@ -15,9 +15,9 @@
 #
 
 FactoryBot.define do
-  factory :trivia_available_question, class: 'Trivia::AvailableQuestion' do
+  factory :trivia_available_question, class: 'Trivia::SingleChoiceAvailableQuestion' do
     title { Faker::Lorem.question(10) }
-    cooldown_period {5 }
+    cooldown_period { 6 }
     time_limit { 10 }
     topic { create(:trivia_topic) }
     complexity { 1 }
@@ -32,7 +32,15 @@ FactoryBot.define do
     end
 
     factory :trivia_multiple_choice_available_question, class: "Trivia::MultipleChoiceAvailableQuestion" do
+    end
 
+    factory :trivia_single_choice_available_question, class: "Trivia::SingleChoiceAvailableQuestion" do
+    end
+    factory :trivia_picture_available_question, class: "Trivia::PictureAvailableQuestion" do
+    end
+    factory :trivia_boolean_choice_available_question, class: "Trivia::BooleanChoiceAvailableQuestion" do
+    end
+    factory :trivia_hangman_available_question, class: "Trivia::HangmanAvailableQuestion" do
     end
   end
 end

@@ -11,7 +11,7 @@ describe Trivia::GameGenerator do
         create_list(:trivia_multiple_choice_available_question, 100)
         expect { generator.generate }.to change {  Trivia::Game.count  }.by(1)
         expect { generator.generate }.to change { Trivia::Round.count }.by(5)
-        expect { generator.generate }.to change { Trivia::Question.count }.by(50)
+        expect { generator.generate }.to change { Trivia::Question.count }.by(250)
 
           #
       end

@@ -110,3 +110,4 @@ RSpec.describe Trivia::Game, type: :model do
     end
   end
 end
+

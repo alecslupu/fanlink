@@ -13,4 +13,3 @@ RSpec.describe Trivia::Answer, type: :model do
     end
   end
 end
-

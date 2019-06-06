@@ -50,7 +50,7 @@ FactoryBot.define do
     end
 
     after :create do |round, options|
-      create_list :trivia_question, 10, round: round, with_leaderboard: options.with_leaderboard
+      create_list :trivia_single_choice_question, 10, round: round, with_leaderboard: options.with_leaderboard
     end
   end
 end
