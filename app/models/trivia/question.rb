@@ -33,7 +33,7 @@ module Trivia
 
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
                 Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
-                Trivia::BooleanChoiceAQuestion Trivia::HangmanQuestion
+                Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
               ),  message: "%{value} is not a valid type" }
 
     # administrate falback
