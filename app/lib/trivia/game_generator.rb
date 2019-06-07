@@ -7,15 +7,17 @@
 
     def generate
       generate_game!
+      start_date = 5.minutes.from_now
       5.times do |index|
+        start_date = game.rounds.reload.last.end_date + 5.minutes unless index.zero?
         @round = game.rounds.build(
           status: :draft,
           leaderboard_size: game.leaderboard_size,
-	  start_date: (index).hours.from_now + 5.minutes,
+	  start_date: start_date,
           complexity: 1
         )
         questions = Trivia::AvailableQuestion.order("random()").first(100)
-        
+
         50.times do |index|
           available_question = questions.pop
 
@@ -27,6 +29,7 @@
           )
         end
         @round.save!
+        @round.compute_gameplay_parameters
       end
     end
 
