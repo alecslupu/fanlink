@@ -11,7 +11,7 @@
         @round = game.rounds.build(
           status: :draft,
           leaderboard_size: game.leaderboard_size,
-	  start_date: (index).hours.from_now + 5 .minutes,
+	  start_date: (index).hours.from_now + 5.minutes,
           complexity: 1
         )
         questions = Trivia::AvailableQuestion.order("random()").first(100)
