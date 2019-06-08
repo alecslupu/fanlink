@@ -136,31 +136,28 @@ class Post < ApplicationRecord
     # We assume that the post has been deleted if we can't find it.
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
-    p = self.find_by(id: msg["userMetadata"]["post_id"].to_i)
-    return if (!p)
+    post = self.where.(id: msg["userMetadata"]["post_id"].to_i).first
+    return unless post.present?
 
     if (msg["userMetadata"]["sizer"])
       # There should be exactly one entry in `outputs`.
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
-      job = Flaws.finish_transcoding(p.video.path,
+      job = Flaws.finish_transcoding(post.video.path,
                                      width, height,
-                                     post_id: p.id.to_s)
-      p.video_job_id = job.id
-      p.save!
-      p.send(:start_listener)
+                                     post_id: post.id.to_s)
+      post.video_job_id = job.id
+      post.save!
+      post.send(:start_listener)
     else
-      presets = ([msg["userMetadata"]["presets"]] + msg["outputs"].to_a.map { |o| o["presetId"] }).compact
-      p.send(:youve_been_transcoded!, presets)
+      presets = ([msg["userMetadata"]["presets"]] + msg["outputs"].to_a.map { |output| output["presetId"] }).compact
+      post.send(:youve_been_transcoded!, presets)
     end
   end
 
   def video_thumbnail
-    if video_transcoded.empty?
-      nil
-    else
-      id = File.basename(self.video.path, File.extname(self.video.path))
-      url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.jpg"
-    end
+    return if video_transcoded.empty?
+    id = File.basename(self.video.path, File.extname(self.video.path))
+    url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.jpg"
   end
 
   def flush_cache
@@ -170,14 +167,12 @@ class Post < ApplicationRecord
 
   def reaction_breakdown
     Rails.cache.fetch([cache_key, __method__]) {
-      (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |r, c| r.to_i(16) }.to_h : nil
+      (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
     }
   end
 
   def cached_reaction_count
-    Rails.cache.fetch([cache_key, __method__]) {
-      post_reactions.count
-    }
+    Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
   end
 
   def cached_tags
@@ -185,9 +180,7 @@ class Post < ApplicationRecord
   end
 
   def reactions
-    Rails.cache.fetch([self, "post_reactions"]) {
-      post_reactions
-    }
+    Rails.cache.fetch([self, "post_reactions"]) { post_reactions }
   end
 
   def reported?
@@ -238,8 +231,8 @@ class Post < ApplicationRecord
       if priority > 0 && saved_change_to_attribute?(:priority)
         same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
         if same_priority.count > 0
-          person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |p|
-            p.increment!(:priority)
+          person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |post|
+            post.increment!(:priority)
           end
         end
       end

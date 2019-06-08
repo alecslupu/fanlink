@@ -25,7 +25,7 @@ class QuizPage < ApplicationRecord
   validates :quiz_text, presence: true
   after_save :set_certcourse_page_content_type
 
-  validate :mandatory_checks,  unless: Proc.new { |p| p.is_optional }
+  validate :mandatory_checks,  unless: Proc.new { |page| page.is_optional }
   validate :answer_checks
 
 
@@ -47,15 +47,15 @@ class QuizPage < ApplicationRecord
     def just_me
       return if certcourse_page.new_record?
 
-      x = CertcoursePage.find(certcourse_page.id)
-      child = x.child
+      target_course_page = CertcoursePage.find(certcourse_page.id)
+      child = target_course_page.child
       if child && child != self
         errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
       end
     end
 
     def answer_checks
-      correct_answers = answers.reject{|x| !x.is_correct}.size
+      correct_answers = answers.reject{|answer| !answer.is_correct}.size
       errors.add(:base, _("You need at least one correct answer. The changes have not been saved. Please refresh and try again")) if correct_answers.zero?
       # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
       errors.add(:base, _("Mandatory quizzes should have ONLY ONE correct answer")) if correct_answers > 1 && is_mandatory?

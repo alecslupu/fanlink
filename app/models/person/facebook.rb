@@ -8,9 +8,9 @@ class Person
           begin
             graph = Koala::Facebook::API.new(token)
             results = graph.get_object("me", fields: [:id, :email, :picture])
-          rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => e
+          rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
             Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
-            Rails.logger.warn("Message: #{e.fb_error_message}")
+            Rails.logger.warn("Message: #{error.fb_error_message}")
             return nil
           end
           Rails.logger.error(results.inspect)
@@ -28,9 +28,9 @@ class Person
           begin
             graph = Koala::Facebook::API.new(token)
             results = graph.get_object("me", fields: [:id])
-          rescue Koala::Facebook::APIError => e
+          rescue Koala::Facebook::APIError => error
             Rails.logger.warn("Error contacting facebook for login with token #{token}")
-            Rails.logger.warn("Message: #{e.fb_error_message}")
+            Rails.logger.warn("Message: #{error.fb_error_message}")
             return nil
           end
           if results && results["id"].present?

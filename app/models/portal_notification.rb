@@ -47,8 +47,8 @@ class PortalNotification < ApplicationRecord
 
   def push_topics
     topics = {}
-    LANGS.keys.each do |l|
-      topics[l] = "#{product.internal_name}-portal_notices-#{l}" unless ignore_translation_lang?(:body, l)
+    LANGS.keys.each do |language|
+      topics[language] = "#{product.internal_name}-portal_notices-#{language}" unless ignore_translation_lang?(:body, language)
     end
     topics
   end
