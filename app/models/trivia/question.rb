@@ -36,6 +36,8 @@ module Trivia
                 Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
               ),  message: "%{value} is not a valid type" }
 
+    validates :available_question, presence: { message: "Please make sure selected question type is the compatible with available question type" }
+
     # administrate falback
     def round_id
       trivia_round_id
