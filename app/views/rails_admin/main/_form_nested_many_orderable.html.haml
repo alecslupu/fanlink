@@ -3,8 +3,8 @@
       function refreshSortable() {
             jQuery('#orderable').find('a').each(function(index) {
                 var target = $(this).attr("href");
-                console.log($(target + " .certcourse_page_order_field input").val())
-                $(target + " .certcourse_page_order_field input").val(1+index);
+                console.log($(target + " .#{field_order} input").val())
+                $(target + " .#{field_order} input").val(1+index);
             });
       }
       jQuery('ul#orderable.nav.nav-tabs')

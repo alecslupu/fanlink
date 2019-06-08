@@ -24,6 +24,20 @@ module Trivia
     has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id, dependent: :destroy
     has_many :available_answers, through: :available_question, source: :available_answers
 
+
+    validates :time_limit, numericality: { greater_than: 0 },
+              presence: true
+
+    validates :cooldown_period, numericality: { greater_than: 5 },
+              presence: true
+
+    validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
+                Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
+                Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
+              ),  message: "%{value} is not a valid type" }
+
+    validates :available_question, presence: { message: "Please make sure selected question type is the compatible with available question type" }
+
     # administrate falback
     def round_id
       trivia_round_id
@@ -41,6 +55,35 @@ module Trivia
     def set_order(index)
       self.question_order = index
       self.save
+    end
+
+    rails_admin do
+      parent "Trivia::Game"
+
+      edit do
+        fields :round, :type, :time_limit, :question_order, :cooldown_period, :available_question
+        #  trivia_round_id :bigint(8)
+        #  type            :string
+        #  start_date      :integer
+        #  end_date        :integer
+        #
+        #
+        field :type, :enum do
+          enum do
+            Trivia::Question.descendants.map(&:name)
+          end
+        end
+
+        field :available_answers do
+          read_only { true }
+        end
+      end
+      nested do
+        exclude_fields :round
+        field :available_answers do
+          read_only { true }
+        end
+      end
     end
   end
 end

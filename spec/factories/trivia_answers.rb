@@ -15,7 +15,7 @@
 FactoryBot.define do
   factory :trivia_answer, class: "Trivia::Answer" do
     person { create(:person) }
-    question { create(:trivia_question) }
+    question { create(:trivia_single_choice_question) }
     answered { "MyString" }
     time { Faker::Number.between 1, 2000 }
 

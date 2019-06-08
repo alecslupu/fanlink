@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190601191216) do
+ActiveRecord::Schema.define(version: 20190606222111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1132,6 +1132,19 @@ ActiveRecord::Schema.define(version: 20190601191216) do
     t.index ["room_id"], name: "index_trivia_games_on_room_id"
   end
 
+  create_table "trivia_picture_available_answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.boolean "is_correct", default: false, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.index ["question_id"], name: "index_trivia_picture_available_answers_on_question_id"
+  end
+
   create_table "trivia_prizes", force: :cascade do |t|
     t.bigint "trivia_game_id"
     t.integer "status", default: 0, null: false
@@ -1339,6 +1352,7 @@ ActiveRecord::Schema.define(version: 20190601191216) do
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
   add_foreign_key "trivia_games", "products"
   add_foreign_key "trivia_games", "rooms"
+  add_foreign_key "trivia_picture_available_answers", "trivia_available_questions", column: "question_id"
   add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"

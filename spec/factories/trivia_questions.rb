@@ -21,7 +21,7 @@ FactoryBot.define do
     end_date { "2019-04-01 22:39:26" }
     round { create(:trivia_round) }
     time_limit { 1 }
-    cooldown_period { 4 }
+    cooldown_period { 6 }
     available_question { create(:trivia_available_question, with_answers: with_answers) }
 
 
@@ -44,6 +44,21 @@ FactoryBot.define do
     end
 
     factory :trivia_multiple_choice_question, class: "Trivia::MultipleChoiceQuestion" do
+      available_question { create(:trivia_multiple_choice_available_question, with_answers: with_answers) }
+    end
+
+
+    factory :trivia_single_choice_question, class: "Trivia::SingleChoiceQuestion" do
+      available_question { create(:trivia_single_choice_available_question, with_answers: with_answers) }
+    end
+    factory :trivia_picture_question, class: "Trivia::PictureQuestion" do
+      available_question { create(:trivia_picture_available_question, with_answers: with_answers) }
+    end
+    factory :trivia_boolean_choice_question, class: "Trivia::BooleanChoiceQuestion" do
+      available_question { create(:trivia_boolean_choice_available_question, with_answers: with_answers) }
+    end
+    factory :trivia_hangman_question, class: "Trivia::HangmanQuestion" do
+      available_question { create(:trivia_hangman_available_question, with_answers: with_answers) }
     end
   end
 end

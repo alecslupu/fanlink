@@ -7,28 +7,29 @@
 
     def generate
       generate_game!
-      questions = Trivia::MultipleChoiceAvailableQuestion.order("random()").first(100)
-
+      start_date = 5.minutes.from_now
       5.times do |index|
+        start_date = game.rounds.reload.last.end_date + 5.minutes unless index.zero?
         @round = game.rounds.build(
           status: :draft,
           leaderboard_size: game.leaderboard_size,
-          start_date: (1+index).hours.from_now,
+	  start_date: start_date,
           complexity: 1
         )
+        questions = Trivia::AvailableQuestion.order("random()").first(100)
 
-        10.times do |index|
+        50.times do |index|
           available_question = questions.pop
 
-          MultipleChoiceQuestion.create!(
+          available_question.active_questions.create(
             round: @round,
             question_order: 1 + index,
-            available_question: available_question,
-            time_limit: available_question.time_limit,
-            cooldown_period: available_question.cooldown_period,
+            time_limit: available_question.time_limit + 10,
+            cooldown_period: available_question.cooldown_period + 10,
           )
         end
         @round.save!
+        @round.compute_gameplay_parameters
       end
     end
 

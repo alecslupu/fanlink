@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::V1::PasswordResetsController, type: :controller do
   describe "#create" do
-    it "should accept valid password reset parameters with email and send the email" do
+    it "should accept valid password reset parameters with email and send the email", :run_delayed_jobs do
       email = "forgetful@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
@@ -29,7 +29,7 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
         expect(person.reload.reset_password_token).to be_nil
       end
     end
-    it "should accept valid username parameter and send the email" do
+    it "should accept valid username parameter and send the email", :run_delayed_jobs do
       username = "forgetful"
       person = create(:person, username: username)
       ActsAsTenant.with_tenant(person.product) do

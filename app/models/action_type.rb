@@ -20,6 +20,8 @@ class ActionType < ApplicationRecord
   has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "ActionType"
   has_many :badge_actions, dependent: :restrict_with_error
 
+  has_many :hacked_metrics, dependent: :destroy
+
   has_paper_trail
 
   # before_destroy :check_usage

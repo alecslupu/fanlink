@@ -850,6 +850,12 @@
         },
         "subscribed": {
           "type": "boolean"
+        },
+        "user_enroled": {
+          "type": "boolean"
+        },
+        "user_notification": {
+          "type": "boolean"
         }
       }
     },

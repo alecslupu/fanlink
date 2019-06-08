@@ -38,5 +38,13 @@ module Trivia
     end
 
     scope :visible, -> { where(status: [:published, :locked]) }
+
+    rails_admin do
+      parent "Trivia::Game"
+
+      nested do
+        exclude_fields :game
+      end
+    end
   end
 end

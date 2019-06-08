@@ -19,5 +19,9 @@ module Trivia
     def game_id
       trivia_game_id
     end
+
+    rails_admin do
+
+    end
   end
 end

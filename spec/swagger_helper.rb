@@ -153,7 +153,9 @@ RSpec.configure do |config|
           properties: {
             game_id: { type: :integer },
             person_id: { type: :integer },
-            subscribed: { type: :boolean }
+            subscribed: { type: :boolean },
+            user_enroled: { type: :boolean },
+            user_notification: { type: :boolean }
           }
         },
         trivia_game_prize: {
