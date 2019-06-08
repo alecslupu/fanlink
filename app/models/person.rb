@@ -119,7 +119,7 @@ class Person < ApplicationRecord
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
   validates :username, uniqueness: { scope: :product_id, message: _("A user has already signed up with that username.") }
 
-  validates :email, presence: { message: _("Email is required.") }, if: Proc.new { |p| p.facebookid.blank? }
+  validates :email, presence: { message: _("Email is required.") }, if: Proc.new { |person| person.facebookid.blank? }
   validates :email, email: { message: _("Email is invalid."), allow_nil: true }
 
   validates :username, presence: { message: _("Username is required.") }

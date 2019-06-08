@@ -38,8 +38,8 @@ class ImagePage < ApplicationRecord
 
     def just_me
       return if certcourse_page.new_record?
-      x = CertcoursePage.find(certcourse_page.id)
-      child = x.child
+      target_course_page = CertcoursePage.find(certcourse_page.id)
+      child = target_course_page.child
       if child && child != self
         errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
       end

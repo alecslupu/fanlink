@@ -59,11 +59,11 @@ class PersonCertificate < ApplicationRecord
   def self.update_certification_status(certificate_ids, user_id)
     # TODO find a better way to write this
     # TODO move it in a job
-    where(person_id: user_id, certificate_id: certificate_ids).find_each do |c|
-      person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: c.certificate.certcourse_ids).pluck(:is_completed)
+    where(person_id: user_id, certificate_id: certificate_ids).find_each do |person_certificate|
+      person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: person_certificate.certificate.certcourse_ids).pluck(:is_completed)
       # raise ({c_size: c.certificate.certcourse_ids.size, p_size: person_certcourses.size, pc: person_certcourses}).inspect
-      c.is_completed = (c.certificate.certcourses.size == person_certcourses.size) && person_certcourses.inject(true, :&)
-      c.save!
+      person_certificate.is_completed = (person_certificate.certificate.certcourses.size == person_certcourses.size) && person_certcourses.inject(true, :&)
+      person_certificate.save!
     end
   end
 
