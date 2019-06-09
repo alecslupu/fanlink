@@ -49,6 +49,7 @@ module Trivia
       end
     end
 
+    acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail
@@ -56,7 +57,6 @@ module Trivia
     include AttachmentSupport
     has_image_called :picture
 
-    acts_as_tenant(:product)
     belongs_to :room, class_name: "Room", optional: true
     has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
     has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy

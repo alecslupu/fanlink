@@ -12,10 +12,15 @@
 #  complexity      :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  product_id      :integer          not null
 #
 
 module Trivia
   class AvailableQuestion < ApplicationRecord
+
+    acts_as_tenant(:product)
+    scope :for_product, -> (product) { where(product_id: product.id) }
+
     belongs_to :topic, class_name: "Trivia::Topic"
     has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
     has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question

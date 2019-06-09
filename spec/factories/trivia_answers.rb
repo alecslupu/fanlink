@@ -7,13 +7,16 @@
 #  trivia_question_id :bigint(8)
 #  answered           :string
 #  time               :integer
+#  is_correct         :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  is_correct         :boolean          default(FALSE)
+#  product_id         :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_answer, class: "Trivia::Answer" do
+    product { current_product }
+
     person { create(:person) }
     question { create(:trivia_single_choice_question) }
     answered { "MyString" }

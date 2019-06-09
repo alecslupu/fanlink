@@ -15,11 +15,14 @@
 #  prize_type         :integer          default("digital")
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  product_id         :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_prize, class: "Trivia::Prize" do
     game { create(:trivia_game) }
+    product { current_product }
+
     description { Faker::Lorem.paragraph }
     sequence(:position) { |n| n }
     prize_type { :digital }

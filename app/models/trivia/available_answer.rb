@@ -10,6 +10,7 @@
 #  status             :integer          default("draft"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  product_id         :integer          not null
 #
 
 module Trivia
@@ -17,6 +18,9 @@ module Trivia
     has_paper_trail
     belongs_to :question, class_name: "Trivia::AvailableQuestion", foreign_key: :trivia_question_id, optional: true
     enum status: %i[draft published locked closed]
+
+    acts_as_tenant(:product)
+    scope :for_product, -> (product) { where(product_id: product.id) }
 
     rails_admin do
       parent "Trivia::Game"
