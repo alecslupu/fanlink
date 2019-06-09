@@ -39,5 +39,9 @@ module Trivia
         exclude_fields :question
       end
     end
+
+    def product
+      Product.where(internal_name: 'caned').first
+    end
   end
 end

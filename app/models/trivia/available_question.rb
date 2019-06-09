@@ -38,6 +38,7 @@ module Trivia
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
               ),  message: "%{value} is not a valid type" }
     rails_admin do
+      label_plural "Available questions"
       edit do
         fields :title, :cooldown_period, :time_limit, :topic, :complexity, :status
         field :type, :enum do

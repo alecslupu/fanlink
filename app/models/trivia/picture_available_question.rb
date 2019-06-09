@@ -19,10 +19,12 @@ module Trivia
     has_many :active_questions, class_name: "Trivia::PictureQuestion", inverse_of: :available_question, foreign_key: :available_question_id
     has_many :available_answers, class_name: "Trivia::PictureAvailableAnswer", foreign_key: :question_id
 
-
     rails_admin do
-
       parent "Trivia::AvailableQuestion"
+      label_plural "Picture choice"
+      edit do
+        exclude_fields :type
+      end
     end
   end
 end

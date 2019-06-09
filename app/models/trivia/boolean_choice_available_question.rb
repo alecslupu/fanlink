@@ -20,6 +20,11 @@ module Trivia
 
     rails_admin do
       parent "Trivia::AvailableQuestion"
+      label_plural "True or False"
+
+      edit do
+        exclude_fields :type
+      end
     end
   end
 end

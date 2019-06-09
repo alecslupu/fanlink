@@ -20,7 +20,10 @@ module Trivia
 
     rails_admin do
       parent "Trivia::AvailableQuestion"
-
+      label_plural "Single choice"
+      edit do
+        exclude_fields :type
+      end
     end
   end
 end
