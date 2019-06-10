@@ -5,7 +5,7 @@ class Api::V4::Trivia::GameLeaderboardsController < ApiController
   end
 
   def me
-    @leaderboard = ::Trivia::Game.find(params[:game_id]).leaderboards.where(person_id: current_user.id).last
+    @leaderboard = ::Trivia::Game.find(params[:game_id]).leaderboards.where(person_id: current_user.id).first_or_initialize
     return_the @leaderboard, handler: :jb
   end
 end
