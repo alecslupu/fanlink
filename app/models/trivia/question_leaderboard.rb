@@ -8,7 +8,6 @@
 #  person_id          :bigint(8)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  product_id         :integer          not null
 #
 
 module Trivia

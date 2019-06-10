@@ -13,7 +13,6 @@
 #  start_date            :integer
 #  end_date              :integer
 #  available_question_id :integer
-#  product_id            :integer          not null
 #
 
 FactoryBot.define do

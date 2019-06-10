@@ -12,7 +12,6 @@
 #  picture_content_type :string
 #  picture_file_size    :integer
 #  picture_updated_at   :datetime
-#  product_id           :integer          not null
 #
 
 module Trivia
