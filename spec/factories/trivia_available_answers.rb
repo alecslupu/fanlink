@@ -10,12 +10,10 @@
 #  status             :integer          default("draft"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  product_id         :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_available_answer, class: "Trivia::AvailableAnswer" do
-    product { current_product }
 
     question { create(:trivia_available_question) }
     name { Faker::Lorem.question(4) }

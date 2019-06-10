@@ -7,13 +7,10 @@
 #  status     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  product_id :integer          not null
 #
 
 module Trivia
   class Topic < ApplicationRecord
-    acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail
 

@@ -12,12 +12,9 @@
 #  picture_content_type :string
 #  picture_file_size    :integer
 #  picture_updated_at   :datetime
-#  product_id           :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_picture_available_answer, class: 'Trivia::PictureAvailableAnswer' do
-    product { current_product }
-
   end
 end

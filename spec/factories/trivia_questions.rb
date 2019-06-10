@@ -13,12 +13,10 @@
 #  start_date            :integer
 #  end_date              :integer
 #  available_question_id :integer
-#  product_id            :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_question, class: "Trivia::Question" do
-    product { current_product }
 
     start_date { "2019-04-01 22:39:26" }
     end_date { "2019-04-01 22:39:26" }

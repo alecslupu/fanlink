@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190609214246) do
+ActiveRecord::Schema.define(version: 20190610195121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1072,9 +1072,7 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.boolean "is_correct", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_answers_on_person_id"
-    t.index ["product_id"], name: "idx_trivia_answers_product"
     t.index ["trivia_question_id"], name: "index_trivia_answers_on_trivia_question_id"
   end
 
@@ -1086,8 +1084,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_available_answers_product"
     t.index ["trivia_question_id"], name: "index_trivia_available_answers_on_trivia_question_id"
   end
 
@@ -1101,8 +1097,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.integer "complexity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_available_questions_product"
   end
 
   create_table "trivia_game_leaderboards", force: :cascade do |t|
@@ -1113,9 +1107,7 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_game_leaderboards_on_person_id"
-    t.index ["product_id"], name: "idx_trivia_game_leaderboards_product"
     t.index ["trivia_game_id"], name: "index_trivia_game_leaderboards_on_trivia_game_id"
   end
 
@@ -1150,8 +1142,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_picture_available_answers_product"
     t.index ["question_id"], name: "index_trivia_picture_available_answers_on_question_id"
   end
 
@@ -1168,8 +1158,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.integer "prize_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_prizes_product"
     t.index ["trivia_game_id"], name: "index_trivia_prizes_on_trivia_game_id"
   end
 
@@ -1179,9 +1167,7 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_question_leaderboards_on_person_id"
-    t.index ["product_id"], name: "idx_trivia_question_leaderboards_product"
     t.index ["trivia_question_id"], name: "index_trivia_question_leaderboards_on_trivia_question_id"
   end
 
@@ -1196,8 +1182,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.integer "start_date"
     t.integer "end_date"
     t.integer "available_question_id"
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_questions_product"
     t.index ["trivia_round_id"], name: "index_trivia_questions_on_trivia_round_id"
   end
 
@@ -1209,9 +1193,7 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.integer "average_time", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_round_leaderboards_on_person_id"
-    t.index ["product_id"], name: "idx_trivia_round_leaderboards_product"
     t.index ["trivia_round_id"], name: "index_trivia_round_leaderboards_on_trivia_round_id"
   end
 
@@ -1225,8 +1207,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.datetime "updated_at", null: false
     t.integer "start_date"
     t.integer "end_date"
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_rounds_product"
     t.index ["trivia_game_id"], name: "index_trivia_rounds_on_trivia_game_id"
   end
 
@@ -1236,9 +1216,7 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.boolean "subscribed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_subscribers_on_person_id"
-    t.index ["product_id"], name: "idx_trivia_subscribers_product"
     t.index ["trivia_game_id"], name: "index_trivia_subscribers_on_trivia_game_id"
   end
 
@@ -1247,8 +1225,6 @@ ActiveRecord::Schema.define(version: 20190609214246) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "product_id", null: false
-    t.index ["product_id"], name: "idx_trivia_topics_product"
   end
 
   create_table "urls", force: :cascade do |t|
@@ -1369,36 +1345,24 @@ ActiveRecord::Schema.define(version: 20190609214246) do
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
   add_foreign_key "trivia_answers", "people", name: "trivia_answers_person_id_fkey"
-  add_foreign_key "trivia_answers", "products", name: "fk_trivia_answers_products", on_delete: :cascade
   add_foreign_key "trivia_answers", "trivia_questions", name: "trivia_answers_questions_id_fkey"
-  add_foreign_key "trivia_available_answers", "products", name: "fk_trivia_available_answers_products", on_delete: :cascade
   add_foreign_key "trivia_available_answers", "trivia_available_questions", column: "trivia_question_id"
-  add_foreign_key "trivia_available_questions", "products", name: "fk_trivia_available_questions_products", on_delete: :cascade
   add_foreign_key "trivia_available_questions", "trivia_topics", column: "topic_id"
   add_foreign_key "trivia_game_leaderboards", "people"
-  add_foreign_key "trivia_game_leaderboards", "products", name: "fk_trivia_game_leaderboards_products", on_delete: :cascade
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
   add_foreign_key "trivia_games", "products"
   add_foreign_key "trivia_games", "rooms"
-  add_foreign_key "trivia_picture_available_answers", "products", name: "fk_trivia_picture_available_answers_products", on_delete: :cascade
   add_foreign_key "trivia_picture_available_answers", "trivia_available_questions", column: "question_id"
-  add_foreign_key "trivia_prizes", "products", name: "fk_trivia_prizes_products", on_delete: :cascade
   add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
-  add_foreign_key "trivia_question_leaderboards", "products", name: "fk_trivia_question_leaderboards_products", on_delete: :cascade
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
-  add_foreign_key "trivia_questions", "products", name: "fk_trivia_questions_products", on_delete: :cascade
   add_foreign_key "trivia_questions", "trivia_available_questions", column: "available_question_id"
   add_foreign_key "trivia_questions", "trivia_rounds"
   add_foreign_key "trivia_round_leaderboards", "people"
-  add_foreign_key "trivia_round_leaderboards", "products", name: "fk_trivia_round_leaderboards_products", on_delete: :cascade
   add_foreign_key "trivia_round_leaderboards", "trivia_rounds"
-  add_foreign_key "trivia_rounds", "products", name: "fk_trivia_rounds_products", on_delete: :cascade
   add_foreign_key "trivia_rounds", "trivia_games"
   add_foreign_key "trivia_subscribers", "people"
-  add_foreign_key "trivia_subscribers", "products", name: "fk_trivia_subscribers_products", on_delete: :cascade
   add_foreign_key "trivia_subscribers", "trivia_games"
-  add_foreign_key "trivia_topics", "products", name: "fk_trivia_topics_products", on_delete: :cascade
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

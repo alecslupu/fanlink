@@ -12,22 +12,37 @@
 #  picture_content_type :string
 #  picture_file_size    :integer
 #  picture_updated_at   :datetime
-#  product_id           :integer          not null
 #
 
 module Trivia
   class PictureAvailableAnswer < ApplicationRecord
-    include AttachmentSupport
-
-    acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
-
 
     has_paper_trail
     belongs_to :question, class_name: "Trivia::PictureAvailableQuestion", foreign_key: :question_id, optional: true
     enum status: %i[draft published locked closed]
 
-    has_image_called :picture
+    has_attached_file :picture,
+                      default_url: nil,
+                      url: "/system/:class/:attachment/:id_partition/:style/:hash.:extension",
+                      styles: {
+                        optimal: "1000x",
+                        thumbnail: "100x100#",
+                      },
+                      convert_options: {
+                        optimal: "-quality 75 -strip",
+                      }
+
+    validates_attachment :picture,
+                         content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+                         size: { in: 0..5.megabytes }
+
+    def picture_url
+      picture.file? ? picture.url : nil
+    end
+
+    def picture_optimal_url
+      picture.file? ? picture.url(:optimal) : nil
+    end
 
     rails_admin do
       parent "Trivia::Game"

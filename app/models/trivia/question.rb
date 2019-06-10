@@ -13,13 +13,10 @@
 #  start_date            :integer
 #  end_date              :integer
 #  available_question_id :integer
-#  product_id            :integer          not null
 #
 
 module Trivia
   class Question < ApplicationRecord
-    acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail
     belongs_to :round, class_name: "Trivia::Round", counter_cache: :question_count, foreign_key: :trivia_round_id

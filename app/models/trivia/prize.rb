@@ -15,15 +15,11 @@
 #  prize_type         :integer          default("digital")
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  product_id         :integer          not null
 #
 
 module Trivia
   class Prize < ApplicationRecord
     include AttachmentSupport
-    acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
-
 
     has_paper_trail
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
@@ -32,6 +28,10 @@ module Trivia
 
     enum status: %i[draft published locked closed]
     enum prize_type: %i[digital physical]
+
+    def product
+      game.product
+    end
 
     def game_id
       trivia_game_id

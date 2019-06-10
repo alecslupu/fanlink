@@ -8,12 +8,10 @@
 #  subscribed     :boolean          default(FALSE)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  product_id     :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_subscriber, class: "Trivia::Subscriber" do
-    product { current_product }
 
     person { create(:person) }
     game { create(:trivia_game) }

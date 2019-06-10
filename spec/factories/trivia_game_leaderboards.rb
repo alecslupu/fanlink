@@ -10,12 +10,10 @@
 #  person_id      :bigint(8)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  product_id     :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_game_leaderboard, class: "Trivia::GameLeaderboard" do
-    product { current_product }
 
     game { create(:trivia_game) }
     points { 1 }

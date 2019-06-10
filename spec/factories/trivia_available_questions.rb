@@ -12,12 +12,10 @@
 #  complexity      :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  product_id      :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_available_question, class: 'Trivia::SingleChoiceAvailableQuestion' do
-    product { current_product }
 
     title { Faker::Lorem.question(10) }
     cooldown_period { 6 }
