@@ -38,7 +38,7 @@ describe Trivia::GameGenerator do
 
         # yes, i mean 2 times ... one updating the status to published,
         # the second on changing the start date
-        expect(generator.game).to receive(:promote_status_changes).exactly(2).times
+        expect(generator.game).to receive(:handle_status_changes).exactly(2).times
         generator.promote!
 
       end

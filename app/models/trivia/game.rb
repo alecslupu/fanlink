@@ -75,7 +75,7 @@ module Trivia
     scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
-    after_save :promote_status_changes
+    after_save :handle_status_changes
     before_save do
       self.compute_gameplay_parameters if self.compute_gameplay && self.rounds.size > 0
       self.compute_gameplay = false
@@ -93,7 +93,7 @@ module Trivia
       end
     end
 
-    def promote_status_changes
+    def handle_status_changes
       if saved_change_to_attribute?(:status) && locked?
         Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
       end
