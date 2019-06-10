@@ -25,6 +25,12 @@ module Trivia
   class Game < ApplicationRecord
 
     rails_admin do
+
+      list do
+        fields :id, :description, :round_count, :long_name, :status
+        field :start_date, :unix_timestamp
+      end
+
       edit do
         fields :short_name, :long_name, :description, :room, :leaderboard_size, :picture
         field :status, :enum do
