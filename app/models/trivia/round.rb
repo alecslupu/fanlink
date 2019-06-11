@@ -12,6 +12,7 @@
 #  updated_at       :datetime         not null
 #  start_date       :integer
 #  end_date         :integer
+#  product_id       :integer          not null
 #
 
 module Trivia

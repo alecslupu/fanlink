@@ -75,6 +75,17 @@ module Trivia
     validates :long_name, presence: true
     validates :short_name, presence: true
 
+=begin
+validates the startd_date > now when draft and published FLAPI-936
+
+    validate :start_time_constraints
+    def start_time_constraints
+      if published?
+        errors.add(:start_date) if start_date < DateTime.now.to_i
+      end
+    end
+=end
+
     enum status: %i[draft published locked running closed]
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
@@ -104,6 +115,7 @@ module Trivia
         Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
       end
     end
+
   end
 end
 

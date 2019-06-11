@@ -10,6 +10,7 @@
 #  status             :integer          default("draft"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  product_id         :integer          not null
 #
 
 FactoryBot.define do
