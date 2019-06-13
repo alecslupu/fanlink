@@ -70,7 +70,7 @@ RSpec.describe Trivia::Round, type: :model do
 
         question = round.reload.questions.first(value).last
 
-        # 7 = time_limit + cooldown 
+        # 7 = time_limit + cooldown
         result = round.start_date + (7 * (value - 1)).seconds
 
         expect(question.start_date - result).to eq(0)
@@ -100,3 +100,4 @@ RSpec.describe Trivia::Round, type: :model do
     end
   end
 end
+
