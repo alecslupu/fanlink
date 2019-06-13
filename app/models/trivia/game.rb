@@ -36,7 +36,9 @@ module Trivia
         field :status, :enum do
           # read_only { bindings[:object].persisted? }
         end
-        field :start_date, :unix_timestamp
+        field :start_date, :unix_timestamp do
+          read_only { true }
+        end
         field :prizes do
           visible { bindings[:object].persisted? }
         end
