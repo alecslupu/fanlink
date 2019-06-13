@@ -43,10 +43,6 @@ module Trivia
         field :rounds do
           visible { bindings[:object].persisted? }
         end
-
-        field :compute_gameplay, :boolean do
-          read_only { bindings[:object].persisted? }
-        end
       end
       show do
         fields :short_name, :long_name, :description, :room, :status, :leaderboard_size, :picture
@@ -59,7 +55,6 @@ module Trivia
     scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail
-    attr_accessor :compute_gameplay
     include AttachmentSupport
     has_image_called :picture
 
@@ -93,10 +88,6 @@ validates the startd_date > now when draft and published FLAPI-936
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
     after_save :handle_status_changes
-    before_save do
-      self.compute_gameplay_parameters if self.compute_gameplay && self.rounds.size > 0
-      self.compute_gameplay = false
-    end
 
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
@@ -104,15 +95,15 @@ validates the startd_date > now when draft and published FLAPI-936
         self.start_date =  rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
         self.save
-        Delayed::Job.enqueue(::Trivia::LockGameJob.new(self.id), run_at: Time.at(self.start_date) - 10.minute)
-        Delayed::Job.enqueue(::Trivia::RunningGameJob.new(self.id), run_at: Time.at(self.start_date))
-        Delayed::Job.enqueue(::Trivia::CloseGameJob.new(self.id), run_at: Time.at(self.end_date))
       end
     end
 
     def handle_status_changes
-      if saved_change_to_attribute?(:status) && locked?
-        Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
+      if saved_change_to_attribute?(:status) && published?
+        Delayed::Job.enqueue(::Trivia::Game::PublishJob.new(self.id))
+        Delayed::Job.enqueue(::Trivia::Game::LockedJob.new(self.id), run_at: Time.at(self.start_date) - 10.minutes)
+        Delayed::Job.enqueue(::Trivia::Game::RunningJob.new(self.id), run_at: Time.at(self.start_date))
+        Delayed::Job.enqueue(::Trivia::Game::CloseJob.new(self.id), run_at: Time.at(self.end_date))
       end
     end
 
