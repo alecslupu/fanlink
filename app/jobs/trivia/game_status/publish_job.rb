@@ -1,5 +1,5 @@
 module Trivia
-  module Game
+  module GameStatus
     class PublishJob < Struct.new(:game_id)
 
       def perform

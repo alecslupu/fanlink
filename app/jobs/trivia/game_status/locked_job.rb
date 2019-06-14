@@ -1,10 +1,10 @@
 module Trivia
-  module Game
-    class CloseJob  < Struct.new(:game_id)
+  module GameStatus
+    class LockedJob  < Struct.new(:game_id)
 
       def perform
         game = Trivia::Game.find(game_id)
-        game.closed!
+        game.locked!
       end
     end
   end
