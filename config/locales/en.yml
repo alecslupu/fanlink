@@ -263,3 +263,6 @@ en:
         title: Select Product
         menu: Select Product
         breadcrumb: Select Product
+
+      generate_game_action:
+        menu: "Generate Random game"
