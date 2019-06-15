@@ -30,7 +30,7 @@ RETURNS void AS $$
         INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
         INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
       WHERE r.trivia_game_id  = $1 AND a.is_correct = 't'
-      GROUP BY r.trivia_game_id,r.complexity, r.leaderboard_size, a.person_id
+      GROUP BY r.trivia_game_id, r.product_id,r.complexity, r.leaderboard_size, a.person_id
     ) AS leaderboard;
     PERFORM pg_notify('leaderboard',  CONCAT('{"type": "game", "id": ', $1 ,'}'));
   END;

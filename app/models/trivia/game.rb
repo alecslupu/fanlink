@@ -102,10 +102,7 @@ validates the startd_date > now when draft and published FLAPI-936
 
     def handle_status_changes
       if saved_change_to_attribute?(:status) && published?
-        Delayed::Job.enqueue(::Trivia::Game::PublishJob.new(self.id))
-        Delayed::Job.enqueue(::Trivia::Game::LockedJob.new(self.id), run_at: Time.at(self.start_date) - 10.minutes)
-        Delayed::Job.enqueue(::Trivia::Game::RunningJob.new(self.id), run_at: Time.at(self.start_date))
-        Delayed::Job.enqueue(::Trivia::Game::CloseJob.new(self.id), run_at: Time.at(self.end_date))
+        Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
       end
     end
 
