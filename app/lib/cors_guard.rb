@@ -5,6 +5,9 @@ class CorsGuard
     https://portal.dev.fanlinkmusic.com
     https://portal.staging.fanlinkmusic.com
     https://portal.fanlinkmusic.com
+
+    https://courses.can-ed.com/
+    https://staging.can-ed.com/
   )
 
   %w(
