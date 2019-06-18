@@ -5,17 +5,11 @@ class CorsGuard
     https://portal.dev.fanlinkmusic.com
     https://portal.staging.fanlinkmusic.com
     https://portal.fanlinkmusic.com
-
-    https://courses.can-ed.com/
-    https://staging.can-ed.com/
-  )
-
-  %w(
+    https://courses.can-ed.com
+    https://staging.can-ed.com
     http://alecslupu.go.ro
     http://alecslupu.go.ro:8082
-  ).each do |url|
-    ALWAYS_ALLOW << url
-  end
+  )
 
   if ENV["PORTAL_URL"]
     ENV["PORTAL_URL"].split(",").each do |url|
