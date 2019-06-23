@@ -1,9 +1,9 @@
 class AddTriviaQuestionLeaderboardFunction < ActiveRecord::Migration[5.1]
   def up
-    begin
-      execute %Q(DROP FUNCTION compute_trivia_question_leaderboard(integer))
-    rescue ActiveRecord::StatementInvalid => e
-    end
+    # begin
+    #   execute %Q(DROP FUNCTION compute_trivia_question_leaderboard(integer))
+    # rescue ActiveRecord::StatementInvalid => e
+    # end
     execute %Q(
 CREATE OR REPLACE FUNCTION compute_trivia_question_leaderboard(question_id integer)
 RETURNS void AS $$
