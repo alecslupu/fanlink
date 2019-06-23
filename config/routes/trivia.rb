@@ -9,6 +9,7 @@ JkoApi.routes self do
         resources :prizes, only: [ :index ]
 
         resources :rounds, only: [ :index ] do
+          post :change_status
           resources :round_leaderboards, path: :leaderboard, only: [ :index ] do
             get :me, on: :collection
           end

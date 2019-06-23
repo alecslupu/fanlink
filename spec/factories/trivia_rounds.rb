@@ -12,10 +12,13 @@
 #  updated_at       :datetime         not null
 #  start_date       :integer
 #  end_date         :integer
+#  product_id       :integer          not null
 #
 
 FactoryBot.define do
   factory :trivia_round, class: "Trivia::Round" do
+    product { current_product }
+
     game { create(:trivia_game) }
     leaderboard_size { game.leaderboard_size }
     status { :locked }

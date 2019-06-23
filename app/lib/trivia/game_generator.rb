@@ -36,7 +36,6 @@
     def promote!
       game.published!
       game.rounds.reload.find_each(&:published!)
-      game.compute_gameplay_parameters
     end
 
     private

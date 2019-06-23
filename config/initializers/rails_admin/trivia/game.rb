@@ -10,11 +10,7 @@ RailsAdmin.config do |config|
   #
   end
 
-  # Trivia::BooleanChoiceAvailableQuestion
-  # Trivia::HangmanAvailableQuestion
-  # Trivia::MultipleChoiceAvailableQuestion
-  # Trivia::SingleChoiceAvailableQuestion
-  # Trivia::PictureAvailableQuestion
+  #
   #
   # Trivia::BooleanChoiceQuestion
   # Trivia::HangmanQuestion
@@ -24,7 +20,7 @@ RailsAdmin.config do |config|
   %w(
     Trivia::Answer
     Trivia::AvailableAnswer
-    Trivia::AvailableQuestion
+    Trivia::PictureAvailableAnswer
     Trivia::GameLeaderboard
     Trivia::Prize
     Trivia::Question
@@ -33,6 +29,19 @@ RailsAdmin.config do |config|
     Trivia::RoundLeaderboard
     Trivia::Subscriber
     Trivia::Topic
+  ).each do |model|
+    config.included_models << model
+    config.model model do
+      parent "Trivia::Game"
+    end
+  end
+  %w(
+    Trivia::AvailableQuestion
+    Trivia::PictureAvailableQuestion
+    Trivia::BooleanChoiceAvailableQuestion
+    Trivia::HangmanAvailableQuestion
+    Trivia::MultipleChoiceAvailableQuestion
+    Trivia::SingleChoiceAvailableQuestion
   ).each do |model|
     config.included_models << model
     config.model model do

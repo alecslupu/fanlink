@@ -1,7 +1,7 @@
 module Trivia
-  class CreateRandomGameJob
+  class CreateRandomGameJob < Struct.new(:product_id)
     def perform
-      product = Product.where(internal_name: 'caned').first
+      product = Product.where(id: product_id).first
 
       ActsAsTenant.with_tenant(product) do
         game_generator = Trivia::GameGenerator.new
@@ -9,10 +9,5 @@ module Trivia
         game_generator.promote!
       end
     end
-    # def error(job, exception)
-    #   if exception.is_a?(Mandrill::UnknownTemplateError)
-    #     Delayed::Job.where(id: job.id).destroy_all
-    #   end
-    # end
   end
 end
