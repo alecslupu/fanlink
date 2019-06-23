@@ -12,6 +12,7 @@
 #  complexity      :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  product_id      :integer          not null
 #
 
 module Trivia
@@ -20,7 +21,11 @@ module Trivia
 
     rails_admin do
 
+      label_plural "Fill in the blank"
       parent "Trivia::AvailableQuestion"
+      edit do
+        exclude_fields :type
+      end
     end
   end
 end

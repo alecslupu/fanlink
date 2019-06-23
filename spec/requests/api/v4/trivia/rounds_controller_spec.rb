@@ -32,4 +32,30 @@ RSpec.describe "Api::V4::Trivia::RoundsController", type: :request, swagger_doc:
       end
     end
   end
+  path "/trivia/games/{game_id}/rounds/{round_id}/change_status" do
+    post "Changes the status of a round" do
+      tags "Trivia"
+      produces "application/vnd.api.v4+json"
+      parameter name: :game_id, in: :path, type: :integer
+      parameter name: :round_id, in: :path, type: :integer
+      parameter name: :token, in: :formData, type: :string
+      parameter name: :status, in: :formData, type: :string, enum: [:locked, :published, :running]
+      parameter name: "X-App", in: :header, type: :string
+      response "200", "Set the status" do
+        let(:user) { create(:person) }
+        let!(:games) { ActsAsTenant.with_tenant(user.product) {
+          create_list(:full_trivia_game, 10, with_leaderboard: true)
+        }}
+        run_test!
+      end
+
+      response "401", "unauthorized" do
+        let(:user) { create(:person, terminated: true) }
+        let!(:games) { ActsAsTenant.with_tenant(user.product) {
+          create_list(:full_trivia_game, 10)
+        }}
+        run_test!
+      end
+    end
+  end
 end

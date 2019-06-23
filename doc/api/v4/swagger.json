@@ -481,6 +481,59 @@
         }
       }
     },
+    "/trivia/games/{game_id}/rounds/{round_id}/change_status": {
+      "post": {
+        "summary": "Changes the status of a round",
+        "tags": [
+          "Trivia"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "round_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "type": "string",
+            "enum": [
+              "locked",
+              "published",
+              "running"
+            ]
+          },
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set the status"
+          },
+          "401": {
+            "description": "unauthorized"
+          }
+        }
+      }
+    },
     "/trivia/games/{game_id}/subscription": {
       "get": {
         "summary": "Show the subscription information",

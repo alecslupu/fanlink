@@ -25,6 +25,12 @@ module Trivia
   class Game < ApplicationRecord
 
     rails_admin do
+
+      list do
+        fields :id, :description, :round_count, :long_name, :status
+        field :start_date, :unix_timestamp
+      end
+
       edit do
         fields :short_name, :long_name, :description, :room, :leaderboard_size, :picture
         field :status, :enum do
@@ -37,10 +43,6 @@ module Trivia
         field :rounds do
           visible { bindings[:object].persisted? }
         end
-
-        field :compute_gameplay, :boolean do
-          read_only { bindings[:object].persisted? }
-        end
       end
       show do
         fields :short_name, :long_name, :description, :room, :status, :leaderboard_size, :picture
@@ -49,14 +51,13 @@ module Trivia
       end
     end
 
+    acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail
-    attr_accessor :compute_gameplay
     include AttachmentSupport
     has_image_called :picture
 
-    acts_as_tenant(:product)
     belongs_to :room, class_name: "Room", optional: true
     has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
     has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy
@@ -69,17 +70,24 @@ module Trivia
     validates :long_name, presence: true
     validates :short_name, presence: true
 
+=begin
+validates the startd_date > now when draft and published FLAPI-936
+
+    validate :start_time_constraints
+    def start_time_constraints
+      if published?
+        errors.add(:start_date) if start_date < DateTime.now.to_i
+      end
+    end
+=end
+
     enum status: %i[draft published locked running closed]
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
     scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
-    after_save :promote_status_changes
-    before_save do
-      self.compute_gameplay_parameters if self.compute_gameplay && self.rounds.size > 0
-      self.compute_gameplay = false
-    end
+    after_save :handle_status_changes
 
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
@@ -87,17 +95,15 @@ module Trivia
         self.start_date =  rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
         self.save
-        Delayed::Job.enqueue(::Trivia::LockGameJob.new(self.id), run_at: Time.at(self.start_date) - 10.minute)
-        Delayed::Job.enqueue(::Trivia::RunningGameJob.new(self.id), run_at: Time.at(self.start_date))
-        Delayed::Job.enqueue(::Trivia::CloseGameJob.new(self.id), run_at: Time.at(self.end_date))
       end
     end
 
-    def promote_status_changes
-      if saved_change_to_attribute?(:status) && locked?
-        Delayed::Job.enqueue(::Trivia::PublishToEngine.new(self.id), run_at: 1.minute.from_now)
+    def handle_status_changes
+      if saved_change_to_attribute?(:status) && published?
+        Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
       end
     end
+
   end
 end
 

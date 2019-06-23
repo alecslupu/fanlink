@@ -7,9 +7,10 @@
 #  trivia_question_id :bigint(8)
 #  answered           :string
 #  time               :integer
+#  is_correct         :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  is_correct         :boolean          default(FALSE)
+#  product_id         :integer          not null
 #
 
 module Trivia
@@ -17,6 +18,9 @@ module Trivia
     has_paper_trail
     belongs_to :person, class_name: "Person"
     belongs_to :question, class_name: "Trivia::Question", foreign_key: :trivia_question_id
+
+    acts_as_tenant(:product)
+    scope :for_product, -> (product) { where(product_id: product.id) }
 
     rails_admin do
       navigation_label "Answer"
