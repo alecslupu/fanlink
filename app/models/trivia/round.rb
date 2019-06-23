@@ -16,14 +16,16 @@
 
 module Trivia
   class Round < ApplicationRecord
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+    has_paper_trail
+    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id, counter_cache: :round_count
 
-    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id
-    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id
+    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id, dependent: :destroy
+    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
+    accepts_nested_attributes_for :questions, allow_destroy: true
 
-    enum status: %i[draft published locked closed]
+    enum status: %i[draft published locked running closed]
 
-    scope :published, -> { where(status: [:published, :locked, :closed]) }
+    scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
 
     def compute_gameplay_parameters
       date_to_set = self.start_date
@@ -44,6 +46,34 @@ module Trivia
     # administrate fallback
     def game_id
       trivia_game_id
+    end
+
+    rails_admin do
+      parent "Trivia::Game"
+      edit do
+        fields :status, :complexity
+        field :start_date, :unix_timestamp
+
+        field :questions do
+          def render
+            bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
+              field: self, form: bindings[:form], field_order: :question_order_field
+            }
+          end
+        end
+      end
+      nested do
+        exclude_fields :game
+        field :questions do
+          visible { bindings[:object].persisted? }
+
+          def render
+            bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
+              field: self, form: bindings[:form], field_order: :question_order_field
+            }
+          end
+        end
+      end
     end
   end
 end

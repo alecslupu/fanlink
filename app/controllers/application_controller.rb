@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
       return if authorization_header.nil?
       payload, header = TokenProvider.valid?(token)
       user = Person.find_by(id: payload["user_id"])
-      auto_login(user) unless user.terminated?
+      auto_login(user) unless user.nil? || user.terminated?
+    rescue JWT::DecodeError
     end
 
     def token

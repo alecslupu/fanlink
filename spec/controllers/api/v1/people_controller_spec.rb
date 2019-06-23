@@ -10,7 +10,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         patch :change_password,  params: { id: person.id, person: { current_password: current, new_password: new_password } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
   end
 
   describe "#create" do
-    it "should sign up new user with email, username, and password, profile fields and send onboarding email" do
+    it "should sign up new user with email, username, and password, profile fields and send onboarding email", :run_delayed_jobs do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect_any_instance_of(Person).to receive(:do_auto_follows)
@@ -71,7 +71,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
           { product: product.internal_name,
             person: { username: username, email: email, password: "secret", gender: "male",
                       birthdate: "2000-01-02", city: "Shambala", country_code: "us" } }
-        expect(response).to be_success
+        expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
         expect(p.username).to eq(username)
@@ -87,7 +87,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       end
     end
 
-    it "should sign up new user with FB auth token and send onboarding email" do
+    it "should sign up new user with FB auth token and send onboarding email", :run_delayed_jobs do
       tok = "1234"
       username = "newuser#{Time.now.to_i}"
       product = create(:product)
@@ -98,7 +98,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect {
           post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
         }.to change { Person.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
         expect(p.username).to eq(username)
@@ -120,7 +120,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect {
           post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
         }.to change { Person.count }.by(1)
-        expect(response).to be_success
+        expect(response).to be_successful
         p = Person.last
         expect(p.username).to eq(username)
         # expect(json["person"]).to eq(person_private_json(p))
@@ -281,7 +281,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(normal_person)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         expected = [person.id, person1.id, person2.id, person3.id, person4.id, person5.id, normal_person.id]
         expect(json["people"].count).to eq(expected.count)
         listed_ids = json["people"].map { |p| p["id"].to_i }
@@ -297,7 +297,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(normal_person)
         get :index, params: { page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expected = [person5.id, person4.id]
         expect(json["people"].count).to eq(expected.count)
         listed_ids = json["people"].map { |p| p["id"].to_i }
@@ -316,7 +316,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(normal_person)
         get :index, params: { page: 2, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expected = [person3.id, person2.id]
         expect(json["people"].count).to eq(expected.count)
         listed_ids = json["people"].map { |p| p["id"].to_i }
@@ -335,7 +335,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(person)
         get :index, params: { page: 1 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expected = [normal_person.id, person5.id, person4.id, person3.id, person2.id, person1.id, person.id]
         expect(json["people"].count).to eq(expected.count)
         listed_ids = json["people"].map { |p| p["id"].to_i }
@@ -347,7 +347,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         get :index, params: { page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(0)
       end
     end
@@ -356,7 +356,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         get :index, params: { username_filter: "notthere" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(0)
       end
     end
@@ -370,7 +370,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         person5 = create(:person, username: "pers5", email: "pers5@example.com")
         login_as(person)
         get :index, params: { username_filter: "ers" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(5)
         listed_ids = json["people"].map { |p| p["id"].to_i }
         expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
@@ -383,7 +383,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         person1 = create(:person, username: "pers1", email: "pers1@example.com")
         login_as(person)
         get :index, params: { username_filter: "ers1" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(1)
         listed_ids = json["people"].map { |p| p["id"].to_i }
         expect(listed_ids).to eq([person1.id])
@@ -394,7 +394,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         get :index, params: { email_filter: "notthere" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(0)
       end
     end
@@ -408,7 +408,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         person5 = create(:person, username: "pers5", email: "pers5@example.com")
         login_as(person)
         get :index, params: { email_filter: "ers" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(5)
         listed_ids = json["people"].map { |p| p["id"].to_i }
         expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
@@ -420,7 +420,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         person1 = create(:person, username: "pers1", email: "pers1@example.com")
         login_as(person)
         get :index, params: { email_filter: "ers1" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(1)
         listed_ids = json["people"].map { |p| p["id"].to_i }
         expect(listed_ids).to eq([person1.id])
@@ -437,7 +437,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(person)
         get :index, params: { email_filter: "example.com", username_filter: "pers" }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(5)
         listed_ids = json["people"].map { |p| p["id"].to_i }
         expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
@@ -451,7 +451,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         login_as(person)
         get :index, params: { email_filter: "example.com", username_filter: "pers", page: 1, per_page: 2 }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["people"].count).to eq(2)
         listed_ids = json["people"].map { |p| p["id"].to_i }
         expect(listed_ids.sort).to eq([person5.id, person4.id].sort)
@@ -465,7 +465,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         get :show, params: { id: person.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         # expect(json["person"]).to eq(person_json(person))
         expect(person_json(json["person"])).to be true
       end
@@ -506,7 +506,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         new_name = "Joe Foo"
         patch :update, params: { id: person.id, person: { email: new_email, name: new_name, username: new_username,
                                                                    gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: "fr" } }
-        expect(response).to be_success
+        expect(response).to be_successful
         per = person.reload
         expect(per.username).to eq(new_username)
         expect(per.email).to eq(new_email)
@@ -537,7 +537,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect(rec_person.recommended).to be_falsey
         login_as(person)
         patch :update, params: { id: rec_person.id, person: { recommended: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(rec_person.reload.recommended).to be_truthy
       end
     end
@@ -548,7 +548,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect(rec_person.recommended).to be_falsey
         login_as(person)
         patch :update, params: { id: rec_person.id, person: { recommended: true } }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(rec_person.reload.recommended).to be_truthy
       end
     end

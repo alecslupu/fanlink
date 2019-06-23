@@ -28,7 +28,7 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-              attachment.instance.product.internal_name
+            attachment.instance.product.internal_name
           end
         end
         EOE
@@ -96,7 +96,7 @@ module AttachmentSupport
           if attachment.instance.class.to_s == "Product"
             attachment.instance.internal_name
           else
-              attachment.instance.product.internal_name
+            attachment.instance.product.internal_name
           end
         end
       EOE

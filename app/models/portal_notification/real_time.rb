@@ -8,9 +8,7 @@ class PortalNotification
 
     def update_push
       if pending? && self.send_me_at > Time.zone.now
-        if current_job = get_job
-          current_job.destroy
-        end
+        get_job.try(:destroy)
         enqueue_push
       end
     end

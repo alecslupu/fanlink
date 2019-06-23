@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::Round, type: :model do
 
@@ -15,7 +15,12 @@ RSpec.describe Trivia::Round, type: :model do
     end
   end
 
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe ".game_id" do
+    it "matches the trivia game id" do
+      round = create :started_trivia_round
+      expect(round.game_id).to eq(round.trivia_game_id)
+    end
+  end
 
   context "complete round" do
     it "" do
@@ -65,7 +70,8 @@ RSpec.describe Trivia::Round, type: :model do
 
         question = round.reload.questions.first(value).last
 
-        result = round.start_date + (5 * (value-1)).seconds
+        # 7 = time_limit + cooldown 
+        result = round.start_date + (7 * (value - 1)).seconds
 
         expect(question.start_date - result).to eq(0)
         expect(question.question_order).to eq(value)
@@ -87,8 +93,8 @@ RSpec.describe Trivia::Round, type: :model do
         time = DateTime.now.to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
-        # 46 = 10*1 seconds duration + 9*6 timeouts
-        result = time + 46.seconds
+        # 46 = 10*1 seconds duration + 10*6 timeouts
+        result = time + 64.seconds
         expect(round.end_date_with_cooldown - result).to eq(0)
       end
     end

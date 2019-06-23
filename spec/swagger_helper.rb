@@ -32,6 +32,41 @@ RSpec.configure do |config|
       }
 
     },
+    "v2/swagger.json" => {
+      swagger: "2.0",
+      info: {
+        title: "API V2",
+        version: "v2"
+      },
+      paths: {},
+
+      securityDefinitions: {
+        Bearer: {
+          description: "...",
+          type: :apiKey,
+          name: "Authorization",
+          in: :header
+        }
+      }
+
+    },
+    "v3/swagger.json" => {
+      swagger: "2.0",
+      info: {
+        title: "API V3",
+        version: "v3"
+      },
+      paths: {},
+
+      securityDefinitions: {
+        Bearer: {
+          description: "...",
+          type: :apiKey,
+          name: "Authorization",
+          in: :header
+        }
+      }
+    },
     "v4/swagger.json" => {
       swagger: "2.0",
       info: {
@@ -48,6 +83,60 @@ RSpec.configure do |config|
       },
       paths: {},
       definitions: {
+        session_jwt: {
+          type: :object,
+          properties: {
+            person:   {
+              type: :object,
+              properties: {
+                id:                { type: :integer },
+                username:          { type: :string },
+                name:              { type: :string },
+                gender:            { type: :string },
+                city:              { type: :string },
+                country_code:      { type: :string },
+                birthdate:         { type: :datetime },
+                biography:         { type: :string },
+                picture_url:       { type: :string },
+                product_account:   { type: :boolean },
+                recommended:       { type: :boolean },
+                chat_banned:       { type: :boolean },
+                tester:            { type: :boolean },
+                terminated:        { type: :boolean },
+                terminated_reason: { type: :string },
+                designation:       { type: :string },
+                role:              { type: :string },
+                do_not_message_me: { type: :boolean },
+                pin_messages_from: { type: :boolean },
+                auto_follow:       { type: :boolean },
+                num_followers:     { type: :integer },
+                num_following:     { type: :integer },
+                facebookid:        { type: :integer },
+                facebook_picture_url: { type: :string},
+                badge_points:      { type: :integer },
+                level:             { type: :integer },
+                created_at:        { type: :datetime },
+                updated_at:        { type: :datetime },
+                following_id:      { type: :integer },
+                email:             { type: :string },
+                product: {
+                  type: :object,
+                  properties: {
+                    id:            { type: :integer },
+                    internal_name: { type: :string },
+                    name:          { type: :string },
+                  }
+                },
+                level_progress:    { type: :integer },
+                rewards:           { type: :string },
+                blocked_people:    { type: :integer },
+                permissions:       { type: :integer },
+                pin_messages_to:   { type: :integer },
+                token:             { type: :string },
+              }
+            }
+          }
+        },
         person_mini: {
           type: :object,
           properties: {
@@ -57,6 +146,16 @@ RSpec.configure do |config|
             designation: { type: :string },
             facebook_picture_url:  { type: :string },
             badge_points:  { type: :integer }
+          }
+        },
+        trivia_user_subscribed: {
+          type: :object,
+          properties: {
+            game_id: { type: :integer },
+            person_id: { type: :integer },
+            subscribed: { type: :boolean },
+            user_enroled: { type: :boolean },
+            user_notification: { type: :boolean }
           }
         },
         trivia_game_prize: {
@@ -77,7 +176,8 @@ RSpec.configure do |config|
             start_date:  { type: :integer },
             end_date:  { type: :integer },
             question_size: { type: :integer },
-            complexity: { type: :integer }
+            complexity: { type: :integer },
+            status: { type: :string }
           }
         },
         trivia_round_list: {
@@ -133,7 +233,7 @@ RSpec.configure do |config|
             leaderboard: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/trivia_games_leaderboard"
+                "$ref" => "#/definitions/trivia_rounds_leaderboard"
               }
             }
           },
@@ -166,8 +266,8 @@ RSpec.configure do |config|
           type: :object,
           properties: {
               id: { type: :integer },
-              start_date:{ type: :integer },
-              end_date:{ type: :integer },
+              start_date: { type: :integer },
+              end_date: { type: :integer },
               long_name: { type: :string },
               short_name: { type: :string },
               description: { type: :string },
@@ -176,10 +276,12 @@ RSpec.configure do |config|
               leaderboard_size: { type: :integer },
               prize_count: { type: :integer },
               room_id: { type: :integer },
+              status: { type: :string },
+              picture: { type: :string },
               user_enroled: { type: :boolean },
               user_notification: { type: :boolean }
           },
-          required: ['trivia_game_id']
+          required: ["trivia_game_id"]
         }
       }
     }

@@ -33,6 +33,7 @@ gem "redis"
 gem "redis-namespace"
 gem "redis-rails"
 
+gem "httparty", "0.16.4"
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
 
@@ -61,8 +62,9 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "factory_bot_rails"
   gem "fuubar"
-  gem "rubocop-rails"
+  # gem "rubocop-rails"
   gem "rubocop-rails_config"
+  gem "rubocop-rspec"
 end
 
 group :development do
@@ -175,12 +177,8 @@ gem "erubis"
 group :development, :test do
     # gem "rspec-rails-swagger"
     # gem "apigen", path: "lib/gems/apigen"
-    # gem "rswag-specs"
+    gem "rswag-specs"
 end
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
-
-group :test do
-    gem 'rswag-specs'
-end

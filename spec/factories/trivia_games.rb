@@ -33,7 +33,7 @@ FactoryBot.define do
     leaderboard_size { 5 }
 
     transient do
-      with_leaderboard {false}
+      with_leaderboard { false }
     end
 
     factory :full_trivia_game do

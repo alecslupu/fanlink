@@ -12,7 +12,12 @@
 
 module Trivia
   class QuestionLeaderboard < ApplicationRecord
+    has_paper_trail
     belongs_to :question, class_name: "Trivia::Question", foreign_key: :trivia_question_id
     belongs_to :person, class_name: "Person"
+
+    rails_admin do
+
+    end
   end
 end

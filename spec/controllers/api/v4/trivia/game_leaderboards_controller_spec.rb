@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::V4::Trivia::GameLeaderboardsController, type: :controller do
   # TODO: auto-generated

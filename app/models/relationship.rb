@@ -24,7 +24,7 @@ class Relationship < ApplicationRecord
   validate :valid_status_transition
 
   scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
-  scope :for_people, -> (person1, person2) { where(requested_to: [person1, person2]).where(requested_by: [person1, person2]) }
+  scope :for_people, -> (source_person, target_person) { where(requested_to: [source_person, target_person]).where(requested_by: [source_person, target_person]) }
   scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
 
   def person_involved?(person)

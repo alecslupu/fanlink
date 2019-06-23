@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::Subscriber, type: :model do
   context "Valid factory" do
@@ -13,4 +13,13 @@ RSpec.describe Trivia::Subscriber, type: :model do
       end
     end
   end
+
+  describe ".game_id" do
+    it "matches the trivia game id" do
+      subscriber = create :trivia_subscriber
+      expect(subscriber.game_id).to eq(subscriber.trivia_game_id)
+    end
+  end
+
+
 end

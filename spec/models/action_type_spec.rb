@@ -79,6 +79,7 @@ RSpec.describe ActionType, type: :model do
         should have_many(:badges)
         should have_many(:badge_actions)
         should have_many(:assigned_rewards)
+        should have_many(:hacked_metrics)
         should have_many(:rewards).through(:assigned_rewards)
       end
     end

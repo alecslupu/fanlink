@@ -9,7 +9,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
         login_as(person)
         expected = create_list(:merchandise, 2)
         get :index
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json["merchandise"].count).to eq(expected.size)
         expect(merchandise_json(json["merchandise"].first)).to be_truthy
         expect(merchandise_json(json["merchandise"].last)).to be_truthy

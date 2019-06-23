@@ -14,7 +14,7 @@
 
 FactoryBot.define do
   factory :trivia_available_answer, class: "Trivia::AvailableAnswer" do
-    question { create(:trivia_question) }
+    question { create(:trivia_available_question) }
     name { Faker::Lorem.question(4) }
     hint { Faker::Lorem.words(5) }
     is_correct { false }
@@ -22,7 +22,7 @@ FactoryBot.define do
 
 
     factory :correct_trivia_available_answer do
-      is_correct{ true }
+      is_correct { true }
     end
 
     factory :wrong_trivia_available_answer do

@@ -16,8 +16,8 @@ class Message
 
   private
     def push_mentions
-      message_mentions.each do |m|
-        Delayed::Job.enqueue(MessageMentionPushJob.new(m.id))
+      message_mentions.each do |mention|
+        Delayed::Job.enqueue(MessageMentionPushJob.new(mention.id))
       end
     end
   end

@@ -12,8 +12,8 @@ class Person
     end
 
     def do_auto_follows
-      Person.where(auto_follow: true).each do |p|
-        follow(p)
+      Person.where(auto_follow: true).each do |person|
+        follow(person)
       end
     end
 

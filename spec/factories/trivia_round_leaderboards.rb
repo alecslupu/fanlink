@@ -17,7 +17,7 @@ FactoryBot.define do
     round { create(:trivia_round) }
     points { Faker::Number.between(0, 10000) }
     position { Faker::Number.between(0, 10000) }
-    average_time { Faker::Number.decimal(0, 6)}
+    average_time { Faker::Number.decimal(0, 6) }
     person { create(:person) }
   end
 end

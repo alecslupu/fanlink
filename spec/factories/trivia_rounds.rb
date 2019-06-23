@@ -19,6 +19,8 @@ FactoryBot.define do
     game { create(:trivia_game) }
     leaderboard_size { game.leaderboard_size }
     status { :locked }
+    start_date { 30.minutes.ago   }
+    end_date { 10.minutes.from_now }
 
     transient do
       with_leaderboard { false }
@@ -26,7 +28,7 @@ FactoryBot.define do
 
     factory :started_trivia_round do
       start_date { 30.minutes.ago   }
-      end_date { 10.minutes.from_now}
+      end_date { 10.minutes.from_now }
     end
 
     factory :past_trivia_round do
@@ -48,7 +50,7 @@ FactoryBot.define do
     end
 
     after :create do |round, options|
-      create_list :trivia_question, 10, round: round, with_leaderboard: options.with_leaderboard
+      create_list :trivia_single_choice_question, 10, round: round, with_leaderboard: options.with_leaderboard
     end
   end
 end
