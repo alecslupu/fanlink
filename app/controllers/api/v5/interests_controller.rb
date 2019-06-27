@@ -8,7 +8,22 @@ class Api::V5::InterestsController < Api::V4::InterestsController
     if params.has_key?(:interest_ids)
       interest_ids = params[:interest_ids].split(",")
       if interest_ids.length.between? 3, 5
-        @people = Person.joins(:interests).where(interests: { id: interest_ids })
+        @people = Person.joins(:interests).where(interests: {id: interest_ids})
+        return_the @people, handler: tpl_handler
+      else
+        render_422 _("Please select between 3 and 5 interests.")
+      end
+    else
+      render_404
+    end
+  end
+
+  def match
+    p params.inspect
+    if params.has_key?(:interest_ids)
+      interest_ids = params[:interest_ids].split(",")
+      if interest_ids.length.between? 3, 5
+        @people = PersonInterest.match(interest_ids.map(&:to_i))
         return_the @people, handler: tpl_handler
       else
         render_422 _("Please select between 3 and 5 interests.")

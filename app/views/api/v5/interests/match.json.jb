@@ -1,0 +1,12 @@
+{
+  matches: @people.map { |p|
+    person = Rails.cache.fetch(["v5", "person", "mini", p.id, p.updated_at.to_i]) {
+      p2 = Person.find(p.id)
+      render partial: "api/v5/people/person_mini", locals: { person: p2 }, handlers: "jb"
+    }
+    {
+      person: person, 
+      matched_interest_ids: p.matched_ids
+    }
+  }
+}
