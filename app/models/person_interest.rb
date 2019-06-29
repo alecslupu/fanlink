@@ -20,6 +20,5 @@ class PersonInterest < ApplicationRecord
       .where("person_interests.person_id != (?)", uid)
       .group("people.id")
       .order("count(person_interests.*) DESC")
-      .limit(15)
   end
 end
