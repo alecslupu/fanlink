@@ -6,7 +6,7 @@ pipelines:
         caches:
           - bundler
         script: # Modify the commands below to build your repository.
-          - gem install bundler
+          - gem install bundler -v '2.0.1'
           - bundle install --path vendor/bundle
           - RAILS_ENV=test bundle exec rake db:reset
           - RAILS_ENV=test bundle exec rake db:setup
