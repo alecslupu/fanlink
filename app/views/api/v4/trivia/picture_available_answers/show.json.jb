@@ -1,0 +1,2 @@
+json = render partial: "app", locals: { answer: @answer }, handler: :jb
+json
