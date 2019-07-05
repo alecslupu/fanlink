@@ -1,9 +1,10 @@
 json = {
-  id: package.id,
-  trivia_game_id: package.trivia_game_id,
-  start_date:  package.start_date,
-  end_date:  package.end_date,
-  package_order: package.package_order,
-  question_size: package.trivia_questions.size
+  id: round.id,
+  game_id: round.trivia_game_id,
+  start_date:  (round.start_date.to_i rescue nil),
+  end_date:  (round.end_date.to_i rescue nil),
+  question_size: round.questions.size,
+  complexity: round.complexity,
+  status: round.status
 }
 json
