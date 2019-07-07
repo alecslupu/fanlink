@@ -27,7 +27,7 @@ class PersonMailer < MandrillMailer::TemplateMailer
       subject: "%{name} - Your certificate" % { name: person.name },
       vars: {
         link: "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{person.product.internal_name}/#{person.name}",
-        name: person.name,
+        name: person_certificate.full_name,
         certificate_name: person_certificate.certificate.short_name
       },
       attachments: [{

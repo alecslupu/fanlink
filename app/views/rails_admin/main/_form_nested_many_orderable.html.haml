@@ -1,13 +1,13 @@
 :javascript
     $(document).ready( function() {
       function refreshSortable() {
-            jQuery('#orderable').find('a').each(function(index) {
+            jQuery('#{form.jquery_namespace(field)} .orderable').find('a').each(function(index) {
                 var target = $(this).attr("href");
                 console.log($(target + " .#{field_order} input").val())
                 $(target + " .#{field_order} input").val(1+index);
             });
       }
-      jQuery('ul#orderable.nav.nav-tabs')
+      jQuery('#{form.jquery_namespace(field)} ul.orderable.nav.nav-tabs')
         .sortable()
         .on( "sortstop", function( event, ui ) { refreshSortable();
         });
@@ -27,7 +27,7 @@
             = form.link_to_add "<i class=\"icon-plus icon-white\"></i> #{wording_for(:link, :new, field.associated_model_config.abstract_model)}".html_safe, field.name, { class: 'btn btn-info' }
     = form.errors_for(field)
     = form.help_for(field)
-    %ul#orderable.nav.nav-tabs
+    %ul.orderable.nav.nav-tabs
 
 .tab-content
     = form.fields_for field.name do |nested_form|

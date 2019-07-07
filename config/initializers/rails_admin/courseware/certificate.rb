@@ -4,6 +4,9 @@ RailsAdmin.config do |config|
   config.model "Certificate" do
     navigation_label "Courseware"
 
+    configure :is_paid do
+    end
+
     show do
       fields :id,
              :long_name,
@@ -45,8 +48,13 @@ RailsAdmin.config do |config|
     list do
       fields :id,
              :short_name,
-             :certificate_order,
-             :status,
+             :certificate_order
+      field :is_paid, :boolean do
+        pretty_value do
+          bindings[:object].is_paid?
+        end
+      end
+      fields :status,
              :certcourses
     end
   end
