@@ -64,6 +64,10 @@ class Certificate < ApplicationRecord
     short_name
   end
 
+  def is_paid?
+    !is_free?
+  end
+
   def self.certificate_order_max_value
     @maxvalue ||= maximum(:certificate_order).to_i
   end
