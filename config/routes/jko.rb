@@ -248,6 +248,11 @@ JkoApi.routes self do
         get "stats" => "posts#stats"
       end
     end
+    resources :interests do
+      collection do
+        get "match" => "interests#match"
+      end
+    end
   end
 
   version 5 do
