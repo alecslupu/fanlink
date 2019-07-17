@@ -227,7 +227,11 @@ JkoApi.routes self do
       resources :certcourses, only: [:index]
     end
     resources :certcourses, only: [:show, :create, :destroy]
-    resources :person_certificates, only: [:create]
+    resources :person_certificates, only: [:create] do
+      collection do
+        get ":unique_id" => "person_certificates#show"
+      end
+    end
     resources :person_certcourses, only: [:create]
 
     resources :messages, except: %i[ create index show update ] do
