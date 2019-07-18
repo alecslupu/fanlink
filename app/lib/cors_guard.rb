@@ -8,6 +8,7 @@ class CorsGuard
     https://courses.can-ed.com
     https://staging.can-ed.com
     http://alecslupu.go.ro
+
     http://alecslupu.go.ro:8082
   )
 
