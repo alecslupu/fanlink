@@ -83,6 +83,16 @@ RSpec.configure do |config|
       },
       paths: {},
       definitions: {
+        certificate_information: {
+          type: :object,
+          certificate: {
+            type: :object,
+            properties: {
+              name: { type: :string },
+              issue_: { type: :datetime }
+            }
+          }
+        },
         session_jwt: {
           type: :object,
           properties: {

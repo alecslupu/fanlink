@@ -13,6 +13,46 @@
     }
   },
   "paths": {
+    "/person_certificates/{unique_id}": {
+      "get": {
+        "summary": "Show the subscription information",
+        "tags": [
+          "Certificates"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "X-App",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "X-Current-Product",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "unique_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "displays valid certificate",
+            "schema": {
+              "$ref": "#/definitions/certificate_information"
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/session/token": {
       "post": {
         "summary": "generates a  valid JWT",
@@ -737,6 +777,20 @@
     }
   },
   "definitions": {
+    "certificate_information": {
+      "type": "object",
+      "certificate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "issue_": {
+            "type": "datetime"
+          }
+        }
+      }
+    },
     "session_jwt": {
       "type": "object",
       "properties": {

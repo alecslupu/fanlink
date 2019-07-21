@@ -3,6 +3,8 @@ class Api::V4::PersonCertificatesController < ApiController
   include Magick
 
   load_up_the Certificate, from: :certificate_id
+  skip_before_action :require_login, :check_banned, only: [ :show ]
+
 
   def create
     @person_certificate = PersonCertificate.find_by(certificate_id: params[:certificate_id], person_id: @current_user.id)
@@ -26,6 +28,11 @@ class Api::V4::PersonCertificatesController < ApiController
         render_422(_("Something went wrong."))
       end
     end
+  end
+
+  def show
+    @person_certificate = PersonCertificate.where(unique_id: params[:unique_id]).first!
+    render :show, handler: tpl_handler
   end
 
   protected
