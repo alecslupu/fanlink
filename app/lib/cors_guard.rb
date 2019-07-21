@@ -24,7 +24,7 @@ class CorsGuard
   end
 
   def self.allow_from?(source)
-    ALWAYS_ALLOW.include?(source) || self.allow_from_known_fqdn(source)
+    ALWAYS_ALLOW.include?(source) || !self.allow_from_known_fqdn(source)
   end
 
   def self.allow_from_known_fqdn(source)
