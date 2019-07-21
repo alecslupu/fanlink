@@ -22,6 +22,7 @@ class CertificateCertcourse < ApplicationRecord
 
   scope :for_certificate, -> (certificate) { where(certificate_id: certificate.id) }
   scope :for_certcourse, -> (certcourse) { where(certcourse_id: certcourse.id) }
+  scope :for_product, -> (product) { where(product_id: product.id) }
 
   validates_uniqueness_of :certcourse_id, scope: :certificate_id
   validates_uniqueness_of :certcourse_order, scope: :certificate_id

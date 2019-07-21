@@ -14,6 +14,9 @@
 #
 
 class ImagePage < ApplicationRecord
+
+  scope :for_product, -> (product) { where(product_id: product.id) }
+
   include AttachmentSupport
   acts_as_tenant(:product)
   belongs_to :product
