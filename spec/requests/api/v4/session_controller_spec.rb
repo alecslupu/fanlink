@@ -17,7 +17,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
       response "200", "" do
         let!(:user) { create(:person) }
         schema "$ref": "#/definitions/session_jwt"
-
         run_test!
       end
 
