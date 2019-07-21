@@ -13,7 +13,7 @@ class PersonCertcoursePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all
+      super.for_product(ActsAsTenant.current_tenant)
     end
   end
 end
