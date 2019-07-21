@@ -60,6 +60,7 @@ class PersonCertificate < ApplicationRecord
     # TODO find a better way to write this
     # TODO move it in a job
     where(person_id: user_id, certificate_id: certificate_ids).find_each do |person_certificate|
+      next if person_certificate.is_completed?
       person_certcourses = PersonCertcourse.where(person_id: user_id, certcourse_id: person_certificate.certificate.certcourse_ids).pluck(:is_completed)
       # raise ({c_size: c.certificate.certcourse_ids.size, p_size: person_certcourses.size, pc: person_certcourses}).inspect
       person_certificate.is_completed = (person_certificate.certificate.certcourses.size == person_certcourses.size) && person_certcourses.inject(true, :&)

@@ -4,6 +4,7 @@ json = {
   id: person.id.to_s,
   username: person.username,
   name: person.name,
+  email: person.email,
   gender: person.gender,
   city: person.city,
   country_code: person.country_code,
