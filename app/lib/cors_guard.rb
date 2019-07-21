@@ -6,6 +6,7 @@ class CorsGuard
     https://portal.dev.fanlinkmusic.com
     https://portal.staging.fanlinkmusic.com
     https://portal.fanlinkmusic.com
+    https://portal.fanmusiclink.com
 
     https://can-ed.com
     https://www.can-ed.com
@@ -24,15 +25,6 @@ class CorsGuard
   end
 
   def self.allow_from?(source)
-    ALWAYS_ALLOW.include?(source) || !self.allow_from_known_fqdn(source)
-  end
-
-  def self.allow_from_known_fqdn(source)
-    [
-      source.match('https://(.*\.)?can\-ed\.com').nil?,
-      source.match('https://(.*\.)?fanlinkmusic.com').nil?,
-      source.match('https://(.*\.)?fanmusiclink.com').nil?,
-      source.match('https://(.*\.)?fan\.link').nil?
-    ].any?
+    ALWAYS_ALLOW.include?(source) || !source.match('https://.*\.fan\.link').nil?
   end
 end
