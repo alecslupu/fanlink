@@ -94,7 +94,7 @@ class PersonCertificate < ApplicationRecord
     }
 
     txt = Draw.new
-    img.annotate(txt, 0,0,150, 150, "https://can-ed.com/check/#{unique_id}") do
+    img.annotate(txt, 0,0,150, 150, "https://can-ed.com/certificate-check/#{unique_id}") do
       txt.gravity = Magick::SouthEastGravity
       txt.pointsize = 50
       txt.stroke = "#FFFFFF"
