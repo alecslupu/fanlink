@@ -1,5 +1,6 @@
 json = {
   id: message.id,
+  room_id: message.room_id,
   body: message.parse_content(),
   picture_url: message.picture_url,
   audio_url: message.audio_url,
