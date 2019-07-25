@@ -8,6 +8,7 @@ class PostMessageJob < Struct.new(:message_id, :version)
       if message.room.public?
         msg = {
           id: message.id,
+          room_id: message.room_id,
           body: message.parse_content((version.present? ? version : 0)),
           # picture_id: message.picture_id,
           create_time: message.create_time,

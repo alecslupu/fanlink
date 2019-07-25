@@ -171,6 +171,7 @@ private
       pinned: message.pinned,
       person: {
         id: message.person.id,
+        room_id: message.room_id,
         username: message.person.username,
         name: message.person.name,
         designation: message.person.designation,
