@@ -1,5 +1,6 @@
 json.cache! ["v3", message] do
   json.id message.id
+  json.room_id message.room_id
   json.create_time message.created_at.to_s
   json.body message.parse_content(3)
   json.picture_url message.picture_url
