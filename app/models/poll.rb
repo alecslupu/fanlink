@@ -7,10 +7,10 @@
 #  poll_type_id :integer
 #  start_date   :datetime         not null
 #  duration     :integer          default(0), not null
+#  end_date     :datetime         default(Mon, 28 Jan 2019 16:43:52 UTC +00:00)
 #  poll_status  :integer          default("inactive"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  end_date     :datetime         default(Mon, 28 Jan 2019 16:43:52 UTC +00:00)
 #  description  :jsonb            not null
 #  product_id   :integer          not null
 #
@@ -35,8 +35,8 @@ class Poll < ApplicationRecord
   has_manual_translated :description
 
   scope :assignable, -> {
-    where(poll_type_id: nil).where("end_date > ?", Time.now)
-  }
+          where(poll_type_id: nil).where("end_date > ?", Time.now)
+        }
 
   def closed?
     end_date.to_time.to_i <= Time.now.to_time.to_i
@@ -60,7 +60,7 @@ class Poll < ApplicationRecord
 
   private
 
-    def add_end_date
-      self.end_date = start_date.to_datetime + duration.seconds
-    end
+  def add_end_date
+    self.end_date = start_date.to_datetime + duration.seconds
+  end
 end
