@@ -21,7 +21,8 @@ RailsAdmin.config do |config|
              :background_color_hex,
              :quiz_page,
              :video_page,
-             :image_page
+             :image_page,
+             :download_file_page
     end
 
     list do

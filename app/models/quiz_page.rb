@@ -29,7 +29,6 @@ class QuizPage < ApplicationRecord
   validate :mandatory_checks,  unless: Proc.new { |page| page.is_optional }
   validate :answer_checks
 
-
   def course_name
     certcourse_page.certcourse.to_s
   end
@@ -43,6 +42,9 @@ class QuizPage < ApplicationRecord
     !is_optional?
   end
 
+  def content_type
+    :quiz
+  end
   private
 
     def just_me
@@ -75,9 +77,9 @@ class QuizPage < ApplicationRecord
       end
     end
 
-    def set_certcourse_page_content_type
+  def set_certcourse_page_content_type
       page = CertcoursePage.find(self.certcourse_page_id)
-      page.content_type = "quiz"
+      page.content_type = content_type
       page.save
     end
 end
