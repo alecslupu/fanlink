@@ -11,6 +11,7 @@
 #  document_updated_at   :datetime
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  caption               :text
 #
 
 class DownloadFilePage < ApplicationRecord
@@ -28,7 +29,10 @@ class DownloadFilePage < ApplicationRecord
   after_save :set_certcourse_page_content_type
   validate :just_me
 
-  validates_uniqueness_of :certcourse_page_id
+  validates :caption, presence: true
+  validates :certcourse_page_id, uniqueness: true
+
+  # validates_uniqueness_of :certcourse_page_id
   validates_attachment_presence :document
 
   def course_name
