@@ -10,6 +10,7 @@ RailsAdmin.config do |config|
              :quiz_page,
              :video_page,
              :image_page,
+             :download_file_page,
              :certcourse_page_order,
              :duration,
              :background_color_hex
@@ -26,7 +27,7 @@ RailsAdmin.config do |config|
     end
 
     list do
-      scopes [ nil, :quizes, :videos, :images ]
+      scopes [ nil, :quizes, :videos, :images, :download_files ]
       fields :id,
              :certcourse,
              :content_type,
@@ -34,7 +35,7 @@ RailsAdmin.config do |config|
     end
 
     nested do
-      [:quiz_page, :image_page, :video_page].each do |configured_model|
+      [:quiz_page, :image_page, :video_page, :download_file_page].each do |configured_model|
         field configured_model do
           visible do
             bindings[:object].persisted?

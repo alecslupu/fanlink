@@ -7,14 +7,14 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      field :certcourse_page
+      fields :certcourse_page, :caption
       field :document, :paperclip
     end
     list do
-      fields :id, :course_name, :document, :created_at
+      fields :id, :course_name, :caption, :document, :created_at
     end
     show do
-      fields :id, :certcourse_page, :document
+      fields :id, :certcourse_page, :caption, :document
     end
 
     nested do

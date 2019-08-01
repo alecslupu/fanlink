@@ -20,6 +20,24 @@ class PersonMailer < MandrillMailer::TemplateMailer
     )
   end
 
+  def send_downloaded_file(person, certcourse_page)
+    mandrill_mail(
+      template: "test-certificate",
+      subject: "%{name} - Your certificate" % { name: person.name },
+      vars: {
+        link: "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{person.product.internal_name}/#{person.name}",
+        name: person.name,
+        course_name: certcourse_page.certcourse.short_name
+      },
+      attachments: [{
+                      content: File.read(Paperclip.io_adapters.for(certcourse_page.download_file_page.document).path),
+                      name: certcourse_page.download_file_page.document_file_name,
+                      type: "application/pdf"
+                    }],
+      to: { email: person.email, name: person.name }
+    )
+  end
+
   def send_certificate(person, person_certificate, email)
     to_email = email.nil? ? person.email : email
     mandrill_mail(
