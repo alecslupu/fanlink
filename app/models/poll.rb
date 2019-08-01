@@ -34,6 +34,8 @@ class Poll < ApplicationRecord
 
   has_manual_translated :description
 
+  accepts_nested_attributes_for :poll_options, allow_destroy: true
+
   scope :assignable, -> {
           where(poll_type_id: nil).where("end_date > ?", Time.now)
         }
