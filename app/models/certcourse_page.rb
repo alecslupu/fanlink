@@ -45,6 +45,14 @@ class CertcoursePage < ApplicationRecord
     return "image" if image_page.present?
   end
 
+  def media_content_type
+    return image_page.image_content_type if image?
+    return video_page.video_content_type if video?
+    return download_file_page.document_content_type if download?
+
+    nil
+  end
+
   validates_format_of :background_color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 
   def media_url
