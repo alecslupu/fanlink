@@ -1,0 +1,2 @@
+class MerchandisePolicy < ApplicationPolicy
+end

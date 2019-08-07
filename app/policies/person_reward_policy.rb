@@ -1,0 +1,2 @@
+class PersonRewardPolicy < ApplicationPolicy
+end

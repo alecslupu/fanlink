@@ -1,0 +1,2 @@
+class QuestActivityPolicy < ApplicationPolicy
+end

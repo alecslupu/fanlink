@@ -1,0 +1,2 @@
+class InterestPolicy < ApplicationPolicy
+end

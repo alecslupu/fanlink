@@ -1,0 +1,2 @@
+class RewardPolicy < ApplicationPolicy
+end

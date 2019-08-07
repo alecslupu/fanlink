@@ -1,5 +1,4 @@
 class MessagePolicy < ApplicationPolicy
-
   def unhide_action?
     raise "not implemented"
     record.hidden?

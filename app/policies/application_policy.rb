@@ -72,9 +72,8 @@ class ApplicationPolicy
   # Rails admin
 
   def select_product?
-    user && user.super_admin? && user.product.internal_name == 'admin'
+    user && user.super_admin? && user.product.internal_name == "admin"
   end
-
 
   class Scope
     attr_reader :user, :scope

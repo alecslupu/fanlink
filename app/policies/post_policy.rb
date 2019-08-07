@@ -1,5 +1,4 @@
 class PostPolicy < ApplicationPolicy
-
   def attributes_for(action)
     case action
     when :create

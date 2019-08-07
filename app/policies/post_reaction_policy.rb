@@ -1,0 +1,2 @@
+class PostReactionPolicy < ApplicationPolicy
+end

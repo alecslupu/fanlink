@@ -1,0 +1,2 @@
+class LevelProgressPolicy < ApplicationPolicy
+end

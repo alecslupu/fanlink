@@ -1,0 +1,2 @@
+class MessageMentionPolicy < ApplicationPolicy
+end

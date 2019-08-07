@@ -1,0 +1,2 @@
+class ProductBeaconPolicy < ApplicationPolicy
+end

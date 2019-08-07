@@ -1,0 +1,2 @@
+class RoomMembershipPolicy < ApplicationPolicy
+end

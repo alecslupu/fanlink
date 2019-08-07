@@ -1,0 +1,2 @@
+class PersonPollOptionPolicy < ApplicationPolicy
+end

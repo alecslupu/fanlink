@@ -1,5 +1,4 @@
 class ProductPolicy < ApplicationPolicy
-
   def show?
     raise "not implemented"
     true

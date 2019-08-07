@@ -1,0 +1,2 @@
+class PostCommentReportPolicy < ApplicationPolicy
+end

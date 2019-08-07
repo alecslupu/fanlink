@@ -1,0 +1,2 @@
+class PollPolicy < ApplicationPolicy
+end

@@ -1,0 +1,2 @@
+class PostCommentMentionPolicy < ApplicationPolicy
+end

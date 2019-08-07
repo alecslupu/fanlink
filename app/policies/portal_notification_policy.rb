@@ -1,5 +1,4 @@
 class PortalNotificationPolicy < ApplicationPolicy
-
   def create?
     raise "not implemented"
     true
@@ -15,7 +14,7 @@ class PortalNotificationPolicy < ApplicationPolicy
   def attributes_for(action)
     case action
     when :new
-      {send_me_at: (Time.zone.now + 1.hour).beginning_of_hour}
+      { send_me_at: (Time.zone.now + 1.hour).beginning_of_hour }
     when :create
       { trigger_admin_notification: true }
     when :update
@@ -26,6 +25,5 @@ class PortalNotificationPolicy < ApplicationPolicy
   end
 
   class Scope < Scope
-
   end
 end

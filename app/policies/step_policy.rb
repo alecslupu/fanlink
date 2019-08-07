@@ -1,0 +1,2 @@
+class StepPolicy < ApplicationPolicy
+end

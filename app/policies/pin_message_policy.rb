@@ -1,0 +1,2 @@
+class PinMessagePolicy < ApplicationPolicy
+end

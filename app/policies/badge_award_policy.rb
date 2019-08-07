@@ -1,0 +1,2 @@
+class BadgeAwardPolicy < ApplicationPolicy
+end

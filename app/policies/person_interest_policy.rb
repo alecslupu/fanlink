@@ -1,0 +1,2 @@
+class PersonInterestPolicy < ApplicationPolicy
+end
