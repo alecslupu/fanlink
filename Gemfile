@@ -62,7 +62,7 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "factory_bot_rails"
   gem "fuubar"
-  gem "rubocop-rails"
+  gem 'rubocop-rails'
   gem "rubocop-rails_config"
   gem "rubocop-rspec"
 end
