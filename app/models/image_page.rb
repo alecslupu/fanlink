@@ -21,20 +21,22 @@ class ImagePage < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
+  belongs_to :certcourse_page
+
   has_course_image_called :image
   validates_attachment_presence :image
 
   validates_uniqueness_of :certcourse_page_id
 
-  belongs_to :certcourse_page
-  has_course_image_called :image
-
-  validates_attachment_presence :image
   after_save :set_certcourse_page_content_type
   validate :just_me
 
   def course_name
     certcourse_page.certcourse.to_s
+  end
+
+  def content_type
+    :image
   end
 
   private
@@ -50,7 +52,7 @@ class ImagePage < ApplicationRecord
 
     def set_certcourse_page_content_type
       page = CertcoursePage.find(self.certcourse_page_id)
-      page.content_type = "image"
+      page.content_type = content_type
       page.save
     end
 end
