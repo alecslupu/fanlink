@@ -1,13 +1,16 @@
 class PersonCertcoursePolicy < ApplicationPolicy
   def destroy?
+    raise "not implemented"
     false
   end
 
   def forget_action?
+    raise "not implemented"
     true
   end
 
   def reset_progress_action?
+    raise "not implemented"
     true
   end
 

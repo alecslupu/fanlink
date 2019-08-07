@@ -7,15 +7,19 @@ class ApplicationPolicy
   end
 
   def index?
-    true
+    # true
+    false
   end
 
+
   def show?
-    true
+    # true
+    false
   end
 
   def create?
-    true
+    # true
+    false
   end
 
   def new?
@@ -23,7 +27,8 @@ class ApplicationPolicy
   end
 
   def update?
-    true
+    # true
+    false
   end
 
   def edit?
@@ -31,31 +36,37 @@ class ApplicationPolicy
   end
 
   def destroy?
+    # false
     false
   end
 
   # Rails_admin
   #
   def export?
-    true
+    # true
+    false
   end
 
   def show_in_app?
+    # false
     false
   end
 
   def history?
-    true
+    # true
+    false
   end
 
   def dashboard?
-    true
+    user && user.some_admin?
   end
 
   def select_product_dashboard?
-    true
+    # true
+    false
   end
   def generate_game_action?
+    # false
     false
   end
   # Rails admin

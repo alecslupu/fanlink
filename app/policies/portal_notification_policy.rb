@@ -1,11 +1,13 @@
 class PortalNotificationPolicy < ApplicationPolicy
 
   def create?
+    raise "not implemented"
     true
   end
   alias :new? :create?
 
   def update?
+    raise "not implemented"
     true
   end
   alias :edit? :update?

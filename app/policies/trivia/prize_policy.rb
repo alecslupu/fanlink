@@ -1,7 +1,9 @@
-class Trivia::PrizePolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
+module Trivia
+  class PrizePolicy < ApplicationPolicy
+    class Scope < ApplicationPolicy::Scope
+      def resolve
+        scope.for_product(ActsAsTenant.current_tenant)
+      end
     end
   end
 end
