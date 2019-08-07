@@ -34,6 +34,10 @@ class VideoPage < ApplicationRecord
     certcourse_page.certcourse.to_s
   end
 
+  def content_type
+    :video
+  end
+
   private
 
     def just_me
@@ -47,7 +51,7 @@ class VideoPage < ApplicationRecord
 
     def set_certcourse_page_content_type
       page = CertcoursePage.find(certcourse_page_id)
-      page.content_type = "video"
+      page.content_type = content_type
       page.save
     end
 end

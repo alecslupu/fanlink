@@ -23,7 +23,6 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
         get :show, params: { id: qp.certcourse_page_id }
         expect(response).to have_http_status(200)
-
         qp.answers.each_with_index do |value, k|
           selected_answer = json["certcourse_pages"][0]["quiz"]["answers"][k]
           expect(selected_answer["is_selected"]).to be_falsey
