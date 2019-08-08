@@ -30,6 +30,7 @@ class PortalAccess < ApplicationRecord
               2 => "#{field}_update".to_sym,
               3 => "#{field}_delete".to_sym,
               4 => "#{field}_export".to_sym,
+              4 => "#{field}_history".to_sym,
               :column => field
   end
 

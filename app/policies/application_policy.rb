@@ -7,19 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    # true
-    false
+    access.send([module_name, "read?"].join("_").to_sym) rescue false
   end
 
-
   def show?
-    # true
-    false
+    access.send([module_name, "read?"].join("_").to_sym) rescue false
   end
 
   def create?
-    # true
-    false
+    access.send([module_name, "create?"].join("_").to_sym) rescue false
   end
 
   def new?
@@ -27,36 +23,31 @@ class ApplicationPolicy
   end
 
   def update?
-    # true
-    false
+    access.send([module_name, "update?"].join("_").to_sym) rescue false
   end
 
   def edit?
-    update?
+    access.send([module_name, "update?"].join("_").to_sym) rescue false
   end
 
   def destroy?
-    # false
-    false
+    access.send([module_name, "delete?"].join("_").to_sym) rescue false
   end
 
   # Rails_admin
   #
   def export?
-    # true
-    false
+    access.send([module_name, "export?"].join("_").to_sym) rescue false
+  end
+
+  def history?
+    access.send([module_name, "history?"].join("_").to_sym) rescue false
   end
 
   def show_in_app?
     # false
     false
   end
-
-  def history?
-    # true
-    false
-  end
-
   def dashboard?
     user && user.some_admin?
   end
@@ -65,6 +56,7 @@ class ApplicationPolicy
     # true
     false
   end
+
   def generate_game_action?
     # false
     false
@@ -73,6 +65,16 @@ class ApplicationPolicy
 
   def select_product?
     user && user.super_admin? && user.product.internal_name == "admin"
+  end
+
+  protected
+
+  def module_name
+    raise "Not implemented - #{self.class.name}"
+  end
+
+  def access
+    @portal ||= PortalAccess.where(person_id: user.id).first_or_initialize
   end
 
   class Scope

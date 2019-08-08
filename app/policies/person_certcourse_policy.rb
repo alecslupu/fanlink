@@ -13,10 +13,15 @@ class PersonCertcoursePolicy < ApplicationPolicy
     raise "not implemented"
     true
   end
-
   class Scope < Scope
     def resolve
       super.for_product(ActsAsTenant.current_tenant)
     end
   end
+
+  protected
+  def module_name
+    "courseware"
+  end
+
 end

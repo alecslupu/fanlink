@@ -1,9 +1,4 @@
 module Trivia
-  class QuestionLeaderboardPolicy < ApplicationPolicy
-    class Scope < ApplicationPolicy::Scope
-      def resolve
-        scope.for_product(ActsAsTenant.current_tenant)
-      end
-    end
+  class QuestionLeaderboardPolicy < TriviaPolicy
   end
 end
