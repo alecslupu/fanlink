@@ -18,6 +18,10 @@
 class Poll < ApplicationRecord
   include TranslationThings
 
+  after_initialize do
+    self.end_date = Time.zone.now + 1.month
+  end
+
   enum poll_type: %i[ post ]
   enum poll_status: %i[ inactive active disabled ]
 
