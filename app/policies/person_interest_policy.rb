@@ -1,2 +1,2 @@
-class PersonInterestPolicy < PersonInterestPolicy
+class PersonInterestPolicy < InterestModulePolicy
 end
