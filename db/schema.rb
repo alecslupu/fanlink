@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190810070510) do
+ActiveRecord::Schema.define(version: 20190810163933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -810,8 +810,8 @@ ActiveRecord::Schema.define(version: 20190810070510) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.text "name", null: false
-    t.text "internal_name", null: false
+    t.string "name", null: false
+    t.string "internal_name", null: false
     t.boolean "enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -838,6 +838,11 @@ ActiveRecord::Schema.define(version: 20190810070510) do
     t.integer "toolbar_style", default: 1
     t.string "color_accessory", default: "000000"
     t.integer "features", default: 0, null: false
+    t.string "contact_email"
+    t.text "privacy_url"
+    t.text "terms_url"
+    t.text "android_url"
+    t.text "ios_url"
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end
