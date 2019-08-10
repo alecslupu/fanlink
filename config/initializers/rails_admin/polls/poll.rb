@@ -4,8 +4,6 @@ RailsAdmin.config do |config|
   config.model "Poll" do
     navigation_label "Polls"
 
-
-
     show do
       fields :id,
              :poll_type,
@@ -20,7 +18,9 @@ RailsAdmin.config do |config|
     edit do
       fields :id,
              :poll_type
-      field :poll_type_id, :integer
+      field :poll_type_id, :integer do
+        label "Post id"
+      end
       fields  :start_date,
              :end_date,
              :poll_status,
