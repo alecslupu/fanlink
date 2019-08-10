@@ -23,6 +23,9 @@ class PollOption < ApplicationRecord
 
   has_manual_translated :description
 
+  scope :for_product, -> (product) { joins(:poll).where(polls: { product_id: product.id } ) }
+
+
   def voted?(person)
     people.present? && people.exists?(person.id)
   end
