@@ -1,4 +1,10 @@
 class Api::V4::PersonCertcoursesController < ApiController
+
+  def send_email
+    current_user.send_course_attachment_email(certcourse_page)
+    render json: { message: _("Email sent") }
+  end
+
   def create
     register_certcourse_progress
 
