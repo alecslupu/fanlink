@@ -40,7 +40,8 @@ class PortalAccess < ApplicationRecord
             3 => :chat_delete,
             4 => :chat_export,
             5 => :chat_history,
-            5 => :chat_hide,
+            6 => :chat_hide,
+            7 => :chat_ignore,
             column: :chat
 
   has_flags 1 => :courseware_read,

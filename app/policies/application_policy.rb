@@ -7,15 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    super_admin? || access.send([module_name, "read?"].join("_").to_sym)
+    has_permission? :read?
   end
 
   def show?
-    super_admin? || access.send([module_name, "read?"].join("_").to_sym)
+    has_permission? :read?
   end
 
   def create?
-    super_admin? || access.send([module_name, "create?"].join("_").to_sym)
+    has_permission? __method__
   end
 
   def new?
@@ -23,25 +23,25 @@ class ApplicationPolicy
   end
 
   def update?
-    super_admin? || access.send([module_name, "update?"].join("_").to_sym)
+    has_permission? __method__
   end
 
   def edit?
-    super_admin? || access.send([module_name, "update?"].join("_").to_sym)
+    update?
   end
 
   def destroy?
-    super_admin? || access.send([module_name, "delete?"].join("_").to_sym)
+    has_permission? :delete?
   end
 
   # Rails_admin
   #
   def export?
-    super_admin? || access.send([module_name, "export?"].join("_").to_sym)
+    has_permission? __method__
   end
 
   def history?
-    super_admin? || access.send([module_name, "history?"].join("_").to_sym)
+    has_permission? __method__
   end
 
   def show_in_app?
@@ -68,6 +68,10 @@ class ApplicationPolicy
   end
 
   protected
+  def has_permission?(permission)
+    super_admin? || access.send([module_name, permission].join("_").to_sym)
+  end
+
   def super_admin?
     user && user.super_admin? && user.product.internal_name == "admin"
   end
