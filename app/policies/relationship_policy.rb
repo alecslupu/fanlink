@@ -1,2 +1,2 @@
-class RelationshipPolicy < ApplicationPolicy
+class RelationshipPolicy < UserModulePolicy
 end

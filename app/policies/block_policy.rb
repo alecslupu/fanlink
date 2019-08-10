@@ -1,2 +1,2 @@
-class BlockPolicy < ApplicationPolicy
+class BlockPolicy < ChatModulePolicy
 end

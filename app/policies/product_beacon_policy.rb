@@ -1,2 +1,2 @@
-class ProductBeaconPolicy < ApplicationPolicy
+class ProductBeaconPolicy < QuestModulePolicy
 end

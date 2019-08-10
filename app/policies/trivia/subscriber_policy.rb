@@ -1,4 +1,4 @@
 module Trivia
-  class SubscriberPolicy < TriviaPolicy
+  class SubscriberPolicy < TriviaModulePolicy
   end
 end

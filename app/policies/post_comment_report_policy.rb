@@ -1,2 +1,2 @@
-class PostCommentReportPolicy < ApplicationPolicy
+class PostCommentReportPolicy < PostModulePolicy
 end

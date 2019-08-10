@@ -1,2 +1,2 @@
-class InterestPolicy < ApplicationPolicy
+class InterestPolicy < InterestModulePolicy
 end

@@ -1,2 +1,2 @@
-class PersonPolicy < ApplicationPolicy
+class PersonPolicy < UserModulePolicy
 end

@@ -1,5 +1,5 @@
 module Trivia
-  class GamePolicy < TriviaPolicy
+  class GamePolicy < TriviaModulePolicy
     def generate_game_action?
       raise "Not implemented"
       true

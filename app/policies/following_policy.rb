@@ -1,2 +1,2 @@
-class FollowingPolicy < ApplicationPolicy
+class FollowingPolicy < UserModulePolicy
 end

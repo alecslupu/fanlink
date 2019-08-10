@@ -1,6 +1,2 @@
-class CertificateCertcoursePolicy < ApplicationPolicy
-  protected
-    def module_name
-      "courseware"
-    end
+class CertificateCertcoursePolicy < CoursewareModulePolicy
 end

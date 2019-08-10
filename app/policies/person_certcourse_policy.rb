@@ -1,27 +1,15 @@
-class PersonCertcoursePolicy < ApplicationPolicy
-  def destroy?
-    raise "not implemented"
-    false
-  end
-
+class PersonCertcoursePolicy < CoursewareModulePolicy
   def forget_action?
-    raise "not implemented"
-    true
+    super_admin? || access.send([module_name, "forget?"].join("_").to_sym)
   end
 
   def reset_progress_action?
-    raise "not implemented"
-    true
+    super_admin? || access.send([module_name, "reset?"].join("_").to_sym)
   end
+
   class Scope < Scope
     def resolve
       super.for_product(ActsAsTenant.current_tenant)
     end
   end
-
-  protected
-  def module_name
-    "courseware"
-  end
-
 end

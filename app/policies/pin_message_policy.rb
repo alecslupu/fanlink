@@ -1,2 +1,2 @@
-class PinMessagePolicy < ApplicationPolicy
+class PinMessagePolicy < ChatModulePolicy
 end

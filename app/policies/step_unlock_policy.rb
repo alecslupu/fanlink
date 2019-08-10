@@ -1,2 +1,2 @@
-class StepUnlockPolicy < ApplicationPolicy
+class StepUnlockPolicy < QuestModulePolicy
 end

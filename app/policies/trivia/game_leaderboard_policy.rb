@@ -1,4 +1,4 @@
 module Trivia
-  class GameLeaderboardPolicy < TriviaPolicy
+  class GameLeaderboardPolicy < TriviaModulePolicy
   end
 end

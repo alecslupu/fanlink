@@ -1,4 +1,4 @@
 module Trivia
-  class HangmanAvailableQuestionPolicy < TriviaPolicy
+  class HangmanAvailableQuestionPolicy < TriviaModulePolicy
   end
 end

@@ -1,4 +1,4 @@
-class RoomPolicy < ApplicationPolicy
+class RoomPolicy < ChatModulePolicy
   def attributes_for(action)
     case action
     when :create

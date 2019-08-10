@@ -1,4 +1,4 @@
 module Trivia
-  class SingleChoiceQuestionPolicy < TriviaPolicy
+  class SingleChoiceQuestionPolicy < TriviaModulePolicy
   end
 end

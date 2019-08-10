@@ -1,2 +1,2 @@
-class MessageMentionPolicy < ApplicationPolicy
+class MessageMentionPolicy < ChatModulePolicy
 end

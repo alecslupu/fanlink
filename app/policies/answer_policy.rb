@@ -1,2 +1,2 @@
-class AnswerPolicy < ApplicationPolicy
+class AnswerPolicy < CoursewareModulePolicy
 end

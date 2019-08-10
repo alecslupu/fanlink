@@ -1,4 +1,5 @@
 module Trivia
-  class AnswerPolicy < TriviaPolicy
+  class AnswerPolicy < TriviaModulePolicy
+
   end
 end

@@ -1,2 +1,2 @@
-class BadgeActionPolicy < ApplicationPolicy
+class BadgeActionPolicy < BadgeModulePolicy
 end

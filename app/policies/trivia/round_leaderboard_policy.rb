@@ -1,4 +1,4 @@
 module Trivia
-  class RoundLeaderboardPolicy < TriviaPolicy
+  class RoundLeaderboardPolicy < TriviaModulePolicy
   end
 end

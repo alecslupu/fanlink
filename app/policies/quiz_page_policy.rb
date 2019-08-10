@@ -1,7 +1,2 @@
-class QuizPagePolicy < ApplicationPolicy
-
-  protected
-    def module_name
-      "courseware"
-    end
+class QuizPagePolicy < CoursewareModulePolicy
 end

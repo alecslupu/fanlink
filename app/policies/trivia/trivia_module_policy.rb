@@ -1,5 +1,5 @@
 module Trivia
-  class TriviaPolicy < ApplicationPolicy
+  class TriviaModulePolicy < ApplicationPolicy
 
     class Scope < ApplicationPolicy::Scope
       def resolve

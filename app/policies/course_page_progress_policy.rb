@@ -1,6 +1,2 @@
-class CoursePageProgressPolicy < ApplicationPolicy
-  protected
-    def module_name
-      "courseware"
-    end
+class CoursePageProgressPolicy < CoursewareModulePolicy
 end

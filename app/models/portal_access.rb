@@ -25,14 +25,32 @@ class PortalAccess < ApplicationRecord
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 
-  %w(post chat event merchandise user badge reward quest beacon reporting interest courseware trivia).each do |field|
+  %w(post event merchandise user badge reward quest beacon reporting interest trivia).each do |field|
     has_flags 1 => "#{field}_read".to_sym,
               2 => "#{field}_update".to_sym,
               3 => "#{field}_delete".to_sym,
               4 => "#{field}_export".to_sym,
-              4 => "#{field}_history".to_sym,
-              :column => field
+              5 => "#{field}_history".to_sym,
+              column: field
   end
+
+
+  has_flags 1 => :chat_read,
+            2 => :chat_update,
+            3 => :chat_delete,
+            4 => :chat_export,
+            5 => :chat_history,
+            5 => :chat_hide,
+            column: :chat
+
+  has_flags 1 => :courseware_read,
+            2 => :courseware_update,
+            3 => :courseware_delete,
+            4 => :courseware_export,
+            5 => :courseware_history,
+            6 => :courseware_forget,
+            7 => :courseware_reset,
+            column: :courseware
 
   def summarize
     perms = {}

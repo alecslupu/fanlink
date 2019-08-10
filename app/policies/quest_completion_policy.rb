@@ -1,2 +1,2 @@
-class QuestCompletionPolicy < ApplicationPolicy
+class QuestCompletionPolicy < QuestModulePolicy
 end

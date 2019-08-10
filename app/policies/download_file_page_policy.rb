@@ -1,6 +1,2 @@
-class DownloadFilePagePolicy < ApplicationPolicy
-  protected
-    def module_name
-      "courseware"
-    end
+class DownloadFilePagePolicy < CoursewareModulePolicy
 end

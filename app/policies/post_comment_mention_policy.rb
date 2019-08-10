@@ -1,2 +1,2 @@
-class PostCommentMentionPolicy < ApplicationPolicy
+class PostCommentMentionPolicy < PostModulePolicy
 end

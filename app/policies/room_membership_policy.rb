@@ -1,2 +1,2 @@
-class RoomMembershipPolicy < ApplicationPolicy
+class RoomMembershipPolicy < ChatModulePolicy
 end

@@ -1,9 +1,4 @@
-class PersonQuizPolicy < ApplicationPolicy
-
-  protected
-    def module_name
-      "courseware"
-    end
+class PersonQuizPolicy < CoursewareModulePolicy
   class Scope < Scope
     def resolve
       super.for_product(ActsAsTenant.current_tenant)

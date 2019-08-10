@@ -1,16 +1,4 @@
-class PortalNotificationPolicy < ApplicationPolicy
-  def create?
-    raise "not implemented"
-    true
-  end
-  alias :new? :create?
-
-  def update?
-    raise "not implemented"
-    true
-  end
-  alias :edit? :update?
-
+class PortalNotificationPolicy < UserModulePolicy
   def attributes_for(action)
     case action
     when :new
@@ -22,8 +10,5 @@ class PortalNotificationPolicy < ApplicationPolicy
     else
       {}
     end
-  end
-
-  class Scope < Scope
   end
 end

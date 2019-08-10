@@ -1,4 +1,4 @@
-class PostReportPolicy < ApplicationPolicy
+class PostReportPolicy < PostModulePolicy
   # a message report should not be edited by an admin
   def update?
     raise "not implemented"

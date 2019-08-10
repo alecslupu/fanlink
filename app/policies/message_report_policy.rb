@@ -1,4 +1,4 @@
-class MessageReportPolicy < ApplicationPolicy
+class MessageReportPolicy < ChatModulePolicy
   # a message report should not be edited by an admin
   def update?
     raise "not implemented"

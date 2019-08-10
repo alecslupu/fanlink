@@ -1,2 +1,2 @@
-class EventPolicy < ApplicationPolicy
+class EventPolicy < EventModulePolicy
 end

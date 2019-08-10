@@ -7,15 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    access.send([module_name, "read?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "read?"].join("_").to_sym)
   end
 
   def show?
-    access.send([module_name, "read?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "read?"].join("_").to_sym)
   end
 
   def create?
-    access.send([module_name, "create?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "create?"].join("_").to_sym)
   end
 
   def new?
@@ -23,25 +23,25 @@ class ApplicationPolicy
   end
 
   def update?
-    access.send([module_name, "update?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "update?"].join("_").to_sym)
   end
 
   def edit?
-    access.send([module_name, "update?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "update?"].join("_").to_sym)
   end
 
   def destroy?
-    access.send([module_name, "delete?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "delete?"].join("_").to_sym)
   end
 
   # Rails_admin
   #
   def export?
-    access.send([module_name, "export?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "export?"].join("_").to_sym)
   end
 
   def history?
-    access.send([module_name, "history?"].join("_").to_sym) rescue false
+    super_admin? || access.send([module_name, "history?"].join("_").to_sym)
   end
 
   def show_in_app?
@@ -64,13 +64,17 @@ class ApplicationPolicy
   # Rails admin
 
   def select_product?
-    user && user.super_admin? && user.product.internal_name == "admin"
+    super_admin?
   end
 
   protected
+  def super_admin?
+    user && user.super_admin? && user.product.internal_name == "admin"
+  end
 
   def module_name
-    raise "Not implemented - #{self.class.name}"
+    Rails.logger.debug("Defaulting to #{__CLASS__}")
+    "admin"
   end
 
   def access

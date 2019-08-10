@@ -1,2 +1,2 @@
-class EventCheckinPolicy < ApplicationPolicy
+class EventCheckinPolicy < EventModulePolicy
 end

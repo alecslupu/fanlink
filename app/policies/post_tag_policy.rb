@@ -1,2 +1,2 @@
-class PostTagPolicy < ApplicationPolicy
+class PostTagPolicy < PostModulePolicy
 end

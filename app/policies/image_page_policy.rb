@@ -1,7 +1,2 @@
-class ImagePagePolicy < ApplicationPolicy
-
-  protected
-    def module_name
-      "courseware"
-    end
+class ImagePagePolicy < CoursewareModulePolicy
 end

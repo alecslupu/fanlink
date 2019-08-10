@@ -1,2 +1,2 @@
-class RewardPolicy < ApplicationPolicy
+class RewardPolicy < RewardModulePolicy
 end

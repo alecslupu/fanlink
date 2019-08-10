@@ -1,2 +1,2 @@
-class PollOptionPolicy < ApplicationPolicy
+class PollOptionPolicy < PostModulePolicy
 end

@@ -1,2 +1,2 @@
-class PostReactionPolicy < ApplicationPolicy
+class PostReactionPolicy < PostModulePolicy
 end

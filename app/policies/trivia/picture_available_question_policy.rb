@@ -1,4 +1,4 @@
 module Trivia
-  class PictureAvailableQuestionPolicy < TriviaPolicy
+  class PictureAvailableQuestionPolicy < TriviaModulePolicy
   end
 end

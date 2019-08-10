@@ -1,2 +1,2 @@
-class PersonPollOptionPolicy < ApplicationPolicy
+class PersonPollOptionPolicy < PostModulePolicy
 end
