@@ -1,0 +1,2 @@
+class PostTagPolicy < PostModulePolicy
+end
