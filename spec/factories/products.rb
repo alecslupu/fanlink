@@ -32,6 +32,7 @@
 #  color_accessory      :string           default("000000")
 #  features             :integer          default(0), not null
 #  contact_email        :string
+#  privacy_url          :text
 #
 
 FactoryBot.define do
