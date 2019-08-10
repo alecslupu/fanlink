@@ -1,0 +1,2 @@
+class ActionTypePolicy < RewardModulePolicy
+end

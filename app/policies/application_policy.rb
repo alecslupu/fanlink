@@ -7,15 +7,15 @@ class ApplicationPolicy
   end
 
   def index?
-    true
+    has_permission? :read?
   end
 
   def show?
-    true
+    has_permission? :read?
   end
 
   def create?
-    true
+    has_permission? __method__
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    true
+    has_permission? __method__
   end
 
   def edit?
@@ -31,39 +31,59 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    has_permission? :delete?
   end
 
   # Rails_admin
   #
   def export?
-    true
-  end
-
-  def show_in_app?
-    false
+    has_permission? __method__
   end
 
   def history?
-    true
+    has_permission? __method__
   end
 
+  def show_in_app?
+    # false
+    false
+  end
   def dashboard?
-    true
+    user && user.some_admin?
   end
 
   def select_product_dashboard?
-    true
+    # true
+    false
   end
+
   def generate_game_action?
+    # false
     false
   end
   # Rails admin
 
   def select_product?
-    user && user.super_admin? && user.product.internal_name == 'admin'
+    super_admin?
   end
 
+  protected
+  def has_permission?(permission)
+    super_admin? || access.send([module_name, permission].join("_").to_sym)
+  end
+
+  def super_admin?
+    user && user.super_admin? && user.product.internal_name == "admin"
+  end
+
+  def module_name
+    Rails.logger.debug("Defaulting to #{__CLASS__}")
+    "admin"
+  end
+
+  def access
+    @portal ||= PortalAccess.where(person_id: user.id).first_or_initialize
+  end
 
   class Scope
     attr_reader :user, :scope
