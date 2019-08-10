@@ -17,7 +17,8 @@ RailsAdmin.config do |config|
              :can_have_supers,
              :age_requirement,
              :contact_email,
-             :privacy_url
+             :privacy_url,
+             :terms_url
     end
     show do
       fields :id,
@@ -27,7 +28,8 @@ RailsAdmin.config do |config|
              :can_have_supers,
              :age_requirement,
              :contact_email,
-             :privacy_url
+             :privacy_url,
+             :terms_url
     end
   end
 end
