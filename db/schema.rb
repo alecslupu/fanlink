@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190810163408) do
+ActiveRecord::Schema.define(version: 20190810163933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -841,6 +841,8 @@ ActiveRecord::Schema.define(version: 20190810163408) do
     t.string "contact_email"
     t.text "privacy_url"
     t.text "terms_url"
+    t.text "android_url"
+    t.text "ios_url"
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end

@@ -34,6 +34,8 @@
 #  contact_email        :string
 #  privacy_url          :text
 #  terms_url            :text
+#  android_url          :text
+#  ios_url              :text
 #
 
 class Product < ApplicationRecord
