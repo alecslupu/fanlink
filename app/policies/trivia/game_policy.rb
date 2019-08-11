@@ -1,8 +1,7 @@
 module Trivia
   class GamePolicy < TriviaModulePolicy
     def generate_game_action?
-      raise "Not implemented"
-      true
+      has_permission? __method__
     end
   end
 end
