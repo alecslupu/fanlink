@@ -23,8 +23,8 @@ RailsAdmin.config do |config|
       end
       fields  :start_date,
              :end_date,
-             :poll_status,
-             :duration
+              # :duration,
+             :poll_status
       field :description, :translated
       field :poll_options
     end
