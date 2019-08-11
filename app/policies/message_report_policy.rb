@@ -1,11 +1,13 @@
 class MessageReportPolicy < ChatModulePolicy
+
   # a message report should not be edited by an admin
   def update?
     false
   end
 
+  # This should be false as result of FLAPI-1081
   def create?
-    true
+    false
   end
 
   # a message report should not be deleted by an admin
