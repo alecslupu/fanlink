@@ -25,7 +25,8 @@ class PortalAccess < ApplicationRecord
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 
-  %w(post event merchandise user badge reward quest beacon reporting interest trivia).each do |field|
+  %w(post event merchandise user badge reward quest beacon reporting interest).each do |field|
+
     has_flags 1 => "#{field}_read".to_sym,
               2 => "#{field}_update".to_sym,
               3 => "#{field}_delete".to_sym,
@@ -34,6 +35,13 @@ class PortalAccess < ApplicationRecord
               column: field
   end
 
+  has_flags 1 => :trivia_read,
+            2 => :trivia_update,
+            3 => :trivia_delete,
+            4 => :trivia_export,
+            5 => :trivia_history,
+            6 => :trivia_generate_game_action,
+            column: :trivia
 
   has_flags 1 => :chat_read,
             2 => :chat_update,
