@@ -77,7 +77,7 @@ class ApplicationPolicy
   end
 
   def module_name
-    Rails.logger.debug("Defaulting to #{__CLASS__}")
+    Rails.logger.debug("Defaulting to #{self.class.name}")
     "admin"
   end
 
