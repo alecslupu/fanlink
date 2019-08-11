@@ -15,7 +15,7 @@ class ApplicationPolicy
   end
 
   def create?
-    has_permission? __method__
+    has_permission? :update?
   end
 
   def new?
@@ -48,6 +48,7 @@ class ApplicationPolicy
     # false
     false
   end
+
   def dashboard?
     user && user.some_admin?
   end

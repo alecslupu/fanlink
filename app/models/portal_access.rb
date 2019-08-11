@@ -17,6 +17,7 @@
 #  interest    :integer          default(0), not null
 #  courseware  :integer          default(0), not null
 #  trivia      :integer          default(0), not null
+#  admin       :integer
 #
 
 class PortalAccess < ApplicationRecord
@@ -26,7 +27,6 @@ class PortalAccess < ApplicationRecord
   belongs_to :person
 
   %w(post event merchandise user badge reward quest beacon reporting interest).each do |field|
-
     has_flags 1 => "#{field}_read".to_sym,
               2 => "#{field}_update".to_sym,
               3 => "#{field}_delete".to_sym,
@@ -34,6 +34,10 @@ class PortalAccess < ApplicationRecord
               5 => "#{field}_history".to_sym,
               column: field
   end
+
+  has_flags 1 => :admin_read,
+            2 => :admin_history,
+            column: :admin
 
   has_flags 1 => :trivia_read,
             2 => :trivia_update,
