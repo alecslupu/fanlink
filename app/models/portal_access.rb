@@ -36,7 +36,9 @@ class PortalAccess < ApplicationRecord
   end
 
   has_flags 1 => :admin_read,
-            2 => :admin_history,
+            2 => :admin_update,
+            3 => :admin_delete,
+            4 => :admin_history,
             column: :admin
 
   has_flags 1 => :trivia_read,
@@ -68,7 +70,7 @@ class PortalAccess < ApplicationRecord
   def summarize
     perms = {}
     self.flag_columns.each do |column|
-      self.as_flag_collection(column, :"#{column}_read", :"#{column}_update", :"#{column}_delete").collect do |o|
+      self.as_flag_collection(column).collect do |o|
         perms[o.first] = o.second
       end
     end
