@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190811075212) do
+ActiveRecord::Schema.define(version: 20190812210322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,22 @@ ActiveRecord::Schema.define(version: 20190811075212) do
     t.integer "product_id", null: false
     t.index ["product_id"], name: "idx_certificates_product"
     t.index ["room_id"], name: "idx_certificates_room"
+  end
+
+  create_table "config_items", force: :cascade do |t|
+    t.bigint "product_id"
+    t.string "item_key"
+    t.string "item_value"
+    t.string "type"
+    t.boolean "enabled", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "parent_id"
+    t.integer "lft", default: 0, null: false
+    t.integer "rgt", default: 0, null: false
+    t.integer "depth", default: 0, null: false
+    t.integer "children_count", default: 0
+    t.index ["product_id"], name: "index_config_items_on_product_id"
   end
 
   create_table "contests", force: :cascade do |t|
@@ -1326,6 +1342,7 @@ ActiveRecord::Schema.define(version: 20190811075212) do
   add_foreign_key "certificate_certcourses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
+  add_foreign_key "config_items", "products"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"

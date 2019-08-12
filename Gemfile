@@ -116,7 +116,10 @@ gem "administrate-field-belongs_to_search"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
+gem 'awesome_nested_set'
+
 gem "rails_admin", "1.3.0"
+gem "rails_admin_nested_set"
 
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"

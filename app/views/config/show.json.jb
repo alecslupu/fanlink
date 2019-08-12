@@ -1,0 +1,44 @@
+json = {}
+
+json[:app_settings] = {
+  product: @product.internal_name,
+  terms_url: @product.terms_url,
+  privacy_url: @product.privacy_url,
+  support_email: @product.contact_email,
+  android_url: @product.android_url,
+  ios_url: @product.ios_url,
+  has_age_verification: @product.age_requirement > 0,
+
+
+  has_onboarding: nil,
+  has_sign_up: nil,
+  has_fb_sign_in: nil,
+  has_relationships: nil,
+  has_badges: nil,
+  has_interest: nil,
+  has_categories: nil,
+  tabs: [ ],
+}
+
+def parse_node(node)
+  data = {}
+  if node.children.size.zero?
+    data = node.item_value
+  else
+    node.children.each do |child|
+      if child.children.size > 0
+        data[child.item_key] = parse_node(child)
+      else
+        data[child.item_key] = child.item_value
+      end
+    end
+  end
+  data
+end
+
+
+@product.config_items.enabled.roots.each do |root|
+  json[:app_settings][root.item_key] = parse_node(root)
+end
+
+json
