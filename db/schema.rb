@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190801172420) do
+ActiveRecord::Schema.define(version: 20190810070510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -675,6 +675,8 @@ ActiveRecord::Schema.define(version: 20190801172420) do
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
     t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -931,6 +933,7 @@ ActiveRecord::Schema.define(version: 20190801172420) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.boolean "is_survey", default: false
     t.index ["certcourse_page_id"], name: "idx_quiz_pages_certcourse_page"
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
