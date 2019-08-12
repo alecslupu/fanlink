@@ -17,6 +17,7 @@
 #  interest    :integer          default(0), not null
 #  courseware  :integer          default(0), not null
 #  trivia      :integer          default(0), not null
+#  admin       :integer
 #
 
 class PortalAccess < ApplicationRecord
@@ -25,7 +26,7 @@ class PortalAccess < ApplicationRecord
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 
-  %w(post event merchandise user badge reward quest beacon reporting interest trivia).each do |field|
+  %w(post event merchandise user badge reward quest beacon reporting interest).each do |field|
     has_flags 1 => "#{field}_read".to_sym,
               2 => "#{field}_update".to_sym,
               3 => "#{field}_delete".to_sym,
@@ -34,6 +35,19 @@ class PortalAccess < ApplicationRecord
               column: field
   end
 
+  has_flags 1 => :admin_read,
+            2 => :admin_update,
+            3 => :admin_delete,
+            4 => :admin_history,
+            column: :admin
+
+  has_flags 1 => :trivia_read,
+            2 => :trivia_update,
+            3 => :trivia_delete,
+            4 => :trivia_export,
+            5 => :trivia_history,
+            6 => :trivia_generate_game_action,
+            column: :trivia
 
   has_flags 1 => :chat_read,
             2 => :chat_update,
@@ -56,7 +70,7 @@ class PortalAccess < ApplicationRecord
   def summarize
     perms = {}
     self.flag_columns.each do |column|
-      self.as_flag_collection(column, :"#{column}_read", :"#{column}_update", :"#{column}_delete").collect do |o|
+      self.as_flag_collection(column).collect do |o|
         perms[o.first] = o.second
       end
     end

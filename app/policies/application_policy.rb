@@ -15,7 +15,7 @@ class ApplicationPolicy
   end
 
   def create?
-    has_permission? __method__
+    has_permission? :update?
   end
 
   def new?
@@ -48,6 +48,7 @@ class ApplicationPolicy
     # false
     false
   end
+
   def dashboard?
     user && user.some_admin?
   end
@@ -77,7 +78,7 @@ class ApplicationPolicy
   end
 
   def module_name
-    Rails.logger.debug("Defaulting to #{__CLASS__}")
+    Rails.logger.debug("Defaulting to #{self.class.name}")
     "admin"
   end
 
