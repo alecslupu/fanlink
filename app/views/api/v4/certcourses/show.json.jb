@@ -17,7 +17,6 @@ if @certcourse.certcourse_pages.present?
     elsif ccp.download?
       cpc[:caption] = ccp.download_file_page.caption
     end
-    cpc[:passed] = ccp.course_page_progresses.where(person_id: current_user.id).first_or_initialize.passed
     cpc[:is_passed] = ccp.course_page_progresses.where(person_id: current_user.id).first_or_initialize.passed
     cpc
   end
