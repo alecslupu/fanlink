@@ -10,6 +10,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  product_id           :integer          not null
+#  is_survey            :boolean          default(FALSE)
 #
 
 FactoryBot.define do
