@@ -10,6 +10,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  product_id           :integer          not null
+#  is_survey            :boolean          default(FALSE)
 #
 
 class QuizPage < ApplicationRecord
@@ -27,7 +28,15 @@ class QuizPage < ApplicationRecord
   after_save :set_certcourse_page_content_type
 
   validate :mandatory_checks,  unless: Proc.new { |page| page.is_optional }
-  validate :answer_checks
+  validate :answer_checks, unless: Proc.new { |page| page.is_survey }
+
+  validates :is_optional, presence: { message: "You have set the quiz survey, you must choose to be optional as well" }, if: :is_survey?
+  validates :answers, presence: true, length: {
+    minimum: 2,
+    tokenizer: lambda { |assoc| assoc.size },
+    too_short: "must have at least %{count} entries",
+    too_long: "must have at most %{count} entries"
+  }
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -62,7 +71,6 @@ class QuizPage < ApplicationRecord
       errors.add(:base, _("You need at least one correct answer. The changes have not been saved. Please refresh and try again")) if correct_answers.zero?
       # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
       errors.add(:base, _("Mandatory quizzes should have ONLY ONE correct answer")) if correct_answers > 1 && is_mandatory?
-
     end
 
     def mandatory_checks
