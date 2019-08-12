@@ -18,6 +18,10 @@
 class Poll < ApplicationRecord
   include TranslationThings
 
+  # after_initialize do
+  #   self.end_date = Time.zone.now + 1.month
+  # end
+
   enum poll_type: %i[ post ]
   enum poll_status: %i[ inactive active disabled ]
 
@@ -30,9 +34,16 @@ class Poll < ApplicationRecord
   validate :start_date_cannot_be_in_the_past
   validate :description_cannot_be_empty
 
+  validates :duration, numericality: {
+    greater_than: 0,
+    message: "Duration cannot be 0, please specify duration or end date of the poll"
+  }
+
   before_validation :add_end_date
 
   has_manual_translated :description
+
+  accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
     where(poll_type_id: nil).where("end_date > ?", Time.now)
@@ -61,6 +72,10 @@ class Poll < ApplicationRecord
   private
 
     def add_end_date
-      self.end_date = start_date.to_datetime + duration.seconds
+      if duration.zero?
+        self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
+      else
+        self.end_date = start_date.to_datetime + duration.seconds
+      end
     end
 end

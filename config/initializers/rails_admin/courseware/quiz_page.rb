@@ -7,13 +7,13 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      fields :certcourse_page, :is_optional, :quiz_text, :wrong_answer_page_id, :answers
+      fields :certcourse_page, :is_optional, :is_survey, :quiz_text, :wrong_answer_page_id, :answers
     end
     list do
-      fields :id, :course_name, :quiz_text, :answers, :is_optional
+      fields :id, :course_name, :quiz_text, :answers, :is_optional, :is_survey
     end
     show do
-      fields :id, :certcourse_page, :is_optional, :quiz_text, :wrong_answer_page_id
+      fields :id, :certcourse_page, :is_optional, :is_survey, :quiz_text, :wrong_answer_page_id
       field :answers do
         pretty_value do
           v = bindings[:view]
