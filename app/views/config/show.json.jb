@@ -1,0 +1,23 @@
+json = {}
+
+@product.config_items.enabled.roots.each do |root|
+  json[root.item_key] = parse_node(root)
+end
+#
+app_settings = {
+  product: @product.internal_name,
+  terms_url: @product.terms_url,
+  privacy_url: @product.privacy_url,
+  support_email: @product.contact_email,
+  android_url: @product.android_url,
+  ios_url: @product.ios_url,
+  has_age_verification: @product.age_requirement > 0
+}
+
+json["app_settings"] ||= {}
+
+app_settings.each do |item|
+  json["app_settings"][item.first] = item.last
+end
+
+json
