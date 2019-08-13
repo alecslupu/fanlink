@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
+  get "/config/:internal_name" => "config#show"
+
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
 
 
   post "/graphql", to: "graphql#execute"
-
 
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))

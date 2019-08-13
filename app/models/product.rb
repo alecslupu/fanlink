@@ -61,6 +61,8 @@ class Product < ApplicationRecord
 
   has_many :trivia_games, class_name: "Trivia::Game", dependent: :restrict_with_error
 
+  has_many :config_items, dependent: :destroy
+
   scope :enabled, -> { where(enabled: true) }
 
   def people_count
