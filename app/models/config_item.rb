@@ -20,7 +20,11 @@
 class ConfigItem < ApplicationRecord
   acts_as_nested_set
   acts_as_tenant(:product)
-
+  rails_admin do
+    nested_set(
+      max_depth: 5
+    )
+  end
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
