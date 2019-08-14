@@ -26,6 +26,12 @@ class ConfigItem < ApplicationRecord
     )
   end
 
+  validates :type, inclusion: { in: %w(
+            StringConfigItem
+            ArrayConfigItem
+            BooleanConfigItem
+  ),  message: "%{value} is not a valid type" }
+
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
   def to_s

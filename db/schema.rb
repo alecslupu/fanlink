@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190812210322) do
+ActiveRecord::Schema.define(version: 20190814170026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -232,6 +232,8 @@ ActiveRecord::Schema.define(version: 20190812210322) do
     t.integer "rgt", default: 0, null: false
     t.integer "depth", default: 0, null: false
     t.integer "children_count", default: 0
+    t.string "item_url"
+    t.string "item_description"
     t.index ["product_id"], name: "index_config_items_on_product_id"
   end
 

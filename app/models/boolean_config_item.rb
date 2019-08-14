@@ -1,0 +1,2 @@
+class BooleanConfigItem < ConfigItem
+end

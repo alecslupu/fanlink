@@ -1,0 +1,2 @@
+class ArrayConfigItem < ConfigItem
+end
