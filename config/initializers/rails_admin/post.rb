@@ -5,7 +5,7 @@ RailsAdmin.config do |config|
     configure :reported do
     end
     configure :id do
-      label 'Post ID'
+      label "Post ID"
     end
     list do
       fields :person,
