@@ -675,8 +675,6 @@ ActiveRecord::Schema.define(version: 20190810070510) do
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
     t.integer "interest", default: 0, null: false
-    t.integer "courseware", default: 0, null: false
-    t.integer "trivia", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
