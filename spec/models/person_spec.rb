@@ -24,17 +24,17 @@ RSpec.describe Person, type: :model do
       it "should raise an error if username's length is not between 5 and 25 characters" do
         subject = Person.new(username: "as")
         subject.valid?
-        expect(subject.errors.messages[:username].first).to include("must be 5 to 25 characters with no special characters or spaces")
+        expect(subject.errors.messages[:username].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
 
         subject = Person.new(username: "ThisIsLongerThan25Characters")
         subject.valid?
-        expect(subject.errors.messages[:username].first).to include("must be 5 to 25 characters with no special characters or spaces")
+        expect(subject.errors.messages[:username].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
       end
 
       it "should raise an error if the username contains special characters" do
         subject = Person.new(username: "username&")
         subject.valid?
-        expect(subject.errors.messages[:username].first).to include("must be 5 to 25 characters with no special characters or spaces")
+        expect(subject.errors.messages[:username].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
       end
       it "should validate password's length" do
         should validate_length_of(:password).is_at_least(6).with_message(_("Password must be at least 6 characters in length."))
