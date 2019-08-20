@@ -62,7 +62,6 @@ class Poll < ApplicationRecord
   end
 
   def description_cannot_be_empty
-    binding.pry
     if !description.present? || description.empty?
       errors.add(:description_error, "description can't be empty")
     end
@@ -73,7 +72,6 @@ class Poll < ApplicationRecord
   end
 
   private
-
     def add_end_date
       if duration.zero?
         self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
