@@ -24,17 +24,17 @@ RSpec.describe Person, type: :model do
       it "should raise an error if username's length is not between 5 and 25 characters" do
         subject = Person.new(username: "as")
         subject.valid?
-        expect(subject.errors.messages[:username].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
+        expect(subject.errors.messages[:username_error].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
 
         subject = Person.new(username: "ThisIsLongerThan25Characters")
         subject.valid?
-        expect(subject.errors.messages[:username].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
+        expect(subject.errors.messages[:username_error].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
       end
 
       it "should raise an error if the username contains special characters" do
         subject = Person.new(username: "username&")
         subject.valid?
-        expect(subject.errors.messages[:username].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
+        expect(subject.errors.messages[:username_error].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
       end
       it "should validate password's length" do
         should validate_length_of(:password).is_at_least(6).with_message(_("Password must be at least 6 characters in length."))
@@ -372,20 +372,20 @@ RSpec.describe Person, type: :model do
     end
   end
   describe "#username" do
-    it "should not let you create a person with a username less than 3 characters" do
-      person = build(:person, username: "ab")
+    it "should not let you create a person with a username less than 5 characters" do
+      person = build(:person, username: "abcd")
       expect(person).not_to be_valid
-      expect(person.errors[:username]).not_to be_blank
+      expect(person.errors[:username_error]).not_to be_blank
     end
-    it "should not let you create a person with a username more than 26 characters" do
+    it "should not let you create a person with a username more than 25 characters" do
       person = build(:person, username: "abcdefghijklmnopqrstuvwxyza")
       expect(person).not_to be_valid
-      expect(person.errors[:username]).not_to be_blank
+      expect(person.errors[:username_error]).not_to be_blank
     end
     it "should not let you create a person without a username" do
       person = build(:person, username: "")
       expect(person).not_to be_valid
-      expect(person.errors[:username]).not_to be_blank
+      expect(person.errors[:username_error]).not_to be_blank
     end
     it "should properly mangle the username into a slug" do
       expect(@person.username_canonical).to eq("whereispancakehouse")
