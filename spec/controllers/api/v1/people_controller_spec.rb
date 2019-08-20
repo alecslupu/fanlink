@@ -206,7 +206,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
           post :create, params: { product: product.internal_name, person: { username: "ab", email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("Username must be between 3 and 26 characters")
+        expect(json["errors"]).to include("must be 5 to 25 characters with no special characters or spaces")
       end
     end
     it "should not sign up new user with a username more than 26 characters" do
@@ -216,7 +216,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
           post :create, params: { product: product.internal_name, person: { username: "a" * 27, email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("Username must be between 3 and 26 characters")
+        expect(json["errors"]).to include("must be 5 to 25 characters with no special characters or spaces")
       end
     end
 
