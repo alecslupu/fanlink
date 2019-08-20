@@ -19,6 +19,18 @@
             "fourth_tab": "feed",
             "fifth_tab": "profile"
         },
+        "reactions": [
+            "\uD83D\uDC9A",
+            "\uD83D\uDE4F",
+            "\uD83D\uDC4D",
+            "\uD83D\uDC4E",
+            "\uD83D\uDE02",
+            "\uD83D\uDE03",
+            "\uD83D\uDE41",
+            "\uD83D\uDCA8",
+            "\uD83D\uDE0D",
+            "\uD83D\uDD25"
+        ],
         "colors": {
             "navigation_bar_background": "#4D4D4F",
             "navigation_bar_underline": "#XXXXXX",
@@ -30,16 +42,16 @@
             "app_text_secondary": "#000000",
             "button_main_background_enabled": "#994C8E",
             "button_main_background_disabled": "#cb7abe",
-            "button_main_foregorund_enabled": "#FFFFFF",
-            "button_main_foregorund_disabled": "#FFFFFF",
+            "button_main_foreground_enabled": "#FFFFFF",
+            "button_main_foreground_disabled": "#FFFFFF",
             "button_secondary_background_enabled": "#4D4D4F",
             "button_secondary_background_disabled": "#585858",
-            "button_secondary_foregorund_enabled": "#FFFFFF",
-            "button_secondary_foregorund_disabled": "#FFFFFF",
+            "button_secondary_foreground_enabled": "#FFFFFF",
+            "button_secondary_foreground_disabled": "#FFFFFF",
             "button_tertiary_background_enabled": "#FFFFFF",
             "button_tertiary_background_disabled": "#D3D3D3",
-            "button_tertiary_foregorund_enabled": "#000000",
-            "button_tertiary_foregorund_disabled": "#000000",
+            "button_tertiary_foreground_enabled": "#000000",
+            "button_tertiary_foreground_disabled": "#000000",
             "progress_fill": "#994C8E",
             "progress_empty": "#FFFFFF"
         }
@@ -88,8 +100,9 @@
     "feed": {
         "colors": {
             "post_background": "#ffffff",
-            "post_foregorund": "#000000",
+            "post_foreground": "#000000",
             "post_text": "#000000",
+            "post_highlighted_text": "#994C8E",
             "poll_background": "#4D4D4F",
             "poll_text": "#ffffff",
             "poll_option_text": "#000000",
@@ -134,7 +147,7 @@
     "discover": {
         "colors": {}
     },
-    "onboardingScreens": [{
+    "onboarding_screens": [{
         "title": "Welcome to Can-Ed",
         "short_description": "The number one cannabis education app that fits right in your pocket and provides quality cannabis education while you’re on the go.",
         "long_description": null,
@@ -198,7 +211,7 @@
             "fg_color": "#ffffff"
         }
     ],
-    "censoredWords": ["a55",
+    "censored_words": ["a55",
         "a55hole",
         "aeolus",
         "ahole",
