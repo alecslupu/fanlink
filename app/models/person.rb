@@ -280,7 +280,7 @@ class Person < ApplicationRecord
 
     def valid_username
       if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
-        errors.add(:username, "must be 5 to 25 characters with no special characters or spaces")
+        errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
       end
     end
 end
