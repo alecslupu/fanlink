@@ -39,6 +39,8 @@ class Poll < ApplicationRecord
     message: "Duration cannot be 0, please specify duration or end date of the poll"
   }
 
+  validates_uniqueness_of :poll_type_id, scope: :poll_type, message: "has already been used on that Post. Check Post id"
+
   before_validation :add_end_date
 
   has_manual_translated :description
@@ -60,6 +62,7 @@ class Poll < ApplicationRecord
   end
 
   def description_cannot_be_empty
+    binding.pry
     if !description.present? || description.empty?
       errors.add(:description_error, "description can't be empty")
     end
