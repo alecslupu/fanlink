@@ -13,6 +13,7 @@ RailsAdmin.config do |config|
     StringConfigItem
     ArrayConfigItem
     BooleanConfigItem
+    RootConfigItem
   ).each do |model|
     config.included_models << model
     config.model model do

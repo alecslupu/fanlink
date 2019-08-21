@@ -30,6 +30,7 @@ class ConfigItem < ApplicationRecord
             StringConfigItem
             ArrayConfigItem
             BooleanConfigItem
+            RootConfigItem
   ),  message: "%{value} is not a valid type" }
 
   scope :enabled, -> { where(enabled: true) }
