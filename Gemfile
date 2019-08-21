@@ -132,7 +132,6 @@ gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
-gem "graphql"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
 gem "jko_api" # api versioning
