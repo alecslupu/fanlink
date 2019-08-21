@@ -170,8 +170,6 @@ gem "wisper-activerecord"
 
 gem "rmagick"
 
-gem "graphiql-rails", group: :development
-
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"
 gem "prawn"
