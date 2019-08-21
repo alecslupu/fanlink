@@ -39,6 +39,8 @@ class Poll < ApplicationRecord
     message: "Duration cannot be 0, please specify duration or end date of the poll"
   }
 
+  validates_uniqueness_of :poll_type_id, scope: :poll_type, message: "has already been used on that Post. Check Post id"
+
   before_validation :add_end_date
 
   has_manual_translated :description
@@ -70,7 +72,6 @@ class Poll < ApplicationRecord
   end
 
   private
-
     def add_end_date
       if duration.zero?
         self.duration = end_date.to_datetime.to_i - start_date.to_datetime.to_i
