@@ -20,4 +20,5 @@ app_settings.each do |item|
   json["app_settings"][item.first] = item.last
 end
 
+json["censored_words"] = CensoredWord.all.map(&:word)
 json
