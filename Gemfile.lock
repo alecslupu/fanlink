@@ -929,7 +929,7 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n_data (0.8.0)
     ice_nine (0.11.2)
-    jaro_winkler (1.5.2)
+    jaro_winkler (1.5.3)
     jb (0.5.0)
       multi_json
     jbuilder (2.7.0)
@@ -1046,8 +1046,8 @@ GEM
       paperclip (>= 4.0.0)
     paperclip-meta (3.1.0)
       paperclip (>= 5.0)
-    parallel (1.14.0)
-    parser (2.6.2.1)
+    parallel (1.17.0)
+    parser (2.6.3.0)
       ast (~> 2.4.0)
     path_expander (1.0.3)
     pdf-core (0.7.0)
@@ -1203,20 +1203,21 @@ GEM
     rswag-ui (2.0.5)
       actionpack (>= 3.1, < 6.0)
       railties (>= 3.1, < 6.0)
-    rubocop (0.66.0)
+    rubocop (0.74.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5, != 2.5.1.1)
-      psych (>= 3.1.0)
+      parser (>= 2.6)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 1.6)
-    rubocop-rails_config (0.4.4)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    rubocop-performance (1.0.0)
+      rubocop (>= 0.58.0)
+    rubocop-rails (1.5.0)
       railties (>= 3.0)
-      rubocop (~> 0.58)
+      rubocop (~> 0.53)
     rubocop-rspec (1.33.0)
       rubocop (>= 0.60.0)
-    ruby-progressbar (1.10.0)
+    ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     ruby_parser (3.13.1)
       sexp_processor (~> 4.9)
@@ -1298,7 +1299,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.5.0)
+    unicode-display_width (1.6.0)
     unicode_utils (1.4.0)
     uniform_notifier (1.11.0)
     uri_template (0.7.0)
@@ -1427,7 +1428,9 @@ DEPENDENCIES
   rswag-api
   rswag-specs
   rswag-ui
-  rubocop-rails_config
+  rubocop (~> 0.74.0)
+  rubocop-performance
+  rubocop-rails
   rubocop-rspec
   sass-rails (~> 5.0)
   seed_dump
