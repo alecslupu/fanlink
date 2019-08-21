@@ -1,0 +1,2 @@
+class StringConfigItem < ConfigItem
+end

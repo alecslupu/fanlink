@@ -20,7 +20,18 @@
 class ConfigItem < ApplicationRecord
   acts_as_nested_set
   acts_as_tenant(:product)
+  rails_admin do
+    nested_set(
+      max_depth: 5
+    )
+  end
 
+  validates :type, inclusion: { in: %w(
+            StringConfigItem
+            ArrayConfigItem
+            BooleanConfigItem
+            RootConfigItem
+  ),  message: "%{value} is not a valid type" }
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
