@@ -1,5 +1,0 @@
-{
-  id: level.id,
-  points: level.points,
-  total: level.total
-}

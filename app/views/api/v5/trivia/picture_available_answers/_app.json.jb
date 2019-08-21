@@ -1,5 +1,0 @@
-json = {
-  id: @answer.id,
-  url: @answer.picture_url
-}
-json
