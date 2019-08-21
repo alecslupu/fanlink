@@ -48,6 +48,7 @@ class Api::V4::SessionController < Api::V3::SessionController
       if @person.present?
         return render_401 _("Your account has been banned.") if @person.terminated
         @person = login(@person.email, params[:password]) if @person
+        return render_422 _("Invalid login.") if @person.nil?
       else
         return render_422 _("Invalid login.")
       end
