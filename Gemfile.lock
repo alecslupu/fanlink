@@ -1354,28 +1354,28 @@ DEPENDENCIES
   attribute_normalizer
   awesome_print
   aws-sdk
-  better_errors
+  better_errors (~> 2.5.1)
   binding_of_caller
-  bullet
-  byebug
+  bullet (~> 6.0.2)
+  byebug (~> 11.0.1)
   coffee-rails (~> 4.2)
   countries
-  cucumber-rails
-  daemons
+  cucumber-rails (~> 1.8.0)
+  daemons (~> 1.3.1)
   database_cleaner
   delayed_job_active_record
   delayed_job_web
-  derailed_benchmarks
-  dotenv-rails
+  derailed_benchmarks (~> 1.3.6)
+  dotenv-rails (~> 2.7.5)
   email_validator
   erubis
-  factory_bot_rails
-  faker
+  factory_bot_rails (~> 5.0.2)
+  faker (~> 2.1.2)
   fcm
   filterrific
   firebase!
   flag_shih_tzu
-  fuubar
+  fuubar (~> 2.4.1)
   gettext (>= 3.0.2)
   gettext_i18n_rails
   goldiloader
@@ -1392,7 +1392,7 @@ DEPENDENCIES
   jb
   jbuilder (~> 2.5)
   jko_api
-  json_schemer
+  json_schemer (~> 0.2.5)
   jwt
   kaminari
   koala
@@ -1413,8 +1413,8 @@ DEPENDENCIES
   pg_search
   postgresql-check
   prawn
-  pry
-  pry-byebug
+  pry (~> 0.12.2)
+  pry-byebug (~> 3.7.0)
   puma (~> 3.7)
   pundit
   rack-cors
@@ -1437,7 +1437,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   seed_dump
   shoulda-matchers!
-  simplecov
+  simplecov (~> 0.17.0)
   sorcery
   stackprof
   therubyracer
@@ -1448,7 +1448,7 @@ DEPENDENCIES
   unicode_utils
   uuidtools
   web-console (>= 3.3.0)
-  webmock
+  webmock (~> 3.6.2)
   wisper (= 2.0.0)
   wisper-activejob
   wisper-activerecord
