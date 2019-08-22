@@ -35,7 +35,8 @@
             "navigation_bar_background": "#4D4D4F",
             "navigation_bar_underline": "#XXXXXX",
             "navigation_bar_text": "#FFFFFF",
-            "app_background": "#A7A9AC",
+            "app_background_top": "#030303",
+            "app_background_bottom": "#2b2b2b",
             "app_foreground": "#FFFFFF",
             "app_accent_foreground": "#994C8E",
             "app_text_main": "#FFFFFF",
@@ -145,9 +146,18 @@
         }
     },
     "discover": {
-        "colors": {}
+        "has_search_by_interests": true,
+        "colors": {
+            "container_background": "#ffffff",
+            "container_foreground": "#000000",
+            "container_text": "#000000",
+            "container_highlighted_text": "#994C8E",
+            "reaction_counter_text": "#994C8E",
+            "reaction_counter_container": "#994C8E"
+        }
     },
     "onboarding_screens": [{
+        "order": 1,
         "title": "Welcome to Can-Ed",
         "short_description": "The number one cannabis education app that fits right in your pocket and provides quality cannabis education while you’re on the go.",
         "long_description": null,
@@ -157,6 +167,7 @@
         "fg_color": "#ffffff"
     },
         {
+            "order": 2,
             "title": "Certifications",
             "short_description": "The first step to earning your cannabis career certification is to sign-up for a course. Next, complete the modules, pass the quizzes, and voila! Certification earned. It’s that easy.",
             "long_description": null,
@@ -166,6 +177,7 @@
             "fg_color": "#ffffff"
         },
         {
+            "order": 3,
             "title": "Chat",
             "short_description": "Connect with fellow students and instructors. Discuss course material, ask questions, or discuss what’s on your mind. Just keep it course and cannabis related.",
             "long_description": null,
@@ -175,6 +187,7 @@
             "fg_color": "#ffffff"
         },
         {
+            "order": 4,
             "title": "Discover",
             "short_description": "Search and find. Select your interests and discover people on the app who like the same things as you do. You may be surprised by what you have in common.",
             "long_description": null,
@@ -184,6 +197,7 @@
             "fg_color": "#ffffff"
         },
         {
+            "order": 5,
             "title": "Feed",
             "short_description": "Stay in the know. Find out what’s happening in the cannabis industry, learn about job opportunities, and get in on the conversation with others in the Can-Ed community.",
             "long_description": null,
@@ -193,6 +207,7 @@
             "fg_color": "#ffffff"
         },
         {
+            "order": 6,
             "title": "Profile",
             "short_description": "Getting to know you. Create a custom profile by adding a picture, a bio, and selecting your interests.",
             "long_description": null,
@@ -202,6 +217,7 @@
             "fg_color": "#ffffff"
         },
         {
+            "order": 7,
             "title": "Support",
             "short_description": "Chat with our support team through the private chat message that will be saved on your chat tab. We are available Monday-Friday 8am - 3pm PST but you can send us a message any time.",
             "long_description": null,
