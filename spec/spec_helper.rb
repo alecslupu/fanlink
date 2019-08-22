@@ -7,7 +7,6 @@ SimpleCov.start "rails" do
   add_filter "app/dashboards"
   add_filter "app/fields"
   add_filter "lib/gems/apigen"
-  add_filter "app/graphql"
   add_filter "app/lib/rails_admin"
   add_filter "lib/generators/fanlink"
   # add_group "jobs", "app/jobs" # nothing here
