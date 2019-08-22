@@ -20,10 +20,10 @@ ActsAsTenant.with_tenant(caned) do
     "has_categories": true,
   }
   app_settings_items.each do |item|
-    if item.last.is_a?(TrueClass) || item.last.is_a?(FalseClass)
-      ci = BooleanConfigItem.create!(item_key:item.first, item_value: item.last, enabled: true )
+    ci = if item.last.is_a?(TrueClass) || item.last.is_a?(FalseClass)
+      BooleanConfigItem.create!(item_key:item.first, item_value: item.last, enabled: true )
     else
-      ci = StringConfigItem.create!(item_key:item.first, item_value: item.last, enabled: true )
+      StringConfigItem.create!(item_key:item.first, item_value: item.last, enabled: true )
     end
     ci.move_to_child_of(app_settings)
   end
@@ -45,18 +45,6 @@ ActsAsTenant.with_tenant(caned) do
   end
 
   reaction_items = %w(💚 🙏 👍 👎 😂 😃 🙁 💨 😍 🔥)
-  #
-  # reaction_items = %w(
-  #   \\\uD83D\\\uDC9A
-  #   \uD83D\uDE4F
-  #   \uD83D\uDC4D
-  #   \uD83D\uDC4E
-  #   \uD83D\uDE02
-  #   \uD83D\uDE03
-  #   \uD83D\uDE41
-  #   \uD83D\uDCA8
-  #   \uD83D\uDE0D
-  #   \uD83D\uDD25)
 
   reactions = ArrayConfigItem.create!(item_key:"reactions", item_value: '', enabled: true )
   reactions.move_to_child_of(app_settings)
@@ -265,7 +253,7 @@ ActsAsTenant.with_tenant(caned) do
   discover =  RootConfigItem.create!(item_key:"discover", item_value: '', enabled: true )
 
   colors = RootConfigItem.create!(item_key:"colors", item_value: '', enabled: true )
-  colors.move_to_child_of(trivia)
+  colors.move_to_child_of(discover)
 
   chat_colors = {
     "container_background": "#ffffff",
