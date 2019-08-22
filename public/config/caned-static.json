@@ -12,7 +12,6 @@
         "has_badges": false,
         "has_interest": true,
         "has_categories": true,
-        "is_education_app": true,
         "tabs": {
             "first_tab": "certificates",
             "second_tab": "discover",
@@ -36,7 +35,8 @@
             "navigation_bar_background": "#4D4D4F",
             "navigation_bar_underline": "#XXXXXX",
             "navigation_bar_text": "#FFFFFF",
-            "app_background": "#A7A9AC",
+            "app_background_top": "#030303",
+            "app_background_bottom": "#2b2b2b",
             "app_foreground": "#FFFFFF",
             "app_accent_foreground": "#994C8E",
             "app_text_main": "#FFFFFF",
