@@ -1,9 +1,0 @@
-{
-  id: lesson.id,
-  course_id: lesson.course_id,
-  name: lesson.name,
-  description: lesson.description,
-  start_date: lesson.start_date,
-  end_date: ((lesson.end_date.present?) ? lesson.end_date : nil),
-  video: lesson.video
-}

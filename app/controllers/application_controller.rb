@@ -49,26 +49,27 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-    def require_login
-      authenticate!
-      super
-    end
 
-    def authenticate!
-      return if authorization_header.nil?
-      payload, header = TokenProvider.valid?(token)
-      user = Person.find_by(id: payload["user_id"])
-      auto_login(user) unless user.nil? || user.terminated?
-    rescue JWT::DecodeError
-    end
+  def require_login
+    authenticate!
+    super
+  end
 
-    def token
-      @jwt_token ||= (authorization_header.split(" ").last)
-    end
+  def authenticate!
+    return if authorization_header.nil?
+    payload, header = TokenProvider.valid?(token)
+    user = Person.find_by(id: payload["user_id"])
+    auto_login(user) unless user.nil? || user.terminated?
+  rescue JWT::DecodeError
+  end
+
+  def token
+    @jwt_token ||= authorization_header.split(" ").last
+  end
 
   private
 
-    def authorization_header
-      request.headers["Authorization"]
-    end
+  def authorization_header
+    request.headers["Authorization"]
+  end
 end
