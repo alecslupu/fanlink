@@ -6,6 +6,7 @@ RSpec.describe Api::V4::SessionController, type: :controller do
       ActsAsTenant.without_tenant do
         person = create(:person, password: "correctpassword")
         post :token, params: { email_or_username: person.email, password: "correctpassword", product: person.product.internal_name }
+        expect(response.body).to eq("")
         expect(response).to have_http_status(200)
         parsed_response = JSON.parse(response.body)
         expect(parsed_response["person"]["id"]).to include(person.id.to_s)
@@ -48,3 +49,4 @@ RSpec.describe Api::V4::SessionController, type: :controller do
   #   pending
   # end
 end
+
