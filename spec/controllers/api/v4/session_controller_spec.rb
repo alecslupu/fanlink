@@ -1,22 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V4::SessionController, type: :controller do
-
-  # TODO: auto-generated
-  describe "GET index" do
-    pending
-  end
-
-  # TODO: auto-generated
-  describe "POST create" do
-    pending
-  end
-
-  # TODO: auto-generated
-  describe "GET token" do
-    pending
-  end
-
   describe "POST token" do
     it "should return the correct response when providing correct credentials" do
       ActsAsTenant.without_tenant do
@@ -48,4 +32,19 @@ RSpec.describe Api::V4::SessionController, type: :controller do
       end
     end
   end
+
+  # # TODO: auto-generated
+  # describe "GET index" do
+  #   pending
+  # end
+
+  # # TODO: auto-generated
+  # describe "POST create" do
+  #   pending
+  # end
+
+  # # TODO: auto-generated
+  # describe "GET token" do
+  #   pending
+  # end
 end
