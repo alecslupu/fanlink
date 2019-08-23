@@ -1,0 +1,8 @@
+{
+  id: relationship.id.to_s,
+  status: relationship.status,
+  requested_by_id: relationship.requested_by.id.to_s,
+  requested_to_id: relationship.requested_to.id.to_s,
+  create_time: relationship.created_at.to_s,
+  update_time: relationship.updated_at.to_s
+}
