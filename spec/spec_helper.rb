@@ -138,17 +138,22 @@ RSpec.configure do |config|
     end
   end
 
+
+  # config.include Sorcery::TestHelpers::Rails::Controller# , type: :request
+  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
+
+  config.include Sorcery::TestHelpers::Rails::Controller, type: :controller
+  config.include Sorcery::TestHelpers::Rails::Integration, type: :feature
+  config.include Sorcery::TestHelpers::Rails
+
+  config.include RSpec::Rails::RequestExampleGroup, type: :request
+  config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
+
   config.include MandrillMailerHelper
   config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers
   config.include JsonHelpers, type: :controller
-
-  config.include Sorcery::TestHelpers::Rails::Controller# , type: :request
-  config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
-  config.include RSpec::Rails::RequestExampleGroup, type: :request
-  config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
-
 
   config.before :each, type: :controller do
     @json = nil
