@@ -1,6 +1,5 @@
-json = Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, person) do
-  render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: "jb")
-end
+json = render(partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: "jb")
+
 json[:email] = person.email
 json[:product] = {
   id: person.product.id,
