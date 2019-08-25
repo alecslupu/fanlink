@@ -2,6 +2,7 @@ class Api::V4::SessionController < Api::V3::SessionController
   prepend_before_action :logout, only: [ :create, :token ]
   before_action :set_product, only: [ :create, :token ]
 
+
   def index
     if @person = current_user
       if @person.terminated
@@ -48,15 +49,13 @@ class Api::V4::SessionController < Api::V3::SessionController
       if @person.present?
         return render_401 _("Your account has been banned.") if @person.terminated
         @person = login(@person.email, params[:password]) if @person
-      else
-        return render_422 _("Invalid login.")
       end
+      return render_422 _("Invalid login.") if @person.nil?
     end
     return_the @person, handler: tpl_handler, using: :create
   end
 
   protected
-
     def tpl_handler
       :jb
     end
