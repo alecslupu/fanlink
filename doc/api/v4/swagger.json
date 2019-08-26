@@ -90,7 +90,7 @@
             }
           },
           "422": {
-            "description": ""
+            "description": "Invalid login"
           }
         }
       }

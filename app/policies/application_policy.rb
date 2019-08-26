@@ -70,7 +70,11 @@ class ApplicationPolicy
 
   protected
   def has_permission?(permission)
-    super_admin? || access.send([module_name, permission].join("_").to_sym)
+    begin
+      super_admin? || access.send([module_name, permission].join("_").to_sym)
+    rescue
+      false
+    end
   end
 
   def super_admin?
