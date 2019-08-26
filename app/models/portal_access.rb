@@ -15,6 +15,9 @@
 #  beacon      :integer          default(0), not null
 #  reporting   :integer          default(0), not null
 #  interest    :integer          default(0), not null
+#  courseware  :integer          default(0), not null
+#  trivia      :integer          default(0), not null
+#  admin       :integer
 #
 
 class PortalAccess < ApplicationRecord

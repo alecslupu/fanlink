@@ -133,6 +133,18 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
+  describe "#friend_request_accepted_push" do
+    it "responds to method " do
+      expect(Relationship.new).to respond_to(:friend_request_accepted_push)
+    end
+    pending
+  end
+  describe "#friend_request_received_push" do
+    it "responds to method " do
+      expect(Relationship.new).to respond_to(:friend_request_received_push)
+    end
+    pending
+  end
 
 private
 
