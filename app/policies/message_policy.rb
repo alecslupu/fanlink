@@ -11,9 +11,15 @@ class MessagePolicy < ApplicationPolicy
   def create?
     false
   end
+
   # an admin should not be able to edit messages
-  def edit?
+
+  def update?
     false
+  end
+
+  def edit?
+    update?
   end
 
   def hide_action?
