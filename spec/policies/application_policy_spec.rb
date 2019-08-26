@@ -42,7 +42,6 @@ RSpec.describe ApplicationPolicy, type: :policy do
     context "superadmin who doesn't have admin product assigned" do
       let(:product) { create(:product, internal_name: "not_admin") }
       let(:person) { Person.new(product: product, role: :super_admin) }
-      let(:message) { Message.new }
 
       it { is_expected.to forbid_action(:select_product) }
     end
