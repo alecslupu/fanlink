@@ -63,12 +63,31 @@ RSpec.describe Person, type: :model do
     end
 
     describe "#format" do
-      subject { FactoryBot.build(:person) }
       it "should not allow emoji's for name on creation" do
-        should_not allow_value("Person \uFE0F").for(:name).on(:create).with_message(_("Name may not contain emojis."))
+        record = Person.new
+        record.name = "Person \uFE0F"
+        record.valid?
+        expect(record.errors[:name]).to include("may not contain emojis.")
       end
       it "should not allow emoji's for username on creation" do
-        should_not allow_value("Person_\uFE0F").for(:username).on(:create).with_message(_("Username may not contain emojis."))
+        record = Person.new
+        record.username = "Person \uFE0F"
+        record.valid?
+        expect(record.errors[:username]).to include("may not contain emojis.")
+      end
+
+      it "should not allow emoji's for name on update" do
+        person = create(:person)
+        person.update(name: "Person \uFE0F")
+        person.valid?
+        expect(person.errors[:name]).to include("may not contain emojis.")
+      end
+
+      it "should not allow emoji's for username on update" do
+        person = create(:person)
+        person.update(username: "Person \uFE0F")
+        person.valid?
+        expect(person.errors[:username]).to include("may not contain emojis.")
       end
     end
   end
