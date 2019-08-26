@@ -11,6 +11,7 @@ require "shoulda/matchers"
 require "wisper/rspec/matchers"
 require "wisper/rspec/stub_wisper_publisher"
 require "pundit/rspec"
+require 'pundit/matchers'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -79,6 +80,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.include(Wisper::RSpec::BroadcastMatcher)
 
+end
+
+Pundit::Matchers.configure do |config|
+  config.user_alias = :person
 end
 
 Shoulda::Matchers.configure do |config|

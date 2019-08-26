@@ -1075,6 +1075,8 @@ GEM
     puma (3.12.1)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.6.0)
+      rspec-rails (>= 3.0.0)
     rack (2.0.7)
     rack-cors (1.0.3)
     rack-pjax (1.0.0)
@@ -1414,6 +1416,7 @@ DEPENDENCIES
   pry-byebug
   puma (~> 3.7)
   pundit
+  pundit-matchers (~> 1.6.0)
   rack-cors
   rack-timeout
   rails (~> 5.1.4)
