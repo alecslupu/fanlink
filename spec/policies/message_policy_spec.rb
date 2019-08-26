@@ -1,27 +1,52 @@
 require "rails_helper"
 
 RSpec.describe MessagePolicy, type: :policy do
-  let(:user) { User.new }
+  subject { described_class.new(person, message) }
 
-  subject { described_class }
+  let(:person) { nil }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+
+  context "CRUD actions" do
+    let(:message) { Message.new }
+
+    it { is_expected.to forbid_new_and_create_actions }
+    it { is_expected.to forbid_edit_and_update_actions }
+    it { is_expected.to forbid_action(:destroy) }
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "#hide_action" do
+    let(:message) { Message.new(hidden: false) }
+    it { is_expected.to permit_action(:hide_action) }
   end
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "#unhide_action" do
+    let(:message) { Message.new(hidden: true) }
+    it { is_expected.to permit_action(:unhide_action) }
   end
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  context "Scope" do
+    it "should only return messages from current product's public rooms" do
+      ActsAsTenant.without_tenant do
+        current_product = create(:product)
+        another_product = create(:product)
 
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+        public_room = create(:room, public: true)
+        private_room = create(:room)
+        public_room_from_another_product = create(:room, public: true, product_id: another_product.id)
+
+        create(:message, room_id: private_room.id)
+        create(:message, room_id: public_room_from_another_product.id)
+        message = create(:message, room_id: public_room.id)
+        message2 = create(:message, room_id: public_room.id)
+
+        ActsAsTenant.current_tenant = current_product
+        scope = Pundit.policy_scope!(person, Message.all)
+
+        expect(Message.count).to eq(4) # to test if all the messages are created
+        expect(scope.count).to eq(2)
+        expect(scope).to include(message)
+        expect(scope).to include(message2)
+      end
+    end
   end
 end
