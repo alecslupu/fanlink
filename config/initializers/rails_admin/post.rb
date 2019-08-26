@@ -5,19 +5,44 @@ RailsAdmin.config do |config|
     configure :reported do
     end
     list do
-      fields :person,
-             :body,
-             :picture,
-             :global,
-             :starts_at,
-             :ends_at,
-             :repost_interval,
-             :status,
-             :priority
+      field :person do
+        column_width 30
+      end
+      field :body do
+        column_width 150
+        pretty_value do
+          bindings[:object].body_buffed("en")
+        end
+      end
+      field :picture do
+        column_width 30
+      end
+      field :global do
+        column_width 30
+      end
+      field :starts_at do
+        column_width 30
+      end
+      field :ends_at do
+        column_width 30
+      end
+      field :repost_interval do
+        column_width 30
+      end
+      field :status do
+        column_width 30
+      end
+      field :priority do
+        column_width 30
+      end
       field :reported do
+        column_width 30
         pretty_value do
           bindings[:object].reported?
         end
+      end
+      field :created_at do
+        column_width 60
       end
     end
     show do
