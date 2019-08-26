@@ -26,5 +26,48 @@ RSpec.describe QuestCompletion, type: :model do
       qc = create(:quest_completion)
       expect(QuestCompletion.count_activity(qc.step_id)).to eq(1)
     end
+
+    describe ".id_filter" do
+      it do
+        expect(QuestCompletion).to respond_to(:id_filter)
+      end
+      pending
+    end
+
+    describe ".person_id_filter" do
+      it do
+        expect(QuestCompletion).to respond_to(:person_id_filter)
+      end
+      pending
+    end
+
+    describe ".person_filter" do
+      it do
+        expect(QuestCompletion).to respond_to(:person_filter)
+      end
+      pending
+    end
+
+    describe ".quest_id_filter" do
+      it do
+        expect(QuestCompletion).to respond_to(:quest_id_filter)
+      end
+      pending
+    end
+
+    describe ".activity_id_filter" do
+      it do
+        expect(QuestCompletion).to respond_to(:activity_id_filter)
+      end
+      pending
+    end
+
+    describe ".activity_filter" do
+      it do
+        expect(QuestCompletion).to respond_to(:activity_filter)
+      end
+      pending
+    end
+
   end
 end
