@@ -15,14 +15,28 @@ RSpec.describe MessagePolicy, type: :policy do
     it { is_expected.to permit_actions(%i[index show]) }
   end
 
-  context "#hide_action" do
-    let(:message) { Message.new(hidden: false) }
-    it { is_expected.to permit_action(:hide_action) }
+  describe "#hide_action" do
+    context "an unhidden message" do
+      let(:message) { Message.new(hidden: false) }
+      it { is_expected.to permit_action(:hide_action) }
+    end
+
+    context "a hidden message" do
+      let(:message) { Message.new(hidden: true) }
+      it { is_expected.to forbid_action(:hide_action) }
+    end
   end
 
-  context "#unhide_action" do
-    let(:message) { Message.new(hidden: true) }
-    it { is_expected.to permit_action(:unhide_action) }
+  describe "#unhide_action" do
+    context "a hidden message" do
+      let(:message) { Message.new(hidden: true) }
+      it { is_expected.to permit_action(:unhide_action) }
+    end
+
+    context "an unhidden message" do
+      let(:message) { Message.new(hidden: false) }
+      it { is_expected.to forbid_action(:unhide_action) }
+    end
   end
 
   context "Scope" do
@@ -42,7 +56,6 @@ RSpec.describe MessagePolicy, type: :policy do
 
         ActsAsTenant.current_tenant = current_product
         scope = Pundit.policy_scope!(person, Message.all)
-
         expect(Message.count).to eq(4) # to test if all the messages are created
         expect(scope.count).to eq(2)
         expect(scope).to include(message)
