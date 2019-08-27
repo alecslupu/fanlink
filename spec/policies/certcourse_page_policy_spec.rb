@@ -46,4 +46,25 @@ RSpec.describe CertcoursePagePolicy, type: :policy do
       it { is_expected.to forbid_action(:select_product) }
     end
   end
+
+  context "Scope" do
+    it "should only return certcourses pages from the current product" do
+      ActsAsTenant.without_tenant do
+        person = create(:person, role: :admin)
+        current_product = create(:product)
+        another_product = create(:product)
+
+        certcourse_page = create(:certcourse_page, product_id: current_product.id)
+        certcourse_page2 = create(:certcourse_page, product_id: current_product.id)
+        create(:certcourse_page, product_id: another_product.id)
+        expect(CertcoursePage.count).to eq(3) # to test if all the certcourses pages are created
+
+        ActsAsTenant.current_tenant = current_product
+        scope = Pundit.policy_scope!(person, CertcoursePage.all)
+        expect(scope.count).to eq(2)
+        expect(scope).to include(certcourse_page)
+        expect(scope).to include(certcourse_page2)
+      end
+    end
+  end
 end
