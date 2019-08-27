@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AnswerPolicy, type: :policy do
   subject { described_class.new(person, answer) }
@@ -13,13 +13,6 @@ RSpec.describe AnswerPolicy, type: :policy do
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:show) }
-  end
-
-  context "Rails admin actions" do
-    let(:answer) { Answer.new }
-
-    it { is_expected.to permit_actions(%i[export history dashboard select_product_dashboard]) }
-    it { is_expected.to forbid_actions(%i[show_in_app generate_game_action]) }
   end
 
   context "Rails admin actions" do
