@@ -53,7 +53,6 @@ RSpec.describe MessagePolicy, type: :policy do
         create(:message, room_id: public_room_from_another_product.id)
         message = create(:message, room_id: public_room.id)
         message2 = create(:message, room_id: public_room.id)
-        expect(Message.count).to eq(4) # to test if all the messages are created
 
         ActsAsTenant.current_tenant = current_product
         scope = Pundit.policy_scope!(person, Message.all)
