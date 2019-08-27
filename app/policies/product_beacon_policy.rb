@@ -1,0 +1,2 @@
+class ProductBeaconPolicy < QuestModulePolicy
+end

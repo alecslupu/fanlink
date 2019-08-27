@@ -1,21 +1,19 @@
-class MessagePolicy < ApplicationPolicy
-
-  def unhide_action?
-    record.hidden?
-  end
-
-  def destroy?
-    false
-  end
+class MessagePolicy < ChatModulePolicy
 
   def create?
     false
   end
 
-  # an admin should not be able to edit messages
+  def new?
+    create?
+  end
 
   def update?
     false
+  end
+
+  def unhide_action?
+    record.hidden? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym))
   end
 
   def edit?
@@ -23,10 +21,10 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def hide_action?
-    record.visible?
+    record.visible? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym))
   end
 
-  class Scope < ApplicationPolicy::Scope
+  class Scope < Scope
     def resolve
       scope.publics.for_product(ActsAsTenant.current_tenant)
     end
