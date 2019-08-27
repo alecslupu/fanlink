@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe ImagePagePolicy, type: :policy do
-  subject { described_class.new(person, certificate) }
+  subject { described_class.new(person, image_page) }
 
   let(:person) { nil }
 
   context "CRUD actions" do
-    let(:certificate) { Certificate.new }
+    let(:image_page) { ImagePage.new }
 
     it { is_expected.to permit_new_and_create_actions }
     it { is_expected.to permit_edit_and_update_actions }
@@ -16,14 +16,14 @@ RSpec.describe ImagePagePolicy, type: :policy do
   end
 
   context "Rails admin actions" do
-    let(:certificate) { Certificate.new }
+    let(:image_page) { ImagePage.new }
 
     it { is_expected.to permit_actions(%i[export history dashboard select_product_dashboard]) }
     it { is_expected.to forbid_actions(%i[show_in_app generate_game_action]) }
   end
 
   describe "#select_product" do
-    let(:certificate) { Certificate.new }
+    let(:image_page) { ImagePage.new }
 
     context "superadmin who has the admin product assigned" do
       let(:product) { create(:product, internal_name: "admin") }
@@ -48,22 +48,22 @@ RSpec.describe ImagePagePolicy, type: :policy do
   end
 
   context "Scope" do
-    it "should only return certcourses pages from the current product" do
+    it "should only return image pages from the current product" do
       ActsAsTenant.without_tenant do
         person = create(:person, role: :admin)
         current_product = create(:product)
         another_product = create(:product)
 
-        certificate = create(:certificate, product_id: current_product.id)
-        certificate2 = create(:certificate, product_id: current_product.id)
-        create(:certificate, product_id: another_product.id)
-        expect(Certificate.count).to eq(3) # to test if all the certcourses pages are created
+        image_page = create(:image_page, product_id: current_product.id)
+        image_page2 = create(:image_page, product_id: current_product.id)
+        create(:image_page, product_id: another_product.id)
+        expect(ImagePage.count).to eq(3) # to test if all the certcourses pages are created
 
         ActsAsTenant.current_tenant = current_product
-        scope = Pundit.policy_scope!(person, Certificate.all)
+        scope = Pundit.policy_scope!(person, ImagePage.all)
         expect(scope.count).to eq(2)
-        expect(scope).to include(certificate)
-        expect(scope).to include(certificate2)
+        expect(scope).to include(image_page)
+        expect(scope).to include(image_page2)
       end
     end
   end
