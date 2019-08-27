@@ -57,7 +57,7 @@ RSpec.describe ImagePagePolicy, type: :policy do
         image_page = create(:image_page, product_id: current_product.id)
         image_page2 = create(:image_page, product_id: current_product.id)
         create(:image_page, product_id: another_product.id)
-        expect(ImagePage.count).to eq(3) # to test if all the certcourses pages are created
+        expect(ImagePage.count).to eq(3) # to test if all the image pages are created
 
         ActsAsTenant.current_tenant = current_product
         scope = Pundit.policy_scope!(person, ImagePage.all)
