@@ -6,6 +6,21 @@ RSpec.describe PostCommentReport, type: :model do
     @post_comment = create(:post_comment)
   end
 
+  context "Scopes" do
+    describe "#for_product" do
+      it "responds" do
+        expect(PostCommentReport).to respond_to(:for_product)
+      end
+      pending
+    end
+    describe "#status_filter" do
+      it "responds" do
+        expect(PostCommentReport).to respond_to(:status_filter)
+      end
+      pending
+    end
+  end
+
   context "Valid" do
     it "should create a valid post comment report" do
       expect(create(:post_comment_report)).to be_valid
