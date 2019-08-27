@@ -45,9 +45,9 @@ RSpec.describe MessagePolicy, type: :policy do
         current_product = create(:product)
         another_product = create(:product)
 
-        public_room = create(:room, public: true)
-        private_room = create(:room)
-        public_room_from_another_product = create(:room, public: true, product_id: another_product.id)
+        public_room = create(:room, public: true, product: current_product)
+        private_room = create(:room, product: current_product)
+        public_room_from_another_product = create(:room, public: true, product: another_product)
 
         create(:message, room_id: private_room.id)
         create(:message, room_id: public_room_from_another_product.id)
