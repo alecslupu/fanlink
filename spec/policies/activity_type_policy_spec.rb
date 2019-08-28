@@ -30,7 +30,7 @@ RSpec.describe ActivityTypePolicy, type: :policy do
   end
 
   context "logged out user" do
-    et(:activity_type) { create(:activity_type) }
+    let(:activity_type) { create(:activity_type) }
     subject { described_class.new(nil, activity_type) }
 
     describe "permissions" do
@@ -82,8 +82,6 @@ RSpec.describe ActivityTypePolicy, type: :policy do
     it "should return all the activity types records" do
       ActsAsTenant.without_tenant do
         person = create(:person)
-        current_product = create(:product)
-        another_product = create(:product)
 
         activity_type = create(:activity_type)
         activity_type2 = create(:activity_type)
