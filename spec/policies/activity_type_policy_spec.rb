@@ -30,7 +30,8 @@ RSpec.describe ActivityTypePolicy, type: :policy do
   end
 
   context "logged out user" do
-    subject { described_class.new(nil, Person) }
+    et(:activity_type) { create(:activity_type) }
+    subject { described_class.new(nil, activity_type) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
