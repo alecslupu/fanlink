@@ -69,4 +69,16 @@ RSpec.describe PortalNotification, type: :model do
     end
     pending
   end
+
+  describe "#enqueue_push" do
+    it "responds to" do
+      expect(PortalNotification.new).to respond_to(:enqueue_push)
+    end
+  end
+  describe "#update_push" do
+    it "responds to" do
+      expect(PortalNotification.new).to respond_to(:update_push)
+    end
+  end
+
 end
