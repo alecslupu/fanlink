@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe ApplicationPolicy, type: :policy do
@@ -40,6 +42,32 @@ RSpec.describe ApplicationPolicy, type: :policy do
       end
       it do
         expect(subject.send(:has_permission?, "bogous")).to eq(false)
+      end
+    end
+  end
+
+  context "user with super admin role and with admin product" do
+    let(:product) { create(:product, internal_name: "admin") }
+    let(:action_type) { create(:action_type) }
+    subject { described_class.new(Person.new(role: :super_admin, product: product), action_type) }
+
+    describe "permissions" do
+      permission_list.each do |policy, _|
+        it { is_expected.to permit_action(policy) } unless policy == :show_in_app
+      end
+
+      it { is_expected.to forbid_action(:show_in_app) }
+    end
+
+    describe "protected methods" do
+      it do
+        expect(subject.send(:module_name)).to eq("admin")
+      end
+      it do
+        expect(subject.send(:super_admin?)).to eq(true)
+      end
+      it do
+        expect(subject.send(:has_permission?, "bogous")).to eq(true)
       end
     end
   end
