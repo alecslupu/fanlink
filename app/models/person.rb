@@ -125,11 +125,9 @@ class Person < ApplicationRecord
   validates :username, presence: { message: _("Username is required.") }
   validates :username, length: { in: 3..26, message: _("Username must be between 3 and 26 characters") }
 
-  validates :username, emoji: true
   validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
   validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
-  validates :name, emoji: true
   # validates :birthdate, presence: { message: "is required." }
 
   validate :check_role
