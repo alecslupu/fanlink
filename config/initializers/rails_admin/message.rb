@@ -18,12 +18,7 @@ RailsAdmin.config do |config|
       end
     end
     show do
-      field :created
-      field :body
-      field :poster
-      field :reporter
-      field :reason
-      field :status
+      fields :person, :room, :id, :body, :hidden, :created, :updated
     end
   end
 end

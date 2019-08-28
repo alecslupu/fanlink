@@ -4,8 +4,12 @@ RailsAdmin.config do |config|
   config.model "Post" do
     configure :reported do
     end
+    configure :id do
+      label "Post ID"
+    end
     list do
       fields :person,
+             :id,
              :body,
              :picture,
              :global,
