@@ -72,7 +72,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
   end
 
   context "Scope" do
-    it "should all the action types" do
+    it "should all the action types records" do
       ActsAsTenant.without_tenant do
         person = create(:person)
         current_product = create(:product)
@@ -80,7 +80,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
         action_type = create(:action_type)
         action_type2 = create(:action_type)
-        expect(ActionType.count).to eq(2) # to test if all the certcourses pages are created
+        expect(ActionType.count).to eq(2)
 
         ActsAsTenant.current_tenant = current_product
         scope = Pundit.policy_scope!(person, ActionType.all)
