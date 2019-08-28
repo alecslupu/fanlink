@@ -83,26 +83,53 @@ RSpec.describe Person, type: :model do
 
   context "Associations" do
     describe "#has_many" do
-      it "should verify associations" do
-        should have_many(:message_reports)
-        should have_many(:notification_device_ids)
-        should have_many(:post_reactions)
-        should have_many(:room_memberships)
-        should have_many(:posts)
-        should have_many(:quest_completions)
-        should have_many(:step_completed)
-        should have_many(:quest_completed)
-        should have_many(:person_rewards)
-        should have_many(:person_interests)
-        should have_many(:level_progresses)
-        should have_many(:reward_progresses)
-        should have_many(:messages)
-        should have_many(:event_checkins)
+      it { should have_many(:message_reports) }
+      it { should have_many(:notification_device_ids) }
+      it { should have_many(:post_reactions) }
+      it { should have_many(:room_memberships) }
+      it { should have_many(:posts) }
+      it { should have_many(:quest_completions) }
+      it { should have_many(:step_completed) }
+      it { should have_many(:quest_completed) }
+      it { should have_many(:person_rewards) }
+      it { should have_many(:person_interests) }
+      it { should have_many(:level_progresses) }
+      it { should have_many(:reward_progresses) }
+      it { should have_many(:messages) }
+      it { should have_many(:event_checkins) }
+      it { should have_many(:pin_messages) }
+      it { should have_many(:person_poll_options) }
+      it { should have_many(:pinned_to).through(:pin_messages) }
+      it { should have_many(:private_rooms).through(:room_memberships) }
+      it { should have_many(:rewards).through(:person_rewards) }
+      it { should have_many(:interests).through(:person_interests) }
+      it { should have_many(:poll_options).through(:person_poll_options) }
+      it { should have_many(:course_page_progresses) }
+      it { should have_many(:person_certificates) }
+      it { should have_many(:certificates).through(:person_certificates) }
+      it { should have_many(:person_certcourses) }
+      it { should have_many(:certcourses).through(:person_certcourses) }
 
-        should have_many(:rewards).through(:person_rewards)
-        # should have_many(:private_rooms).through(:room_memberships) # Currently fails with nilClass on room_memberships
-        should have_many(:interests).through(:person_interests)
-      end
+      it { should have_many(:badge_actions) }
+      it { should have_many(:badge_awards) }
+      it { should have_many(:badges).through(:badge_awards) }
+
+      it { should have_many(:trivia_game_leaderboards) }
+      it { should have_many(:trivia_package_leaderboards) }
+      it { should have_many(:trivia_question_leaderboards) }
+      it { should have_many(:trivia_answers) }
+      it { should have_many(:trivia_subscribers) }
+      it { should have_many(:blocks_by) }
+      it { should have_many(:blocked_people).through(:blocks_by) }
+      it { should have_many(:blocks_on) }
+      it { should have_many(:blocked_by_people).through(:blocks_on) }
+
+
+      it { should have_many(:active_followings) }
+      it { should have_many(:following).through(:active_followings) }
+      it { should have_many(:passive_followings) }
+      it { should have_many(:followers).through(:passive_followings) }
+      # it { should have_many(:relationships) }
     end
 
     describe "#has_one" do
@@ -118,10 +145,15 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context "Filters" do
+  context "scopes" do
     describe "#username_filter" do
+      it { expect(Person).to respond_to(:username_filter)}
+    end
+    describe "product_account_filter" do
+      it { expect(Person).to respond_to(:product_account_filter)}
     end
     describe "#email_filter" do
+      it { expect(Person).to respond_to(:email_filter)}
     end
   end
 
@@ -152,7 +184,7 @@ RSpec.describe Person, type: :model do
       expect(person.errors[:country_code]).not_to be_empty
     end
     it "should accept an empty string country code" do
-      person = build(:person, country_code: "")
+      person = build(:person, country_code: nil)
       expect(person).to be_valid
       expect(person.country_code).to be_nil
     end
@@ -184,6 +216,7 @@ RSpec.describe Person, type: :model do
       expect(person.following.sort).to eq([auto1, auto2].sort)
     end
   end
+
   describe "#badge_points" do
     it "should give the total point value of badges earned when no badges earned" do
       person = create(:person)
@@ -618,6 +651,7 @@ RSpec.describe Person, type: :model do
       expect(Delayed::Job.count).to eq 1
     end
   end
+
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
       expect(Delayed::Job.count).to eq 0
@@ -626,11 +660,21 @@ RSpec.describe Person, type: :model do
       expect(Delayed::Job.count).to eq 1
     end
   end
+
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
       expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
       pc.person.send_certificate_email(pc.certificate_id,pc.person.email)
+      expect(Delayed::Job.count).to eq 1
+    end
+  end
+
+  describe "#send_course_attachment_email" do
+    it "sends a course on email" do
+      expect(Delayed::Job.count).to eq 0
+      pc = create(:person_certificate)
+      pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
       expect(Delayed::Job.count).to eq 1
     end
   end

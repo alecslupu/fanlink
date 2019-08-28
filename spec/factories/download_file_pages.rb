@@ -16,6 +16,8 @@
 
 FactoryBot.define do
   factory :download_file_page do
-    CertcoursePage { nil }
+    certcourse_page { create(:certcourse_page) }
+    caption { Faker::Lorem.paragraph(  2 )}
+    document {  File.new(Rails.root.join("spec/fixtures/pdfs/dummy.pdf")) }
   end
 end
