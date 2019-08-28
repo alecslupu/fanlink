@@ -53,15 +53,15 @@ class ApplicationPolicy
     user && user.some_admin?
   end
 
-  def select_product_dashboard?
-    # true
-    false
-  end
+  # def select_product_dashboard?
+  #   # true
+  #   false
+  # end
 
-  def generate_game_action?
-    # false
-    false
-  end
+  # def generate_game_action?
+  #   # false
+  #   false
+  # end
   # Rails admin
 
   def select_product?
