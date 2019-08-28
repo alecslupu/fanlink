@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationPolicy, type: :policy do
+RSpec.describe ActionTypePolicy, type: :policy do
   permission_list = {
     index: false,
     show: false,
@@ -36,7 +36,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     end
     describe "protected methods" do
       it do
-        expect(subject.send(:module_name)).to eq("admin")
+        expect(subject.send(:module_name)).to eq("reward")
       end
       it do
         expect(subject.send(:super_admin?)).to be_nil
@@ -62,7 +62,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
     describe "protected methods" do
       it do
-        expect(subject.send(:module_name)).to eq("admin")
+        expect(subject.send(:module_name)).to eq("reward")
       end
       it do
         expect(subject.send(:super_admin?)).to eq(true)
