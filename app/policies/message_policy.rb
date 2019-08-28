@@ -1,7 +1,7 @@
 class MessagePolicy < ApplicationPolicy
 
   def unhide_action?
-    record.hidden?
+    record.is_a?(Message) ? record.hidden? : false
   end
 
   def destroy?
@@ -17,7 +17,7 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def hide_action?
-    record.visible?
+    record.is_a?(Message) ? record.visible? : false
   end
 
   class Scope < ApplicationPolicy::Scope
