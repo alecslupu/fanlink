@@ -20,7 +20,10 @@ RSpec.describe ActionTypePolicy, type: :policy do
   }
 
   describe "defined policies" do
-    subject { described_class.new(nil, Person.new) }
+    let(:action_type) { create(:action_type) }
+
+    subject { described_class.new(Person.new, action_type) }
+
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
     end
@@ -74,7 +77,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
   end
 
   context "Scope" do
-    it "should all the action types records" do
+    it "should return all the action types records" do
       ActsAsTenant.without_tenant do
         person = create(:person)
         current_product = create(:product)
