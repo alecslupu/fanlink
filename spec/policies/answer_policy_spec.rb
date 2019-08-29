@@ -84,7 +84,7 @@ RSpec.describe AnswerPolicy, type: :policy do
         answer = create(:answer, product: current_product)  # only one question will be on the current_product
         expect(Answer.count).to eq(10) # there are 5 questions created for each create
                                        # 4 from the creation of the quiz page and 1 separate
-        expect(Answer.where(product_id: current_product.id).count).to eq(1)
+        expect(Answer.where(product: current_product).count).to eq(1)
         answer_current_product = Answer.where(product_id: current_product.id).first
 
         scope = Pundit.policy_scope!(Person.new, Answer.all)
