@@ -75,7 +75,7 @@ RSpec.describe ActivityTypePolicy, type: :policy do
   end
 
   context "Scope" do
-    it "should return all the activity types records" do
+    it "should return all the records" do
       person = create(:person, role: :admin)
 
       ActsAsTenant.with_tenant(person.product) do
