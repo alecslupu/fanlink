@@ -17,6 +17,13 @@
 
 FactoryBot.define do
   factory :poll do
+    poll_type { "post" }
+    poll_type_id { rand(100)}
+    start_date { DateTime.now + 1.day }
+    end_date { start_date + 1.day }
+    duration { 0 }
+    description{ "Random description" }
+    product_id { create(:product).id }
 
   end
 end

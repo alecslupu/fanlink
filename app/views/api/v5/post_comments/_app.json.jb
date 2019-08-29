@@ -1,6 +1,0 @@
-{
-  id: post_comment.id.to_s,
-  post_id: post_comment.post_id,
-  body: post_comment.body,
-  create_time: post_comment.created_at.to_s
-}

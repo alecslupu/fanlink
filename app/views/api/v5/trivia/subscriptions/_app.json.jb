@@ -1,9 +1,0 @@
-json = {
-  game_id: subscriber.game_id,
-  person_id: subscriber.person_id,
-  subscribed: subscriber.subscribed,
-
-  user_enroled: subscriber.persisted?,
-  user_notification: subscriber.subscribed?
-}
-json

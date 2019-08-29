@@ -1,3 +1,0 @@
-{
-  block: render(partial: @req_source, locals: { block: @block }, handlers: "jb")
-}

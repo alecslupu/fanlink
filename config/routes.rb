@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
 
 
-  post "/graphql", to: "graphql#execute"
 
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
@@ -27,7 +26,6 @@ Rails.application.routes.draw do
   draw :administrate
 
   if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
   end
 end

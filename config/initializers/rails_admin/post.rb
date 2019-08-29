@@ -4,6 +4,9 @@ RailsAdmin.config do |config|
   config.model "Post" do
     configure :reported do
     end
+    configure :id do
+      label "Post ID"
+    end
     list do
       field :person do
         column_width 30

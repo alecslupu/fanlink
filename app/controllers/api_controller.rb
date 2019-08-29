@@ -45,7 +45,7 @@ protected
   def set_api_version
     # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller]
     # /\Aapplication\/vnd\.api\.v(?<version>[0-9]+)\+json\z/ =~ request.headers['Accept']a
-    @api_version = 5
+    @api_version = 4
   end
 
   def check_banned
@@ -117,7 +117,7 @@ protected
     end
     product = (current_user.present? && current_user.try(:product)) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
-      render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
+      render json: {errors: "You must supply a valid product"}, status: :unprocessable_entity
     else
       set_current_tenant(product)
       cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
