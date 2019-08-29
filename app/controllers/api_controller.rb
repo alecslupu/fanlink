@@ -85,7 +85,7 @@ protected
   def set_api_version
     # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller]
     # /\Aapplication\/vnd\.api\.v(?<version>[0-9]+)\+json\z/ =~ request.headers['Accept']a
-    @api_version = 5
+    @api_version = 4
   end
 
   def check_banned

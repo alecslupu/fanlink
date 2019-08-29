@@ -1,9 +1,0 @@
-json = {}
-
-json[:interests] = @interests.map do |interest|
-  Rails.cache.fetch ["v5", "interests", @req_source, interest.id, interest.updated_at.to_i, @lang] do
-    render partial: @req_source, locals: { interest: interest }, handlers: "jb"
-  end
-end
-
-json
