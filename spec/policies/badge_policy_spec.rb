@@ -20,9 +20,7 @@ RSpec.describe BadgePolicy, type: :policy do
   }
 
   describe "defined policies" do
-    let(:badge) { create(:badge) }
-
-    subject { described_class.new(Person.new, badge) }
+    subject { described_class.new(Person.new, Badge.new) }
 
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
@@ -30,8 +28,7 @@ RSpec.describe BadgePolicy, type: :policy do
   end
 
   context "logged out user" do
-    let(:badge) { create(:badge) }
-    subject { described_class.new(nil, badge) }
+    subject { described_class.new(nil, Badge.new) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -53,8 +50,8 @@ RSpec.describe BadgePolicy, type: :policy do
 
   context "user with super admin role and with admin product" do
     let(:product) { create(:product, internal_name: "admin") }
-    let(:badge) { create(:badge) }
-    subject { described_class.new(Person.new(role: :super_admin, product: product), badge) }
+
+    subject { described_class.new(Person.new(role: :super_admin, product: product), Badge.new) }
 
     describe "permissions" do
       permission_list.each do |policy, _|
@@ -78,18 +75,20 @@ RSpec.describe BadgePolicy, type: :policy do
   end
 
   context "Scope" do
-    it "should return all the badge records" do
-      ActsAsTenant.without_tenant do
+    it "should return all the assigned_rewards" do
+      person = create(:person)
+
+      ActsAsTenant.with_tenant(person.product) do
+
         badge = create(:badge)
         badge2 = create(:badge)
 
         expect(Badge.count).to eq(2)
 
-        ActsAsTenant.current_tenant = current_product
-        scope = Pundit.policy_scope!(Person.new(role: :admin), Badge.all)
+        scope = Pundit.policy_scope!(person, Badge.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(badge)
-        expect(scope).to include(badge2)
+        expect(scope).to include(badge)
       end
     end
   end
