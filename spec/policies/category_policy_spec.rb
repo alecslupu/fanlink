@@ -81,14 +81,14 @@ RSpec.describe CategoryPolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
 
         category = create(:category)
-        category = create(:category)
+        category2 = create(:category)
 
         expect(Category.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Category.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(category)
-        expect(scope).to include(category)
+        expect(scope).to include(category2)
       end
     end
   end

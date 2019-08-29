@@ -80,14 +80,14 @@ RSpec.describe CoursePolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         course = create(:course)
-        course = create(:course)
+        course2 = create(:course)
 
         expect(Course.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Course.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(course)
-        expect(scope).to include(course)
+        expect(scope).to include(course2)
       end
     end
   end

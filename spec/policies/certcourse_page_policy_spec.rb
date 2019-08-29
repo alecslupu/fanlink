@@ -81,14 +81,14 @@ RSpec.describe CertcoursePagePolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
 
         certcourse_page = create(:certcourse_page)
-        certcourse_page = create(:certcourse_page)
+        certcourse_page2 = create(:certcourse_page)
 
         expect(CertcoursePage.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, CertcoursePage.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(certcourse_page)
-        expect(scope).to include(certcourse_page)
+        expect(scope).to include(certcourse_page2)
       end
     end
   end

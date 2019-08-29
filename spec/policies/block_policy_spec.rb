@@ -81,14 +81,14 @@ RSpec.describe BlockPolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
 
         block = create(:block)
-        block = create(:block)
+        block2 = create(:block)
 
         expect(Block.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Block.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(block)
-        expect(scope).to include(block)
+        expect(scope).to include(block2)
       end
     end
   end

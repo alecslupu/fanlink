@@ -80,14 +80,14 @@ RSpec.describe ContestPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         contest = create(:contest)
-        contest = create(:contest)
+        contest2 = create(:contest)
 
         expect(Contest.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Contest.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(contest)
-        expect(scope).to include(contest)
+        expect(scope).to include(contest2)
       end
     end
   end

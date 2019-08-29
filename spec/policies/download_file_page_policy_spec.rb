@@ -80,14 +80,14 @@ RSpec.describe DownloadFilePagePolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         download_file_page = create(:download_file_page)
-        download_file_page = create(:download_file_page)
+        download_file_page2 = create(:download_file_page)
 
         expect(DownloadFilePage.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, DownloadFilePage.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(download_file_page)
-        expect(scope).to include(download_file_page)
+        expect(scope).to include(download_file_page2)
       end
     end
   end

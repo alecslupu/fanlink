@@ -80,14 +80,14 @@ RSpec.describe HackedMetricPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         hacked_metric = create(:hacked_metric)
-        hacked_metric = create(:hacked_metric)
+        hacked_metric2 = create(:hacked_metric)
 
         expect(HackedMetric.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, HackedMetric.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(hacked_metric)
-        expect(scope).to include(hacked_metric)
+        expect(scope).to include(hacked_metric2)
       end
     end
   end

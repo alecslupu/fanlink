@@ -80,14 +80,14 @@ RSpec.describe FollowingPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         following = create(:following)
-        following = create(:following)
+        following2 = create(:following)
 
         expect(Following.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Following.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(following)
-        expect(scope).to include(following)
+        expect(scope).to include(following2)
       end
     end
   end

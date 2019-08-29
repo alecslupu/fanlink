@@ -80,14 +80,14 @@ RSpec.describe EventPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         event = create(:event)
-        event = create(:event)
+        event2 = create(:event)
 
         expect(Event.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Event.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(event)
-        expect(scope).to include(event)
+        expect(scope).to include(event2)
       end
     end
   end

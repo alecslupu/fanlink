@@ -80,14 +80,14 @@ RSpec.describe CoursePageProgressPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         course_page_progress = create(:course_page_progress)
-        course_page_progress = create(:course_page_progress)
+        course_page_progress2 = create(:course_page_progress)
 
         expect(CoursePageProgress.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, CoursePageProgress.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(course_page_progress)
-        expect(scope).to include(course_page_progress)
+        expect(scope).to include(course_page_progress2)
       end
     end
   end

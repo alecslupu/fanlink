@@ -81,14 +81,14 @@ RSpec.describe CertificatePolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
 
         certificate = create(:certificate)
-        certificate = create(:certificate)
+        certificate2 = create(:certificate)
 
         expect(Certificate.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Certificate.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(certificate)
-        expect(scope).to include(certificate)
+        expect(scope).to include(certificate2)
       end
     end
   end

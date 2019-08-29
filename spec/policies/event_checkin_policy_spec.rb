@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+2# frozen_string_literal: true
 
 require "rails_helper"
 
@@ -80,14 +80,14 @@ RSpec.describe EventCheckinPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         event_checkin = create(:event_checkin)
-        event_checkin = create(:event_checkin)
+        event_checkin2 = create(:event_checkin)
 
         expect(EventCheckin.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, EventCheckin.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(event_checkin)
-        expect(scope).to include(event_checkin)
+        expect(scope).to include(event_checkin2)
       end
     end
   end

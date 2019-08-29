@@ -88,7 +88,7 @@ RSpec.describe BadgeActionPolicy, type: :policy do
         scope = Pundit.policy_scope!(person, BadgeAction.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(badge_action)
-        expect(scope).to include(badge_action)
+        expect(scope).to include(badge_action2)
       end
     end
   end

@@ -80,14 +80,14 @@ RSpec.describe CouponPolicy, type: :policy do
 
       ActsAsTenant.with_tenant(person.product) do
         coupon = create(:coupon)
-        coupon = create(:coupon)
+        coupon2 = create(:coupon)
 
         expect(Coupon.count).to eq(2)
 
         scope = Pundit.policy_scope!(person, Coupon.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(coupon)
-        expect(scope).to include(coupon)
+        expect(scope).to include(coupon2)
       end
     end
   end
