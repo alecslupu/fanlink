@@ -76,7 +76,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
   context "Scope" do
     it "should return all the assigned_rewards" do
       ActsAsTenant.without_tenant do
-        person = create(:person, role: :admin)
+        # person = create(:person, role: :admin)
 
         badge = create(:badge)
         badge2 = create(:badge)
@@ -90,7 +90,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
         expect(AssignedReward.count).to eq(2)
 
         ActsAsTenant.current_tenant = current_product
-        scope = Pundit.policy_scope!(person, AssignedReward.all)
+        scope = Pundit.policy_scope!(Person.new, AssignedReward.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(assigned_reward)
         expect(scope).to include(assigned_reward2)
