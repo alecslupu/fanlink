@@ -62,9 +62,12 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
-  # gem "rubocop-rails"
-  gem "rubocop-rails_config"
+
+  gem 'rubocop', '~> 0.74.0', require: false
+  # gem "rubocop-rails_config"
+  gem 'rubocop-rails'
   gem "rubocop-rspec"
+  gem 'rubocop-performance'
 end
 
 group :development do
@@ -132,7 +135,6 @@ gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
-gem "graphql"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
 gem "jko_api" # api versioning
@@ -165,8 +167,6 @@ gem "wisper-activejob"
 gem "wisper-activerecord"
 
 gem "rmagick"
-
-gem "graphiql-rails", group: :development
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"
