@@ -20,9 +20,7 @@ RSpec.describe ActivityTypePolicy, type: :policy do
   }
 
   describe "defined policies" do
-    let(:activity_type) { create(:activity_type) }
-
-    subject { described_class.new(Person.new, activity_type) }
+    subject { described_class.new(Person.new, ActivityType.new) }
 
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
@@ -30,8 +28,7 @@ RSpec.describe ActivityTypePolicy, type: :policy do
   end
 
   context "logged out user" do
-    let(:activity_type) { create(:activity_type) }
-    subject { described_class.new(nil, activity_type) }
+    subject { described_class.new(nil, ActivityType.new) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -53,9 +50,8 @@ RSpec.describe ActivityTypePolicy, type: :policy do
 
   context "user with super admin role and with admin product" do
     let(:product) { create(:product, internal_name: "admin") }
-    let(:activity_type) { create(:activity_type) }
 
-    subject { described_class.new(Person.new(role: :super_admin, product: product), activity_type) }
+    subject { described_class.new(Person.new(role: :super_admin, product: product), ActivityType.new) }
 
     describe "permissions" do
       permission_list.each do |policy, _|

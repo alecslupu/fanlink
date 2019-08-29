@@ -20,7 +20,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    let(:assigned_reward) { AssignedReward.create }
+    let(:assigned_reward) { AssignedReward.new }
 
     subject { described_class.new(Person.new, assigned_reward) }
 
@@ -30,7 +30,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
   end
 
   context "logged out user" do
-    let(:assigned_reward) { AssignedReward.create }
+    let(:assigned_reward) { AssignedReward.new }
     subject { described_class.new(nil, assigned_reward) }
 
     describe "permissions" do
@@ -53,7 +53,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
   context "user with super admin role and with admin product" do
     let(:product) { create(:product, internal_name: "admin") }
-    let(:assigned_reward) { AssignedReward.create }
+    let(:assigned_reward) { AssignedReward.new }
     subject { described_class.new(Person.new(role: :super_admin, product: product), assigned_reward) }
 
     describe "permissions" do

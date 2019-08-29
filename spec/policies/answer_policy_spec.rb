@@ -20,9 +20,7 @@ RSpec.describe AnswerPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    let(:answer) { create(:answer) }
-
-    subject { described_class.new(Person.new, answer) }
+    subject { described_class.new(Person.new, Answer.new) }
 
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
@@ -30,8 +28,7 @@ RSpec.describe AnswerPolicy, type: :policy do
   end
 
   context "logged out user" do
-    let(:answer) { create(:answer) }
-    subject { described_class.new(nil, answer) }
+    subject { described_class.new(nil, Answer.new) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -53,8 +50,7 @@ RSpec.describe AnswerPolicy, type: :policy do
 
   context "user with super admin role and with admin product" do
     let(:product) { create(:product, internal_name: "admin") }
-    let(:answer) { create(:answer) }
-    subject { described_class.new(Person.new(role: :super_admin, product: product), answer) }
+    subject { described_class.new(Person.new(role: :super_admin, product: product), Answer.new) }
 
     describe "permissions" do
       permission_list.each do |policy, _|

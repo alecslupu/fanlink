@@ -20,7 +20,8 @@ RSpec.describe ApplicationPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    subject { described_class.new(nil, Person.new) }
+    subject { described_class.new(nil, nil) }
+
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
     end
@@ -48,8 +49,8 @@ RSpec.describe ApplicationPolicy, type: :policy do
 
   context "user with super admin role and with admin product" do
     let(:product) { create(:product, internal_name: "admin") }
-    let(:action_type) { create(:action_type) }
-    subject { described_class.new(Person.new(role: :super_admin, product: product), action_type) }
+
+    subject { described_class.new(Person.new(role: :super_admin, product: product), nil) }
 
     describe "permissions" do
       permission_list.each do |policy, _|
