@@ -13,9 +13,12 @@
 #  updated_at            :datetime         not null
 #  caption               :text
 #
+include ActionDispatch::TestProcess
 
 FactoryBot.define do
   factory :download_file_page do
-    CertcoursePage { nil }
+    certcourse_page { create(:certcourse_page) }
+    caption { Faker::Lorem.words(2) }
+    document { fixture_file_upload(Rails.root.join('spec', 'support', 'files', 'blank_test.pdf'), 'application/pdf') }
   end
 end
