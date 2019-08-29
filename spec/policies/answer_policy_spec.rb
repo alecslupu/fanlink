@@ -1,49 +1,100 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe AnswerPolicy, type: :policy do
-  subject { described_class.new(person, answer) }
+  permission_list = {
+    index: false,
+    show: false,
+    create: false,
+    new: false,
+    update: false,
+    edit: false,
+    destroy: false,
+    export: false,
+    history: false,
+    show_in_app: false,
+    dashboard: false,
+    # select_product_dashboard: false,
+    select_product: false,
+  }
 
-  let(:person) { nil }
+  describe "defined policies" do
+    let(:answer) { create(:answer) }
 
-  context "CRUD actions" do
-    let(:answer) { Answer.new }
+    subject { described_class.new(Person.new, answer) }
 
-    it { is_expected.to permit_new_and_create_actions }
-    it { is_expected.to permit_edit_and_update_actions }
-    it { is_expected.to forbid_action(:destroy) }
-    it { is_expected.to permit_action(:index) }
-    it { is_expected.to permit_action(:show) }
+    permission_list.each do |policy, value|
+      it { is_expected.to respond_to("#{policy}?".to_sym) }
+    end
   end
 
-  context "Rails admin actions" do
-    let(:answer) { Answer.new }
+  context "logged out user" do
+    let(:answer) { create(:answer) }
+    subject { described_class.new(nil, answer) }
 
-    it { is_expected.to permit_actions(%i[export history dashboard select_product_dashboard]) }
-    it { is_expected.to forbid_actions(%i[show_in_app generate_game_action]) }
+    describe "permissions" do
+      permission_list.each do |policy, value|
+        it { is_expected.to forbid_action(policy) }
+      end
+    end
+    describe "protected methods" do
+      it do
+        expect(subject.send(:module_name)).to eq("courseware")
+      end
+      it do
+        expect(subject.send(:super_admin?)).to be_nil
+      end
+      it do
+        expect(subject.send(:has_permission?, "bogous")).to eq(false)
+      end
+    end
   end
 
-  describe "#select_product" do
-    let(:answer) { Answer.new }
+  context "user with super admin role and with admin product" do
+    let(:product) { create(:product, internal_name: "admin") }
+    let(:answer) { create(:answer) }
+    subject { described_class.new(Person.new(role: :super_admin, product: product), answer) }
 
-    context "superadmin who has the admin product assigned" do
-      let(:product) { create(:product, internal_name: "admin") }
-      let(:person) { Person.new(product: product, role: :super_admin) }
+    describe "permissions" do
+      permission_list.each do |policy, _|
+        it { is_expected.to permit_action(policy) } unless policy == :show_in_app
+      end
 
-      it { is_expected.to permit_action(:select_product) }
+      it { is_expected.to forbid_action(:show_in_app) }
     end
 
-    context "admin who has the admin product assigned" do
-      let(:product) { create(:product, internal_name: "admin") }
-      let(:person) { Person.new(product: product, role: :admin) }
-
-      it { is_expected.to forbid_action(:select_product) }
+    describe "protected methods" do
+      it do
+        expect(subject.send(:module_name)).to eq("courseware")
+      end
+      it do
+        expect(subject.send(:super_admin?)).to eq(true)
+      end
+      it do
+        expect(subject.send(:has_permission?, "bogous")).to eq(true)
+      end
     end
+  end
 
-    context "superadmin who doesn't have admin product assigned" do
-      let(:product) { create(:product, internal_name: "not_admin") }
-      let(:person) { Person.new(product: product, role: :super_admin) }
+  context "Scope" do
+    it "should return all the answers records that are for the current product" do
+      ActsAsTenant.without_tenant do
+        person = create(:person, role: :admin)
+        current_product = create(:product)
 
-      it { is_expected.to forbid_action(:select_product) }
+        answer = create(:answer)
+        answer = create(:answer, product: current_product)  # only one question will be on the current_product
+        expect(Answer.count).to eq(10) # there are 5 questions created for each create
+                                       # 4 from the creation of the quiz page and 1 separate
+        expect(Answer.where(product_id: current_product.id).count).to eq(1)
+        answer_current_product = Answer.where(product_id: current_product.id).first
+        ActsAsTenant.current_tenant = current_product
+
+        scope = Pundit.policy_scope!(person, Answer.all)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(answer_current_product)
+      end
     end
   end
 end

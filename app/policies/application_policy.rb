@@ -99,11 +99,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      if user.some_admin? && scope.respond_to?(:product)
-        scope.where(product_id: ActsAsTenant.current_tenant.id)
-      else
-        scope.all
-      end
+      scope.all
     end
   end
 end
