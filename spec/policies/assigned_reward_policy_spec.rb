@@ -20,9 +20,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    let(:assigned_reward) { AssignedReward.new }
-
-    subject { described_class.new(Person.new, assigned_reward) }
+    subject { described_class.new(Person.new, AssignedReward.new) }
 
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
@@ -30,8 +28,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
   end
 
   context "logged out user" do
-    let(:assigned_reward) { AssignedReward.new }
-    subject { described_class.new(nil, assigned_reward) }
+    subject { described_class.new(nil, AssignedReward.new) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -53,8 +50,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
   context "user with super admin role and with admin product" do
     let(:product) { create(:product, internal_name: "admin") }
-    let(:assigned_reward) { AssignedReward.new }
-    subject { described_class.new(Person.new(role: :super_admin, product: product), assigned_reward) }
+    subject { described_class.new(Person.new(role: :super_admin, product: product), AssignedReward.new) }
 
     describe "permissions" do
       permission_list.each do |policy, _|
