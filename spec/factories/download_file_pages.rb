@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: download_file_pages
@@ -19,6 +21,6 @@ FactoryBot.define do
   factory :download_file_page do
     certcourse_page { create(:certcourse_page) }
     caption { Faker::Lorem.words(2) }
-    document { fixture_file_upload(Rails.root.join('spec', 'support', 'files', 'blank_test.pdf'), 'application/pdf') }
+    document { fixture_file_upload(Rails.root.join("spec", "support", "files", "blank_test.pdf"), "application/pdf") }
   end
 end
