@@ -75,7 +75,9 @@ RSpec.describe AnswerPolicy, type: :policy do
 
   context "Scope" do
     it "should return all the answers records that are for the current product" do
-      ActsAsTenant.without_tenant do
+      person = create(:person, role: :admin)
+
+      ActsAsTenant.with_tenant(person.product) do
         current_product = create(:product)
 
         answer = create(:answer)
@@ -84,7 +86,6 @@ RSpec.describe AnswerPolicy, type: :policy do
                                        # 4 from the creation of the quiz page and 1 separate
         expect(Answer.where(product_id: current_product.id).count).to eq(1)
         answer_current_product = Answer.where(product_id: current_product.id).first
-        ActsAsTenant.current_tenant = current_product
 
         scope = Pundit.policy_scope!(Person.new, Answer.all)
         expect(scope.count).to eq(1)

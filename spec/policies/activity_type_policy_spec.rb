@@ -76,13 +76,14 @@ RSpec.describe ActivityTypePolicy, type: :policy do
 
   context "Scope" do
     it "should return all the activity types records" do
-      ActsAsTenant.without_tenant do
+      person = create(:person, role: :admin)
+
+      ActsAsTenant.with_tenant(person.product) do
 
         activity_type = create(:activity_type)
         activity_type2 = create(:activity_type)
         expect(ActivityType.count).to eq(2)
 
-        ActsAsTenant.current_tenant = current_product
         scope = Pundit.policy_scope!(Person.new, ActivityType.all)
         expect(scope.count).to eq(2)
         expect(scope).to include(activity_type)
