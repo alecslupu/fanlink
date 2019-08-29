@@ -1,7 +1,6 @@
 RSpec.describe Person, type: :model do
-
   before(:all) do
-    @username = "Whére.Ïs.Pañçâkèß.HOUSE"
+    @username = "WhereisPancakeHouse"
     @password = "logmein"
     @email = "pancakes@example.com"
     @person = create(:person, email: @email, username: @username, password: @password)
@@ -22,8 +21,22 @@ RSpec.describe Person, type: :model do
       end
     end
     describe "#length" do
-      it do
-        should validate_length_of(:username).is_at_least(3).is_at_most(26).with_message(_("Username must be between 3 and 26 characters"))
+      it "should raise an error if username's length is not between 5 and 25 characters" do
+        subject = Person.new(username: "as")
+        subject.valid?
+        expect(subject.errors.messages[:username_error].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
+
+        subject = Person.new(username: "ThisIsLongerThan25Characters")
+        subject.valid?
+        expect(subject.errors.messages[:username_error].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
+      end
+
+      it "should raise an error if the username contains special characters" do
+        subject = Person.new(username: "username&")
+        subject.valid?
+        expect(subject.errors.messages[:username_error].first).to include("Username must be 5 to 25 characters with no special characters or spaces")
+      end
+      it "should validate password's length" do
         should validate_length_of(:password).is_at_least(6).with_message(_("Password must be at least 6 characters in length."))
       end
     end
@@ -291,8 +304,8 @@ RSpec.describe Person, type: :model do
     it "should be nil for person with one badge below first level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
-        badge = create(:badge, point_value: 10)
-        level_earned = create(:level, points: 20)
+        create(:badge, point_value: 10)
+        create(:level, points: 20)
         create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
@@ -301,7 +314,7 @@ RSpec.describe Person, type: :model do
     it "should be right level for person with one badge above only level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
-        badge = create(:badge, point_value: 20)
+        create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
         create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
         person.reload
@@ -311,9 +324,9 @@ RSpec.describe Person, type: :model do
     it "should be right level for person with one badge between levels" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
-        badge = create(:badge, point_value: 20)
+        create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
-        level2 = create(:level, points: 21)
+        create(:level, points: 21)
         create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
@@ -359,27 +372,27 @@ RSpec.describe Person, type: :model do
     end
   end
   describe "#username" do
-    it "should not let you create a person with a username less than 3 characters" do
-      person = build(:person, username: "ab")
+    it "should not let you create a person with a username less than 5 characters" do
+      person = build(:person, username: "abcd")
       expect(person).not_to be_valid
-      expect(person.errors[:username]).not_to be_blank
+      expect(person.errors[:username_error]).not_to be_blank
     end
-    it "should not let you create a person with a username more than 26 characters" do
+    it "should not let you create a person with a username more than 25 characters" do
       person = build(:person, username: "abcdefghijklmnopqrstuvwxyza")
       expect(person).not_to be_valid
-      expect(person.errors[:username]).not_to be_blank
+      expect(person.errors[:username_error]).not_to be_blank
     end
     it "should not let you create a person without a username" do
       person = build(:person, username: "")
       expect(person).not_to be_valid
-      expect(person.errors[:username]).not_to be_blank
+      expect(person.errors[:username_error]).not_to be_blank
     end
     it "should properly mangle the username into a slug" do
-      expect(@person.username_canonical).to eq("whereispancakeßhouse")
+      expect(@person.username_canonical).to eq("whereispancakehouse")
     end
     it "should ignore accents, case, and punctuation when using for_username" do
-      examples = [ "Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
-                   "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house" ]
+      examples = [ "Whére.Ïs.Pañçâkè.HOUSE", "where.is.pancake.house",
+                   "whereispancakehouse", "where-is_pancake.house", "where@is_pancakehouse" ]
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -462,7 +475,6 @@ RSpec.describe Person, type: :model do
         expect(person.reset_password_token).to be_nil
         person.set_password_token!
         expect(person.reset_password_token).not_to be_nil
-
       end
     end
   end
@@ -630,7 +642,7 @@ RSpec.describe Person, type: :model do
     it "enqueues an onboarding email" do
       expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
-      pc.person.send_certificate_email(pc.certificate_id,pc.person.email)
+      pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
       expect(Delayed::Job.count).to eq 1
     end
   end

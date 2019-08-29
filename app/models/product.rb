@@ -35,7 +35,6 @@
 
 class Product < ApplicationRecord
   include AttachmentSupport
-  # include Product::Views
   has_paper_trail
 
   has_image_called :logo

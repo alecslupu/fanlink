@@ -1,6 +1,10 @@
 RailsAdmin.config do |config|
   config.included_models.push("Person")
   config.model "Person" do
+    object_label_method do
+      :to_s
+    end
+
     configure :level_earned do
     end
 

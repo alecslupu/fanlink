@@ -20,7 +20,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
         run_test!
       end
 
-      response 422, "" do
+      response 422, "Invalid login" do
+        let!(:user) { create(:person) }
         run_test!
       end
     end

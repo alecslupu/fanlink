@@ -1,5 +1,0 @@
-{
-  message: Rails.cache.fetch(["v5", "message", @req_source, @message.id, @message.updated_at.to_i]) {
-    render partial: @req_source, locals: { message: @message }, handlers: "jb"
-  }
-}
