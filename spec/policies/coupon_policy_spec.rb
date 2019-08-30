@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe CouponPolicy, type: :policy do
-  let(:master_class) { CouponPolicy.new }
+  let(:master_class) { Coupon.new }
   permission_list = {
     index: false,
     show: false,
@@ -33,7 +33,7 @@ RSpec.describe CouponPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("course_ware") }
+      it { expect(subject.send(:module_name)).to eq("admin") }
       it { expect(subject.send(:super_admin?)).to be_nil }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
     end
@@ -80,7 +80,7 @@ RSpec.describe CouponPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, course_ware_read: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_read: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -111,7 +111,7 @@ RSpec.describe CouponPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, course_ware_update: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_update: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -142,7 +142,7 @@ RSpec.describe CouponPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, course_ware_delete: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_delete: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -173,7 +173,7 @@ RSpec.describe CouponPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, course_ware_export: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_export: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -204,7 +204,7 @@ RSpec.describe CouponPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, course_ware_history: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_history: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
