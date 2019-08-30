@@ -8,6 +8,7 @@ class MessagePolicy < ChatModulePolicy
     create?
   end
 
+
   def update?
     false
   end
@@ -15,13 +16,13 @@ class MessagePolicy < ChatModulePolicy
   def edit?
     update?
   end
-
+  
   def unhide_action?
-    record.hidden? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym))
+    record.is_a?(Message) ? record.hidden? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym)) : false
   end
 
   def hide_action?
-    record.visible? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym))
+    record.is_a?(Message) ? record.visible? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym)) : false
   end
 
   class Scope < Scope
