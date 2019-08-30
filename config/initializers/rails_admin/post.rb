@@ -59,7 +59,17 @@ RailsAdmin.config do |config|
              :priority
     end
     edit do
-      fields :body,
+      field :body, :translated
+      # field :person_ do
+      #   default_value do
+      #     if bindings[:view]._current_user.try(:product_id) == ActsAsTenant.current_tenant.id
+      #       bindings[:view]._current_user
+      #     else
+      #       ActsAsTenant.current_tenant.people.where(role: 'admin').first
+      #     end
+      #   end
+      # end
+      fields :person,
              :picture,
              :global,
              :recommended,
