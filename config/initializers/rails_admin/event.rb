@@ -14,8 +14,15 @@ RailsAdmin.config do |config|
              :description,
              :starts_at,
              :ends_at,
-             :ticket_url,
-             :place_identifier
+             :ticket_url
+      field :place_identifier, :string do
+        def render
+          bindings[:view].render partial: 'rails_admin/main/places', locals: {
+            field: self, form: bindings[:form], place_info: bindings[:object].place_info,
+            url: "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_PLACES_KEY']}&libraries=places&callback=initMap"
+          }
+        end
+      end
     end
     show do
       fields :id,
