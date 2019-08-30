@@ -43,19 +43,20 @@ class RailsAdminController < ApplicationController
   end
 
   private
-    def not_found
-      raise ActionController::RoutingError.new("Not Found")
-    end
 
-    def reload_rails_admin
-      # models = RailsAdmin::Config.models_pool
-      # models.each do |m|
-      #   RailsAdmin::Config.reset_model(m)
-      # end
-      # RailsAdmin::Config::Actions.reset
-      #
-      # # Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| load f }
-      # # Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| load f }
-      # load("#{Rails.root}/config/initializers/rails_admin.rb")
-    end
+  def not_found
+    raise ActionController::RoutingError.new("Not Found")
+  end
+
+  def reload_rails_admin
+    # models = RailsAdmin::Config.models_pool
+    # models.each do |m|
+    #   RailsAdmin::Config.reset_model(m)
+    # end
+    # RailsAdmin::Config::Actions.reset
+    #
+    # # Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| load f }
+    # # Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| load f }
+    # load("#{Rails.root}/config/initializers/rails_admin.rb")
+  end
 end

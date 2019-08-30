@@ -1,2 +1,0 @@
-json = render partial: "app", locals: { subscriber: @subscriber }, handler: :jb
-json
