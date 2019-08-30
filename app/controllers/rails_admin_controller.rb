@@ -1,4 +1,5 @@
 class RailsAdminController < ApplicationController
+  include Messaging
   include ::Pundit
 
   set_current_tenant_through_filter
