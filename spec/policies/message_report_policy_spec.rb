@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe MessageReportPolicy, type: :policy do
@@ -103,7 +105,7 @@ RSpec.describe MessageReportPolicy, type: :policy do
   end
 
   context "hide message/ignore/reanalyze actions for a normal user" do
-    describe "hide permission for a pending message" do
+    describe "chat hide portal permission for a pending message report" do
       let(:portal_access) { create(:portal_access, chat_hide: true) }
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :pending)) }
 
@@ -112,7 +114,7 @@ RSpec.describe MessageReportPolicy, type: :policy do
       it { is_expected.to forbid_action(:ignore_action) }
     end
 
-    describe "ignore permission for a pending message" do
+    describe "chat ignore portal permission for a pending message report" do
       let(:portal_access) { create(:portal_access, chat_ignore: true) }
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :pending)) }
 
@@ -121,7 +123,7 @@ RSpec.describe MessageReportPolicy, type: :policy do
       it { is_expected.to forbid_action(:hide_message_action) }
     end
 
-    describe "hide permission for a hidden message" do
+    describe "chat hide portal permission for a hidden message report" do
       let(:portal_access) { create(:portal_access, chat_hide: true) }
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :message_hidden)) }
 
