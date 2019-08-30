@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CouponPolicyPolicy, type: :policy do
+RSpec.describe CouponPolicy, type: :policy do
   let(:master_class) { CouponPolicy.new }
   permission_list = {
     index: false,

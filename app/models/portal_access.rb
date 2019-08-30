@@ -39,6 +39,7 @@ class PortalAccess < ApplicationRecord
             2 => :admin_update,
             3 => :admin_delete,
             4 => :admin_history,
+            5 => :admin_export,
             column: :admin
 
   has_flags 1 => :trivia_read,

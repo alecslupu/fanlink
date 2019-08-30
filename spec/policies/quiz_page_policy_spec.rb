@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe QuizPolicy, type: :policy do
-  let(:master_class) { Quiz.new }
+RSpec.describe QuizPagePolicy, type: :policy do
+  let(:master_class) { QuizPage.new }
   permission_list = {
     index: false,
     show: false,

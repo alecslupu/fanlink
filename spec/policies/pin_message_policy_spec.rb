@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe PinPolicy, type: :policy do
-  let(:master_class) { Pin.new }
+RSpec.describe PinMessagePolicy, type: :policy do
+  let(:master_class) { PinMessage.new }
   permission_list = {
     index: false,
     show: false,

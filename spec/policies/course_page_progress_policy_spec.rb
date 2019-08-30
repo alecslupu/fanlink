@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CoursePagePolicy, type: :policy do
+RSpec.describe CoursePageProgressPolicy, type: :policy do
   let(:master_class) { CoursePage.new }
   permission_list = {
     index: false,

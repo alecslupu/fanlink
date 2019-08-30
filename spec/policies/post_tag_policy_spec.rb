@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe PollOptionMessagePostTagPolicy, type: :policy do
+RSpec.describe PostTagPolicy, type: :policy do
   let(:master_class) { PostTag.new }
   permission_list = {
     index: false,
