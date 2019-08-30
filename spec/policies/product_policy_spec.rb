@@ -228,9 +228,10 @@ RSpec.describe ProductPolicy, type: :policy do
         admin_product = create(:product, internal_name: "admin")
         another_product = create(:product, internal_name: "not_admin")
         person = create(:person, product: admin_product)
-
-        scope = Pundit.policy_scope!(person, Product.all)
-        expect(scope.count).to eq(2)
+        ActsAsTenant.with_tenant(person.product) do
+          scope = Pundit.policy_scope!(person, Product.all)
+          expect(scope.count).to eq(2)
+        end
       end
     end
     describe "when the product is not admin" do
@@ -238,9 +239,10 @@ RSpec.describe ProductPolicy, type: :policy do
         admin_product = create(:product, internal_name: "admin")
         another_product = create(:product, internal_name: "not_admin")
         person = create(:person, product: another_product)
-
-        scope = Pundit.policy_scope!(person, Product.all)
-        expect(scope.count).to eq(1)
+        ActsAsTenant.with_tenant(person.product) do
+          scope = Pundit.policy_scope!(person, Product.all)
+          expect(scope.count).to eq(1)
+        end
       end
 
     end
