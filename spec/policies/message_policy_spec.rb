@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe MessagePolicy, type: :policy do
@@ -89,6 +91,24 @@ RSpec.describe MessagePolicy, type: :policy do
       it do
         expect(subject.send(:has_permission?, "bogous")).to eq(true)
       end
+    end
+  end
+
+  context "hide/unhide message for a normal user" do
+    describe "hide portal permission for hidden message" do
+      let(:portal_access) { create(:portal_access, chat_hide: true) }
+      subject { described_class.new(Person.find(portal_access.person_id), Message.new(hidden: true)) }
+
+      it { is_expected.to permit_action(:unhide_action) }
+      it { is_expected.to forbid_action(:hide_action) }
+    end
+
+    describe "hide portal permission for visible message" do
+      let(:portal_access) { create(:portal_access, chat_hide: true) }
+      subject { described_class.new(Person.find(portal_access.person_id), Message.new(hidden: false)) }
+
+      it { is_expected.to permit_action(:hide_action) }
+      it { is_expected.to forbid_action(:unhide_action) }
     end
   end
 
