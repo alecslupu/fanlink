@@ -61,35 +61,35 @@ RSpec.describe Person, type: :model do
         expect(person2).not_to be_valid
       end
     end
-
-    describe "#format" do
-      it "should not allow emoji's for name on creation" do
-        record = Person.new
-        record.name = "Person \uFE0F"
-        record.valid?
-        expect(record.errors[:name]).to include("may not contain emojis.")
-      end
-      it "should not allow emoji's for username on creation" do
-        record = Person.new
-        record.username = "Person \uFE0F"
-        record.valid?
-        expect(record.errors[:username]).to include("may not contain emojis.")
-      end
-
-      it "should not allow emoji's for name on update" do
-        person = create(:person)
-        person.update(name: "Person \uFE0F")
-        person.valid?
-        expect(person.errors[:name]).to include("may not contain emojis.")
-      end
-
-      it "should not allow emoji's for username on update" do
-        person = create(:person)
-        person.update(username: "Person \uFE0F")
-        person.valid?
-        expect(person.errors[:username]).to include("may not contain emojis.")
-      end
-    end
+    #
+    # describe "#format" do
+    #   it "should not allow emoji's for name on creation" do
+    #     record = Person.new
+    #     record.name = "Person \uFE0F"
+    #     record.valid?
+    #     expect(record.errors[:name]).to include("may not contain emojis.")
+    #   end
+    #   it "should not allow emoji's for username on creation" do
+    #     record = Person.new
+    #     record.username = "Person \uFE0F"
+    #     record.valid?
+    #     expect(record.errors[:username]).to include("may not contain emojis.")
+    #   end
+    #
+    #   it "should not allow emoji's for name on update" do
+    #     person = create(:person)
+    #     person.update(name: "Person \uFE0F")
+    #     person.valid?
+    #     expect(person.errors[:name]).to include("may not contain emojis.")
+    #   end
+    #
+    #   it "should not allow emoji's for username on update" do
+    #     person = create(:person)
+    #     person.update(username: "Person \uFE0F")
+    #     person.valid?
+    #     expect(person.errors[:username]).to include("may not contain emojis.")
+    #   end
+    # end
   end
 
   context "Validation as facebook user" do
