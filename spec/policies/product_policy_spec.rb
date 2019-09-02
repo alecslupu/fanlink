@@ -225,10 +225,10 @@ RSpec.describe ProductPolicy, type: :policy do
   context "scope" do
     describe "when the product is admin" do
       it "should return all the products" do
-        admin_product = create(:product, internal_name: "admin")
-        another_product = create(:product, internal_name: "not_admin")
-        person = create(:person, product: admin_product)
         ActsAsTenant.without_tenant do
+          admin_product = create(:product, internal_name: "admin")
+          another_product = create(:product, internal_name: "not_admin")
+          person = create(:person, product: admin_product)
           scope = Pundit.policy_scope!(person, Product.all)
           expect(scope.count).to eq(2)
         end
@@ -245,7 +245,6 @@ RSpec.describe ProductPolicy, type: :policy do
           expect(scope.count).to eq(1)
         end
       end
-
     end
   end
 end
