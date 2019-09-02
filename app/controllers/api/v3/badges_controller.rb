@@ -20,7 +20,7 @@ class Api::V3::BadgesController < Api::V2::BadgesController
 
   def update
     if params.has_key?(:badge)
-      @badge.update(badge_params)
+      @badge.update_attributes(badge_params)
     end
     return_the @badge
   end

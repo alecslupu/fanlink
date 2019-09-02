@@ -13,6 +13,7 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+
         post :create, params: {
           badge: {
             product_id: person.product.id,
@@ -21,6 +22,7 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
             picture: fixture_file_upload("images/better.png", "image/png")
           }
         }
+
         parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
         expect(Badge.first.picture.exists?).to eq(true)
@@ -31,7 +33,25 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
 
   # TODO: auto-generated
   describe "PUT update" do
-    pending
+    it "should update a badge's attachment" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        badge = create(:badge)
+
+        put :update, params: {
+          id: badge.id,
+          badge: {
+            picture: fixture_file_upload("images/better.png", "image/png")
+          }
+        }
+
+        parsed_response = JSON.parse(response.body)
+        expect(response).to have_http_status(200)
+        expect(Badge.first.picture.exists?).to eq(true)
+        expect(parsed_response["badge"]["picture_url"]).to include("better.png")
+      end
+    end
   end
 
   # TODO: auto-generated
