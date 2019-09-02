@@ -7,7 +7,6 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
     pending
   end
 
-  # TODO: auto-generated
   describe "POST create" do
     it "should create a badge with attachment when it's valid" do
       person = create(:person, role: :admin)
@@ -31,7 +30,6 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
     end
   end
 
-  # TODO: auto-generated
   describe "PUT update" do
     it "should update a badge's attachment" do
       person = create(:person, role: :admin)
@@ -63,5 +61,4 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
   describe "DELETE destroy" do
     pending
   end
-
 end
