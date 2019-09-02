@@ -40,7 +40,7 @@ class PortalAccess < ApplicationRecord
             3 => :admin_delete,
             4 => :admin_history,
             5 => :admin_export,
-            column: :admin
+            column: 'admin'
 
   has_flags 1 => :trivia_read,
             2 => :trivia_update,
@@ -48,7 +48,7 @@ class PortalAccess < ApplicationRecord
             4 => :trivia_export,
             5 => :trivia_history,
             6 => :trivia_generate_game_action,
-            column: :trivia
+            column: 'trivia'
 
   has_flags 1 => :chat_read,
             2 => :chat_update,
@@ -57,7 +57,7 @@ class PortalAccess < ApplicationRecord
             5 => :chat_history,
             6 => :chat_hide,
             7 => :chat_ignore,
-            column: :chat
+            column: 'chat'
 
   has_flags 1 => :courseware_read,
             2 => :courseware_update,
@@ -66,7 +66,7 @@ class PortalAccess < ApplicationRecord
             5 => :courseware_history,
             6 => :courseware_forget,
             7 => :courseware_reset,
-            column: :courseware
+            column: 'courseware'
 
   def summarize
     perms = {}
