@@ -545,6 +545,19 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         expect(response).to be_not_found
       end
     end
+
+    it "should return the people object with their attached picture" do
+      person = create(:person, picture: fixture_file_upload("images/better.png", "image/png"))
+      ActsAsTenant.with_tenant(person.product) do
+        create_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
+
+        login_as(person)
+        get :show ,params: { id: person.id }
+
+        expect(response).to be_successful
+        expect(Person.last.picture.exists?).to eq(true)
+      end
+    end
   end
 
   describe "#update" do
