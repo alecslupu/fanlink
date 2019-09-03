@@ -290,8 +290,8 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
             }
           }
         expect(response).to be_successful
+        expect(json["person"]["picture_url"]).to_not eq(nil)
         expect(Person.last.picture.exists?).to eq(true)
-        expect(person_private_json(json["person"])).to be true
       end
     end
   end
@@ -503,6 +503,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         expect(response).to be_successful
         expect(json["people"].count).to eq(4)
+        json["people"].each do |person|
+          expect(person["picture_url"]).to_not eq(nil)
+        end
+
         Person.all.each do |person|
           expect(person.picture.exists?).to eq(true)
         end
@@ -555,6 +559,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         get :show ,params: { id: person.id }
 
         expect(response).to be_successful
+        expect(json["person"]["picture_url"]).to_not eq(nil)
         expect(Person.last.picture.exists?).to eq(true)
       end
     end
