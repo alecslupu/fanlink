@@ -13,7 +13,7 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
         expect(response).to have_http_status(200)
         expect(parsed_response["badges"].size).to eq(3)
         parsed_response["badges"].each do |badge|
-          expect(Badge.first.picture.exists?).to eq(true)
+          expect(Badge.find(badge["badge"]["id"]).picture.exists?).to eq(true)
         end
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
 
         parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
-        expect(Badge.first.picture.exists?).to eq(true)
+        expect(Badge.last.picture.exists?).to eq(true)
         expect(parsed_response["badge"]["picture_url"]).to include("better.png")
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
 
         parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
-        expect(Badge.first.picture.exists?).to eq(true)
+        expect(Badge.last.picture.exists?).to eq(true)
         expect(parsed_response["badge"]["picture_url"]).to include("better.png")
       end
     end
@@ -73,13 +73,13 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
         get :show, params: { id: badge.id }
         parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
-        expect(Badge.first.picture.exists?).to eq(true)
+        expect(Badge.last.picture.exists?).to eq(true)
       end
     end
   end
 
-  # # TODO: auto-generated
-  # describe "DELETE destroy" do
-  #   pending
-  # end
+  # TODO: auto-generated
+  describe "DELETE destroy" do
+    pending
+  end
 end
