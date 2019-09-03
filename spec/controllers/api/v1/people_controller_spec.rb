@@ -503,7 +503,6 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         expect(response).to be_successful
         expect(json["people"].count).to eq(4)
-        binding.pry
         Person.all.each do |person|
           expect(person.picture.exists?).to eq(true)
         end
