@@ -4,7 +4,21 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
 
   # TODO: auto-generated
   describe "GET index" do
-    pending
+    it "should return the people objects with their attached picture" do
+      person = create(:person, picture: fixture_file_upload("images/better.png", "image/png"))
+      ActsAsTenant.with_tenant(person.product) do
+        create_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
+
+        login_as(person)
+        get :index
+
+        expect(response).to be_successful
+        expect(json["people"].count).to eq(3)  #current user is not included
+        Person.all.each do |person|
+          expect(person.picture.exists?).to eq(true)
+        end
+      end
+    end
   end
 
   # TODO: auto-generated
