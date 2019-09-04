@@ -9,10 +9,9 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
         login_as(person)
         create_list(:badge,3)
         get :index
-        parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
-        expect(parsed_response["badges"].size).to eq(3)
-        parsed_response["badges"].each do |badge|
+        expect(json["badges"].size).to eq(3)
+        json["badges"].each do |badge|
           expect(Badge.find(badge["badge"]["id"]).picture.exists?).to eq(true)
         end
       end
@@ -34,10 +33,9 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
           }
         }
 
-        parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
         expect(Badge.last.picture.exists?).to eq(true)
-        expect(parsed_response["badge"]["picture_url"]).to include("better.png")
+        expect(json["badge"]["picture_url"]).to include("better.png")
       end
     end
   end
@@ -56,10 +54,9 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
           }
         }
 
-        parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
         expect(Badge.last.picture.exists?).to eq(true)
-        expect(parsed_response["badge"]["picture_url"]).to include("better.png")
+        expect(json["badge"]["picture_url"]).to include("better.png")
       end
     end
   end
@@ -71,7 +68,6 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
         login_as(person)
         badge = create(:badge)
         get :show, params: { id: badge.id }
-        parsed_response = JSON.parse(response.body)
         expect(response).to have_http_status(200)
         expect(Badge.last.picture.exists?).to eq(true)
       end
