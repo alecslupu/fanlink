@@ -1,9 +1,5 @@
-# frozen_string_literal: true
-
-require "rails_helper"
-
-RSpec.describe RoomPolicy, type: :policy do
-  let(:master_class) { Room.new }
+RSpec.describe Trivia::GamePolicy, type: :policy do
+  let(:master_class) { Trivia::Game.new }
   permission_list = {
     index: false,
     show: false,
@@ -16,6 +12,7 @@ RSpec.describe RoomPolicy, type: :policy do
     history: false,
     show_in_app: false,
     select_product: false,
+    generate_game_action: false,
   }
 
   describe "defined policies" do
@@ -33,7 +30,7 @@ RSpec.describe RoomPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("chat") }
+      it { expect(subject.send(:module_name)).to eq("trivia") }
       it { expect(subject.send(:super_admin?)).to be_nil }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
     end
@@ -79,8 +76,9 @@ RSpec.describe RoomPolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
+      generate_game_action: false,
     }
-    subject { described_class.new(create(:portal_access, chat_read: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_read: true ).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -110,8 +108,9 @@ RSpec.describe RoomPolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
+      generate_game_action: false,
     }
-    subject { described_class.new(create(:portal_access, chat_update: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_update: true ).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -141,8 +140,9 @@ RSpec.describe RoomPolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
+      generate_game_action: false,
     }
-    subject { described_class.new(create(:portal_access, chat_delete: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_delete: true ).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -168,12 +168,13 @@ RSpec.describe RoomPolicy, type: :policy do
       update: false,
       edit: false,
       destroy: false,
-      export: true,
+      export: true ,
       history: false,
       show_in_app: false,
       select_product: false,
+      generate_game_action: false,
     }
-    subject { described_class.new(create(:portal_access, chat_export: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_export: true ).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -203,8 +204,9 @@ RSpec.describe RoomPolicy, type: :policy do
       history: true,
       show_in_app: false,
       select_product: false,
+      generate_game_action: false,
     }
-    subject { described_class.new(create(:portal_access, chat_history: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_history: true ).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -221,14 +223,36 @@ RSpec.describe RoomPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
+  context "logged in admin with generate game permission" do
+    permission_list = {
+      index: false,
+      show: false,
+      create: false,
+      new: false,
+      update: false,
+      edit: false,
+      destroy: false,
+      export: false,
+      history: false,
+      show_in_app: false,
+      select_product: false,
+      generate_game_action: true,
+    }
+    subject { described_class.new(create(:portal_access, trivia_generate_game_action: true).person, master_class) }
 
-  context "object default attributes" do
-    subject { described_class.new(create(:portal_access, user_history: true).person, master_class) }
-
-    describe ".attributes_for" do
-      it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:create)).to eq({public: true, created_by_id: subject.user.id}) }
+    describe "permissions" do
+      permission_list.each do |policy, value|
+        if value
+          it { is_expected.to permit_action(policy) }
+        else
+          it { is_expected.to forbid_action(policy) }
+        end
+      end
+    end
+    describe "protected methods" do
+      it { expect(subject.send(:super_admin?)).to eq(false) }
+      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
+      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
 end
-
