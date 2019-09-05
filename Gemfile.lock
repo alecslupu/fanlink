@@ -1275,6 +1275,8 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stackprof (0.2.12)
+    streamio-ffmpeg (3.0.2)
+      multi_json (~> 1.8)
     temple (0.8.1)
     text (1.3.1)
     therubyracer (0.12.3)
@@ -1435,6 +1437,7 @@ DEPENDENCIES
   simplecov
   sorcery
   stackprof
+  streamio-ffmpeg
   therubyracer
   timber (~> 2.0)
   timecop
