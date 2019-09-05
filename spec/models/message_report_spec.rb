@@ -1,5 +1,4 @@
 RSpec.describe MessageReport, type: :model do
-
   before(:all) do
     @product = create(:product)
     @room = create(:room, product: @product)
@@ -25,7 +24,6 @@ RSpec.describe MessageReport, type: :model do
         expect { build(:message_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
       end
     end
-
   end
 
   describe "scopes" do
@@ -69,7 +67,6 @@ RSpec.describe MessageReport, type: :model do
     it { expect(MessageReport.valid_status?("no_status")).to be_falsey }
   end
 
-
   # TODO: auto-generated
   describe "#create_time" do
     it "works" do
@@ -97,5 +94,4 @@ RSpec.describe MessageReport, type: :model do
       expect(message_report.reporter).to eq(message_report.person)
     end
   end
-
 end

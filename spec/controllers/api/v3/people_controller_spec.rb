@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V3::PeopleController, type: :controller do
-
   describe "#change_password" do
     it "should change the current users password" do
       current = "secret"
@@ -9,7 +8,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password,  params: { id: person.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: {id: person.id, person: {current_password: current, new_password: new_password}}
         expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
@@ -20,7 +19,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password,  params: { id: person.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: {id: person.id, person: {current_password: current, new_password: new_password}}
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("Password must be at least 6 characters in length.")
       end
@@ -31,7 +30,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password,  params: { id: person.id, person: { current_password: "wrongpassword", new_password: new_password } }
+        patch :change_password, params: {id: person.id, person: {current_password: "wrongpassword", new_password: new_password}}
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("The password is incorrect")
       end
@@ -41,7 +40,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       new_password = "newsecret"
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
-        patch :change_password,  params: { id: person.id, person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: {id: person.id, person: {current_password: current, new_password: new_password}}
         expect(response).to be_unauthorized
         expect(person.reload.valid_password?(current)).to be_truthy
       end
@@ -53,13 +52,12 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password,  params: { id: pers.id,  person: { current_password: current, new_password: new_password } }
+        patch :change_password, params: {id: pers.id, person: {current_password: current, new_password: new_password}}
         expect(response).to be_not_found
         expect(person.reload.valid_password?(current)).to be_truthy
       end
     end
   end
-
 
   # TODO: auto-generated
   describe "POST create" do

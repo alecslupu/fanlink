@@ -1,5 +1,4 @@
 RSpec.describe ActionType, type: :model do
-
   context "Valid factory" do
     it { expect(build(:action_type)).to be_valid }
   end

@@ -35,8 +35,8 @@ FactoryBot.define do
     color_hex { Faker::Color.hex_color }
     status { 1 }
     room { nil }
-    validity_duration {  Faker::Number.unique(20).between(1, 500) }
-    access_duration {  Faker::Number.unique(20).between(1, 500) }
+    validity_duration { Faker::Number.unique(20).between(1, 500) }
+    access_duration { Faker::Number.unique(20).between(1, 500) }
     is_free { false }
     sku_ios { Faker::Code.ean(13) }
     sku_android { Faker::Code.ean(13) }

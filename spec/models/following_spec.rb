@@ -1,5 +1,4 @@
 RSpec.describe Following, type: :model do
-
   before(:all) do
     @follower = create(:person)
     @followed = create(:person, product: @follower.product)
@@ -8,7 +7,7 @@ RSpec.describe Following, type: :model do
   end
 
   context "Valid" do
-    it  { expect(create(:following)).to be_valid }
+    it { expect(create(:following)).to be_valid }
   end
 
   describe "#follower_id" do

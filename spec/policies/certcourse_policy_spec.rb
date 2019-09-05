@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe CertcoursePolicy, type: :policy do
   let(:master_class) { Certcourse.new }
@@ -80,7 +80,7 @@ RSpec.describe CertcoursePolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, courseware_read: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, courseware_read: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -111,7 +111,7 @@ RSpec.describe CertcoursePolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, courseware_update: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, courseware_update: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -142,7 +142,7 @@ RSpec.describe CertcoursePolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, courseware_delete: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, courseware_delete: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -168,12 +168,12 @@ RSpec.describe CertcoursePolicy, type: :policy do
       update: false,
       edit: false,
       destroy: false,
-      export: true ,
+      export: true,
       history: false,
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, courseware_export: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, courseware_export: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -204,7 +204,7 @@ RSpec.describe CertcoursePolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, courseware_history: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, courseware_history: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|

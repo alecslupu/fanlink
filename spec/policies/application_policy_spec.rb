@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe ApplicationPolicy, type: :policy do
   permission_list = {
@@ -72,7 +72,6 @@ RSpec.describe ApplicationPolicy, type: :policy do
       end
     end
   end
-
 
   # subject { described_class.new(person, message) }
   #

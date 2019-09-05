@@ -1,5 +1,4 @@
 RSpec.describe Merchandise, type: :model do
-
   before(:all) do
     @name = "abc"
     @merchandise = create(:merchandise, name: @name)
@@ -32,9 +31,9 @@ RSpec.describe Merchandise, type: :model do
       expect(merch0.reload.priority).to eq(0)
     end
     it "should adjust priorities if priority is greater than 0 and there is merch of equal priority" do
-      merch_other = ActsAsTenant.with_tenant(create(:product)) do
+      merch_other = ActsAsTenant.with_tenant(create(:product)) {
         create(:merchandise, priority: 1)
-      end
+      }
       create(:merchandise, priority: 1)
       expect(merch1.reload.priority).to eq(2)
       expect(merch2.reload.priority).to eq(3)

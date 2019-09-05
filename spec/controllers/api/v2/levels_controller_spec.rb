@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V2::LevelsController, type: :controller do
-
   describe "#index" do
     it "should return all levels" do
       person = create(:person)

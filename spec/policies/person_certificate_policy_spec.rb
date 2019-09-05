@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe PersonCertificatePolicy, type: :policy do
   let(:master_class) { PersonCertificate.new }
@@ -219,6 +219,22 @@ RSpec.describe PersonCertificatePolicy, type: :policy do
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+    end
+  end
+
+  context "Scope" do
+    it "should only return the certificate in current product" do
+      person = create(:person)
+
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:person_certificate) }
+
+      ActsAsTenant.with_tenant(person.product) do
+        post = create(:person_certificate)
+        scope = Pundit.policy_scope!(person, PersonCertificate)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(post)
+        expect(scope).not_to include(post2)
+      end
     end
   end
 end

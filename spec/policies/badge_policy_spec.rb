@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe BadgePolicy, type: :policy do
   let(:master_class) { Badge.new }
@@ -168,7 +168,7 @@ RSpec.describe BadgePolicy, type: :policy do
       update: false,
       edit: false,
       destroy: false,
-      export: true ,
+      export: true,
       history: false,
       show_in_app: false,
       select_product: false,

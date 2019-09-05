@@ -1,5 +1,4 @@
 RSpec.describe Person, type: :model do
-
   before(:all) do
     @username = "Whére.Ïs.Pañçâkèß.HOUSE"
     @password = "logmein"
@@ -293,7 +292,7 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         badge = create(:badge, point_value: 10)
         level_earned = create(:level, points: 20)
-        create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
+        create(:level_progress, person: person, points: {badge_action: 10}, total: 10)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
       end
@@ -303,7 +302,7 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         badge = create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
-        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+        create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level_earned)
       end
@@ -314,7 +313,7 @@ RSpec.describe Person, type: :model do
         badge = create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
         level2 = create(:level, points: 21)
-        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+        create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
       end
@@ -378,8 +377,8 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq("whereispancakeßhouse")
     end
     it "should ignore accents, case, and punctuation when using for_username" do
-      examples = [ "Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
-                   "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house" ]
+      examples = ["Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
+                  "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house",]
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -390,7 +389,7 @@ RSpec.describe Person, type: :model do
     describe ".create_from_facebook" do
       it "should create and return a new user from valid FB auth token" do
         username = "somedude#{Time.now.to_i}"
-        koala_result = { "id" => Time.now.to_i.to_s, "name" => "John Smith" }
+        koala_result = {"id" => Time.now.to_i.to_s, "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         p = nil
         expect {
@@ -408,7 +407,7 @@ RSpec.describe Person, type: :model do
         fbid = "123456"
         tok = "1234567"
         person = create(:person, facebookid: fbid)
-        koala_result = { "id" => fbid, "name" => "John Smith" }
+        koala_result = {"id" => fbid, "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect(Person.for_facebook_auth_token(tok)).to eq(person)
       end
@@ -462,11 +461,9 @@ RSpec.describe Person, type: :model do
         expect(person.reset_password_token).to be_nil
         person.set_password_token!
         expect(person.reset_password_token).not_to be_nil
-
       end
     end
   end
-
 
   # TODO: auto-generated
   describe "#canonicalize" do
@@ -526,7 +523,7 @@ RSpec.describe Person, type: :model do
   describe "#current_user" do
     it "works" do
       person = create(:person)
-      Person.current_user = (person)
+      Person.current_user = person
       result = Person.current_user
       expect(result).to eq(person)
     end
@@ -537,7 +534,7 @@ RSpec.describe Person, type: :model do
   describe "#current_user=" do
     it "works" do
       user = double("user")
-      result = Person.current_user = (user)
+      result = Person.current_user = user
       expect(result).not_to be_nil
     end
     pending
@@ -630,7 +627,7 @@ RSpec.describe Person, type: :model do
     it "enqueues an onboarding email" do
       expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
-      pc.person.send_certificate_email(pc.certificate_id,pc.person.email)
+      pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
       expect(Delayed::Job.count).to eq 1
     end
   end

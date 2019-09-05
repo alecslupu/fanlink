@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe CertcoursePage, type: :model do
-
   context "Valid factory" do
     it { expect(create(:certcourse_page)).to be_valid }
   end
@@ -20,7 +19,6 @@ RSpec.describe CertcoursePage, type: :model do
   describe "#child" do
     pending
   end
-
 
   pending "add some examples to (or delete) #{__FILE__}"
 end

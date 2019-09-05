@@ -11,7 +11,7 @@
 
 FactoryBot.define do
   factory :person_poll_option do
-    person_id { Person.first.id }
-    poll_option_id { create(:poll_option).id }
+    person { create(:person) }
+    poll_option { create(:poll_option) }
   end
 end

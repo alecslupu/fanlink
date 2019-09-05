@@ -11,7 +11,7 @@ require "shoulda/matchers"
 require "wisper/rspec/matchers"
 require "wisper/rspec/stub_wisper_publisher"
 require "pundit/rspec"
-require 'pundit/matchers'
+require "pundit/matchers"
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -44,12 +44,12 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   # from https://stackoverflow.com/questions/19209865/rspec-leaves-record-in-test-database
-  config.around(:each) do |example|
-    ActiveRecord::Base.transaction do
-      example.run
-      raise ActiveRecord::Rollback
-    end
-  end
+  # config.around(:each) do |example|
+  #   ActiveRecord::Base.transaction do
+  #     example.run
+  #     raise ActiveRecord::Rollback
+  #   end
+  # end
   config.around(:each, :run_delayed_jobs) do |example|
     Delayed::Worker.delay_jobs = false
 
@@ -79,7 +79,6 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include(Wisper::RSpec::BroadcastMatcher)
-
 end
 
 Pundit::Matchers.configure do |config|

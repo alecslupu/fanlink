@@ -37,7 +37,6 @@ RSpec.describe PostComment, type: :model do
     end
   end
 
-
   # TODO: auto-generated
   describe "#mentions" do
     pending

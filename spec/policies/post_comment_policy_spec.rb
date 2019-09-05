@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe PostCommentPolicy, type: :policy do
   let(:master_class) { PostComment.new }

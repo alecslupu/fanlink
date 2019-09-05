@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "spec_helper"
 
 RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
   let(:master_class) { Trivia::MultipleChoiceQuestion.new }
@@ -78,7 +78,7 @@ RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, trivia_read: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_read: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -109,7 +109,7 @@ RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, trivia_update: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_update: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -140,7 +140,7 @@ RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, trivia_delete: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_delete: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -166,12 +166,12 @@ RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
       update: false,
       edit: false,
       destroy: false,
-      export: true ,
+      export: true,
       history: false,
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, trivia_export: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_export: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -202,7 +202,7 @@ RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, trivia_history: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, trivia_history: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -217,6 +217,22 @@ RSpec.describe Trivia::MultipleChoiceQuestionPolicy, type: :policy do
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+    end
+  end
+
+  context "Scope" do
+    it "should only return the person quiz in current product" do
+      person = create(:person)
+
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_multiple_choice_question) }
+
+      ActsAsTenant.with_tenant(person.product) do
+        post = create(:trivia_multiple_choice_question)
+        scope = Pundit.policy_scope!(person, Trivia::MultipleChoiceQuestion)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(post)
+        expect(scope).not_to include(post2)
+      end
     end
   end
 end

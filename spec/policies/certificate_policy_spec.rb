@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe CertificatePolicy, type: :policy do
   let(:master_class) { Certificate.new }
@@ -80,7 +80,7 @@ RSpec.describe CertificatePolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, courseware_read: true ).person, master_class) }
+    subject { described_class.new(create(:portal_access, courseware_read: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
