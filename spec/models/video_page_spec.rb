@@ -10,11 +10,11 @@ RSpec.describe VideoPage, type: :model do
     let(:certcourse_page) { create(:certcourse_page, duration: duration + 1) }
 
     it "changes the duration of the certcourse's page" do
-      allow_any_instance_of(VideoPage).to receive(:set_certcourse_page_duration) {
-        certcourse_page.update(duration: duration)
+      allow_any_instance_of(described_class).to receive(:video_duration) {
+        duration
       }
 
-      video_page = create(
+      create(
         :video_page,
         certcourse_page: certcourse_page,
         product: Product.find(certcourse_page.product_id),

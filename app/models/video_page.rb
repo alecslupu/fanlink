@@ -58,8 +58,10 @@ class VideoPage < ApplicationRecord
       page.save
     end
 
+    def video_duration
+      FFMPEG::Movie.new(Paperclip.io_adapters.for(video).path).duration.to_i + 1
+    end
     def set_certcourse_page_duration
-      duration = FFMPEG::Movie.new(Paperclip.io_adapters.for(video).path).duration.to_i + 1
-      certcourse_page.update(duration: duration)
+      certcourse_page.update(duration: video_duration)
     end
 end
