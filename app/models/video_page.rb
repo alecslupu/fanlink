@@ -16,6 +16,8 @@
 class VideoPage < ApplicationRecord
   scope :for_product, -> (product) { where(product_id: product.id) }
   include AttachmentSupport
+  require 'streamio-ffmpeg'
+
   acts_as_tenant(:product)
   belongs_to :product
 
@@ -29,6 +31,7 @@ class VideoPage < ApplicationRecord
 
   validate :just_me
   after_save :set_certcourse_page_content_type
+  after_save :set_certcourse_page_duration
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -53,5 +56,10 @@ class VideoPage < ApplicationRecord
       page = CertcoursePage.find(certcourse_page_id)
       page.content_type = content_type
       page.save
+    end
+
+    def set_certcourse_page_duration
+      duration = FFMPEG::Movie.new(Paperclip.io_adapters.for(video).path).duration.to_i + 1
+      certcourse_page.update(duration: duration)
     end
 end
