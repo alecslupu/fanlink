@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe MessageReportPolicy, type: :policy do
   let(:master_class) { MessageReport.new }
@@ -221,7 +221,6 @@ RSpec.describe MessageReportPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
-
 
   context "Logged in admin with chat_hide permission" do
     describe "message report with no action needed status" do

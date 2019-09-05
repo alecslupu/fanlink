@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V4::MessagesController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     pending
@@ -31,5 +30,4 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
   describe "GET stats" do
     pending
   end
-
 end

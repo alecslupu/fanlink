@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe PortalAccessPolicy, type: :policy do
   let(:master_class) { PortalAccess.new }
@@ -221,7 +221,6 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
-
 
   context "object default attributes" do
     subject { described_class.new(create(:portal_access, admin_update: true).person, master_class) }

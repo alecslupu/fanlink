@@ -96,8 +96,6 @@ RSpec.describe Post, type: :model do
     end
   end
 
-
-
   # TODO: auto-generated
   describe "#cache_key" do
     it "works" do
@@ -219,6 +217,4 @@ RSpec.describe Post, type: :model do
     end
     pending
   end
-
-
 end

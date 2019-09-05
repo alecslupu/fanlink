@@ -20,6 +20,4 @@ RSpec.describe Trivia::Subscriber, type: :model do
       expect(subscriber.game_id).to eq(subscriber.trivia_game_id)
     end
   end
-
-
 end

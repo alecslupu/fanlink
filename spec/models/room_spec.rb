@@ -1,5 +1,4 @@
 RSpec.describe Room, type: :model do
-
   before(:all) do
     @name = "abc"
     @room = create(:room, name: @name, public: true)
@@ -78,7 +77,6 @@ RSpec.describe Room, type: :model do
       should define_enum_for(:status).with([:inactive, :active, :deleted])
     end
   end
-
 
   # There is no validation currently in the model for these tests
   # describe "#name" do

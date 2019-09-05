@@ -47,7 +47,6 @@ RSpec.describe PortalNotification, type: :model do
     end
   end
 
-
   # TODO: auto-generated
   describe "#ignore_translation_lang?" do
     it "works" do

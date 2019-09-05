@@ -1,10 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ActivityType, type: :model do
-
   context "Enumerables" do
     it "should be defined for atype" do
-      should define_enum_for(:atype).with(%i[ beacon image audio post activity_code ])
+      should define_enum_for(:atype).with(%i[beacon image audio post activity_code])
     end
   end
   context "Validation" do
@@ -22,8 +21,6 @@ RSpec.describe ActivityType, type: :model do
         expect { build(:activity_type, atype: :invalid_status_form_spec) }.to raise_error(/is not a valid atype/)
       end
     end
-
-
   end
   context "Associations" do
     describe "#belongs_to" do

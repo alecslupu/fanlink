@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe PostPolicy, type: :policy do
   let(:master_class) { Post.new }
@@ -233,12 +233,11 @@ RSpec.describe PostPolicy, type: :policy do
     end
   end
 
-
   context "Scope" do
     it "should only return the messages from public rooms" do
       person = create(:person)
 
-      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:post, person: create(:person )) }
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:post, person: create(:person)) }
 
       ActsAsTenant.with_tenant(person.product) do
         post = create(:post)

@@ -34,5 +34,4 @@ RSpec.describe EventCheckin, type: :model do
   describe "#product_match" do
     pending
   end
-
 end

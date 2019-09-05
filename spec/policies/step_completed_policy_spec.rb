@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe StepCompletedPolicy, type: :policy do
   let(:master_class) { StepCompleted.new }

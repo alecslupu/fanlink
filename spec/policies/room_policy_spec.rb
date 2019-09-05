@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe RoomPolicy, type: :policy do
   let(:master_class) { Room.new }
@@ -231,4 +231,3 @@ RSpec.describe RoomPolicy, type: :policy do
     end
   end
 end
-

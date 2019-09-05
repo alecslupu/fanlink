@@ -15,7 +15,7 @@ RSpec.describe Quest, type: :model do
     it "#starts_at" do
       should validate_presence_of(:starts_at).with_message(_("Starting date and time is required."))
     end
-    it "#date_sanity"  do
+    it "#date_sanity" do
       quest = build(:quest, starts_at: DateTime.current, ends_at: DateTime.current - 1.hour)
       quest.valid?
       expect(quest.errors[:ends_at]).to include(_("Start date cannot be after end date."))

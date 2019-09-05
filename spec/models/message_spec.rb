@@ -1,5 +1,4 @@
 RSpec.describe Message, type: :model do
-
   before(:all) do
     @product = create(:product)
     @room = create(:room, product: @product)
@@ -203,5 +202,4 @@ RSpec.describe Message, type: :model do
   describe "#pinned" do
     pending
   end
-
 end
