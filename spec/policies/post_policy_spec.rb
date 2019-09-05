@@ -221,4 +221,32 @@ RSpec.describe PostPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
+
+  context "object default attributes" do
+    subject { described_class.new(create(:portal_access, post_update: true).person, master_class) }
+
+    describe ".attributes_for" do
+      it { expect(subject.attributes_for(:read)).to eq({}) }
+      it { expect(subject.attributes_for(:update)).to eq({}) }
+      it { expect(subject.attributes_for(:delete)).to eq({}) }
+      it { expect(subject.attributes_for(:create)).to eq({person_id: subject.user.id}) }
+    end
+  end
+
+
+  context "Scope" do
+    it "should only return the messages from public rooms" do
+      person = create(:person)
+
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:post, person: create(:person )) }
+
+      ActsAsTenant.with_tenant(person.product) do
+        post = create(:post)
+        scope = Pundit.policy_scope!(person, Post)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(post)
+        expect(scope).not_to include(post2)
+      end
+    end
+  end
 end

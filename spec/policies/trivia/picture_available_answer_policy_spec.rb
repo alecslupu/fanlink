@@ -219,4 +219,20 @@ RSpec.describe Trivia::PictureAvailableAnswerPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
+
+  context "Scope" do
+    it "should only return the person quiz in current product" do
+      person = create(:person)
+
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_picture_available_answer) }
+
+      ActsAsTenant.with_tenant(person.product) do
+        post = create(:trivia_picture_available_answer)
+        scope = Pundit.policy_scope!(person, Trivia::PictureAvailableAnswer)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(post)
+        expect(scope).not_to include(post2)
+      end
+    end
+  end
 end

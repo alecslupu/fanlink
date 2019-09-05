@@ -244,4 +244,21 @@ RSpec.describe MessageReportPolicy, type: :policy do
       it { is_expected.to forbid_action(:reanalyze_action) }
     end
   end
+
+  context "Scope" do
+    it "should only return the messages from public rooms" do
+      person = create(:person)
+      current_product = person.product
+      another_product = create(:product)
+      message_report2 = ActsAsTenant.with_tenant(another_product) { create(:message_report, person: create(:person)) }
+
+      ActsAsTenant.with_tenant(current_product) do
+        message_report = create(:message_report, person: person)
+        scope = Pundit.policy_scope!(person, MessageReport)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(message_report)
+        expect(scope).not_to include(message_report2)
+      end
+    end
+  end
 end

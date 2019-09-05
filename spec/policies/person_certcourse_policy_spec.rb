@@ -241,4 +241,20 @@ RSpec.describe PersonCertcoursePolicy, type: :policy do
       it { is_expected.to forbid_action(:forget_action) }
     end
   end
+
+  context "Scope" do
+    it "should only return the person quiz in current product" do
+      person = create(:person)
+
+      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:person_certcourse) }
+
+      ActsAsTenant.with_tenant(person.product) do
+        post = create(:person_certcourse)
+        scope = Pundit.policy_scope!(person, PersonCertcourse)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(post)
+        expect(scope).not_to include(post2)
+      end
+    end
+  end
 end
