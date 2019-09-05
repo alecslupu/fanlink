@@ -6,9 +6,14 @@ RSpec.describe VideoPage, type: :model do
   end
 
   describe '#set_certcourse_page_duration' do
-    let(:certcourse_page) { create(:certcourse_page, duration: 300) }
+    let(:duration) { 10 }
+    let(:certcourse_page) { create(:certcourse_page, duration: duration + 1) }
 
-    it 'changes the duration of the page' do
+    it "changes the duration of the certcourse's page" do
+      allow_any_instance_of(VideoPage).to receive(:set_certcourse_page_duration) {
+        certcourse_page.update(duration: duration)
+      }
+
       video_page = create(
         :video_page,
         certcourse_page: certcourse_page,
@@ -17,9 +22,7 @@ RSpec.describe VideoPage, type: :model do
           Rails.root.join('spec', 'fixtures', 'videos', 'short_video.mp4')
         )
       )
-      duration = FFMPEG::Movie.new(
-        Paperclip.io_adapters.for(video_page.video).path
-      ).duration.to_i + 1
+
       expect(certcourse_page.duration).to eq(duration)
     end
   end
