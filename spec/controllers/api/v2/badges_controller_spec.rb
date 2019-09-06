@@ -43,10 +43,14 @@ RSpec.describe Api::V2::BadgesController, type: :controller do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(:badge, 3)
-        get :index
+        badge1 = create(:badge, action_requirement: 1)
+        badge2 = create(:badge, action_requirement: 4)
+        person.badge_awards.create(badge: badge1)
+        person.badge_actions.create(action_type: badge2.action_type)
+
+        get :index, params: { person_id: person.id }
         expect(response).to have_http_status(200)
-        expect(json['badges'].size).to eq(3)
+        expect(json['badges'].size).to eq(2)
         json['badges'].each do |badge|
           expect(badge['badge']['picture_url']).not_to eq(nil)
         end
