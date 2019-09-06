@@ -17,10 +17,6 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
         json["people"].each do |person|
           expect(person["picture_url"]).to_not eq(nil)
         end
-
-        Person.all.each do |person|
-          expect(person.picture.exists?).to eq(true)
-        end
       end
     end
   end
@@ -37,7 +33,6 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
 
         expect(response).to be_successful
         expect(json["person"]).to_not eq(nil)
-        expect(Person.last.picture.exists?).to eq(true)
       end
     end
   end
@@ -72,7 +67,23 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
 
   # TODO: auto-generated
   describe "PUT update" do
-    pending
+    it "updates a person's picture" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+
+        put :update, params: {
+          id: person.id,
+          person: {
+            picture: fixture_file_upload('images/better.png', 'image/png')
+          }
+        }
+
+        expect(response).to be_successful
+        expect(Person.last.picture.exists?).to be_truthy
+        expect(json['person']['picture_url']).to include('better.png')
+      end
+    end
   end
 
   # TODO: auto-generated
