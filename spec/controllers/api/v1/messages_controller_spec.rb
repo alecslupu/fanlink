@@ -475,7 +475,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           to = Date.today
           private_room = create(:room, public: false, status: :active)
           private_room.members << person << private_room.created_by
-          msg = create_list(
+          create_list(
             :message,
             3,
             room: private_room,
@@ -744,7 +744,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        msg = create_list(
+        create_list(
           :message,
           3,
           created_at: to,
@@ -770,7 +770,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        msg = create_list(
+        create_list(
           :message,
           3,
           room: private_room,

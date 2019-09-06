@@ -27,7 +27,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        msg = create_list(
+        create_list(
           :message,
           3,
           created_at: to,
@@ -46,6 +46,26 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         json['messages'].each do |message|
           expect(message['picture_url']).not_to eq(nil)
         end
+      end
+    end
+
+    it "should create a new message with an attached audio" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        body = "Do you like my body?"
+        room = create(:public_active_room, )
+        post :create,
+        params: {
+          room_id: room.id,
+          message: {
+            body: body,
+            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+          }
+        }
+        expect(response).to be_successful
+        expect(json['message']['audio_url']).not_to eq(nil)
+        expect(Message.last.audio.exists?).to be_truthy
       end
     end
   end
@@ -170,7 +190,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        msg = create_list(
+        create_list(
           :message,
           3,
           created_at: to,
@@ -196,7 +216,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        msg = create_list(
+        create_list(
           :message,
           3,
           room: private_room,
