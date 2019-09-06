@@ -12,7 +12,7 @@ RSpec.describe BadgeAction, type: :model do
   end
   context "Validations" do
     describe "Uniqueness" do
-      it { should validate_uniqueness_of(:identifier).scoped_to(%i[ person_id action_type_id ]).allow_nil.with_message(_("Sorry, you cannot get credit for that action again.")) }
+      it { should validate_uniqueness_of(:identifier).scoped_to(%i[person_id action_type_id]).allow_nil.with_message(_("Sorry, you cannot get credit for that action again.")) }
     end
   end
   describe "#identifier" do

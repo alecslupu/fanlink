@@ -323,9 +323,15 @@ RSpec.describe Person, type: :model do
     it "should be nil for person with one badge below first level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
+# <<<<<<< HEAD
         create(:badge, point_value: 10)
         create(:level, points: 20)
         create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
+# =======
+#         badge = create(:badge, point_value: 10)
+#         level_earned = create(:level, points: 20)
+#         create(:level_progress, person: person, points: {badge_action: 10}, total: 10)
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
       end
@@ -335,7 +341,7 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
-        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+        create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level_earned)
       end
@@ -345,8 +351,13 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
+# <<<<<<< HEAD
         create(:level, points: 21)
         create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+# =======
+#         level2 = create(:level, points: 21)
+#         create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
       end
@@ -410,8 +421,13 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq("whereispancakehouse")
     end
     it "should ignore accents, case, and punctuation when using for_username" do
+# <<<<<<< HEAD
       examples = [ "Whére.Ïs.Pañçâkè.HOUSE", "where.is.pancake.house",
                    "whereispancakehouse", "where-is_pancake.house", "where@is_pancakehouse" ]
+# =======
+#       examples = ["Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
+#                   "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house",]
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -422,7 +438,7 @@ RSpec.describe Person, type: :model do
     describe ".create_from_facebook" do
       it "should create and return a new user from valid FB auth token" do
         username = "somedude#{Time.now.to_i}"
-        koala_result = { "id" => Time.now.to_i.to_s, "name" => "John Smith" }
+        koala_result = {"id" => Time.now.to_i.to_s, "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         p = nil
         expect {
@@ -440,7 +456,7 @@ RSpec.describe Person, type: :model do
         fbid = "123456"
         tok = "1234567"
         person = create(:person, facebookid: fbid)
-        koala_result = { "id" => fbid, "name" => "John Smith" }
+        koala_result = {"id" => fbid, "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect(Person.for_facebook_auth_token(tok)).to eq(person)
       end
@@ -498,7 +514,6 @@ RSpec.describe Person, type: :model do
     end
   end
 
-
   # TODO: auto-generated
   describe "#canonicalize" do
     it "works" do
@@ -540,11 +555,6 @@ RSpec.describe Person, type: :model do
 
   # TODO: auto-generated
   describe "#device_tokens" do
-    it "works" do
-      person = Person.new
-      result = person.device_tokens
-      expect(result).not_to be_nil
-    end
     pending
   end
 
@@ -555,83 +565,41 @@ RSpec.describe Person, type: :model do
 
   # TODO: auto-generated
   describe "#current_user" do
-    it "works" do
-      person = create(:person)
-      Person.current_user = (person)
-      result = Person.current_user
-      expect(result).to eq(person)
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#current_user=" do
-    it "works" do
-      user = double("user")
-      result = Person.current_user = (user)
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#reset_password_to" do
-    it "works" do
-      person = Person.new
-      password = double("password")
-      result = person.reset_password_to(password)
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#set_password_token!" do
-    it "works" do
-      person = build(:person)
-      result = person.set_password_token!
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#permissions" do
-    it "works" do
-      person = Person.new
-      result = person.permissions
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#roles_for_select" do
-    it "works" do
-      person = Person.new
-      result = person.roles_for_select
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#some_admin?" do
-    it "works" do
-      person = Person.new
-      result = person.some_admin?
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#to_s" do
-    it "works" do
-      person = build(:person)
-      result = person.to_s
-      expect(result).to eq(person.name)
-    end
     pending
   end
 

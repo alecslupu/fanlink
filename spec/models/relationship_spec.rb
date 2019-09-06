@@ -1,5 +1,4 @@
 RSpec.describe Relationship, type: :model do
-
   before(:all) do
     ActsAsTenant.current_tenant = current_product
   end
@@ -114,7 +113,7 @@ RSpec.describe Relationship, type: :model do
       expect(rel.friended?).to be_truthy
     end
     it "should allow transitions from requested" do
-      allowed = %i[ friended ]
+      allowed = %i[friended]
       rel = create(:relationship)
       expect(rel.requested?).to be_truthy
       allowed.each do |s|
@@ -125,7 +124,7 @@ RSpec.describe Relationship, type: :model do
     end
     it "should disallow transitions from friended" do
       rel = create(:relationship)
-      %i[ requested ].each do |s|
+      %i[requested].each do |s|
         rel.update_column(:status, Relationship.statuses[:friended])
         rel.status = s
         invalid_status(rel)
@@ -133,8 +132,7 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
-
-private
+  private
 
   def invalid_status(rel)
     expect(rel).not_to be_valid

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: download_file_pages
@@ -13,9 +15,13 @@
 #  updated_at            :datetime         not null
 #  caption               :text
 #
+include ActionDispatch::TestProcess
 
 FactoryBot.define do
   factory :download_file_page do
-    CertcoursePage { nil }
+    product { current_product }
+    certcourse_page { create(:certcourse_page) }
+    caption { Faker::Lorem.words(2) }
+    document { fixture_file_upload(Rails.root.join("spec", "fixtures", "documents", "blank_test.pdf"), "application/pdf") }
   end
 end

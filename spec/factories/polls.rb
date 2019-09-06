@@ -17,13 +17,17 @@
 
 FactoryBot.define do
   factory :poll do
-    poll_type { "post" }
-    poll_type_id { rand(100)}
-    start_date { DateTime.now + 1.day }
-    end_date { start_date + 1.day }
-    duration { 0 }
-    description{ "Random description" }
-    product_id { create(:product).id }
-
+    start_date { DateTime.now + 1.hour }
+    end_date { DateTime.now + 1.day }
+    description { Faker::Lorem.paragraph(sentence_count: 1) }
+    product { current_product }
+# <<<<<<< HEAD
+#     poll_type { "post" }
+#     poll_type_id { rand(100)}
+#     duration { 0 }
+# =======
+#     poll_type { :post }
+#     poll_status { :active }
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
   end
 end

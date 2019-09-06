@@ -1,7 +1,6 @@
 require "swagger_helper"
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
-
   path "/session/token" do
     post "generates a  valid JWT" do
       tags "Session"

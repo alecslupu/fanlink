@@ -1,5 +1,4 @@
 RSpec.describe PostReport, type: :model do
-
   before(:all) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product
@@ -56,6 +55,4 @@ RSpec.describe PostReport, type: :model do
   describe "#valid_status?" do
     pending
   end
-
-
 end

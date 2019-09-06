@@ -18,7 +18,7 @@ RSpec.configure do |config|
       swagger: "2.0",
       info: {
         title: "API V1",
-        version: "v1"
+        version: "v1",
       },
       paths: {},
 
@@ -27,16 +27,16 @@ RSpec.configure do |config|
           description: "...",
           type: :apiKey,
           name: "Authorization",
-          in: :header
-        }
-      }
+          in: :header,
+        },
+      },
 
     },
     "v2/swagger.json" => {
       swagger: "2.0",
       info: {
         title: "API V2",
-        version: "v2"
+        version: "v2",
       },
       paths: {},
 
@@ -45,16 +45,16 @@ RSpec.configure do |config|
           description: "...",
           type: :apiKey,
           name: "Authorization",
-          in: :header
-        }
-      }
+          in: :header,
+        },
+      },
 
     },
     "v3/swagger.json" => {
       swagger: "2.0",
       info: {
         title: "API V3",
-        version: "v3"
+        version: "v3",
       },
       paths: {},
 
@@ -63,23 +63,23 @@ RSpec.configure do |config|
           description: "...",
           type: :apiKey,
           name: "Authorization",
-          in: :header
-        }
-      }
+          in: :header,
+        },
+      },
     },
     "v4/swagger.json" => {
       swagger: "2.0",
       info: {
         title: "API V4",
-        version: "v4"
+        version: "v4",
       },
       securityDefinitions: {
         Bearer: {
           description: "...",
           type: :apiKey,
           name: "Authorization",
-          in: :header
-        }
+          in: :header,
+        },
       },
       paths: {},
       definitions: {
@@ -88,107 +88,107 @@ RSpec.configure do |config|
           certificate: {
             type: :object,
             properties: {
-              name: { type: :string },
-              issue_: { type: :datetime }
-            }
-          }
+              name: {type: :string},
+              issue_: {type: :datetime},
+            },
+          },
         },
         session_jwt: {
           type: :object,
           properties: {
-            person:   {
+            person: {
               type: :object,
               properties: {
-                id:                { type: :integer },
-                username:          { type: :string },
-                name:              { type: :string },
-                gender:            { type: :string },
-                city:              { type: :string },
-                country_code:      { type: :string },
-                birthdate:         { type: :datetime },
-                biography:         { type: :string },
-                picture_url:       { type: :string },
-                product_account:   { type: :boolean },
-                recommended:       { type: :boolean },
-                chat_banned:       { type: :boolean },
-                tester:            { type: :boolean },
-                terminated:        { type: :boolean },
-                terminated_reason: { type: :string },
-                designation:       { type: :string },
-                role:              { type: :string },
-                do_not_message_me: { type: :boolean },
-                pin_messages_from: { type: :boolean },
-                auto_follow:       { type: :boolean },
-                num_followers:     { type: :integer },
-                num_following:     { type: :integer },
-                facebookid:        { type: :integer },
-                facebook_picture_url: { type: :string},
-                badge_points:      { type: :integer },
-                level:             { type: :integer },
-                created_at:        { type: :datetime },
-                updated_at:        { type: :datetime },
-                following_id:      { type: :integer },
-                email:             { type: :string },
+                id: {type: :integer},
+                username: {type: :string},
+                name: {type: :string},
+                gender: {type: :string},
+                city: {type: :string},
+                country_code: {type: :string},
+                birthdate: {type: :datetime},
+                biography: {type: :string},
+                picture_url: {type: :string},
+                product_account: {type: :boolean},
+                recommended: {type: :boolean},
+                chat_banned: {type: :boolean},
+                tester: {type: :boolean},
+                terminated: {type: :boolean},
+                terminated_reason: {type: :string},
+                designation: {type: :string},
+                role: {type: :string},
+                do_not_message_me: {type: :boolean},
+                pin_messages_from: {type: :boolean},
+                auto_follow: {type: :boolean},
+                num_followers: {type: :integer},
+                num_following: {type: :integer},
+                facebookid: {type: :integer},
+                facebook_picture_url: {type: :string},
+                badge_points: {type: :integer},
+                level: {type: :integer},
+                created_at: {type: :datetime},
+                updated_at: {type: :datetime},
+                following_id: {type: :integer},
+                email: {type: :string},
                 product: {
                   type: :object,
                   properties: {
-                    id:            { type: :integer },
-                    internal_name: { type: :string },
-                    name:          { type: :string },
-                  }
+                    id: {type: :integer},
+                    internal_name: {type: :string},
+                    name: {type: :string},
+                  },
                 },
-                level_progress:    { type: :integer },
-                rewards:           { type: :string },
-                blocked_people:    { type: :integer },
-                permissions:       { type: :integer },
-                pin_messages_to:   { type: :integer },
-                token:             { type: :string },
-              }
-            }
-          }
+                level_progress: {type: :integer},
+                rewards: {type: :string},
+                blocked_people: {type: :integer},
+                permissions: {type: :integer},
+                pin_messages_to: {type: :integer},
+                token: {type: :string},
+              },
+            },
+          },
         },
         person_mini: {
           type: :object,
           properties: {
-            id:   { type: :string },
-            username:  { type: :string },
-            picture_url:  { type: :string },
-            designation: { type: :string },
-            facebook_picture_url:  { type: :string },
-            badge_points:  { type: :integer }
-          }
+            id: {type: :string},
+            username: {type: :string},
+            picture_url: {type: :string},
+            designation: {type: :string},
+            facebook_picture_url: {type: :string},
+            badge_points: {type: :integer},
+          },
         },
         trivia_user_subscribed: {
           type: :object,
           properties: {
-            game_id: { type: :integer },
-            person_id: { type: :integer },
-            subscribed: { type: :boolean },
-            user_enroled: { type: :boolean },
-            user_notification: { type: :boolean }
-          }
+            game_id: {type: :integer},
+            person_id: {type: :integer},
+            subscribed: {type: :boolean},
+            user_enroled: {type: :boolean},
+            user_notification: {type: :boolean},
+          },
         },
         trivia_game_prize: {
           type: :object,
           properties: {
-            id: { type: :integer },
-            game_id: { type: :integer },
-            position: { type: :integer },
-            photo_url: { type: :string },
-            description: { type: :string }
-          }
+            id: {type: :integer},
+            game_id: {type: :integer},
+            position: {type: :integer},
+            photo_url: {type: :string},
+            description: {type: :string},
+          },
         },
         trivia_round: {
           type: :object,
           properties: {
-            id: { type: :integer },
-            game_id: { type: :integer },
-            start_date:  { type: :integer },
-            end_date:  { type: :integer },
-            question_size: { type: :integer },
-            complexity: { type: :integer },
-            status: { type: :string }
-          }
+            id: {type: :integer},
+            game_id: {type: :integer},
+            start_date: {type: :integer},
+            end_date: {type: :integer},
+            question_size: {type: :integer},
+            complexity: {type: :integer},
+            status: {type: :string},
+          },
         },
         trivia_round_list: {
           type: :object,
@@ -196,10 +196,10 @@ RSpec.configure do |config|
             rounds: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/trivia_round"
-              }
-            }
-          }
+                "$ref" => "#/definitions/trivia_round",
+              },
+            },
+          },
         },
 
         trivia_game_prize_list: {
@@ -208,10 +208,10 @@ RSpec.configure do |config|
             prizes: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/trivia_game_prize"
-              }
-            }
-          }
+                "$ref" => "#/definitions/trivia_game_prize",
+              },
+            },
+          },
         },
 
         trivia_games_leaderboard_list: {
@@ -220,22 +220,22 @@ RSpec.configure do |config|
             leaderboard: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/trivia_games_leaderboard"
-              }
-            }
+                "$ref" => "#/definitions/trivia_games_leaderboard",
+              },
+            },
           },
-          required: ["games"]
+          required: ["games"],
         },
         trivia_games_leaderboard: {
           type: :object,
           properties: {
-            id: { type: :integer },
-            game_id: { type: :integer },
-            points: { type: :integer },
-            position: { type: :integer },
-            average_time: { type: :integer },
-            person: { type: :object, "$ref" => "#/definitions/person_mini" }
-          }
+            id: {type: :integer},
+            game_id: {type: :integer},
+            points: {type: :integer},
+            position: {type: :integer},
+            average_time: {type: :integer},
+            person: {:type => :object, "$ref" => "#/definitions/person_mini"},
+          },
         },
         trivia_rounds_leaderboard_list: {
           type: :object,
@@ -243,22 +243,22 @@ RSpec.configure do |config|
             leaderboard: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/trivia_rounds_leaderboard"
-              }
-            }
+                "$ref" => "#/definitions/trivia_rounds_leaderboard",
+              },
+            },
           },
-          required: ["games"]
+          required: ["games"],
         },
         trivia_rounds_leaderboard: {
           type: :object,
           properties: {
-            id: { type: :integer },
-            round_id: { type: :integer },
-            points: { type: :integer },
-            position: { type: :integer },
-            average_time: { type: :integer },
-            person: { type: :object, "$ref" => "#/definitions/person_mini" }
-          }
+            id: {type: :integer},
+            round_id: {type: :integer},
+            points: {type: :integer},
+            position: {type: :integer},
+            average_time: {type: :integer},
+            person: {:type => :object, "$ref" => "#/definitions/person_mini"},
+          },
         },
         trivia_games_list: {
           type: :object,
@@ -266,34 +266,34 @@ RSpec.configure do |config|
             games: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/trivia_game"
-              }
-            }
+                "$ref" => "#/definitions/trivia_game",
+              },
+            },
           },
-          required: ["games"]
+          required: ["games"],
         },
         trivia_game: {
           type: :object,
           properties: {
-              id: { type: :integer },
-              start_date: { type: :integer },
-              end_date: { type: :integer },
-              long_name: { type: :string },
-              short_name: { type: :string },
-              description: { type: :string },
-              round_count: { type: :integer },
-              question_count: { type: :integer },
-              leaderboard_size: { type: :integer },
-              prize_count: { type: :integer },
-              room_id: { type: :integer },
-              status: { type: :string },
-              picture: { type: :string },
-              user_enroled: { type: :boolean },
-              user_notification: { type: :boolean }
+            id: {type: :integer},
+            start_date: {type: :integer},
+            end_date: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            round_count: {type: :integer},
+            question_count: {type: :integer},
+            leaderboard_size: {type: :integer},
+            prize_count: {type: :integer},
+            room_id: {type: :integer},
+            status: {type: :string},
+            picture: {type: :string},
+            user_enroled: {type: :boolean},
+            user_notification: {type: :boolean},
           },
-          required: ["trivia_game_id"]
-        }
-      }
-    }
+          required: ["trivia_game_id"],
+        },
+      },
+    },
   }
 end

@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Contest, type: :model do
-
   context "Valid factory" do
     it { expect(build(:contest)).to be_valid }
   end
@@ -27,7 +26,6 @@ RSpec.describe Contest, type: :model do
         expect(contest.contest_url).to eq("somecapsinhere@example.com")
       end
     end
-
   end
 
   pending "add some examples to (or delete) #{__FILE__}"

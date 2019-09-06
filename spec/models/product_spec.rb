@@ -1,5 +1,4 @@
 RSpec.describe Product, type: :model do
-
   context "Validation" do
     it "should create a valid product" do
       expect(create(:product)).to be_valid

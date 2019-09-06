@@ -13,7 +13,6 @@ RSpec.describe ProductBeacon, type: :model do
     it { should belong_to(:product) }
   end
 
-
   context "Methods" do
     describe ".attached_to" do
       it "should normalize  :attached_to" do

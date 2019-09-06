@@ -1,5 +1,4 @@
 RSpec.describe NotificationDeviceId, type: :model do
-
   before(:all) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product

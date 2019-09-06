@@ -185,6 +185,11 @@ group :development, :test do
     # gem "apigen", path: "lib/gems/apigen"
     gem "rswag-specs"
 end
+
+group :test do
+  gem 'pundit-matchers', '~> 1.6.0'
+end
+
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"

@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Badge, type: :model do
-
   before(:all) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product
@@ -187,5 +186,4 @@ RSpec.describe Badge, type: :model do
       expect(create(:badge)).to be_valid
     end
   end
-
 end
