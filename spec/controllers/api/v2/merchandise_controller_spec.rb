@@ -62,7 +62,7 @@ RSpec.describe Api::V2::MerchandiseController, type: :controller do
         expect(response).to have_http_status(200)
         expect(json['merchandise'].size).to eq(3)
         json['merchandise'].each do |merchandise|
-          expect(Merchandise.find(merchandise['id']).picture.exists?).to be_truthy
+          expect(merchandise['picture_url']).not_to eq(nil)
         end
       end
     end
