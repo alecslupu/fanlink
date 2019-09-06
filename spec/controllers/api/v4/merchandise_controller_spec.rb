@@ -10,7 +10,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
         create_list(:merchandise, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
         get :index
 
-        expect(response).to have_http_status(200)
+        expect(response).to be_successful
         expect(json['merchandise'].size).to eq(3)
         json['merchandise'].each do |merchandise|
          expect(merchandise['picture_url']).not_to eq(nil)
@@ -26,8 +26,8 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
         login_as(person)
         merchandise = create(:merchandise, picture: fixture_file_upload('images/better.png', 'image/png'))
         get :show, params: { id: merchandise.id }
-        expect(response).to have_http_status(200)
 
+        expect(response).to be_successful
         expect(json['merchandise']['picture_url']).not_to eq(nil)
       end
     end
@@ -49,7 +49,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
           }
         }
 
-        expect(response).to have_http_status(200)
+        expect(response).to be_successful
         expect(Merchandise.last.picture.exists?).to be_truthy
         expect(json['merchandise']['picture_url']).to include('better.png')
       end
@@ -70,7 +70,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
           }
         }
 
-        expect(response).to have_http_status(200)
+        expect(response).to be_successful
         expect(Merchandise.last.picture.exists?).to be_truthy
         expect(json['merchandise']['picture_url']).to include('better.png')
       end
