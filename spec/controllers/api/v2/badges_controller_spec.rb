@@ -39,5 +39,18 @@ RSpec.describe Api::V2::BadgesController, type: :controller do
         expect(response).to have_http_status(404)
       end
     end
+    it 'returns all badges with their attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        create_list(:badge, 3)
+        get :index
+        expect(response).to have_http_status(200)
+        expect(json['badges'].size).to eq(3)
+        json['badges'].each do |badge|
+          expect(badge['badge']['picture_url']).not_to eq(nil)
+        end
+      end
+    end
   end
 end

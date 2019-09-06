@@ -11,7 +11,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
         expect(response).to have_http_status(200)
         expect(json['badges'].size).to eq(3)
         json['badges'].each do |badge|
-          expect(Badge.find(badge['badge']['id']).picture.exists?).to eq(true)
+          expect(badge['badge']['picture_url']).not_to eq(nil)
         end
       end
     end
@@ -33,7 +33,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
         }
 
         expect(response).to have_http_status(200)
-        expect(Badge.last.picture.exists?).to eq(true)
+        expect(Badge.last.picture.exists?).to be_truthy
         expect(json['badge']['picture_url']).to include('better.png')
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
         }
 
         expect(response).to have_http_status(200)
-        expect(Badge.last.picture.exists?).to eq(true)
+        expect(Badge.last.picture.exists?).to be_truthy
         expect(json['badge']['picture_url']).to include('better.png')
       end
     end
