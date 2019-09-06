@@ -761,33 +761,8 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         end
       end
     end
-
-    it 'returns all the messages with the attached audio' do
-      person = create(:person, role: :admin)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        from = Date.today - 1.day
-        to = Date.today
-        private_room = create(:room, public: false, status: :active)
-        private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          room: private_room,
-          body: "this is my body",
-          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-        )
-
-        get :list
-
-        expect(response).to be_successful
-        expect(json['messages'].size).to eq(3)
-        json['messages'].each do |message|
-          expect(message['audio_url']).not_to eq(nil)
-        end
-      end
-    end
   end
+
   describe "#show" do
     it "should get a single private message" do
       person = create(:person)
