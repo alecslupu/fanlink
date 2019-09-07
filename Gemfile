@@ -8,34 +8,54 @@ end
 ruby "2.5.1"
 
 # gem "rack-cache"
+if ENV['RAILS52']
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 5.2"
+  # Use Puma as the app server
+  gem 'puma', '~> 3.11'
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 5.0'
+  # Use Uglifier as compressor for JavaScript assets
+  gem 'uglifier', '>= 1.3.0'
+  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+  gem 'jbuilder', '~> 2.5'
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 5.1.4"
+  # Reduces boot times through caching; required in config/boot.rb
+  gem 'bootsnap', '>= 1.1.0', require: false
+
+elsif ENV["RAILS6"]
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 6"
+else
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 5.1.4"
+  # Use Puma as the app server
+  gem "puma", "~> 3.7"
+  # Use SCSS for stylesheets
+  gem "sass-rails", "~> 5.0"
+  # Use Uglifier as compressor for JavaScript assets
+  gem "uglifier", ">= 1.3.0"
+  # See https://github.com/rails/execjs#readme for more supported runtimes
+  gem "therubyracer", platforms: :ruby
+  # Use CoffeeScript for .coffee assets and views
+  gem "coffee-rails", "~> 4.2"
+  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+  gem "jbuilder", "~> 2.5"
+  # Use Redis adapter to run Action Cable in production
+  gem "redis"
+  # Use ActiveModel has_secure_password
+  # gem "bcrypt", "~> 3.1.7"
+end
+
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
-# Use Puma as the app server
-gem "puma", "~> 3.7"
-# Use SCSS for stylesheets
-gem "sass-rails", "~> 5.0"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem "therubyracer", platforms: :ruby
 
-# Use CoffeeScript for .coffee assets and views
-gem "coffee-rails", "~> 4.2"
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.5"
 gem "jb"
-# Use Redis adapter to run Action Cable in production
-gem "redis"
 gem "redis-namespace"
 gem "redis-rails"
 
 gem "httparty", "0.16.4"
-# Use ActiveModel has_secure_password
-# gem "bcrypt", "~> 3.1.7"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
@@ -77,9 +97,22 @@ group :development do
   gem "binding_of_caller"
   gem "daemons"
   gem "gettext", ">=3.0.2", require: false
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
+
+  if ENV['RAILS52']
+    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+    gem "web-console", ">= 3.3.0"
+    gem "listen", ">= 3.0.5", "< 3.2"
+    # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+    gem 'spring'
+    gem 'spring-watcher-listen', '~> 2.0.0'
+  elsif ENV["RAILS6"]
+      # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+      gem "rails", "~> 6"
+  else
+    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+    gem "web-console", ">= 3.3.0"
+    gem "listen", ">= 3.0.5", "< 3.2"
+  end
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require: "ap"

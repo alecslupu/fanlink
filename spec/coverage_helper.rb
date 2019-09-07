@@ -1,4 +1,4 @@
-if ENV['COVERAGE'] == 'true'
+if ENV.fetch('COVERAGE', 'false') == 'true'
   require 'simplecov'
   require 'simplecov-console'
   SimpleCov.formatter = SimpleCov::Formatter::Console
