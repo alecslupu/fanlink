@@ -16,6 +16,6 @@ FactoryBot.define do
     product { current_product }
     certcourse { create(:certcourse) }
     certificate { create(:certificate) }
-    certcourse_order { Faker::Number.unique(20).between(1, 500) }
+    certcourse_order { Faker::Number.unique(20).between(from: 1, to: 500) }
   end
 end
