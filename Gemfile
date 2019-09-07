@@ -99,6 +99,7 @@ group :test do
   gem "cucumber-rails", require: false
   gem "database_cleaner", require: false
   gem "simplecov", require: false
+  gem 'simplecov-console', require: false
   gem "timecop"
   gem "webmock"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
@@ -187,3 +188,6 @@ end
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
+
+gem "psych"
+gem 'parallel_tests', group: [:development, :test]

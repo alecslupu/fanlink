@@ -113,6 +113,7 @@ GEM
     annotate (2.7.4)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
+    ansi (1.5.0)
     api-pagination (4.8.2)
     appraisal (2.2.0)
       bundler
@@ -1045,6 +1046,8 @@ GEM
     paperclip-meta (3.1.0)
       paperclip (>= 5.0)
     parallel (1.17.0)
+    parallel_tests (2.29.2)
+      parallel
     parser (2.6.3.0)
       ast (~> 2.4.0)
     path_expander (1.0.3)
@@ -1256,6 +1259,10 @@ GEM
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
+    simplecov-console (0.5.0)
+      ansi
+      simplecov
+      terminal-table
     simplecov-html (0.10.2)
     sinatra (2.0.5)
       mustermann (~> 1.0)
@@ -1278,6 +1285,8 @@ GEM
     streamio-ffmpeg (3.0.2)
       multi_json (~> 1.8)
     temple (0.8.1)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     text (1.3.1)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
@@ -1404,12 +1413,14 @@ DEPENDENCIES
   paperclip (~> 5.0.0)
   paperclip-dimension-validator
   paperclip-meta
+  parallel_tests
   pg (~> 0.18)
   pg_search
   postgresql-check
   prawn
   pry
   pry-byebug
+  psych
   puma (~> 3.7)
   pundit
   rack-cors
@@ -1435,6 +1446,7 @@ DEPENDENCIES
   seed_dump
   shoulda-matchers!
   simplecov
+  simplecov-console
   sorcery
   stackprof
   streamio-ffmpeg

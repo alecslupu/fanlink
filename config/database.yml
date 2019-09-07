@@ -69,7 +69,7 @@ staging:
 test: &test
   <<: *default
   adapter: postgresql
-  database: fanlink_test
+  database: fanlink_test<%= ENV.fetch("TEST_ENV_NUMBER", 7) %>
   username: <%= ENV.fetch("FANLINK_PG_USER", "root") %>
   password: <%= ENV.fetch('FANLINK_PG_PASSWORD', "") %>
   host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>

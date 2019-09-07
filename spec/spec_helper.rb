@@ -1,19 +1,4 @@
-require "simplecov"
 require "pry"
-
-SimpleCov.start "rails" do
-  add_filter "app/channels" # nothing here
-  add_filter "app/controllers/admin" # administrate stuff
-  add_filter "app/dashboards"
-  add_filter "app/fields"
-  add_filter "lib/gems/apigen"
-  add_filter "app/lib/rails_admin"
-  add_filter "lib/generators/fanlink"
-  # add_group "jobs", "app/jobs" # nothing here
-  add_group "listeners", "app/listeners" # nothing here
-  add_group "policies", "app/policies" # nothing here
-end
-
 require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "webmock/rspec"
@@ -108,7 +93,7 @@ RSpec.configure do |config|
   # particularly slow.
   config.profile_examples = 10
 =end
-  config.seed = 1234
+  config.seed = rand(1000).to_i
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
