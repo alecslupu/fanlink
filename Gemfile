@@ -66,36 +66,34 @@ group :production, :staging do
 end
 
 group :staging, :development, :test do
-  gem "derailed_benchmarks"
+  gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
-  gem "bullet"
+  gem "bullet", "~>6.0.2"
 end
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "pry"
-  gem "byebug", platforms: [:mri, :mingw]
-  gem "pry-byebug"
-  gem "dotenv-rails"
-  gem "faker"
+  gem "pry", "~>0.12.2"
+  gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
+  gem "pry-byebug", "~>3.7.0"
+  gem "dotenv-rails", "~>2.7.5"
+  gem "faker", "~>2.1.2"
   gem "rspec-rails"
   gem "rails-controller-testing"
-  gem "factory_bot_rails"
-  gem "fuubar"
+  gem "factory_bot_rails", "~>5.0.2"
+  gem "fuubar", "~>2.4.1"
 
   gem 'rubocop', '~> 0.74.0', require: false
   # gem "rubocop-rails_config"
-
   gem 'rubocop-rails'
   gem "rubocop-rspec"
-
   gem 'rubocop-performance'
 end
 
 group :development do
-  gem "better_errors"
+  gem "better_errors", "~>2.5.1"
   gem "binding_of_caller"
-  gem "daemons"
+  gem "daemons", "~>1.3.1"
   gem "gettext", ">=3.0.2", require: false
 
   if ENV['RAILS52']
@@ -129,15 +127,15 @@ group :development do
 end
 
 group :test do
-  gem "cucumber-rails", require: false
+  gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
-  gem "simplecov", require: false
+  gem "simplecov", "~>0.17.0", require: false
   gem 'simplecov-console', require: false
   gem "timecop"
-  gem "webmock"
+  gem "webmock", "~>3.6.2"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
   gem "wisper-rspec", require: false
-  gem "json_schemer"
+  gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
 end
 

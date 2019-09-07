@@ -1,4 +1,4 @@
-# == Schema Information
+# == Schema Informationr_digits
 #
 # Table name: trivia_round_leaderboards
 #
@@ -18,9 +18,9 @@ FactoryBot.define do
     product { current_product }
 
     round { create(:trivia_round) }
-    points { Faker::Number.between(0, 10000) }
-    position { Faker::Number.between(0, 10000) }
-    average_time { Faker::Number.decimal(0, 6) }
+    points { Faker::Number.between(from: 0, to: 10000) }
+    position { Faker::Number.between(from: 0, to: 10000) }
+    average_time { Faker::Number.decimal(l_digits: 0, r_digits: 6) }
     person { create(:person) }
   end
 end

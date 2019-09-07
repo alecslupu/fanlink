@@ -30,16 +30,16 @@ FactoryBot.define do
     product { current_product }
 
     long_name { Faker::Lorem.name }
-    short_name { Faker::Lorem.sentence(4) }
+    short_name { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
     color_hex { Faker::Color.hex_color }
     status { 1 }
     room { nil }
-    validity_duration {  Faker::Number.unique(20).between(1, 500) }
-    access_duration {  Faker::Number.unique(20).between(1, 500) }
+    validity_duration {  Faker::Number.unique(20).between(from: 1, to: 500) }
+    access_duration {  Faker::Number.unique(20).between(from: 1, to: 500) }
     is_free { false }
-    sku_ios { Faker::Code.ean(13) }
-    sku_android { Faker::Code.ean(13) }
+    sku_ios { Faker::Code.ean( base:13) }
+    sku_android { Faker::Code.ean( base:13) }
     template_image_file_name { Faker::File.file_name }
     certificate_issuable { false }
     sequence(:certificate_order) { |n| n }
