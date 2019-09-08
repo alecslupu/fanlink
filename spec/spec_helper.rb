@@ -5,7 +5,7 @@ require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
 require "json_schemer"
-
+require 'rspec/retry'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -25,6 +25,22 @@ WebMock.disable_net_connect!(allow_localhost: true)
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+
+  # show retry status in spec process
+  config.verbose_retry = true
+  # show exception that triggers a retry if verbose_retry is set to true
+  config.display_try_failure_messages = true
+
+  # run retry only on features
+  config.around :each do |ex|
+    ex.run_with_retry retry: 3
+  end
+
+  config.retry_callback = proc do |ex|
+    DatabaseCleaner.clean_with(:truncation)
+    ActsAsTenant.current_tenant = nil
+    create(:product)
+  end
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -93,7 +109,7 @@ RSpec.configure do |config|
   # particularly slow.
   config.profile_examples = 10
 =end
-  config.seed = rand(1000).to_i
+  config.seed = 1234
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -111,14 +127,19 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
+  config.before(:each) do
+    ActsAsTenant.current_tenant = nil
+  end
   config.after(:each) do
     logout
     DatabaseCleaner.clean
+    # ActsAsTenant.current_tenant = nil
   end
 
   config.around(:each) do |example|
     DatabaseCleaner.cleaning do
       example.run
+      # ActsAsTenant.current_tenant = nil
     end
   end
 

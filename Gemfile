@@ -137,6 +137,7 @@ group :test do
   gem "wisper-rspec", require: false
   gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
+  gem 'rspec-retry'
 end
 
 # greg is saying that is not suporting V Rails 5.2.

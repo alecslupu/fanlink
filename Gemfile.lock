@@ -1196,6 +1196,8 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
+    rspec-retry (0.6.1)
+      rspec-core (> 3.3)
     rspec-support (3.8.2)
     rswag-api (2.0.5)
       railties (>= 3.1, < 6.0)
@@ -1437,6 +1439,7 @@ DEPENDENCIES
   rmagick
   rollbar
   rspec-rails
+  rspec-retry
   rswag-api
   rswag-specs
   rswag-ui

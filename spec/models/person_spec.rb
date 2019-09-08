@@ -131,6 +131,7 @@ RSpec.describe Person, type: :model do
     end
   end
 
+
   context "Filters" do
     describe "#username_filter" do
     end

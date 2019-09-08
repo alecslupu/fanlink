@@ -1,7 +1,7 @@
 if ENV.fetch('COVERAGE', 'false') == 'true'
   require 'simplecov'
-  require 'simplecov-console'
-  SimpleCov.formatter = SimpleCov::Formatter::Console
+  # require 'simplecov-console'
+  # SimpleCov.formatter = SimpleCov::Formatter::Console
 
   SimpleCov.start "rails" do
     add_filter "app/channels" # nothing here
@@ -16,10 +16,10 @@ if ENV.fetch('COVERAGE', 'false') == 'true'
     add_group "policies", "app/policies" # nothing here
   end
 
-  if ENV['TEST_ENV_NUMBER'] # parallel specs
-    SimpleCov.at_exit do
-      result = SimpleCov.result
-      result.format! if ParallelTests.number_of_running_processes <= 1
-    end
-  end
+  # if ENV['TEST_ENV_NUMBER'] # parallel specs
+  #   SimpleCov.at_exit do
+  #     result = SimpleCov.result
+  #     result.format! # if ENV.fetch("PARALLEL_PID_FILE", false) &&  ParallelTests.number_of_running_processes <= 1
+  #   end
+  # end
 end
