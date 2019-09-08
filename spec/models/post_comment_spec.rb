@@ -12,6 +12,19 @@ RSpec.describe PostComment, type: :model do
     @followed2_post1 = create(:post, person: @followed2)
   end
 
+  context "Scopes" do
+    describe ".person_filter" do
+      it "responds to" do
+        expect(PostComment).to respond_to(:person_filter)
+      end
+    end
+    describe ".body_filter" do
+      it "responds to" do
+        expect(PostComment).to respond_to(:body_filter)
+      end
+    end
+  end
+
   context "Valid" do
     it "should create a valid post comment" do
       expect(create(:post_comment)).to be_valid
@@ -36,7 +49,12 @@ RSpec.describe PostComment, type: :model do
       expect(cmt).not_to be_valid
     end
   end
-
+  # TODO: auto-generated
+  describe "#post_me" do
+    it "responds to " do
+      expect(PostComment.new).to respond_to(:post_me)
+    end
+  end
   # TODO: auto-generated
   describe "#mentions" do
     pending

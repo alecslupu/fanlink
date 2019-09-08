@@ -26,10 +26,18 @@ RSpec.describe MessageReport, type: :model do
     end
   end
 
-  describe "scopes" do
-    # It's a good idea to create specs that test a failing result for each scope, but that's up to you
-    it ".for product" do
-      product = create(:product)
+  context "Scopes" do
+    describe "#for_product" do
+      it "responds to" do
+        expect(MessageReport).to respond_to(:for_product)
+      end
+      pending
+    end
+    describe "#status_filter" do
+      it "responds to" do
+        expect(MessageReport).to respond_to(:status_filter)
+      end
+      pending
     end
   end
 

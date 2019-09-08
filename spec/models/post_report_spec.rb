@@ -11,6 +11,17 @@ RSpec.describe PostReport, type: :model do
     end
   end
 
+  context "Scopes" do
+
+    describe ".status_filter" do
+      it do
+        expect(PostReport).to respond_to(:status_filter)
+      end
+      pending
+    end
+
+  end
+
   describe "#create" do
     it "should not let you create a post report without a post" do
       report = build(:post_report, post: nil)

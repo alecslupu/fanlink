@@ -23,6 +23,53 @@ RSpec.describe Post, type: :model do
     end
   end
 
+  describe "scopes" do
+    describe ".id_filter" do
+      it do
+        expect(Post).to respond_to(:id_filter)
+      end
+      pending
+    end
+    describe ".person_id_filter" do
+      it do
+        expect(Post).to respond_to(:person_id_filter)
+      end
+      pending
+    end
+
+    describe ".person_filter" do
+      it do
+        expect(Post).to respond_to(:person_filter)
+      end
+      pending
+    end
+
+    describe ".body_filter" do
+      it do
+        expect(Post).to respond_to(:body_filter)
+      end
+      pending
+    end
+    describe ".posted_after_filter" do
+      it do
+        expect(Post).to respond_to(:posted_after_filter)
+      end
+      pending
+    end
+    describe ".posted_before_filter" do
+      it do
+        expect(Post).to respond_to(:posted_before_filter)
+      end
+      pending
+    end
+    describe ".status_filter" do
+      it do
+        expect(Post).to respond_to(:status_filter)
+      end
+      pending
+    end
+  end
+
   # we don't care about post status here because that should be handled with scope chaining
   # TODO: we should care about poster status WHEN we implement that
   describe ".following" do
@@ -217,4 +264,19 @@ RSpec.describe Post, type: :model do
     end
     pending
   end
+
+
+  describe "#delete_real_time" do
+    it "responds to method " do
+      expect(Post.new).to respond_to(:delete_real_time)
+    end
+    pending
+  end
+  describe "#post" do
+    it "responds to method " do
+      expect(Post.new).to respond_to(:post)
+    end
+    pending
+  end
+
 end

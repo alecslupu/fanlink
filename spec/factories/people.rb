@@ -50,6 +50,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     password { "badpassword" }
     birthdate { "2000-01-01" }
+    country_code { nil }
 
     factory :recommended_person do
       recommended { true }

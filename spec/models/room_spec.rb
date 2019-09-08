@@ -70,6 +70,37 @@ RSpec.describe Room, type: :model do
     describe "#private?" do
       pending
     end
+
+    describe "#clear_message_counter" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:clear_message_counter)
+      end
+      pending
+    end
+    describe "#delete_me" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:delete_me)
+      end
+      pending
+    end
+    describe "#post" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:post)
+      end
+      pending
+    end
+    describe "#increment_message_counters" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:increment_message_counters)
+      end
+      pending
+    end
+    describe "#new_room" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:new_room)
+      end
+      pending
+    end
   end
 
   context "Enumeration" do
