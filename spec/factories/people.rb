@@ -51,9 +51,9 @@ FactoryBot.define do
     password { "badpassword" }
     birthdate { "2000-01-01" }
     country_code { "US" }
-    city { "Bucharest" }
-    biography { Faker::Lorem.paragraph(sentence_count: 2)}
-    picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
+    # city { "Bucharest" }
+    # biography { Faker::Lorem.paragraph(sentence_count: 2)}
+    # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
 
 
     factory :recommended_person do
