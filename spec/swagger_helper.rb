@@ -99,7 +99,7 @@ RSpec.configure do |config|
             person: {
               type: :object,
               properties: {
-                id: {type: :integer},
+                id: {type: :string},
                 username: {type: :string},
                 name: {type: :string},
                 gender: {type: :string},
