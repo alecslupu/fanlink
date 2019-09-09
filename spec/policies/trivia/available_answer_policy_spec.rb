@@ -1,5 +1,6 @@
 require "spec_helper"
 
+
 RSpec.describe Trivia::AvailableAnswerPolicy, type: :policy do
   let(:master_class) { Trivia::AvailableAnswer.new }
   permission_list = {
@@ -227,10 +228,11 @@ RSpec.describe Trivia::AvailableAnswerPolicy, type: :policy do
       post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_available_answer) }
 
       ActsAsTenant.with_tenant(person.product) do
-        post = create(:trivia_available_answer)
+        post = create(:trivia_available_question)
         scope = Pundit.policy_scope!(person, Trivia::AvailableAnswer)
-        expect(scope.count).to eq(1)
-        expect(scope).to include(post)
+        post.available_answers.each do |a|
+          expect(scope).to include(a)
+        end
         expect(scope).not_to include(post2)
       end
     end

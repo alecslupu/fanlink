@@ -1,5 +1,6 @@
 require "spec_helper"
 
+
 RSpec.describe Trivia::MultipleChoiceAvailableQuestionPolicy, type: :policy do
   let(:master_class) { Trivia::MultipleChoiceAvailableQuestion.new }
   permission_list = {

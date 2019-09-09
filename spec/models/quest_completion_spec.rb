@@ -1,4 +1,5 @@
 RSpec.describe QuestCompletion, type: :model do
+
   context "Associations" do
     describe "it should validation associatations for" do
       it "#belongs_to" do
@@ -28,44 +29,32 @@ RSpec.describe QuestCompletion, type: :model do
     end
 
     describe ".id_filter" do
-      it do
-        expect(QuestCompletion).to respond_to(:id_filter)
-      end
+      it { expect(QuestCompletion).to respond_to(:id_filter)}
       pending
     end
 
     describe ".person_id_filter" do
-      it do
-        expect(QuestCompletion).to respond_to(:person_id_filter)
-      end
+      it { expect(QuestCompletion).to respond_to(:person_id_filter)}
       pending
     end
 
     describe ".person_filter" do
-      it do
-        expect(QuestCompletion).to respond_to(:person_filter)
-      end
+      it { expect(QuestCompletion).to respond_to(:person_filter) }
       pending
     end
 
     describe ".quest_id_filter" do
-      it do
-        expect(QuestCompletion).to respond_to(:quest_id_filter)
-      end
+      it { expect(QuestCompletion).to respond_to(:quest_id_filter) }
       pending
     end
 
     describe ".activity_id_filter" do
-      it do
-        expect(QuestCompletion).to respond_to(:activity_id_filter)
-      end
+      it { expect(QuestCompletion).to respond_to(:activity_id_filter) }
       pending
     end
 
     describe ".activity_filter" do
-      it do
-        expect(QuestCompletion).to respond_to(:activity_filter)
-      end
+      it { expect(QuestCompletion).to respond_to(:activity_filter) }
       pending
     end
 

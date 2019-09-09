@@ -21,13 +21,8 @@ FactoryBot.define do
     end_date { DateTime.now + 1.day }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     product { current_product }
-# <<<<<<< HEAD
-#     poll_type { "post" }
-#     poll_type_id { rand(100)}
-#     duration { 0 }
-# =======
-#     poll_type { :post }
-#     poll_status { :active }
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
+    poll_type { "post" }
+    poll_status { :active }
+    poll_type_id { create(:post).id }
   end
 end

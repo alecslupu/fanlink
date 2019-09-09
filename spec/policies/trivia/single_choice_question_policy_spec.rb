@@ -228,8 +228,10 @@ RSpec.describe Trivia::SingleChoiceQuestionPolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
         post = create(:trivia_single_choice_question)
         scope = Pundit.policy_scope!(person, Trivia::SingleChoiceQuestion)
-        expect(scope.count).to eq(1)
-        expect(scope).to include(post)
+        post.round.questions.each do |q|
+          expect(scope).to include(q)
+        end
+        expect(scope.count).to eq(post.round.questions.size)
         expect(scope).not_to include(post2)
       end
     end

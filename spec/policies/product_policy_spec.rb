@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 require "spec_helper"
 
 RSpec.describe ProductPolicy, type: :policy do
@@ -249,3 +250,4 @@ RSpec.describe ProductPolicy, type: :policy do
     end
   end
 end
+

@@ -12,7 +12,7 @@
 
 FactoryBot.define do
   factory :poll_option do
-    poll_id { create(:poll).id }
-    description { Faker::Lorem.paragraph(1) }
+    poll { create(:poll) }
+    description { Faker::Lorem.sentence }
   end
 end
