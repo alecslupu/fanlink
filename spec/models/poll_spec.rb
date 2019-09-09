@@ -20,10 +20,10 @@ RSpec.describe Poll, type: :model do
   describe "#was_voted" do
     pending
   end
-  
+
 
   context "Valid factory" do
-    it { expect(create(:poll)).to be_valid }
+    it { expect(build(:poll)).to be_valid }
   end
 
   context "Validations" do

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe CertificateCertcourse, type: :model do
   context "Valid factory" do
-    it { expect(create(:certificate_certcourse)).to be_valid }
+    it { expect(build(:certificate_certcourse)).to be_valid }
   end
 
   context "Validation" do

@@ -1,7 +1,4 @@
 RSpec.describe Relationship, type: :model do
-  before(:all) do
-    ActsAsTenant.current_tenant = current_product
-  end
 
   context "Associations" do
     describe "should belong to" do
@@ -13,7 +10,7 @@ RSpec.describe Relationship, type: :model do
   context "Validation" do
     describe "should create a valid relationship" do
       it do
-        expect(create(:relationship)).to be_valid
+        expect(build(:relationship)).to be_valid
       end
     end
   end

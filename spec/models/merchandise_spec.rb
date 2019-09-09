@@ -1,14 +1,12 @@
 RSpec.describe Merchandise, type: :model do
-  before(:all) do
-    @name = "abc"
-    @merchandise = create(:merchandise, name: @name)
-    @product = @merchandise.product
-    ActsAsTenant.current_tenant = @product
+  before(:each) do
+    @merchandise = create(:merchandise, name: "abc")
+    ActsAsTenant.current_tenant = create(:product)
   end
 
   context "Valid" do
     it "should create a valid merchandise" do
-      expect(create(:merchandise)).to be_valid
+      expect(build(:merchandise)).to be_valid
     end
   end
 

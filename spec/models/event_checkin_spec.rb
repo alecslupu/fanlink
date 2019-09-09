@@ -1,7 +1,7 @@
 RSpec.describe EventCheckin, type: :model do
   context "Validation" do
     describe "should create a valid event checkin" do
-      it { expect(create(:event_checkin)).to be_valid }
+      it { expect(build(:event_checkin)).to be_valid }
     end
     describe "#product_match" do
       it "adds error message" do

@@ -1,20 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Badge, type: :model do
-  before(:all) do
-    @product = create(:product)
-    ActsAsTenant.current_tenant = @product
-  end
 
   context "Validation" do
-    it { expect(create(:badge)).to be_valid }
+    it { expect(build(:badge)).to be_valid }
   end
 
   describe "#action_count_earned_by" do
-    let(:badge) { create(:badge) }
-    let(:person) { create(:person) }
+    let(:badge) { build(:badge) }
+    let(:person) { build(:person) }
     it "should return 0 for person with nothing" do
-      expect(badge.action_count_earned_by(create(:person))).to eq(0)
+      expect(badge.action_count_earned_by(person)).to eq(0)
     end
     it "should return 0 for person with actions before issued_from with no issued to" do
       b = create(:badge, issued_from: Time.now + 1.day)
@@ -76,27 +72,27 @@ RSpec.describe Badge, type: :model do
   describe "current?" do
     let(:current_time) { Time.now }
     it "should not be current if before issued_from with no issued_to" do
-      badge = create(:badge, issued_from: current_time + 1.minute)
+      badge = build(:badge, issued_from: current_time + 1.minute)
       expect(badge.current?).to be_falsey
     end
     it "should not be current if before issued_from with also an issued_to" do
-      badge = create(:badge, issued_from: current_time + 1.minute, issued_to: current_time + 3.minutes)
+      badge = build(:badge, issued_from: current_time + 1.minute, issued_to: current_time + 3.minutes)
       expect(badge.current?).to be_falsey
     end
     it "should not be current if after issued_to with no issued_from" do
-      badge = create(:badge, issued_to: current_time - 1.minutes)
+      badge = build(:badge, issued_to: current_time - 1.minutes)
       expect(badge.current?).to be_falsey
     end
     it "should not be current if after issued_to with issued_from" do
-      badge = create(:badge, issued_from: current_time - 1.minutes, issued_to: current_time - 1.second)
+      badge = build(:badge, issued_from: current_time - 1.minutes, issued_to: current_time - 1.second)
       expect(badge.current?).to be_falsey
     end
     it "should be current if after issued_from with no issued_to" do
-      badge = create(:badge, issued_from: current_time - 1.minute)
+      badge = build(:badge, issued_from: current_time - 1.minute)
       expect(badge.current?).to be_truthy
     end
     it "should be current if after issued_from with and before issued_to" do
-      badge = create(:badge, issued_from: current_time - 1.minute, issued_to: current_time + 1.minute)
+      badge = build(:badge, issued_from: current_time - 1.minute, issued_to: current_time + 1.minute)
       expect(badge.current?).to be_truthy
     end
   end

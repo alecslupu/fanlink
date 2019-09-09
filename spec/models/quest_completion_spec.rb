@@ -11,7 +11,7 @@ RSpec.describe QuestCompletion, type: :model do
 
   context "Validation" do
     it "should create a valid quest completion" do
-      expect(create(:quest_completion)).to be_valid
+      expect(build(:quest_completion)).to be_valid
     end
   end
 

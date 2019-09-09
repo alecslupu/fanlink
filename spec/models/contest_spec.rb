@@ -16,13 +16,13 @@ RSpec.describe Contest, type: :model do
   context "Methods" do
     describe ".rules_url" do
       it "should normalize  :rules_url" do
-        contest = create(:contest, rules_url: " SOMEcapsinHereAexample.com ")
+        contest = build(:contest, rules_url: " SOMEcapsinHereAexample.com ")
         expect(contest.rules_url).to eq("somecapsinhereaexample.com")
       end
     end
     describe ".contest_url" do
       it "should normalize :contest_url" do
-        contest = create(:contest, contest_url: " SOMEcapsinHere@example.com ")
+        contest = build(:contest, contest_url: " SOMEcapsinHere@example.com ")
         expect(contest.contest_url).to eq("somecapsinhere@example.com")
       end
     end

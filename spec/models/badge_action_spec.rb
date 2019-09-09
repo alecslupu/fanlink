@@ -2,7 +2,7 @@ RSpec.describe BadgeAction, type: :model do
   subject { FactoryBot.create(:badge_action, action_type_id: FactoryBot.create(:action_type).id, person_id: FactoryBot.create(:person).id, identifier: "myaction") }
 
   context "Valid factory" do
-    it { expect(create(:badge_action)).to be_valid }
+    it { expect(build(:badge_action)).to be_valid }
   end
   context "Associations" do
     describe "#belongs_to" do
@@ -54,8 +54,8 @@ RSpec.describe BadgeAction, type: :model do
       ActsAsTenant.with_tenant(person.product) do
         action_type1 = create(:action_type)
         action_type2 = create(:action_type)
-        ba1 = BadgeAction.create(action_type_id: action_type1.id, person_id: person.id, identifier: ident)
-        ba2 = BadgeAction.create(action_type_id: action_type2.id, person_id: person.id, identifier: ident)
+        ba1 = BadgeAction.new(action_type_id: action_type1.id, person_id: person.id, identifier: ident)
+        ba2 = BadgeAction.new(action_type_id: action_type2.id, person_id: person.id, identifier: ident)
         expect(ba2).to be_valid
       end
     end

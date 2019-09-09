@@ -30,6 +30,6 @@ RSpec.describe ActivityType, type: :model do
     end
   end
   context "Valid factory" do
-    it { expect(create(:activity_type)).to be_valid }
+    it { expect(build(:activity_type)).to be_valid }
   end
 end

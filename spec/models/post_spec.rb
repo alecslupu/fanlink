@@ -1,5 +1,5 @@
 RSpec.describe Post, type: :model do
-  before(:all) do
+  before(:each) do
     @product = Product.first || create(:product)
     ActsAsTenant.current_tenant = @product
     @person = create(:person)
@@ -19,7 +19,7 @@ RSpec.describe Post, type: :model do
 
   context "Valid" do
     it "should create a valid post" do
-      expect(create(:post)).to be_valid
+      expect(build(:post)).to be_valid
     end
   end
 

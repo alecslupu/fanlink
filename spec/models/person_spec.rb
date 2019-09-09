@@ -1,5 +1,5 @@
 RSpec.describe Person, type: :model do
-  before(:all) do
+  before(:each) do
     @username = "WhereisPancakeHouse"
     @password = "logmein"
     @email = "pancakes@example.com"
@@ -9,16 +9,14 @@ RSpec.describe Person, type: :model do
 
   context "Valid" do
     it "should create a valid person" do
-      expect(create(:person)).to be_valid
+      expect(build(:person)).to be_valid
     end
   end
 
   context "Validation for normal user" do
     describe "#presence" do
-      it do
-        should validate_presence_of(:username).with_message(_("Username is required."))
-        should validate_presence_of(:password).with_message(_("Password is required."))
-      end
+      it { should validate_presence_of(:username).with_message(_("Username is required."))}
+      it { should validate_presence_of(:password).with_message(_("Password is required.")) }
     end
     describe "#length" do
       it "should raise an error if username's length is not between 5 and 25 characters" do
@@ -43,10 +41,8 @@ RSpec.describe Person, type: :model do
 
     describe "#uniqueness" do
       it "should allow duplicate emails and usernames for differnt products" do
-        product = create(:product)
-        product2 = create(:product)
-        person1 = build(:person, product: product, username: "Joe2987", email: "Joe2987@example.com")
-        person2 = build(:person, product: product2, username: "Joe2987", email: "Joe2987@example.com")
+        person1 = build(:person, product: create(:product), username: "Joe2987", email: "Joe2987@example.com")
+        person2 = build(:person, product: create(:product), username: "Joe2987", email: "Joe2987@example.com")
 
         expect(person1).to be_valid
         expect(person2).to be_valid
@@ -95,19 +91,19 @@ RSpec.describe Person, type: :model do
   context "Validation as facebook user" do
     describe "#presence" do
       it "should not validate the email if a facebook id is present" do
-        person = create(:person, facebookid: "123013910sdaa", email: nil)
+        person = build(:person, facebookid: "123013910sdaa", email: nil)
         expect(person).to be_valid
       end
 
       it "should not validate the password if a facebook id is present" do
-        person = create(:person, facebookid: "123013910sdaa", password: nil)
+        person = build(:person, facebookid: "123013910sdaa", password: nil)
         expect(person).to be_valid
       end
     end
 
     describe "#length" do
       it "should not validate length of password if a facebook id is present" do
-        person = create(:person, facebookid: "asdjaj231klkda", password: nil)
+        person = build(:person, facebookid: "asdjaj231klkda", password: nil)
         expect(person).to be_valid
       end
     end
@@ -206,7 +202,7 @@ RSpec.describe Person, type: :model do
 
   describe "#country" do
     it "should accept a valid country code" do
-      person = create(:person, country_code: "US")
+      person = build(:person, country_code: "US")
       expect(person).to be_valid
       expect(person.country_code).to eq("US")
     end
@@ -221,8 +217,8 @@ RSpec.describe Person, type: :model do
       expect(person.country_code).to be_nil
     end
     it "should upcase it" do
-      person = create(:person, country_code: "us")
-      expect(person.reload.country_code).to eq("US")
+      person = build(:person, country_code: "us")
+      expect(person.country_code).to eq("US")
     end
   end
 

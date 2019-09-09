@@ -3,7 +3,7 @@ RSpec.describe ActionType, type: :model do
     it { expect(build(:action_type)).to be_valid }
   end
   context "Validation" do
-    subject { create(:action_type) }
+    subject { build(:action_type) }
     describe "#presence" do
       it { should validate_presence_of(:internal_name).with_message(_("Internal name is required.")) }
       it { should validate_presence_of(:name).with_message(_("Name is required.")) }
@@ -40,35 +40,33 @@ RSpec.describe ActionType, type: :model do
   end
   context "Methods" do
     describe "#destroy" do
+
+      subject { create(:action_type) }
       it "should not let you destroy an action type that has been used in a badge" do
-        act_type = create(:action_type)
-        create(:badge, action_type: act_type)
-        expect(act_type.destroy).to be_falsey
-        expect(act_type).to exist_in_database
-        expect(act_type.errors[:base]).not_to be_empty
+        create(:badge, action_type: subject)
+        expect(subject.destroy).to be_falsey
+        expect(subject).to exist_in_database
+        expect(subject.errors[:base]).not_to be_empty
       end
       it "should not let you destroy an action type that has been used in a badge action" do
-        act_type = create(:action_type)
-        create(:badge_action, action_type: act_type)
-        expect(act_type.destroy).to be_falsey
-        expect(act_type).to exist_in_database
-        expect(act_type.errors[:base]).not_to be_empty
+        create(:badge_action, action_type: subject)
+        expect(subject.destroy).to be_falsey
+        expect(subject).to exist_in_database
+        expect(subject.errors[:base]).not_to be_empty
       end
     end
     describe "#in_use?" do
+      subject { build(:action_type) }
       it "is false upon initialization" do
-        act_type = create(:action_type)
-        expect(act_type.in_use?).to be_falsey
+        expect(subject.in_use?).to be_falsey
       end
       it "marked as used when associated badges exists" do
-        act_type = create(:action_type)
-        act_type.badges = create_list(:badge, 3)
-        expect(act_type.in_use?).to be_truthy
+        subject.badges = build_list(:badge, 3)
+        expect(subject.in_use?).to be_truthy
       end
       it "marked as used when associated badges exists" do
-        act_type = create(:action_type)
-        act_type.badge_actions = create_list(:badge_action, 2)
-        expect(act_type.in_use?).to be_truthy
+        subject.badge_actions = build_list(:badge_action, 2)
+        expect(subject.in_use?).to be_truthy
       end
     end
   end

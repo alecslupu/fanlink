@@ -1,10 +1,7 @@
 RSpec.describe Block, type: :model do
-  before(:all) do
-    ActsAsTenant.current_tenant = create(:product)
-  end
 
   context "Validation" do
-    it { expect(create(:block)).to be_valid }
+    it { expect(build(:block)).to be_valid }
   end
 
   describe "#blocked_id" do

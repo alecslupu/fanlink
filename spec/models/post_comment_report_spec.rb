@@ -1,5 +1,5 @@
 RSpec.describe PostCommentReport, type: :model do
-  before(:all) do
+  before(:each) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product
     @post_comment = create(:post_comment)

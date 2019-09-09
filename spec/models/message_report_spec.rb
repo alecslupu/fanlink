@@ -1,10 +1,4 @@
 RSpec.describe MessageReport, type: :model do
-  before(:all) do
-    @product = create(:product)
-    @room = create(:room, product: @product)
-    @message = create(:message, room: @room)
-    ActsAsTenant.current_tenant = @product
-  end
 
   context "Associations" do
     it { should belong_to(:message) }
@@ -43,7 +37,7 @@ RSpec.describe MessageReport, type: :model do
 
   context "Valid" do
     it "should create a valid message report" do
-      expect(create(:message_report)).to be_valid
+      expect(build(:message_report)).to be_valid
     end
   end
 

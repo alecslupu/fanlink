@@ -22,7 +22,7 @@ RSpec.describe Url, type: :model do
   context "Validation" do
     describe "should create a valid url" do
       it do
-        expect(create(:url)).to be_valid
+        expect(build(:url)).to be_valid
       end
     end
   end

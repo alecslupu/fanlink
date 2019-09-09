@@ -1,12 +1,11 @@
 RSpec.describe PortalNotification, type: :model do
-  before(:all) do
-    @product = Product.first || create(:product)
-    ActsAsTenant.current_tenant = @product
+  before(:each) do
+    ActsAsTenant.current_tenant = create(:product)
     @person = create(:person)
   end
   context "Valid" do
     it "should create a valid portal notification" do
-      expect(create(:portal_notification)).to be_valid
+      expect(build(:portal_notification)).to be_valid
     end
   end
 

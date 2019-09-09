@@ -1,13 +1,14 @@
 RSpec.describe Message, type: :model do
-  before(:all) do
-    @product = create(:product)
-    @room = create(:room, product: @product)
-    ActsAsTenant.current_tenant = @product
-  end
+  # before(:all) do
+  #   @product = create(:product)
+  #   @room = create(:room, product: @product)
+  #   ActsAsTenant.current_tenant = @product
+  # end
 
+  let(:room) { create(:room) }
   context "Valid" do
     it "should create a valid message" do
-      expect(create(:message)).to be_valid
+      expect(build(:message)).to be_valid
     end
   end
 
@@ -87,18 +88,18 @@ RSpec.describe Message, type: :model do
 
   describe "#visible?" do
     it "should return true if message not hidden" do
-      msg = create(:message)
+      msg = build(:message)
       expect(msg.visible?).to be_truthy
     end
     it "should return false if message hidden" do
-      msg = create(:message, hidden: true)
+      msg = build(:message, hidden: true)
       expect(msg.visible?).to be_falsey
     end
   end
 
   describe "#product" do
     it "should return the product of the room" do
-      msg = create(:message)
+      msg = build(:message)
       expect(msg.product).to eq(msg.room.product)
     end
   end
@@ -108,7 +109,7 @@ RSpec.describe Message, type: :model do
       blocker = create(:person)
       blocked = create(:person)
       blocker.block(blocked)
-      msg = create(:message, room: @room, person_id: blocked.id)
+      msg = create(:message, room: room, person_id: blocked.id)
       expect(Message.unblocked(blocker.blocked_people)).not_to include(msg)
     end
   end
