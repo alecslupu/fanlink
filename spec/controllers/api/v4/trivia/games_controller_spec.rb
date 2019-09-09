@@ -25,7 +25,7 @@ RSpec.describe Api::V4::Trivia::GamesController, type: :controller do
   end
   # TODO: auto-generated
   describe "GET completed" do
-    it "returns all the upcomming games with their attached images" do
+    it "returns all the completed games with their attached images" do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
