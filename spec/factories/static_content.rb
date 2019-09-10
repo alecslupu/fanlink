@@ -7,16 +7,11 @@
 #  title        :string           not null
 #  product_id   :integer          not null
 #  slug         :string           not null
-class StaticContent < ApplicationRecord
-  belongs_to :product
-  acts_as_tenant(:product)
 
-  validates :title, uniqueness: true
-  before_create :set_slug
-
-  private
-
-  def set_slug
-    self.slug = title.parameterize
+FactoryBot.define do
+  factory :static_content do
+    product { current_product }
+    title { Faker::Lorem.sentence(word_count: 3) }
+    content { Faker::Lorem.sentences(number: 1, supplemental: true) }
   end
 end
