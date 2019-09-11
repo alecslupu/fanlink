@@ -11,7 +11,7 @@
 FactoryBot.define do
   factory :static_content do
     product { current_product }
-    title { Faker::Lorem.sentence(word_count: 3) }
-    content { Faker::Lorem.sentences(number: 1, supplemental: true) }
+    title { Faker::Lorem.sentence() }
+    content { Faker::Lorem.sentence() }
   end
 end
