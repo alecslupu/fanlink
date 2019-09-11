@@ -3,8 +3,8 @@
 # Table name: contents
 #
 #  id           :bigint(8)        not null, primary key
-#  content      :content          default "", not null
-#  title        :string           not null
+#  content      :jsonb            default "", not null
+#  title        :jsonb            not null
 #  product_id   :integer          not null
 #  slug         :string           not null
 
