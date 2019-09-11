@@ -12,6 +12,9 @@ class StaticContent < ApplicationRecord
   acts_as_tenant(:product)
 
   validates :title, presence: true, uniqueness: true
+  validates :content, presence: true
+  validates :product_id, presence: true
+
   before_create :set_slug
 
   private

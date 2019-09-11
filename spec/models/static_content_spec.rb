@@ -15,6 +15,8 @@ RSpec.describe StaticContent, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :title }
+    it { is_expected.to validate_presence_of :product_id }
+    it { is_expected.to validate_presence_of :content }
 
     it 'validates the uniqueness of title' do
       title = 'title'
