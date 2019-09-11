@@ -1,12 +1,16 @@
 # == Schema Information
 #
-# Table name: contents
+# Table name: static_contents
 #
-#  id           :bigint(8)        not null, primary key
-#  content      :jsonb            default "", not null
-#  title        :jsonb            not null
-#  product_id   :integer          not null
-#  slug         :string           not null
+#  id         :bigint(8)        not null, primary key
+#  content    :jsonb            not null
+#  title      :jsonb            not null
+#  slug       :string           not null
+#  product_id :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class StaticContent < ApplicationRecord
   include TranslationThings
 
@@ -18,6 +22,7 @@ class StaticContent < ApplicationRecord
   validates :product_id, presence: true
 
   has_manual_translated :title, :content
+
   before_create :set_slug
 
   private
