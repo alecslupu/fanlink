@@ -8,6 +8,8 @@
 #  product_id   :integer          not null
 #  slug         :string           not null
 class StaticContent < ApplicationRecord
+  include TranslationThings
+
   belongs_to :product
   acts_as_tenant(:product)
 
@@ -15,6 +17,7 @@ class StaticContent < ApplicationRecord
   validates :content, presence: true
   validates :product_id, presence: true
 
+  has_manual_translated :title, :content
   before_create :set_slug
 
   private

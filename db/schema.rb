@@ -1025,8 +1025,8 @@ ActiveRecord::Schema.define(version: 20190910122621) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.string "content", default: "", null: false
-    t.string "title", null: false
+    t.jsonb "content", default: "", null: false
+    t.jsonb "title", null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
