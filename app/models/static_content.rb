@@ -33,7 +33,10 @@ class StaticContent < ApplicationRecord
   end
 
   def title_uniqueness_by_product
-    errors.add(:title) << 'Title must be unique' if StaticContent.where(product: product).where(title: self[:title])
-.exists?
+    errors.add(:title) << 'Title must be unique' if uniq?
+  end
+
+  def uniq?
+    StaticContent.where(product: product).where(title: self[:title]).exists?
   end
 end
