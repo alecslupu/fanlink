@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   post "/people/password_reset" => "api/v1/password_resets#update"
   draw :administrate
 
+  get '/:product_id/static_content/:slug' => 'static_contents#show'
+
   if Rails.env.development?
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
   end
