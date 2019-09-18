@@ -1,10 +1,4 @@
 RSpec.describe StaticContent, type: :model do
-  # before(:all) do
-  #   @product = create(:product)
-  #   ActsAsTenant.current_tenant = @product
-  #   @static_content = create(:static_content)
-  # end
-
   describe 'valid factory' do
     it { expect(build(:static_content)).to be_valid }
   end
@@ -23,7 +17,8 @@ RSpec.describe StaticContent, type: :model do
 
       static_content = build(:static_content, title: title)
       static_content.valid?
-      expect(static_content.errors.added?(:title, :taken)).to eq(true)
+
+      expect(static_content.errors[:title]).to include('Title must be unique')
     end
   end
 
