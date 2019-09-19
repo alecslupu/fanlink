@@ -1,9 +1,4 @@
 RSpec.describe Api::V4::StaticContentsController, type: :controller do
-  before do
-    @json = nil
-    @api_version = nil
-  end
-
   describe 'GET show' do
     it 'returns the record' do
       person = create(:person)
