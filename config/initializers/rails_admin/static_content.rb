@@ -6,18 +6,22 @@ RailsAdmin.config do |config|
     list do
       fields :id,
              :title,
-             :content
+             :content,
+             :slug
     end
 
     edit do
       field :title, :translated
-      field :content, :translated
+      field :content, :translated do
+        html_attributes rows: 20, cols: 50
+      end
     end
 
     show do
       fields :id,
              :title,
              :content
+             :slug
     end
   end
 end
