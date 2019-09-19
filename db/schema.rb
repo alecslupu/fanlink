@@ -152,12 +152,6 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.index ["role"], name: "idx_category_roles"
   end
 
-  create_table "censored_words", force: :cascade do |t|
-    t.string "word"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "certcourse_pages", force: :cascade do |t|
     t.integer "certcourse_id"
     t.integer "certcourse_page_order", default: 0, null: false
@@ -223,24 +217,6 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.integer "product_id", null: false
     t.index ["product_id"], name: "idx_certificates_product"
     t.index ["room_id"], name: "idx_certificates_room"
-  end
-
-  create_table "config_items", force: :cascade do |t|
-    t.bigint "product_id"
-    t.string "item_key"
-    t.string "item_value"
-    t.string "type"
-    t.boolean "enabled", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "parent_id"
-    t.integer "lft", default: 0, null: false
-    t.integer "rgt", default: 0, null: false
-    t.integer "depth", default: 0, null: false
-    t.integer "children_count", default: 0
-    t.string "item_url"
-    t.string "item_description"
-    t.index ["product_id"], name: "index_config_items_on_product_id"
   end
 
   create_table "contests", force: :cascade do |t|
@@ -490,6 +466,7 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -539,6 +516,7 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.index ["created_at"], name: "index_people_on_created_at"
+    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -679,7 +657,7 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-01-28 16:43:52"
+    t.datetime "end_date", default: "2019-02-07 01:46:08"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -699,9 +677,6 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
     t.integer "interest", default: 0, null: false
-    t.integer "courseware", default: 0, null: false
-    t.integer "trivia", default: 0, null: false
-    t.integer "admin"
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -835,8 +810,8 @@ ActiveRecord::Schema.define(version: 20190911171730) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "internal_name", null: false
+    t.text "name", null: false
+    t.text "internal_name", null: false
     t.boolean "enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -846,28 +821,20 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.string "logo_content_type"
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string "color_primary", default: "#4B73D7"
-    t.string "color_primary_dark", default: "#4B73D7"
-    t.string "color_primary_66", default: "#A94B73D7"
-    t.string "color_primary_text", default: "#FFFFFFF"
-    t.string "color_secondary", default: "#CDE5FF"
-    t.string "color_secondary_text", default: "#000000"
-    t.string "color_tertiary", default: "#FFFFFF"
-    t.string "color_tertiary_text", default: "#000000"
-    t.string "color_accent", default: "#FFF537"
-    t.string "color_accent_50", default: "#FFF537"
-    t.string "color_accent_text", default: "#FFF537"
-    t.string "color_title_text", default: "#FFF537"
+    t.string "color_primary", default: "4B73D7"
+    t.string "color_primary_text", default: "FFFFFF"
+    t.string "color_secondary", default: "CDE5FF"
+    t.string "color_secondary_text", default: "000000"
+    t.string "color_tertiary", default: "FFFFFF"
+    t.string "color_tertiary_text", default: "000000"
+    t.string "color_accent", default: "FFF537"
+    t.string "color_accent_text", default: "FFF537"
+    t.string "color_title_text", default: "FFF537"
+    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
-    t.string "color_accessory", default: "000000"
     t.integer "features", default: 0, null: false
-    t.string "contact_email"
-    t.text "privacy_url"
-    t.text "terms_url"
-    t.text "android_url"
-    t.text "ios_url"
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end
@@ -1360,7 +1327,6 @@ ActiveRecord::Schema.define(version: 20190911171730) do
   add_foreign_key "certificate_certcourses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
-  add_foreign_key "config_items", "products"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
