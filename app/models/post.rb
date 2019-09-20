@@ -74,6 +74,9 @@ class Post < ApplicationRecord
 
   after_create :start_transcoding, if: :video_file_name
 
+  after_save :expire_cache
+  before_destroy :expire_cache
+
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
@@ -242,5 +245,9 @@ class Post < ApplicationRecord
       if starts_at.present? && ends_at.present? && starts_at > ends_at
         errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
       end
+    end
+
+    def expire_cache
+      ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(self, product))
     end
 end

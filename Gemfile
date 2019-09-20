@@ -185,3 +185,6 @@ end
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
+
+#for page caching
+gem "actionpack-page_caching"
