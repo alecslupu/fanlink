@@ -248,6 +248,6 @@ class Post < ApplicationRecord
     end
 
     def expire_cache
-      ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(self, product))
+      ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(post_id: self.id, product: product.internal_name))
     end
 end
