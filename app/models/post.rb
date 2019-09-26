@@ -75,7 +75,7 @@ class Post < ApplicationRecord
   after_create :start_transcoding, if: :video_file_name
 
   after_save :expire_cache
-  before_destroy :expire_cache
+  before_destroy :expire_cache, prepend: true
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
