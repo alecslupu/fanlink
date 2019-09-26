@@ -39,7 +39,7 @@ class Event < ApplicationRecord
   def place_info
     info = nil
     if self.place_identifier.present?
-      client = GooglePlaces::Client.new(ENV["GOOGLE_PLACES_KEY"])
+      client = GooglePlaces::Client.new(Rails.application.secrets.google_places_key)
       info = client.spot(self.place_identifier)
     end
     info
