@@ -31,11 +31,15 @@ class Api::V1::PeopleController < ApiController
   def change_password
     if @person == current_user
       if @person.valid_password?(person_params[:current_password])
-        @person.password = person_params[:new_password]
-        if @person.save
-          head :ok
+        if person_params[:current_password] == person_params[:new_password]
+          render_error(_("New password can't be identical to the current one"))
         else
-          render_error(@person.errors)
+          @person.password = person_params[:new_password]
+          if @person.save
+            head :ok
+          else
+            render_error(@person.errors)
+          end
         end
       else
         render_error(_("The password is incorrect"))
