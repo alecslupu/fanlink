@@ -91,6 +91,9 @@ group :development do
   gem "guard-brakeman"
   gem "guard-annotate"
   gem "guard-rubycritic"
+
+  gem "capistrano", require: false
+  gem 'capistrano-passenger', require: false
 end
 
 group :test do
