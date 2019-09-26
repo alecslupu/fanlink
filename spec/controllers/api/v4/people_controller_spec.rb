@@ -10,7 +10,7 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
         login_as(person)
         patch :change_password,  params: { id: person.id, person: { current_password: password, new_password: password } }
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("New password can't be identical to the current one")
+        expect(json["errors"]).to include("New password can't be identical to your current one")
       end
     end
   end

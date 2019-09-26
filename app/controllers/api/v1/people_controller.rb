@@ -32,7 +32,7 @@ class Api::V1::PeopleController < ApiController
     if @person == current_user
       if @person.valid_password?(person_params[:current_password])
         if person_params[:current_password] == person_params[:new_password]
-          render_error(_("New password can't be identical to the current one"))
+          render_error(_("New password can't be identical to your current one"))
         else
           @person.password = person_params[:new_password]
           if @person.save
