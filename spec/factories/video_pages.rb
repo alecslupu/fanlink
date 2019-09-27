@@ -17,6 +17,6 @@ FactoryBot.define do
   factory :video_page do
     product { current_product }
     certcourse_page { create(:certcourse_page) }
-    video { File.open("#{Rails.root}/spec/fixtures/videos/video.mp4") }
+    video { File.open("#{Rails.root}/spec/fixtures/videos/short_video.mp4") }
   end
 end
