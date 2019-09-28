@@ -93,5 +93,5 @@
     setTimeout(function() { document.getElementById('pac-input').style.display = 'block' }, 1000);
   }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_PLACES_KEY'] %>&libraries=places&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.secrets.google_places_key %>&libraries=places&callback=initMap"
         async defer></script>

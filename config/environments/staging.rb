@@ -7,7 +7,7 @@ Rails.application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
+  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", { expires_in: 30.minutes }
 
   # Disable full error reports.
   config.consider_all_requests_local = true
@@ -50,7 +50,7 @@ Rails.application.configure do
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
 
-  config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
+  config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
   config.eager_load = true
   config.force_ssl = false
 
@@ -63,12 +63,12 @@ Rails.application.configure do
 
   config.fanlink = {
     aws: {
-      hls_server: "http://d9f7ufze0iovw.cloudfront.net/",
-      rtmp_server: "rtmp://s153hddjp1ltg0.cloudfront.net/",
-      transcoder_key: ENV["AWS_TRANSCODER_KEY"],
-      transcoder_secret: ENV["AWS_TRANSCODER_SECRET"],
-      s3_bucket: ENV["AWS_BUCKET"],
-      transcoder_pipeline_id: ENV["AWS_PIPELINE_ID"],
+      hls_server: Rails.application.secrets.hls_server,
+      rtmp_server: Rails.application.secrets.rtmp_server,
+      transcoder_key: Rails.application.secrets.aws_transcoder_key,
+      transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
+      s3_bucket:  Rails.application.secrets.aws_bucket,
+      transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
     }
   }
 

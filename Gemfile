@@ -42,7 +42,7 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem "newrelic_rpm"
+  gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
@@ -91,6 +91,10 @@ group :development do
   gem "guard-brakeman"
   gem "guard-annotate"
   gem "guard-rubycritic"
+
+  gem "capistrano", require: false
+  gem 'capistrano-passenger', require: false
+  gem 'slackistrano', require: false
 end
 
 group :test do
@@ -160,7 +164,6 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
-gem "rollbar"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
