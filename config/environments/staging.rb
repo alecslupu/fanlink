@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # See everything in the log (default is :info)
   config.logger = Logger.new(STDOUT)
-  config.log_level = :debug
+  config.log_level = :info
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -54,12 +54,6 @@ Rails.application.configure do
   config.eager_load = true
   config.force_ssl = false
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger = Timber::Logger.new(STDOUT)
-    logger.level = config.log_level
-    # logger.formatter = config.log_formatter
-    config.logger = ActiveSupport::TaggedLogging.new(logger)
-  end
 
   config.fanlink = {
     aws: {
@@ -75,7 +69,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = true
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

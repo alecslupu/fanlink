@@ -7,8 +7,13 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
+server "54.183.70.153", user: "ubuntu", roles: %w{ app db web }
 
+set :rails_env, "staging"
+set :branch, "staging"
 
+set :bundle_without, %w{development test}.join(' ')
+set :bundle_jobs, 8
 # role-based syntax
 # ==================
 
@@ -21,6 +26,10 @@
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
+#
+# role :app, %w("52.53.208.155", "54.183.234.164")
+# role :web, %w("52.53.208.155", "54.183.234.164")
+# role :db, %w("52.53.208.155"), :primary => true
 
 
 # Configuration
