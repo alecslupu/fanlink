@@ -42,7 +42,7 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem "newrelic_rpm"
+  gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
