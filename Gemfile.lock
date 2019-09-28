@@ -1196,8 +1196,6 @@ GEM
     rest-firebase (1.1.0)
       rest-core (>= 4.0.0)
     rmagick (3.0.0)
-    rollbar (2.17.0)
-      multi_json
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -1459,7 +1457,6 @@ DEPENDENCIES
   redis-rails
   rest-firebase
   rmagick
-  rollbar
   rspec-rails
   rswag-api
   rswag-specs
