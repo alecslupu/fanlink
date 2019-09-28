@@ -18,11 +18,11 @@ default: &default
   encoding: utf8
   adapter: postgresql
   pool: <%=  Rails.application.secrets.rails_max_threads %>
-  #  url: <%= Rails.application.secrets.database_url %>
   database: <%= Rails.application.secrets.fanlink_pg_database %>
   username: <%= Rails.application.secrets.fanlink_pg_user %>
   password: <%= Rails.application.secrets.fanlink_pg_password %>
   host: <%= Rails.application.secrets.fanlink_pg_host %>
+  #  url: <%= Rails.application.secrets.database_url %>
 
 
 development:

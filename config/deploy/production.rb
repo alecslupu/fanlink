@@ -10,8 +10,8 @@
 server "52.53.208.155", user: "ubuntu", roles: %w{ app db web }
 server "54.183.234.164", user: "ubuntu", roles: %w{ web db }
 
-set :rails_env, "capistrano"
-set :branch, "master"
+set :rails_env, "production"
+set :branch, "capistrano"
 
 set :bundle_without, %w{development test staging}.join(' ')
 set :bundle_jobs, 8

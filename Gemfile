@@ -94,6 +94,7 @@ group :development do
 
   gem "capistrano", require: false
   gem 'capistrano-passenger', require: false
+  gem 'slackistrano', require: false
 end
 
 group :test do
