@@ -98,9 +98,6 @@ private
     raise ActiveRecord::RecordNotFound if reward.nil?
 
     reward.update(
-      status: :active,
-      reward_type: :badge,
-      product: product,
       name: name,
       internal_name: internal_name,
       points: point_value,
