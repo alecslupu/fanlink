@@ -94,7 +94,7 @@ private
 
   def update_reward
     reward = Reward.find_by(reward_type_id: id)
-    binding.pry
+
     raise ActiveRecord::RecordNotFound if reward.nil?
 
     reward.update(
