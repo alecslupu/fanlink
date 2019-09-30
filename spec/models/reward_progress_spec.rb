@@ -14,7 +14,7 @@ RSpec.describe RewardProgress, type: :model do
   context "Validation" do
     describe "should create a valid reward progress" do
       it do
-        expect(create(:reward_progress)).to be_valid
+        expect(build(:reward_progress)).to be_valid
       end
     end
   end

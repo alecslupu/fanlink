@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     pending
@@ -12,7 +11,6 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
     pending
   end
 
-
   describe "#show" do
     it "does not display as selected the wrong_answers" do
       person = create(:person)
@@ -21,7 +19,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
 
-        get :show, params: { id: qp.certcourse_page_id }
+        get :show, params: {id: qp.certcourse_page_id}
         expect(response).to have_http_status(200)
         qp.answers.each_with_index do |value, k|
           selected_answer = json["certcourse_pages"][0]["quiz"]["answers"][k]
@@ -38,7 +36,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
-        get :show, params: { id: qp.certcourse_page_id }
+        get :show, params: {id: qp.certcourse_page_id}
         expect(response).to have_http_status(200)
 
         selected_answer = json["certcourse_pages"][0]["quiz"]["answers"].first
@@ -53,7 +51,6 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
           expect(selected_answer["is_selected"]).not_to be_nil
           expect(selected_answer["id"]).to eq(value.id)
         end
-
       end
     end
   end
