@@ -29,7 +29,7 @@ class Badge < ApplicationRecord
   has_manual_translated :description, :name
 
   has_many :badge_awards, dependent: :restrict_with_error
-  has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types["badge"]) }, foreign_key: "reward_type_id"
+  has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types["badge"]) }, foreign_key: "reward_type_id", dependent: :destroy
   has_many :assigned_rewards, through: :reward
 
   has_paper_trail
@@ -52,6 +52,8 @@ class Badge < ApplicationRecord
   validates :action_requirement, presence: { message: _("Action requirement is required.") },
             numericality: { greater_than: 0, message: _("Action requirement must be greater than zero.") }
 
+  around_create :create_reward
+  after_update :update_reward
 
   def action_count_earned_by(person)
     time_frame_start = (issued_from.present?) ? issued_from : Time.now - 10.years
@@ -69,5 +71,40 @@ private
     if issued_from.present? && issued_to.present? && issued_from > issued_to
       errors.add(:issued_to, :time_sanity, message: _("Issued to cannot be before issued from."))
     end
+  end
+
+  def create_reward
+    reward = Reward.new(
+      status: :active,
+      reward_type: :badge,
+      product: product,
+      name: name,
+      internal_name: internal_name,
+      points: point_value,
+      completion_requirement: action_requirement,
+      reward_type_id: 0
+    )
+
+    if reward.valid? # check if the new reward is valid
+      yield # saves the badge
+      reward.reward_type_id = id
+      reward.save
+    end
+  end
+
+  def update_reward
+    reward = Reward.find_by(reward_type_id: id)
+    binding.pry
+    raise ActiveRecord::RecordNotFound if reward.nil?
+
+    reward.update(
+      status: :active,
+      reward_type: :badge,
+      product: product,
+      name: name,
+      internal_name: internal_name,
+      points: point_value,
+      completion_requirement: action_requirement,
+    )
   end
 end
