@@ -127,8 +127,8 @@ RSpec.describe Reward, type: :model do
       describe "#reward_type_id" do
         it "should not allow a reward to be assigned multiple times" do
           product = create(:product)
-          badge = create(:badge)
-          reward1 = create(:reward, product: product, reward_type_id: badge.id, reward_type: :badge)
+          badge= create(:badge) #already creates a reward
+          reward1 = badge.reward
           reward2 = build(:reward, product: product, reward_type_id: badge.id, reward_type: :badge)
 
           expect(reward1).to be_valid
