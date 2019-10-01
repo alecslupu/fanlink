@@ -20,6 +20,13 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
+
+
+    logger           = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
