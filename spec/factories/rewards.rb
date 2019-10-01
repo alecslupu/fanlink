@@ -26,6 +26,9 @@ FactoryBot.define do
     factory :badge_reward do
       reward_type_id { create(:badge).id }
       reward_type { :badge }
+      before(:create) do
+        Reward.last.destroy # because a reward is created when the badge is created
+      end
     end
 
     factory :url_reward do
