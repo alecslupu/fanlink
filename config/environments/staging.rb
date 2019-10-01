@@ -23,7 +23,7 @@ Rails.application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  config.logger = Logger.new(STDOUT)
+  # config.logger = Logger.new(STDOUT)
   config.log_level = :info
 
   # Use a different logger for distributed setups
@@ -71,10 +71,6 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
 
-  logger           = ActiveSupport::Logger.new(STDOUT)
-  logger.formatter = config.log_formatter
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
