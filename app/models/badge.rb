@@ -81,14 +81,23 @@ private
       name: name,
       internal_name: internal_name,
       points: point_value,
-      completion_requirement: action_requirement,
-      reward_type_id: 0
+      completion_requirement: action_requirement
     )
 
     if reward.valid? # check if the new reward is valid
       yield # saves the badge
       reward.reward_type_id = id
       reward.save
+      ar = AssignedReward.new
+      ar.reward = reward
+      ar.assigned_id = id
+      ar.assigned_type = "ActionType"
+      ar.max_times = 1
+      ar.save!
+      self.assigned_rewards.reload
+      self.touch
+    else
+      yield
     end
   end
 
