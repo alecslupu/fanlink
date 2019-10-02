@@ -87,9 +87,8 @@ private
     if reward.valid? && self.valid?# check if the new reward and badge are valid
       yield # saves the badge
       reward.reward_type_id = id
-      reward.save!
-      ar = AssignedReward.new(reward: reward, assigned: action_type, max_times: 1)
-      ar.save
+      reward.save
+      AssignedReward.create(reward: reward, assigned: action_type, max_times: 1)
       self.touch
     else
       yield

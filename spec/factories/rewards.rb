@@ -26,9 +26,8 @@ FactoryBot.define do
     factory :badge_reward do
       reward_type_id { create(:badge).id }
       reward_type { :badge }
-      # before(:create) do
       callback(:before_create, :after_build) do
-        Reward.last.destroy if Reward.find_by(reward_type_id: Badge.last.id).present? # because a reward is created when the badge is created
+        Reward.find_by(reward_type_id: Badge.last.id)&.destroy # because a reward is created when the badge is created
       end
     end
 
