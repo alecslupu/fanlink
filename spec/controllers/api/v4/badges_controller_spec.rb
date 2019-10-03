@@ -7,13 +7,13 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
       ActsAsTenant.with_tenant(user.product) do
         login_as(user)
         name = 'A name'
-        internal = 'internal'
+        internal_name = 'internal'
         description = 'description'
         action_type = create(:action_type)
         post :create, params: {
           badge: {
             name: name,
-            internal_name: internal,
+            internal_name: internal_name,
             description: description,
             action_type_id: action_type.id
           }
