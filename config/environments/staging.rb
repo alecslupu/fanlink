@@ -66,6 +66,17 @@ Rails.application.configure do
     }
   }
 
+  log_file = if ENV['HEROKU'].present?
+               STDOUT
+             else
+               "log/#{Rails.env}.log"
+             end
+
+
+  logger           = ActiveSupport::Logger.new(log_file)
+  logger.formatter = config.log_formatter
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
+
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
