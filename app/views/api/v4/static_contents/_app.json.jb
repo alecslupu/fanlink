@@ -1,8 +1,0 @@
-{
-  id: static_content.id.to_s,
-  title: static_content.title,
-  content: static_content.content,
-  product_id: static_content.product_id,
-  created_at: static_content.created_at,
-  updated_at: static_content.updated_at
-}
