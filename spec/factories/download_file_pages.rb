@@ -16,6 +16,9 @@
 
 FactoryBot.define do
   factory :download_file_page do
-    CertcoursePage { nil }
+    product { current_product }
+    certcourse_page { create(:certcourse_page) }
+    caption { Faker::Lorem.sentence }
+    document { File.open("#{Rails.root}/spec/fixtures/documents/blank.pdf") }
   end
 end

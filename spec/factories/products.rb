@@ -3,8 +3,8 @@
 # Table name: products
 #
 #  id                   :bigint(8)        not null, primary key
-#  name                 :text             not null
-#  internal_name        :text             not null
+#  name                 :string           not null
+#  internal_name        :string           not null
 #  enabled              :boolean          default(FALSE), not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -31,6 +31,11 @@
 #  toolbar_style        :integer          default(1)
 #  color_accessory      :string           default("000000")
 #  features             :integer          default(0), not null
+#  contact_email        :string
+#  privacy_url          :text
+#  terms_url            :text
+#  android_url          :text
+#  ios_url              :text
 #
 
 FactoryBot.define do

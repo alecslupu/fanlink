@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V4::MessagesController, type: :controller do
-
-  # TODO: auto-generated
   describe "GET index" do
     it "should get a list of messages not to include blocked people" do
       person = create(:person)

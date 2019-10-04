@@ -1,18 +1,40 @@
 RailsAdmin.config do |config|
   config.included_models.push("Person")
   config.model "Person" do
+    object_label_method do
+      :to_s
+    end
+
     configure :level_earned do
     end
 
     configure :password do
     end
     list do
-      fields :username,
-             :email,
-             :name,
-             :picture,
-             :role,
-             :notification_device_ids
+      field :username do
+        column_width 150
+      end
+      field :email do
+        column_width 200
+      end
+      field :name do
+        column_width 100
+      end
+      field :picture do
+        column_width 70
+      end
+      field :role do
+        column_width 70
+      end
+      field :created_at do
+        column_width 100
+      end
+      field :notification_device_ids do
+        column_width 100
+        pretty_value do
+          bindings[:view].link_to "#{ bindings[:object].notification_device_ids.size} notification device ids", bindings[:view].rails_admin.show_path('person', bindings[:object].id)
+        end
+      end
     end
     show do
       fields :id,

@@ -21,7 +21,4 @@ JkoApi.routes self do
       end
     end
   end
-
-  version 5 do
-  end
 end

@@ -19,7 +19,6 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              include Messaging unless defined?("delete_post")
               @object.status = "post_hidden"
               post = @object.post
               post.status = :deleted

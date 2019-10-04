@@ -15,6 +15,9 @@
 #  beacon      :integer          default(0), not null
 #  reporting   :integer          default(0), not null
 #  interest    :integer          default(0), not null
+#  courseware  :integer          default(0), not null
+#  trivia      :integer          default(0), not null
+#  admin       :integer
 #
 
 class PortalAccess < ApplicationRecord
@@ -23,65 +26,51 @@ class PortalAccess < ApplicationRecord
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 
-  has_flags 1 => :post_read,
-            2 => :post_update,
-            3 => :post_delete,
-            :column => "post"
+  %w(post event merchandise user badge reward quest beacon reporting interest).each do |field|
+    has_flags 1 => "#{field}_read".to_sym,
+              2 => "#{field}_update".to_sym,
+              3 => "#{field}_delete".to_sym,
+              4 => "#{field}_export".to_sym,
+              5 => "#{field}_history".to_sym,
+              column: field
+  end
+
+  has_flags 1 => :admin_read,
+            2 => :admin_update,
+            3 => :admin_delete,
+            4 => :admin_history,
+            column: :admin
+
+  has_flags 1 => :trivia_read,
+            2 => :trivia_update,
+            3 => :trivia_delete,
+            4 => :trivia_export,
+            5 => :trivia_history,
+            6 => :trivia_generate_game_action,
+            column: :trivia
 
   has_flags 1 => :chat_read,
             2 => :chat_update,
             3 => :chat_delete,
-            :column => "chat"
+            4 => :chat_export,
+            5 => :chat_history,
+            6 => :chat_hide,
+            7 => :chat_ignore,
+            column: :chat
 
-  has_flags 1 => :event_read,
-            2 => :event_update,
-            3 => :event_delete,
-            :column => "event"
-
-  has_flags 1 => :merchandise_read,
-            2 => :merchandise_update,
-            3 => :merchandise_delete,
-            :column => "merchandise"
-
-  has_flags 1 => :user_read,
-            2 => :user_update,
-            3 => :user_delete,
-            :column => "user"
-
-  has_flags 1 => :badge_read,
-            2 => :badge_update,
-            3 => :badge_delete,
-            :column => "badge"
-
-  has_flags 1 => :reward_read,
-            2 => :reward_update,
-            3 => :reward_delete,
-            :column => "reward"
-
-  has_flags 1 => :quest_read,
-            2 => :quest_update,
-            3 => :quest_delete,
-            :column => "quest"
-
-  has_flags 1 => :beacon_read,
-            2 => :beacon_update,
-            3 => :beacon_delete,
-            :column => "beacon"
-
-  has_flags 1 => :reporting_read,
-            2 => :reporting_update,
-            3 => :reporting_delete,
-            :column => "reporting"
-
-  has_flags 1 => :interest_read,
-            2 => :interest_update,
-            3 => :interest_delete,
-            :column => "interest"
+  has_flags 1 => :courseware_read,
+            2 => :courseware_update,
+            3 => :courseware_delete,
+            4 => :courseware_export,
+            5 => :courseware_history,
+            6 => :courseware_forget,
+            7 => :courseware_reset,
+            column: :courseware
 
   def summarize
     perms = {}
     self.flag_columns.each do |column|
-      self.as_flag_collection(column, :"#{column}_read", :"#{column}_update", :"#{column}_delete").collect do |o|
+      self.as_flag_collection(column).collect do |o|
         perms[o.first] = o.second
       end
     end

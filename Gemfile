@@ -42,35 +42,38 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem "newrelic_rpm"
+  gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
-  gem "derailed_benchmarks"
+  gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
-  gem "bullet"
+  gem "bullet", "~>6.0.2"
 end
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "pry"
-  gem "byebug", platforms: [:mri, :mingw]
-  gem "pry-byebug"
-  gem "dotenv-rails"
-  gem "faker"
+  gem "pry", "~>0.12.2"
+  gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
+  gem "pry-byebug", "~>3.7.0"
+  gem "dotenv-rails", "~>2.7.5"
+  gem "faker", "~>2.1.2"
   gem "rspec-rails"
   gem "rails-controller-testing"
-  gem "factory_bot_rails"
-  gem "fuubar"
-  # gem "rubocop-rails"
-  gem "rubocop-rails_config"
+  gem "factory_bot_rails", "~>5.0.2"
+  gem "fuubar", "~>2.4.1"
+
+  gem 'rubocop', '~> 0.74.0', require: false
+  # gem "rubocop-rails_config"
+  gem 'rubocop-rails'
   gem "rubocop-rspec"
+  gem 'rubocop-performance'
 end
 
 group :development do
-  gem "better_errors"
+  gem "better_errors", "~>2.5.1"
   gem "binding_of_caller"
-  gem "daemons"
+  gem "daemons", "~>1.3.1"
   gem "gettext", ">=3.0.2", require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
@@ -88,17 +91,21 @@ group :development do
   gem "guard-brakeman"
   gem "guard-annotate"
   gem "guard-rubycritic"
+
+  gem "capistrano", require: false
+  gem 'capistrano-passenger', require: false
+  gem 'slackistrano', require: false
 end
 
 group :test do
-  gem "cucumber-rails", require: false
+  gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
-  gem "simplecov", require: false
+  gem "simplecov", "~>0.17.0", require: false
   gem "timecop"
-  gem "webmock"
+  gem "webmock", "~>3.6.2"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
   gem "wisper-rspec", require: false
-  gem "json_schemer"
+  gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
 end
 
@@ -116,7 +123,10 @@ gem "administrate-field-belongs_to_search"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
+gem 'awesome_nested_set'
+
 gem "rails_admin", "1.3.0"
+gem "rails_admin_nested_set"
 
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
@@ -132,7 +142,6 @@ gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
-gem "graphql"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
 gem "jko_api" # api versioning
@@ -155,7 +164,6 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
-gem "rollbar"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
@@ -164,9 +172,10 @@ gem "wisper", "2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
-gem "rmagick"
+# To get video's length
+gem "streamio-ffmpeg"
 
-gem "graphiql-rails", group: :development
+gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"

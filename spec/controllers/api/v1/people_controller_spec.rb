@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V1::PeopleController, type: :controller do
-
   describe "#change_password" do
     it "should change the current users password" do
       current = "secret"
@@ -153,7 +152,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
                                                                                      username: username, password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("A user has already signed up with that username.")
+        expect(json["errors"]).to include("has already been taken.")
       end
     end
     # it "should not sign up new user with email already used"
@@ -199,24 +198,35 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect(json["errors"]).to include("Username is required.")
       end
     end
-    it "should not sign up new user with a username less than 3 characters" do
+    it "should not sign up new user with a username less than 5 characters" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: "ab", email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
+          post :create, params: { product: product.internal_name, person: { username: "abcd", email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("Username must be between 3 and 26 characters")
+        expect(json["errors"]).to include("Username must be 5 to 25 characters with no special characters or spaces")
       end
     end
-    it "should not sign up new user with a username more than 26 characters" do
+    it "should not sign up new user with a username more than 25 characters" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect {
-          post :create, params: { product: product.internal_name, person: { username: "a" * 27, email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
+          post :create, params: { product: product.internal_name, person: { username: "a" * 26, email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("Username must be between 3 and 26 characters")
+        expect(json["errors"]).to include("Username must be 5 to 25 characters with no special characters or spaces")
+      end
+    end
+
+    it "should not sign up new user with a username that contains special characters" do
+      product = create(:product)
+      ActsAsTenant.with_tenant(product) do
+        expect {
+          post :create, params: { product: product.internal_name, person: { username: "abcde$", email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
+        }.to change { Person.count }.by(0)
+        expect(response).to be_unprocessable
+        expect(json["errors"]).to include("Username must be 5 to 25 characters with no special characters or spaces")
       end
     end
 
@@ -308,11 +318,11 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         normal_person = create(:person,  username: "normal", email: "normal@example.com")
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
+        create(:person, username: "pers1", email: "pers1@example.com")
         person2 = create(:person, username: "pers2", email: "pers2@example.com")
         person3 = create(:person, username: "pers3", email: "pers3@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
+        create(:person, username: "pers4", email: "pers4@example.com")
+        create(:person, username: "pers5", email: "pers5@example.com")
 
         login_as(normal_person)
         get :index, params: { page: 2, per_page: 2 }
@@ -553,5 +563,4 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       end
     end
   end
-
 end

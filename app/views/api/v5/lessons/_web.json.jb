@@ -1,5 +1,0 @@
-json = {}
-lesson.attributes.each do |attr_name, attr_value|
-  json[attr_name] = attr_value
-end
-json

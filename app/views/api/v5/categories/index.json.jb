@@ -1,9 +1,0 @@
-json = {}
-
-json[:categories] = @categories.map do |category|
-  Rails.cache.fetch ["v5", "category", @req_source, category.id, category.updated_at] do
-    render partial: @req_source, locals: { category: category }, handlers: "jb"
-  end
-end
-
-json
