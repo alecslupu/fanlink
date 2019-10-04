@@ -18,7 +18,7 @@ class QuizPage < ApplicationRecord
   belongs_to :product
   belongs_to :certcourse_page
 
-  has_many :answers
+  has_many :answers, dependent: :destroy
   scope :for_product, -> (product) { where(product_id: product.id) }
 
   accepts_nested_attributes_for :answers, allow_destroy: true
