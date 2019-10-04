@@ -11,7 +11,7 @@ RailsAdmin.config do |config|
       field :document, :paperclip
     end
     list do
-      fields :id, :course_name, :caption, :document, :created_at
+      fields :id, :course_name, :caption, :document, :created_at, :updated_at
     end
     show do
       fields :id, :certcourse_page, :caption, :document

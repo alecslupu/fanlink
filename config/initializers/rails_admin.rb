@@ -72,5 +72,11 @@ RailsAdmin.config do |config|
     end
     select_product_dashboard
     select_product_action
+    nested_set do
+      visible do
+        %w(ConfigItem).include? bindings[:abstract_model].model_name
+      end
+    end
+
   end
 end
