@@ -4,10 +4,15 @@ RailsAdmin.config do |config|
   config.model "Post" do
     configure :reported do
     end
+    configure :id do
+      label "Post ID"
+    end
     list do
       field :person do
         column_width 30
       end
+      field :id do 
+      end 
       field :body do
         column_width 150
         pretty_value do
