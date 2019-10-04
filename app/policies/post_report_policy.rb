@@ -1,15 +1,7 @@
-class PostReportPolicy < ApplicationPolicy
+class PostReportPolicy < PostModulePolicy
   # a message report should not be edited by an admin
   def update?
     false
-  end
-
-  def create?
-    false
-  end
-
-  def show?
-    true
   end
 
   # a message report should not be deleted by an admin

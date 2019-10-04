@@ -43,6 +43,8 @@ class PersonCertificate < ApplicationRecord
   belongs_to :certificate, touch: true
   validates_uniqueness_of :certificate_id, scope: :person_id
 
+  validates :amount_paid, numericality: { greater_than_or_equal_to: 0 }
+
   enum purchased_platform: %i[ios android]
 
   scope :for_person, -> (person) { where(person_id: person.id) }

@@ -1,0 +1,2 @@
+class BadgeActionPolicy < BadgeModulePolicy
+end

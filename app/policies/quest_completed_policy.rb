@@ -1,0 +1,2 @@
+class QuestCompletedPolicy < QuestModulePolicy
+end
