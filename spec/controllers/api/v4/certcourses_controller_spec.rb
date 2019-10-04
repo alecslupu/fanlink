@@ -23,7 +23,8 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
         get :show, params: { id: qp.certcourse_page_id }
         expect(response).to have_http_status(200)
-        qp.answers.each_with_index do |value, k|
+
+        qp.answers.order(id: :desc).each_with_index do |value, k|
           selected_answer = json["certcourse_pages"][0]["quiz"]["answers"][k]
           expect(selected_answer["is_selected"]).to be_falsey
           expect(selected_answer["is_selected"]).not_to be_nil
@@ -41,14 +42,15 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         get :show, params: { id: qp.certcourse_page_id }
         expect(response).to have_http_status(200)
 
-        selected_answer = json["certcourse_pages"][0]["quiz"]["answers"].first
+        selected_answer = json["certcourse_pages"][0]["quiz"]["answers"].last
         expect(selected_answer["is_selected"]).to be_truthy
         expect(selected_answer["is_selected"]).not_to be_nil
         expect(selected_answer["id"]).to eq(qp.answers.first.id)
 
-        qp.answers.each_with_index do |value, k|
-          next if k == 0
+        qp.answers.order(id: :desc).each_with_index do |value, k|
           selected_answer = json["certcourse_pages"][0]["quiz"]["answers"][k]
+          next if selected_answer['id'] == qp.answers.first.id
+
           expect(selected_answer["is_selected"]).to be_falsey
           expect(selected_answer["is_selected"]).not_to be_nil
           expect(selected_answer["id"]).to eq(value.id)
