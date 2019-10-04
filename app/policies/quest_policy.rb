@@ -1,0 +1,2 @@
+class QuestPolicy < QuestModulePolicy
+end

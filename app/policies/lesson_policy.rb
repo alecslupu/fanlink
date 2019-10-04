@@ -1,0 +1,2 @@
+class LessonPolicy < ApplicationPolicy
+end

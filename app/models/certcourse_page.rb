@@ -20,11 +20,11 @@ class CertcoursePage < ApplicationRecord
 
   belongs_to :certcourse, counter_cache: true
 
-  has_one :quiz_page
-  has_one :video_page
-  has_one :image_page
-  has_one :download_file_page
-  has_many :course_page_progresses
+  has_one :quiz_page, dependent: :destroy
+  has_one :video_page, dependent: :destroy
+  has_one :image_page, dependent: :destroy
+  has_one :download_file_page, dependent: :destroy
+  has_many :course_page_progresses, dependent: :destroy
 
   accepts_nested_attributes_for :quiz_page, allow_destroy: true
   accepts_nested_attributes_for :video_page, allow_destroy: true

@@ -1,5 +1,4 @@
-class PersonPollOptionPolicy < ApplicationPolicy
-
+class PersonPollOptionPolicy < PostModulePolicy
   def create?
     false
   end

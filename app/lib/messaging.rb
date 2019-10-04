@@ -58,8 +58,6 @@ private
     client.update("", payload).response.status == 200
   end
 
-
-
   def generic_payload_user(fragment, member, value, version)
     payload = {}
     payload["#{user_path(member)}/#{fragment}"] = value
