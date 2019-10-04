@@ -269,6 +269,31 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect(json["errors"]).to include("A user has already signed up with that email address.")
       end
     end
+
+    it "should create a person with a picture attached if added" do
+      product = create(:product)
+      ActsAsTenant.with_tenant(product) do
+        expect_any_instance_of(Person).to receive(:do_auto_follows)
+        username = "newuser#{Time.now.to_i}"
+        email = "#{username}@example.com"
+        post :create, params:
+          { product: product.internal_name,
+            person: {
+              username: username,
+              email: email,
+              password: "password",
+              gender: "male",
+              birthdate: "2019-01-02",
+              city: "Las Vegas",
+              country_code: "us",
+              picture: fixture_file_upload("images/better.png", "image/png")
+            }
+          }
+        expect(response).to be_successful
+        expect(json["person"]["picture_url"]).to_not eq(nil)
+        expect(Person.last.picture.exists?).to be_truthy
+      end
+    end
   end
 
   describe "#index" do
@@ -467,6 +492,22 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect(listed_ids.sort).to eq([person5.id, person4.id].sort)
       end
     end
+
+    it "should return the people objects with their attached picture" do
+      person = create(:person, picture: fixture_file_upload("images/better.png", "image/png"))
+      ActsAsTenant.with_tenant(person.product) do
+        create_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
+
+        login_as(person)
+        get :index
+
+        expect(response).to be_successful
+        expect(json["people"].count).to eq(4)
+        json["people"].each do |person|
+          expect(person["picture_url"]).to_not eq(nil)
+        end
+      end
+    end
   end
 
   describe "#show" do
@@ -502,6 +543,19 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         login_as(person)
         get :show, params: { id: other.id }
         expect(response).to be_not_found
+      end
+    end
+
+    it "should return the people object with their attached picture" do
+      person = create(:person, picture: fixture_file_upload("images/better.png", "image/png"))
+      ActsAsTenant.with_tenant(person.product) do
+        create_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
+
+        login_as(person)
+        get :show ,params: { id: person.id }
+
+        expect(response).to be_successful
+        expect(json["person"]["picture_url"]).to_not eq(nil)
       end
     end
   end
@@ -560,6 +614,24 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         patch :update, params: { id: rec_person.id, person: { recommended: true } }
         expect(response).to be_successful
         expect(rec_person.reload.recommended).to be_truthy
+      end
+    end
+
+    it "updates a person's picture" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+
+        put :update, params: {
+          id: person.id,
+          person: {
+            picture: fixture_file_upload('images/better.png', 'image/png')
+          }
+        }
+
+        expect(response).to be_successful
+        expect(Person.last.picture.exists?).to be_truthy
+        expect(json['person']['picture_url']).to include('better.png')
       end
     end
   end

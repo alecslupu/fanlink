@@ -22,6 +22,8 @@
 #  issued_to            :datetime
 #
 
+include ActionDispatch::TestProcess
+
 FactoryBot.define do
   factory :badge do
     product { current_product }
@@ -29,5 +31,6 @@ FactoryBot.define do
     sequence(:internal_name) { |n| "action_#{n}" }
     action_type { create(:action_type) }
     point_value { 10 }
+    picture { fixture_file_upload("spec/fixtures/images/better.png", "image/png") }
   end
 end
