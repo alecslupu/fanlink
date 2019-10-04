@@ -1,14 +1,10 @@
-class PersonCertcoursePolicy < ApplicationPolicy
-  def destroy?
-    false
-  end
-
+class PersonCertcoursePolicy < CoursewareModulePolicy
   def forget_action?
-    true
+    super_admin? || access.send([module_name, "forget?"].join("_").to_sym)
   end
 
   def reset_progress_action?
-    true
+    super_admin? || access.send([module_name, "reset?"].join("_").to_sym)
   end
 
   class Scope < Scope

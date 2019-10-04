@@ -1,0 +1,2 @@
+class DownloadFilePagePolicy < CoursewareModulePolicy
+end

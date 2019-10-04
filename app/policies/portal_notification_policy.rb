@@ -1,19 +1,8 @@
-class PortalNotificationPolicy < ApplicationPolicy
-
-  def create?
-    true
-  end
-  alias :new? :create?
-
-  def update?
-    true
-  end
-  alias :edit? :update?
-
+class PortalNotificationPolicy < UserModulePolicy
   def attributes_for(action)
     case action
     when :new
-      {send_me_at: (Time.zone.now + 1.hour).beginning_of_hour}
+      { send_me_at: (Time.zone.now + 1.hour).beginning_of_hour }
     when :create
       { trigger_admin_notification: true }
     when :update
@@ -21,9 +10,5 @@ class PortalNotificationPolicy < ApplicationPolicy
     else
       {}
     end
-  end
-
-  class Scope < Scope
-
   end
 end

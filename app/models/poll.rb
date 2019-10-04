@@ -7,10 +7,10 @@
 #  poll_type_id :integer
 #  start_date   :datetime         not null
 #  duration     :integer          default(0), not null
+#  end_date     :datetime         default(Thu, 07 Feb 2019 01:46:08 UTC +00:00)
 #  poll_status  :integer          default("inactive"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  end_date     :datetime         default(Thu, 07 Feb 2019 01:46:08 UTC +00:00)
 #  description  :jsonb            not null
 #  product_id   :integer          not null
 #
@@ -48,8 +48,8 @@ class Poll < ApplicationRecord
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
-    where(poll_type_id: nil).where("end_date > ?", Time.now)
-  }
+          where(poll_type_id: nil).where("end_date > ?", Time.now)
+        }
 
   def closed?
     end_date.to_time.to_i <= Time.now.to_time.to_i

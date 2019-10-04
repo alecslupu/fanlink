@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  get "/config/:internal_name" => "config#show"
+
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
-
 
 
 

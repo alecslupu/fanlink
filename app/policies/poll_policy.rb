@@ -1,0 +1,2 @@
+class PollPolicy < PostModulePolicy
+end
