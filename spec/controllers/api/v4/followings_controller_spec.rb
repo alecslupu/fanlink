@@ -21,7 +21,7 @@ RSpec.describe Api::V4::FollowingsController, type: :controller do
       end
     end
 
-    it "should paginate response with 2 people per page" do
+    it "should paginate response with two followers per page" do
       followed = create(:person)
 
       ActsAsTenant.with_tenant(followed.product) do
@@ -41,7 +41,7 @@ RSpec.describe Api::V4::FollowingsController, type: :controller do
       end
     end
 
-    it "should get all the followers of someone if no pagination param is given" do
+    it "should get all the followed people of someone if no pagination param is given" do
       follower = create(:person)
       ActsAsTenant.with_tenant(follower.product) do
         login_as(follower)
@@ -58,7 +58,7 @@ RSpec.describe Api::V4::FollowingsController, type: :controller do
       end
     end
 
-    it "should paginate response with 2 people per page" do
+    it "should paginate response with two followeds per page" do
       follower = create(:person)
 
       ActsAsTenant.with_tenant(follower.product) do
