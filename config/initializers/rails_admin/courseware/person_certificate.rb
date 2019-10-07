@@ -3,8 +3,12 @@ RailsAdmin.config do |config|
   config.model "PersonCertificate" do
     parent "Certificate"
 
+    configure :purchased_waived_date do
+      label "Purchased date"
+    end
+
     list do
-      fields :id, :person, :certificate, :full_name
+      fields :id, :person, :certificate, :purchased_waived_date, :full_name, :purchased_platform, :amount_paid, :currency
     end
 
     edit do
