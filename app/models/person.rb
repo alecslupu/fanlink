@@ -144,7 +144,7 @@ class Person < ApplicationRecord
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
-  validates :username, uniqueness: { scope: :product_id, message: _("A user has already signed up with that username.") }
+  validates :username, uniqueness: { scope: :product_id, message: _("has already been taken.") }
 
   validates :email, presence: { message: _("Email is required.") }, if: Proc.new { |person| person.facebookid.blank? }
   validates :email, email: { message: _("Email is invalid."), allow_nil: true }
@@ -413,7 +413,7 @@ class Person < ApplicationRecord
 
     def canonicalize_username
       if Person.find_by(username_canonical: canonicalize(self.username), product_id: product.id)
-        errors.add(:username, :username_in_use, message: _("A user has already signed up with that username."))
+        errors.add(:username, :username_in_use, message: _("has already been taken."))
         false
       else
         self.username_canonical = canonicalize(self.username)

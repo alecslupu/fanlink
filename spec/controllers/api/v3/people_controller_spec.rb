@@ -57,6 +57,16 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
         expect(person.reload.valid_password?(current)).to be_truthy
       end
     end
+    it "should not change the current users password if it matches the current one" do
+      password = "password"
+      person = create(:person, password: password)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        patch :change_password,  params: { id: person.id, person: { current_password: password, new_password: password } }
+        expect(response).to be_unprocessable
+        expect(json["errors"]).to include("New password can't be identical to your current one")
+      end
+    end
   end
 
   # TODO: auto-generated
