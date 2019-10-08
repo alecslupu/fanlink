@@ -248,14 +248,14 @@ RSpec.describe MessagePolicy, type: :policy do
         current_product = create(:product)
         another_product = create(:product)
 
-        public_room = create(:room, public: true, product: current_product)
-        private_room = create(:room, product: current_product)
+        public_room = create(:room, public: true)
+        private_room = create(:room)
 
         message = create(:message, room: public_room)
         message2 = create(:message, room: public_room)
         create(:message, room: private_room)
 
-        scope = Pundit.policy_scope!(person, Message.all)
+        scope = Pundit.policy_scope!(person, Message)
         expect(scope.count).to eq(2)
         expect(scope).to include(message)
         expect(scope).to include(message2)
