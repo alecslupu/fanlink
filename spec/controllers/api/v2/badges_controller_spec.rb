@@ -13,10 +13,10 @@ RSpec.describe Api::V2::BadgesController, type: :controller do
         get :index, params: {person_id: person.id}
         expect(response).to have_http_status(200)
         expect(json["badges"].count).to eq(2)
-        fb = json["badges"].first
+        fb = json["badges"].last
         expect(fb["badge_action_count"]).to eq(1)
         expect(badge_json(fb["badge"])).to be_truthy
-        sb = json["badges"].last
+        sb = json["badges"].first
         expect(sb["badge_action_count"]).to eq(0)
         expect(badge_json(sb["badge"])).to be_truthy
       end
