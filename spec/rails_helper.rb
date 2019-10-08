@@ -1,16 +1,19 @@
 # This file is copied to spec/ when you run "rails generate rspec:install"
 ENV["RAILS_ENV"] ||= "test"
 require "spec_helper"
+require "coverage_helper"
 require File.expand_path("../../config/environment", __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
+require "turnip/rspec"
 require "factory_bot_rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "shoulda/matchers"
 require "wisper/rspec/matchers"
 require "wisper/rspec/stub_wisper_publisher"
 require "pundit/rspec"
+require "pundit/matchers"
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -31,6 +34,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.silence_filter_announcements = true if ENV['TEST_ENV_NUMBER']
   config.render_views
   config.infer_spec_type_from_file_location!
 
@@ -40,15 +44,15 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # from https://stackoverflow.com/questions/19209865/rspec-leaves-record-in-test-database
-  config.around(:each) do |example|
-    ActiveRecord::Base.transaction do
-      example.run
-      raise ActiveRecord::Rollback
-    end
-  end
+  # config.around(:each) do |example|
+  #   ActiveRecord::Base.transaction do
+  #     example.run
+  #     raise ActiveRecord::Rollback
+  #   end
+  # end
   config.around(:each, :run_delayed_jobs) do |example|
     Delayed::Worker.delay_jobs = false
 
@@ -78,7 +82,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include(Wisper::RSpec::BroadcastMatcher)
+end
 
+Pundit::Matchers.configure do |config|
+  config.user_alias = :person
 end
 
 Shoulda::Matchers.configure do |config|

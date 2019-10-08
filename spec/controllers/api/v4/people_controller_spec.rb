@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::PeopleController, type: :controller do
-
   describe "#change_password" do
     it "should not change the current users password if it matches the current one" do
       password = "password"

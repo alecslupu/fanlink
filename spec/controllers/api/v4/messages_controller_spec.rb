@@ -43,5 +43,4 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
   describe "GET stats" do
     pending
   end
-
 end

@@ -1,9 +1,6 @@
-# -*- encoding: utf-8 -*-
-
 require "spec_helper"
 
 describe AttachmentSupport::ClassMethods do
-
   # TODO: auto-generated
   describe "#has_image_called" do
     pending
@@ -28,5 +25,4 @@ describe AttachmentSupport::ClassMethods do
   describe "#has_pdf_file_called" do
     pending
   end
-
 end

@@ -37,10 +37,31 @@
 
 class Post < ApplicationRecord
   include AttachmentSupport
-  include Post::PortalFilters
-  include Post::RealTime
+  # include Post::PortalFilters
+
+  scope :id_filter, -> (query) { where(id: query.to_i) }
+  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
+  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
+  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  # include Post::PortalFilters
   include TranslationThings
 
+  #   include Post::RealTime
+
+  def delete_real_time(version = 0)
+    Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
+  end
+
+  def post(version = 0)
+    Delayed::Job.enqueue(PostPostJob.new(self.id, version))
+    if notify_followers && (person.followers.count > 0)
+      Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
+    end
+  end
+  #   include Post::RealTime
   enum status: %i[ pending published deleted rejected errored ]
 
   after_save :adjust_priorities
