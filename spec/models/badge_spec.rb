@@ -182,4 +182,83 @@ RSpec.describe Badge, type: :model do
       expect(create(:badge)).to be_valid
     end
   end
+
+  describe 'creation of badge' do
+    it 'creates a reward' do
+      expect{ create(:badge) }.to change { Reward.count }.by(1)
+    end
+
+    it 'creates an assigned reward' do
+      expect{ create(:badge) }.to change { AssignedReward.count }.by(1)
+    end
+  end
+
+  context 'the reward and assigned reward have the correct info' do
+    let(:badge) { create(:badge) }
+    describe 'reward' do
+      it 'has the corect internal name' do
+        expect(badge.internal_name).to eq(badge.reward.internal_name)
+      end
+      it 'has the corect product' do
+        expect(badge.product).to eq(badge.reward.product)
+      end
+      it 'has the corect name' do
+        expect(badge.name).to eq(badge.reward.name)
+      end
+      it 'has the corect points' do
+        expect(badge.point_value).to eq(badge.reward.points)
+      end
+      it 'has the corect completion requirements' do
+        expect(badge.action_requirement).to eq(badge.reward.completion_requirement)
+      end
+      it 'has the corect badge' do
+        expect(badge.id).to eq(badge.reward.reward_type_id)
+      end
+      it 'has the corect status' do
+        expect(badge.reward.status).to eq('active')
+      end
+      it 'has the corect reward type' do
+        expect(badge.reward.reward_type).to eq('badge')
+      end
+    end
+
+    describe 'assigned reward' do
+      let(:assigned_reward) { badge.reward.assigned_rewards.first }
+
+      it 'has the corect action type' do
+        expect(badge.action_type.id).to eq(assigned_reward.assigned.id)
+      end
+      it 'has the corect max times' do
+        expect(assigned_reward.max_times).to eq(1)
+      end
+    end
+  end
+
+  describe 'update of the badge triggers the update of the reward' do
+    let(:badge) { create(:badge) }
+
+    it "updates the name" do
+      badge.update(name: badge.name + 's')
+
+      expect(badge.reward.name).to eq(badge.name)
+    end
+
+    it "updates the internal name" do
+      badge.update(name: badge.internal_name + 's')
+
+      expect(badge.reward.internal_name).to eq(badge.internal_name)
+    end
+
+    it "updates the points" do
+      badge.update(name: badge.point_value + 1)
+
+      expect(badge.reward.points).to eq(badge.point_value)
+    end
+
+    it "updates the action requirement" do
+      badge.update(action_requirement: badge.action_requirement + 1)
+
+      expect(badge.reward.completion_requirement).to eq(badge.action_requirement)
+    end
+  end
 end
