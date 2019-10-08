@@ -1,5 +1,0 @@
-{
-  static_content: Rails.cache.fetch(["v4", "static_content", @req_source, @static_content.id, @static_content.updated_at.to_i]) {
-    render(partial: @req_source, locals: { static_content: @static_content, lang: @lang }, handlers: "jb")
-  }
-}

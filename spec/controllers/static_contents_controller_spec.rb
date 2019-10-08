@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Api::V4::StaticContentsController, type: :controller do
   describe 'GET show' do
     it 'returns the record' do
@@ -14,7 +12,7 @@ RSpec.describe Api::V4::StaticContentsController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(static_content_json(json)).to be_truthy
+        expect(response).to render_template('show')
       end
     end
   end
