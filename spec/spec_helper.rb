@@ -172,7 +172,7 @@ RSpec.configure do |config|
   config.include JsonHelpers, type: :controller
 
   config.before :each, type: :controller do
-    if self.class.name.include?('Api')
+    if self.class.name.include?("Api")
       @json = nil
       vmatch = /V([0-9]).*\:\:/.match(self.class.name)
       @api_version = "v#{vmatch[1]}"

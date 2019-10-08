@@ -145,6 +145,20 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
         expect(room_ids.sort).to eq([private_room.id, private_room2.id].sort)
       end
     end
+    it "should return active public rooms with their attached pictures" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        create_list(:room, 3, public: true, status: :active, picture: fixture_file_upload("images/better.png", "image/png"))
+        get :index
+
+        expect(response).to be_successful
+        expect(json["rooms"].size).to eq(3)
+        json["rooms"].each do |room|
+          expect(room["picture_url"]).to_not eq(nil)
+        end
+      end
+    end
   end
 
   describe "#update" do
