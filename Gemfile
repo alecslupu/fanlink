@@ -234,3 +234,5 @@ gem "rswag-ui"
 
 gem "psych"
 gem 'parallel_tests', group: [:development, :test]
+#for page caching
+gem "actionpack-page_caching"
