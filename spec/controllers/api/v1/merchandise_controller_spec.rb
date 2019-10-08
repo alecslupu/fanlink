@@ -21,6 +21,20 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
         expect(response).to have_http_status(401)
       end
     end
+    it 'returns all merchandises with their attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        create_list(:merchandise, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
+        get :index
+
+        expect(response).to have_http_status(200)
+        expect(json['merchandise'].size).to eq(3)
+        json['merchandise'].each do |merchandise|
+          expect(merchandise['picture_url']).not_to eq(nil)
+        end
+      end
+    end
   end
 
   describe "#show" do
@@ -49,6 +63,17 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
         login_as(person)
         get :show, params: {id: merchandise.id}
         expect(response).to have_http_status(404)
+      end
+    end
+    it 'returns the merchandise with the attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        merchandise = create(:merchandise, picture: fixture_file_upload('images/better.png', 'image/png'))
+        get :show, params: { id: merchandise.id }
+        expect(response).to have_http_status(200)
+
+        expect(json['merchandise']['picture_url']).not_to eq(nil)
       end
     end
   end

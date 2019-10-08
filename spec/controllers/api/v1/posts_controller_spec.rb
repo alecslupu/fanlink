@@ -112,6 +112,27 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(response).to be_unauthorized
       end
     end
+
+    it "creates a post with attachments when it's valid" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+
+        post :create, params: {
+          post: {
+            body: "Body",
+            picture: fixture_file_upload('images/better.png', 'image/png'),
+            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+          }
+        }
+
+        expect(response).to have_http_status(200)
+        expect(Post.last.picture.exists?).to be_truthy
+        expect(Post.last.audio.exists?).to be_truthy
+        expect(json['post']['picture_url']).to include('better.png')
+        expect(json['post']['audio_url']).to include('small_audio')
+      end
+    end
   end
 
   describe "#destroy" do
@@ -298,6 +319,39 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         get :index, params: {from_date: from, to_date: to, person_id: Person.last.id + 1}
         expect(response).to be_unprocessable
         expect(json["errors"]).not_to be_empty
+      end
+    end
+
+    it 'returns all the messages with the attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        person2 = create(:person)
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        person.follow(person2)
+        person2.follow(person)
+        create_list(
+          :published_post,
+          3,
+          person: person2,
+          body: "this is my body",
+          picture: fixture_file_upload('images/better.png', 'image/png'),
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
+          created_at: to,
+        )
+        get :index,
+          params: {
+            from_date: from,
+            to_date: to
+          }
+
+        expect(response).to be_successful
+        expect(json['posts'].size).to eq(3)
+        json['posts'].each do |post|
+          expect(post['picture_url']).not_to eq(nil)
+          expect(post['audio_url']).not_to eq(nil)
+        end
       end
     end
   end
