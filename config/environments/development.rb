@@ -90,4 +90,8 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
 
+  # for page caching
+  config.action_controller.perform_caching = true
+  config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
+
 end
