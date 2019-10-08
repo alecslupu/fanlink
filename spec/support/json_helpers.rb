@@ -175,4 +175,10 @@ module JsonHelpers
     relationship["requested_to"] = relationship["requested_to"].compact
     schema.valid?(relationship.compact)
   end
+
+  def static_content_json(static_content)
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/static_content.json"))
+
+    schema.valid?(static_content.compact)
+  end
 end

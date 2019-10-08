@@ -79,6 +79,7 @@ JkoApi.routes self do
     end
 
     resources :products do
+      resources :static_contents, param: :slug
       collection do
         get "select" => "products#index"
       end
