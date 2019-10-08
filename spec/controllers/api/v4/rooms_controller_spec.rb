@@ -69,7 +69,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
                  picture: fixture_file_upload('images/better.png', 'image/png')
                }
              }
-
+        
         expect(response).to be_successful
         expect(json['room']['picture_url']).not_to eq(nil)
         expect(Room.last.picture).not_to eq(nil)
