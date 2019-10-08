@@ -150,7 +150,6 @@ class Person < ApplicationRecord
   validates :email, email: { message: _("Email is invalid."), allow_nil: true }
 
   validates :username, presence: { message: _("Username is required.") }
-  # validates :username, length: { in: 3..26, message: _("Username must be between 3 and 26 characters") }
 
   validates :username, emoji: true, on: :create
   validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
