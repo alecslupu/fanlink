@@ -17,6 +17,7 @@ class QuizPage < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
   belongs_to :certcourse_page
+  has_one :certcourse, through: :certcourse_page, source: :certcourse
 
   has_many :answers
   scope :for_product, -> (product) { where(product_id: product.id) }
