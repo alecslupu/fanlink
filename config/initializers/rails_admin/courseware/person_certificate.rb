@@ -21,16 +21,30 @@ RailsAdmin.config do |config|
              :purchased_order_id,
              :purchased_platform,
              :purchased_sku,
-             :unique_id,
-             :issued_certificate_image_file_name,
-             :issued_certificate_image_content_type,
-             :issued_certificate_image_file_size,
-             :issued_certificate_image_updated_at,
-             :issued_certificate_pdf_file_name,
-             :issued_certificate_pdf_content_type,
-             :issued_certificate_pdf_file_size,
-             :issued_certificate_pdf_updated_at,
-             :receipt_id
+             :unique_id
+      field :issued_certificate_image
+      field :issued_certificate_image_updated_at do
+        read_only true
+      end
+      field :issued_certificate_image_file_size do
+        read_only true
+      end
+      field :issued_certificate_pdf
+      # fields :issued_certificate_image_file_name,
+      #        :issued_certificate_image_content_type,
+      #        :,
+      #        :,
+      #        :issued_certificate_pdf_file_name,
+      #        :issued_certificate_pdf_content_type,
+      #        :issued_certificate_pdf_file_size,
+      #        :issued_certificate_pdf_updated_at
+      field :issued_certificate_pdf_updated_at do
+        read_only true
+      end
+      field :issued_certificate_pdf_file_size do
+        read_only true
+      end
+      field :receipt_id
     end
     show do
       fields :id,
