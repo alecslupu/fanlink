@@ -11,7 +11,12 @@ RailsAdmin.config do |config|
       field :video, :paperclip
     end
     list do
-      fields :id, :course_name, :video, :created_at
+      field :id
+      field :course_name do
+        searchable [{ Certcourse => :long_name }]
+        queryable true
+      end
+      fields :video, :created_at
     end
     show do
       fields :id, :certcourse_page, :video
