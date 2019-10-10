@@ -53,6 +53,31 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(room.reload.last_message_timestamp).to be >= timestamp
       end
     end
+
+    it "should create a new message in a private room and updates the timestamp" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        room = create(:room, created_by: person, status: :active)
+        expect(room.last_message_timestamp).to eq(nil)
+
+        room.members << person
+        other_member = create(:person, product: person.product)
+        room.members << other_member
+        login_as(person)
+        body = "Do you like my body?"
+        timestamp = DateTime.now.to_i
+
+        post :create, params: { room_id: room.id, message: { body: body } }
+
+        expect(response).to be_successful
+        msg = Message.last
+        expect(msg.room).to eq(room)
+        expect(msg.person).to eq(person)
+        expect(msg.body).to eq(body)
+        expect(room.reload.last_message_timestamp).to be >= timestamp
+
+      end
+    end
   end
 
   # TODO: auto-generated
