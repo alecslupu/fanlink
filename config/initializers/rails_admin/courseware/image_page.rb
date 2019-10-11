@@ -12,7 +12,7 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :course_name do
-        searchable [{ Certcourse => :long_name }]
+        searchable [{ Certcourse => :short_name }]
         queryable true
       end
       fields :image, :created_at
