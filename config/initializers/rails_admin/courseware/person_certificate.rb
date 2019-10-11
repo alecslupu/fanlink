@@ -4,12 +4,7 @@ RailsAdmin.config do |config|
     parent "Certificate"
 
     list do
-      fields :id, :person
-      field :certificate do
-        searchable [{ Certificate => :short_name }]
-        queryable true
-      end
-      field :full_name
+      fields :id, :person, :certificate, :full_name
     end
 
     edit do
