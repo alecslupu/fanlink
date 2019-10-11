@@ -9,3 +9,4 @@ README.rdoc
 # .env
 .vscode
 .docker-sync
+latest.dump
