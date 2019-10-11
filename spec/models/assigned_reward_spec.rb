@@ -4,10 +4,10 @@ RSpec.describe AssignedReward, type: :model do
   context "Validation" do
     it "should validate presence of assigned_type" do
       should validate_presence_of(:assigned_type).with_message(_(" is not an assignable type."))
-      should validate_inclusion_of(:assigned_type).in_array(%w( ActionType Quest Step QuestActivity ))
+      should validate_inclusion_of(:assigned_type).in_array(%w[ActionType Quest Step QuestActivity])
     end
     it "should create a valid assigned_reward" do
-      expect(create(:assigned_as_quest)).to be_valid
+      expect(build(:assigned_as_quest)).to be_valid
     end
   end
   context "Associations" do
@@ -17,10 +17,10 @@ RSpec.describe AssignedReward, type: :model do
 
   context "Valid factory" do
     it { expect(build(:assigned_reward)).not_to be_valid }
-    it { expect(create(:assigned_as_quest)).to be_valid }
-    it { expect(create(:assigned_as_step)).to be_valid }
-    it { expect(create(:assigned_as_quest_activity)).to be_valid }
-    it { expect(create(:assigned_as_action_type)).to be_valid }
+    it { expect(build(:assigned_as_quest)).to be_valid }
+    it { expect(build(:assigned_as_step)).to be_valid }
+    it { expect(build(:assigned_as_quest_activity)).to be_valid }
+    it { expect(build(:assigned_as_action_type)).to be_valid }
   end
 
   # describe "scopes" do
@@ -35,5 +35,4 @@ RSpec.describe AssignedReward, type: :model do
   #     expect(model.scope_name(conditions)).to eq(result_expected)
   #   end
   # end
-
 end
