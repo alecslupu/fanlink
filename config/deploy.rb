@@ -55,8 +55,8 @@ set :ssh_options, {
 
 set :slackistrano, {
   klass: Slackistrano::CustomMessaging,
-  channel: '#appbacon',
-  webhook: 'https://hooks.slack.com/services/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'
+  channel: '#bot-deploys',
+  webhook: 'https://hooks.slack.com/services/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'
 }
 
 #
