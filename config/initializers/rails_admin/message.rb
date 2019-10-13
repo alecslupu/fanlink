@@ -6,6 +6,7 @@ RailsAdmin.config do |config|
     configure :updated do
     end
     list do
+      scopes [ nil, :reported, :not_reported ]
       fields :created,
              :person,
               :room,

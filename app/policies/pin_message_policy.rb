@@ -1,0 +1,2 @@
+class PinMessagePolicy < ChatModulePolicy
+end

@@ -19,7 +19,6 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              include Messaging unless defined?("delete_message")
               @object.hidden = true
               changes = @object.changes
               if @object.save

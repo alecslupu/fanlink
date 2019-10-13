@@ -1,7 +1,4 @@
-class Trivia::AvailableAnswerPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
+module Trivia
+  class AvailableAnswerPolicy < TriviaModulePolicy
   end
 end
