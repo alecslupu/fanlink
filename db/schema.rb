@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190911171730) do
+ActiveRecord::Schema.define(version: 20191009160601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
+    t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
+    t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "index_badges_on_product_id"
   end
 
@@ -1045,6 +1047,7 @@ ActiveRecord::Schema.define(version: 20190911171730) do
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
     t.integer "order", default: 0, null: false
+    t.bigint "last_message_timestamp"
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
