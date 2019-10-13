@@ -42,7 +42,7 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem "newrelic_rpm"
+  gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
@@ -91,6 +91,10 @@ group :development do
   gem "guard-brakeman"
   gem "guard-annotate"
   gem "guard-rubycritic"
+
+  gem "capistrano", require: false
+  gem 'capistrano-passenger', require: false
+  gem 'slackistrano', require: false
 end
 
 group :test do
@@ -119,7 +123,10 @@ gem "administrate-field-belongs_to_search"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
+gem 'awesome_nested_set'
+
 gem "rails_admin", "1.3.0"
+gem "rails_admin_nested_set"
 
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
@@ -157,7 +164,6 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
-gem "rollbar"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"

@@ -1,5 +1,4 @@
-class PostPolicy < ApplicationPolicy
-
+class PostPolicy < PostModulePolicy
   def attributes_for(action)
     case action
     when :create
@@ -8,7 +7,6 @@ class PostPolicy < ApplicationPolicy
       {}
     end
   end
-
 
   class Scope < ApplicationPolicy::Scope
     def resolve
