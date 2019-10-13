@@ -1,0 +1,2 @@
+class CoursePageProgressPolicy < CoursewareModulePolicy
+end
