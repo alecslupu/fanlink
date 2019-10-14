@@ -1,8 +1,12 @@
+
+
 <body>
   <div class="post">
-    <%= image_tag(@post.person.picture.exists? ? @post.person.picture.url :  "https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg" , class: "profile-picture") %>
-    <h2><%= @post.person.username %></h2>
-    <%= image_tag(@post.picture.exists? ? @post.picture.url :  "https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg" , class: "post-picture") %>
-    <p> <%= @post.body.present? ? @post.body.html_safe : "" %> </p>
+    <%= image_tag(@locals[:user_image_url] , class: "profile-picture") %>
+    <h2><%= @locals[:username] %></h2>
+    <%= image_tag(@locals[:post_image_url] , class: "post-picture") %>
+    <p> <%= @locals[:body].html_safe %> </p>
   </div>
 </body>
+
+
