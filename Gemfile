@@ -49,6 +49,7 @@ group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
   gem "bullet", "~>6.0.2"
+  gem "httplog"
 end
 
 group :development, :test do
