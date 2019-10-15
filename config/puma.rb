@@ -13,6 +13,7 @@ workers Integer(ENV["WEB_CONCURRENCY"] || 2)
 # and maximum; this matches the default thread size of Active Record.
 #
 threads_count = Integer(ENV.fetch("RAILS_MAX_THREADS", 5))
+threads_count = Integer(ENV.fetch("RAILS_MAX_THREADS") { 5 })
 threads threads_count, threads_count
 
 # Use the `preload_app!` method when specifying a `workers` number.
