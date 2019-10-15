@@ -124,7 +124,7 @@ private
   end
 
   def client
-    @fb ||= Firebase::Client.new(Rails.application.secrets.firebase_url, Rails.application.secrets.firebase_key.to_s)
+    @fb ||= Firebase::Client.new(Rails.application.secrets.firebase_url, Rails.application.secrets.firebase_key.to_json)
   end
 
   def delete_public_room(room, version = nil)
