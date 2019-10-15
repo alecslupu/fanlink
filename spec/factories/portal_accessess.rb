@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :portal_access do
-    person { create(:admin_user) }
+    person { create(:person) }
   end
 end

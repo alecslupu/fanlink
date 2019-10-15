@@ -1,6 +1,9 @@
+# -*- encoding: utf-8 -*-
+
 require "spec_helper"
 
 describe PortalNotificationPushJob, group: :jobs do
+
   # TODO: auto-generated
   describe "#perform" do
     pending
@@ -10,4 +13,5 @@ describe PortalNotificationPushJob, group: :jobs do
   describe "#error" do
     pending
   end
+
 end

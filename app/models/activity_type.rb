@@ -24,4 +24,6 @@ class ActivityType < ApplicationRecord
 
   validates :activity_id, presence: { message: _("Activity ID is required.") }
   validates_inclusion_of :atype, in: ActivityType.atypes.keys, message: _("%{value} is not a valid activity type.")
+
+private
 end

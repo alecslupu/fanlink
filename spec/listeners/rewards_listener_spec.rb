@@ -1,6 +1,9 @@
+# -*- encoding: utf-8 -*-
+
 require "spec_helper"
 
 describe RewardsListener do
+
   # TODO: auto-generated
   describe "#reward_progress_created" do
     pending
@@ -15,4 +18,5 @@ describe RewardsListener do
   describe "#create_step_completed_successful" do
     pending
   end
+
 end

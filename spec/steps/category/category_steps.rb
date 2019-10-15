@@ -27,6 +27,7 @@ step "the post should not have a category" do
   expect(@post.reload.category_id).to be nil
 end
 
+
 step "category should return deleted as true" do
   expect(@category.reload.deleted).to be true
 end

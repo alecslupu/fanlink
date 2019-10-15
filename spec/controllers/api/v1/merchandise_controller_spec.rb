@@ -1,6 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Api::V1::MerchandiseController, type: :controller do
+
   describe "#index" do
     it "should get the available merchandise in priority order" do
       person = create(:person)
@@ -21,20 +22,6 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
         expect(response).to have_http_status(401)
       end
     end
-    it 'returns all merchandises with their attached image' do
-      person = create(:person, role: :admin)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        create_list(:merchandise, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
-        get :index
-
-        expect(response).to have_http_status(200)
-        expect(json['merchandise'].size).to eq(3)
-        json['merchandise'].each do |merchandise|
-          expect(merchandise['picture_url']).not_to eq(nil)
-        end
-      end
-    end
   end
 
   describe "#show" do
@@ -43,7 +30,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         merchandise = create(:merchandise)
-        get :show, params: {id: merchandise.id}
+        get :show, params: { id: merchandise.id }
         expect(response).to have_http_status(200)
         expect(merchandise_json(json["merchandise"])).to be_truthy
       end
@@ -52,7 +39,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         merchandise = create(:merchandise)
-        get :show, params: {id: merchandise.id}
+        get :show, params: { id: merchandise.id }
         expect(response).to have_http_status(401)
       end
     end
@@ -61,19 +48,8 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       merchandise = create(:merchandise, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        get :show, params: {id: merchandise.id}
-        expect(response).to have_http_status(404)
-      end
-    end
-    it 'returns the merchandise with the attached image' do
-      person = create(:person, role: :admin)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        merchandise = create(:merchandise, picture: fixture_file_upload('images/better.png', 'image/png'))
         get :show, params: { id: merchandise.id }
-        expect(response).to have_http_status(200)
-
-        expect(json['merchandise']['picture_url']).not_to eq(nil)
+        expect(response).to have_http_status(404)
       end
     end
   end

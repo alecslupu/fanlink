@@ -16,7 +16,7 @@ RSpec.describe StepUnlock, type: :model do
   context "Validation" do
     describe "should create a valid step unlock" do
       it do
-        expect(build(:step_unlock)).to be_valid
+        expect(create(:step_unlock)).to be_valid
       end
     end
   end

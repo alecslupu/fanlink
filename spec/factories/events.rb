@@ -33,5 +33,6 @@ FactoryBot.define do
     factory :future_event do
       starts_at { 1.month.from_now }
     end
+
   end
 end

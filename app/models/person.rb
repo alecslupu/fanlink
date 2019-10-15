@@ -42,13 +42,17 @@
 
 class Person < ApplicationRecord
   include AttachmentSupport
-  # include Person::Blocks
-  # include Person::Facebook
-  # include Person::Filters
-  # include Person::Followings
-  # include Person::Levels
-  # include Person::Mailing
-  # include Person::Profile
+  include Person::Blocks
+  include Person::Badges
+  include Person::Facebook
+  include Person::Filters
+  include Person::Followings
+  include Person::Levels
+  include Person::Mailing
+  include Person::Profile
+  include Person::Relationships
+
+  include Person::Trivia
 
   include TranslationThings
   authenticates_with_sorcery!
@@ -102,43 +106,12 @@ class Person < ApplicationRecord
   has_many :person_certcourses
   has_many :certcourses, through: :person_certcourses, dependent: :destroy
 
-  has_many :badge_actions, dependent: :destroy
-  has_many :badge_awards
-
-  has_many :badges, through: :badge_awards
-
-
-  has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
-  has_many :trivia_package_leaderboards, class_name: "Trivia::RoundLeaderboard"
-  has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
-  has_many :trivia_answers, class_name: "Trivia::Answer"
-  has_many :trivia_subscribers, class_name: "Trivia::Subscriber"
-
-  has_many :relationships, ->(person) { unscope(:where).where("requested_by_id = :id OR requested_to_id = :id", id: person.id) }
-
-
-  has_many :blocks_by,  class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
-  has_many :blocks_on, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
-
-  has_many :blocked_people, through: :blocks_by, source: :blocked
-  has_many :blocked_by_people, through: :blocks_on, source: :blocker
-
-  has_many :active_followings, class_name:  "Following", foreign_key: "follower_id", dependent: :destroy
-
-  has_many :passive_followings, class_name:  "Following", foreign_key: "followed_id", dependent: :destroy
-
-  has_many :following, through: :active_followings, source: :followed
-  has_many :followers, through: :passive_followings, source: :follower
-
-
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
   after_commit :flush_cache
 
-  # scope :username_filter, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
   scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
-  # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
   scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
 
@@ -150,6 +123,7 @@ class Person < ApplicationRecord
   validates :email, email: { message: _("Email is invalid."), allow_nil: true }
 
   validates :username, presence: { message: _("Username is required.") }
+  # validates :username, length: { in: 3..26, message: _("Username must be between 3 and 26 characters") }
 
   validates :username, emoji: true, on: :create
   validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
@@ -162,14 +136,6 @@ class Person < ApplicationRecord
 
   # Check if username has any special characters and if length is between 5 and 25
   validate :valid_username
-  enum gender: %i[ unspecified male female ]
-
-  validate :valid_country_code
-  validates :country_code, length: { is: 2 }, allow_blank: true
-
-  def country_code=(c)
-    write_attribute :country_code, (c.nil?) ? nil : c.upcase
-  end
 
   # validate :validate_age
   #
@@ -189,138 +155,10 @@ class Person < ApplicationRecord
     Rails.cache.fetch([name, id]) { find(id) }
   end
 
-  def friends
-    relationships.where(status: :friended)
-  end
-
-  def friend_request_count
-    relationships.where(requested_to: self).where(status: :requested).count
-  end
-
   def jwt_token
     ::TokenProvider.issue_token(user_id: self.id)
   end
 
-  def send_onboarding_email
-    Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
-  end
-
-
-  def send_password_reset_email
-    Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
-  end
-
-  def send_certificate_email(certificate_id, email)
-    Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
-  end
-
-  def send_course_attachment_email(certcourse_page)
-    Delayed::Job.enqueue(SendDownloadFileEmailJob.new(self.id, certcourse_page.id))
-  end
-
-  def self.create_from_facebook(token, username)
-    person = nil
-    begin
-      graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id, :email, :picture])
-    rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
-      Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
-      Rails.logger.warn("Message: #{error.fb_error_message}")
-      return nil
-    end
-    Rails.logger.error(results.inspect)
-    if results && results["id"].present?
-      person = Person.create(facebookid: results["id"],
-                             username: username,
-                             email: results["email"],
-                             facebook_picture_url: results.dig("picture", "data", "url"))
-    end
-    person
-  end
-
-  def self.for_facebook_auth_token(token)
-    person = nil
-    begin
-      graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id])
-    rescue Koala::Facebook::APIError => error
-      Rails.logger.warn("Error contacting facebook for login with token #{token}")
-      Rails.logger.warn("Message: #{error.fb_error_message}")
-      return nil
-    end
-    if results && results["id"].present?
-      person = Person.find_by(facebookid: results["id"])
-    end
-    person
-  end
-
-  def cache_key_follow_person(ver, app_source, user, person)
-    [ver, "person", app_source, user.id,  person.id, person.updated_at.to_i]
-  end
-
-  def do_auto_follows
-    Person.where(auto_follow: true).each do |person|
-      follow(person)
-    end
-  end
-
-  def follow(followed)
-    active_followings.find_or_create_by(followed_id: followed.id)
-  end
-
-  def following?(someone)
-    following.include?(someone)
-  end
-
-  def following_for_person(person)
-    active_followings.find_by(followed_id: person.id)
-  end
-
-  def unfollow(someone)
-    following.delete(someone)
-  end
-
-  def level_earned_from_progresses(progresses)
-    points = progresses.first.try(:total) || 0
-    determine_level(points)
-  end
-
-  def level
-    level_earned.as_json(only: %i[ id name internal_name points ], methods: %i[ picture_url ])
-  end
-
-  def level_earned
-    points = level_progresses.first.try(:total) || 0
-    determine_level(points)
-  end
-
-  def determine_level(points)
-    Level.where(product_id: product.id).where("points <= ?", points).order(points: :desc).first
-  end
-
-  def block_with?(person)
-    blocks_with.include?(person)
-  end
-
-  def blocks_with
-    blocked_people + blocked_by_people
-  end
-
-  def badge_points
-    badges.sum(:point_value)
-  end
-
-  def block(blocked)
-    blocks_by.create(blocked_id: blocked.id)
-  end
-
-  def blocked?(person)
-    blocked_people.include?(person)
-  end
-
-  def unblock(blocked)
-    blocked_people.destroy(blocked)
-  end
   #
   # Lookup a person via their username.
   #
@@ -431,12 +269,6 @@ class Person < ApplicationRecord
         errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
       end
     end
-
-  def valid_country_code
-    if country_code.present? && ISO3166::Country.find_country_by_alpha2(country_code).nil?
-      errors.add(:country_code, message: _("Country code '%{country_code}' is invalid"))
-    end
-  end
 
     def normalize_email
       self.email = self.email.strip.downcase if self.email_changed? && self.email.present?

@@ -1,6 +1,9 @@
+# -*- encoding: utf-8 -*-
+
 require "spec_helper"
 
 describe Flaws do
+
   # TODO: auto-generated
   describe "#hls_server" do
     pending
@@ -45,4 +48,5 @@ describe Flaws do
   describe "#transcoded_summary_for" do
     pending
   end
+
 end

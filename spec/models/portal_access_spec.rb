@@ -2,7 +2,7 @@ RSpec.describe PortalAccess, type: :model do
   context "Validation" do
     describe "should create a valid portal access" do
       it do
-        expect(build(:portal_access)).to be_valid
+        expect(create(:portal_access)).to be_valid
       end
     end
   end
@@ -15,4 +15,5 @@ RSpec.describe PortalAccess, type: :model do
       expect(result).not_to be_nil
     end
   end
+
 end

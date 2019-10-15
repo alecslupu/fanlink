@@ -1,6 +1,9 @@
+# -*- encoding: utf-8 -*-
+
 require "spec_helper"
 
 describe MessageMentionPushJob, group: :jobs do
+
   # TODO: auto-generated
   describe "#perform" do
     pending
@@ -10,4 +13,5 @@ describe MessageMentionPushJob, group: :jobs do
   describe "#error" do
     pending
   end
+
 end

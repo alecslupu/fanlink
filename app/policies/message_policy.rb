@@ -8,16 +8,17 @@ class MessagePolicy < ChatModulePolicy
     create?
   end
 
+
   def update?
     false
   end
 
-  def unhide_action?
-    record.is_a?(Message) ? record.hidden? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym)) : false
-  end
-
   def edit?
     update?
+  end
+  
+  def unhide_action?
+    record.is_a?(Message) ? record.hidden? && (super_admin? || access.send([module_name, "hide?"].join("_").to_sym)) : false
   end
 
   def hide_action?
