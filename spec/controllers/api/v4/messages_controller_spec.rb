@@ -76,7 +76,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
 
   # TODO: auto-generated
   describe "POST create" do
-    it "creates a new message in a public room and updates the timestamp" do
+    it "creates a new message in a public room and does not update the timestamp" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -95,7 +95,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(msg.person).to eq(person)
         expect(msg.body).to eq(body)
         expect(json["message"]["body"]).to eq(body)
-        expect(room.reload.last_message_timestamp).to be >= timestamp
+        expect(room.reload.last_message_timestamp).to eq(nil)
       end
     end
 
