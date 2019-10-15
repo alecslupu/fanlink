@@ -27,6 +27,8 @@ class Api::V4::RoomsController < Api::V3::RoomsController
         render_422
         return
       end
+      # if the room is private, the timestamp will reflect the moment of creation
+      @room.last_message_timestamp = DateTime.now.to_i
     end
     if @room.save
       room_members.each do |room_member|
