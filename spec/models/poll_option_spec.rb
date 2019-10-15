@@ -39,5 +39,4 @@ RSpec.describe PollOption, type: :model do
       expect(result).not_to be_nil
     end
   end
-
 end

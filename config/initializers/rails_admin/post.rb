@@ -6,13 +6,14 @@ RailsAdmin.config do |config|
     end
     configure :id do
       label "Post ID"
+      column_width 30
     end
     list do
       field :person do
-        column_width 30
+        column_width 75
       end
-      field :id do 
-      end 
+      field :id do
+      end
       field :body do
         column_width 150
         pretty_value do

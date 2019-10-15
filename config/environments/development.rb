@@ -45,9 +45,6 @@ Rails.application.configure do
 
   config.debug_exception_response_format = :api
 
-  # logger           = ActiveSupport::Logger.new(STDOUT)
-  # logger.formatter = config.log_formatter
-  # config.logger    = ActiveSupport::TaggedLogging.new(logger)
   # ActiveSupport::Notifications.subscribe(/cache*+active_support/) do |name, start, finish, id, payload|
   #   Rails.logger.debug ["cache:", name, finish - start, id, payload].join(" ")
   # end
@@ -92,5 +89,9 @@ Rails.application.configure do
     # Bullet.bullet_logger = true
     Bullet.rails_logger = true
   end
+
+  # for page caching
+  config.action_controller.perform_caching = true
+  config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
 
 end
