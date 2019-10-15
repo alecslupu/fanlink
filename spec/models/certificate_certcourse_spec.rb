@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe CertificateCertcourse, type: :model do
+
   context "Valid factory" do
-    it { expect(build(:certificate_certcourse)).to be_valid }
+    it { expect(create(:certificate_certcourse)).to be_valid }
   end
 
   context "Validation" do
@@ -12,7 +13,8 @@ RSpec.describe CertificateCertcourse, type: :model do
                    product: cc.product,
                    certcourse: create(:certcourse),
                    certificate: cc.certificate,
-                   certcourse_order: cc.certcourse_order)
+                   certcourse_order: cc.certcourse_order
+      )
       #   validates_uniqueness_to_tenant :certcourse_order, scope: %i[ certificate_id certcourse_id ]
       expect(cc2.valid?).to be_falsey
       cc2.certcourse_order += 1
@@ -27,6 +29,7 @@ RSpec.describe CertificateCertcourse, type: :model do
     it { should belong_to(:certcourse) }
     it { should belong_to(:certificate) }
   end
+
 
   describe "scopes" do
     describe "for_certificate has value" do
@@ -64,4 +67,5 @@ RSpec.describe CertificateCertcourse, type: :model do
       end
     end
   end
+
 end

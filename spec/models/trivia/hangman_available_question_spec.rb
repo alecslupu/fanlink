@@ -1,6 +1,7 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
+
   context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#has_many" do

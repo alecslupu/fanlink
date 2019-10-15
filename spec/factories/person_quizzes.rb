@@ -13,9 +13,6 @@
 
 FactoryBot.define do
   factory :person_quiz do
-    person_id { create(:person).id }
-    quiz_page_id { create(:quiz_page).id }
-    answer_id { create(:answer).id }
-    fill_in_response { Faker::Lorem.sentence }
+
   end
 end

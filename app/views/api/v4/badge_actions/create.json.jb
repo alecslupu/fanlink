@@ -4,12 +4,6 @@ if @progress.present?
     json[:pending_badge] = {
       badge_action_count: @series_total
     }
-    Rails.logger.error @progress.inspect
-    Rails.logger.error @progress.reward.inspect
-    Rails.logger.error @progress.reward.badge.inspect
-
-
-
     json[:pending_badge][:badge] = Rails.cache.fetch ["v4", "badge", @req_source, @progress.reward.badge.id, @progress.reward.badge.updated_at.to_i, @lang] do
       render partial: "api/v4/badges/#{@req_source}", locals: { badge: @progress.reward.badge }, renders: "jb"
     end

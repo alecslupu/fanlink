@@ -15,11 +15,9 @@
 FactoryBot.define do
   factory :quest_completion do
     person { create(:person) }
-    quest_activity { create(:quest_activity)}
-    step { create(:step) }
     before(:create) do |quest_completion|
-      quest_completion.quest_activity.step = quest_completion.step
-      quest_completion.quest_activity.save
+      quest_completion.step = FactoryBot.create(:step)
+      quest_completion.activity_id = FactoryBot.create(:quest_activity, step: quest_completion.step).id
     end
   end
 end

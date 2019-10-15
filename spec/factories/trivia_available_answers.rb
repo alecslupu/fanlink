@@ -23,6 +23,7 @@ FactoryBot.define do
     is_correct { false }
     status { :published }
 
+
     factory :correct_trivia_available_answer do
       is_correct { true }
     end
@@ -30,5 +31,6 @@ FactoryBot.define do
     factory :wrong_trivia_available_answer do
       is_correct { false }
     end
+
   end
 end

@@ -1,4 +1,5 @@
 RSpec.describe BadgeAward, type: :model do
+
   context "Valid factory" do
     it { expect(create(:badge_award)).to be_valid }
   end
@@ -36,6 +37,7 @@ RSpec.describe BadgeAward, type: :model do
       expect(BadgeAward.count - precount).to eq(0)
     end
   end
+
 
   describe "#product_match" do
     it "adds error message" do

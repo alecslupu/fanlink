@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Trivia::GameLeaderboard, type: :model do
+
   context "Valid factory" do
     it { expect(build(:trivia_game_leaderboard)).to be_valid }
   end

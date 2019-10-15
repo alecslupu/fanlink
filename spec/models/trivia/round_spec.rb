@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Trivia::Round, type: :model do
+
   context "Valid factory" do
     it { expect(build(:trivia_round)).to be_valid }
   end
@@ -57,6 +58,7 @@ RSpec.describe Trivia::Round, type: :model do
         question = round.reload.questions.first(2).last
         expect(question.start_date).to be_within(1.seconds).of round.start_date + 6.seconds
         expect(question.question_order).to eq(2)
+
       end
 
       it "sets any question at the right interval" do
@@ -98,3 +100,4 @@ RSpec.describe Trivia::Round, type: :model do
     end
   end
 end
+

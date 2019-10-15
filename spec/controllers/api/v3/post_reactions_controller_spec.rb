@@ -1,6 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Api::V3::PostReactionsController, type: :controller do
+
   # TODO: auto-generated
   describe "POST create" do
     pending
@@ -15,4 +16,5 @@ RSpec.describe Api::V3::PostReactionsController, type: :controller do
   describe "PUT update" do
     pending
   end
+
 end

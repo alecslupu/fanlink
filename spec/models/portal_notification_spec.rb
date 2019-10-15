@@ -1,11 +1,12 @@
 RSpec.describe PortalNotification, type: :model do
-  before(:each) do
-    ActsAsTenant.current_tenant = create(:product)
+  before(:all) do
+    @product = Product.first || create(:product)
+    ActsAsTenant.current_tenant = @product
     @person = create(:person)
   end
   context "Valid" do
     it "should create a valid portal notification" do
-      expect(build(:portal_notification)).to be_valid
+      expect(create(:portal_notification)).to be_valid
     end
   end
 
@@ -46,6 +47,7 @@ RSpec.describe PortalNotification, type: :model do
     end
   end
 
+
   # TODO: auto-generated
   describe "#ignore_translation_lang?" do
     it "works" do
@@ -67,16 +69,4 @@ RSpec.describe PortalNotification, type: :model do
     end
     pending
   end
-
-  describe "#enqueue_push" do
-    it "responds to" do
-      expect(PortalNotification.new).to respond_to(:enqueue_push)
-    end
-  end
-  describe "#update_push" do
-    it "responds to" do
-      expect(PortalNotification.new).to respond_to(:update_push)
-    end
-  end
-
 end

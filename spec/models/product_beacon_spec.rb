@@ -13,16 +13,17 @@ RSpec.describe ProductBeacon, type: :model do
     it { should belong_to(:product) }
   end
 
+
   context "Methods" do
     describe ".attached_to" do
       it "should normalize  :attached_to" do
-        product_beacon = build(:product_beacon, attached_to: " 15 ")
+        product_beacon = create(:product_beacon, attached_to: " 15 ")
         expect(product_beacon.attached_to).to eq(15)
       end
     end
     describe ".uuid" do
       it "should normalize :uuid" do
-        product_beacon = build(:product_beacon, uuid: " 38a95016-ba21-4b1b-94ab-7cbe276c7306 ")
+        product_beacon = create(:product_beacon, uuid: " 38a95016-ba21-4b1b-94ab-7cbe276c7306 ")
         expect(product_beacon.uuid).to eq("38a95016-ba21-4b1b-94ab-7cbe276c7306")
       end
     end
