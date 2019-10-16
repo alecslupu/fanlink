@@ -1,8 +1,8 @@
 class StaticContentsController < ApplicationController
   caches_page :post_share, gzip: true
-  before_action :set_static_content, only: %i[show]
+  before_action :set_static_content, only: %i[html_content]
 
-  def show
+  def html_content
   end
 
   def post_share
@@ -14,7 +14,10 @@ class StaticContentsController < ApplicationController
   private
 
   def set_static_content
-    @static_content = StaticContent.find_by(slug: params[:slug], product_id: params[:product_id])
+    product = Product.where(internal_name: params[:product]).first
+    raise ActionController::RoutingError.new('Invalid Product') if product.nil?
+    @static_content = StaticContent.find_by(slug: params[:slug], product_id: product.id)
+    raise ActionController::RoutingError.new("Invalid slug parameter: #{product.internal_name}/static/:slug") if@static_content.nil?
   end
 
   def generate_locals(post)

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   draw :administrate
   get ':product/post_share/:post_id', to: 'static_contents#post_share', as: 'cache_post'
 
-  get '/:product_id/static_content/:slug', to: 'static_contents#show'
+  get '/:product/static/:slug', to: 'static_contents#html_content'
 
   if Rails.env.development?
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
