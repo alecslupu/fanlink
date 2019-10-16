@@ -24,9 +24,9 @@ Rails.application.routes.draw do
   # TODO: move the password reset controller update out of the api
   post "/people/password_reset" => "api/v1/password_resets#update"
   draw :administrate
-  get ':product/share_post/:post_id', to: 'posts#share', as: 'cache_post'
+  get ':product/post_share/:post_id', to: 'static_contents#post_share', as: 'cache_post'
 
-  get '/:product_id/static_content/:slug' => 'static_contents#show'
+  get '/:product_id/static_content/:slug', to: 'static_contents#show'
 
   if Rails.env.development?
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
