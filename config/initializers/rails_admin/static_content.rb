@@ -11,8 +11,8 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      field :title, :translated
-      field :content, :translated do
+      field :title
+      field :content do
         html_attributes rows: 20, cols: 50
       end
     end
