@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Api::V2::PostCommentsController, type: :controller do
+
   describe "#create" do
     it "should create a post comment" do
       person = create(:person)
@@ -8,7 +9,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(person)
         po = create(:post, status: :published)
         expect {
-          post :create, params: {post_id: po.id, post_comment: {body: "a comment"}}
+          post :create, params: { post_id: po.id, post_comment: { body: "a comment" } }
         }.to change { po.comments.count }.by(1)
         expect(response).to be_successful
         expect(post_comment_json(json["post_comment"])).to be true
@@ -22,13 +23,10 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(person)
         po = create(:post, status: :published)
         expect {
-          post :create, params: {post_id: po.id, post_comment: {
+          post :create, params: { post_id: po.id, post_comment: {
             body: "a comment", mentions: [
               {
-                person_id: followee2.id, location: 1, length: 2,
-              },
-            ],
-          },}
+                person_id: followee2.id, location: 1, length: 2 } ] } }
         }.to change { po.comments.count }.by(1)
         expect(response).to be_successful
         comment = po.comments.last
@@ -47,10 +45,10 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         po = create(:post, status: :published)
 
         expect {
-          post :create, params: {post_id: po.id, post_comment: {body: "a comment", mentions: [
-            {person_id: followee2.id, location: 1, length: 2},
-            {person_id: followee1.id, location: 11, length: 3},
-          ],},}
+          post :create, params: { post_id: po.id, post_comment: { body: "a comment", mentions: [
+            { person_id: followee2.id, location: 1, length: 2 },
+            { person_id: followee1.id, location: 11, length: 3 }
+          ] } }
         }.to change { po.comments.count }.by(1)
         expect(response).to be_successful
         comment = po.comments.last
@@ -64,7 +62,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
       ActsAsTenant.with_tenant(create(:product)) do
         po = create(:post, status: :published)
         expect {
-          post :create, params: {post_id: po.id, post_comment: {body: "a comment"}}
+          post :create, params: { post_id: po.id, post_comment: { body: "a comment" } }
         }.to change { po.comments.count }.by(0)
         expect(response).to be_unauthorized
       end
@@ -76,7 +74,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         po = create(:post, status: :published)
         login_as(person)
         expect {
-          post :create, params: {post_id: po.id, post_comment: {body: "a comment"}}
+          post :create, params: { post_id: po.id, post_comment: { body: "a comment" } }
         }.to change { po.comments.count }.by(0)
         expect(response).to be_not_found
       end
@@ -91,7 +89,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         admin_user = create(:admin_user)
         login_as(admin_user)
         expect(comment).to exist_in_database
-        delete :destroy, params: {post_id: comment.post_id, id: comment.id}
+        delete :destroy, params: { post_id: comment.post_id, id: comment.id }
         expect(response).to be_successful
         expect(comment).not_to exist_in_database
       end
@@ -102,7 +100,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         comment = create(:post_comment, person: person, body: "bleeb blub")
         expect(comment).to exist_in_database
         login_as(person)
-        delete :destroy, params: {post_id: comment.post_id, id: comment.id}
+        delete :destroy, params: { post_id: comment.post_id, id: comment.id }
         expect(response).to be_successful
         expect(comment).not_to exist_in_database
       end
@@ -114,7 +112,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         comment = create(:post_comment, person: creator, body: "bleeb blub")
         expect(comment).to exist_in_database
         login_as(create(:person))
-        delete :destroy, params: {post_id: comment.post_id, id: comment.id}
+        delete :destroy, params: { post_id: comment.post_id, id: comment.id }
         expect(response).to be_not_found
         expect(comment).to exist_in_database
       end
@@ -126,7 +124,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         comment = create(:post_comment, person: person, body: "bleeb blub")
         expect(comment).to exist_in_database
         login_as(admin_user)
-        delete :destroy, params: {post_id: comment.post_id, id: comment.id}
+        delete :destroy, params: { post_id: comment.post_id, id: comment.id }
         expect(response).to be_not_found
         expect(comment).to exist_in_database
       end
@@ -137,7 +135,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         creator = create(:person)
         comment = create(:post_comment, person: creator, body: "bleeb blub")
         expect(comment).to exist_in_database
-        delete :destroy, params: {post_id: comment.post_id, id: comment.id}
+        delete :destroy, params: { post_id: comment.post_id, id: comment.id }
         expect(response).to be_unauthorized
         expect(comment).to exist_in_database
       end
@@ -159,7 +157,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         po.comments.create(body: "another comment", person: person, hidden: true)
 
         pp = 2
-        get :index, params: {post_id: po.id, page: 1, per_page: pp}
+        get :index, params: { post_id: po.id, page: 1, per_page: pp }
         expect(response).to be_successful
         expect(json["post_comments"].count).to eq(pp)
         # expect(json["post_comments"].first).to eq(post_comment_json(@post.comments.visible.order(created_at: :desc).first))
@@ -173,7 +171,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         followee2 = create(:person)
         person.follow(followee2)
         po = create(:post, person: followee2)
-        get :index, params: {post_id: po.id}
+        get :index, params: { post_id: po.id }
         expect(response).to be_successful
         expect(json["post_comments"].count).to eq(0)
       end
@@ -187,7 +185,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         5.times { |n| create(:post_comment, body: "some body that I made up #{n}") }
 
-        get :list, params: {per_page: 2, page: 1}
+        get :list, params: { per_page: 2, page: 1 }
         expect(response).to be_successful
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(2)
@@ -201,7 +199,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         5.times { |n| create(:post_comment, body: "some body that I made up #{n}") }
 
-        get :list, params: {per_page: 2, page: 2}
+        get :list, params: { per_page: 2, page: 2 }
         expect(response).to be_successful
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(2)
@@ -215,7 +213,7 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         login_as(admin)
         5.times { |n| create(:post_comment, body: "some body that I made up #{n}") }
         fragment = "made up 2"
-        get :list, params: {body_filter: fragment}
+        get :list, params: { body_filter: fragment }
         expect(response).to be_successful
         pc_json = json["post_comments"]
         expect(pc_json.count).to eq(1)
@@ -227,10 +225,10 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         people_list = [create(:person, username: "cuser111", email: "cuser1112@example.com"),
                        create(:person, username: "cuser112", email: "cuser112@example.com"),
-                       create(:person, username: "cuser121", email: "cuser121@example.com"),]
+                       create(:person, username: "cuser121", email: "cuser121@example.com")]
         login_as(admin)
         person = people_list.sample
-        get :list, params: {person_filter: person.username}
+        get :list, params: { person_filter: person.username }
         expect(response).to be_successful
         post_comments = PostComment.where(person_id: person.id)
         pc_json = json["post_comments"]
@@ -243,10 +241,10 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         people_list = [create(:person, username: "cuser111", email: "cuser1112@example.com"),
                        create(:person, username: "cuser112", email: "cuser112@example.com"),
-                       create(:person, username: "cuser121", email: "cuser121@example.com"),]
+                       create(:person, username: "cuser121", email: "cuser121@example.com")]
         login_as(admin)
-        people = [people_list.first, people_list[1]]
-        get :list, params: {person_filter: "cuser11"}
+        people = [people_list.first, people_list[1] ]
+        get :list, params: { person_filter: "cuser11" }
         expect(response).to be_successful
         post_comments = PostComment.where(person_id: people)
         pc_json = json["post_comments"]
@@ -259,10 +257,10 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         people_list = [create(:person, username: "cuser111", email: "cuser1112@example.com"),
                        create(:person, username: "cuser112", email: "cuser112@example.com"),
-                       create(:person, username: "cuser121", email: "cuser121@example.com"),]
+                       create(:person, username: "cuser121", email: "cuser121@example.com")]
         login_as(admin)
         person = people_list.sample
-        get :list, params: {person_filter: person.email}
+        get :list, params: { person_filter: person.email }
         expect(response).to be_successful
         post_comments = PostComment.where(person_id: person.id)
         pc_json = json["post_comments"]
@@ -275,10 +273,10 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         people_list = [create(:person, username: "cuser111", email: "cuser1112@example.com"),
                        create(:person, username: "cuser112", email: "cuser112@example.com"),
-                       create(:person, username: "cuser121", email: "cuser121@example.com"),]
+                       create(:person, username: "cuser121", email: "cuser121@example.com")]
         login_as(admin)
-        people = [people_list.first, people_list[1]]
-        get :list, params: {person_filter: "112@example"}
+        people = [people_list.first, people_list[1] ]
+        get :list, params: { person_filter: "112@example" }
         expect(response).to be_successful
         post_comments = PostComment.where(person_id: people)
         pc_json = json["post_comments"]

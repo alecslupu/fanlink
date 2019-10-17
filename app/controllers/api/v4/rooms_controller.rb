@@ -11,11 +11,11 @@ class Api::V4::RoomsController < Api::V3::RoomsController
 
   def create
     @room = Room.new(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
-    room_members = []
     if !@room.public
       blocks_with = current_user.blocks_with.map(&:id)
       members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map(&:to_i) : []
       members_ids << current_user.id
+      room_members = []
 
       members_ids.uniq.each do |member_id|
         unless blocks_with.include?(member_id)
@@ -27,8 +27,6 @@ class Api::V4::RoomsController < Api::V3::RoomsController
         render_422
         return
       end
-      # if the room is private, the timestamp will reflect the moment of creation
-      @room.last_message_timestamp = DateTime.now.to_i
     end
     if @room.save
       room_members.each do |room_member|

@@ -1,4 +1,5 @@
-class PortalAccessPolicy < UserModulePolicy
+class PortalAccessPolicy < ApplicationPolicy
+
   def attributes_for(action)
     {}
   end
@@ -7,5 +8,11 @@ class PortalAccessPolicy < UserModulePolicy
     def resolve
       super.for_product(ActsAsTenant.current_tenant)
     end
+  end
+
+  protected
+
+  def module_name
+    "user"
   end
 end

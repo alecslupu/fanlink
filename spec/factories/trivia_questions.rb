@@ -27,6 +27,7 @@ FactoryBot.define do
     cooldown_period { 6 }
     available_question { create(:trivia_available_question, with_answers: with_answers) }
 
+
     transient do
       with_leaderboard { false }
       with_answers { false }
@@ -40,7 +41,7 @@ FactoryBot.define do
 
       if options.with_leaderboard
         question.trivia_answers.find_each do |ta|
-          create :trivia_question_leaderboard, person: ta.person, question: question
+          create :trivia_question_leaderboard, person: ta.person,  question: question
         end
       end
     end
@@ -48,6 +49,7 @@ FactoryBot.define do
     factory :trivia_multiple_choice_question, class: "Trivia::MultipleChoiceQuestion" do
       available_question { create(:trivia_multiple_choice_available_question, with_answers: with_answers) }
     end
+
 
     factory :trivia_single_choice_question, class: "Trivia::SingleChoiceQuestion" do
       available_question { create(:trivia_single_choice_available_question, with_answers: with_answers) }

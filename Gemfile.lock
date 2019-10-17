@@ -62,8 +62,6 @@ GEM
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionpack-page_caching (1.1.1)
-      actionpack (>= 4.0.0, < 6)
     actionview (5.1.4)
       activesupport (= 5.1.4)
       builder (~> 3.1)
@@ -117,7 +115,6 @@ GEM
     annotate (2.7.4)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
-    ansi (1.5.0)
     api-pagination (4.8.2)
     appraisal (2.2.0)
       bundler
@@ -744,7 +741,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     byebug (11.0.1)
-    capistrano (3.11.2)
+    capistrano (3.11.1)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -1065,8 +1062,6 @@ GEM
     paperclip-meta (3.1.0)
       paperclip (>= 5.0)
     parallel (1.17.0)
-    parallel_tests (2.29.2)
-      parallel
     parser (2.6.3.0)
       ast (~> 2.4.0)
     path_expander (1.0.3)
@@ -1094,8 +1089,6 @@ GEM
     puma (3.12.1)
     pundit (2.0.1)
       activesupport (>= 3.0.0)
-    pundit-matchers (1.6.0)
-      rspec-rails (>= 3.0.0)
     rack (2.0.7)
     rack-cors (1.0.3)
     rack-pjax (1.0.0)
@@ -1216,8 +1209,6 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-retry (0.6.1)
-      rspec-core (> 3.3)
     rspec-support (3.8.0)
     rswag-api (2.0.5)
       railties (>= 3.1, < 6.0)
@@ -1283,10 +1274,6 @@ GEM
       docile (~> 1.1)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
-    simplecov-console (0.5.0)
-      ansi
-      simplecov
-      terminal-table
     simplecov-html (0.10.2)
     sinatra (2.0.5)
       mustermann (~> 1.0)
@@ -1314,8 +1301,6 @@ GEM
     streamio-ffmpeg (3.0.2)
       multi_json (~> 1.8)
     temple (0.8.1)
-    terminal-table (1.8.0)
-      unicode-display_width (~> 1.1, >= 1.1.1)
     text (1.3.1)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
@@ -1378,7 +1363,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack-page_caching
   acts_as_api
   acts_as_tenant
   administrate (~> 0.11.0)
@@ -1446,17 +1430,14 @@ DEPENDENCIES
   paperclip (~> 5.0.0)
   paperclip-dimension-validator
   paperclip-meta
-  parallel_tests
   pg (~> 0.18)
   pg_search
   postgresql-check
   prawn
   pry (~> 0.12.2)
   pry-byebug (~> 3.7.0)
-  psych
   puma (~> 3.7)
   pundit
-  pundit-matchers (~> 1.6.0)
   rack-cors
   rack-timeout
   rails (~> 5.1.4)
@@ -1469,7 +1450,6 @@ DEPENDENCIES
   rest-firebase
   rmagick
   rspec-rails
-  rspec-retry
   rswag-api
   rswag-specs
   rswag-ui
@@ -1481,7 +1461,6 @@ DEPENDENCIES
   seed_dump
   shoulda-matchers!
   simplecov (~> 0.17.0)
-  simplecov-console
   slackistrano
   sorcery
   stackprof

@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Api::V4::CertificatesController, type: :controller do
+
   # TODO: auto-generated
   describe "POST create" do
     pending
@@ -25,4 +26,5 @@ RSpec.describe Api::V4::CertificatesController, type: :controller do
   describe "GET send_certificate" do
     pending
   end
+
 end

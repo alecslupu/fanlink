@@ -66,7 +66,7 @@ module Push
 private
 
   def push_client
-    @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
+    @fbcm ||= FCM.new(FIREBASE_CM_KEY)
   end
   module_function :push_client
 

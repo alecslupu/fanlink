@@ -20,7 +20,7 @@ RSpec.describe Tag, type: :model do
   context "Validation" do
     describe "should create a valid tag" do
       it do
-        expect(build(:tag)).to be_valid
+        expect(create(:tag)).to be_valid
       end
     end
   end

@@ -16,7 +16,8 @@
 #
 
 FactoryBot.define do
-  factory :trivia_picture_available_answer, class: "Trivia::PictureAvailableAnswer" do
+  factory :trivia_picture_available_answer, class: 'Trivia::PictureAvailableAnswer' do
     product { current_product }
+
   end
 end

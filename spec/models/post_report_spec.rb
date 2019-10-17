@@ -1,6 +1,6 @@
 RSpec.describe PostReport, type: :model do
 
-  before(:each) do
+  before(:all) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product
     @post = create(:post)
@@ -8,19 +8,8 @@ RSpec.describe PostReport, type: :model do
 
   context "Valid" do
     it "should create a valid post report" do
-      expect(build(:post_report)).to be_valid
+      expect(create(:post_report)).to be_valid
     end
-  end
-
-  context "Scopes" do
-
-    describe ".status_filter" do
-      it do
-        expect(PostReport).to respond_to(:status_filter)
-      end
-      pending
-    end
-
   end
 
   describe "#create" do
@@ -67,4 +56,6 @@ RSpec.describe PostReport, type: :model do
   describe "#valid_status?" do
     pending
   end
+
+
 end

@@ -1,12 +1,13 @@
 RSpec.describe NotificationDeviceId, type: :model do
-  # before(:each) do
-  #   @product = create(:product)
-  #   ActsAsTenant.current_tenant = @product
-  # end
+
+  before(:all) do
+    @product = create(:product)
+    ActsAsTenant.current_tenant = @product
+  end
 
   context "Valid" do
     it "should create a valid notification device id" do
-      expect(build(:event)).to be_valid
+      expect(create(:event)).to be_valid
     end
   end
 

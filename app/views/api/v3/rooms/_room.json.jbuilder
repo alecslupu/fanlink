@@ -6,7 +6,6 @@ json.picture_url room.picture_url
 json.public room.public
 json.order room.order if room.public?
 if room.private?
-  json.last_message_timestamp room.last_message_timestamp
   json.members room.members, partial: "api/v3/people/person", as: :person
 end
 if room.pin_from.present?

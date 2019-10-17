@@ -1,6 +1,7 @@
 require "swagger_helper"
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
+
   path "/session/token" do
     post "generates a  valid JWT" do
       tags "Session"
@@ -15,21 +16,14 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
 
       response "200", "" do
         let!(:user) { create(:person) }
-        let(:email_or_username) { user.email }
-        let(:password) { "badpassword"}
-        let(:product) { user.product.internal_name }
         schema "$ref": "#/definitions/session_jwt"
         run_test!
       end
 
       response 422, "Invalid login" do
         let!(:user) { create(:person) }
-        let(:email_or_username) { "a" + user.email }
-        let(:password) { "bad_password" }
-        let(:product) { user.product.internal_name }
         run_test!
       end
     end
   end
 end
-

@@ -1,23 +1,9 @@
 RSpec.describe PostCommentReport, type: :model do
-  before(:each) do
+
+  before(:all) do
     @product = create(:product)
     ActsAsTenant.current_tenant = @product
     @post_comment = create(:post_comment)
-  end
-
-  context "Scopes" do
-    describe "#for_product" do
-      it "responds" do
-        expect(PostCommentReport).to respond_to(:for_product)
-      end
-      pending
-    end
-    describe "#status_filter" do
-      it "responds" do
-        expect(PostCommentReport).to respond_to(:status_filter)
-      end
-      pending
-    end
   end
 
   context "Valid" do

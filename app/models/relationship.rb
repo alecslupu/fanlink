@@ -11,18 +11,8 @@
 #
 
 class Relationship < ApplicationRecord
-  # include Relationship::RealTime
+  include Relationship::RealTime
   enum status: %i[ requested friended ]
-
-  #  Relationship::RealTime
-
-  def friend_request_accepted_push
-    Delayed::Job.enqueue(FriendRequestAcceptedPushJob.new(self.id))
-  end
-  def friend_request_received_push
-    Delayed::Job.enqueue(FriendRequestReceivedPushJob.new(self.id))
-  end
-  # eof Relationship::RealTime
 
   has_paper_trail
 

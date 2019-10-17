@@ -15,6 +15,7 @@
 
 FactoryBot.define do
   factory :quiz_page do
+
     transient do
       that_is_mandatory { true }
     end

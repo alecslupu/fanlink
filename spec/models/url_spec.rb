@@ -8,7 +8,7 @@ RSpec.describe Url, type: :model do
 
     describe "should have one" do
       it "#reward" do
-        should have_one(:reward).conditions("rewards.reward_type = #{Reward.reward_types["url"]}").with_foreign_key(:reward_type_id)
+        should have_one(:reward).conditions("rewards.reward_type = #{ Reward.reward_types["url"] }").with_foreign_key(:reward_type_id)
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe Url, type: :model do
   context "Validation" do
     describe "should create a valid url" do
       it do
-        expect(build(:url)).to be_valid
+        expect(create(:url)).to be_valid
       end
     end
   end
