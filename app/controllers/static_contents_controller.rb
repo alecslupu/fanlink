@@ -1,5 +1,6 @@
 class StaticContentsController < ApplicationController
   caches_page :post_share, gzip: true
+  caches_page :html_content, gzip: true
   before_action :set_static_content, only: %i[html_content]
 
   def html_content
