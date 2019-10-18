@@ -264,5 +264,6 @@ JkoApi.routes self do
         get "match" => "interests#match"
       end
     end
+    resources :notifications, only: [:create]
   end
 end
