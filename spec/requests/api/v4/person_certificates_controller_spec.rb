@@ -9,7 +9,7 @@ RSpec.describe "Api::V4::Trivia::PersonCertificatesController", type: :request, 
       parameter name: "X-Current-Product", in: :header, type: :string
       parameter name: :unique_id, in: :path, type: :string
       response "200", "displays valid certificate" do
-        let(:person_certificate) { create(:person_certificate) }
+        let(:person_certificate)  { create(:person_certificate) }
         schema "$ref": "#/definitions/certificate_information"
         run_test!
       end
@@ -17,6 +17,7 @@ RSpec.describe "Api::V4::Trivia::PersonCertificatesController", type: :request, 
       response 404, "" do
         run_test!
       end
+
     end
   end
 end

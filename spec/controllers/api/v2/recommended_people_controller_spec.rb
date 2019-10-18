@@ -1,6 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 
 RSpec.describe Api::V2::RecommendedPeopleController, type: :controller do
+
   describe "#index" do
     it "should get all recommended people" do
       person = create(:person)

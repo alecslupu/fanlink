@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Trivia::Prize, type: :model do
+
   context "Valid factory" do
     it { expect(build(:trivia_prize)).to be_valid }
   end
@@ -11,6 +12,7 @@ RSpec.describe Trivia::Prize, type: :model do
       end
     end
   end
+
 
   describe ".game_id" do
     it "matches the trivia game id" do

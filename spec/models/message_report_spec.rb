@@ -1,5 +1,12 @@
 RSpec.describe MessageReport, type: :model do
 
+  before(:all) do
+    @product = create(:product)
+    @room = create(:room, product: @product)
+    @message = create(:message, room: @room)
+    ActsAsTenant.current_tenant = @product
+  end
+
   context "Associations" do
     it { should belong_to(:message) }
     it { should belong_to(:person) }
@@ -18,26 +25,19 @@ RSpec.describe MessageReport, type: :model do
         expect { build(:message_report, status: :invalid_status_form_spec) }.to raise_error(/is not a valid status/)
       end
     end
+
   end
 
-  context "Scopes" do
-    describe "#for_product" do
-      it "responds to" do
-        expect(MessageReport).to respond_to(:for_product)
-      end
-      pending
-    end
-    describe "#status_filter" do
-      it "responds to" do
-        expect(MessageReport).to respond_to(:status_filter)
-      end
-      pending
+  describe "scopes" do
+    # It's a good idea to create specs that test a failing result for each scope, but that's up to you
+    it ".for product" do
+      product = create(:product)
     end
   end
 
   context "Valid" do
     it "should create a valid message report" do
-      expect(build(:message_report)).to be_valid
+      expect(create(:message_report)).to be_valid
     end
   end
 
@@ -69,6 +69,7 @@ RSpec.describe MessageReport, type: :model do
     it { expect(MessageReport.valid_status?("no_status")).to be_falsey }
   end
 
+
   # TODO: auto-generated
   describe "#create_time" do
     it "works" do
@@ -96,4 +97,5 @@ RSpec.describe MessageReport, type: :model do
       expect(message_report.reporter).to eq(message_report.person)
     end
   end
+
 end

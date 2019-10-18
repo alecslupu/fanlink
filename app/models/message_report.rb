@@ -12,10 +12,7 @@
 #
 
 class MessageReport < ApplicationRecord
-  # include MessageReport::PortalFilters
-  scope :status_filter, ->(query) { where(status: query.to_sym) }
-
-  # include MessageReport::PortalFilters
+  include MessageReport::PortalFilters
 
   enum status: %i[ pending no_action_needed message_hidden ]
 
@@ -30,7 +27,7 @@ class MessageReport < ApplicationRecord
 
   normalize_attributes :reason
 
-  scope :for_product, ->(product) { joins(message: :room).where(rooms: { product_id: product.id }) }
+  scope :for_product, -> (product) { joins(message: :room).where(rooms: { product_id: product.id }) }
 
   def create_time
     created_at.to_s

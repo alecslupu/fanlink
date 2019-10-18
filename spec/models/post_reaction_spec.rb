@@ -1,7 +1,14 @@
 RSpec.describe PostReaction, type: :model do
+
+  before(:all) do
+    @product = create(:product)
+    ActsAsTenant.current_tenant = @product
+    @post = create(:post)
+  end
+
   context "Valid" do
     it "should create a valid post reaction" do
-      expect(build(:post_reaction)).to be_valid
+      expect(create(:post_reaction)).to be_valid
     end
   end
   describe "#create" do

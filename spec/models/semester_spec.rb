@@ -15,7 +15,9 @@ RSpec.describe Semester, type: :model do
 
   context "Validation" do
     describe "should create a valid semester" do
-      it { expect(build(:semester)).to be_valid }
+      it do
+        expect(create(:semester)).to be_valid
+      end
     end
 
     describe "should validate presense of" do
@@ -33,7 +35,7 @@ RSpec.describe Semester, type: :model do
     end
 
     describe "should validate length of" do
-      subject { build(:semester) }
+      subject { create(:semester) }
 
       it "#name" do
         should validate_length_of(:name).is_at_least(3).is_at_most(26).with_message(_("Name must be between 3 and 26 characters."))
@@ -47,8 +49,10 @@ RSpec.describe Semester, type: :model do
     describe "should validate uniqueness of" do
       describe "#name" do
         it "should allow the same name for multiple products" do
-          sem1 = build(:semester, product: create(:product), name: "test_123")
-          sem2 = build(:semester, product: create(:product), name: "test_123")
+          product = create(:product)
+          product2 = create(:product)
+          sem1 = build(:semester, product: product, name: "test_123")
+          sem2 = build(:semester, product: product2, name: "test_123")
 
           expect(sem1).to be_valid
           expect(sem2).to be_valid

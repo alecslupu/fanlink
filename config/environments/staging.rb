@@ -23,7 +23,7 @@ Rails.application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  # config.logger = Logger.new(STDOUT)
+  config.logger = Logger.new(STDOUT)
   config.log_level = :info
 
   # Use a different logger for distributed setups
@@ -65,17 +65,6 @@ Rails.application.configure do
       transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
     }
   }
-
-  log_file = if ENV['HEROKU'].present?
-               STDOUT
-             else
-               "log/#{Rails.env}.log"
-             end
-
-
-  logger           = ActiveSupport::Logger.new(log_file)
-  logger.formatter = config.log_formatter
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
 
   # Disable serving static files from the `/public` folder by default since

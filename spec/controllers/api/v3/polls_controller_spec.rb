@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Api::V3::PollsController, type: :controller do
+
   # TODO: auto-generated
   describe "POST create" do
     pending
@@ -25,4 +26,5 @@ RSpec.describe Api::V3::PollsController, type: :controller do
   describe "GET list" do
     pending
   end
+
 end

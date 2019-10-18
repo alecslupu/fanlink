@@ -4,6 +4,7 @@ json = {
   description: room.description(@lang),
   picture_url: room.picture_url,
   public: room.public,
+  last_message_timestamp: room.last_message_timestamp
 }
 json[:order] = room.order
 json[:last_message_timestamp] = room.last_message_timestamp
