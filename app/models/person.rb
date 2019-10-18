@@ -130,6 +130,7 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+  has_ many :notifications, dependent: :destroy
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
