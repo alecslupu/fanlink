@@ -85,7 +85,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-    it 'should return an public room with the timestamp' do
+    it 'should return an public room with the timestamp and order' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -98,7 +98,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-    it 'should return a private room with the timestamp' do
+    it 'should return a private room with the timestamp and order' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -214,7 +214,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-   it 'should set public room timestamp' do
+   it 'should set private room timestamp' do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
