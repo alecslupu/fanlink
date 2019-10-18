@@ -39,7 +39,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-    it "should return public rooms without timestamps" do
+    it "should return public rooms with timestamps and order" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -49,12 +49,13 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
 
         expect(response).to be_successful
         json["rooms"].each do |room|
-          expect(room).to_not include('last_message_timestamp')
+          expect(room).to include('order')
+          expect(room).to include('last_message_timestamp')
         end
       end
     end
 
-    it "should return private rooms with timestamps" do
+    it "should return private rooms with timestamps and order" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -64,6 +65,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
 
         expect(response).to be_successful
         json["rooms"].each do |room|
+          expect(room).to include('order')
           expect(room).to include('last_message_timestamp')
         end
       end
@@ -83,7 +85,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-    it 'should return an public room without the timestamp' do
+    it 'should return an public room with the timestamp' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -91,7 +93,8 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         get :show, params: { id: room.id}
 
         expect(response).to be_successful
-        expect(json['room']).to_not include('last_message_timestamp')
+        expect(json['room']).to include('order')
+        expect(json['room']).to include('last_message_timestamp')
       end
     end
 
@@ -103,6 +106,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         get :show, params: { id: room.id}
 
         expect(response).to be_successful
+        expect(json['room']).to include('order')
         expect(json['room']).to include('last_message_timestamp')
       end
     end
@@ -194,6 +198,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+        current_timestamp = DateTime.now.to_i
 
         post :create,
              params: {
@@ -204,7 +209,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
              }
 
         expect(response).to be_successful
-        expect(json['room']['last_message_timestamp']).to eq(nil)
+        expect(json['room']['last_message_timestamp']).to be >= current_timestamp
         expect(Room.last.picture).not_to eq(nil)
       end
     end
