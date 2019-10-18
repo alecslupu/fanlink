@@ -5,8 +5,8 @@ json = {
   picture_url: room.picture_url,
   public: room.public,
 }
-json[:order] = room.order if room.public?
-json[:last_message_timestamp] = room.last_message_timestamp if room.private?
+json[:order] = room.order
+json[:last_message_timestamp] = room.last_message_timestamp
 
 json[:members] = render partial: "api/v4/people/#{@req_source}", collection: room.members, as: :person if room.private?
 
