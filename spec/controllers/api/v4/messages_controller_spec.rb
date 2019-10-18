@@ -62,7 +62,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
 
         msg = Message.last
 
-      binding.pry
         expect(msg.room).to eq(room)
         expect(msg.person).to eq(person)
         expect(msg.body).to eq(body)
