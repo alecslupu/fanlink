@@ -66,6 +66,5 @@ module Fanlink
     end
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
-    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
   end
 end

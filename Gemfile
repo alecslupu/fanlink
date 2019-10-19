@@ -42,13 +42,14 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem 'elastic-apm'
+  # gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
   gem "bullet", "~>6.0.2"
+  gem "httplog"
 end
 
 group :development, :test do
@@ -191,6 +192,3 @@ end
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
-
-#for page caching
-gem "actionpack-page_caching"
