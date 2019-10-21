@@ -94,7 +94,6 @@ end
 group :development do
   gem "better_errors", "~>2.5.1"
   gem "binding_of_caller"
-  gem "daemons", "~>1.3.1"
   gem "gettext", ">=3.0.2", require: false
 
   if ENV['RAILS52']
@@ -117,7 +116,6 @@ group :development do
   gem "awesome_print", require: "ap"
   #
   gem "memory_profiler"
-  gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "launchy"
   gem "guard-rspec"
@@ -169,6 +167,8 @@ gem "api-pagination"
 gem "attribute_normalizer"
 gem "aws-sdk"
 gem "countries"
+gem "daemons", "~>1.3.1"
+gem "delayed_job_web"
 gem "delayed_job_active_record"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging

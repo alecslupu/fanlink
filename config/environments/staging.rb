@@ -52,7 +52,7 @@ Rails.application.configure do
 
   config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
   config.eager_load = true
-  config.force_ssl = false
+  config.force_ssl = true
 
 
   config.fanlink = {
@@ -65,18 +65,6 @@ Rails.application.configure do
       transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
     }
   }
-
-  log_file = if ENV['HEROKU'].present?
-               STDOUT
-             else
-               "log/#{Rails.env}.log"
-             end
-
-
-  logger           = ActiveSupport::Logger.new(log_file)
-  logger.formatter = config.log_formatter
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
-
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.

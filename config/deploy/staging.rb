@@ -14,6 +14,9 @@ set :branch, "ale-staging"
 
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_jobs, 8
+
+set :delayed_job_args, "-n 1 -e #{fetch(:rails_env)}"
+
 # role-based syntax
 # ==================
 
