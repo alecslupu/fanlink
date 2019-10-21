@@ -12,7 +12,7 @@ class SimpleNotificationPushJob < Struct.new(:notification_id)
         receipents = Person.where.not(id: current_user.id)
       end
 
-      simple_notification_push(notification,current_user, receipents)
+      simple_notification_push(notification, current_user, receipents)
     end
   end
 
