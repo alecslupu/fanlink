@@ -18,7 +18,7 @@ class StaticContentsController < ApplicationController
     product = Product.where(internal_name: params[:product]).first
     raise ActionController::RoutingError.new('Invalid Product') if product.nil?
     @static_content = StaticContent.find_by(slug: params[:slug], product_id: product.id)
-    raise ActionController::RoutingError.new("Invalid slug parameter: #{product.internal_name}/static/:slug") if@static_content.nil?
+    raise ActionController::RoutingError.new("Invalid slug parameter: #{product.internal_name}/static/:slug") if @static_content.nil?
   end
 
   def generate_locals(post)

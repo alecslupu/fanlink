@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 
   get '/:product/static/:slug', to: 'static_contents#html_content', as: 'cache_static_content'
 
+  get '/:product/download', to: 'static_contents#download', as: 'cached_download_page'
+
   if Rails.env.development?
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
   end
