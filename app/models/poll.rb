@@ -48,8 +48,8 @@ class Poll < ApplicationRecord
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
-    where(poll_type_id: nil).where("end_date > ?", Time.now)
-  }
+          where(poll_type_id: nil).where("end_date > ?", Time.now)
+        }
 
   def closed?
     end_date.to_time.to_i <= Time.now.to_time.to_i

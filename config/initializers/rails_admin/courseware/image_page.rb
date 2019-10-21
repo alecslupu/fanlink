@@ -10,7 +10,7 @@ RailsAdmin.config do |config|
       fields :certcourse_page, :image
     end
     list do
-      fields :id, :course_name, :image, :created_at
+      fields :id, :course_name, :image, :created_at, :updated_at
     end
     show do
       fields :id, :certcourse_page, :image

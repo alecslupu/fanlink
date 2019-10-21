@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::PersonRewardsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     pending

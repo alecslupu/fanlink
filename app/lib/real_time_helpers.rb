@@ -2,7 +2,7 @@ module RealTimeHelpers
   protected
 
     def client
-      Firebase::Client.new(FIREBASE_URL, FIREBASE_KEY)
+      Firebase::Client.new(Rails.application.secrets.firebase_url, Rails.application.secrets.firebase_key.to_json)
     end
 
     def versioned_message_counter_path(membership, version)

@@ -42,6 +42,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
           @message.post(@api_version)
           broadcast(:message_created, @message.id, room.product_id)
           if room.private?
+            room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
             room.increment_message_counters(current_user.id)
             @message.private_message_push
           end

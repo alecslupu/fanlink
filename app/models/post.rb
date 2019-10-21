@@ -37,10 +37,31 @@
 
 class Post < ApplicationRecord
   include AttachmentSupport
-  include Post::PortalFilters
-  include Post::RealTime
+  # include Post::PortalFilters
+
+  scope :id_filter, -> (query) { where(id: query.to_i) }
+  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
+  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
+  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  # include Post::PortalFilters
   include TranslationThings
 
+  #   include Post::RealTime
+
+  def delete_real_time(version = 0)
+    Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
+  end
+
+  def post(version = 0)
+    Delayed::Job.enqueue(PostPostJob.new(self.id, version))
+    if notify_followers && (person.followers.count > 0)
+      Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
+    end
+  end
+  #   include Post::RealTime
   enum status: %i[ pending published deleted rejected errored ]
 
   after_save :adjust_priorities
@@ -74,11 +95,14 @@ class Post < ApplicationRecord
 
   after_create :start_transcoding, if: :video_file_name
 
+  after_save :expire_cache
+  before_destroy :expire_cache, prepend: true
+
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-    left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
-  }
+          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
+        }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
   scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
@@ -94,8 +118,8 @@ class Post < ApplicationRecord
                           Time.zone.now, Time.zone.now)
         }
   scope :not_promoted, -> {
-    left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()")
-  }
+          left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()")
+        }
 
   def cache_key
     [super, person.cache_key].join("/")
@@ -112,6 +136,7 @@ class Post < ApplicationRecord
   def cached_person
     Person.cached_find(person_id)
   end
+
   #
   # def self.cached_for_person(person)
   #   Rails.cache.fetch([name, person]) {
@@ -136,7 +161,7 @@ class Post < ApplicationRecord
     # We assume that the post has been deleted if we can't find it.
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
-    post = self.where.(id: msg["userMetadata"]["post_id"].to_i).first
+    post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
     return unless post.present?
 
     if (msg["userMetadata"]["sizer"])
@@ -163,7 +188,6 @@ class Post < ApplicationRecord
   def flush_cache
     Rails.cache.delete([self.class.name, product])
   end
-
 
   def reaction_breakdown
     Rails.cache.fetch([cache_key, __method__]) {
@@ -200,47 +224,52 @@ class Post < ApplicationRecord
   def published?
     status == "published" && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
   end
+
   private
 
-    def start_transcoding
-      # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
-      return if (self.video_job_id || Rails.env.test?)
-      Delayed::Job.enqueue(PostTranscoderJob.new(self.id), run_at: 1.minutes.from_now)
-      true
-    end
+  def start_transcoding
+    # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
+    return if (self.video_job_id || Rails.env.test?)
+    Delayed::Job.enqueue(PostTranscoderJob.new(self.id), run_at: 1.minutes.from_now)
+    true
+  end
 
-    def merge_new_videos(new_videos)
-      by_src = -> (e) { e[:src] }
-      by_m3u8 = -> (e) { e[:src].to_s.end_with?("v.m3u8") }
+  def merge_new_videos(new_videos)
+    by_src = -> (e) { e[:src] }
+    by_m3u8 = -> (e) { e[:src].to_s.end_with?("v.m3u8") }
 
-      m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
-      m3u8 + the_rest.sort_by(&by_src)
-    end
+    m3u8, the_rest = (self.video_transcoded.to_a + new_videos).uniq(&by_src).partition(&by_m3u8)
+    m3u8 + the_rest.sort_by(&by_src)
+  end
 
-    #
-    # Mark this video as having been transcoded. The SQS DJ and SNS
-    # listener use this to tell the Post that it is all finished.
-    #
-    def youve_been_transcoded!(preset_ids)
-      self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.path, preset_ids))
-      self.video_job_id = nil
-      self.save!
-    end
+  #
+  # Mark this video as having been transcoded. The SQS DJ and SNS
+  # listener use this to tell the Post that it is all finished.
+  #
+  def youve_been_transcoded!(preset_ids)
+    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.path, preset_ids))
+    self.video_job_id = nil
+    self.save!
+  end
 
-    def adjust_priorities
-      if priority > 0 && saved_change_to_attribute?(:priority)
-        same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
-        if same_priority.count > 0
-          person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |post|
-            post.increment!(:priority)
-          end
+  def adjust_priorities
+    if priority > 0 && saved_change_to_attribute?(:priority)
+      same_priority = person.posts.where.not(id: self.id).where(priority: self.priority)
+      if same_priority.count > 0
+        person.posts.where.not(id: self.id).where("priority >= ?", self.priority).each do |post|
+          post.increment!(:priority)
         end
       end
     end
+  end
 
-    def sensible_dates
-      if starts_at.present? && ends_at.present? && starts_at > ends_at
-        errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
-      end
+  def sensible_dates
+    if starts_at.present? && ends_at.present? && starts_at > ends_at
+      errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
     end
+  end
+
+  def expire_cache
+    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(post_id: self.id, product: product.internal_name))
+  end
 end
