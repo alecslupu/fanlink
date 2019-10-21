@@ -50,6 +50,10 @@ RSpec.describe Api::V4::NotificationsController, type: :controller do
         expect{
           post :create, params: { notification: { body: 'body' } }
         }.to change(Delayed::Job, :count).by(1)
+
+        post :create, params: { notification: { body: 'body' } }
+
+        expect(response).to be_successful
       end
     end
   end
