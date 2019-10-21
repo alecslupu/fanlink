@@ -3,7 +3,7 @@ class SimpleNotificationPushJob < Struct.new(:notification_id)
 
   def perform
     notification = Notification.find(notification_id)
-    ActsAsTenant.with_tenant(notification.person.product) do
+    ActsAsTenant.with_tenant(notification.product) do
       current_user = Person.find(notification.person_id)
 
       if notification.for_followers
