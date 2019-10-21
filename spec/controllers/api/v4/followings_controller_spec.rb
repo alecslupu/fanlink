@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V4::FollowingsController, type: :controller do
-
   # TODO: auto-generated
   describe 'GET index' do
     it "should get all the followers of someone if no pagination param is given" do

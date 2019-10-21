@@ -16,7 +16,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_available_question, class: 'Trivia::SingleChoiceAvailableQuestion' do
+  factory :trivia_available_question, class: "Trivia::SingleChoiceAvailableQuestion" do
     product { current_product }
 
     title { Faker::Lorem.question(word_count: 10) }

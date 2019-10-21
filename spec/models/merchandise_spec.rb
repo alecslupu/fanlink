@@ -1,15 +1,12 @@
 RSpec.describe Merchandise, type: :model do
-
-  before(:all) do
-    @name = "abc"
-    @merchandise = create(:merchandise, name: @name)
-    @product = @merchandise.product
-    ActsAsTenant.current_tenant = @product
+  before(:each) do
+    @merchandise = create(:merchandise, name: "abc")
+    ActsAsTenant.current_tenant = create(:product)
   end
 
   context "Valid" do
     it "should create a valid merchandise" do
-      expect(create(:merchandise)).to be_valid
+      expect(build(:merchandise)).to be_valid
     end
   end
 
@@ -32,9 +29,9 @@ RSpec.describe Merchandise, type: :model do
       expect(merch0.reload.priority).to eq(0)
     end
     it "should adjust priorities if priority is greater than 0 and there is merch of equal priority" do
-      merch_other = ActsAsTenant.with_tenant(create(:product)) do
+      merch_other = ActsAsTenant.with_tenant(create(:product)) {
         create(:merchandise, priority: 1)
-      end
+      }
       create(:merchandise, priority: 1)
       expect(merch1.reload.priority).to eq(2)
       expect(merch2.reload.priority).to eq(3)
