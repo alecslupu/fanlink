@@ -4,9 +4,7 @@ class SimpleNotificationPushJob < Struct.new(:notification_id)
   def perform
     notification = Notification.find(notification_id)
     ActsAsTenant.with_tenant(notification.person.product) do
-      if notification.room.private?
-        simple_notification_push(notification)
-      end
+      simple_notification_push(notification)
     end
   end
 

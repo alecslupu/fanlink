@@ -1,7 +1,7 @@
 class Api::V4::NotificationsController < ApiController
   def create
     if current_user.pin_messages_from || current_user.product_account
-      @notification = Notification.new(notification_params)
+      @notification = Notification.new(notification_params.merge(person_id: current_user.id))
       if @notification.save
         @notification.notify
       else
@@ -15,6 +15,6 @@ class Api::V4::NotificationsController < ApiController
   private
 
   def notification_params
-    params.require(:notification).permit(:body, :for_followers, :person_id)
+    params.require(:notification).permit(:body, :for_followers)
   end
 end
