@@ -12,8 +12,19 @@
 #
 
 class PostComment < ApplicationRecord
-  include PostComment::PortalFilters
-  include PostComment::RealTime
+  # include PostComment::PortalFilters
+  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { where("post_comments.body ilike ?", "%#{query}%") }
+  # include PostComment::PortalFilters
+  # include PostComment::RealTime
+
+  def post_me
+    post_comment_mentions.each do |mention|
+      Rails.logger.debug("mention: #{mention.inspect}")
+      Delayed::Job.enqueue(PostCommentMentionPushJob.new(mention.id))
+    end
+  end
+  # include PostComment::RealTime
 
   belongs_to :person, touch: true
   belongs_to :post, touch: true, counter_cache: true

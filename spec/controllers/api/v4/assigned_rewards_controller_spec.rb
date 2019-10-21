@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::AssignedRewardsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     pending
@@ -21,5 +20,4 @@ RSpec.describe Api::V4::AssignedRewardsController, type: :controller do
   describe "PUT update" do
     pending
   end
-
 end
