@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V2::MerchandiseController, type: :controller do
-
   describe "POST create" do
     it "creates a merchandise with attachment when it's valid" do
       person = create(:person, role: :admin)

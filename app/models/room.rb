@@ -2,27 +2,53 @@
 #
 # Table name: rooms
 #
-#  id                   :bigint(8)        not null, primary key
-#  product_id           :integer          not null
-#  name_text_old        :text
-#  created_by_id        :integer
-#  status               :integer          default("inactive"), not null
-#  public               :boolean          default(FALSE), not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  picture_file_name    :string
-#  picture_content_type :string
-#  picture_file_size    :integer
-#  picture_updated_at   :datetime
-#  name                 :jsonb            not null
-#  description          :jsonb            not null
-#  order                :integer          default(0), not null
+#  id                     :bigint(8)        not null, primary key
+#  product_id             :integer          not null
+#  name_text_old          :text
+#  created_by_id          :integer
+#  status                 :integer          default("inactive"), not null
+#  public                 :boolean          default(FALSE), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  picture_file_name      :string
+#  picture_content_type   :string
+#  picture_file_size      :integer
+#  picture_updated_at     :datetime
+#  name                   :jsonb            not null
+#  description            :jsonb            not null
+#  order                  :integer          default(0), not null
+#  last_message_timestamp :bigint(8)
 #
 
 class Room < ApplicationRecord
   include AttachmentSupport
-  include Room::RealTime
+  # include Room::RealTime
   include TranslationThings
+
+  # old Room::RealTime
+  def clear_message_counter(membership)
+    Delayed::Job.enqueue(ClearMessageCounterJob.new(self.id, membership.id))
+  end
+
+  def delete_me(version = 0)
+    Delayed::Job.enqueue(DeleteRoomJob.new(self.id, version)) if self.private?
+  end
+
+  def post(version = 0)
+    Delayed::Job.enqueue(PostMessageJob.new(self.id, version))
+  end
+
+  def increment_message_counters(poster_id, version = 0)
+    room_memberships.each do |mem|
+      mem.increment!(:message_count) unless mem.person.id == poster_id
+    end
+    Delayed::Job.enqueue(UpdateMessageCounterJob.new(self.id, poster_id, version))
+  end
+
+  def new_room(version = 0)
+    Delayed::Job.enqueue(AddRoomJob.new(self.id, version)) if self.private?
+  end
+  # eof old Room::RealTime
 
   # replicated_model
 

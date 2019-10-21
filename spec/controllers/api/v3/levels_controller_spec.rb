@@ -38,5 +38,4 @@ RSpec.describe Api::V3::LevelsController, type: :controller do
   describe "DELETE destroy" do
     pending
   end
-
 end

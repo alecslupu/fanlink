@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::QuestActivitiesController, type: :controller do
   describe "GET show" do

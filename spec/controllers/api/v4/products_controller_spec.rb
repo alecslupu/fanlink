@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::ProductsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     it 'returns all products with their attached image' do
@@ -61,5 +60,4 @@ RSpec.describe Api::V4::ProductsController, type: :controller do
     #   expect(json['product']['logo_file_size']).not_to eq(nil)
     # end
   end
-
 end

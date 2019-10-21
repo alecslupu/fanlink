@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V4::PostsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     it 'returns all the posts with the attachments' do

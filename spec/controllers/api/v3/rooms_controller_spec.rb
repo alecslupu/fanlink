@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V3::RoomsController, type: :controller do
-
   # TODO: auto-generated
   describe 'POST create' do
     it 'shold attach picture to public rooms when provided' do

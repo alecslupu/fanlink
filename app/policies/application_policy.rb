@@ -53,15 +53,15 @@ class ApplicationPolicy
     user && user.some_admin?
   end
 
-  def select_product_dashboard?
-    # true
-    false
-  end
+  # def select_product_dashboard?
+  #   # true
+  #   false
+  # end
 
-  def generate_game_action?
-    # false
-    false
-  end
+  # def generate_game_action?
+  #   # false
+  #   false
+  # end
   # Rails admin
 
   def select_product?
@@ -99,11 +99,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      if user.some_admin? && scope.respond_to?(:product)
-        scope.where(product_id: ActsAsTenant.current_tenant.id)
-      else
-        scope.all
-      end
+      scope.all
     end
   end
 end

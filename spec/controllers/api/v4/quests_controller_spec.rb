@@ -1,6 +1,7 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::QuestsController, type: :controller do
+
   describe "GET index" do
     it 'returns all quests with their attached image' do
       person = create(:person, role: :admin)

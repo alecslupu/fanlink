@@ -1,6 +1,7 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V2::MessagesController, type: :controller do
+
   describe "create" do
     it "should create a new message with an attached image" do
       person = create(:person)
@@ -44,10 +45,10 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
   end
 
   describe 'index' do
-    # it "should get a paginated list of messages with page 1"
-    # it "should get only pinned messages with page 1"
-    # it "should get only nonpinned messages"
-    # it "should get all pinned and nonpinned messages"
+    it "should get a paginated list of messages with page 1"
+    it "should get only pinned messages with page 1"
+    it "should get only nonpinned messages"
+    it "should get all pinned and nonpinned messages"
 
     it 'returns all the messages with the attached image' do
       person = create(:person, role: :admin)

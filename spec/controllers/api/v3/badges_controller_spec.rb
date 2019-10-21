@@ -59,7 +59,6 @@ RSpec.describe Api::V3::BadgesController, type: :controller do
       end
     end
   end
-
   describe 'GET show' do
     it 'returns the badge with the attached image' do
       person = create(:person, role: :admin)

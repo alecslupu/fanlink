@@ -46,13 +46,13 @@ RSpec.describe Reward, type: :model do
   context "Validation" do
     describe "should create a valid reward as" do
       it "#badge reward" do
-        expect(create(:badge_reward)).to be_valid
+        expect(build(:badge_reward)).to be_valid
       end
       it "#url reward" do
-        expect(create(:url_reward)).to be_valid
+        expect(build(:url_reward)).to be_valid
       end
       it "#coupon reward" do
-        expect(create(:coupon_reward)).to be_valid
+        expect(build(:coupon_reward)).to be_valid
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Reward, type: :model do
     end
 
     describe "should validate length of" do
-      subject { create(:badge_reward) }
+      subject { build(:badge_reward) }
 
       it "#internal_name" do
         should validate_length_of(:internal_name).is_at_least(3).is_at_most(26).with_message(_("Internal name must be between 3 and 26 characters."))
@@ -104,10 +104,8 @@ RSpec.describe Reward, type: :model do
     describe "should validate uniqueness of" do
       describe "#internal_name" do
         it "should allow the same internal name for multiple products" do
-          product = create(:product)
-          product2 = create(:product)
-          reward1 = build(:badge_reward, product: product, internal_name: "test_123")
-          reward2 = build(:badge_reward, product: product2, internal_name: "test_123")
+          reward1 = build(:badge_reward, product: create(:product), internal_name: "test_123")
+          reward2 = build(:badge_reward, product: create(:product), internal_name: "test_123")
 
           expect(reward1).to be_valid
           expect(reward2).to be_valid
@@ -127,8 +125,8 @@ RSpec.describe Reward, type: :model do
       describe "#reward_type_id" do
         it "should not allow a reward to be assigned multiple times" do
           product = create(:product)
-          badge = create(:badge)
-          reward1 = create(:reward, product: product, reward_type_id: badge.id, reward_type: :badge)
+          badge= create(:badge) #already creates a reward
+          reward1 = badge.reward
           reward2 = build(:reward, product: product, reward_type_id: badge.id, reward_type: :badge)
 
           expect(reward1).to be_valid
