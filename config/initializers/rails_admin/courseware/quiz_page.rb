@@ -10,12 +10,7 @@ RailsAdmin.config do |config|
       fields :certcourse_page, :is_optional, :is_survey, :quiz_text, :wrong_answer_page_id, :answers
     end
     list do
-      field :id
-      field :course_name do
-        searchable [{ Certcourse => :long_name }]
-        queryable true
-      end
-      fields :quiz_text, :answers, :is_optional, :is_survey
+      fields :id, :course_name, :quiz_text, :answers, :is_optional, :is_survey
     end
     show do
       fields :id, :certcourse_page, :is_optional, :is_survey, :quiz_text, :wrong_answer_page_id

@@ -1,9 +1,6 @@
-# -*- encoding: utf-8 -*-
-
 require "spec_helper"
 
 describe PersonMailer do
-
   # TODO: auto-generated
   describe "#onboarding" do
     pending
@@ -18,5 +15,4 @@ describe PersonMailer do
   describe "#send_certificate" do
     pending
   end
-
 end

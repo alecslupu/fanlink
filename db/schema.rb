@@ -492,7 +492,6 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
-    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -542,7 +541,6 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.index ["created_at"], name: "index_people_on_created_at"
-    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -683,7 +681,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-02-07 01:46:08"
+    t.datetime "end_date", default: "2019-09-10 13:54:50"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
