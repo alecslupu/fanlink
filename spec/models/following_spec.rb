@@ -1,27 +1,19 @@
 RSpec.describe Following, type: :model do
-
-  before(:all) do
-    @follower = create(:person)
-    @followed = create(:person, product: @follower.product)
-    @following = Following.new(follower_id: @follower.id, followed_id: @followed.id)
-    ActsAsTenant.current_tenant = @follower.product
-  end
-
   context "Valid" do
-    it  { expect(create(:following)).to be_valid }
+    it { expect(build(:following)).to be_valid }
   end
 
-  describe "#follower_id" do
-    it "should require a follower_id" do
-      @following.follower_id = nil
-      expect(@following).not_to be_valid
-    end
+  describe " requires a follower_id" do
+    let(:follower) { build(:person) }
+    let(:followed) { build(:person, product: follower.product) }
+    let(:following) { build(:following, follower: nil, followed: followed)}
+    it { expect(following).not_to be_valid }
   end
 
-  describe "#followed_id" do
-    it "should require a followed_id" do
-      @following.followed_id = nil
-      expect(@following).not_to be_valid
-    end
+  describe "requires a followed_id" do
+    let(:follower) { build(:person) }
+    let(:following) { build(:following, follower: follower, followed: nil)}
+
+    it { expect(following).not_to be_valid }
   end
 end

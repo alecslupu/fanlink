@@ -18,7 +18,7 @@ module TranslationThings
       "ro" => "Romanian"
   }.freeze
 
-  DEFAULT_LANG = "en"
+  DEFAULT_LANG = "un"
   DEFAULT_READ_LANG = "en"
 
   def self.word(code)
