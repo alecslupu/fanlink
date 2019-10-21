@@ -33,9 +33,7 @@
 
 FactoryBot.define do
   factory :person_certificate do
-
     person { create(:person) }
     certificate { create(:certificate) }
-
   end
 end

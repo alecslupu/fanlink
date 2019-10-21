@@ -1,6 +1,6 @@
 RSpec.describe RoomMembership, type: :model do
-  before(:all) do
-    ActsAsTenant.current_tenant = Product.first
+  before(:each) do
+    ActsAsTenant.current_tenant = create(:product)
     @owner = create(:person)
     @room = create(:room, created_by: @owner)
     @room.room_memberships.create(person_id: @owner.id)
@@ -21,7 +21,7 @@ RSpec.describe RoomMembership, type: :model do
   context "Validation" do
     describe "should create a valid room membership" do
       it do
-        expect(create(:room_membership)).to be_valid
+        expect(build(:room_membership)).to be_valid
       end
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe RoomMembership, type: :model do
   describe "#room_id" do
     it "should not allow membership to public room" do
       public_room = create(:room, public: true)
-      mem = public_room.room_memberships.create(person_id: create(:person).id)
+      mem = public_room.room_memberships.build(person_id: create(:person).id)
       expect(mem).not_to be_valid
       expect(mem.errors[:room_id]).not_to be_empty
     end

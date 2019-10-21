@@ -1,5 +1,5 @@
 RSpec.describe Post, type: :model do
-  before(:all) do
+  before(:each) do
     @product = Product.first || create(:product)
     ActsAsTenant.current_tenant = @product
     @person = create(:person)
@@ -19,7 +19,54 @@ RSpec.describe Post, type: :model do
 
   context "Valid" do
     it "should create a valid post" do
-      expect(create(:post)).to be_valid
+      expect(build(:post)).to be_valid
+    end
+  end
+
+  describe "scopes" do
+    describe ".id_filter" do
+      it do
+        expect(Post).to respond_to(:id_filter)
+      end
+      pending
+    end
+    describe ".person_id_filter" do
+      it do
+        expect(Post).to respond_to(:person_id_filter)
+      end
+      pending
+    end
+
+    describe ".person_filter" do
+      it do
+        expect(Post).to respond_to(:person_filter)
+      end
+      pending
+    end
+
+    describe ".body_filter" do
+      it do
+        expect(Post).to respond_to(:body_filter)
+      end
+      pending
+    end
+    describe ".posted_after_filter" do
+      it do
+        expect(Post).to respond_to(:posted_after_filter)
+      end
+      pending
+    end
+    describe ".posted_before_filter" do
+      it do
+        expect(Post).to respond_to(:posted_before_filter)
+      end
+      pending
+    end
+    describe ".status_filter" do
+      it do
+        expect(Post).to respond_to(:status_filter)
+      end
+      pending
     end
   end
 
@@ -95,8 +142,6 @@ RSpec.describe Post, type: :model do
       expect(post.errors[:starts_at]).not_to be_empty
     end
   end
-
-
 
   # TODO: auto-generated
   describe "#cache_key" do
@@ -220,5 +265,18 @@ RSpec.describe Post, type: :model do
     pending
   end
 
+
+  describe "#delete_real_time" do
+    it "responds to method " do
+      expect(Post.new).to respond_to(:delete_real_time)
+    end
+    pending
+  end
+  describe "#post" do
+    it "responds to method " do
+      expect(Post.new).to respond_to(:post)
+    end
+    pending
+  end
 
 end

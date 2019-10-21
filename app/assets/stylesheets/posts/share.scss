@@ -1,0 +1,41 @@
+body {
+        font-family: 'Helvetica', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg');
+        background-size: cover;
+        width: 100%;
+        min-height: calc(100vh - 100px);
+      }
+      .post {
+        position: relative;
+        width: 330px;
+        border-radius: 20px;
+        background-color: #fff;
+        margin: 100px auto 0;
+        box-sizing: border-box;
+        min-height: 200px;
+      }
+      .post .profile-picture {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin: 10px;
+        display: inline-block;
+      }
+      .post .post-picture {
+        width: 330px;
+      }
+        .post h2 {
+        margin: 0;
+        padding: 20px 0 0 0;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: top;
+      }
+      .post p {
+        font-size: 16px;
+        padding: 20px;
+        margin: 0;
+      }
+
