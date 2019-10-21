@@ -36,7 +36,7 @@ class Api::V1::BadgesController < ApiController
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   # *
   def index
-    @badges = Badge.all
+    @badges = Badge.order(:id).all
     @badges_awarded = @person.badge_awards.map(&:badge)
     @badge_action_counts = @person.badge_actions.group(:action_type_id).count
     return_the @badges

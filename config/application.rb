@@ -20,6 +20,13 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
+
+
+    logger           = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
@@ -32,13 +39,13 @@ module Fanlink
     config.paperclip_defaults = {
         storage: :s3,
         url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
-        s3_region: ENV["AWS_REGION"],
-        bucket:    ENV["AWS_BUCKET"],
-        hash_secret: ENV["PAPERCLIP_SECRET"],
-        s3_host_name: "s3.#{ENV.fetch('AWS_REGION')}.amazonaws.com",
+        s3_region: Rails.application.secrets.aws_region,
+        bucket:    Rails.application.secrets.aws_bucket,
+        hash_secret: Rails.application.secrets.paperclip_secret,
+        s3_host_name: "s3.#{Rails.application.secrets.aws_region}.amazonaws.com",
         s3_credentials: {
-            access_key_id: ENV["AWS_ACCESS_KEY_ID"],
-            secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
+            access_key_id: Rails.application.secrets.aws_access_key_id,
+            secret_access_key: Rails.application.secrets.aws_secret_access_key
         },
         s3_protocol: :https
     }
@@ -66,5 +73,6 @@ module Fanlink
     end
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
+    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
   end
 end

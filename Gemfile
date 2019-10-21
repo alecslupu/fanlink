@@ -8,73 +8,110 @@ end
 ruby "2.5.1"
 
 # gem "rack-cache"
+if ENV['RAILS52']
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 5.2"
+  # Use Puma as the app server
+  gem 'puma', '~> 3.11'
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 5.0'
+  # Use Uglifier as compressor for JavaScript assets
+  gem 'uglifier', '>= 1.3.0'
+  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+  gem 'jbuilder', '~> 2.5'
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 5.1.4"
+  # Reduces boot times through caching; required in config/boot.rb
+  gem 'bootsnap', '>= 1.1.0', require: false
+
+elsif ENV["RAILS6"]
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 6"
+else
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 5.1.4"
+  # Use Puma as the app server
+  gem "puma", "~> 3.7"
+  # Use SCSS for stylesheets
+  gem "sass-rails", "~> 5.0"
+  # Use Uglifier as compressor for JavaScript assets
+  gem "uglifier", ">= 1.3.0"
+  # See https://github.com/rails/execjs#readme for more supported runtimes
+  gem "therubyracer", platforms: :ruby
+  # Use CoffeeScript for .coffee assets and views
+  gem "coffee-rails", "~> 4.2"
+  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+  gem "jbuilder", "~> 2.5"
+  # Use Redis adapter to run Action Cable in production
+  gem "redis"
+  # Use ActiveModel has_secure_password
+  # gem "bcrypt", "~> 3.1.7"
+end
+
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
-# Use Puma as the app server
-gem "puma", "~> 3.7"
-# Use SCSS for stylesheets
-gem "sass-rails", "~> 5.0"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem "therubyracer", platforms: :ruby
 
-# Use CoffeeScript for .coffee assets and views
-gem "coffee-rails", "~> 4.2"
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.5"
 gem "jb"
-# Use Redis adapter to run Action Cable in production
-gem "redis"
 gem "redis-namespace"
 gem "redis-rails"
 
 gem "httparty", "0.16.4"
-# Use ActiveModel has_secure_password
-# gem "bcrypt", "~> 3.1.7"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
 #
 
 group :production, :staging do
-  gem "newrelic_rpm"
+  # gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
-  gem "derailed_benchmarks"
+  gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
-  gem "bullet"
+  gem "bullet", "~>6.0.2"
+  gem "httplog"
 end
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "pry"
-  gem "byebug", platforms: [:mri, :mingw]
-  gem "pry-byebug"
-  gem "dotenv-rails"
-  gem "faker"
+  gem "pry", "~>0.12.2"
+  gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
+  gem "pry-byebug", "~>3.7.0"
+  gem "dotenv-rails", "~>2.7.5"
+  gem "faker", "~>2.1.2"
   gem "rspec-rails"
   gem "rails-controller-testing"
-  gem "factory_bot_rails"
-  gem "fuubar"
-  # gem "rubocop-rails"
-  gem "rubocop-rails_config"
+  gem "factory_bot_rails", "~>5.0.2"
+  gem "fuubar", "~>2.4.1"
+
+  gem 'rubocop', '~> 0.74.0', require: false
+  # gem "rubocop-rails_config"
+  gem 'rubocop-rails'
   gem "rubocop-rspec"
+  gem 'rubocop-performance'
 end
 
 group :development do
-  gem "better_errors"
+  gem "better_errors", "~>2.5.1"
   gem "binding_of_caller"
-  gem "daemons"
+  gem "daemons", "~>1.3.1"
   gem "gettext", ">=3.0.2", require: false
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
+
+  if ENV['RAILS52']
+    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+    gem "web-console", ">= 3.3.0"
+    gem "listen", ">= 3.0.5", "< 3.2"
+    # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+    gem 'spring'
+    gem 'spring-watcher-listen', '~> 2.0.0'
+  elsif ENV["RAILS6"]
+      # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+      gem "rails", "~> 6"
+  else
+    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+    gem "web-console", ">= 3.3.0"
+    gem "listen", ">= 3.0.5", "< 3.2"
+  end
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require: "ap"
@@ -88,18 +125,24 @@ group :development do
   gem "guard-brakeman"
   gem "guard-annotate"
   gem "guard-rubycritic"
+
+  gem "capistrano", require: false
+  gem 'capistrano-passenger', require: false
+  gem 'slackistrano', require: false
 end
 
 group :test do
-  gem "cucumber-rails", require: false
+  gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
-  gem "simplecov", require: false
+  gem "simplecov", "~>0.17.0", require: false
+  gem 'simplecov-console', require: false
   gem "timecop"
-  gem "webmock"
+  gem "webmock", "~>3.6.2"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
   gem "wisper-rspec", require: false
-  gem "json_schemer"
+  gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
+  gem 'rspec-retry'
 end
 
 # greg is saying that is not suporting V Rails 5.2.
@@ -116,7 +159,10 @@ gem "administrate-field-belongs_to_search"
 gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
+gem 'awesome_nested_set'
+
 gem "rails_admin", "1.3.0"
+gem "rails_admin_nested_set"
 
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
@@ -132,7 +178,6 @@ gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
-gem "graphql"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
 gem "jko_api" # api versioning
@@ -155,7 +200,6 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rack-timeout"
 gem "rest-firebase"
-gem "rollbar"
 gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
@@ -164,9 +208,10 @@ gem "wisper", "2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
-gem "rmagick"
+# To get video's length
+gem "streamio-ffmpeg"
 
-gem "graphiql-rails", group: :development
+gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"
@@ -179,6 +224,16 @@ group :development, :test do
     # gem "apigen", path: "lib/gems/apigen"
     gem "rswag-specs"
 end
+
+group :test do
+  gem 'pundit-matchers', '~> 1.6.0'
+end
+
 # Gemfile
 gem "rswag-api"
 gem "rswag-ui"
+
+gem "psych"
+gem 'parallel_tests', group: [:development, :test]
+#for page caching
+gem "actionpack-page_caching"

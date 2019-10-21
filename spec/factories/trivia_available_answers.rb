@@ -18,11 +18,10 @@ FactoryBot.define do
     product { current_product }
 
     question { create(:trivia_available_question) }
-    name { Faker::Lorem.question(4) }
-    hint { Faker::Lorem.words(5) }
+    name { Faker::Lorem.question }
+    hint { Faker::Lorem.paragraph }
     is_correct { false }
     status { :published }
-
 
     factory :correct_trivia_available_answer do
       is_correct { true }
@@ -31,6 +30,5 @@ FactoryBot.define do
     factory :wrong_trivia_available_answer do
       is_correct { false }
     end
-
   end
 end

@@ -1,9 +1,6 @@
-# -*- encoding: utf-8 -*-
-
 require "spec_helper"
 
 describe QuestsListener do
-
   # TODO: auto-generated
   describe "#completion_created" do
     pending
@@ -23,5 +20,4 @@ describe QuestsListener do
   describe "#update_step_successful" do
     pending
   end
-
 end
