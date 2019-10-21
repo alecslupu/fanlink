@@ -13,8 +13,10 @@ module MessagingHelpers
   class FBStub
     def new
     end
+
     def delete(k)
     end
+
     def set(k, v)
     end
 

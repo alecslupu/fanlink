@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
-
   describe "#index" do
     it "should get all recommended posts" do
       person = create(:person)
@@ -23,7 +22,7 @@ RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         post_list = create_list(:recommended_post, 8, status: :published).reverse
         login_as(person)
-        get :index, params: { page: 1, per_page: 2 }
+        get :index, params: {page: 1, per_page: 2}
         expect(response).to be_successful
         posts = json["recommended_posts"].map { |p| p["id"].to_i }
         expect(posts.size).to eq(2)
@@ -35,7 +34,7 @@ RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         post_list = create_list(:recommended_post, 8, status: :published).reverse
         login_as(person)
-        get :index, params: { page: 2, per_page: 2 }
+        get :index, params: {page: 2, per_page: 2}
         expect(response).to be_successful
         posts = json["recommended_posts"].map { |p| p["id"].to_i }
         expect(posts.size).to eq(2)
@@ -46,7 +45,7 @@ RSpec.describe Api::V2::RecommendedPostsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         create_list(:recommended_post, 8, status: :published)
-        get :index, params: { page: 1, per_page: 25 }
+        get :index, params: {page: 1, per_page: 25}
         expect(response).to be_unauthorized
       end
     end

@@ -37,10 +37,31 @@
 
 class Post < ApplicationRecord
   include AttachmentSupport
-  include Post::PortalFilters
-  include Post::RealTime
+  # include Post::PortalFilters
+
+  scope :id_filter, -> (query) { where(id: query.to_i) }
+  scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
+  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
+  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  # include Post::PortalFilters
   include TranslationThings
 
+  #   include Post::RealTime
+
+  def delete_real_time(version = 0)
+    Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
+  end
+
+  def post(version = 0)
+    Delayed::Job.enqueue(PostPostJob.new(self.id, version))
+    if notify_followers && (person.followers.count > 0)
+      Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
+    end
+  end
+  #   include Post::RealTime
   enum status: %i[ pending published deleted rejected errored ]
 
   after_save :adjust_priorities
@@ -73,6 +94,9 @@ class Post < ApplicationRecord
   validate :sensible_dates
 
   after_create :start_transcoding, if: :video_file_name
+
+  after_save :expire_cache
+  before_destroy :expire_cache, prepend: true
 
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
@@ -243,5 +267,9 @@ class Post < ApplicationRecord
     if starts_at.present? && ends_at.present? && starts_at > ends_at
       errors.add(:starts_at, :sensible_dates, message: _("Start date cannot be after end date."))
     end
+  end
+
+  def expire_cache
+    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_post_path(post_id: self.id, product: product.internal_name))
   end
 end
