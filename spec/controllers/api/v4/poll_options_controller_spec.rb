@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V4::PollOptionsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET cast_vote" do
     pending

@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe CertcoursePage, type: :model do
-
   context "Valid factory" do
-    it { expect(create(:certcourse_page)).to be_valid }
+    it { expect(build(:certcourse_page)).to be_valid }
   end
 
   describe "dependencies" do
@@ -60,6 +59,4 @@ RSpec.describe CertcoursePage, type: :model do
   describe "#child" do
     pending
   end
-
-
 end
