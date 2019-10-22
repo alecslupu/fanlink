@@ -125,10 +125,10 @@ group :development do
   gem "guard-rubycritic"
 
   gem "capistrano", require: false
-  gem 'capistrano-passenger', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
   gem 'slackistrano', require: false
+  gem 'capistrano3-puma' , require: false
 end
 
 group :test do
