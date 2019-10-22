@@ -20,9 +20,9 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
+    log_dest = ENV['HEROKU'].present? ? STDOUT : "log/#{Rails.env}.log"
 
-
-    logger           = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+    logger           = ActiveSupport::Logger.new(log_dest)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
 

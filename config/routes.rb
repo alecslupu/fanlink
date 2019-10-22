@@ -28,7 +28,5 @@ Rails.application.routes.draw do
 
   get '/:product_id/static_content/:slug' => 'static_contents#show'
 
-  if Rails.env.development?
-    match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
-  end
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 end

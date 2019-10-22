@@ -7,13 +7,16 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server "54.183.70.153", user: "ubuntu", roles: %w{ app db web }
+server "54.183.29.51", user: "ubuntu", roles: %w{ app db web }
 
 set :rails_env, "staging"
 set :branch, "ale-staging"
 
 set :bundle_without, %w{development test}.join(' ')
 set :bundle_jobs, 8
+
+set :delayed_job_args, "-n 1 -e #{fetch(:rails_env)}"
+
 # role-based syntax
 # ==================
 
