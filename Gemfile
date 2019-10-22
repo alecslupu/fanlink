@@ -62,7 +62,7 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  # gem 'elastic-apm'
+  gem 'elastic-apm'
 end
 
 group :staging, :development, :test do
@@ -126,6 +126,8 @@ group :development do
 
   gem "capistrano", require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
   gem 'slackistrano', require: false
 end
 
