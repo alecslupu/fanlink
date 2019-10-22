@@ -1,4 +1,4 @@
-class PortalAccessPolicy < UserModulePolicy
+class PortalAccessPolicy < ApplicationPolicy
   def attributes_for(action)
     {}
   end
