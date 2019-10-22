@@ -1,0 +1,2 @@
+class HackedMetricPolicy < ApplicationPolicy
+end

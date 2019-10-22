@@ -7,41 +7,316 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         room = create(:room, public: true, status: :active)
         login_as(person)
+        unblocked = create(:person)
         blocked = create(:person)
+        blocked2 = create(:person)
         person.block(blocked)
-        blocked_msg = create(:message, person: blocked,room: room)
-        create(:message, person: blocked,room: room)
-        create(:message, person: blocked,room: room)
-        create(:message, person: create(:person),room: room)
+        person.block(blocked2)
+        unblocked_msg = create(:message, person: unblocked, room_id: room.id)
+        blocked_msg = create(:message, person: blocked, room_id: room.id)
+        blocked_msg2 = create(:message, person: blocked, room_id: room.id)
         get :index, params: { room_id: room.id }
         expect(response).to be_successful
         expect(json["messages"].map { |m| m["id"] }).not_to include(blocked_msg.id)
+        expect(json["messages"].map { |m| m["id"] }).not_to include(blocked_msg.id)
+        expect(json["messages"].map { |m| m["id"] }).to include(unblocked_msg.id)
+      end
+    end
+
+    it 'returns all the messages with the attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        create_list(
+          :message,
+          3,
+          created_at: to,
+          room: private_room,
+          body: "this is my body",
+          picture: fixture_file_upload('images/better.png', 'image/png')
+        )
+        get :index,
+          params: {
+            room_id: private_room.id,
+            from_date: from,
+            to_date: to
+          }
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['picture_url']).not_to eq(nil)
+        end
+      end
+    end
+
+    it "should create a new message with an attached audio" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        body = "Do you like my body?"
+        room = create(:public_active_room, )
+        post :create,
+        params: {
+          room_id: room.id,
+          message: {
+            body: body,
+            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+          }
+        }
+        expect(response).to be_successful
+        expect(json['message']['audio_url']).not_to eq(nil)
+        expect(Message.last.audio.exists?).to be_truthy
       end
     end
   end
 
   # TODO: auto-generated
-  describe "GET list" do
-    pending
-  end
-
-  # TODO: auto-generated
-  describe "GET show" do
-  end
-
-  # TODO: auto-generated
   describe "POST create" do
-    pending
+    it "creates a new message in a public room and does not update the timestamp" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        body = "Do you like my body?"
+        room = create(:room, public: true, status: :active)
+
+        expect(room.last_message_timestamp).to eq(nil)
+
+        timestamp = DateTime.now.to_i
+        post :create, params: { room_id: room.id,  message: { body: body } }
+        expect(response).to be_successful
+
+        msg = Message.last
+
+        expect(msg.room).to eq(room)
+        expect(msg.person).to eq(person)
+        expect(msg.body).to eq(body)
+        expect(json["message"]["body"]).to eq(body)
+        expect(room.reload.last_message_timestamp).to eq(nil)
+      end
+    end
+
+    it "should create a new message in a private room and updates the timestamp" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        room = create(:room, created_by: person, status: :active)
+        expect(room.last_message_timestamp).to eq(nil)
+
+        room.members << person
+        other_member = create(:person, product: person.product)
+        room.members << other_member
+        login_as(person)
+        body = "Do you like my body?"
+        timestamp = DateTime.now.to_i
+
+        post :create, params: { room_id: room.id, message: { body: body } }
+
+        expect(response).to be_successful
+        msg = Message.last
+        expect(msg.room).to eq(room)
+        expect(msg.person).to eq(person)
+        expect(msg.body).to eq(body)
+        expect(room.reload.last_message_timestamp).to be >= timestamp
+      end
+    end
+    it "should create a new message with an attached image" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        body = "Do you like my body?"
+        room = create(:public_active_room, )
+        post :create,
+        params: {
+          room_id: room.id,
+          message: {
+            body: body,
+            picture: fixture_file_upload('images/better.png', 'image/png')
+          }
+        }
+        expect(response).to be_successful
+        expect(json['message']['picture_url']).not_to eq(nil)
+        expect(Message.last.picture.exists?).to be_truthy
+      end
+    end
+
+    it "should create a new message with an attached audio" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        body = "Do you like my body?"
+        room = create(:public_active_room, )
+        post :create,
+        params: {
+          room_id: room.id,
+          message: {
+            body: body,
+            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+          }
+        }
+        expect(response).to be_successful
+        expect(json['message']['audio_url']).not_to eq(nil)
+        expect(Message.last.audio.exists?).to be_truthy
+      end
+    end
+
+    it 'returns all the messages with the attached audio' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        msg = create_list(
+          :message,
+          3,
+          room: private_room,
+          body: "this is my body",
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+        )
+        get :index,
+          params: {
+            room_id: private_room.id,
+            from_date: from,
+            to_date: to
+          }
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['audio_url']).not_to eq(nil)
+        end
+      end
+    end
+  end
+  describe "GET show" do
+    it 'returns the message with the attached picture' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        msg = create(
+          :message,
+          room: private_room,
+          body: "this is my body",
+          picture: fixture_file_upload('images/better.png', 'image/png')
+        )
+        get :show, params: { room_id: private_room.id, id: msg.id }
+
+        expect(response).to be_successful
+        expect(json['message']['picture_url']).not_to eq(nil)
+      end
+    end
+
+    it 'returns the message with the attached audio' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        msg = create(
+          :message,
+          room: private_room,
+          body: "this is my body",
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+        )
+        get :show, params: { room_id: private_room.id, id: msg.id }
+
+        expect(response).to be_successful
+        expect(json['message']['audio_url']).not_to eq(nil)
+      end
+    end
+
+   it" should not return the message from a blocked person" do
+    person = create(:person)
+    ActsAsTenant.with_tenant(person.product) do
+      room = create(:room, public: true, status: :active)
+      login_as(person)
+      blocked = create(:person)
+      person.block(blocked)
+      blocked_msg = create(:message, person: blocked, room_id: room.id)
+      get :show, params: { room_id: room.id, id: blocked_msg.id }
+      expect(response).to have_http_status(404)
+      expect(response.body).to include("Not found")
+    end
+   end
   end
 
   # TODO: auto-generated
   describe "PUT update" do
-    pending
+    it "does not update the timestamp" do
+      admin_person = create(:admin_user)
+      ActsAsTenant.with_tenant(admin_person.product) do
+        login_as(admin_person)
+        room = create(:room, public: true, status: :active, last_message_timestamp: 1)
+        msg = create(:message, room: room)
+
+        expect {
+          patch :update, params: { id: msg.id, message: { hidden: true } }
+        }.not_to change { room.last_message_timestamp }
+      end
+    end
+  end
+
+  describe "list" do
+    it 'returns all the messages with the attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        create_list(
+          :message,
+          3,
+          created_at: to,
+          room: private_room,
+          body: "this is my body",
+          picture: fixture_file_upload('images/better.png', 'image/png')
+        )
+        get :list
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['picture_url']).not_to eq(nil)
+        end
+      end
+    end
+
+    it 'returns all the messages with the attached audio' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        create_list(
+          :message,
+          3,
+          room: private_room,
+          body: "this is my body",
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+        )
+
+        get :list
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['audio_url']).not_to eq(nil)
+        end
+      end
+    end
   end
 
   # TODO: auto-generated
   describe "GET stats" do
     pending
   end
-
 end

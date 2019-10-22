@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trivia::AvailableQuestion, type: :model do
-
   context "Valid factory" do
     it { expect(build(:trivia_multiple_choice_available_question)).to be_valid }
     it { expect(build(:trivia_single_choice_available_question)).to be_valid }

@@ -29,7 +29,7 @@ module Admin
         Message.publics.for_product(ActsAsTenant.current_tenant),
         params[:filterrific],
         select_options: {
-          with_reported_status: Message::FilterrificImpl.options_for_reported_status_filter
+          with_reported_status: Message.options_for_reported_status_filter
         }
       ) || return
       resources = @filterrific.find.page(params[:page])
