@@ -32,6 +32,6 @@ class StaticContent < ApplicationRecord
   end
 
   def expire_cache
-    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_static_content_path(product: product.internal_name, slug: slug))
+    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cached_download_page_path(product: product.internal_name, slug: slug))
   end
 end

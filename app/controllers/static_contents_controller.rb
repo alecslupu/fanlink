@@ -1,6 +1,7 @@
 class StaticContentsController < ApplicationController
   caches_page :post_share, gzip: true
   caches_page :html_content, gzip: true
+  caches_page :download, gzip: true
   before_action :set_static_content, only: %i[html_content]
 
   def html_content
@@ -10,6 +11,9 @@ class StaticContentsController < ApplicationController
     product =  Product.find_by(internal_name: params[:product])
     post = Post.for_product(product).visible.find(params[:post_id])
     @locals = generate_locals(post)
+  end
+
+  def download
   end
 
   private
