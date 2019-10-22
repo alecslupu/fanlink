@@ -23,7 +23,7 @@ Rails.application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  config.logger = Logger.new(STDOUT)
+  # config.logger = Logger.new(STDOUT)
   config.log_level = :info
 
   # Use a different logger for distributed setups
@@ -52,7 +52,7 @@ Rails.application.configure do
 
   config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
   config.eager_load = true
-  config.force_ssl = false
+  config.force_ssl = true
 
 
   config.fanlink = {
@@ -65,7 +65,6 @@ Rails.application.configure do
       transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
     }
   }
-
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.

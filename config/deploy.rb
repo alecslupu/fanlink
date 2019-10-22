@@ -55,11 +55,14 @@ set :ssh_options, {
 
 set :slackistrano, {
   klass: Slackistrano::CustomMessaging,
-  channel: '#appbacon',
-  webhook: 'https://hooks.slack.com/services/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'
+  channel: '#bot-deploys',
+  webhook: 'https://hooks.slack.com/services/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'
 }
 
-#
+
+append :linked_dirs, "tmp/pids"
+set :delayed_job_server_role, :worker
+set :delayed_job_args, "-n 2"
 
 =begin
 deploy
@@ -89,14 +92,18 @@ deploy
 =end
 
 namespace :deploy do
+#
+#   after :restart, :clear_cache do
+#     on roles(:web), in: :groups, limit: 3, wait: 10 do
+#       # Here we can do anything such as:
+#       # within release_path do
+#       #   execute :rake, 'cache:clear'
+#       # end
+#     end
+#   end
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
+  task :restart do
+    invoke 'delayed_job:restart'
   end
-
 end
+after 'deploy:publishing', 'deploy:restart'

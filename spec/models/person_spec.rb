@@ -1,5 +1,5 @@
 RSpec.describe Person, type: :model do
-  before(:all) do
+  before(:each) do
     @username = "WhereisPancakeHouse"
     @password = "logmein"
     @email = "pancakes@example.com"
@@ -9,16 +9,14 @@ RSpec.describe Person, type: :model do
 
   context "Valid" do
     it "should create a valid person" do
-      expect(create(:person)).to be_valid
+      expect(build(:person)).to be_valid
     end
   end
 
   context "Validation for normal user" do
     describe "#presence" do
-      it do
-        should validate_presence_of(:username).with_message(_("Username is required."))
-        should validate_presence_of(:password).with_message(_("Password is required."))
-      end
+      it { should validate_presence_of(:username).with_message(_("Username is required."))}
+      it { should validate_presence_of(:password).with_message(_("Password is required.")) }
     end
     describe "#length" do
       it "should raise an error if username's length is not between 5 and 25 characters" do
@@ -43,10 +41,8 @@ RSpec.describe Person, type: :model do
 
     describe "#uniqueness" do
       it "should allow duplicate emails and usernames for differnt products" do
-        product = create(:product)
-        product2 = create(:product)
-        person1 = build(:person, product: product, username: "Joe2987", email: "Joe2987@example.com")
-        person2 = build(:person, product: product2, username: "Joe2987", email: "Joe2987@example.com")
+        person1 = build(:person, product: create(:product), username: "Joe2987", email: "Joe2987@example.com")
+        person2 = build(:person, product: create(:product), username: "Joe2987", email: "Joe2987@example.com")
 
         expect(person1).to be_valid
         expect(person2).to be_valid
@@ -61,34 +57,53 @@ RSpec.describe Person, type: :model do
         expect(person2).not_to be_valid
       end
     end
-
-    describe "#format" do
-      subject { FactoryBot.build(:person) }
-      it "should not allow emoji's for name on creation" do
-        should_not allow_value("Person \uFE0F").for(:name).on(:create).with_message(_("Name may not contain emojis."))
-      end
-      it "should not allow emoji's for username on creation" do
-        should_not allow_value("Person_\uFE0F").for(:username).on(:create).with_message(_("Username may not contain emojis."))
-      end
-    end
+    #
+    # describe "#format" do
+    #   it "should not allow emoji's for name on creation" do
+    #     record = Person.new
+    #     record.name = "Person \uFE0F"
+    #     record.valid?
+    #     expect(record.errors[:name]).to include("may not contain emojis.")
+    #   end
+    #   it "should not allow emoji's for username on creation" do
+    #     record = Person.new
+    #     record.username = "Person \uFE0F"
+    #     record.valid?
+    #     expect(record.errors[:username]).to include("may not contain emojis.")
+    #   end
+    #
+    #   it "should not allow emoji's for name on update" do
+    #     person = create(:person)
+    #     person.update(name: "Person \uFE0F")
+    #     person.valid?
+    #     expect(person.errors[:name]).to include("may not contain emojis.")
+    #   end
+    #
+    #   it "should not allow emoji's for username on update" do
+    #     person = create(:person)
+    #     person.update(username: "Person \uFE0F")
+    #     person.valid?
+    #     expect(person.errors[:username]).to include("may not contain emojis.")
+    #   end
+    # end
   end
 
   context "Validation as facebook user" do
     describe "#presence" do
       it "should not validate the email if a facebook id is present" do
-        person = create(:person, facebookid: "123013910sdaa", email: nil)
+        person = build(:person, facebookid: "123013910sdaa", email: nil)
         expect(person).to be_valid
       end
 
       it "should not validate the password if a facebook id is present" do
-        person = create(:person, facebookid: "123013910sdaa", password: nil)
+        person = build(:person, facebookid: "123013910sdaa", password: nil)
         expect(person).to be_valid
       end
     end
 
     describe "#length" do
       it "should not validate length of password if a facebook id is present" do
-        person = create(:person, facebookid: "asdjaj231klkda", password: nil)
+        person = build(:person, facebookid: "asdjaj231klkda", password: nil)
         expect(person).to be_valid
       end
     end
@@ -96,26 +111,53 @@ RSpec.describe Person, type: :model do
 
   context "Associations" do
     describe "#has_many" do
-      it "should verify associations" do
-        should have_many(:message_reports)
-        should have_many(:notification_device_ids)
-        should have_many(:post_reactions)
-        should have_many(:room_memberships)
-        should have_many(:posts)
-        should have_many(:quest_completions)
-        should have_many(:step_completed)
-        should have_many(:quest_completed)
-        should have_many(:person_rewards)
-        should have_many(:person_interests)
-        should have_many(:level_progresses)
-        should have_many(:reward_progresses)
-        should have_many(:messages)
-        should have_many(:event_checkins)
+      it { should have_many(:message_reports) }
+      it { should have_many(:notification_device_ids) }
+      it { should have_many(:post_reactions) }
+      it { should have_many(:room_memberships) }
+      it { should have_many(:posts) }
+      it { should have_many(:quest_completions) }
+      it { should have_many(:step_completed) }
+      it { should have_many(:quest_completed) }
+      it { should have_many(:person_rewards) }
+      it { should have_many(:person_interests) }
+      it { should have_many(:level_progresses) }
+      it { should have_many(:reward_progresses) }
+      it { should have_many(:messages) }
+      it { should have_many(:event_checkins) }
+      it { should have_many(:pin_messages) }
+      it { should have_many(:person_poll_options) }
+      it { should have_many(:pinned_to).through(:pin_messages) }
+      it { should have_many(:private_rooms).through(:room_memberships) }
+      it { should have_many(:rewards).through(:person_rewards) }
+      it { should have_many(:interests).through(:person_interests) }
+      it { should have_many(:poll_options).through(:person_poll_options) }
+      it { should have_many(:course_page_progresses) }
+      it { should have_many(:person_certificates) }
+      it { should have_many(:certificates).through(:person_certificates) }
+      it { should have_many(:person_certcourses) }
+      it { should have_many(:certcourses).through(:person_certcourses) }
 
-        should have_many(:rewards).through(:person_rewards)
-        # should have_many(:private_rooms).through(:room_memberships) # Currently fails with nilClass on room_memberships
-        should have_many(:interests).through(:person_interests)
-      end
+      it { should have_many(:badge_actions) }
+      it { should have_many(:badge_awards) }
+      it { should have_many(:badges).through(:badge_awards) }
+
+      it { should have_many(:trivia_game_leaderboards) }
+      it { should have_many(:trivia_package_leaderboards) }
+      it { should have_many(:trivia_question_leaderboards) }
+      it { should have_many(:trivia_answers) }
+      it { should have_many(:trivia_subscribers) }
+      it { should have_many(:blocks_by) }
+      it { should have_many(:blocked_people).through(:blocks_by) }
+      it { should have_many(:blocks_on) }
+      it { should have_many(:blocked_by_people).through(:blocks_on) }
+
+
+      it { should have_many(:active_followings) }
+      it { should have_many(:following).through(:active_followings) }
+      it { should have_many(:passive_followings) }
+      it { should have_many(:followers).through(:passive_followings) }
+      # it { should have_many(:relationships) }
     end
 
     describe "#has_one" do
@@ -131,10 +173,15 @@ RSpec.describe Person, type: :model do
     end
   end
 
-  context "Filters" do
+  context "scopes" do
     describe "#username_filter" do
+      it { expect(Person).to respond_to(:username_filter)}
+    end
+    describe "product_account_filter" do
+      it { expect(Person).to respond_to(:product_account_filter)}
     end
     describe "#email_filter" do
+      it { expect(Person).to respond_to(:email_filter)}
     end
   end
 
@@ -155,7 +202,7 @@ RSpec.describe Person, type: :model do
 
   describe "#country" do
     it "should accept a valid country code" do
-      person = create(:person, country_code: "US")
+      person = build(:person, country_code: "US")
       expect(person).to be_valid
       expect(person.country_code).to eq("US")
     end
@@ -165,13 +212,13 @@ RSpec.describe Person, type: :model do
       expect(person.errors[:country_code]).not_to be_empty
     end
     it "should accept an empty string country code" do
-      person = build(:person, country_code: "")
+      person = build(:person, country_code: nil)
       expect(person).to be_valid
       expect(person.country_code).to be_nil
     end
     it "should upcase it" do
-      person = create(:person, country_code: "us")
-      expect(person.reload.country_code).to eq("US")
+      person = build(:person, country_code: "us")
+      expect(person.country_code).to eq("US")
     end
   end
 
@@ -197,6 +244,7 @@ RSpec.describe Person, type: :model do
       expect(person.following.sort).to eq([auto1, auto2].sort)
     end
   end
+
   describe "#badge_points" do
     it "should give the total point value of badges earned when no badges earned" do
       person = create(:person)
@@ -304,9 +352,15 @@ RSpec.describe Person, type: :model do
     it "should be nil for person with one badge below first level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
+# <<<<<<< HEAD
         create(:badge, point_value: 10)
         create(:level, points: 20)
         create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
+# =======
+#         badge = create(:badge, point_value: 10)
+#         level_earned = create(:level, points: 20)
+#         create(:level_progress, person: person, points: {badge_action: 10}, total: 10)
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
       end
@@ -316,7 +370,7 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
-        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+        create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level_earned)
       end
@@ -326,8 +380,13 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
+# <<<<<<< HEAD
         create(:level, points: 21)
         create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
+# =======
+#         level2 = create(:level, points: 21)
+#         create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
       end
@@ -391,8 +450,13 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq("whereispancakehouse")
     end
     it "should ignore accents, case, and punctuation when using for_username" do
+# <<<<<<< HEAD
       examples = [ "Whére.Ïs.Pañçâkè.HOUSE", "where.is.pancake.house",
                    "whereispancakehouse", "where-is_pancake.house", "where@is_pancakehouse" ]
+# =======
+#       examples = ["Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
+#                   "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house",]
+# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -403,7 +467,7 @@ RSpec.describe Person, type: :model do
     describe ".create_from_facebook" do
       it "should create and return a new user from valid FB auth token" do
         username = "somedude#{Time.now.to_i}"
-        koala_result = { "id" => Time.now.to_i.to_s, "name" => "John Smith" }
+        koala_result = {"id" => Time.now.to_i.to_s, "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         p = nil
         expect {
@@ -421,7 +485,7 @@ RSpec.describe Person, type: :model do
         fbid = "123456"
         tok = "1234567"
         person = create(:person, facebookid: fbid)
-        koala_result = { "id" => fbid, "name" => "John Smith" }
+        koala_result = {"id" => fbid, "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect(Person.for_facebook_auth_token(tok)).to eq(person)
       end
@@ -479,7 +543,6 @@ RSpec.describe Person, type: :model do
     end
   end
 
-
   # TODO: auto-generated
   describe "#canonicalize" do
     it "works" do
@@ -521,11 +584,6 @@ RSpec.describe Person, type: :model do
 
   # TODO: auto-generated
   describe "#device_tokens" do
-    it "works" do
-      person = Person.new
-      result = person.device_tokens
-      expect(result).not_to be_nil
-    end
     pending
   end
 
@@ -536,83 +594,41 @@ RSpec.describe Person, type: :model do
 
   # TODO: auto-generated
   describe "#current_user" do
-    it "works" do
-      person = create(:person)
-      Person.current_user = (person)
-      result = Person.current_user
-      expect(result).to eq(person)
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#current_user=" do
-    it "works" do
-      user = double("user")
-      result = Person.current_user = (user)
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#reset_password_to" do
-    it "works" do
-      person = Person.new
-      password = double("password")
-      result = person.reset_password_to(password)
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#set_password_token!" do
-    it "works" do
-      person = build(:person)
-      result = person.set_password_token!
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#permissions" do
-    it "works" do
-      person = Person.new
-      result = person.permissions
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#roles_for_select" do
-    it "works" do
-      person = Person.new
-      result = person.roles_for_select
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#some_admin?" do
-    it "works" do
-      person = Person.new
-      result = person.some_admin?
-      expect(result).not_to be_nil
-    end
     pending
   end
 
   # TODO: auto-generated
   describe "#to_s" do
-    it "works" do
-      person = build(:person)
-      result = person.to_s
-      expect(result).to eq(person.name)
-    end
     pending
   end
 
@@ -630,6 +646,7 @@ RSpec.describe Person, type: :model do
       expect(Delayed::Job.count).to eq 1
     end
   end
+
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
       expect(Delayed::Job.count).to eq 0
@@ -638,11 +655,21 @@ RSpec.describe Person, type: :model do
       expect(Delayed::Job.count).to eq 1
     end
   end
+
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
       expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
       pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
+      expect(Delayed::Job.count).to eq 1
+    end
+  end
+
+  describe "#send_course_attachment_email" do
+    it "sends a course on email" do
+      expect(Delayed::Job.count).to eq 0
+      pc = create(:person_certificate)
+      pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
       expect(Delayed::Job.count).to eq 1
     end
   end

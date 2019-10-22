@@ -19,11 +19,10 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              include Messaging unless defined?("delete_message")
               @object.status = "message_hidden"
               message = @object.message
               message.hidden = true
-              if message.save && delete_message(message, @api_version)
+              if message.save! && delete_message(message, @api_version)
                 changes = @object.changes
                 if @object.save
                   @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)

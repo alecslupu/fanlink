@@ -26,7 +26,7 @@ RSpec.describe Step, type: :model do
   context "Validation" do
     describe "should create a valid step" do
       it do
-        expect(create(:step)).to be_valid
+        expect(build(:step)).to be_valid
       end
     end
   end

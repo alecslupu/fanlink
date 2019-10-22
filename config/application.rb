@@ -20,6 +20,13 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
+    log_dest = ENV['HEROKU'].present? ? STDOUT : "log/#{Rails.env}.log"
+
+    logger           = ActiveSupport::Logger.new(log_dest)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
@@ -66,5 +73,6 @@ module Fanlink
     end
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
+    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
   end
 end
