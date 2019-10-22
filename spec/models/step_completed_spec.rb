@@ -16,7 +16,7 @@ RSpec.describe StepCompleted, type: :model do
       it do
         reward = create(:badge_reward)
         ar = create(:assigned_as_step, reward: reward)
-        expect(create(:step_completed, step_id: ar.assigned_id)).to be_valid
+        expect(build(:step_completed, step_id: ar.assigned_id)).to be_valid
       end
     end
   end

@@ -12,7 +12,9 @@
 #
 
 class PostReport < ApplicationRecord
-  include PostReport::PortalFilters
+  # include PostReport::PortalFilters
+  scope :status_filter, -> (query) { where(status: query.to_sym) }
+  # include PostReport::PortalFilters
 
   enum status: %i[ pending no_action_needed post_hidden ]
 

@@ -20,6 +20,5 @@ FactoryBot.define do
     duration { 1 }
     background_color_hex { Faker::Color.hex_color }
     product { current_product }
-
   end
 end

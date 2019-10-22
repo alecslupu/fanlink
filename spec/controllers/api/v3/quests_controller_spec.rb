@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Api::V3::QuestsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET index" do
     pending
@@ -31,5 +30,4 @@ RSpec.describe Api::V3::QuestsController, type: :controller do
   describe "DELETE destroy" do
     pending
   end
-
 end
