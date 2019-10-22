@@ -305,7 +305,7 @@ private
   end
 
   def message_params
-    params.require(:message).permit(:body, :picture, :audio, mentions: %i[ person_id location length ])
+    params.require(:message).permit(:body, :picture, :audio, :after_message, :message_id, mentions: %i[ person_id location length ])
   end
 
   def message_update_params
