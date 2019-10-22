@@ -81,6 +81,7 @@ module Flaws
     transcoder = Aws::ElasticTranscoder::Client.new(
       access_key_id: key,
       secret_access_key: secret,
+      region: region
     )
 
     transcoder.create_job(
@@ -205,6 +206,10 @@ module Flaws
 
     def self.video_directory_for(filename)
       File.dirname(filename).gsub("original", "transcoded")
+    end
+
+    def self.region
+      Rails.configuration.fanlink[:aws][:region]
     end
 
     def self.key

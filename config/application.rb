@@ -74,5 +74,20 @@ module Fanlink
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
     config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
+
+    config.fanlink = {
+      aws: {
+        hls_server: Rails.application.secrets.hls_server,
+        rtmp_server: Rails.application.secrets.rtmp_server,
+        transcoder_key: Rails.application.secrets.aws_transcoder_key,
+        transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
+        s3_bucket:  Rails.application.secrets.aws_bucket,
+        transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
+        region: Rails.application.secrets.aws_region,
+        transcoder_queue_url: Rails.application.secrets.transcoder_queue_url,
+      }
+    }
+
+
   end
 end
