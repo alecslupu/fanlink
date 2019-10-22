@@ -8,7 +8,12 @@ RailsAdmin.config do |config|
     end
 
     list do
-      fields :id, :person, :certificate, :purchased_waived_date, :full_name, :purchased_platform, :amount_paid, :currency
+      fields :id, :person
+      field :certificate do
+        searchable [{ Certificate => :short_name }]
+        queryable true
+      end
+      fields :full_name, :purchased_waived_date, :purchased_platform, :amount_paid, :currency
     end
 
     edit do

@@ -13,6 +13,7 @@ RailsAdmin.config do |config|
         column_width 75
       end
       field :id do
+        column_width 30
       end
       field :body do
         column_width 150

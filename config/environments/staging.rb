@@ -55,17 +55,6 @@ Rails.application.configure do
   config.force_ssl = true
 
 
-  config.fanlink = {
-    aws: {
-      hls_server: Rails.application.secrets.hls_server,
-      rtmp_server: Rails.application.secrets.rtmp_server,
-      transcoder_key: Rails.application.secrets.aws_transcoder_key,
-      transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
-      s3_bucket:  Rails.application.secrets.aws_bucket,
-      transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
-    }
-  }
-
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = true
