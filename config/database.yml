@@ -16,25 +16,24 @@
 #
 default: &default
   encoding: utf8
-  # For details on connection pooling, see Rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
-  username: <%= ENV.fetch("FANLINK_PG_USER") %>
-  password: <%= ENV.fetch("FANLINK_PG_PASSWORD") %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  adapter: postgresql
+  pool: <%=  Rails.application.secrets.rails_max_threads %>
+  database: <%= Rails.application.secrets.fanlink_pg_database %>
+  username: <%= Rails.application.secrets.fanlink_pg_user %>
+  password: <%= Rails.application.secrets.fanlink_pg_password %>
+  host: <%= Rails.application.secrets.fanlink_pg_host %>
+  #  url: <%= Rails.application.secrets.database_url %>
+
 
 development:
   <<: *default
-  adapter: postgresql
   database: fanlink_development
-  username: <%= ENV.fetch("FANLINK_PG_USER", "root") %>
-  password: <%= ENV.fetch('FANLINK_PG_PASSWORD', "") %>
-  host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
+
 
 staging:
   <<: *default
   adapter: postgresql
   database: fanlink_staging
-  host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -70,9 +69,6 @@ test: &test
   <<: *default
   adapter: postgresql
   database: fanlink_test
-  username: <%= ENV.fetch("FANLINK_PG_USER", "root") %>
-  password: <%= ENV.fetch('FANLINK_PG_PASSWORD', "") %>
-  host: <%= ENV.fetch("FANLINK_PG_HOST", "localhost") %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -1,0 +1,2 @@
+class EventPolicy < EventModulePolicy
+end

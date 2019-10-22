@@ -1,7 +1,6 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Api::V3::ProductsController, type: :controller do
-
   # TODO: auto-generated
   describe "GET select" do
     pending
@@ -26,5 +25,4 @@ RSpec.describe Api::V3::ProductsController, type: :controller do
   describe "PUT update" do
     pending
   end
-
 end

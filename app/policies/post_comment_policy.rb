@@ -1,0 +1,2 @@
+class PostCommentPolicy < PostModulePolicy
+end

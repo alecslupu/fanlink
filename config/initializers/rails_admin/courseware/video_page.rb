@@ -16,7 +16,7 @@ RailsAdmin.config do |config|
         searchable [{ Certcourse => :short_name }]
         queryable true
       end
-      fields :video, :created_at
+      fields :video, :created_at, :updated_at
     end
     show do
       fields :id, :certcourse_page, :video
