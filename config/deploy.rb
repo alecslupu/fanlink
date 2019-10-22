@@ -91,19 +91,5 @@ deploy
     deploy:log_revision
 =end
 
-namespace :deploy do
-#
-#   after :restart, :clear_cache do
-#     on roles(:web), in: :groups, limit: 3, wait: 10 do
-#       # Here we can do anything such as:
-#       # within release_path do
-#       #   execute :rake, 'cache:clear'
-#       # end
-#     end
-#   end
-
-  task :restart do
-    invoke 'delayed_job:restart'
-  end
-end
-after 'deploy:publishing', 'deploy:restart'
+# after 'deploy:check', 'delayed_job:restart'
+after 'deploy:finished', 'delayed_job:restart'
