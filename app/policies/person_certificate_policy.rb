@@ -1,4 +1,4 @@
-class PersonCertificatePolicy < ApplicationPolicy
+class PersonCertificatePolicy < CoursewareModulePolicy
   class Scope < Scope
     def resolve
       super.for_product(ActsAsTenant.current_tenant)

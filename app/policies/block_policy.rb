@@ -1,0 +1,2 @@
+class BlockPolicy < ChatModulePolicy
+end

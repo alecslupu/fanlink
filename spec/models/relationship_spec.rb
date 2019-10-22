@@ -1,9 +1,5 @@
 RSpec.describe Relationship, type: :model do
 
-  before(:all) do
-    ActsAsTenant.current_tenant = current_product
-  end
-
   context "Associations" do
     describe "should belong to" do
       it { should belong_to(:requested_by).class_name("Person").touch(true) }
@@ -14,7 +10,7 @@ RSpec.describe Relationship, type: :model do
   context "Validation" do
     describe "should create a valid relationship" do
       it do
-        expect(create(:relationship)).to be_valid
+        expect(build(:relationship)).to be_valid
       end
     end
   end
@@ -114,7 +110,7 @@ RSpec.describe Relationship, type: :model do
       expect(rel.friended?).to be_truthy
     end
     it "should allow transitions from requested" do
-      allowed = %i[ friended ]
+      allowed = %i[friended]
       rel = create(:relationship)
       expect(rel.requested?).to be_truthy
       allowed.each do |s|
@@ -125,14 +121,25 @@ RSpec.describe Relationship, type: :model do
     end
     it "should disallow transitions from friended" do
       rel = create(:relationship)
-      %i[ requested ].each do |s|
+      %i[requested].each do |s|
         rel.update_column(:status, Relationship.statuses[:friended])
         rel.status = s
         invalid_status(rel)
       end
     end
   end
-
+  describe "#friend_request_accepted_push" do
+    it "responds to method " do
+      expect(Relationship.new).to respond_to(:friend_request_accepted_push)
+    end
+    pending
+  end
+  describe "#friend_request_received_push" do
+    it "responds to method " do
+      expect(Relationship.new).to respond_to(:friend_request_received_push)
+    end
+    pending
+  end
 
 private
 

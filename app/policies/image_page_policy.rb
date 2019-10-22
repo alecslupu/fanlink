@@ -1,4 +1,4 @@
-class ImagePagePolicy < ApplicationPolicy
+class ImagePagePolicy < CoursewareModulePolicy
   # class Scope < Scope
   #   def resolve
   #     super.for_product(ActsAsTenant.current_tenant)
