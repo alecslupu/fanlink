@@ -2,6 +2,35 @@ require "rails_helper"
 
 RSpec.describe Api::V4::MessagesController, type: :controller do
   describe "GET index" do
+    it 'returns all the messages with the attached audio' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        msg = create_list(
+          :message,
+          3,
+          room: private_room,
+          body: "this is my body",
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+        )
+        get :index,
+          params: {
+            room_id: private_room.id,
+            from_date: from,
+            to_date: to
+          }
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['audio_url']).not_to eq(nil)
+        end
+      end
+    end
+
     it "should get a list of messages not to include blocked people" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -158,39 +187,19 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
   end
+
   # TODO: auto-generated
   describe "POST create" do
-    it "should create a new message with an attached audio" do
-      person = create(:person)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        body = "Do you like my body?"
-        room = create(:public_active_room, )
-        post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-          }
-        }
-        expect(response).to be_successful
-        expect(json['message']['audio_url']).not_to eq(nil)
-        expect(Message.last.audio.exists?).to be_truthy
-      end
-    end
-
-    it "creates a new message in a public room and does not update the timestamp" do
+    it "creates a new message in a public room updates the timestamp" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         body = "Do you like my body?"
         room = create(:room, public: true, status: :active)
-
-        expect(room.last_message_timestamp).to eq(nil)
-
         timestamp = DateTime.now.to_i
+
         post :create, params: { room_id: room.id,  message: { body: body } }
+
         expect(response).to be_successful
 
         msg = Message.last
@@ -199,7 +208,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(msg.person).to eq(person)
         expect(msg.body).to eq(body)
         expect(json["message"]["body"]).to eq(body)
-        expect(room.reload.last_message_timestamp).to eq(nil)
+        expect(room.reload.last_message_timestamp).to be >= timestamp
       end
     end
 
@@ -263,35 +272,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(response).to be_successful
         expect(json['message']['audio_url']).not_to eq(nil)
         expect(Message.last.audio.exists?).to be_truthy
-      end
-    end
-
-    it 'returns all the messages with the attached audio' do
-      person = create(:person, role: :admin)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        from = Date.today - 1.day
-        to = Date.today
-        private_room = create(:room, public: false, status: :active)
-        private_room.members << person << private_room.created_by
-        msg = create_list(
-          :message,
-          3,
-          room: private_room,
-          body: "this is my body",
-          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-        )
-        get :index,
-          params: {
-            room_id: private_room.id,
-            from_date: from,
-            to_date: to
-          }
-        expect(response).to be_successful
-        expect(json['messages'].size).to eq(3)
-        json['messages'].each do |message|
-          expect(message['audio_url']).not_to eq(nil)
-        end
       end
     end
   end
