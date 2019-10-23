@@ -59,7 +59,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum role: %i[ normal staff admin super_admin ]
+  enum role: %i[ normal staff admin super_admin client ]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
