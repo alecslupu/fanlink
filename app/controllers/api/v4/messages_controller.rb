@@ -4,7 +4,19 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     if !check_access(room)
       render_not_found
     else
-      msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
+      if params[:message_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
+        sign = params[:chronologically] == 'after' ? '>' : '<'
+        message = Message.find(params[:message_id])
+
+        if params[:pinned].blank? || params[:pinned].downcase == "all"
+          msgs = room.messages.where("created_at#{sign} ?", message.created_at)
+        else
+          msgs = room.messages.pinned(params[:pinned]).where("created_at #{sign} ?", message.created_at)
+        end
+      else
+        msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
+      end
+
       @messages = paginate(msgs.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
       clear_count(room) if room.private?
       return_the @messages, handler: tpl_handler
