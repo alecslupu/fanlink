@@ -53,6 +53,94 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
 
+    it "returns all the room's messages after the given one" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg3 = create(:message, room_id: room.id, created_at: msg2.created_at + 1)
+        msg4 = create(:message, room_id: room.id, created_at: msg2.created_at + 1)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id,
+            after_message: true
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map{ |m| m['id'] }.sort).to eq([msg3.id, msg4.id])
+      end
+    end
+
+    it "returns all the room's messages before the given one" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id)
+        msg3 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg4 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg3.id,
+            after_message: false
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map{ |m| m['id'] }.sort).to eq([msg1.id, msg2.id])
+      end
+    end
+
+    it "returns all the messages from the room if after_message params is given" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            after_message: false
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+      end
+    end
+
+
+    it "returns all the messages from the room if only the message_id is given" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+      end
+    end
+  end
+
+  # TODO: auto-generated
+  describe "POST create" do
     it "should create a new message with an attached audio" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -72,10 +160,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(Message.last.audio.exists?).to be_truthy
       end
     end
-  end
 
-  # TODO: auto-generated
-  describe "POST create" do
     it "creates a new message in a public room and does not update the timestamp" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do

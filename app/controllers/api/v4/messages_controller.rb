@@ -4,10 +4,9 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     if !check_access(room)
       render_not_found
     else
-      binding.pry
-      if message_params[:after_message].present? && message_params[:message_id].present?
-        sign = params[:after_message] ? '>' : '<'
-        message = Message.find(message_params[:message_id])
+      if params[:after_message].present? && params[:message_id].present?
+        sign = params[:after_message] == 'true' ? '>' : '<'
+        message = Message.find(params[:message_id])
 
         if params[:pinned].blank? || params[:pinned].downcase == "all"
           msgs = room.messages.where("created_at#{sign} ?", message.created_at)
