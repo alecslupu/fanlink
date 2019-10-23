@@ -67,7 +67,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
           params: {
             room_id: room.id,
             message_id: msg2.id,
-            after_message: true
+            chronologically: 'after'
         }
 
         expect(response).to be_successful
@@ -90,7 +90,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
           params: {
             room_id: room.id,
             message_id: msg3.id,
-            after_message: false
+            chronologically: 'before'
         }
 
         expect(response).to be_successful
@@ -99,7 +99,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
 
-    it "returns all the messages from the room if after_message params is given" do
+    it "returns all the messages from the room if only chronologically param is given" do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -130,7 +130,27 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         get :index,
           params: {
             room_id: room.id,
-            message_id: msg2
+            message_id: msg2.id
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+      end
+    end
+
+    it "returns all the messages from the room if chronologically params has bad value" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id,
+            chronologically: 'wrong'
         }
 
         expect(response).to be_successful
@@ -138,7 +158,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
   end
-
   # TODO: auto-generated
   describe "POST create" do
     it "should create a new message with an attached audio" do

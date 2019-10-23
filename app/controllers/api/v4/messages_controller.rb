@@ -4,8 +4,8 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     if !check_access(room)
       render_not_found
     else
-      if params[:after_message].present? && params[:message_id].present?
-        sign = params[:after_message] == 'true' ? '>' : '<'
+      if params[:message_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
+        sign = params[:chronologically] == 'after' ? '>' : '<'
         message = Message.find(params[:message_id])
 
         if params[:pinned].blank? || params[:pinned].downcase == "all"
