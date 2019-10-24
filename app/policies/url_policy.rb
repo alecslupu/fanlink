@@ -1,0 +1,2 @@
+class UrlPolicy < RewardModulePolicy
+end

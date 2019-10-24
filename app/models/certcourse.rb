@@ -45,6 +45,8 @@ class Certcourse < ApplicationRecord
 
   validate :children_not_empty, if: :status_changed? && :live?
 
+  before_destroy :delete_dependent_pages
+
   def to_s
     short_name
   end
@@ -52,9 +54,14 @@ class Certcourse < ApplicationRecord
   alias :title :to_s
 
   protected
+
   def children_not_empty
     unless certcourse_pages.inject(true) { |default, cp| default && cp.child.present? && cp.child.valid? }
       errors.add(:base, _("Cannot publish, at least one page has no content"))
     end
+  end
+
+  def delete_dependent_pages
+    CertcoursePage.where(certcourse_id: id).destroy_all
   end
 end

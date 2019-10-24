@@ -10,6 +10,7 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
+  # ?
   config.enable_dependency_loading = true
 
   # Full error reports are disabled and caching is turned on.
@@ -23,7 +24,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -47,11 +48,11 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :error
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
@@ -59,7 +60,7 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
   # config.cache_store = :memory_store
-  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 90.minutes }
+  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", { expires_in: 90.minutes }
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
@@ -75,39 +76,27 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  # Use a different logger for distributed setups.
-  # require 'syslog/logger'
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-    # ActiveRecord::Base.logger = config.logger
-  end
-
-
   config.debug_exception_response_format = :api
 
   config.fanlink = {
     aws: {
-      hls_server: "http://d9f7ufze0iovw.cloudfront.net/",
-      rtmp_server: "rtmp://s153hddjp1ltg0.cloudfront.net/",
-      transcoder_key: ENV["AWS_TRANSCODER_KEY"],
-      transcoder_secret: ENV["AWS_TRANSCODER_SECRET"],
-      s3_bucket: ENV["AWS_BUCKET"],
-      transcoder_pipeline_id: ENV["AWS_PIPELINE_ID"],
+      hls_server: Rails.application.secrets.hls_server,
+      rtmp_server: Rails.application.secrets.rtmp_server,
+      transcoder_key: Rails.application.secrets.aws_transcoder_key,
+      transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
+      s3_bucket:  Rails.application.secrets.aws_bucket,
+      transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
     }
   }
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Install the Timber.io logger, send logs over STDOUT. Actual log delivery
-  # to the Timber service is handled external of this application.
-  logger = Timber::Logger.new(STDOUT)
-  logger.level = config.log_level
-  config.logger = ActiveSupport::TaggedLogging.new(logger)
+  # # Install the Timber.io logger, send logs over STDOUT. Actual log delivery
+  # # to the Timber service is handled external of this application.
+  # logger = Timber::Logger.new(STDOUT)
+  # logger.level = config.log_level
+  # config.logger = ActiveSupport::TaggedLogging.new(logger)
 
 
 end

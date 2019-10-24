@@ -58,8 +58,6 @@ private
     client.update("", payload).response.status == 200
   end
 
-
-
   def generic_payload_user(fragment, member, value, version)
     payload = {}
     payload["#{user_path(member)}/#{fragment}"] = value
@@ -126,7 +124,7 @@ private
   end
 
   def client
-    @fb ||= Firebase::Client.new(FIREBASE_URL, FIREBASE_KEY)
+    @fb ||= Firebase::Client.new(Rails.application.secrets.firebase_url, Rails.application.secrets.firebase_key.to_json)
   end
 
   def delete_public_room(room, version = nil)

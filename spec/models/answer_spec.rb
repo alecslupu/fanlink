@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Answer, type: :model do
-
   context "Validation" do
-
   end
 
   context "Associations" do
@@ -65,5 +63,4 @@ RSpec.describe Answer, type: :model do
     end
     pending
   end
-
 end
