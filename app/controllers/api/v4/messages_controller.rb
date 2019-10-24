@@ -9,9 +9,11 @@ class Api::V4::MessagesController < Api::V3::MessagesController
         message = Message.find(params[:message_id])
 
         if params[:pinned].blank? || params[:pinned].downcase == "all"
-          msgs = room.messages.where("created_at#{sign} ?", message.created_at)
+          msgs = room.messages.where("messages.created_at #{sign} ? AND messages.id #{sign} ?", message.created_at, message.id)
         else
-          msgs = room.messages.pinned(params[:pinned]).where("messages.created_at #{sign} ?", message.created_at)
+          msgs = room.messages
+          .pinned(params[:pinned])
+          .where("messages.created_at #{sign} ? AND messages.id #{sign} ?", message.created_at, message.id)
         end
       else
         msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
