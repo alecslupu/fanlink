@@ -10,6 +10,8 @@
 #
 
 class Following < ApplicationRecord
+  default_scope ->{ order('created_at DESC, id DESC') }
+
   belongs_to :follower, class_name: "Person", touch: true
   belongs_to :followed, class_name: "Person", touch: true
 
