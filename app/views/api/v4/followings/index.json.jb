@@ -6,14 +6,12 @@ if defined?(@followers)
       render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: "jb"
     end
   end
-  json[:total_followers] = @followers.size
 else
   json[:following] = @following.map do |following|
     Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, following) do
       render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: "jb"
     end
   end
-  json[:total_following] = @following.size
 end
 
 json
