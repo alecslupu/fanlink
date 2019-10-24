@@ -11,7 +11,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
         if params[:pinned].blank? || params[:pinned].downcase == "all"
           msgs = room.messages.where("created_at#{sign} ?", message.created_at)
         else
-          msgs = room.messages.pinned(params[:pinned]).where("created_at #{sign} ?", message.created_at)
+          msgs = room.messages.pinned(params[:pinned]).where("messages.created_at #{sign} ?", message.created_at)
         end
       else
         msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])

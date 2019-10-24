@@ -128,6 +128,56 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
 
+    it "returns all the room's pinned messages after the given one" do
+      person = create(:person, role: :admin, pin_messages_from: true)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg3 = create(:message, room_id: room.id, created_at: msg2.created_at + 1, person_id: person.id)
+        msg4 = create(:message, room_id: room.id, created_at: msg2.created_at + 2, person_id: person.id)
+        msg5 = create(:message, room_id: room.id, created_at: msg2.created_at + 3)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id,
+            chronologically: 'after',
+            pinned: 'yes'
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map{ |m| m['id'] }.sort).to eq([msg3.id, msg4.id])
+      end
+    end
+
+    it "returns all the room's pinned messages before the given one" do
+      person = create(:person, role: :admin, pin_messages_from: true)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id, person_id: person.id)
+        msg2 = create(:message, room_id: room.id, person_id: person.id)
+        msg3 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg4 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+        msg5 = create(:message, room_id: room.id)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg3.id,
+            chronologically: 'before',
+            pinned: 'yes'
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map{ |m| m['id'] }.sort).to eq([msg1.id, msg2.id])
+      end
+    end
+
     it "returns all the messages from the room if only chronologically param is given" do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
