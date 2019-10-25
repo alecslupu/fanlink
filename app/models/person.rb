@@ -130,8 +130,8 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
-  has_many :employers, class_name: "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
-  has_many :employees, class_name: "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
+  has_many :assigners, class_name: "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
+  has_many :assignees, class_name: "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
 
   # has_many :people, through: :active_followings, source: :followed
   # has_many :followers, through: :passive_followings, source: :follower
