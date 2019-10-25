@@ -130,6 +130,11 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+  # has_many :people, class_name: "ClientToPerson", foreign_key: "person_id", dependent: :destroy
+  # has_many :clients, class_name: "ClientToPerson", foreign_key: "client_id", dependent: :destroy
+
+  # has_many :people, through: :active_followings, source: :followed
+  # has_many :followers, through: :passive_followings, source: :follower
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
