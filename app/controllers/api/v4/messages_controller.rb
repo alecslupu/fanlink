@@ -26,9 +26,9 @@ class Api::V4::MessagesController < Api::V3::MessagesController
 
       @messages = paginate(
                     msgs
-                    .visible
-                    .unblocked(current_user.blocked_people)
-                    .order("messages.created_at #{ordering}, messages.id #{ordering} ")
+                      .visible
+                      .unblocked(current_user.blocked_people)
+                      .order("messages.created_at #{ordering}, messages.id #{ordering} ")
                   )
 
       clear_count(room) if room.private?
