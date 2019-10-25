@@ -171,6 +171,7 @@ class Person < ApplicationRecord
 
   validate :valid_country_code
   validates :country_code, length: { is: 2 }, allow_blank: true
+  validate :client_role_changing, on: :update
 
   def country_code=(c)
     write_attribute :country_code, (c.nil?) ? nil : c.upcase
@@ -453,4 +454,10 @@ class Person < ApplicationRecord
         errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
       end
     end
+
+  def client_role_changing
+    if self.changed.include?('role') && self.role_was == 'client' && self.role != 'client'
+      self.errors[:base] << "You cannot change the 'client' role"
+    end
+  end
 end
