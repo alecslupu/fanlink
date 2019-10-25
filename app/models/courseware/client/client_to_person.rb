@@ -16,11 +16,10 @@ module Courseware
     class ClientToPerson < ApplicationRecord
       has_paper_trail
       belongs_to :person, class_name: "Person", foreign_key: :person_id
-      belongs_to :person, class_name: "Person", foreign_key: :client_id
+      belongs_to :client, class_name: "Person", foreign_key: :client_id
 
       enum status: %i[active terminated]
       enum relation_type: %i[assigned designated]
-      end
     end
   end
 end
