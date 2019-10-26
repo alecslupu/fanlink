@@ -18,6 +18,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
     select_product: false,
   }
 
+
   describe "defined policies" do
     subject { described_class.new(nil, master_class) }
     permission_list.each do |policy, value|
@@ -33,7 +34,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("user") }
+      it { expect(subject.send(:module_name)).to eq("admin") }
       it { expect(subject.send(:super_admin?)).to be_nil }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
     end
@@ -66,6 +67,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
+
   context "logged in admin with read permission" do
     permission_list = {
       index: true,
@@ -80,7 +82,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_read: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_read: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -111,7 +113,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_update: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_update: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -142,7 +144,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_delete: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_delete: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -173,7 +175,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_export: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_export: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -190,6 +192,12 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
+
+  describe "rspo" do
+    it "responds " do
+      expect{ build(:portal_access).to respond_to(:person) }
+    end
+  end
   context "logged in admin with history permission" do
     permission_list = {
       index: false,
@@ -204,7 +212,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_history: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, admin_history: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
