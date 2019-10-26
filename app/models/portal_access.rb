@@ -18,6 +18,7 @@
 #  courseware  :integer          default(0), not null
 #  trivia      :integer          default(0), not null
 #  admin       :integer
+#  root        :integer          default(0)
 #
 
 class PortalAccess < ApplicationRecord
@@ -26,7 +27,7 @@ class PortalAccess < ApplicationRecord
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
   belongs_to :person
 
-  %w(post event merchandise user badge reward quest beacon reporting interest).each do |field|
+  %w(post event merchandise user badge reward quest beacon reporting interest root).each do |field|
     has_flags 1 => "#{field}_read".to_sym,
               2 => "#{field}_update".to_sym,
               3 => "#{field}_delete".to_sym,
