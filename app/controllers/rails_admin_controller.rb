@@ -1,6 +1,6 @@
 class RailsAdminController < ApplicationController
-  include ::Pundit
   include Messaging
+  include ::Pundit
 
   set_current_tenant_through_filter
   before_action :require_login, :set_tenant, :set_api_version, :reload_rails_admin
@@ -15,8 +15,8 @@ class RailsAdminController < ApplicationController
     unless logged_in?
       session[:return_to_url] = "/admin_portal/"
       send(Config.not_authenticated_action)
-    else
-      not_found unless current_user.product_id == Product.first.id && current_user.role == "super_admin"
+    # else
+    #   not_found unless current_user.product_id == Product.first.id && current_user.role == "super_admin"
     end
   end
 

@@ -15,7 +15,12 @@ RailsAdmin.config do |config|
              :internal_name,
              :enabled,
              :can_have_supers,
-             :age_requirement
+             :age_requirement,
+             :contact_email,
+             :privacy_url,
+             :terms_url,
+             :android_url,
+             :ios_url
     end
     show do
       fields :id,
@@ -23,7 +28,12 @@ RailsAdmin.config do |config|
              :internal_name,
              :enabled,
              :can_have_supers,
-             :age_requirement
+             :age_requirement,
+             :contact_email,
+             :privacy_url,
+             :terms_url,
+             :android_url,
+             :ios_url
     end
   end
 end

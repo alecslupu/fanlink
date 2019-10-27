@@ -8,6 +8,8 @@ RailsAdmin.config do |config|
       strftime_format "%m/%d/%Y %H:%M:%S"
     end
     list do
+      scopes [ nil, :reported, :not_reported ]
+
       fields :created_at,
              :person,
               :room,

@@ -39,6 +39,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
           Rails.logger.tagged("Message Controller") { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
+          room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
           @message.post(@api_version)
           broadcast(:message_created, @message.id, room.product_id)
           if room.private?
