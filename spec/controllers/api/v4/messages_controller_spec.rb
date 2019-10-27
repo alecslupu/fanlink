@@ -2,6 +2,35 @@ require "rails_helper"
 
 RSpec.describe Api::V4::MessagesController, type: :controller do
   describe "GET index" do
+    it 'returns all the messages with the attached audio' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        msg = create_list(
+          :message,
+          3,
+          room: private_room,
+          body: "this is my body",
+          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+        )
+        get :index,
+          params: {
+            room_id: private_room.id,
+            from_date: from,
+            to_date: to
+          }
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['audio_url']).not_to eq(nil)
+        end
+      end
+    end
+
     it "should get a list of messages not to include blocked people" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -53,23 +82,158 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
 
-    it "should create a new message with an attached audio" do
-      person = create(:person)
+    it "returns all the room's messages after the given one in the correct order" do
+      person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        body = "Do you like my body?"
-        room = create(:public_active_room, )
-        post :create,
-        params: {
-          room_id: room.id,
-          message: {
-            body: body,
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-          }
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg3 = create(:message, room_id: room.id, created_at: msg2.created_at + 1)
+        msg4 = create(:message, room_id: room.id, created_at: msg2.created_at + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id,
+            chronologically: 'after'
         }
+
         expect(response).to be_successful
-        expect(json['message']['audio_url']).not_to eq(nil)
-        expect(Message.last.audio.exists?).to be_truthy
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map { |m| m['id'] }).to eq([msg3.id, msg4.id])
+      end
+    end
+
+    it "returns all the room's messages before the given one in the correct order" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id)
+        msg3 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg4 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg3.id,
+            chronologically: 'before'
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map { |m| m['id'] }).to eq([msg2.id, msg1.id])
+      end
+    end
+
+    it "returns all the room's pinned messages after the given one in the correct order" do
+      person = create(:person, role: :admin, pin_messages_from: true)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg3 = create(:message, room_id: room.id, created_at: msg2.created_at + 1, person_id: person.id)
+        msg4 = create(:message, room_id: room.id, created_at: msg2.created_at + 2, person_id: person.id)
+        msg5 = create(:message, room_id: room.id, created_at: msg2.created_at + 3)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id,
+            chronologically: 'after',
+            pinned: 'yes'
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map { |m| m['id'] }).to eq([msg3.id, msg4.id])
+      end
+    end
+
+    it "returns all the room's pinned messages before the given one" do
+      person = create(:person, role: :admin, pin_messages_from: true)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id, person_id: person.id)
+        msg2 = create(:message, room_id: room.id, person_id: person.id)
+        msg3 = create(:message, room_id: room.id, created_at: DateTime.now + 1)
+        msg4 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+        msg5 = create(:message, room_id: room.id)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg3.id,
+            chronologically: 'before',
+            pinned: 'yes'
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+        expect(json['messages'].map { |m| m['id'] }).to eq([msg2.id, msg1.id])
+      end
+    end
+
+    it "returns all the messages from the room if only chronologically param is given" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            after_message: false
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+      end
+    end
+
+
+    it "returns all the messages from the room if only the message_id is given" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
+      end
+    end
+
+    it "returns all the messages from the room if chronologically params has bad value" do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, status: :active, public: true)
+        msg1 = create(:message, room_id: room.id)
+        msg2 = create(:message, room_id: room.id, created_at: DateTime.now + 2)
+
+        get :index,
+          params: {
+            room_id: room.id,
+            message_id: msg2.id,
+            chronologically: 'wrong'
+        }
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(2)
       end
     end
   end
@@ -158,35 +322,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(response).to be_successful
         expect(json['message']['audio_url']).not_to eq(nil)
         expect(Message.last.audio.exists?).to be_truthy
-      end
-    end
-
-    it 'returns all the messages with the attached audio' do
-      person = create(:person, role: :admin)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        from = Date.today - 1.day
-        to = Date.today
-        private_room = create(:room, public: false, status: :active)
-        private_room.members << person << private_room.created_by
-        msg = create_list(
-          :message,
-          3,
-          room: private_room,
-          body: "this is my body",
-          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-        )
-        get :index,
-          params: {
-            room_id: private_room.id,
-            from_date: from,
-            to_date: to
-          }
-        expect(response).to be_successful
-        expect(json['messages'].size).to eq(3)
-        json['messages'].each do |message|
-          expect(message['audio_url']).not_to eq(nil)
-        end
       end
     end
   end
