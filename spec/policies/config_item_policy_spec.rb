@@ -32,7 +32,7 @@ RSpec.describe ConfigItemPolicy, type: :policy do
     end
     describe "protected methods" do
       it { expect(subject.send(:module_name)).to eq("root") }
-      it { expect(subject.send(:super_admin?)).to be_nil }
+      it { expect(subject.send(:super_admin?)).to be_falsey }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
     end
   end
