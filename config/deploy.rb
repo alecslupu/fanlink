@@ -34,16 +34,16 @@ set :keep_releases, 5
 set :linked_files, fetch(:linked_files, []).push('config/secrets.yml', 'config/database.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
-set :passenger_restart_with_touch, true
-
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for local_user is ENV['USER']
 # set :local_user, -> { `git config user.name`.chomp }
 
-# Default value for keep_releases is 5
-# set :keep_releases, 5
+set :puma_preload_app, true
+set :puma_init_active_record, true
+set :puma_plugins, [ :tmp_restart ]  #accept array of plugins
+
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
