@@ -2,10 +2,10 @@ RailsAdmin.config do |config|
   config.included_models.push("PersonCertificate")
   config.model "PersonCertificate" do
     parent "Certificate"
-
-    configure :purchased_waived_date do
-      label "Purchased date"
-    end
+    # THis is not the purchased Date
+    # configure :purchased_waived_date do
+    #   label "Purchased date"
+    # end
 
     list do
       fields :id, :person
