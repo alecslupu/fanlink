@@ -1,5 +1,6 @@
 class RailsAdminController < ApplicationController
   include ::Pundit
+  include Messaging
 
   set_current_tenant_through_filter
   before_action :require_login, :set_tenant, :set_api_version, :reload_rails_admin
