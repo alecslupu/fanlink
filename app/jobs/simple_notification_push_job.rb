@@ -1,18 +1,22 @@
 class SimpleNotificationPushJob < Struct.new(:notification_id)
   include Push
 
+  BATCH_SIZE = 20.freeze
+
   def perform
     notification = Notification.find(notification_id)
     ActsAsTenant.with_tenant(notification.product) do
       current_user = Person.find(notification.person_id)
 
       if notification.for_followers
-        receipents = current_user.followers
+        current_user.followers.find_in_batches(batch_size: BATCH_SIZE) do |receipents|
+          simple_notification_push(notification, current_user, receipents)
+        end
       else
-        receipents = Person.where.not(id: current_user.id)
+        Person.where.not(id: current_user.id).find_in_batches(batch_size: BATCH_SIZE) do |receipents|
+          simple_notification_push(notification, current_user, receipents)
+        end
       end
-
-      simple_notification_push(notification, current_user, receipents)
     end
   end
 
