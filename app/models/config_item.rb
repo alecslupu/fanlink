@@ -27,8 +27,7 @@ class ConfigItem < ApplicationRecord
       max_depth: 5
     )
   end
-  has_paper_trail
-  
+
   validates :type, inclusion: { in: %w(
             StringConfigItem
             ArrayConfigItem
