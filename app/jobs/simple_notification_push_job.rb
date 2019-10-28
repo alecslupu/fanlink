@@ -1,7 +1,7 @@
 class SimpleNotificationPushJob < Struct.new(:notification_id)
   include Push
 
-  BATCH_SIZE = 20.freeze
+  BATCH_SIZE = 50.freeze
 
   def perform
     notification = Notification.find(notification_id)
