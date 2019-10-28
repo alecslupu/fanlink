@@ -1,0 +1,5 @@
+json = {
+}
+json[:person] = render partial: "api/v4/people/person_mini", locals: { person: assignee }, handler: "jb"
+
+json

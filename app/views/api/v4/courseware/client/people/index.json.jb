@@ -1,0 +1,6 @@
+json = {}
+
+json[:assignees] = @assignees.map do |assignee|
+  render partial: @req_source, collection: assignee, handler: :jb
+end
+json
