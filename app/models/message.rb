@@ -139,6 +139,7 @@ class Message < ApplicationRecord
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> { where(hidden: false) }
   scope :room_date_range, -> (from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
+  scope :chronological, ->(sign, created_at, id) { where("messages.created_at #{sign} ? AND messages.id #{sign} ?", created_at, id) }
 
 
   scope :reported, -> { joins(:message_reports) }

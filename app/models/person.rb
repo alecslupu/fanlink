@@ -116,7 +116,6 @@ class Person < ApplicationRecord
 
   has_many :relationships, ->(person) { unscope(:where).where("requested_by_id = :id OR requested_to_id = :id", id: person.id) }
 
-
   has_many :blocks_by,  class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
   has_many :blocks_on, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
 
