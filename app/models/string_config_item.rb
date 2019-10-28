@@ -20,4 +20,6 @@
 #
 
 class StringConfigItem < ConfigItem
+  has_paper_trail
+
 end

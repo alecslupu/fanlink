@@ -20,6 +20,8 @@
 #
 
 class IntegerConfigItem < ConfigItem
+  has_paper_trail
+
   def item_value
     self[:item_value].try(:to_i)
   end
