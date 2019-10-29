@@ -1,6 +1,8 @@
-json = {}
-
-json[:assignees] = @assignees.map do |assignee|
-  render partial: @req_source, collection: assignee, handler: :jb
+json = @assignees.map do |assignee|
+  a = Rails.cache.fetch ["v4", "courseware","client","people", @req_source, assignee.id, assignee.updated_at.to_i] do
+    render(partial: "api/v4/courseware/client/people/#{@req_source}", locals: { assignee: assignee }, handlers: "jb")
+  end
+  a
 end
 json
+
