@@ -1,4 +1,7 @@
 class Api::V4::Courseware::Client::CertificatesController < ApiController
+
+  # o sa dai certificarile persoane cu id-ul params[:person_id]
+
   def index
     id = Certificate.last.nil? ? 1 : Certificate.last.id
     @certificates = [
