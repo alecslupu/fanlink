@@ -20,4 +20,6 @@
 #
 
 class RootConfigItem < ConfigItem
+  has_paper_trail
+
 end
