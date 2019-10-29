@@ -1,6 +1,6 @@
 class Api::V4::RoomsController < Api::V3::RoomsController
   def index
-    @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics.order(order: :desc)
+    @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics
     return_the @rooms, handler: tpl_handler
   end
 
@@ -27,9 +27,9 @@ class Api::V4::RoomsController < Api::V3::RoomsController
         render_422
         return
       end
-      # if the room is private, the timestamp will reflect the moment of creation
-      @room.last_message_timestamp = DateTime.now.to_i
     end
+    # the timestamp will reflect the moment of the room's creation
+    @room.last_message_timestamp = DateTime.now.to_i
     if @room.save
       room_members.each do |room_member|
         @room.room_memberships.create(person_id: room_member)

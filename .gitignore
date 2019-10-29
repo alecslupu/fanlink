@@ -111,3 +111,6 @@ build-iPhoneSimulator/
 
 # End of https://www.gitignore.io/api/ruby
 rubocop.html
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
