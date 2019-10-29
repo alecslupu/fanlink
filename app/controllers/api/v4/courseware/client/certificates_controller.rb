@@ -1,7 +1,9 @@
 class Api::V4::Courseware::Client::CertificatesController < ApiController
   def index
+    id = Certificate.last.nil? ? 1 : Certificate.last.id
     @certificates = [
       Certificate.create(
+        id: id + 1,
         long_name: "First Certificate Test",
         short_name: "1st Cert Test",
         description: "This is the first certificate ever created",
@@ -26,6 +28,7 @@ class Api::V4::Courseware::Client::CertificatesController < ApiController
     ]
     @certificates <<
       Certificate.create(
+        id: id + 2,
         long_name: "Not bought certificate",
         short_name: "Nbgtcrt",
         description: "I didn't buy this",
@@ -47,5 +50,6 @@ class Api::V4::Courseware::Client::CertificatesController < ApiController
         template_image_updated_at: nil,
         product_id: current_user.product.id
       )
+      return_the @certificates, handler: :jb
   end
 end
