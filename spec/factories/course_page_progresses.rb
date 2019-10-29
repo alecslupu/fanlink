@@ -13,5 +13,7 @@
 FactoryBot.define do
   factory :course_page_progress do
     passed { false }
+    certcourse_page { create(:certcourse_page) }
+    person { create(:person) }
   end
 end

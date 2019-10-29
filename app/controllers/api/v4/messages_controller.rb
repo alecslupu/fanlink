@@ -4,8 +4,33 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     if !check_access(room)
       render_not_found
     else
-      msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
-      @messages = paginate(msgs.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
+      ordering = 'DESC'
+      if params[:message_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
+        if params[:chronologically] == 'after'
+          sign = '>'
+          ordering = 'ASC'
+        else
+          sign = '<'
+        end
+
+        message = Message.find(params[:message_id])
+
+        if params[:pinned].blank? || params[:pinned].downcase == "all"
+          msgs = room.messages.chronological(sign, message.created_at, message.id)
+        else
+          msgs = room.messages.pinned(params[:pinned]).chronological(sign, message.created_at, message.id)
+        end
+      else
+        msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
+      end
+
+      @messages = paginate(
+                    msgs
+                      .visible
+                      .unblocked(current_user.blocked_people)
+                      .order("messages.created_at #{ordering}, messages.id #{ordering} ")
+                  )
+
       clear_count(room) if room.private?
       return_the @messages, handler: tpl_handler
     end
@@ -39,6 +64,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
           Rails.logger.tagged("Message Controller") { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
+          room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
           @message.post(@api_version)
           broadcast(:message_created, @message.id, room.product_id)
           if room.private?

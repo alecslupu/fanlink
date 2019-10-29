@@ -43,12 +43,17 @@ class PersonCertificate < ApplicationRecord
   belongs_to :certificate, touch: true
   validates_uniqueness_of :certificate_id, scope: :person_id
 
+  validates :amount_paid, numericality: { greater_than_or_equal_to: 0 }
+
   enum purchased_platform: %i[ios android]
 
   scope :for_person, -> (person) { where(person_id: person.id) }
   scope :for_android, -> (person) { where(person_id: person.id, purchased_platform: "android") }
   scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: "ios") }
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
+
+  scope :free, -> { joins(:certificate).where(certificates: { is_free: true } ) }
+  scope :paid, -> { joins(:certificate).where(certificates: { is_free: false } ) }
 
   def product
     person.product

@@ -2,20 +2,15 @@ require "rails_helper"
 
 RSpec.describe Badge, type: :model do
 
-  before(:all) do
-    @product = create(:product)
-    ActsAsTenant.current_tenant = @product
-  end
-
   context "Validation" do
-    it { expect(create(:badge)).to be_valid }
+    it { expect(build(:badge)).to be_valid }
   end
 
   describe "#action_count_earned_by" do
-    let(:badge) { create(:badge) }
-    let(:person) { create(:person) }
+    let(:badge) { build(:badge) }
+    let(:person) { build(:person) }
     it "should return 0 for person with nothing" do
-      expect(badge.action_count_earned_by(create(:person))).to eq(0)
+      expect(badge.action_count_earned_by(person)).to eq(0)
     end
     it "should return 0 for person with actions before issued_from with no issued to" do
       b = create(:badge, issued_from: Time.now + 1.day)
@@ -77,27 +72,27 @@ RSpec.describe Badge, type: :model do
   describe "current?" do
     let(:current_time) { Time.now }
     it "should not be current if before issued_from with no issued_to" do
-      badge = create(:badge, issued_from: current_time + 1.minute)
+      badge = build(:badge, issued_from: current_time + 1.minute)
       expect(badge.current?).to be_falsey
     end
     it "should not be current if before issued_from with also an issued_to" do
-      badge = create(:badge, issued_from: current_time + 1.minute, issued_to: current_time + 3.minutes)
+      badge = build(:badge, issued_from: current_time + 1.minute, issued_to: current_time + 3.minutes)
       expect(badge.current?).to be_falsey
     end
     it "should not be current if after issued_to with no issued_from" do
-      badge = create(:badge, issued_to: current_time - 1.minutes)
+      badge = build(:badge, issued_to: current_time - 1.minutes)
       expect(badge.current?).to be_falsey
     end
     it "should not be current if after issued_to with issued_from" do
-      badge = create(:badge, issued_from: current_time - 1.minutes, issued_to: current_time - 1.second)
+      badge = build(:badge, issued_from: current_time - 1.minutes, issued_to: current_time - 1.second)
       expect(badge.current?).to be_falsey
     end
     it "should be current if after issued_from with no issued_to" do
-      badge = create(:badge, issued_from: current_time - 1.minute)
+      badge = build(:badge, issued_from: current_time - 1.minute)
       expect(badge.current?).to be_truthy
     end
     it "should be current if after issued_from with and before issued_to" do
-      badge = create(:badge, issued_from: current_time - 1.minute, issued_to: current_time + 1.minute)
+      badge = build(:badge, issued_from: current_time - 1.minute, issued_to: current_time + 1.minute)
       expect(badge.current?).to be_truthy
     end
   end
@@ -188,4 +183,82 @@ RSpec.describe Badge, type: :model do
     end
   end
 
+  describe 'creation of badge' do
+    it 'creates a reward' do
+      expect{ create(:badge) }.to change { Reward.count }.by(1)
+    end
+
+    it 'creates an assigned reward' do
+      expect{ create(:badge) }.to change { AssignedReward.count }.by(1)
+    end
+  end
+
+  context 'the reward and assigned reward have the correct info' do
+    let(:badge) { create(:badge) }
+    describe 'reward' do
+      it 'has the corect internal name' do
+        expect(badge.internal_name).to eq(badge.reward.internal_name)
+      end
+      it 'has the corect product' do
+        expect(badge.product).to eq(badge.reward.product)
+      end
+      it 'has the corect name' do
+        expect(badge.name).to eq(badge.reward.name)
+      end
+      it 'has the corect points' do
+        expect(badge.point_value).to eq(badge.reward.points)
+      end
+      it 'has the corect completion requirements' do
+        expect(badge.action_requirement).to eq(badge.reward.completion_requirement)
+      end
+      it 'has the corect badge' do
+        expect(badge.id).to eq(badge.reward.reward_type_id)
+      end
+      it 'has the corect status' do
+        expect(badge.reward.status).to eq('active')
+      end
+      it 'has the corect reward type' do
+        expect(badge.reward.reward_type).to eq('badge')
+      end
+    end
+
+    describe 'assigned reward' do
+      let(:assigned_reward) { badge.reward.assigned_rewards.first }
+
+      it 'has the corect action type' do
+        expect(badge.action_type.id).to eq(assigned_reward.assigned.id)
+      end
+      it 'has the corect max times' do
+        expect(assigned_reward.max_times).to eq(1)
+      end
+    end
+  end
+
+  describe 'update of the badge triggers the update of the reward' do
+    let(:badge) { create(:badge) }
+
+    it "updates the name" do
+      badge.update(name: badge.name + 's')
+
+      expect(badge.reward.name).to eq(badge.name)
+    end
+
+    it "updates the internal name" do
+      badge.update(name: badge.internal_name + 's')
+
+      expect(badge.reward.internal_name).to eq(badge.internal_name)
+    end
+
+    it "updates the points" do
+      badge.update(name: badge.point_value + 1)
+
+      expect(badge.reward.points).to eq(badge.point_value)
+    end
+
+    it "updates the action requirement" do
+      badge.update(action_requirement: badge.action_requirement + 1)
+
+      expect(badge.reward.completion_requirement).to eq(badge.action_requirement)
+    end
+  end
 end

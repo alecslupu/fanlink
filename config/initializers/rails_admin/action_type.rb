@@ -29,14 +29,15 @@ RailsAdmin.config do |config|
 
     end
     edit do
-      fields :name, :internal_name, :active, :seconds_lag, :badges, :rewards
+      fields :name, :internal_name, :active, :seconds_lag
+      #, :badges, :rewards
 
-      field :badge_actions_count do
-        read_only true
-      end
-      field :badges_count do
-        read_only true
-      end
+      # field :badge_actions_count do
+      #   read_only true
+      # end
+      # field :badges_count do
+      #   read_only true
+      # end
     end
     show do
       fields :id,
