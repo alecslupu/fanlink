@@ -3,9 +3,9 @@ RailsAdmin.config do |config|
   config.model "PersonCertificate" do
     parent "Certificate"
     # THis is not the purchased Date
-    # configure :purchased_waived_date do
-    #   label "Purchased date"
-    # end
+    configure :created_at do
+      label "Purchased date"
+    end
 
     list do
       scopes [nil, :free, :paid]
@@ -15,7 +15,7 @@ RailsAdmin.config do |config|
         searchable [{ Certificate => :short_name }]
         queryable true
       end
-      fields :full_name, :purchased_waived_date, :purchased_platform, :amount_paid, :currency
+      fields :full_name, :created_at, :purchased_platform, :amount_paid, :currency
     end
 
     edit do
@@ -26,6 +26,7 @@ RailsAdmin.config do |config|
              :validity_duration,
              :amount_paid,
              :currency,
+             :created_at,
              :fee_waived,
              :purchased_waived_date,
              :access_duration,
@@ -66,6 +67,7 @@ RailsAdmin.config do |config|
              :validity_duration,
              :amount_paid,
              :currency,
+             :created_at,
              :fee_waived,
              :purchased_waived_date,
              :access_duration,
