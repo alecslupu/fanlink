@@ -1,4 +1,5 @@
 class Api::V4::Courseware::Client::CertcoursesController < ApiController
+  # frozen_string_literal: true
   # cauti cursurile ptr acel certificat
     # le poti da id-ul quizz-ului la show
   def index
