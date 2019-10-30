@@ -492,6 +492,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -539,8 +540,8 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -551,6 +552,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.index ["created_at"], name: "index_people_on_created_at"
+    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -691,7 +693,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-01-28 16:43:52"
+    t.datetime "end_date", default: "2019-02-07 01:46:08"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -859,22 +861,19 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.string "logo_content_type"
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string "color_primary", default: "#4B73D7"
-    t.string "color_primary_dark", default: "#4B73D7"
-    t.string "color_primary_66", default: "#A94B73D7"
-    t.string "color_primary_text", default: "#FFFFFFF"
-    t.string "color_secondary", default: "#CDE5FF"
-    t.string "color_secondary_text", default: "#000000"
-    t.string "color_tertiary", default: "#FFFFFF"
-    t.string "color_tertiary_text", default: "#000000"
-    t.string "color_accent", default: "#FFF537"
-    t.string "color_accent_50", default: "#FFF537"
-    t.string "color_accent_text", default: "#FFF537"
-    t.string "color_title_text", default: "#FFF537"
+    t.string "color_primary", default: "4B73D7"
+    t.string "color_primary_text", default: "FFFFFF"
+    t.string "color_secondary", default: "CDE5FF"
+    t.string "color_secondary_text", default: "000000"
+    t.string "color_tertiary", default: "FFFFFF"
+    t.string "color_tertiary_text", default: "000000"
+    t.string "color_accent", default: "FFF537"
+    t.string "color_accent_text", default: "FFF537"
+    t.string "color_title_text", default: "FFF537"
+    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
-    t.string "color_accessory", default: "000000"
     t.integer "features", default: 0, null: false
     t.string "contact_email"
     t.text "privacy_url"
@@ -1077,8 +1076,8 @@ ActiveRecord::Schema.define(version: 20191029152417) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.jsonb "content", default: "{}", null: false
-    t.jsonb "title", default: "{}", null: false
+    t.jsonb "content", default: {}, null: false
+    t.jsonb "title", default: {}, null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false

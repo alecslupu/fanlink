@@ -411,8 +411,8 @@ class Person < ApplicationRecord
     end
 
     def canonicalize_username
-      if Person.find_by(username_canonical: canonicalize(self.username), product_id: product.id)
-        errors.add(:username, :username_in_use, message: _("has already been taken."))
+      if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+        errors.add(:username, :username_in_use, message: _("The username has already been taken."))
         false
       else
         self.username_canonical = canonicalize(self.username)
