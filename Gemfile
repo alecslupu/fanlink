@@ -61,6 +61,7 @@ gem "httparty", "0.16.4"
 # gem "capistrano-rails", group: :development
 #
 
+gem "http", '= 4.1.1'
 group :production, :staging do
   gem 'elastic-apm', '~> 2.10.1'
 end
