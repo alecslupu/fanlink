@@ -63,6 +63,14 @@ module Push
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
   end
 
+  def simple_notification_push(notification, current_user, receipents)
+    tokens = []
+    receipents.each do |person|
+      tokens += person.notification_device_ids.map { |ndi| ndi.device_identifier }
+    end
+    do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
+  end
+
 private
 
   def push_client
