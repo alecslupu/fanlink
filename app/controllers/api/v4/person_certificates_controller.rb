@@ -10,7 +10,7 @@ class Api::V4::PersonCertificatesController < ApiController
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update_attributes(person_certificate_params)
-        @person_certificate.issued_date = DateTime.now if @person_certificate.issued_date.empty?
+        @person_certificate.issued_date = DateTime.now if @person_certificate.issued_date.present?
         @person_certificate.write_files
         return_the @certificate.reload, handler: "jb"
       else
@@ -28,28 +28,6 @@ class Api::V4::PersonCertificatesController < ApiController
       end
     end
   end
-
-
-  # def create
-  #   @person_certificate = PersonCertificate.where(certificate_id: params[:certificate_id], person_id: current_user.id).first_or_initialize
-  #   if @person_certificate.new_record?
-  #     @person_certificate.assign_attributes(person_certificate_params)
-  #     if @person_certificate.save
-  #       return_the @person_certificate.certificate, handler: tpl_handler
-  #     else
-  #       render_422(_("Something went wrong."))
-  #     end
-  #   else
-  #     if @person_certificate.full_name.blank?
-  #       @person_certificate.assign_attributes(person_certificate_params)
-  #       @person_certificate.issued_date = DateTime.now if @person_certificate.issued_date.empty?
-  #       @person_certificate.write_files
-  #       return_the @person_certificate.reload.certificate, handler: "jb"
-  #     else
-  #       render_422(_("User already completed the full name"))
-  #     end
-  #   end
-  # end
 
   def show
     @person_certificate = PersonCertificate.where(unique_id: params[:unique_id]).first!
