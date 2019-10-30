@@ -278,5 +278,6 @@ JkoApi.routes self do
         end
       end
     end
+    resources :notifications, only: [:create]
   end
 end

@@ -116,7 +116,6 @@ class Person < ApplicationRecord
 
   has_many :relationships, ->(person) { unscope(:where).where("requested_by_id = :id OR requested_to_id = :id", id: person.id) }
 
-
   has_many :blocks_by,  class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
   has_many :blocks_on, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
 
@@ -136,6 +135,8 @@ class Person < ApplicationRecord
   has_many :assigners, through: :hired_people, source: :client
   has_many :assignees, through: :clients, source: :person
 
+  has_many :notifications, dependent: :destroy
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
 
@@ -149,17 +150,20 @@ class Person < ApplicationRecord
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
-  validates :username, uniqueness: { scope: :product_id, message: _("has already been taken.") }
+  validates :username, uniqueness: { scope: :product_id, message: _("The username has already been taken.") }
 
   validates :email, presence: { message: _("Email is required.") }, if: Proc.new { |person| person.facebookid.blank? }
   validates :email, email: { message: _("Email is invalid."), allow_nil: true }
 
   validates :username, presence: { message: _("Username is required.") }
 
-  validates :username, emoji: true, on: :create
   validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
   validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
+  validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+
+  validates :username, emoji: true, on: :create
   # validates :name, emoji: true, on: :create
   # validates :birthdate, presence: { message: "is required." }
 
@@ -417,8 +421,8 @@ class Person < ApplicationRecord
     end
 
     def canonicalize_username
-      if Person.find_by(username_canonical: canonicalize(self.username), product_id: product.id)
-        errors.add(:username, :username_in_use, message: _("has already been taken."))
+      if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+        errors.add(:username, :username_in_use, message: _("The username has already been taken."))
         false
       else
         self.username_canonical = canonicalize(self.username)

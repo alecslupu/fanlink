@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191024153229) do
+ActiveRecord::Schema.define(version: 20191029152417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 20191024153229) do
     t.string "item_key"
     t.string "item_value"
     t.string "type"
-    t.boolean "enabled", default: false
+    t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parent_id"
@@ -500,6 +500,7 @@ ActiveRecord::Schema.define(version: 20191024153229) do
     t.index ["created_at"], name: "index_messages_on_created_at"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -559,6 +560,7 @@ ActiveRecord::Schema.define(version: 20191024153229) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.index ["created_at"], name: "index_people_on_created_at"
+    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -699,7 +701,7 @@ ActiveRecord::Schema.define(version: 20191024153229) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-09-10 13:54:50"
+    t.datetime "end_date", default: "2019-02-07 01:46:08"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -722,6 +724,7 @@ ActiveRecord::Schema.define(version: 20191024153229) do
     t.integer "courseware", default: 0, null: false
     t.integer "trivia", default: 0, null: false
     t.integer "admin"
+    t.integer "root", default: 0
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
