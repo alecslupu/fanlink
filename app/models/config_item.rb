@@ -28,6 +28,9 @@ class ConfigItem < ApplicationRecord
     )
   end
 
+  scope :for_product, -> (product) { where(product_id: product.id) }
+
+
   validates :type, inclusion: { in: %w(
             StringConfigItem
             ArrayConfigItem

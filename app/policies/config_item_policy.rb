@@ -1,18 +1,17 @@
 class ConfigItemPolicy < ApplicationPolicy
-  def nested_set?
-    update?
+
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      scope.for_product(ActsAsTenant.current_tenant)
+    end
   end
 
-  def create?
-    false
-  end
-
-  def new?
-    create?
-  end
   protected
-
   def module_name
-    "product"
+    "root"
+  end
+
+  def super_admin?
+    false
   end
 end
