@@ -352,15 +352,9 @@ RSpec.describe Person, type: :model do
     it "should be nil for person with one badge below first level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
-# <<<<<<< HEAD
         create(:badge, point_value: 10)
         create(:level, points: 20)
         create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
-# =======
-#         badge = create(:badge, point_value: 10)
-#         level_earned = create(:level, points: 20)
-#         create(:level_progress, person: person, points: {badge_action: 10}, total: 10)
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
       end
@@ -380,13 +374,8 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
-# <<<<<<< HEAD
         create(:level, points: 21)
         create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
-# =======
-#         level2 = create(:level, points: 21)
-#         create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
       end
@@ -450,13 +439,8 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq("whereispancakehouse")
     end
     it "should ignore accents, case, and punctuation when using for_username" do
-# <<<<<<< HEAD
       examples = [ "Whére.Ïs.Pañçâkè.HOUSE", "where.is.pancake.house",
                    "whereispancakehouse", "where-is_pancake.house", "where@is_pancakehouse" ]
-# =======
-#       examples = ["Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
-#                   "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house",]
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
