@@ -1,18 +1,27 @@
 class Api::V4::Courseware::Client::CertificatesController < ApiController
-
-  # o sa dai certificarile persoane cu id-ul params[:person_id]
-  # PersonCertificate.last.issued_certificate_image.url poza
-
+  # frozen_string_literal: true
+  before_action :load_person_certificate, only: [:send_email]
   def index
-    @certificates = Person.find(params[:person_id]).certificates
+    @certificates = Person.find(certificate_params[:person_id]).certificates
     return_the @certificates, handler: :jb
   end
 
-  def download
-    @url = "https://s3.us-east-1.amazonaws.com/fanlink-staging/caned/certificates/template_images/000/000/086/original/76ba71377a4b46a2d2c72921c0e62bc3b3b9d6cf.jpg?1571836879"
+  def send_email
+    if @person_certificate.issued_certificate_pdf.present?
+      render json: { message: _("Email sent") }
+    else
+      render_422 _("This user does not have a pdf file attached to this certificate.")
+    end
   end
 
-  def send_email
-    render json: { message: _("Email sent") }
-  end
+  private
+
+    def load_person_certificate
+      @person_certificate = PersonCertificate.where(certificate_id: certificate_params[:certificate_id], person_id: certificate_params[:person_id])
+      render_404 if @person_certificate.blank?
+    end
+
+    def certificate_params
+      params.require(:certificate).permit(:certificate_id, :person_id)
+    end
 end
