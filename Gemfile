@@ -62,7 +62,7 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem 'elastic-apm', '~> 2.12.0'
+  gem 'elastic-apm', '~> 2.10.1'
 end
 
 group :staging, :development, :test do
