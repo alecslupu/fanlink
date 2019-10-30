@@ -8,6 +8,8 @@ RailsAdmin.config do |config|
     # end
 
     list do
+      scopes [nil, :free, :paid]
+
       fields :id, :person
       field :certificate do
         searchable [{ Certificate => :short_name }]

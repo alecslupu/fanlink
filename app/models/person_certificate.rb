@@ -52,6 +52,9 @@ class PersonCertificate < ApplicationRecord
   scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: "ios") }
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
 
+  scope :free, -> { joins(:certificate).where(certificates: { is_free: true } ) }
+  scope :paid, -> { joins(:certificate).where(certificates: { is_free: false } ) }
+
   def product
     person.product
   end
