@@ -7,7 +7,7 @@
 #  item_key         :string
 #  item_value       :string
 #  type             :string
-#  enabled          :boolean          default(FALSE)
+#  enabled          :boolean          default(TRUE)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  parent_id        :integer
@@ -20,4 +20,6 @@
 #
 
 class ArrayConfigItem < ConfigItem
+  has_paper_trail
+
 end

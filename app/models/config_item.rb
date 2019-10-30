@@ -7,7 +7,7 @@
 #  item_key         :string
 #  item_value       :string
 #  type             :string
-#  enabled          :boolean          default(FALSE)
+#  enabled          :boolean          default(TRUE)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  parent_id        :integer
@@ -27,6 +27,9 @@ class ConfigItem < ApplicationRecord
       max_depth: 5
     )
   end
+
+  scope :for_product, -> (product) { where(product_id: product.id) }
+
 
   validates :type, inclusion: { in: %w(
             StringConfigItem

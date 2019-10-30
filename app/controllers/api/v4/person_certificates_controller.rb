@@ -12,7 +12,8 @@ class Api::V4::PersonCertificatesController < ApiController
         @person_certificate.update_attributes(person_certificate_params)
         @person_certificate.issued_date = DateTime.now if @person_certificate.issued_date.present?
         @person_certificate.write_files
-        return_the @certificate.reload, handler: "jb"
+        @certificate = @person_certificate.reload.certificate
+        return_the @certificate, handler: tpl_handler
       else
         render_422(_("User already completed the full name"))
       end
