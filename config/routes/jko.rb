@@ -270,7 +270,7 @@ JkoApi.routes self do
         resources :people, only: [:index] do
           resources :certificates, only: [:index, :show] do
             member do
-              get 'send_email'
+              post 'send_email'
               get 'download'
             end
             resources :certcourses, only: [:index, :show]
