@@ -70,7 +70,6 @@ group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
   gem "bullet", "~>6.0.2"
-  gem "httplog"
 end
 
 group :development, :test do
@@ -84,6 +83,7 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
+  gem "httplog"
 
   gem 'rubocop', '~> 0.74.0', require: false
   # gem "rubocop-rails_config"
