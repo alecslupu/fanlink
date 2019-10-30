@@ -1,0 +1,9 @@
+json = {}
+json[:quizzes] = @quizzes.map do |quiz|
+  quiz = Rails.cache.fetch ["v4", "courseware", "client", "certcourses", @req_source, quiz[:id]] do
+    render partial: @req_source, locals: { quiz: quiz }, handlers: "jb"
+  end
+  quiz
+end
+
+json
