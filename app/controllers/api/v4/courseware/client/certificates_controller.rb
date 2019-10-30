@@ -1,9 +1,18 @@
 class Api::V4::Courseware::Client::CertificatesController < ApiController
   # frozen_string_literal: true
-  before_action :load_person_certificate, only: [:send_email]
+  before_action :load_person_certificate, only: [:download, :send_email]
   def index
     @certificates = Person.find(certificate_params[:person_id]).certificates
     return_the @certificates, handler: :jb
+  end
+
+  def download
+    if @person_certificate.issued_certificate_image.present?
+      @url = @person_certificate.issued_certificate_image.url
+      return_the @url, handler: :jb
+    else
+      render_422 _("This user does not have a image attached to this certificate.")
+    end
   end
 
   def send_email
