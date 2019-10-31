@@ -9,3 +9,7 @@ secret_token: 'f80747de-6853-4400-a611-bd764e5ececb'
 
 # Set custom APM Server URL (default: http://localhost:8200)
 server_url: 'http://monitoring.fan.link:8200'
+
+log_path: 'log/elastic_apm.log'
+
+metrics_interval: '5s'
