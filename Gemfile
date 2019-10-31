@@ -72,6 +72,7 @@ group :staging, :development, :test do
 end
 
 group :development, :test do
+  gem "httplog"
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry", "~>0.12.2"
   gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
