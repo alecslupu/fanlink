@@ -25,15 +25,9 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
     end
   end
 
-
-  # def send_certificate
-  #   @person_certificate = Certificate.find(params[:id]).for_person(@current_user)
-  #   @current_user.send_certificate_email(@person_certificate)
-  # end
-
   private
     def load_person_certificate
-      @person_certificate = PersonCertificate.where(certificate_id: params[:certificate_id], person_id: params[:person_id])
+      @person_certificate = PersonCertificate.where(certificate_id: params[:id], person_id: params[:person_id]).first
       render_404 if @person_certificate.blank?
     end
 end
