@@ -6,7 +6,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      fields :product, :item_key, :item_value, :item_url, :item_description, :enabled
+      fields :product, :item_key, :item_value, :item_url, :item_description
     end
   end
   %w(
@@ -21,7 +21,7 @@ RailsAdmin.config do |config|
       parent "ConfigItem"
 
       edit do
-        fields :product, :item_key, :item_value, :item_url, :item_description, :enabled
+        fields :product, :item_key, :item_value, :item_url, :item_description
       end
     end
   end

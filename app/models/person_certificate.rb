@@ -52,12 +52,20 @@ class PersonCertificate < ApplicationRecord
   scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: "ios") }
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
 
+  scope :free, -> { joins(:certificate).where(certificates: { is_free: true } ) }
+  scope :paid, -> { joins(:certificate).where(certificates: { is_free: false } ) }
+
   def product
     person.product
   end
 
   include Magick
 
+  before_create do
+    self.generate_token!
+    self.access_duration   = self.certificate.access_duration
+    self.validity_duration = self.certificate.validity_duration
+  end
 
   def self.update_certification_status(certificate_ids, user_id)
     # TODO find a better way to write this
@@ -115,7 +123,6 @@ class PersonCertificate < ApplicationRecord
       txt.font_weight = Magick::BoldWeight
     end
 
-
     img.format = "jpeg"
 
     jpeg_file = Tempfile.new(%w(certificate_image .jpg))
@@ -128,6 +135,6 @@ class PersonCertificate < ApplicationRecord
       pdf.image jpeg_file.path, fit: [pdf.bounds.right, pdf.bounds.top]
     end
 
-    self.update_attributes(issued_certificate_image: jpeg_file, issued_certificate_pdf: pdf_file)
+    self.update_attributes(issued_date: issued_date , issued_certificate_image: jpeg_file, issued_certificate_pdf: pdf_file)
   end
 end
