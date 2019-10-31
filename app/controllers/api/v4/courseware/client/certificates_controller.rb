@@ -19,7 +19,7 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
   def send_email
     #  to check jiras
     if @person_certificate.issued_certificate_pdf.present?
-      current_user.send_certificate_email(@person_certificate, params[:email])
+      current_user.send_assignee_certificate_email(@person_certificate, params[:person_id], params[:email])
       render json: { message: _("Email sent") }
     else
       render_422 _("This user does not have a pdf file attached to this certificate.")
@@ -28,7 +28,7 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
 
   private
     def load_person_certificate
-      @person_certificate = PersonCertificate.where(certificate_id: params[:id], person_id: params[:person_id]).first
+      @person_certificate = PersonCertificate.where(certificate_id: params[:id], person_id: params[:person_id]).last
       render_404 if @person_certificate.blank?
     end
 end
