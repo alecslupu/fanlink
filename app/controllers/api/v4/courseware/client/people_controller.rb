@@ -2,7 +2,11 @@ class Api::V4::Courseware::Client::PeopleController < Api::V4::Courseware::Clien
   # frozen_string_literal: true
 
   def index
-    @assignees = current_user.assignees
+    if params[:username_filter].present?
+      @assignees = paginate (current_user.assignees.username_filter(params[:username_filter], current_user))
+    else
+      @assignees = paginate (current_user.assignees)
+    end
     return_the @assignees, handler: :jb
   end
 end
