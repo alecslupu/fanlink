@@ -225,7 +225,7 @@ class Person < ApplicationRecord
   end
 
   def send_assignee_certificate_email(person_certificate_id, assignee_id, email)
-    # as
+    # test
     Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate_id, email))
   end
 
