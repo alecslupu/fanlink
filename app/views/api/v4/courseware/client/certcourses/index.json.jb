@@ -1,0 +1,7 @@
+json = {}
+
+json[:certcourses] = @certcourses.map do |certcourse|
+  render partial: "api/v4/certcourses/app", locals: { certcourse: certcourse, person: @current_user }, handlers: "jb"
+end
+
+json
