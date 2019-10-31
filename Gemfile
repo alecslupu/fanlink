@@ -62,17 +62,17 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem 'elastic-apm'
+  gem 'elastic-apm', '~> 3.1.0'
 end
 
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
   gem "bullet", "~>6.0.2"
-  gem "httplog"
 end
 
 group :development, :test do
+  gem "httplog"
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry", "~>0.12.2"
   gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
@@ -125,10 +125,10 @@ group :development do
   gem "guard-rubycritic"
 
   gem "capistrano", require: false
-  gem 'capistrano-passenger', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
   gem 'slackistrano', require: false
+  gem 'capistrano3-puma' , require: false
 end
 
 group :test do

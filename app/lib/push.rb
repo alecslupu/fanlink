@@ -68,7 +68,7 @@ module Push
     receipents.each do |person|
       tokens += person.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
-    do_push(tokens, current_user.username, notification.body, 'simple_notification', notification_id: notification.id)
+    do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
 private
