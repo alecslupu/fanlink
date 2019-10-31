@@ -1,4 +1,4 @@
-class Api::V4::Courseware::Client::CertificatesController < ApiController
+class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware::Client::BaseController
   # frozen_string_literal: true
   before_action :load_person_certificate, only: [:download, :send_email]
 
