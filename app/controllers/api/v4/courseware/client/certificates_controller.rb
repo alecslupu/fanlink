@@ -1,8 +1,9 @@
 class Api::V4::Courseware::Client::CertificatesController < ApiController
   # frozen_string_literal: true
   before_action :load_person_certificate, only: [:download, :send_email]
+
   def index
-    @certificates = Person.find(certificate_params[:person_id]).certificates
+    @certificates = Person.find(params[:person_id]).certificates
     return_the @certificates, handler: :jb
   end
 
@@ -24,13 +25,8 @@ class Api::V4::Courseware::Client::CertificatesController < ApiController
   end
 
   private
-
     def load_person_certificate
-      @person_certificate = PersonCertificate.where(certificate_id: certificate_params[:certificate_id], person_id: certificate_params[:person_id])
+      @person_certificate = PersonCertificate.where(certificate_id: params[:certificate_id], person_id: params[:person_id])
       render_404 if @person_certificate.blank?
-    end
-
-    def certificate_params
-      params.require(:certificate).permit(:certificate_id, :person_id)
     end
 end
