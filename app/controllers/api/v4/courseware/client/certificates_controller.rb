@@ -18,11 +18,18 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
 
   def send_email
     if @person_certificate.issued_certificate_pdf.present?
+      current_user.send_certificate_email(@person_certificate, params[:email])
       render json: { message: _("Email sent") }
     else
       render_422 _("This user does not have a pdf file attached to this certificate.")
     end
   end
+
+
+  # def send_certificate
+  #   @person_certificate = Certificate.find(params[:id]).for_person(@current_user)
+  #   @current_user.send_certificate_email(@person_certificate)
+  # end
 
   private
     def load_person_certificate
