@@ -93,9 +93,3 @@ deploy
 
 # after 'deploy:check', 'delayed_job:restart'
 after 'deploy:finished', 'delayed_job:restart'
-
-namespace :deploy do
-  task :restart do
-    invoke 'delayed_job:restart'
-  end
-end
