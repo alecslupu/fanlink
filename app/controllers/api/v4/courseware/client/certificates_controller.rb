@@ -3,6 +3,7 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
   before_action :load_person_certificate, only: [:download, :send_email]
 
   def index
+    # binding.pry
     @certificates = Person.find(params[:person_id]).certificates
     return_the @certificates, handler: :jb
   end

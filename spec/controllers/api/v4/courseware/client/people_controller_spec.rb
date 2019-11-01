@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller do
   describe 'GET index' do
 
-    it "return 401 for a non client user" do
+    it "return error code 401 for a non client user" do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
