@@ -149,7 +149,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
                                                                                  username: username, password: "anything",},}
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
-        expect(json["errors"]).to include("has already been taken.")
+        expect(json["errors"]).to include("The username has already been taken.")
       end
     end
     # it "should not sign up new user with email already used"
