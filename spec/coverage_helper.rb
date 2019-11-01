@@ -5,7 +5,6 @@ if ENV.fetch('COVERAGE', 'false') == 'true'
 
   SimpleCov.start "rails" do
     add_filter "app/channels" # nothing here
-    add_filter "app/controllers/admin" # administrate stuff
     add_filter "app/dashboards"
     add_filter "app/fields"
     add_filter "lib/gems/apigen"
