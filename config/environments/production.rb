@@ -78,17 +78,6 @@ Rails.application.configure do
 
   config.debug_exception_response_format = :api
 
-  config.fanlink = {
-    aws: {
-      hls_server: Rails.application.secrets.hls_server,
-      rtmp_server: Rails.application.secrets.rtmp_server,
-      transcoder_key: Rails.application.secrets.aws_transcoder_key,
-      transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
-      s3_bucket:  Rails.application.secrets.aws_bucket,
-      transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
-    }
-  }
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 

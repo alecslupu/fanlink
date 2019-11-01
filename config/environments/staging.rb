@@ -52,30 +52,7 @@ Rails.application.configure do
 
   config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
   config.eager_load = true
-  config.force_ssl = false
-
-
-  config.fanlink = {
-    aws: {
-      hls_server: Rails.application.secrets.hls_server,
-      rtmp_server: Rails.application.secrets.rtmp_server,
-      transcoder_key: Rails.application.secrets.aws_transcoder_key,
-      transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
-      s3_bucket:  Rails.application.secrets.aws_bucket,
-      transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
-    }
-  }
-
-  log_file = if ENV['HEROKU'].present?
-               STDOUT
-             else
-               "log/#{Rails.env}.log"
-             end
-
-
-  logger           = ActiveSupport::Logger.new(log_file)
-  logger.formatter = config.log_formatter
-  config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  config.force_ssl = true
 
 
   # Disable serving static files from the `/public` folder by default since
