@@ -62,7 +62,12 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  gem 'elastic-apm', '~> 3.1.0'
+  if ENV['HEROKU']
+    gem 'newrelic_rpm'
+  else
+    gem 'elastic-apm', '~> 3.1.0'
+  end
+
 end
 
 group :staging, :development, :test do
