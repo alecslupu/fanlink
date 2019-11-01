@@ -137,8 +137,12 @@ class Person < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
 
+  has_one :client_info, dependent: :destroy, foreign_key: "client_id"
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
+
+  after_save :generate_unique_client_code, if: -> { self.role == 'client' && self.attribute_before_last_save(:role) != 'client' }
 
   after_commit :flush_cache
 
@@ -464,8 +468,16 @@ class Person < ApplicationRecord
     end
 
   def client_role_changing
-    if self.role_was == 'client' && self.role != 'client'
+    if self.attribute_before_last_save(:role) == 'client' && self.role != 'client'
       self.errors[:base] << "You cannot change the 'client' role"
     end
+  end
+
+  def generate_unique_client_code
+    code = SecureRandom.hex(4)[0..-2]
+    while code.in?(ClientInfo.all.map(&:code))
+      code = SecureRandom.hex(4)[0..-2]
+    end
+    ClientInfo.create(client_id: self.id, code: code)
   end
 end
