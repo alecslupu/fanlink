@@ -468,7 +468,7 @@ class Person < ApplicationRecord
     end
 
   def client_role_changing
-    if self.attribute_before_last_save(:role) == 'client' && self.role != 'client'
+    if self.role_was == 'client' && self.role != 'client'
       self.errors[:base] << "You cannot change the 'client' role"
     end
   end
