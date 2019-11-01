@@ -20,7 +20,7 @@ module Admin
           redirect_to rails_admin_path unless performed?
         else
           flash[:alert] = "Login failed"
-          redirect_to login_screen_path(product_internal_name: product.internal_name)
+          redirect_to admin_login_screen_path(product_internal_name: product.internal_name)
         end
       else
         head :not_found
@@ -31,13 +31,13 @@ module Admin
       if current_user
         product = current_user.product
         logout
-        redirect_to(login_screen_path(product_internal_name: product.internal_name), notice: "Logged out!")
+        redirect_to(admin_login_screen_path(product_internal_name: product.internal_name), notice: "Logged out!")
       end
     end
 
     def login_redirect
       if product = Product.find_by(internal_name: params[:product_internal_name])
-        redirect_to(login_screen_path(product_internal_name: product.internal_name))
+        redirect_to(admin_login_screen_path(product_internal_name: product.internal_name))
       else
         render_not_found
       end
