@@ -2,13 +2,13 @@
 #
 # Table name: client_to_people
 #
-#  id                 :bigint(8)        not null, primary key
-#  status             :integer          not null
-#  relation_type      :integer          not null
-#  client_id          :integer          not null, foreign key
-#  person_id          :integer          not null, foreign key
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id            :bigint(8)        not null, primary key
+#  relation_type :integer          not null
+#  status        :integer          not null
+#  client_id     :integer          not null
+#  person_id     :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 
 module Courseware
