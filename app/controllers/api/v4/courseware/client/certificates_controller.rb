@@ -17,7 +17,6 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
   end
 
   def send_email
-    #  to check jiras
     if @person_certificate.issued_certificate_pdf.present?
       current_user.send_assignee_certificate_email(@person_certificate, params[:person_id], params[:email])
       render json: { message: _("Email sent") }
