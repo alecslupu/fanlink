@@ -41,7 +41,6 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
 
         expect(response).to be_successful
         expect(json['certificates'].count).to eq(2)
-        # binding.pry
         certificates_ids = json['certificates'].map { |c| c['id'].to_i }
         expect(certificates_ids.sort).to eq (person1.certificates.map(&:id).sort)
       end
