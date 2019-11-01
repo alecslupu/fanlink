@@ -67,7 +67,6 @@ group :production, :staging do
   else
     gem 'elastic-apm', '~> 3.1.0'
   end
-
 end
 
 group :staging, :development, :test do
@@ -77,7 +76,6 @@ group :staging, :development, :test do
 end
 
 group :development, :test do
-  gem "httplog"
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry", "~>0.12.2"
   gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
@@ -88,6 +86,7 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
+  gem "httplog"
 
   gem 'rubocop', '~> 0.74.0', require: false
   # gem "rubocop-rails_config"
