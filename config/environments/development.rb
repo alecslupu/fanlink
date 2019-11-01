@@ -66,19 +66,6 @@ Rails.application.configure do
 
   config.web_console.whitelisted_ips = "172.16.0.0/12"
 
-  config.fanlink = {
-    aws: {
-      hls_server: Rails.application.secrets.hls_server,
-      rtmp_server: Rails.application.secrets.rtmp_server,
-      transcoder_key: Rails.application.secrets.aws_transcoder_key,
-      transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
-      s3_bucket:  Rails.application.secrets.aws_bucket,
-      transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
-      transcoder_queue_url: Rails.application.secrets.transcoder_queue_url,
-    }
-  }
-
-
   #     #load openapi files
   # Dir['app/controllers/api/v*/docs/*'].each {
   #   |p| config.eager_load_paths << p
