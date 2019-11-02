@@ -6,6 +6,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
                          :execute, :message_created)
   end
   describe "#create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+    end
     it "should create a new message in a public room" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -271,6 +274,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
   end
 
   describe "#index" do
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     let(:from) { "2018-01-01" }
     let(:to) { "2018-01-03" }
     it "should get a list of messages for a date range without limit" do

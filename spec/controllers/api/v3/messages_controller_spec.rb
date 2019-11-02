@@ -1,7 +1,11 @@
 require "rails_helper"
 
+
 RSpec.describe Api::V3::MessagesController, type: :controller do
   describe "create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+    end
     it "should create a new message with an attached image" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -44,6 +48,10 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
   end
 
   describe 'index' do
+
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     it 'returns all the messages with the attached image' do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do

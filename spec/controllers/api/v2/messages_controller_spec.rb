@@ -1,8 +1,12 @@
 require "spec_helper"
 
+
 RSpec.describe Api::V2::MessagesController, type: :controller do
 
   describe "create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+    end
     it "should create a new message with an attached image" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -45,6 +49,9 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
   end
 
   describe 'index' do
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     it "should get a paginated list of messages with page 1"
     it "should get only pinned messages with page 1"
     it "should get only nonpinned messages"
