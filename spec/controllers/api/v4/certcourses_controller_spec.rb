@@ -11,6 +11,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
     pending
   end
 
+
   describe "#show" do
     it "does not display as selected the wrong_answers" do
       person = create(:person)
