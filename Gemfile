@@ -147,7 +147,6 @@ group :test do
   gem "wisper-rspec", require: false
   gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
-  gem 'rspec-retry'
 end
 
 # greg is saying that is not suporting V Rails 5.2.
@@ -241,6 +240,5 @@ gem "rswag-api"
 gem "rswag-ui"
 
 gem "psych"
-gem 'parallel_tests', group: [:development, :test]
 #for page caching
 gem "actionpack-page_caching"

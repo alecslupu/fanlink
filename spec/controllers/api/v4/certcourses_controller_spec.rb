@@ -19,7 +19,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         login_as(person)
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
-
+        
         get :show, params: {id: qp.certcourse_page_id}
         expect(response).to have_http_status(200)
         json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
