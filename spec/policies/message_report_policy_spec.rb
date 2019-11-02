@@ -4,6 +4,8 @@ require "spec_helper"
 
 RSpec.describe MessageReportPolicy, type: :policy do
   let(:master_class) { MessageReport.new }
+  subject { described_class.new(build(:person), master_class) }
+
   permission_list = {
     index: false,
     show: false,
@@ -39,7 +41,7 @@ RSpec.describe MessageReportPolicy, type: :policy do
     end
   end
   context "logged in user with no permission" do
-    subject { described_class.new(create(:person), master_class) }
+    subject { described_class.new(build(:person), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -53,7 +55,7 @@ RSpec.describe MessageReportPolicy, type: :policy do
     end
   end
   context "logged in admin with no permission" do
-    subject { described_class.new(create(:admin_user), master_class) }
+    subject { described_class.new(build(:admin_user), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -246,10 +248,10 @@ RSpec.describe MessageReportPolicy, type: :policy do
 
   context "Scope" do
     it "should only return the messages from public rooms" do
-      person = create(:person)
+      person = build(:person)
       current_product = person.product
       another_product = create(:product)
-      message_report2 = ActsAsTenant.with_tenant(another_product) { create(:message_report, person: create(:person)) }
+      message_report2 = ActsAsTenant.with_tenant(another_product) { create(:message_report, person: build(:person)) }
 
       ActsAsTenant.with_tenant(current_product) do
         message_report = create(:message_report, person: person)

@@ -37,7 +37,7 @@ RSpec.describe Trivia::GameLeaderboardPolicy, type: :policy do
     end
   end
   context "logged in user with no permission" do
-    subject { described_class.new(create(:person), master_class) }
+    subject { described_class.new(build(:person), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -51,7 +51,7 @@ RSpec.describe Trivia::GameLeaderboardPolicy, type: :policy do
     end
   end
   context "logged in admin with no permission" do
-    subject { described_class.new(create(:admin_user), master_class) }
+    subject { described_class.new(build(:admin_user), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -222,7 +222,7 @@ RSpec.describe Trivia::GameLeaderboardPolicy, type: :policy do
 
   context "Scope" do
     it "should only return the person quiz in current product" do
-      person = create(:person)
+      person = build(:person)
 
       post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_game_leaderboard) }
 
