@@ -414,14 +414,15 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          created_at: to,
-          room: private_room,
-          body: "this is my body",
-          picture: fixture_file_upload('images/better.png', 'image/png')
-        )
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               created_at: to,
+                                                               room: private_room,
+                                                               body: "this is my body",
+                                                               picture: fixture_file_upload('images/better.png', 'image/png')
+                                                             )
+
         get :list
 
         expect(response).to be_successful
@@ -440,13 +441,14 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          room: private_room,
-          body: "this is my body",
-          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-        )
+
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               room: private_room,
+                                                               body: "this is my body",
+                                                               audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+                                                             )
 
         get :list
 

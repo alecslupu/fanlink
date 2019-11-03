@@ -11,6 +11,5 @@ RailsAdmin.config do |config|
     nested do
       exclude_fields :person_poll_options, :poll, :people
     end
-
   end
 end

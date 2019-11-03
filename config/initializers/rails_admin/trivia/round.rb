@@ -9,7 +9,7 @@ RailsAdmin.config do |config|
 
       field :questions do
         def render
-          bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
+          bindings[:view].render partial: "rails_admin/main/form_nested_many_orderable", locals: {
             field: self, form: bindings[:form], field_order: :question_order_field
           }
         end
@@ -21,7 +21,7 @@ RailsAdmin.config do |config|
         visible { bindings[:object].persisted? }
 
         def render
-          bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
+          bindings[:view].render partial: "rails_admin/main/form_nested_many_orderable", locals: {
             field: self, form: bindings[:form], field_order: :question_order_field
           }
         end

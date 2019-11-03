@@ -9,7 +9,7 @@ RailsAdmin.config do |config|
       field :type, :enum do
         enum do
           [
-            ["Single Choice",   "Trivia::SingleChoiceAvailableQuestion"],
+            ["Single Choice", "Trivia::SingleChoiceAvailableQuestion"],
             ["Multiple Choice", "Trivia::MultipleChoiceAvailableQuestion"],
             ["Picture Choice", "Trivia::PictureAvailableQuestion"],
             ["True or False", "Trivia::BooleanChoiceAvailableQuestion"],
