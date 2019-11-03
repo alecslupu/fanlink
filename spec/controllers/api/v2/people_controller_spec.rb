@@ -395,25 +395,25 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should get people with username filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
-        person2 = create(:person, username: "pers2", email: "pers2@example.com")
-        person3 = create(:person, username: "pers3", email: "pers3@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
+        person2 = build(:person, username: "pers2", email: "pers2@example.com")
+        person3 = build(:person, username: "pers3", email: "pers3@example.com")
+        person4 = build(:person, username: "pers4", email: "pers4@example.com")
+        person5 = build(:person, username: "pers5", email: "pers5@example.com")
         login_as(person)
+        allow(subject).to receive(:apply_filters).and_return [person1, person2, person3, person4, person5]
         get :index, params: {username_filter: "ers"}
         expect(response).to be_successful
         expect(json["people"].count).to eq(5)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
       end
     end
     # it "should not return the current user with the username filter"
     it "should get a person with username filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
         login_as(person)
+        allow(subject).to receive(:apply_filters).and_return [person1]
         get :index, params: {username_filter: "ers1"}
         expect(response).to be_successful
         expect(json["people"].count).to eq(1)
@@ -433,24 +433,25 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should get people with email filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
-        person2 = create(:person, username: "pers2", email: "pers2@example.com")
-        person3 = create(:person, username: "pers3", email: "pers3@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
+        person2 = build(:person, username: "pers2", email: "pers2@example.com")
+        person3 = build(:person, username: "pers3", email: "pers3@example.com")
+        person4 = build(:person, username: "pers4", email: "pers4@example.com")
+        person5 = build(:person, username: "pers5", email: "pers5@example.com")
         login_as(person)
+        allow(subject).to receive(:apply_filters).and_return [person1, person2, person3, person4, person5]
         get :index, params: {email_filter: "ers"}
         expect(response).to be_successful
         expect(json["people"].count).to eq(5)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
       end
     end
     it "should get a person with email filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
         login_as(person)
+        allow(subject).to receive(:apply_filters).and_return [person1]
+
         get :index, params: {email_filter: "ers1"}
         expect(response).to be_successful
         expect(json["people"].count).to eq(1)
@@ -461,41 +462,41 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should people with username and email filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
-        person2 = create(:person, username: "pers2", email: "pers2@example.com")
-        person3 = create(:person, username: "pers3", email: "pers3@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
+        person2 = build(:person, username: "pers2", email: "pers2@example.com")
+        person3 = build(:person, username: "pers3", email: "pers3@example.com")
+        person4 = build(:person, username: "pers4", email: "pers4@example.com")
+        person5 = build(:person, username: "pers5", email: "pers5@example.com")
 
         login_as(person)
+
+        allow(subject).to receive(:apply_filters).and_return [person1, person2, person3, person4, person5]
+
         get :index, params: {email_filter: "example.com", username_filter: "pers"}
         expect(response).to be_successful
         expect(json["people"].count).to eq(5)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids.sort).to eq([person1.id, person2.id, person3.id, person4.id, person5.id].sort)
       end
     end
     it "should people with username and email filter and paginated" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+
         person4 = create(:person, username: "pers4", email: "pers4@example.com")
         person5 = create(:person, username: "pers5", email: "pers5@example.com")
-
-        login_as(person)
+        allow(subject).to receive(:apply_filters).and_return [person4, person5]
         get :index, params: {email_filter: "example.com", username_filter: "pers", page: 1, per_page: 2}
         expect(response).to be_successful
         expect(json["people"].count).to eq(2)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids.sort).to eq([person5.id, person4.id].sort)
       end
     end
 
     it "should return the people objects with their attached picture" do
       person = create(:person, picture: fixture_file_upload("images/better.png", "image/png"))
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
-
         login_as(person)
+        allow(subject).to receive(:apply_filters).and_return build_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
+
         get :index
 
         expect(response).to be_successful

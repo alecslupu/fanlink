@@ -166,14 +166,13 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
 
-        create_list(
-          :message,
-          3,
-          created_at: to,
-          room: private_room,
-          body: "this is my body",
-          picture: fixture_file_upload('images/better.png', 'image/png'))
-
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               created_at: to,
+                                                               room: private_room,
+                                                               body: "this is my body",
+                                                               picture: fixture_file_upload('images/better.png', 'image/png'))
         get :list
 
         expect(response).to be_successful

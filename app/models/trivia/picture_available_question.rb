@@ -19,13 +19,14 @@ module Trivia
   class PictureAvailableQuestion < AvailableQuestion
     has_many :active_questions, class_name: "Trivia::PictureQuestion", inverse_of: :available_question, foreign_key: :available_question_id
     has_many :available_answers, class_name: "Trivia::PictureAvailableAnswer", foreign_key: :question_id
-    # validate :answer_checks
-
+=begin
+    validate :answer_checks
 
     protected
     def answer_checks
       errors.add(:base, _("You need to provide at least 2 answers")) if available_answers.count < 2
       errors.add(:base, _("You need to provide at least one correct answer")) if available_answers.where(is_correct: true).count.zero?
     end
+=end
   end
 end
