@@ -1,17 +1,18 @@
 require "pry"
+require "simplecov"
 # require "coverage_helper"
-# SimpleCov.start "rails" do
-#   add_filter "app/channels" # nothing here
-#   add_filter "app/controllers/admin" # administrate stuff
-#   add_filter "app/dashboards"
-#   add_filter "app/fields"
-#   add_filter "lib/gems/apigen"
-#   add_filter "app/lib/rails_admin"
-#   add_filter "lib/generators/fanlink"
-#   # add_group "jobs", "app/jobs" # nothing here
-#   add_group "Listeners", "app/listeners" # nothing here
-#   add_group "Policies", "app/policies" # nothing here
-# end
+SimpleCov.start "rails" do
+  add_filter "app/channels" # nothing here
+  add_filter "app/controllers/admin" # administrate stuff
+  add_filter "app/dashboards"
+  add_filter "app/fields"
+  add_filter "lib/gems/apigen"
+  add_filter "app/lib/rails_admin"
+  add_filter "lib/generators/fanlink"
+  # add_group "jobs", "app/jobs" # nothing here
+  add_group "Listeners", "app/listeners" # nothing here
+  add_group "Policies", "app/policies" # nothing here
+end
 require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "webmock/rspec"

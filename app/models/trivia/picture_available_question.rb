@@ -21,14 +21,6 @@ module Trivia
     has_many :available_answers, class_name: "Trivia::PictureAvailableAnswer", foreign_key: :question_id
     # validate :answer_checks
 
-    rails_admin do
-      parent "Trivia::AvailableQuestion"
-      label_plural "Picture choice"
-      edit do
-        exclude_fields :type
-      end
-    end
-
 
     protected
     def answer_checks

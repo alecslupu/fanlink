@@ -21,15 +21,6 @@ module Trivia
 
     # validate :answer_checks
 
-    rails_admin do
-      parent "Trivia::AvailableQuestion"
-      label_plural "True or False"
-
-      edit do
-        exclude_fields :type
-      end
-    end
-
     protected
     def answer_checks
       errors.add(:base, _("You need to provide 2 answers")) if available_answers.count != 2

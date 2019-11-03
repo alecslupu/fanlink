@@ -509,16 +509,17 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: "membership1"))
-        msg1 = create(:message, created_at: Time.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, username: "message1person"))
-        msg2 = create(:message, created_at: Time.now - 9.minutes, room: room1, body: "msg2")
-        msg12 = create(:message, created_at: Time.now - 8.minutes, room: room1, body: "msg12")
-        msg13 = create(:message, created_at: Time.now - 7.minutes, room: room1, body: "msg13")
-        msg14 = create(:message, created_at: Time.now - 6.minutes, room: room1, body: "msg14")
-        msg3 = create(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3")
+        msg1 = build(:message, created_at: Time.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, username: "message1person"))
+        msg2 = build(:message, created_at: Time.now - 9.minutes, room: room1, body: "msg2")
+        msg12 = build(:message, created_at: Time.now - 8.minutes, room: room1, body: "msg12")
+        msg13 = build(:message, created_at: Time.now - 7.minutes, room: room1, body: "msg13")
+        msg14 = build(:message, created_at: Time.now - 6.minutes, room: room1, body: "msg14")
+        msg3 = build(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3")
 
         login_as(admin_person)
-
         toget = [msg1, msg2, msg12, msg13, msg14, msg3]
+
+        allow(subject).to receive(:apply_filters).and_return toget
         get :list
         expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
