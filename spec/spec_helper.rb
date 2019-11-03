@@ -12,6 +12,8 @@ SimpleCov.start "rails" do
   # add_group "jobs", "app/jobs" # nothing here
   add_group "Listeners", "app/listeners" # nothing here
   add_group "Policies", "app/policies" # nothing here
+
+  minimum_coverage 60
 end
 require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
