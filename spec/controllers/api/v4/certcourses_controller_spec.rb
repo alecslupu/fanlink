@@ -22,6 +22,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
         get :show, params: {id: qp.certcourse_page_id}
         expect(response).to have_http_status(200)
+        expect(qp).to exist_in_database
         json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
           expect(selected_answer["is_selected"]).to be_falsey
           expect(selected_answer["is_selected"]).not_to be_nil
@@ -38,6 +39,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
         get :show, params: {id: qp.certcourse_page_id}
         expect(response).to have_http_status(200)
+        expect(qp).to exist_in_database
 
         json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
           expect(selected_answer["is_selected"]).not_to be_nil
