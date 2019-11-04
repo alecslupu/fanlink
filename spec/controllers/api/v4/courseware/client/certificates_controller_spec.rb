@@ -46,4 +46,15 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
       end
     end
   end
+
+  describe 'GET download' do
+    it "return the url to the user's certificate image" do
+      person = create(:person, role: :client)
+      person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
+      person.assignees << person1
+      person1.certificates = create(:certificate)
+      ActsAsTenant.with_tenant(person.product) do
+      end
+    end
+  end
 end
