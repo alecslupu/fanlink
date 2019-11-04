@@ -48,12 +48,18 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
   end
 
   describe 'GET download' do
-    it "return the url to the user's certificate image" do
+    it "returns unprocessable (422) if the person certificate does not have the certificate image" do
       person = create(:person, role: :client)
       person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-      person.assignees << person1
-      person1.certificates = create(:certificate)
+      Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+      certificate = create(:certificate)
+      person1.certificates << certificate
+      PersonCertificate.create(person_id: person1.id, certificate_id: certificate.id)
       ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        get :download, params: { person_id: person1.id, id: certificate.id }
+
+        expect(response).to be_unprocessable
       end
     end
   end
