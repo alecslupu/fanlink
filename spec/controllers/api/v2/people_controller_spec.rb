@@ -356,20 +356,20 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should all people using default per page" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
-        person2 = create(:person, username: "pers2", email: "pers2@example.com")
-        person3 = create(:person, username: "pers3", email: "pers3@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
-        normal_person = create(:person, username: "normal", email: "normal@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
+        person2 = build(:person, username: "pers2", email: "pers2@example.com")
+        person3 = build(:person, username: "pers3", email: "pers3@example.com")
+        person4 = build(:person, username: "pers4", email: "pers4@example.com")
+        person5 = build(:person, username: "pers5", email: "pers5@example.com")
+        normal_person = build(:person, username: "normal", email: "normal@example.com")
 
         login_as(person)
+
+        allow(subject).to receive(:apply_filters).and_return [normal_person, person5, person4, person3, person2, person1, person]
+
         get :index, params: {page: 1}
         expect(response).to be_successful
-        expected = [normal_person.id, person5.id, person4.id, person3.id, person2.id, person1.id, person.id]
-        expect(json["people"].count).to eq(expected.count)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids).to eq(expected)
+        expect(json["people"].count).to eq(7)
       end
     end
     it "should get no people using default per page for page 2" do

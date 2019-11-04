@@ -304,36 +304,35 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     it "should get all people with no filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        person1 = create(:person, username: "pers1", email: "pers1@example.com")
-        person2 = create(:person, username: "pers2", email: "pers2@example.com")
-        person3 = create(:person, username: "pers3", email: "pers3@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
+        person1 = build(:person, username: "pers1", email: "pers1@example.com")
+        person2 = build(:person, username: "pers2", email: "pers2@example.com")
+        person3 = build(:person, username: "pers3", email: "pers3@example.com")
+        person4 = build(:person, username: "pers4", email: "pers4@example.com")
+        person5 = build(:person, username: "pers5", email: "pers5@example.com")
         normal_person = create(:person, username: "normal", email: "normal@example.com")
-
         login_as(normal_person)
+
+        allow(subject).to receive(:apply_filters).and_return [person, normal_person, person1, person2, person3, person4, person5]
+
         get :index
         expect(response).to be_successful
-        expected = [person.id, person1.id, person2.id, person3.id, person4.id, person5.id, normal_person.id]
-        expect(json["people"].count).to eq(expected.count)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids.sort).to eq(expected.sort)
+        expect(json["people"].count).to eq(7)
       end
     end
     it "should page 1 of all people with no filter" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         normal_person = create(:person, username: "normal", email: "normal@example.com")
-        person4 = create(:person, username: "pers4", email: "pers4@example.com")
-        person5 = create(:person, username: "pers5", email: "pers5@example.com")
+        person4 = build(:person, username: "pers4", email: "pers4@example.com")
+        person5 = build(:person, username: "pers5", email: "pers5@example.com")
 
         login_as(normal_person)
+
+        allow(subject).to receive(:apply_filters).and_return [person4, person5]
+
         get :index, params: {page: 1, per_page: 2}
         expect(response).to be_successful
-        expected = [person5.id, person4.id]
-        expect(json["people"].count).to eq(expected.count)
-        listed_ids = json["people"].map { |p| p["id"].to_i }
-        expect(listed_ids).to eq(expected)
+        expect(json["people"].count).to eq(2)
       end
     end
     it "should page 2 of all people with no filter" do
