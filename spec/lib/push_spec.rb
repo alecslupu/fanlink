@@ -2,7 +2,6 @@ include ActionView::Helpers::TextHelper # truncate
 include PushHelpers
 
 describe "Push" do
-  
   let(:fcm_stub) { FBCMStub.new }
   let(:target_person) { create(:person) }
   let(:tokens) { [create(:notification_device_id, person: target_person).device_identifier] }
