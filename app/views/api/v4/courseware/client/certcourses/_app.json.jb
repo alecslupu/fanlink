@@ -6,7 +6,8 @@ json = {
   answer_text: quiz[:answer_text],
   certcourse_pages_count: quiz[:certcourse_pages_count],
   page_order: quiz[:page_order],
-  is_correct: quiz[:is_correct]
+  is_correct: quiz[:is_correct],
+  is_survey: quiz[:is_survey]
 }
 
 json
