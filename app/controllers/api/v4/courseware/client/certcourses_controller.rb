@@ -1,15 +1,18 @@
 class Api::V4::Courseware::Client::CertcoursesController < ApiController
-  # cauti cursurile ptr acel certificat
-    # le poti da id-ul quizz-ului la show
   def index
     @certificate = Certificate.find_by(id: params[:certificate_id])
+    order = rand(4000)
+    orders = Certificate.all.map(&:certificate_order)
+    while order.in? orders
+      order = rand(4000)
+    end
     if @certificate.nil?
       @certificate = Certificate.create(
         id: params[:certificate_id],
         long_name: "First Certificate Test",
         short_name: "1st Cert Test",
         description: "This is the first certificate ever created",
-        certificate_order: 1,
+        certificate_order: order,
         color_hex: "#000000",
         status: "entry",
         room_id: nil,
