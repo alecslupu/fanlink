@@ -137,7 +137,7 @@ class Person < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
 
-  has_one :client_info, dependent: :destroy, foreign_key: "client_id"
+  has_one :client_info, foreign_key: "client_id", dependent: :destroy
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
