@@ -1,16 +1,19 @@
 class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::Client::BaseController
   # frozen_string_literal: true
-  # cauti cursurile ptr acel certificat
-    # le poti da id-ul quizz-ului la show
+
   def index
-    certificate = Certificate.find(params[:certificate_id])
-    @certcourses = certificate.certcourses
-    return_the @certcourses, handler: :jb
+    if PersonCertificate.where(person_id: params[:person_id], certificate_id: params[:certificate_id]).present?
+      certificate = Certificate.find(params[:certificate_id])
+      @certcourses = certificate.certcourses
+      return_the @certcourses, handler: :jb
+    else
+      render_422 _('This user does not have the requested certificate.')
+    end
   end
 
   def show
     certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: :quiz)
-    certcourse_pages.present? ? @quizzes = [] : (head :no_content and return) # testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaza
+    certcourse_pages.present? ? @quizzes = [] : (head :no_content && return) # testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaza
     certcourse_pages.each do |certcourse_page|
       quiz_page = QuizPage.find_by(certcourse_page_id: id)
       correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
@@ -28,19 +31,21 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
         answer_text = Answer.find_by(failed_attempts.last.answer_id).description
         is_correct = false
       end
-      # quiz = {
-      #   id: id,
-      #   is_optional: quiz_page.is_optional,
-      #   is_survey: quiz_page.is_survey,
-      #   quiz_text: quiz_page.quiz_text,
-      #   certcourse_pages_count: Certcourse.find(certcourse_page.id).certcourse_pages_count,
-      #   page_order: certcourse_page.certcourse_page_order,
-      #   no_of_failed_attempts: no_of_failed_attempts,
-      #   answer_text: answer_text,
-      #   is_correct: is_correct
-
-      # }
+      quiz = {
+        id: id,
+        is_optional: quiz_page.is_optional,
+        is_survey: quiz_page.is_survey,
+        quiz_text: quiz_page.quiz_text,
+        certcourse_pages_count: Certcourse.find(certcourse_page.id).certcourse_pages_count,
+        page_order: certcourse_page.certcourse_page_order,
+        no_of_failed_attempts: no_of_failed_attempts,
+        answer_text: answer_text,
+        is_correct: is_correct
+      }
     end
+    return_the @quizzes, handler: :jb
+  end
+end
     # <PersonQuiz id: 1, person_id: 36505, quiz_page_id: 2, answer_id: 6, fill_in_response: nil, created_at: "2019-03-16 02:26:21",
     # updated_at: "2019-03-16 02:26:21">,
 
@@ -59,9 +64,6 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
     # product_id: 2, certcourse_pages_count: 5>
 
     # @quizzes = [quiz1, quiz2, quiz3, quiz4, quiz5]
-    return_the @quizzes, handler: :jb
-  end
-end
 
     # quiz1 = {
     #   id: 1, +
