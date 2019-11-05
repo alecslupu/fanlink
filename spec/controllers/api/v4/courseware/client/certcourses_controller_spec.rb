@@ -39,7 +39,24 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
     end
 
     it "returns all the certificate's certcourses" do
+      person = create(:person, role: :client)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
+        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+        certificate = create(:certificate)
+        person1.certificates << certificate
 
+        certcourses = create_list(:certcourse, 3)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
+
+        get :index, params: { person_id: person1.id, certificate_id: certificate.id }
+
+        expect(response).to be_successful
+        expect(json['certcourses'].count).to eq(2)
+        expect(json['certcourses'].map { |cert| cert['id']}.sort).to eq (certcourses.first(2).map(&:id))
+      end
     end
   end
 end
