@@ -99,7 +99,7 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       id: 4,
       is_optional: true,
       no_of_failed_attempts: 0,
-      quiz_text:"Never say?"
+      quiz_text:"Never say?",
       answer_text: "Never!",
       certcourse_pages_count: 36,
       page_order: 8,
