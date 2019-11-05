@@ -13,6 +13,8 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
   end
 
   def show
+    #  fill in response on person quizz is not taken into consideration YET
+
     certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz")
     certcourse_pages.present? ? @quizzes = [] : (head :no_content && return) # testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaza
     certcourse_pages.each do |certcourse_page|
@@ -28,8 +30,11 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
       if person_correct_answer.present?
         answer_text = correct_answer.description
         is_correct = true
+      # elsif quiz_page.is_survey
+      #   is_correct = true
+      #   answer_text = person_response.fill_in_response.present?
       else
-        answer_text = Answer.find_by(failed_attempts.last.answer_id).description
+        answer_text =  Answer.find(failed_attempts.last.answer_id).description
         is_correct = false
       end
       quiz = {
