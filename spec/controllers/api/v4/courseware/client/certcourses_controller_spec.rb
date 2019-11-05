@@ -59,4 +59,36 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
       end
     end
   end
+
+  describe "GET show" do
+    it "returns all the neccessary information" do
+      person = create(:person, role: :client)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
+        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+        certificate = create(:certificate)
+        person1.certificates << certificate
+
+        certcourse = create(:certcourse)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
+        certcourse_pages = create_list(:certcourse_page, 3, certcourse: certcourse)
+        quiz_page1 = create(:quiz_page, certcourse_page: certcourse_pages.first, is_optional: true, is_survey: false)
+        quiz_page2 = create(:quiz_page, certcourse_page: certcourse_pages.second, is_optional: true, is_survey: true)
+        quiz_page3 = create(:quiz_page, certcourse_page: certcourse_pages.third, is_optional: false, is_survey: false)
+
+        answer = create(:correct_answer, quiz_page: quiz_page1, is_correct: true)
+        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+
+        answer = create(:correct_answer, quiz_page: quiz_page1, is_correct: true)
+        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+
+        answer = create(:correct_answer, quiz_page: quiz_page1, is_correct: true)
+        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+      end
+    end
+  end
 end
