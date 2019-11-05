@@ -66,8 +66,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       id: 1,
       is_optional: false,
       no_of_failed_attempts: rand(20),
-      quiz_text: Faker::Lorem.sentence,
-      answer_text: Faker::Lorem.sentence,
+      quiz_text: "Specify the missing word. Never say _",
+      answer_text: "never",
       certcourse_pages_count: 25,
       page_order: 12,
       is_correct: true
@@ -77,8 +77,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       id: 2,
       is_optional: true,
       no_of_failed_attempts: 1,
-      quiz_text: Faker::Lorem.sentence,
-      answer_text: Faker::Lorem.sentence,
+      quiz_text: "maybe maybe",
+      answer_text: "never never",
       certcourse_pages_count: 36,
       page_order: 8,
       is_correct: false
@@ -88,8 +88,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       id: 3,
       is_optional: false,
       no_of_failed_attempts: rand(20),
-      quiz_text: Faker::Lorem.sentence,
-      answer_text: Faker::Lorem.sentence,
+      quiz_text: "Why?",
+      answer_text: "maybe",
       certcourse_pages_count: 25,
       page_order: 12,
       is_correct: true
@@ -99,8 +99,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       id: 4,
       is_optional: true,
       no_of_failed_attempts: 0,
-      quiz_text: Faker::Lorem.sentence,
-      answer_text: Faker::Lorem.sentence,
+      quiz_text:"Never say?"
+      answer_text: "Never!",
       certcourse_pages_count: 36,
       page_order: 8,
       is_correct: true
@@ -110,8 +110,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       id: 5,
       is_optional: false,
       no_of_failed_attempts: rand(20),
-      quiz_text: Faker::Lorem.sentence,
-      answer_text: Faker::Lorem.sentence,
+      quiz_text: "What?",
+      answer_text: "Yes",
       certcourse_pages_count: 25,
       page_order: 12,
       is_correct: false
