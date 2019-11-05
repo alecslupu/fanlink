@@ -13,7 +13,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
   end
 
   def show
-    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: :quiz)
+    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz")
     certcourse_pages.present? ? @quizzes = [] : (head :no_content && return) # testeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaza
     certcourse_pages.each do |certcourse_page|
       quiz_page = QuizPage.find_by(certcourse_page_id: id)
