@@ -40,7 +40,7 @@ module Flaws
   end
 
   def self.sns_client
-    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret)
+    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret, region: region)
   end
 
   def self.sqs_client
@@ -48,7 +48,7 @@ module Flaws
   end
 
   def self.s3_client
-    Aws::S3::Client.new(region: region)
+    Aws::S3::Client.new(access_key_id: key, secret_access_key: secret, region: region)
   end
 
   def self.transcoder_client
