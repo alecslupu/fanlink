@@ -75,28 +75,45 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         certcourse_pages = create_list(:certcourse_page, 2, certcourse: certcourse, content_type: "quiz")
 
         quiz_page1 = create(:quiz_page, is_optional: true, is_survey: false)
-        quiz_page1.update(certcourse_page_id: certcourse_pages.first.id) # can't create a quizpage with desired certcorse page
+        # quiz_page1.update(certcourse_page_id: certcourse_pages.first.id) # can't create a quizpage with desired certcorse page
+
         quiz_page2 = create(:quiz_page, is_optional: false, is_survey: false)
         quiz_page2.update(certcourse_page_id: certcourse_pages.second.id) # can't create a quizpage with desired certcorse page
 
-        answer11 = create(:correct_answer, quiz_page: quiz_page1)
-        answer12 = create(:wrong_answers, quiz_page: quiz_page1)
+        correct_answer = Answer.find_by(quiz_page_id: quiz_page2.id, is_correct: true)
+        correct_answer.update(description: "Correct answer")
 
-        answer21 = create(:correct_answer, quiz_page: quiz_page2)
-        answer22 = create(:wrong_answers, quiz_page: quiz_page2)
-        answer23 = create(:wrong_answers, quiz_page: quiz_page2)
+        create(:person_quiz, answer: Answer.where(quiz_page_id: quiz_page2.id).second, quiz_page: quiz_page2, person: person1)
+        create(:person_quiz, answer: Answer.where(quiz_page_id: quiz_page2.id).third, quiz_page: quiz_page2, person: person1)
+        create(:person_quiz, answer: correct_answer, quiz_page: quiz_page2, person: person1)
 
-        create(:person_quiz, answer: answer11, quiz_page: quiz_page1, person: person1)
-        create(:person_quiz, answer: answer12, quiz_page: quiz_page1, person: person1)
-
-        create(:person_quiz, answer: answer21, quiz_page: quiz_page2, person: person1)
-        create(:person_quiz, answer: answer22, quiz_page: quiz_page2, person: person1)
-
-        binding.pry
         get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
 
         expect(response).to be_successful
+        expect(json["quizzes"].count).to eq(1)
+        quiz = json["quizzes"].first
+
+        expect(quiz["id"]).to eq(quiz_page2.id)
+        expect(quiz["is_optional"]).to eq(quiz_page2.is_optional)
+        expect(quiz["is_survey"]).to eq(quiz_page2.is_survey)
+        expect(quiz["quiz_text"]).to eq(quiz_page2.quiz_text)
+        expect(quiz["certcourse_pages_count"]).to eq(certcourse.certcourse_pages_count)
+        expect(quiz["page_order"]).to eq(certcourse_pages.second.certcourse_page_order)
+        expect(quiz["no_of_failed_attempts"]).to eq(2)
+        expect(quiz["answer_text"]).to eq(correct_answer.description)
+        expect(quiz["is_correct"]).to eq(true)
       end
     end
   end
 end
+
+
+# [{:id=>2,
+#   :is_optional=>false,
+#   :is_survey=>false,
+#   :quiz_text=>"MyString",
+#   :certcourse_pages_count=>1,
+#   :page_order=>2,
+#   :no_of_failed_attempts=>2,
+#   :answer_text=>"MyString",
+#   :is_correct=>true}]

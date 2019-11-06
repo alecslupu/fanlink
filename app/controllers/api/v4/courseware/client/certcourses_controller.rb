@@ -18,10 +18,9 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
     if certcourse_pages.present?
       @quizzes = []
       certcourse_pages.each do |certcourse_page|
-        binding.pry
         quiz_page = QuizPage.find_by(certcourse_page_id: certcourse_page.id)
-        next unless quiz_page.present?
 
+        next unless quiz_page.present?
         correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
         person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
         failed_attempts = person_responses.where.not(answer_id: correct_answer.id)
@@ -46,7 +45,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
           is_optional: quiz_page.is_optional,
           is_survey: quiz_page.is_survey,
           quiz_text: quiz_page.quiz_text,
-          certcourse_pages_count: Certcourse.find(certcourse_page.id).certcourse_pages_count,
+          certcourse_pages_count: Certcourse.find(certcourse_page.certcourse_id).certcourse_pages_count,
           page_order: certcourse_page.certcourse_page_order,
           no_of_failed_attempts: no_of_failed_attempts,
           answer_text: answer_text,
