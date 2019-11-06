@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191029152417) do
+ActiveRecord::Schema.define(version: 20191106220223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -544,7 +544,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.boolean "do_not_message_me", default: false, null: false
     t.boolean "pin_messages_from", default: false, null: false
     t.boolean "auto_follow", default: false, null: false
-    t.integer "role", default: 0, null: false
+    t.integer "old_role", default: 0, null: false
     t.text "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
@@ -561,6 +561,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
+    t.bigint "role_id"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -569,6 +570,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username"], name: "index_people_on_product_id_and_username"
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
+    t.index ["role_id"], name: "index_people_on_role_id"
   end
 
   create_table "permission_policies", force: :cascade do |t|
@@ -1038,9 +1040,23 @@ ActiveRecord::Schema.define(version: 20191029152417) do
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "internal_name", null: false
-    t.integer "role_enum", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post", default: 0, null: false
+    t.integer "chat", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "beacon", default: 0, null: false
+    t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
+    t.integer "admin", default: 0, null: false
+    t.integer "root", default: 0, null: false
+    t.integer "user", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -1405,6 +1421,7 @@ ActiveRecord::Schema.define(version: 20191029152417) do
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "notifications", "people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "people", "roles"
   add_foreign_key "person_certcourses", "certcourses", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "person_certificates", "certificates", name: "fk_person_certificates_certificate"

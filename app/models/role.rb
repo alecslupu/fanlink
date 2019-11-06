@@ -1,32 +1,45 @@
 # == Schema Information
 #
-# Table name: portal_accesses
+# Table name: roles
 #
-#  id          :bigint(8)        not null, primary key
-#  person_id   :integer          not null
-#  post        :integer          default(0), not null
-#  chat        :integer          default(0), not null
-#  event       :integer          default(0), not null
-#  merchandise :integer          default(0), not null
-#  user        :integer          default(0), not null
-#  badge       :integer          default(0), not null
-#  reward      :integer          default(0), not null
-#  quest       :integer          default(0), not null
-#  beacon      :integer          default(0), not null
-#  reporting   :integer          default(0), not null
-#  interest    :integer          default(0), not null
-#  courseware  :integer          default(0), not null
-#  trivia      :integer          default(0), not null
-#  admin       :integer
-#  root        :integer          default(0)
+#  id            :bigint(8)        not null, primary key
+#  name          :string           not null
+#  internal_name :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  post          :integer          default(0), not null
+#  chat          :integer          default(0), not null
+#  event         :integer          default(0), not null
+#  merchandise   :integer          default(0), not null
+#  badge         :integer          default(0), not null
+#  reward        :integer          default(0), not null
+#  quest         :integer          default(0), not null
+#  beacon        :integer          default(0), not null
+#  reporting     :integer          default(0), not null
+#  interest      :integer          default(0), not null
+#  courseware    :integer          default(0), not null
+#  trivia        :integer          default(0), not null
+#  admin         :integer          default(0), not null
+#  root          :integer          default(0), not null
+#  user          :integer          default(0), not null
 #
 
-class PortalAccess < ApplicationRecord
+class Role < ApplicationRecord
   include FlagShihTzu
+
+  # acts_as_tenant(:product)
+  # belongs_to :product
+  # scope :for_product, ->(product) { where(product_id: product.id ) }
+
+  has_many :people, inverse_of: :role
+
+
   has_paper_trail
 
-  scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id }) }
-  belongs_to :person
+  def to_s
+    internal_name
+  end
+
 
   %w(post event merchandise user badge reward quest beacon reporting interest root).each do |field|
     has_flags 1 => "#{field}_read".to_sym,

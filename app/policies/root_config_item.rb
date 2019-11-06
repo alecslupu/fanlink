@@ -1,2 +1,0 @@
-class RootConfigItem < ConfigItemPolicy
-end

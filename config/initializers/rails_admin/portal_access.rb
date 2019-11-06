@@ -18,7 +18,8 @@ RailsAdmin.config do |config|
             :quest,
             :beacon,
             :reporting,
-            :interest
+            :interest,
+            :root
     end
     edit do
       field :person

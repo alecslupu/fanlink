@@ -41,9 +41,14 @@ RailsAdmin.config do |config|
              :username,
              :email,
              :name,
-             :picture,
-             :role,
-             :designation,
+             :picture
+
+      field :role do
+        visible do
+          bindings[:view]._current_user.role == "super_admin"
+        end
+      end
+      fields :designation,
              :do_not_message_me,
              :pin_messages_from,
              :auto_follow,
@@ -62,9 +67,14 @@ RailsAdmin.config do |config|
       fields :username,
              :email,
              :name,
-             :picture,
-             :role,
-             :do_not_message_me,
+             :picture
+      field :role do
+        visible do
+          bindings[:view]._current_user.role == "super_admin"
+        end
+      end
+
+      fields :do_not_message_me,
              :pin_messages_from,
              :auto_follow,
              :chat_banned,

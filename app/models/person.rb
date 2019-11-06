@@ -21,14 +21,14 @@
 #  do_not_message_me               :boolean          default(FALSE), not null
 #  pin_messages_from               :boolean          default(FALSE), not null
 #  auto_follow                     :boolean          default(FALSE), not null
-#  role                            :integer          default("normal"), not null
+#  old_role                        :integer          default("normal"), not null
 #  reset_password_token            :text
 #  reset_password_token_expires_at :datetime
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -38,18 +38,11 @@
 #  terminated                      :boolean          default(FALSE)
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
+#  role_id                         :bigint(8)
 #
 
 class Person < ApplicationRecord
   include AttachmentSupport
-  # include Person::Blocks
-  # include Person::Facebook
-  # include Person::Filters
-  # include Person::Followings
-  # include Person::Levels
-  # include Person::Mailing
-  # include Person::Profile
-
   include TranslationThings
   authenticates_with_sorcery!
 
@@ -59,7 +52,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum role: %i[ normal staff admin super_admin ]
+  enum old_role: %i[ normal staff admin super_admin ]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -130,6 +123,8 @@ class Person < ApplicationRecord
   has_many :followers, through: :passive_followings, source: :follower
 
   has_many :notifications, dependent: :destroy
+
+  belongs_to :role, optional: true
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
@@ -389,7 +384,7 @@ class Person < ApplicationRecord
   end
 
   def roles_for_select
-    (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
+    (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
   end
 
   def some_admin?
@@ -425,7 +420,7 @@ class Person < ApplicationRecord
 
     def check_role
       if super_admin? && !product.can_have_supers
-        errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
+        errors.add(:old_role, :role_unallowed, message: _("This product cannot have super admins."))
       end
     end
 

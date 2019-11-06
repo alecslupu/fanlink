@@ -69,9 +69,30 @@ class ApplicationPolicy
   end
 
   protected
+
   def has_permission?(permission)
+    has_systen_permission?(permission) || has_role_permission?(permission) || has_individual_permission?(permission)
+  end
+
+  def has_role_permission?(permission)
     begin
-      super_admin? || access.send([module_name, permission].join("_").to_sym)
+      user.role.send([module_name, permission].join("_").to_sym)
+    rescue
+      false
+    end
+  end
+
+  def has_systen_permission?(permission)
+    begin
+      super_admin?
+    rescue
+      false
+    end
+  end
+
+  def has_individual_permission?(permission)
+    begin
+      access.send([module_name, permission].join("_").to_sym)
     rescue
       false
     end
