@@ -71,23 +71,31 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         person1.certificates << certificate
 
         certcourse = create(:certcourse)
-        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
-        certcourse_pages = create_list(:certcourse_page, 3, certcourse: certcourse)
-        quiz_page1 = create(:quiz_page, certcourse_page: certcourse_pages.first, is_optional: true, is_survey: false)
-        quiz_page2 = create(:quiz_page, certcourse_page: certcourse_pages.second, is_optional: true, is_survey: true)
-        quiz_page3 = create(:quiz_page, certcourse_page: certcourse_pages.third, is_optional: false, is_survey: false)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourse.id, certcourse_order: 1)
+        certcourse_pages = create_list(:certcourse_page, 2, certcourse: certcourse, content_type: "quiz")
 
-        answer = create(:correct_answer, quiz_page: quiz_page1, is_correct: true)
-        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
-        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+        quiz_page1 = create(:quiz_page, is_optional: true, is_survey: false)
+        quiz_page1.update(certcourse_page_id: certcourse_pages.first.id) # can't create a quizpage with desired certcorse page
+        quiz_page2 = create(:quiz_page, is_optional: false, is_survey: false)
+        quiz_page2.update(certcourse_page_id: certcourse_pages.second.id) # can't create a quizpage with desired certcorse page
 
-        answer = create(:correct_answer, quiz_page: quiz_page1, is_correct: true)
-        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
-        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+        answer11 = create(:correct_answer, quiz_page: quiz_page1)
+        answer12 = create(:wrong_answers, quiz_page: quiz_page1)
 
-        answer = create(:correct_answer, quiz_page: quiz_page1, is_correct: true)
-        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
-        answer = create(:wrong_answers, quiz_page: quiz_page1, is_correct: true)
+        answer21 = create(:correct_answer, quiz_page: quiz_page2)
+        answer22 = create(:wrong_answers, quiz_page: quiz_page2)
+        answer23 = create(:wrong_answers, quiz_page: quiz_page2)
+
+        create(:person_quiz, answer: answer11, quiz_page: quiz_page1, person: person1)
+        create(:person_quiz, answer: answer12, quiz_page: quiz_page1, person: person1)
+
+        create(:person_quiz, answer: answer21, quiz_page: quiz_page2, person: person1)
+        create(:person_quiz, answer: answer22, quiz_page: quiz_page2, person: person1)
+
+        binding.pry
+        get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
+
+        expect(response).to be_successful
       end
     end
   end
