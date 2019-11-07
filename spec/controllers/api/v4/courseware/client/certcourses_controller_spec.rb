@@ -38,7 +38,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
       end
     end
 
-    it "returns all the certificate's certcourses" do
+    it "returns all the certificate's live certcourses" do
       person = create(:person, role: :client)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -48,8 +48,11 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         person1.certificates << certificate
 
         certcourses = create_list(:certcourse, 3)
+        entry_certcourse = create(:certcourse, status: "entry")
+
         CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
         CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: entry_certcourse.id, certcourse_order: 2)
 
         get :index, params: { person_id: person1.id, certificate_id: certificate.id }
 
@@ -127,14 +130,3 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
       end
     end
 end
-
-
-# [{:id=>2,
-#   :is_optional=>false,
-#   :is_survey=>false,
-#   :quiz_text=>"MyString",
-#   :certcourse_pages_count=>1,
-#   :page_order=>2,
-#   :no_of_failed_attempts=>2,
-#   :answer_text=>"MyString",
-#   :is_correct=>true}]
