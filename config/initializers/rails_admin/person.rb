@@ -50,6 +50,7 @@ RailsAdmin.config do |config|
              :chat_banned,
              :product_account,
              :recommended,
+             :authorized,
              :facebookid,
              :facebook_picture_url,
              :created_at,
@@ -70,6 +71,7 @@ RailsAdmin.config do |config|
              :chat_banned,
              :product_account,
              :recommended,
+             :authorized,
              :password
       field :designation, :translated
     end
