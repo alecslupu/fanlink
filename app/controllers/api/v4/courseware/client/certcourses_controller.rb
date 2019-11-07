@@ -21,6 +21,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
         quiz_page = QuizPage.find_by(certcourse_page_id: certcourse_page.id)
 
         next unless quiz_page.present?
+
         correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
         person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
         failed_attempts = person_responses.where.not(answer_id: correct_answer.id)
@@ -54,10 +55,11 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
         @quizzes << quiz
       end
-    else
-      # da 404
-    end
+
     return_the @quizzes, handler: :jb
+    else
+      render_404(_("This certificates has no quiz page."))
+    end
   end
 end
     # <PersonQuiz id: 1, person_id: 36505, quiz_page_id: 2, answer_id: 6, fill_in_response: nil, created_at: "2019-03-16 02:26:21",

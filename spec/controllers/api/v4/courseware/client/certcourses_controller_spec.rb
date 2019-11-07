@@ -104,7 +104,28 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         expect(quiz["is_correct"]).to eq(true)
       end
     end
-  end
+
+    it "return error code 404 when the requested certcourse has not quiz page" do
+        person = create(:person, role: :client)
+        ActsAsTenant.with_tenant(person.product) do
+          login_as(person)
+          person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
+          Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+          certificate = create(:certificate)
+          person1.certificates << certificate
+
+          certcourse = create(:certcourse)
+          CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourse.id, certcourse_order: 1)
+          certcourse_pages = create(:certcourse_page, certcourse: certcourse, content_type: "not_quiz")
+
+          expect(certcourse.certcourse_pages.count).to eq(1)
+
+          get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
+
+          expect(response).to be_not_found
+        end
+      end
+    end
 end
 
 
