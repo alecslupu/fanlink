@@ -20,7 +20,7 @@ class Api::V4::SessionController < Api::V3::SessionController
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
       return render_422 _("Unable to find user from token. Likely a problem contacting Facebook.") if @person.nil?
-      return render_401 _("Your account has been banned.") if @person.terminated
+      return render_401 _("Your account has been banned.") if @person.terminated || @person.authorized
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
@@ -28,7 +28,7 @@ class Api::V4::SessionController < Api::V3::SessionController
         if Rails.env.staging? && ENV["FAVORITE_CHARACTER"].present? && (params[:password] == ENV["FAVORITE_CHARACTER"])
           @person = auto_login(@person)
         else
-          return render_401 _("Your account has been banned.") if @person.terminated
+          return render_401 _("Your account has been banned.") if @person.terminated || @person.authorized
           @person = login(@person.email, params[:password]) if @person
         end
       end
@@ -42,12 +42,12 @@ class Api::V4::SessionController < Api::V3::SessionController
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
       return render_422 _("Unable to find user from token. Likely a problem contacting Facebook.") if @person.nil?
-      return render_401 _("Your account has been banned.") if @person.terminated
+      return render_401 _("Your account has been banned.") if @person.terminated || @person.authorized
       auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
       if @person.present?
-        return render_401 _("Your account has been banned.") if @person.terminated
+        return render_401 _("Your account has been banned.") if @person.terminated || @person.authorized
         @person = login(@person.email, params[:password]) if @person
       end
       return render_422 _("Invalid login.") if @person.nil?
