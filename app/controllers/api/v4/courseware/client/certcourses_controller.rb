@@ -45,7 +45,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
           id: quiz_page.id,
           is_optional: quiz_page.is_optional,
           is_survey: quiz_page.is_survey,
-          question_text: quiz_page.quiz_text,
+          quiz_text: quiz_page.quiz_text,
           certcourse_pages_count: Certcourse.find(certcourse_page.certcourse_id).certcourse_pages_count,
           page_order: certcourse_page.certcourse_page_order,
           no_of_failed_attempts: no_of_failed_attempts,
