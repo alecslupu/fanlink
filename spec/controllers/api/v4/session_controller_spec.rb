@@ -37,6 +37,14 @@ RSpec.describe Api::V4::SessionController, type: :controller do
         expect(json["errors"]).to include("You must supply a valid product")
       end
     end
+
+    it "returns unauthorized(code 401) for an unauthorized person" do
+      person = create(:person, password: "password", authorized: false)
+      post :create, params: { email_or_username: person.email, password: "password", product: person.product.internal_name }
+
+      expect(response).to have_http_status(401)
+      expect(json["errors"]).to include("This account is not authorized.")
+    end
   end
 
   describe "POST token" do
@@ -68,6 +76,14 @@ RSpec.describe Api::V4::SessionController, type: :controller do
         expect(response).to have_http_status(422)
         expect(json["errors"]).to include("You must supply a valid product")
       end
+    end
+
+    it "returns unauthorized(code 401) for an unauthorized person" do
+      person = create(:person, password: "password", authorized: false)
+      post :create, params: { email_or_username: person.email, password: "password", product: person.product.internal_name }
+
+      expect(response).to have_http_status(401)
+      expect(json["errors"]).to include("This account is not authorized.")
     end
   end
 end
