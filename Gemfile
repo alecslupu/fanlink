@@ -67,7 +67,6 @@ group :production, :staging do
   else
     gem 'elastic-apm', '~> 3.1.0'
   end
-
 end
 
 group :staging, :development, :test do
@@ -77,7 +76,6 @@ group :staging, :development, :test do
 end
 
 group :development, :test do
-  gem "httplog"
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry", "~>0.12.2"
   gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
@@ -88,6 +86,7 @@ group :development, :test do
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
+  gem "httplog"
 
   gem 'rubocop', '~> 0.74.0', require: false
   # gem "rubocop-rails_config"
@@ -153,15 +152,15 @@ end
 # greg is saying that is not suporting V Rails 5.2.
 gem "acts_as_tenant" # , git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "acts_as_api"
-
-gem "administrate", "~> 0.11.0" # git: "https://github.com/thoughtbot/administrate.git"
-gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
-gem "administrate-field-hidden", "~> 0.0.3"
-gem "administrate-field-belongs_to_search"
-# For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
-# I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
-# 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
-gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
+#
+# gem "administrate", "~> 0.11.0" # git: "https://github.com/thoughtbot/administrate.git"
+# gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
+# gem "administrate-field-hidden", "~> 0.0.3"
+# gem "administrate-field-belongs_to_search"
+# # For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
+# # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
+# # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
+# gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
 gem 'awesome_nested_set'
