@@ -25,7 +25,22 @@ RSpec.describe Room, type: :model do
         should have_many(:members).through(:room_memberships)
       end
 
-      it "#messages" do
+      it "#messages on production" do
+        allow(Rails).to receive(:env).and_return("production")
+        should have_many(:messages).dependent(:restrict_with_error)
+      end
+
+      it "#messages on staging" do
+        allow(Rails).to receive(:env).and_return("staging")
+        should have_many(:messages)
+        message = create(:message)
+
+        expect(message.room.present?).to eq(true)
+        expect { message.room.delete }.to change { Message.count }.by(-1)
+      end
+
+      it "#messages on development" do
+        allow(Rails).to receive(:env).and_return("development")
         should have_many(:messages).dependent(:restrict_with_error)
       end
     end
