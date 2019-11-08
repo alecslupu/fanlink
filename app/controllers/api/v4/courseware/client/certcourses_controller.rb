@@ -78,7 +78,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       answer_text: "never",
       certcourse_pages_count: 25,
       page_order: 12,
-      is_correct: true
+      is_correct: true,
+      is_survey: false
     }
 
     quiz2 = {
@@ -89,18 +90,20 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       answer_text: "never never",
       certcourse_pages_count: 36,
       page_order: 8,
-      is_correct: false
+      is_correct: false,
+      is_survey: false
     }
 
     quiz3 = {
       id: 3,
       is_optional: false,
-      no_of_failed_attempts: rand(20),
+      no_of_failed_attempts: 0,
       quiz_text: "Why?",
       answer_text: "maybe",
       certcourse_pages_count: 25,
       page_order: 12,
-      is_correct: true
+      is_correct: true,
+      is_survey: false
     }
 
     quiz4 = {
@@ -111,7 +114,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       answer_text: "Never!",
       certcourse_pages_count: 36,
       page_order: 8,
-      is_correct: true
+      is_correct: true,
+      is_survey: true
     }
 
     quiz5 = {
@@ -122,7 +126,8 @@ class Api::V4::Courseware::Client::CertcoursesController < ApiController
       answer_text: "Yes",
       certcourse_pages_count: 25,
       page_order: 12,
-      is_correct: false
+      is_correct: false,
+      is_survey: false
     }
 
     @quizzes = [quiz1, quiz2, quiz3, quiz4, quiz5]
