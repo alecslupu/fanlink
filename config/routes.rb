@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     get ":product_internal_name" => "sessions#login_redirect"
 
     get ":product_internal_name/login" => "sessions#new", as: :login_screen
-    root  to: redirect("/admin_portal")
+    root to: redirect("/admin_portal")
   end
 
 
