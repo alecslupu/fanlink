@@ -71,20 +71,12 @@ class ApplicationPolicy
   protected
 
   def has_permission?(permission)
-    has_systen_permission?(permission) || has_role_permission?(permission) || has_individual_permission?(permission)
+    has_role_permission?(permission) || has_individual_permission?(permission)
   end
 
   def has_role_permission?(permission)
     begin
       user.role.send([module_name, permission].join("_").to_sym)
-    rescue
-      false
-    end
-  end
-
-  def has_systen_permission?(permission)
-    begin
-      super_admin?
     rescue
       false
     end

@@ -1,4 +1,5 @@
 class RolePolicy < ApplicationPolicy
+
   def attributes_for(action)
     {}
   end
@@ -6,9 +7,5 @@ class RolePolicy < ApplicationPolicy
   protected
   def module_name
     "root"
-  end
-
-  def has_systen_permission?(permission)
-    false
   end
 end
