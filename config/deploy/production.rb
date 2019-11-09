@@ -7,11 +7,11 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server "52.53.208.155", user: "ubuntu", roles: %w{app db web}
-server "54.183.234.164", user: "ubuntu", roles: %w{web db}
+server "52.53.208.155", user: "ubuntu", roles: %w{ app db web worker }
+server "54.183.234.164", user: "ubuntu", roles: %w{ app web }
 
 set :rails_env, "production"
-set :branch, "capistrano"
+set :branch, "master"
 
 set :bundle_without, %w{development test staging}.join(" ")
 set :bundle_jobs, 8

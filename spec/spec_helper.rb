@@ -139,7 +139,6 @@ RSpec.configure do |config|
     end
   end
 
-
   # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
   # config.include Sorcery::TestHelpers::Rails::Controller # , type: :request
   # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
