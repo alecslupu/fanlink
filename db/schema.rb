@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191106220223) do
+ActiveRecord::Schema.define(version: 20191107163810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -562,6 +562,7 @@ ActiveRecord::Schema.define(version: 20191106220223) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"

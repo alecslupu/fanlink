@@ -2,7 +2,6 @@ RailsAdmin.config do |config|
   config.included_models.push("Merchandise")
 
   config.model "Merchandise" do
-
     list do
       fields :id,
              :name,

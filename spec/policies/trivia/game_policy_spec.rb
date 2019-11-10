@@ -50,7 +50,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
     end
   end
   context "logged in admin with no permission" do
-    subject { described_class.new(create(:admin_user), master_class) }
+    subject { described_class.new(build(:admin_user), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|

@@ -1,7 +1,11 @@
 require "rails_helper"
 
+
 RSpec.describe Api::V3::MessagesController, type: :controller do
   describe "create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+    end
     it "should create a new message with an attached image" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -44,6 +48,10 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
   end
 
   describe 'index' do
+
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     it 'returns all the messages with the attached image' do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
@@ -152,14 +160,16 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          created_at: to,
-          room: private_room,
-          body: "this is my body",
-          picture: fixture_file_upload('images/better.png', 'image/png')
-        )
+
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               created_at: to,
+                                                               room: private_room,
+                                                               body: "this is my body",
+                                                               picture: fixture_file_upload('images/better.png', 'image/png')
+                                                             )
+
         get :list
 
         expect(response).to be_successful
