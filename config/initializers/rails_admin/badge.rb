@@ -1,7 +1,6 @@
 RailsAdmin.config do |config|
   config.included_models.push("Badge")
   config.model "Badge" do
-
     list do
       fields :id,
              :action_type,

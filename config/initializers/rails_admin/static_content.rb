@@ -2,7 +2,6 @@ RailsAdmin.config do |config|
   config.included_models.push("StaticContent")
 
   config.model "StaticContent" do
-
     list do
       fields :id,
              :title,
@@ -20,7 +19,7 @@ RailsAdmin.config do |config|
     show do
       fields :id,
              :title,
-             :content
+             :content,
              :slug
     end
   end

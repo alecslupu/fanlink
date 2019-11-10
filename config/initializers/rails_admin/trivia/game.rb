@@ -2,50 +2,33 @@ RailsAdmin.config do |config|
   config.included_models.push("Trivia::Game")
 
   config.model "Trivia::Game" do
-  #   configure :compute_gameplay do
-  #
-  #   end
-  #
   #   navigation_label "Trivia"
-  #
-  end
+    label_plural "Trivia Games"
 
-  #
-  #
-  # Trivia::BooleanChoiceQuestion
-  # Trivia::HangmanQuestion
-  # Trivia::MultipleChoiceQuestion
-  # Trivia::PictureQuestion
-  # Trivia::SingleChoiceQuestion
-  %w(
-    Trivia::Answer
-    Trivia::AvailableAnswer
-    Trivia::PictureAvailableAnswer
-    Trivia::GameLeaderboard
-    Trivia::Prize
-    Trivia::Question
-    Trivia::QuestionLeaderboard
-    Trivia::Round
-    Trivia::RoundLeaderboard
-    Trivia::Subscriber
-    Trivia::Topic
-  ).each do |model|
-    config.included_models << model
-    config.model model do
-      parent "Trivia::Game"
+    list do
+      fields :id, :description, :round_count, :long_name, :status
+      field :start_date, :unix_timestamp
     end
-  end
-  %w(
-    Trivia::AvailableQuestion
-    Trivia::PictureAvailableQuestion
-    Trivia::BooleanChoiceAvailableQuestion
-    Trivia::HangmanAvailableQuestion
-    Trivia::MultipleChoiceAvailableQuestion
-    Trivia::SingleChoiceAvailableQuestion
-  ).each do |model|
-    config.included_models << model
-    config.model model do
-      parent "Trivia::Game"
+
+    edit do
+      fields :short_name, :long_name, :description, :room, :leaderboard_size, :picture
+      field :status, :enum do
+        # read_only { bindings[:object].persisted? }
+      end
+      field :start_date, :unix_timestamp do
+        read_only { true }
+      end
+      field :prizes do
+        visible { bindings[:object].persisted? }
+      end
+      field :rounds do
+        visible { bindings[:object].persisted? }
+      end
+    end
+    show do
+      fields :short_name, :long_name, :description, :room, :status, :leaderboard_size, :picture
+      field :start_date, :unix_timestamp
+      fields :prizes, :rounds
     end
   end
 
