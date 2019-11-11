@@ -1,21 +1,11 @@
 RailsAdmin.config do |config|
   config.included_models.push("Badge")
   config.model "Badge" do
-    configure :name do
-      pretty_value do
-        Badge.find(bindings[:object].id).name
-      end
-    end
     list do
       fields :id,
-             :action_type
-
-      field :name do
-        searchable [{Badge => :name.to_s}]
-        queryable true
-      end
-
-      fields :internal_name,
+             :action_type,
+             :name,
+             :internal_name,
              :picture
     end
     edit do
