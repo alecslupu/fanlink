@@ -28,6 +28,5 @@ RailsAdmin.config do |config|
              :status,
              :public
     end
-
   end
 end

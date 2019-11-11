@@ -21,5 +21,19 @@
 
 class StringConfigItem < ConfigItem
   has_paper_trail
+  before_validation :downcase
+  validate :custom_validation
 
+  protected
+
+  def downcase
+    item_value.downcase! if item_key == "tab_id"
+  end
+
+  def custom_validation
+    if item_key == "tab_id"
+      valid_options = %w{ education chat discover feed profile product events trivia menu client_settings client_menu }
+      errors.add(:item_value, "Please specify any of the #{valid_options.inspect}") unless valid_options.include?(item_value)
+    end
+  end
 end

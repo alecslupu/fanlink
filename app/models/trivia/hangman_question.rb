@@ -19,9 +19,5 @@
 module Trivia
   class HangmanQuestion < Question
     belongs_to :available_question, class_name: "Trivia::HangmanAvailableQuestion", foreign_key: :available_question_id
-
-    rails_admin do
-
-    end
   end
 end

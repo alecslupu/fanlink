@@ -11,12 +11,12 @@ RailsAdmin.config do |config|
         pretty_value do
           value = bindings[:object].in_use?
           case value
-          when nil
-            %(<span class='label label-default'>&#x2012;</span>)
           when false
             %(<span class='label label-danger'>&#x2718;</span>)
           when true
             %(<span class='label label-success'>&#x2713;</span>)
+          else
+            %(<span class='label label-default'>&#x2012;</span>)
           end.html_safe
         end
       end
@@ -26,11 +26,10 @@ RailsAdmin.config do |config|
       field :created_at do
         date_format :short
       end
-
     end
     edit do
       fields :name, :internal_name, :active, :seconds_lag
-      #, :badges, :rewards
+      # , :badges, :rewards
 
       # field :badge_actions_count do
       #   read_only true

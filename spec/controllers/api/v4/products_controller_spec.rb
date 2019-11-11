@@ -4,13 +4,14 @@ RSpec.describe Api::V4::ProductsController, type: :controller do
   # TODO: auto-generated
   describe "GET index" do
     it 'returns all products with their attached image' do
-      create_list(:product, 3, logo: fixture_file_upload('images/better.png', 'image/png'))
+      allow(Product).to receive(:all).and_return build_list(:product, 3,
+                                                            logo: fixture_file_upload('images/better.png', 'image/png'))
       get :index
 
       expect(response).to be_successful
       expect(json['products'].size).to eq(3)
       json['products'].each do |product|
-       expect(product['logo_file_size']).not_to eq(nil)
+       expect(product['logo_file_size']).not_to be_nil
       end
     end
   end
@@ -19,10 +20,12 @@ RSpec.describe Api::V4::ProductsController, type: :controller do
   describe "GET show" do
     it 'returns the product with the attached image' do
       product = create(:product, logo: fixture_file_upload('images/better.png', 'image/png'))
+      # allow(Product).to receive(:find).with("1").and_return product
       get :show, params: { id: product.id }
 
+      # expect(response.body).to eq("")
       expect(response).to be_successful
-      expect(json['product']['logo_file_size']).not_to eq(nil)
+      expect(json['product']['logo_file_size']).not_to be_nil
     end
   end
 

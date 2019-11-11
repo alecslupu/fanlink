@@ -5,10 +5,9 @@ Dir[Rails.root.join("app/lib/rails_admin/config/fields/types/*.rb")].each { |f| 
 Dir[Rails.root.join("config/initializers/rails_admin/*.rb")].each { |f| require f }
 
 RailsAdmin.config do |config|
-
   config.main_app_name = ["Fan link", "BackOffice"]
   # or something more dynamic
-  config.main_app_name = Proc.new { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
+  config.main_app_name = proc { |controller| [ "Cool app", "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
 
   config.parent_controller = "RailsAdminController"
 
@@ -77,6 +76,5 @@ RailsAdmin.config do |config|
         %w(ConfigItem).include? bindings[:abstract_model].model_name
       end
     end
-
   end
 end

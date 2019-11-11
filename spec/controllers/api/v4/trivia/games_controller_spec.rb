@@ -7,12 +7,13 @@ RSpec.describe Api::V4::Trivia::GamesController, type: :controller do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(
-          :trivia_game,
-          3,
-          status: :published,
-          picture: fixture_file_upload('images/better.png', 'image/png')
-        )
+
+        allow(Trivia::Game).to receive(:upcomming).and_return build_list(
+                                                                :trivia_game,
+                                                                3,
+                                                                status: :published,
+                                                                picture: fixture_file_upload('images/better.png', 'image/png')
+                                                              )
 
         get :index
         expect(response).to be_successful
@@ -29,13 +30,13 @@ RSpec.describe Api::V4::Trivia::GamesController, type: :controller do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(
-          :trivia_game,
-          3,
-          status: :closed,
-          end_date: (DateTime.now - 1.day).to_i,
-          picture: fixture_file_upload('images/better.png', 'image/png')
-        )
+        allow(Trivia::Game).to receive(:completed).and_return build_list(
+                                                                :trivia_game,
+                                                                3,
+                                                                status: :closed,
+                                                                end_date: (DateTime.now - 1.day).to_i,
+                                                                picture: fixture_file_upload('images/better.png', 'image/png')
+                                                              )
 
         get :completed
         expect(response).to be_successful

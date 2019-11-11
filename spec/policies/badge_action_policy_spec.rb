@@ -4,6 +4,8 @@ require "spec_helper"
 
 RSpec.describe BadgeActionPolicy, type: :policy do
   let(:master_class) { BadgeAction.new }
+  subject { described_class.new(build(:person), master_class) }
+
   permission_list = {
     index: false,
     show: false,
@@ -39,7 +41,7 @@ RSpec.describe BadgeActionPolicy, type: :policy do
     end
   end
   context "logged in user with no permission" do
-    subject { described_class.new(create(:person), master_class) }
+    subject { described_class.new(build(:person), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -53,7 +55,7 @@ RSpec.describe BadgeActionPolicy, type: :policy do
     end
   end
   context "logged in admin with no permission" do
-    subject { described_class.new(create(:admin_user), master_class) }
+    subject { described_class.new(build(:admin_user), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -80,9 +82,11 @@ RSpec.describe BadgeActionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, badge_read: true).person, master_class) }
 
     describe "permissions" do
+      before :each do
+        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, badge_read: true))
+      end
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -111,9 +115,11 @@ RSpec.describe BadgeActionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, badge_update: true).person, master_class) }
 
     describe "permissions" do
+      before :each do
+        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, badge_update: true))
+      end
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -142,9 +148,11 @@ RSpec.describe BadgeActionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, badge_delete: true).person, master_class) }
 
     describe "permissions" do
+      before :each do
+        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, badge_delete: true))
+      end
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -173,9 +181,11 @@ RSpec.describe BadgeActionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, badge_export: true).person, master_class) }
 
     describe "permissions" do
+      before :each do
+        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, badge_export: true))
+      end
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -204,9 +214,11 @@ RSpec.describe BadgeActionPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, badge_history: true).person, master_class) }
 
     describe "permissions" do
+      before :each do
+        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, badge_history: true))
+      end
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }

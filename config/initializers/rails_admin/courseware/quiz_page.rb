@@ -12,7 +12,7 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :course_name do
-        searchable [{ Certcourse => :short_name }]
+        searchable [{Certcourse => :short_name}]
         queryable true
       end
       fields :quiz_text, :answers, :is_optional, :is_survey
@@ -27,12 +27,12 @@ RailsAdmin.config do |config|
             am = amc.abstract_model
 
             icon = case associated.is_correct?
-                   when nil
-                     %(<span class='label label-default'>&#x2012;</span>)
                    when false
                      %(<span class='label label-danger'>&#x2718;</span>)
                    when true
                      %(<span class='label label-success'>&#x2713;</span>)
+                   else
+                     %(<span class='label label-default'>&#x2012;</span>)
                    end
             wording = associated.send(amc.object_label_method)
             can_see = !am.embedded? && (show_action = v.action(:show, am, associated))
