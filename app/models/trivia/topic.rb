@@ -19,9 +19,5 @@ module Trivia
 
     enum status: %i[draft published locked closed]
     scope :published, -> { where(status: [:published, :locked, :closed]) }
-
-    rails_admin do
-
-    end
   end
 end

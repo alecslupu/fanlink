@@ -230,7 +230,7 @@ RSpec.describe Api::V1::RelationshipsController, type: :controller do
         expect_any_instance_of(Api::V1::RelationshipsController).not_to receive(:update_relationship_count)
 
         rel = create(:relationship, requested_by: create(:person, product: person.product), requested_to: person)
-        (Relationship.statuses.keys - ["requested", "friended"]).each do |s|
+        (Relationship.statuses.keys - %w(requested friended)).each do |s|
           rel.update_column(:status, s)
           patch :update, params: {id: rel.id, relationship: {status: "friended"}}
           expect(rel.reload.status).to eq(s)

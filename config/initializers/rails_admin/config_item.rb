@@ -9,13 +9,13 @@ RailsAdmin.config do |config|
       fields :product, :item_key, :item_value, :item_url, :item_description
     end
   end
-  %w(
+  %w[
     StringConfigItem
     ArrayConfigItem
     BooleanConfigItem
     RootConfigItem
     IntegerConfigItem
-  ).each do |model|
+  ].each do |model|
     config.included_models << model
     config.model model do
       parent "ConfigItem"

@@ -19,9 +19,5 @@
 module Trivia
   class BooleanChoiceQuestion < Question
     belongs_to :available_question, class_name: "Trivia::BooleanChoiceAvailableQuestion", foreign_key: :available_question_id
-
-    rails_admin do
-
-    end
   end
 end

@@ -20,11 +20,11 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
-    log_dest = ENV['HEROKU'].present? ? STDOUT : "log/#{Rails.env}.log"
+    log_dest = ENV["HEROKU"].present? ? STDOUT : "log/#{Rails.env}.log"
 
-    logger           = ActiveSupport::Logger.new(log_dest)
+    logger = ActiveSupport::Logger.new(log_dest)
     logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
 
 
     # Initialize configuration defaults for originally generated Rails version.
@@ -52,8 +52,8 @@ module Fanlink
 
 
     config.paperclip_defaults = {
-      path: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension',
-      url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
+      path: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension",
+      url: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension"
     } if Rails.env.test?
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }

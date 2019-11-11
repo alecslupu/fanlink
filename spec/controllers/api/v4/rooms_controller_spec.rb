@@ -212,13 +212,15 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         expect(json['room']['last_message_timestamp']).to be >= current_timestamp
         expect(Room.last.picture).not_to eq(nil)
       end
-    end
+   end
+
 
    it 'should set private room timestamp' do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         current_timestamp = DateTime.now.to_i
+        allow_any_instance_of(Room).to receive(:new_room).and_return(true)
 
         post :create,
              params: {

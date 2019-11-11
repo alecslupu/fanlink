@@ -82,13 +82,14 @@ group :development, :test do
   gem "pry-byebug", "~>3.7.0"
   gem "dotenv-rails", "~>2.7.5"
   gem "faker", "~>2.1.2"
-  gem "rspec-rails"
+  gem "rspec-mocks", "~> 3.9.0"
+  gem "rspec-rails", '~> 3.9.0'
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem 'rubocop', '~> 0.74.0', require: false
+  gem 'rubocop', '~> 0.76.0', require: false
   # gem "rubocop-rails_config"
   gem 'rubocop-rails'
   gem "rubocop-rspec"
@@ -138,7 +139,7 @@ end
 group :test do
   gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
-  gem "simplecov", "~>0.17.0", require: false
+  gem "simplecov", "~>0.17", require: false
   gem 'simplecov-console', require: false
   gem "timecop"
   gem "webmock", "~>3.6.2"
@@ -146,7 +147,6 @@ group :test do
   gem "wisper-rspec", require: false
   gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
-  gem 'rspec-retry'
 end
 
 # greg is saying that is not suporting V Rails 5.2.
@@ -240,6 +240,5 @@ gem "rswag-api"
 gem "rswag-ui"
 
 gem "psych"
-gem 'parallel_tests', group: [:development, :test]
 #for page caching
 gem "actionpack-page_caching"
