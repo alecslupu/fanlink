@@ -3,9 +3,12 @@ RailsAdmin.config do |config|
   config.model "Badge" do
     list do
       fields :id,
-             :action_type,
-             :name,
-             :internal_name,
+             :action_type
+      field :name do
+        searchable false
+        queryable false
+      end
+      fields :internal_name,
              :picture
     end
     edit do
