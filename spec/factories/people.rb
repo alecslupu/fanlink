@@ -27,8 +27,8 @@
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  recommended                     :boolean          default(FALSE), not null
 #  designation                     :jsonb            not null
+#  recommended                     :boolean          default(FALSE), not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -39,6 +39,7 @@
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
 #  role_id                         :bigint(8)
+#  authorized                      :boolean          default(TRUE), not null
 #
 
 require "faker"
@@ -62,7 +63,11 @@ FactoryBot.define do
     end
 
     factory :admin_user do
-      role { :admin }
+      role { create(:role_admin) }
+    end
+
+    factory :super_admin do
+      role { create(:role_super_admin) }
     end
   end
 end

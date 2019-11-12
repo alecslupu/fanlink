@@ -26,6 +26,12 @@
 
 FactoryBot.define do
   factory :role do
-    name { "MyString" }
+    name { Faker::Lorem.word }
+    internal_name { Faker::Lorem.word }
+
+    factory :role_admin do
+    end
+    factory :role_super_admin do
+    end
   end
 end

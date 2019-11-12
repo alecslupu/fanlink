@@ -10,7 +10,7 @@
 #  poll_status  :integer          default("inactive"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  end_date     :datetime         default(Thu, 07 Feb 2019 01:46:08 UTC +00:00)
+#  end_date     :datetime         default(Mon, 28 Jan 2019 16:43:52 UTC +00:00)
 #  description  :jsonb            not null
 #  product_id   :integer          not null
 #

@@ -70,7 +70,11 @@ class ApplicationPolicy
   protected
 
   def has_permission?(permission)
-    has_role_permission?(permission) || has_individual_permission?(permission)
+    begin
+      has_role_permission?(permission) || has_individual_permission?(permission)
+    rescue
+      false
+    end
   end
 
   def has_role_permission?(permission)

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V4::BadgesController, type: :controller do
   describe 'GET index' do
     it 'returns all badges with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(:badge, 3)
@@ -19,7 +19,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
 
   describe 'POST create' do
     it "creates a badge with attachment when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -65,7 +65,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
 
   describe 'PUT update' do
     it "updates a badge's attachment" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         badge = create(:badge)
@@ -86,7 +86,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
 
   describe 'GET show' do
     it 'returns the badge with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         badge = create(:badge)
