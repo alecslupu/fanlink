@@ -91,9 +91,10 @@ class Room < ApplicationRecord
   def private?
     !public
   end
+
   private
+
     def delete_room_messages
-      binding.pry
       messages.delete_all
     end
 end
