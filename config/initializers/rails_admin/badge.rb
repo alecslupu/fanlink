@@ -4,10 +4,12 @@ RailsAdmin.config do |config|
     list do
       fields :id,
              :action_type
+
       field :name do
         searchable false
         queryable false
       end
+
       fields :internal_name,
              :picture
     end
