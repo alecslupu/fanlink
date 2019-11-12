@@ -45,12 +45,11 @@ class ApplicationPolicy
   end
 
   def show_in_app?
-    # false
     false
   end
 
   def dashboard?
-    user && user.some_admin?
+    true
   end
 
   # def select_product_dashboard?
@@ -75,23 +74,15 @@ class ApplicationPolicy
   end
 
   def has_role_permission?(permission)
-    begin
-      user.role.send([module_name, permission].join("_").to_sym)
-    rescue
-      false
-    end
+    role_access.send([module_name, permission].join("_").to_sym)
   end
 
   def has_individual_permission?(permission)
-    begin
-      access.send([module_name, permission].join("_").to_sym)
-    rescue
-      false
-    end
+    individual_access.send([module_name, permission].join("_").to_sym)
   end
 
   def super_admin?
-    user && user.super_admin? && user.product.internal_name == "admin"
+    %w(root super_admin).include?(user.role.try(:to_s))
   end
 
   def module_name
@@ -99,8 +90,12 @@ class ApplicationPolicy
     "admin"
   end
 
-  def access
-    @portal ||= PortalAccess.where(person_id: user.id).first_or_initialize
+  def role_access
+    @role_access ||= (user.role || user.build_role)
+  end
+
+  def individual_access
+    @individual_access ||= (user.portal_access || user.build_portal_access)
   end
 
   class Scope

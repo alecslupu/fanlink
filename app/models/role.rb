@@ -27,13 +27,9 @@
 class Role < ApplicationRecord
   include FlagShihTzu
 
-  # acts_as_tenant(:product)
-  # belongs_to :product
-  # scope :for_product, ->(product) { where(product_id: product.id ) }
-
   has_many :people, inverse_of: :role
-
-
+  validates :internal_name, uniqueness: true
+  
   has_paper_trail
 
   def to_s
