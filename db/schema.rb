@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20191107163810) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -550,8 +550,8 @@ ActiveRecord::Schema.define(version: 20191107163810) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.boolean "recommended", default: false, null: false
     t.jsonb "designation", default: {}, null: false
+    t.boolean "recommended", default: false, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
