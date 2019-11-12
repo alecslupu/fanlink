@@ -26,6 +26,9 @@ RailsAdmin.config do |config|
       field :global do
         column_width 30
       end
+      field :recommended do
+        column_width 30
+      end
       field :starts_at do
         column_width 30
       end
