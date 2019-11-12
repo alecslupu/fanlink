@@ -63,9 +63,8 @@ class Room < ApplicationRecord
 
   has_image_called :picture
 
-  if Rails.env == "staging"
-    has_many :messages
-    before_destroy :delete_room_messages
+  if Rails.env.staging?
+    has_many :messages, dependent: :destroy
   else
     has_many :messages, dependent: :restrict_with_error
   end
@@ -91,10 +90,4 @@ class Room < ApplicationRecord
   def private?
     !public
   end
-
-  private
-
-    def delete_room_messages
-      messages.delete_all
-    end
 end

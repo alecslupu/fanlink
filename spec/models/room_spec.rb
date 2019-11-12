@@ -24,29 +24,6 @@ RSpec.describe Room, type: :model do
       it "#members" do
         should have_many(:members).through(:room_memberships)
       end
-
-      it "#messages with restriction on production env" do
-        allow(Rails).to receive(:env).and_return("production")
-        should have_many(:messages).dependent(:restrict_with_error)
-      end
-
-      it "#messages with dependent destroy on staging env" do
-        allow(Rails).to receive(:env).and_return("staging")
-        should have_many(:messages)
-        message = create(:message)
-
-        expect(message.room.present?).to eq(true)
-        expect { message.room.delete }.to change { Message.count }.by(-1)
-      end
-
-      it "#messages with restriction on development env" do
-        allow(Rails).to receive(:env).and_return("development")
-        should have_many(:messages).dependent(:restrict_with_error)
-      end
-
-      it "#messages with restriction on tests env" do
-        should have_many(:messages).dependent(:restrict_with_error)
-      end
     end
   end
 
