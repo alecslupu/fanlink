@@ -1,6 +1,7 @@
 {
   certificate: {
     name: @person_certificate.full_name,
-    issued_date: @person_certificate.issued_date
+    issued_date: @person_certificate.issued_date,
+    certificate_image_url: (@person_certificate.issued_certificate_image.url rescue nil),
   }
 }
