@@ -4,7 +4,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
   describe "GET index" do
     it 'returns all the posts with the attachments' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         person2 = create(:person)
         login_as(person)
@@ -42,7 +42,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
   describe "GET list" do
     it 'returns all the posts with the attachments' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         person2 = create(:person)
         login_as(person)
@@ -80,7 +80,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
   describe "GET show" do
     it 'returns the message with the attachments' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(
@@ -103,7 +103,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
   describe "GET share" do
     it 'returns all the posts with the attachments' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         person2 = create(:person)
         login_as(person)
@@ -128,7 +128,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
   describe "POST create" do
     it "creates a post with attachments when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -155,7 +155,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
   describe "PUT update" do
     it "updates a posts with attachments when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(:post)

@@ -21,7 +21,7 @@
 #  do_not_message_me               :boolean          default(FALSE), not null
 #  pin_messages_from               :boolean          default(FALSE), not null
 #  auto_follow                     :boolean          default(FALSE), not null
-#  role                            :integer          default("normal"), not null
+#  old_role                        :integer          default("normal"), not null
 #  reset_password_token            :text
 #  reset_password_token_expires_at :datetime
 #  reset_password_email_sent_at    :datetime
@@ -38,18 +38,12 @@
 #  terminated                      :boolean          default(FALSE)
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
+#  role_id                         :bigint(8)
+#  authorized                      :boolean          default(TRUE), not null
 #
 
 class Person < ApplicationRecord
   include AttachmentSupport
-  # include Person::Blocks
-  # include Person::Facebook
-  # include Person::Filters
-  # include Person::Followings
-  # include Person::Levels
-  # include Person::Mailing
-  # include Person::Profile
-
   include TranslationThings
   authenticates_with_sorcery!
 
@@ -59,7 +53,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum role: %i[ normal staff admin super_admin client ]
+  enum old_role: %i[ normal staff admin super_admin ]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -137,8 +131,11 @@ class Person < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
 
+  belongs_to :role, optional: true
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
+  before_validation :assign_role
 
   after_commit :flush_cache
 
@@ -394,14 +391,11 @@ class Person < ApplicationRecord
   def permissions
     1
   end
+  #
+  # def roles_for_select
+  #   (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
+  # end
 
-  def roles_for_select
-    (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
-  end
-
-  def some_admin?
-    !normal?
-  end
 
   def to_s
     name || username
@@ -415,32 +409,69 @@ class Person < ApplicationRecord
     Rails.cache.delete([self.class.name, id])
   end
 
+  def full_permission_list
+    assigned_role.summarize.select { |_, v| v }.keys + individual_access.summarize.select { |_, v| v }.keys
+  end
+
+  def individual_access
+    portal_access || build_portal_access
+  end
+
+  def assigned_role
+    role || build_role(internal_name: "normal", name: "Normal")
+  end
+  before_validation :assign_role
+
+  def assign_role
+    self.role = Role.where(internal_name: "normal").first if role_id.nil?
+  end
+
+  def normal?
+    %w[normal].include?(assigned_role.internal_name)
+  end
+
+  def root?
+    %w[root].include?(assigned_role.internal_name)
+  end
+
+  def super_admin?
+    %w[root super_admin].include?(assigned_role.internal_name)
+  end
+
+  def client?
+    %w[client].include?(assigned_role.internal_name)
+  end
+
+  def some_admin?
+    %w[staff admin super_admin].include?(assigned_role.internal_name)
+  end
+
   private
-    def canonicalize(name)
-      self.class.canonicalize(name)
-    end
+  def canonicalize(name)
+    self.class.canonicalize(name)
+  end
 
-    def canonicalize_username
-      if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
-        errors.add(:username, :username_in_use, message: _("The username has already been taken."))
-        false
-      else
-        self.username_canonical = canonicalize(self.username)
-        true
-      end
+  def canonicalize_username
+    if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+      errors.add(:username, :username_in_use, message: _("The username has already been taken."))
+      false
+    else
+      self.username_canonical = canonicalize(self.username)
+      true
     end
+  end
 
-    def check_role
-      if super_admin? && !product.can_have_supers
-        errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
-      end
+  def check_role
+    if super_admin? && !product.can_have_supers?
+      errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
     end
+  end
 
-    def validate_age
-      if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-        errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
-      end
+  def validate_age
+    if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
+      errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
     end
+  end
 
   def valid_country_code
     if country_code.present? && ISO3166::Country.find_country_by_alpha2(country_code).nil?
@@ -448,20 +479,25 @@ class Person < ApplicationRecord
     end
   end
 
-    def normalize_email
-      self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
-      true
-    end
+  def normalize_email
+    self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
+    true
+  end
 
-    def valid_username
-      if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
-        errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
-      end
+  def valid_username
+    if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
+      errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
 
   def client_role_changing
-    if self.role_was == 'client' && self.role != 'client'
-      self.errors[:base] << "You cannot change the 'client' role"
+    if self.role_id_changed?
+      previous_role = Role.where(id: self.role_id_was).first
+      errors.add(:base, "You cannot change the 'client' role") if previous_role == "client"
     end
+    #
+    # if self.role_was == 'client' && self.role != 'client'
+    #   self.errors[:base] <<
+    # end
   end
 end

@@ -7,9 +7,9 @@ RailsAdmin.config do |config|
 
     configure :level_earned do
     end
-
     configure :password do
     end
+
     list do
       field :username do
         column_width 150
@@ -25,6 +25,9 @@ RailsAdmin.config do |config|
       end
       field :role do
         column_width 70
+        visible do
+          bindings[:view]._current_user.super_admin?
+        end
       end
       field :created_at do
         column_width 100
@@ -37,46 +40,131 @@ RailsAdmin.config do |config|
         pretty_value do
           bindings[:view].link_to "#{ bindings[:object].notification_device_ids.size} notification device ids", bindings[:view].rails_admin.show_path('person', bindings[:object].id)
         end
+        visible do
+          bindings[:view]._current_user.some_admin?
+        end
       end
     end
     show do
-      fields :id,
-             :username,
-             :email,
-             :name,
-             :picture,
-             :role,
-             :designation,
-             :do_not_message_me,
-             :pin_messages_from,
-             :auto_follow,
-             :chat_banned,
-             :product_account,
-             :recommended,
-             :authorized,
-             :facebookid,
-             :facebook_picture_url,
-             :created_at,
-             :updated_at,
-             :level_earned,
-             :badges
+      fields :id, :username, :email, :name, :picture
+      field :role do
+        visible do
+          bindings[:view]._current_user.super_admin?
+        end
+      end
+
+      field :designation, :translated do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+
+      field :do_not_message_me do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :pin_messages_from do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+
+      field :auto_follow do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+
+      field :chat_banned do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :product_account do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+
+      field :recommended do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :authorized
+      field :facebookid do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :facebook_picture_url do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :created_at
+      field :level_earned do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :badges do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
     end
 
     edit do
-      fields :username,
-             :email,
-             :name,
-             :picture,
-             :role,
-             :do_not_message_me,
-             :pin_messages_from,
-             :auto_follow,
-             :chat_banned,
-             :product_account,
-             :recommended,
-             :authorized,
-             :password
-      field :designation, :translated
+      fields :username, :email, :name, :picture
+      field :role do
+        visible do
+          bindings[:view]._current_user.super_admin?
+        end
+      end
+
+      field :do_not_message_me do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :pin_messages_from do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+
+      field :auto_follow do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :chat_banned do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :product_account do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      field :recommended do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+      fields :authorized, :password
+      field :designation, :translated do
+        hide do
+          bindings[:view]._current_user.client?
+        end
+      end
+    end
+
+    export do
+      fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
     end
   end
 end
