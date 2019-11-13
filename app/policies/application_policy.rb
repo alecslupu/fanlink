@@ -74,7 +74,7 @@ class ApplicationPolicy
   end
 
   def super_admin?
-    %w(root super_admin).include?(user.assigned_role.to_s)
+    user.super_admin?
   end
 
   def module_name

@@ -395,9 +395,6 @@ class Person < ApplicationRecord
   #   (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
   # end
 
-  def some_admin?
-    !normal?
-  end
 
   def to_s
     name || username
@@ -423,32 +420,44 @@ class Person < ApplicationRecord
     role || build_role
   end
 
+  def super_admin?
+    %w[root super_admin].include?(assigned_role)
+  end
+
+  def client?
+    %w[client].include?(assigned_role)
+  end
+
+  def some_admin?
+    %w[staff admin super_admin].include?(assigned_role)
+  end
+
   private
-    def canonicalize(name)
-      self.class.canonicalize(name)
-    end
+  def canonicalize(name)
+    self.class.canonicalize(name)
+  end
 
-    def canonicalize_username
-      if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
-        errors.add(:username, :username_in_use, message: _("The username has already been taken."))
-        false
-      else
-        self.username_canonical = canonicalize(self.username)
-        true
-      end
+  def canonicalize_username
+    if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+      errors.add(:username, :username_in_use, message: _("The username has already been taken."))
+      false
+    else
+      self.username_canonical = canonicalize(self.username)
+      true
     end
+  end
 
-    def check_role
-      if super_admin? && !product.can_have_supers
-        errors.add(:old_role, :role_unallowed, message: _("This product cannot have super admins."))
-      end
+  def check_role
+    if super_admin? && !product.can_have_supers?
+      errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
     end
+  end
 
-    def validate_age
-      if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-        errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
-      end
+  def validate_age
+    if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
+      errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
     end
+  end
 
   def valid_country_code
     if country_code.present? && ISO3166::Country.find_country_by_alpha2(country_code).nil?
@@ -456,20 +465,25 @@ class Person < ApplicationRecord
     end
   end
 
-    def normalize_email
-      self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
-      true
-    end
+  def normalize_email
+    self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
+    true
+  end
 
-    def valid_username
-      if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
-        errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
-      end
+  def valid_username
+    if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
+      errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
 
   def client_role_changing
-    if self.role_was == 'client' && self.role != 'client'
-      self.errors[:base] << "You cannot change the 'client' role"
+    if self.role_id_changed?
+      previous_role = Role.where(id: self.role_id_was).first
+      errors.add(:base, "You cannot change the 'client' role") if previous_role == "client"
     end
+    #
+    # if self.role_was == 'client' && self.role != 'client'
+    #   self.errors[:base] <<
+    # end
   end
 end
