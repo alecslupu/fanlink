@@ -1,6 +1,8 @@
 RailsAdmin.config do |config|
   config.included_models.push("Person")
   config.model "Person" do
+    label_plural "Client Users"
+
     object_label_method do
       :username
     end
