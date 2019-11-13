@@ -418,7 +418,7 @@ class Person < ApplicationRecord
   end
 
   def assigned_role
-    role || build_role
+    role || build_role(internal_name: "normal", name: "Normal")
   end
   before_validation :assign_role
 
