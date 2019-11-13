@@ -1,0 +1,89 @@
+body {
+        font-family: 'Helvetica', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg');
+        background-size: cover;
+        width: 100%;
+        min-height: calc(100vh - 100px);
+      }
+      .download {
+        position: relative;
+        width: 100%;
+        max-width: 900px;
+        border-radius: 20px;
+        background-color: #fff;
+        margin: 100px auto 0;
+        box-sizing: border-box;
+        min-height: 200px;
+        padding: 20px;
+        display: block;
+      }
+      .download .app-stores {
+          width: 70%;
+          display: inline-block;
+          box-sizing: border-box;
+          vertical-align: top;
+          padding: 20px;
+          text-align: center;
+      }
+      .download .app-stores a {
+          margin-bottom: 10px;
+          display: block;
+      }
+      a:-webkit-any-link {
+          color: -webkit-link;
+          cursor: pointer;
+          text-decoration: underline;
+      }
+      .download .app-stores img:last-child {
+          margin-bottom: 0;
+      }
+      .download .app-stores img {
+          width: 100%;
+          max-width: 200px;
+          margin: 0 auto 10px;
+          display: block;
+      }
+
+body {
+        font-family: 'Helvetica', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('https://fanlinkmusic.com/static/img/pattern-2.487c258.jpg');
+        background-size: cover;
+        width: 100%;
+        min-height: calc(100vh - 100px);
+      }
+      .post {
+        position: relative;
+        width: 330px;
+        border-radius: 20px;
+        background-color: #fff;
+        margin: 100px auto 0;
+        box-sizing: border-box;
+        min-height: 200px;
+      }
+      .post .profile-picture {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin: 10px;
+        display: inline-block;
+      }
+      .post .post-picture {
+        width: 330px;
+      }
+        .post h2 {
+        margin: 0;
+        padding: 20px 0 0 0;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: top;
+      }
+      .post p {
+        font-size: 16px;
+        padding: 20px;
+        margin: 0;
+      }
+
