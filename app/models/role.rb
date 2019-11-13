@@ -29,7 +29,7 @@ class Role < ApplicationRecord
 
   has_many :people, inverse_of: :role
   validates :internal_name, uniqueness: true
-  
+
   has_paper_trail
 
   def to_s

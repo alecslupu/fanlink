@@ -123,6 +123,12 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+  has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
+  has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
+
+  has_many :assigners, through: :hired_people, source: :client
+  has_many :assignees, through: :clients, source: :person
+
   has_many :notifications, dependent: :destroy
 
   belongs_to :role, optional: true
@@ -132,7 +138,7 @@ class Person < ApplicationRecord
 
   after_commit :flush_cache
 
-  # scope :username_filter, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
+  scope :username_filter_courseware, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
   scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
@@ -165,6 +171,7 @@ class Person < ApplicationRecord
 
   validate :valid_country_code
   validates :country_code, length: { is: 2 }, allow_blank: true
+  validate :client_role_changing, on: :update
 
   def country_code=(c)
     write_attribute :country_code, (c.nil?) ? nil : c.upcase
@@ -459,4 +466,10 @@ class Person < ApplicationRecord
         errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
       end
     end
+
+  def client_role_changing
+    if self.role_was == 'client' && self.role != 'client'
+      self.errors[:base] << "You cannot change the 'client' role"
+    end
+  end
 end

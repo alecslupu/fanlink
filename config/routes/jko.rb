@@ -264,6 +264,20 @@ JkoApi.routes self do
         get "match" => "interests#match"
       end
     end
+
+    namespace :courseware do
+      namespace :client do
+        resources :people, only: [:index] do
+          resources :certificates, only: [:index, :show] do
+            member do
+              post 'send_email'
+              get 'download'
+            end
+            resources :certcourses, only: [:index, :show]
+          end
+        end
+      end
+    end
     resources :notifications, only: [:create]
   end
 end
