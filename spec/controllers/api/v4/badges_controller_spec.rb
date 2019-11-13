@@ -39,7 +39,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
     end
 
     it 'creates a badge' do
-      user = create(:person, role: :admin)
+      user = create(:admin_user)
       ActsAsTenant.with_tenant(user.product) do
         login_as(user)
         name = 'A name'

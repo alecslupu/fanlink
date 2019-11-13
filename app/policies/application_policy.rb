@@ -70,36 +70,16 @@ class ApplicationPolicy
   protected
 
   def has_permission?(permission)
-    begin
-      has_role_permission?(permission) || has_individual_permission?(permission)
-    rescue
-      false
-    end
-  end
-
-  def has_role_permission?(permission)
-    role_access.send([module_name, permission].join("_").to_sym)
-  end
-
-  def has_individual_permission?(permission)
-    individual_access.send([module_name, permission].join("_").to_sym)
+    user.full_permission_list.include?([module_name, permission].join("_").delete_suffix("?").to_sym)
   end
 
   def super_admin?
-    %w(root super_admin).include?(user.role.try(:to_s))
+    %w(root super_admin).include?(user.assigned_role.to_s)
   end
 
   def module_name
     Rails.logger.debug("Defaulting to #{self.class.name}")
     "admin"
-  end
-
-  def role_access
-    @role_access ||= (user.role || user.build_role)
-  end
-
-  def individual_access
-    @individual_access ||= (user.portal_access || user.build_portal_access)
   end
 
   class Scope

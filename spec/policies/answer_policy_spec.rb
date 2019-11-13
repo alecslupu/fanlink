@@ -72,7 +72,7 @@ RSpec.describe AnswerPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, courseware_read: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, courseware_read: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -105,7 +105,7 @@ RSpec.describe AnswerPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, courseware_update: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, courseware_update: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -138,7 +138,7 @@ RSpec.describe AnswerPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, courseware_delete: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, courseware_delete: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -171,7 +171,7 @@ RSpec.describe AnswerPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, courseware_export: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, courseware_export: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -204,7 +204,7 @@ RSpec.describe AnswerPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, courseware_history: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, courseware_history: true))
       end
       permission_list.each do |policy, value|
         if value

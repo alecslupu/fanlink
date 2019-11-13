@@ -71,7 +71,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, reward_read: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_read: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -104,7 +104,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, reward_update: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_update: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -138,7 +138,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, reward_delete: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_delete: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -172,7 +172,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, reward_export: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_export: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -205,7 +205,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
     }
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, reward_history: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_history: true))
       end
 
       permission_list.each do |policy, value|

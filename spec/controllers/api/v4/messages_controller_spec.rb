@@ -133,7 +133,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
     end
 
     it "returns all the room's pinned messages after the given one in the correct order" do
-      person = create(:person, role: :admin, pin_messages_from: true)
+      person = create(:admin_user, pin_messages_from: true)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         room = create(:room, status: :active, public: true)
@@ -158,7 +158,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
     end
 
     it "returns all the room's pinned messages before the given one" do
-      person = create(:person, role: :admin, pin_messages_from: true)
+      person = create(:admin_user, pin_messages_from: true)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         room = create(:room, status: :active, public: true)

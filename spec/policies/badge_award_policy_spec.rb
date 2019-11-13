@@ -71,7 +71,7 @@ RSpec.describe BadgeAwardPolicy, type: :policy do
     }
 
     before :each do
-      allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, badge_read: true))
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, badge_read: true))
     end
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -104,7 +104,7 @@ RSpec.describe BadgeAwardPolicy, type: :policy do
     }
 
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, badge_update: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, badge_update: true))
       end
 
     describe "permissions" do
@@ -138,7 +138,7 @@ RSpec.describe BadgeAwardPolicy, type: :policy do
     }
 
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, badge_delete: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, badge_delete: true))
       end
 
     describe "permissions" do
@@ -172,7 +172,7 @@ RSpec.describe BadgeAwardPolicy, type: :policy do
     }
 
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, badge_export: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, badge_export: true))
       end
 
     describe "permissions" do
@@ -206,7 +206,7 @@ RSpec.describe BadgeAwardPolicy, type: :policy do
     }
 
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:individual_access).and_return(build(:portal_access, badge_history: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, badge_history: true))
       end
 
     describe "permissions" do

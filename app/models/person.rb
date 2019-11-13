@@ -383,10 +383,10 @@ class Person < ApplicationRecord
   def permissions
     1
   end
-
-  def roles_for_select
-    (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
-  end
+  #
+  # def roles_for_select
+  #   (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
+  # end
 
   def some_admin?
     !normal?
@@ -402,6 +402,18 @@ class Person < ApplicationRecord
 
   def flush_cache
     Rails.cache.delete([self.class.name, id])
+  end
+
+  def full_permission_list
+    assigned_role.summarize.select { |_, v| v }.keys + individual_access.summarize.select { |_, v| v }.keys
+  end
+
+  def individual_access
+    portal_access || build_portal_access
+  end
+
+  def assigned_role
+    role || build_role
   end
 
   private
