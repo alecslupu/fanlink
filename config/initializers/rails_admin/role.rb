@@ -11,7 +11,11 @@ RailsAdmin.config do |config|
       Role.flag_columns.each do |column|
         group column do
           Role.new.as_flag_collection(column).collect(&:first).each do |flag|
-            field flag, :boolean
+            field flag, :boolean do
+              visible do
+                bindings[:view]._current_user.full_permission_list.include?(flag)
+              end
+            end
           end
         end
       end

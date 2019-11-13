@@ -36,7 +36,6 @@ class Role < ApplicationRecord
     internal_name
   end
 
-
   %w(post event merchandise user badge reward quest beacon reporting interest root).each do |field|
     has_flags 1 => "#{field}_read".to_sym,
               2 => "#{field}_update".to_sym,
