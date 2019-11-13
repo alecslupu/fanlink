@@ -7,9 +7,9 @@ RailsAdmin.config do |config|
 
     configure :level_earned do
     end
-
     configure :password do
     end
+
     list do
       field :username do
         column_width 150
@@ -46,19 +46,10 @@ RailsAdmin.config do |config|
       end
     end
     show do
-      field :id do
-      end
-      field :username do
-      end
-      field :email do
-      end
-      field :name do
-      end
-      field :picture do
-      end
+      fields :id, :username, :email, :name, :picture
       field :role do
         visible do
-          bindings[:view]._current_user.role == "super_admin"
+          bindings[:view]._current_user.super_admin?
         end
       end
 
@@ -126,14 +117,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      field :username do
-      end
-      field :email do
-      end
-      field :name do
-      end
-      field :picture do
-      end
+      fields :username, :email, :name, :picture
       field :role do
         visible do
           bindings[:view]._current_user.super_admin?
@@ -171,10 +155,7 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client?
         end
       end
-      field :authorized do
-      end
-      field :password do
-      end
+      fields :authorized, :password
       field :designation, :translated do
         hide do
           bindings[:view]._current_user.client?

@@ -135,6 +135,7 @@ class Person < ApplicationRecord
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
+  before_validation :assign_role
 
   after_commit :flush_cache
 
@@ -419,17 +420,26 @@ class Person < ApplicationRecord
   def assigned_role
     role || build_role
   end
+  before_validation :assign_role
+
+  def assign_role
+    self.role = Role.where(internal_name: "normal").first if role_id.nil?
+  end
+
+  def normal?
+    %w[normal].include?(assigned_role.internal_name)
+  end
 
   def super_admin?
-    %w[root super_admin].include?(assigned_role)
+    %w[root super_admin].include?(assigned_role.internal_name)
   end
 
   def client?
-    %w[client].include?(assigned_role)
+    %w[client].include?(assigned_role.internal_name)
   end
 
   def some_admin?
-    %w[staff admin super_admin].include?(assigned_role)
+    %w[staff admin super_admin].include?(assigned_role.internal_name)
   end
 
   private
