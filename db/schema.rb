@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191108161909) do
+ActiveRecord::Schema.define(version: 20191113222534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -550,8 +550,8 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -730,6 +730,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.integer "trivia", default: 0, null: false
     t.integer "admin"
     t.integer "root", default: 0
+    t.integer "portal_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -1058,6 +1059,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.integer "admin", default: 0, null: false
     t.integer "root", default: 0, null: false
     t.integer "user", default: 0, null: false
+    t.integer "portal_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|

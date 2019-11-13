@@ -430,6 +430,10 @@ class Person < ApplicationRecord
     %w[normal].include?(assigned_role.internal_name)
   end
 
+  def root?
+    %w[root].include?(assigned_role.internal_name)
+  end
+
   def super_admin?
     %w[root super_admin].include?(assigned_role.internal_name)
   end
