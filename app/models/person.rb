@@ -443,7 +443,7 @@ class Person < ApplicationRecord
   end
 
   def some_admin?
-    %w[staff admin super_admin].include?(assigned_role.internal_name)
+    !normal?
   end
 
   private
