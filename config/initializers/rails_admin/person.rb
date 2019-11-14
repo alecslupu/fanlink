@@ -181,6 +181,34 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client?
         end
       end
+      field :assignees do
+        inline_add do
+          false
+        end
+        visible do
+          bindings[:object].client?
+        end
+        associated_collection_scope do
+          normal_role = Role.normals.first
+          Proc.new { |scope|
+            scope.where(role_id: normal_role.try(:id).to_i  )
+          }
+        end
+      end
+      field :assigners do
+        inline_add do
+          false
+        end
+        hide do
+          bindings[:object].client?
+        end
+        associated_collection_scope do
+          client_role = Role.clients.first
+          Proc.new { |scope|
+            scope.where(role_id: client_role.try(:id).to_i )
+          }
+        end
+      end
     end
 
 

@@ -507,7 +507,7 @@ class Person < ApplicationRecord
   def client_role_changing
     if self.role_id_changed?
       previous_role = Role.where(id: self.role_id_was).first
-      errors.add(:base, "You cannot change the 'client' role") if previous_role == "client"
+      errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == "client"
     end
     #
     # if self.role_was == 'client' && self.role != 'client'
