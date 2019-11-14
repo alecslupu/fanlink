@@ -132,6 +132,13 @@ RailsAdmin.config do |config|
 
       fields :username, :email, :name, :picture
       field :role do
+        def render
+          bindings[:view].render :partial => 'rails_admin/main/client_role_warning', locals: {
+            field: self, form: bindings[:form] ,
+            client_id: Role.where(internal_name: 'client').first.try(:id)
+          }
+        end
+
         visible do
           bindings[:view]._current_user.super_admin?
         end
@@ -172,11 +179,6 @@ RailsAdmin.config do |config|
       field :designation, :translated do
         hide do
           bindings[:view]._current_user.client?
-        end
-      end
-      field :warning do
-        def render
-          bindings[:view].render :partial => 'rails_admin/main/client_role_warning'
         end
       end
     end
