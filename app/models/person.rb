@@ -146,7 +146,7 @@ class Person < ApplicationRecord
 
   after_commit :flush_cache
 
-  # scope :username_filter, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
+  scope :username_filter_courseware, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
   scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }

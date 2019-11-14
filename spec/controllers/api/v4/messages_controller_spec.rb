@@ -2,6 +2,9 @@ require "rails_helper"
 
 RSpec.describe Api::V4::MessagesController, type: :controller do
   describe "GET index" do
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     it 'returns all the messages with the attached audio' do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
@@ -17,6 +20,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
           body: "this is my body",
           audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
         )
+
         get :index,
           params: {
             room_id: private_room.id,
@@ -240,6 +244,10 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
 
   # TODO: auto-generated
   describe "POST create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+      allow_any_instance_of(Room).to receive(:increment_message_counters).and_return(true)
+    end
     it "creates a new message in a public room updates the timestamp" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -291,6 +299,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         login_as(person)
         body = "Do you like my body?"
         room = create(:public_active_room, )
+
         post :create,
         params: {
           room_id: room.id,
@@ -388,6 +397,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         room = create(:room, public: true, status: :active, last_message_timestamp: 1)
         msg = create(:message, room: room)
 
+        allow_any_instance_of(Message).to receive(:delete_real_time).and_return(true)
         expect {
           patch :update, params: { id: msg.id, message: { hidden: true } }
         }.not_to change { room.last_message_timestamp }
@@ -396,32 +406,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
   end
 
   describe "list" do
-    it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
-      ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
-        from = Date.today - 1.day
-        to = Date.today
-        private_room = create(:room, public: false, status: :active)
-        private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          created_at: to,
-          room: private_room,
-          body: "this is my body",
-          picture: fixture_file_upload('images/better.png', 'image/png')
-        )
-        get :list
-
-        expect(response).to be_successful
-        expect(json['messages'].size).to eq(3)
-        json['messages'].each do |message|
-          expect(message['picture_url']).not_to eq(nil)
-        end
-      end
-    end
-
     it 'returns all the messages with the attached audio' do
       person = create(:person, role: :admin)
       ActsAsTenant.with_tenant(person.product) do
@@ -430,13 +414,14 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          room: private_room,
-          body: "this is my body",
-          audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
-        )
+
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               room: private_room,
+                                                               body: "this is my body",
+                                                               audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+                                                             )
 
         get :list
 
@@ -447,6 +432,33 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         end
       end
     end
+    it 'returns all the messages with the attached image' do
+      person = create(:person, role: :admin)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        from = Date.today - 1.day
+        to = Date.today
+        private_room = create(:room, public: false, status: :active)
+        private_room.members << person << private_room.created_by
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               created_at: to,
+                                                               room: private_room,
+                                                               body: "this is my body sss",
+                                                               picture: fixture_file_upload('images/better.png', 'image/png')
+                                                             )
+
+        get :list
+
+        expect(response).to be_successful
+        expect(json['messages'].size).to eq(3)
+        json['messages'].each do |message|
+          expect(message['picture_url']).not_to eq(nil)
+        end
+      end
+    end
+
   end
 
   # TODO: auto-generated

@@ -62,14 +62,17 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  # gem 'elastic-apm'
+  if ENV['HEROKU']
+    gem 'newrelic_rpm'
+  else
+    gem 'elastic-apm', '~> 3.1.0'
+  end
 end
 
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
   gem "bullet", "~>6.0.2"
-  gem "httplog"
 end
 
 group :development, :test do
@@ -79,12 +82,14 @@ group :development, :test do
   gem "pry-byebug", "~>3.7.0"
   gem "dotenv-rails", "~>2.7.5"
   gem "faker", "~>2.1.2"
-  gem "rspec-rails"
+  gem "rspec-mocks", "~> 3.9.0"
+  gem "rspec-rails", '~> 3.9.0'
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
+  gem "httplog"
 
-  gem 'rubocop', '~> 0.74.0', require: false
+  gem 'rubocop', '~> 0.76.0', require: false
   # gem "rubocop-rails_config"
   gem 'rubocop-rails'
   gem "rubocop-rspec"
@@ -94,7 +99,6 @@ end
 group :development do
   gem "better_errors", "~>2.5.1"
   gem "binding_of_caller"
-  gem "daemons", "~>1.3.1"
   gem "gettext", ">=3.0.2", require: false
 
   if ENV['RAILS52']
@@ -117,7 +121,6 @@ group :development do
   gem "awesome_print", require: "ap"
   #
   gem "memory_profiler"
-  gem "delayed_job_web"
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "launchy"
   gem "guard-rspec"
@@ -127,14 +130,16 @@ group :development do
   gem "guard-rubycritic"
 
   gem "capistrano", require: false
-  gem 'capistrano-passenger', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
   gem 'slackistrano', require: false
+  gem 'capistrano3-puma' , require: false
 end
 
 group :test do
   gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
-  gem "simplecov", "~>0.17.0", require: false
+  gem "simplecov", "~>0.17", require: false
   gem 'simplecov-console', require: false
   gem "timecop"
   gem "webmock", "~>3.6.2"
@@ -142,21 +147,20 @@ group :test do
   gem "wisper-rspec", require: false
   gem "json_schemer", "~>0.2.5"
   gem "turnip", require: false
-  gem 'rspec-retry'
 end
 
 # greg is saying that is not suporting V Rails 5.2.
 gem "acts_as_tenant" # , git: "https://github.com/mark100net/acts_as_tenant.git" #they are still using before_filter :/
 gem "acts_as_api"
-
-gem "administrate", "~> 0.11.0" # git: "https://github.com/thoughtbot/administrate.git"
-gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
-gem "administrate-field-hidden", "~> 0.0.3"
-gem "administrate-field-belongs_to_search"
-# For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
-# I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
-# 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
-gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
+#
+# gem "administrate", "~> 0.11.0" # git: "https://github.com/thoughtbot/administrate.git"
+# gem "administrate-field-enum", git: "https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git", branch: "collection-member-fix"
+# gem "administrate-field-hidden", "~> 0.0.3"
+# gem "administrate-field-belongs_to_search"
+# # For the below, I added a PR on the gem: https://github.com/picandocodigo/administrate-field-paperclip/pull/10
+# # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
+# # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
+# gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
 gem 'awesome_nested_set'
@@ -169,6 +173,8 @@ gem "api-pagination"
 gem "attribute_normalizer"
 gem "aws-sdk"
 gem "countries"
+gem "daemons", "~>1.3.1"
+gem "delayed_job_web"
 gem "delayed_job_active_record"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
@@ -234,6 +240,5 @@ gem "rswag-api"
 gem "rswag-ui"
 
 gem "psych"
-gem 'parallel_tests', group: [:development, :test]
 #for page caching
 gem "actionpack-page_caching"

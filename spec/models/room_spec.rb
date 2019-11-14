@@ -24,10 +24,6 @@ RSpec.describe Room, type: :model do
       it "#members" do
         should have_many(:members).through(:room_memberships)
       end
-
-      it "#messages" do
-        should have_many(:messages).dependent(:restrict_with_error)
-      end
     end
   end
 

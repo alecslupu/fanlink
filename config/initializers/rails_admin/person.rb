@@ -15,7 +15,7 @@ RailsAdmin.config do |config|
         column_width 150
       end
       field :email do
-        column_width 200
+        column_width 175
       end
       field :name do
         column_width 100
@@ -28,6 +28,9 @@ RailsAdmin.config do |config|
       end
       field :created_at do
         column_width 100
+      end
+      field :authorized do
+        column_width 20
       end
       field :notification_device_ids do
         column_width 100
@@ -60,6 +63,7 @@ RailsAdmin.config do |config|
              :chat_banned,
              :product_account,
              :recommended,
+             :authorized,
              :facebookid,
              :facebook_picture_url,
              :created_at,
@@ -80,6 +84,7 @@ RailsAdmin.config do |config|
              :chat_banned,
              :product_account,
              :recommended,
+             :authorized,
              :password
       field :designation, :translated
     end

@@ -4,6 +4,8 @@ require "spec_helper"
 
 RSpec.describe PortalAccessPolicy, type: :policy do
   let(:master_class) { PortalAccess.new }
+  subject { described_class.new(build(:person), master_class) }
+
   permission_list = {
     index: false,
     show: false,
@@ -40,7 +42,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
     end
   end
   context "logged in user with no permission" do
-    subject { described_class.new(create(:person), master_class) }
+    subject { described_class.new(build(:person), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -54,7 +56,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
     end
   end
   context "logged in admin with no permission" do
-    subject { described_class.new(create(:admin_user), master_class) }
+    subject { described_class.new(build(:admin_user), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -243,7 +245,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
 
   context "Scope" do
     it "should only return the messages from public rooms" do
-      person = create(:person)
+      person = build(:person)
       current_product = person.product
       another_product = create(:product)
 

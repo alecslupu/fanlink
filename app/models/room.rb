@@ -63,7 +63,12 @@ class Room < ApplicationRecord
 
   has_image_called :picture
 
-  has_many :messages, dependent: :restrict_with_error
+  if Rails.env.staging?
+    has_many :messages, dependent: :destroy
+  else
+    has_many :messages, dependent: :restrict_with_error
+  end
+
   has_many :pin_messages, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
 
