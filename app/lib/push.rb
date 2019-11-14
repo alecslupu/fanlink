@@ -74,7 +74,7 @@ module Push
 private
 
   def push_client
-    @fbcm ||= FCM.new("AAAAcXURomg:APA91bE0D-DwHG06UMR1nCjDzfapGL3hp5_taU7Zq3Bx-f9YJCmjkw8HqkscIMp2w5sGXpeSnu9aJ-R7Bo7c-0TBqurLxOBYNj9TrlVxYQ5Manj_JJv7OkypqtGKXrFEdmWELjVA1FSi")
+    @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
   end
   module_function :push_client
 
