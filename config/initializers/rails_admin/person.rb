@@ -35,6 +35,16 @@ RailsAdmin.config do |config|
           bindings[:view].link_to "#{ bindings[:object].notification_device_ids.size} notification device ids", bindings[:view].rails_admin.show_path('person', bindings[:object].id)
         end
       end
+      field :no_of_assignees do
+        pretty_value do
+          bindings[:object].assignees.size
+        end
+      end
+      field :no_of_clients do
+        pretty_value do
+          bindings[:object].assigners.size
+        end
+      end
     end
     show do
       fields :id,
