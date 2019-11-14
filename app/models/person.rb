@@ -435,15 +435,19 @@ class Person < ApplicationRecord
   end
 
   def super_admin?
-    %w[root super_admin].include?(assigned_role.internal_name)
+    %w[super_admin].include?(assigned_role.internal_name) || root?
   end
 
   def client?
     %w[client].include?(assigned_role.internal_name)
   end
 
+  def client_portal?
+    %w[client_portal].include?(assigned_role.internal_name)
+  end
+
   def some_admin?
-    !normal?
+    super_admin? || client_portal?
   end
 
   private

@@ -57,10 +57,6 @@ module Admin
 
     protected
 
-    def some_admin?
-      current_user.try(:some_admin?)
-    end
-
     def not_authenticated
       logout
       if params[:product_internal_name].present?
@@ -77,7 +73,7 @@ module Admin
     end
 
     def check_admin
-      not_authenticated unless current_user.super_admin? || some_admin?
+      not_authenticated if %w[normal client].include?(current_user.assigned_role.internal_name)
     end
   end
 end
