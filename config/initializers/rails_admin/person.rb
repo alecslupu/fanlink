@@ -46,6 +46,16 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.some_admin?
         end
       end
+      field :no_of_assignees do
+        pretty_value do
+          bindings[:object].assignees.size
+        end
+      end
+      field :no_of_clients do
+        pretty_value do
+          bindings[:object].assigners.size
+        end
+      end
     end
     show do
       fields :id, :username, :email, :name, :picture
@@ -119,6 +129,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
+
       fields :username, :email, :name, :picture
       field :role do
         visible do
@@ -163,7 +174,14 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client?
         end
       end
+      field :warning do
+        def render
+          bindings[:view].render :partial => 'rails_admin/main/client_role_warning'
+        end
+      end
     end
+
+
 
     export do
       fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender

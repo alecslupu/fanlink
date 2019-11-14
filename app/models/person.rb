@@ -123,11 +123,15 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+
+
   has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
   has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
 
   has_many :assigners, through: :hired_people, source: :client
   has_many :assignees, through: :clients, source: :person
+  has_one :client_info, foreign_key: "client_id", dependent: :destroy
+
 
   has_many :notifications, dependent: :destroy
 
@@ -136,6 +140,8 @@ class Person < ApplicationRecord
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
   before_validation :assign_role
+
+  after_save :generate_unique_client_code, if: -> { self.role == 'client' && self.attribute_before_last_save(:role) != 'client' }
 
   after_commit :flush_cache
 
@@ -219,6 +225,10 @@ class Person < ApplicationRecord
 
   def send_certificate_email(certificate_id, email)
     Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
+  end
+
+  def send_assignee_certificate_email(person_certificate, assignee_id, email)
+    Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate.id, email))
   end
 
   def send_course_attachment_email(certcourse_page)
@@ -503,5 +513,13 @@ class Person < ApplicationRecord
     # if self.role_was == 'client' && self.role != 'client'
     #   self.errors[:base] <<
     # end
+  end
+
+  def generate_unique_client_code
+    code = SecureRandom.hex(4)[0..-2]
+    while code.in?(ClientInfo.all.map(&:code))
+      code = SecureRandom.hex(4)[0..-2]
+    end
+    ClientInfo.create(client_id: self.id, code: code)
   end
 end

@@ -1,15 +1,12 @@
-class Api::V4::Courseware::Client::PeopleController < ApiController
+class Api::V4::Courseware::Client::PeopleController < Api::V4::Courseware::Client::BaseController
+  # frozen_string_literal: true
+
   def index
-    if current_user.client?
-      id = Person.last.nil? ? 1 : Person.last.id
-      if params[:username_filter].present?
-        @assignees = paginate (Person.all.username_filter_courseware(params[:username_filter]).order(:username))
-      else
-        @assignees = paginate (Person.all.order(:username))
-      end
-      return_the @assignees, handler: :jb
+    if params[:username_filter].present?
+      @assignees = paginate (current_user.assignees.username_filter(params[:username_filter], current_user))
     else
-      render_401 _("You must have 'client' role to access this feature.")
+      @assignees = paginate (current_user.assignees)
     end
+    return_the @assignees, handler: :jb
   end
 end

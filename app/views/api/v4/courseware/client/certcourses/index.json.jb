@@ -1,17 +1,8 @@
 json = {}
 
 json[:certcourses] = @certcourses.map do |certcourse|
-  cc = render partial: "api/v4/certcourses/app", locals: { certcourse: certcourse, person: @current_user }, handlers: "jb"
-  cc[:page_count] = rand(50) + 10
-  cc[:last_completed_page_id] = rand(20)
-  cc[:last_completed_page_order] = cc[:page_count] -rand(12) - 1
-  cc[:last_completed_page_order] = nil if cc[:description] == "Not started"
-  cc[:last_completed_page_id] = nil if cc[:description] == "Not started"
-  cc[:is_started] = true unless cc[:description] == "Not started"
-  if cc[:description] == "Completed"
-    cc[:last_completed_page_order] = cc[:page_count]
-    cc[:is_completed] = true
-  end
+  cc = render partial: "api/v4/certcourses/app", locals: { certcourse: certcourse, person: @assignee, certificate: @certificate }, handlers: "jb"
+  cc[:last_completed_page_order] = CertcoursePage.where(id: cc[:last_completed_page_id]).first&.certcourse_page_order
   cc
 end
 

@@ -268,7 +268,7 @@ JkoApi.routes self do
     namespace :courseware do
       namespace :client do
         resources :people, only: [:index] do
-          resources :certificates, only: [:index, :show] do
+          resources :certificates, only: [:index] do
             member do
               post 'send_email'
               get 'download'
