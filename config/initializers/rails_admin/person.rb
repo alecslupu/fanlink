@@ -73,8 +73,15 @@ RailsAdmin.config do |config|
              :email,
              :name,
              :picture,
-             :role,
-             :do_not_message_me,
+             :role
+
+      field :warning do
+        def render
+          bindings[:view].render :partial => 'rails_admin/main/warning', locals: { form: bindings[:form], role: bindings[:object].role  }
+        end
+      end
+
+      fields :do_not_message_me,
              :pin_messages_from,
              :auto_follow,
              :chat_banned,
