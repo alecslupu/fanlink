@@ -17,7 +17,7 @@
 #  name                   :jsonb            not null
 #  description            :jsonb            not null
 #  order                  :integer          default(0), not null
-#  last_message_timestamp :bigint(8)
+#  last_message_timestamp :bigint(8)        default(0)
 #
 
 FactoryBot.define do
