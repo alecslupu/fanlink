@@ -157,12 +157,19 @@ RSpec.describe Person, type: :model do
       it { should have_many(:following).through(:active_followings) }
       it { should have_many(:passive_followings) }
       it { should have_many(:followers).through(:passive_followings) }
+
+      it { should have_many(:hired_people) }
+      it { should have_many(:clients) }
+
+      it { should have_many(:assigners).through(:hired_people) }
+      it { should have_many(:assignees).through(:clients) }
       # it { should have_many(:relationships) }
     end
 
     describe "#has_one" do
       it "should verify associations" do
         should have_one(:portal_access)
+        should have_one(:client_info)
 
       end
     end
@@ -720,6 +727,27 @@ RSpec.describe Person, type: :model do
     it "returns an existing role " do
       to_test = create(:admin_user).reload.assigned_role
       expect(to_test).to eq(Role.last)
+    end
+  end
+  describe "#send_assignee_certificate_email" do
+    it "enqueues a certificate email" do
+      expect(Delayed::Job.count).to eq 0
+      pc = create(:person_certificate)
+      pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
+      expect(Delayed::Job.count).to eq 1
+    end
+  end
+
+  describe "#generate_unique_client_code" do
+    it "generates an uniqe code for a new user with client role" do
+      expect { create(:person, role: :client) }.to change { ClientInfo.count }.by(1)
+    end
+
+    it "generates the unique code when a user's role is changed to client" do
+      person = create(:person, role: :normal)
+      expect(person.client_info.present?).to eq(false)
+
+      expect { person.update(role: :client) }.to change { ClientInfo.count }.by(1)
     end
   end
 end

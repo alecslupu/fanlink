@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20191113222534) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -225,6 +225,15 @@ ActiveRecord::Schema.define(version: 20191113222534) do
     t.integer "product_id", null: false
     t.index ["product_id"], name: "idx_certificates_product"
     t.index ["room_id"], name: "idx_certificates_room"
+  end
+
+  create_table "client_infos", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_infos_on_client_id"
+    t.index ["code"], name: "index_client_infos_on_code"
   end
 
   create_table "client_to_people", force: :cascade do |t|
@@ -550,8 +559,8 @@ ActiveRecord::Schema.define(version: 20191113222534) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.boolean "recommended", default: false, null: false
     t.jsonb "designation", default: {}, null: false
+    t.boolean "recommended", default: false, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"

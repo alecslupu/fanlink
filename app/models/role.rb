@@ -31,6 +31,8 @@ class Role < ApplicationRecord
   has_many :people, inverse_of: :role
   validates :internal_name, uniqueness: true
 
+  scope :clients, -> { where(internal_name: 'client') }
+  scope :normals, -> { where(internal_name: 'normal') }
   has_paper_trail
 
   def to_s

@@ -46,6 +46,16 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.some_admin?
         end
       end
+      field :no_of_assignees do
+        pretty_value do
+          bindings[:object].assignees.size
+        end
+      end
+      field :no_of_clients do
+        pretty_value do
+          bindings[:object].assigners.size
+        end
+      end
     end
     show do
       fields :id, :username, :email, :name, :picture
@@ -119,8 +129,16 @@ RailsAdmin.config do |config|
     end
 
     edit do
+
       fields :username, :email, :name, :picture
       field :role do
+        def render
+          bindings[:view].render :partial => 'rails_admin/main/client_role_warning', locals: {
+            field: self, form: bindings[:form] ,
+            client_id: Role.where(internal_name: 'client').first.try(:id)
+          }
+        end
+
         visible do
           bindings[:view]._current_user.super_admin?
         end
@@ -163,7 +181,37 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client?
         end
       end
+      field :assignees do
+        inline_add do
+          false
+        end
+        visible do
+          bindings[:object].client?
+        end
+        associated_collection_scope do
+          normal_role = Role.normals.first
+          Proc.new { |scope|
+            scope.where(role_id: normal_role.try(:id).to_i  )
+          }
+        end
+      end
+      field :assigners do
+        inline_add do
+          false
+        end
+        hide do
+          bindings[:object].client?
+        end
+        associated_collection_scope do
+          client_role = Role.clients.first
+          Proc.new { |scope|
+            scope.where(role_id: client_role.try(:id).to_i )
+          }
+        end
+      end
     end
+
+
 
     export do
       fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
