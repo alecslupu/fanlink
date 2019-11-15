@@ -105,8 +105,9 @@ private
       resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
       Rails.logger.error("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
-      Rails.logger.error("1st try: #{resp[:body][:not_registered_ids]}")
-      Rails.logger.error("2nd try: #{resp[:not_registered_ids]}")
+      delete_not_registered_device_ids(resp[:not_registered_ids])
+      Rails.logger.error(resp[:not_registered_ids])
+      Rails.logger.debug(resp[:not_registered_ids])
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -121,13 +122,18 @@ private
       resp = push_client.send_to_topic(topic, notification: { body: msg })
       Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
       Rails.logger.error("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
-      Rails.logger.error("1st try: #{resp[:body][:not_registered_ids]}")
-      Rails.logger.error("2nd try: #{resp[:not_registered_ids]}")
+      delete_not_registered_device_ids(resp[:not_registered_ids])
+      Rails.logger.error(resp[:not_registered_ids])
+      Rails.logger.debug(resp[:not_registered_ids])
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
       retry if (retries += 1) < 2
     end
     resp[:status_code] == 200
+  end
+
+  def delete_not_registered_device_ids(ids)
+    NotificationDeviceId.where(id: ids).destroy_all
   end
 end
