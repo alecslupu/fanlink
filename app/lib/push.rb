@@ -104,6 +104,8 @@ private
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
       resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
+      Rails.logger.error("1st try: #{resp[:body][:not_registered_ids]}")
+      Rails.logger.error("2nd try: #{resp[:not_registered_ids]}")
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -117,8 +119,6 @@ private
       Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
       resp = push_client.send_to_topic(topic, notification: { body: msg })
       Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
-      Rails.logger.error("1st try: #{resp[:body][:not_registered_ids]}")
-      Rails.logger.error("2nd try: #{resp[:not_registered_ids]}")
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
