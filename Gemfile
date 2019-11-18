@@ -186,7 +186,6 @@ gem "goldiloader"
 gem "google_places"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
-gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
