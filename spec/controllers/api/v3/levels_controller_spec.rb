@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Api::V3::LevelsController, type: :controller do
   describe "GET index" do
     it 'returns all levels with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(

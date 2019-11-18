@@ -140,7 +140,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
   # TODO: auto-generated
   describe "PUT update" do
     it "updates a person's picture" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 

@@ -17,23 +17,9 @@ RSpec.describe Trivia::SubscriberPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    subject { described_class.new(nil, master_class) }
+    subject { described_class.new(build(:person), master_class) }
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
-    end
-  end
-  context "logged out user" do
-    subject { described_class.new(nil, master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        it { is_expected.to forbid_action(policy) }
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("trivia") }
-      it { expect(subject.send(:super_admin?)).to be_nil }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
     end
   end
   context "logged in user with no permission" do
@@ -45,6 +31,7 @@ RSpec.describe Trivia::SubscriberPolicy, type: :policy do
       end
     end
     describe "protected methods" do
+      it { expect(subject.send(:module_name)).to eq("trivia") }
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }

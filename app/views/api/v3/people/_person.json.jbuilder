@@ -3,7 +3,7 @@ json.cache! ["v3", person] do
   json.(person, :username, :name, :gender, :city, :country_code, :birthdate, :biography, :picture_url, :product_account, :recommended, :chat_banned, :tester, :terminated, :terminated_reason)
   json.designation person.designation(@lang)
 
-  json.role person.role
+  json.role person.role.to_s
   json.do_not_message_me person.do_not_message_me
   json.pin_messages_from person.pin_messages_from
   json.auto_follow person.auto_follow

@@ -627,7 +627,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     end
 
     it "updates a person's picture" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 

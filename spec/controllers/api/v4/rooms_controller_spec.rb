@@ -115,7 +115,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
   describe "POST create" do
 
     it 'should attach picture to public rooms when provided' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -195,7 +195,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
     end
 
    it 'should not set public room timestamp' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         current_timestamp = DateTime.now.to_i
@@ -216,7 +216,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
 
 
    it 'should set private room timestamp' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         current_timestamp = DateTime.now.to_i
@@ -237,7 +237,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
 
   describe 'PUT update' do
     it "should let an admin update a public room's picture" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active)

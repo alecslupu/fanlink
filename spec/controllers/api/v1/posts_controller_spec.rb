@@ -114,7 +114,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     end
 
     it "creates a post with attachments when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -323,7 +323,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     end
 
     it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         person2 = create(:person)
         login_as(person)

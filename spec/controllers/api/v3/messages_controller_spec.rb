@@ -53,7 +53,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
       allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
     end
     it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
@@ -82,7 +82,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
       end
     end
     it 'returns all the messages with the attached audio' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
@@ -113,7 +113,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
 
   describe "show" do
     it 'returns the message with the attached picture' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         private_room = create(:room, public: false, status: :active)
@@ -132,7 +132,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
     end
 
     it 'returns the message with the attached audio' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         private_room = create(:room, public: false, status: :active)
@@ -153,7 +153,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
 
   describe "list" do
     it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
