@@ -85,11 +85,12 @@ private
   def do_push(tokens, title, body, type, data = {})
     unless tokens.empty?
       options = {}
-      options[:data] = data
-      options[:data][:title] = title
-      options[:data][:body] = body
-      options[:data][:sound] = "default"
+      options[:notification] = {}
+      options[:notification][:title] = title
+      options[:notification][:body] = body
+      options[:notification][:sound] = "default"
       options[:content_available] = true
+      options[:data] = data
       options[:data][:notification_type] = type
       options[:data][:priority] = "high"
       push_with_retry(options, tokens)
