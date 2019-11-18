@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191108161909) do
+ActiveRecord::Schema.define(version: 20191118170149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -517,6 +517,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "device_type", default: 0, null: false
+    t.boolean "not_registered", default: false, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
   end
@@ -550,7 +551,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.boolean "do_not_message_me", default: false, null: false
     t.boolean "pin_messages_from", default: false, null: false
     t.boolean "auto_follow", default: false, null: false
-    t.integer "role", default: 0, null: false
+    t.integer "old_role", default: 0, null: false
     t.text "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
@@ -568,6 +569,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.boolean "authorized", default: true, null: false
+    t.bigint "role_id"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
@@ -575,6 +577,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username"], name: "index_people_on_product_id_and_username"
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
+    t.index ["role_id"], name: "index_people_on_role_id"
   end
 
   create_table "permission_policies", force: :cascade do |t|
@@ -733,6 +736,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
     t.integer "trivia", default: 0, null: false
     t.integer "admin"
     t.integer "root", default: 0
+    t.integer "portal_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -1043,9 +1047,24 @@ ActiveRecord::Schema.define(version: 20191108161909) do
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "internal_name", null: false
-    t.integer "role_enum", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post", default: 0, null: false
+    t.integer "chat", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "beacon", default: 0, null: false
+    t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
+    t.integer "admin", default: 0, null: false
+    t.integer "root", default: 0, null: false
+    t.integer "user", default: 0, null: false
+    t.integer "portal_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -1411,6 +1430,7 @@ ActiveRecord::Schema.define(version: 20191108161909) do
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "notifications", "people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "people", "roles"
   add_foreign_key "person_certcourses", "certcourses", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "person_certificates", "certificates", name: "fk_person_certificates_certificate"
