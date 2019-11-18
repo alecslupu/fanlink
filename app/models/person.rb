@@ -132,19 +132,10 @@ class Person < ApplicationRecord
   # has_many :assignees, through: :clients, source: :person
 
   has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
+  has_many :designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "client_id", dependent: :destroy
+  has_many :assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "client_id", dependent: :destroy
+
   has_many :assigners, through: :hired_people, source: :client
-
-  has_many :designated_people, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "client_id", dependent: :destroy
-  has_many :assigned_people, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "client_id", dependent: :destroy
-
-  # has_many :designated_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy do
-  #   # :add_designation_and_status
-  # end
-  # has_many :assigned_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy do
-  #   # :add_assignation_and_status
-  # end
-
-
   has_many :designated_assignees, through: :designated_people, source: :person
   has_many :assignees, through: :assigned_people, source: :person
 
