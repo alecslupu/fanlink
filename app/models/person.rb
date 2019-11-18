@@ -130,6 +130,20 @@ class Person < ApplicationRecord
 
   has_many :assigners, through: :hired_people, source: :client
   has_many :assignees, through: :clients, source: :person
+
+  # has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
+
+  # has_many :designated_people, class_name:  "Courseware::Client::ClientToPerson", before_add: :add_designation_and_status, foreign_key: "client_id", dependent: :destroy
+
+  # has_many :assigned_people, class_name:  "Courseware::Client::ClientToPerson", before_add: :add_assignation_and_status, foreign_key: "client_id", dependent: :destroy
+
+  # # has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
+
+  # has_many :designated_assignees, through: :designated_people, source: :client
+  # has_many :assignees, through: :assigned_people, source: :client
+
+  # has_many :assigners, through: :hired_people, source: :client
+
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
 
 
@@ -141,7 +155,7 @@ class Person < ApplicationRecord
   before_validation :canonicalize_username, if: :username_changed?
   before_validation :assign_role
 
-  after_save :generate_unique_client_code, if: -> { self.role == 'client' && self.attribute_before_last_save(:role) != 'client' }
+  after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
 
   after_commit :flush_cache
 
@@ -197,6 +211,16 @@ class Person < ApplicationRecord
     StringUtil.search_ify(username)
   end
 
+  # def add_designation_and_status(client_to_person)
+  #     client_to_person.relation_type = :designated
+  #     client_to_person.status = :active
+  # end
+
+  # def add_assignation_and_status(client_to_person)
+  #   binding.pry
+  #     client_to_person.relation_type = :assigned
+  #     client_to_person.status = :active
+  # end
 
   def self.cached_find(id)
     Rails.cache.fetch([name, id]) { find(id) }
@@ -509,10 +533,6 @@ class Person < ApplicationRecord
       previous_role = Role.where(id: self.role_id_was).first
       errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == "client"
     end
-    #
-    # if self.role_was == 'client' && self.role != 'client'
-    #   self.errors[:base] <<
-    # end
   end
 
   def generate_unique_client_code

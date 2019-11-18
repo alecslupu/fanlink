@@ -41,5 +41,10 @@ FactoryBot.define do
       name { 'super_admin' }
       internal_name { 'super_admin' }
     end
+
+    factory :role_client do
+      name { 'client' }
+      internal_name { 'client' }
+    end
   end
 end
