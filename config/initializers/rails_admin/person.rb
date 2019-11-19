@@ -211,7 +211,22 @@ RailsAdmin.config do |config|
         end
       end
 
-      field :assigners do
+      field :assigners_with_assignation do
+        inline_add do
+          false
+        end
+        visible do
+          bindings[:object].normal?
+        end
+        associated_collection_scope do
+          client_role = Role.clients.first
+          Proc.new { |scope|
+            scope.where(role_id: client_role.try(:id).to_i )
+          }
+        end
+      end
+
+      field :assigners_with_designation do
         inline_add do
           false
         end
