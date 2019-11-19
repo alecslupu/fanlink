@@ -1,2 +1,2 @@
-class NotificationDeviceIdPolicy < UserModulePolicy
+class NotificationDeviceIdPolicy < ApplicationPolicy
 end
