@@ -739,15 +739,16 @@ RSpec.describe Person, type: :model do
   end
 
   describe "#generate_unique_client_code" do
+    let(:client_role) { create(:role_client) }
     it "generates an uniqe code for a new user with client role" do
-      expect { create(:person, role: :client) }.to change { ClientInfo.count }.by(1)
+      expect { create(:person, role: client_role) }.to change { ClientInfo.count }.by(1)
     end
 
     it "generates the unique code when a user's role is changed to client" do
-      person = create(:person, role: :normal)
+      person = create(:person, role: create(:role, internal_name: "a role"))
       expect(person.client_info.present?).to eq(false)
 
-      expect { person.update(role: :client) }.to change { ClientInfo.count }.by(1)
+      expect { person.update(role: client_role) }.to change { ClientInfo.count }.by(1)
     end
   end
 end
