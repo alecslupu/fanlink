@@ -42,18 +42,26 @@ RailsAdmin.config do |config|
         pretty_value do
           bindings[:view].link_to "#{ bindings[:object].notification_device_ids.size} notification device ids", bindings[:view].rails_admin.show_path('person', bindings[:object].id)
         end
-        hide do
-          bindings[:view]._current_user.client_portal?
+        visible do
+          bindings[:view]._current_user.super_admin?
         end
       end
       field :no_of_assignees do
+        column_width 20
         pretty_value do
-          bindings[:object].assignees.size
+          bindings[:object].assignees.count
+        end
+        visible do
+          bindings[:view]._current_user.super_admin?
         end
       end
       field :no_of_clients do
+        column_width 20
         pretty_value do
-          bindings[:object].assigners.size
+          bindings[:object].assigners.count
+        end
+        visible do
+          bindings[:view]._current_user.super_admin?
         end
       end
     end
