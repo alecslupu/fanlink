@@ -67,63 +67,63 @@ RailsAdmin.config do |config|
 
       field :designation, :translated do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
 
       field :do_not_message_me do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :pin_messages_from do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
 
       field :auto_follow do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
 
       field :chat_banned do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :product_account do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
 
       field :recommended do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :authorized
       field :facebookid do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :facebook_picture_url do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :created_at
       field :level_earned do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :badges do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
     end
@@ -146,44 +146,47 @@ RailsAdmin.config do |config|
 
       field :do_not_message_me do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :pin_messages_from do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
 
       field :auto_follow do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :chat_banned do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :product_account do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :recommended do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       fields :authorized, :password
       field :designation, :translated do
         hide do
-          bindings[:view]._current_user.client?
+          bindings[:view]._current_user.client_portal?
         end
       end
       field :assignees do
         inline_add do
           false
+        end
+        hide do
+          bindings[:view]._current_user.client_portal?
         end
         visible do
           bindings[:object].client?
@@ -203,6 +206,9 @@ RailsAdmin.config do |config|
         visible do
           bindings[:object].client?
         end
+        hide do
+          bindings[:view]._current_user.client_portal?
+        end
         associated_collection_scope do
           normal_role = Role.normals.first
           Proc.new { |scope|
@@ -217,6 +223,9 @@ RailsAdmin.config do |config|
         end
         visible do
           bindings[:object].normal?
+        end
+        hide do
+          bindings[:view]._current_user.client_portal?
         end
         associated_collection_scope do
           client_role = Role.clients.first
@@ -233,6 +242,9 @@ RailsAdmin.config do |config|
         visible do
           bindings[:object].normal?
         end
+        hide do
+          bindings[:view]._current_user.client_portal?
+        end
         associated_collection_scope do
           client_role = Role.clients.first
           Proc.new { |scope|
@@ -241,8 +253,6 @@ RailsAdmin.config do |config|
         end
       end
     end
-
-
 
     export do
       fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
