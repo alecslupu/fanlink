@@ -53,6 +53,7 @@ module Admin
       else
         @person = Person.new
       end
+      redirect_to(rails_admin.dashboard_path) && return if current_user.present?
     end
 
     protected
