@@ -1,4 +1,4 @@
-class PortalNotificationPolicy < UserModulePolicy
+class PortalNotificationPolicy < ApplicationPolicy
   def attributes_for(action)
     case action
     when :new
@@ -10,5 +10,9 @@ class PortalNotificationPolicy < UserModulePolicy
     else
       {}
     end
+  end
+  protected
+  def module_name
+    "portal_notification"
   end
 end

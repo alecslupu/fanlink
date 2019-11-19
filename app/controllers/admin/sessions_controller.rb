@@ -53,13 +53,10 @@ module Admin
       else
         @person = Person.new
       end
+      redirect_to(rails_admin.dashboard_path) && return if current_user.present?
     end
 
     protected
-
-    def some_admin?
-      current_user.try(:some_admin?)
-    end
 
     def not_authenticated
       logout
@@ -77,7 +74,7 @@ module Admin
     end
 
     def check_admin
-      not_authenticated unless (current_user.super_admin? || some_admin?)
+      not_authenticated if %w[normal client].include?(current_user.assigned_role.internal_name)
     end
   end
 end

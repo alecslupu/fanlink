@@ -39,9 +39,9 @@ By default, it renders:
     </svg>
 
     <div class="app-container">
-      <%= render "navigation" -%>
+      <nav class="navigation" role="navigation"></nav>
       <main class="main-content" role="main">
-        <%= render "flashes" -%>
+        <%= render "admin/sessions/flashes" -%>
         <%= yield %>
       </main>
     </div>

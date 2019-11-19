@@ -21,7 +21,7 @@
 #  do_not_message_me               :boolean          default(FALSE), not null
 #  pin_messages_from               :boolean          default(FALSE), not null
 #  auto_follow                     :boolean          default(FALSE), not null
-#  role                            :integer          default("normal"), not null
+#  old_role                        :integer          default("normal"), not null
 #  reset_password_token            :text
 #  reset_password_token_expires_at :datetime
 #  reset_password_email_sent_at    :datetime
@@ -38,6 +38,8 @@
 #  terminated                      :boolean          default(FALSE)
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
+#  role_id                         :bigint(8)
+#  authorized                      :boolean          default(TRUE), not null
 #
 
 require "faker"
@@ -55,13 +57,18 @@ FactoryBot.define do
     # biography { Faker::Lorem.paragraph(sentence_count: 2)}
     # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
 
+    # role { create(:role_normal) }
 
     factory :recommended_person do
       recommended { true }
     end
 
     factory :admin_user do
-      role { :admin }
+      role { create(:role_admin) }
+    end
+
+    factory :super_admin do
+      role { create(:role_super_admin) }
     end
   end
 end
