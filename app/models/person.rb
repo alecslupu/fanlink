@@ -124,24 +124,13 @@ class Person < ApplicationRecord
   has_many :followers, through: :passive_followings, source: :follower
 
 
+  has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
 
-  # has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
-  # has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
+  has_many :assigned, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
+  has_many :designated, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
 
-  # has_many :assigners, through: :hired_people, source: :client
-  # has_many :assignees, through: :clients, source: :person
-
-  has_many :hired_assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "person_id", dependent: :destroy
-  has_many :hired_designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "person_id", dependent: :destroy
-
-  has_many :assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "client_id", dependent: :destroy
-  has_many :designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "client_id", dependent: :destroy
-
-  has_many :assigners_with_assignation, through: :hired_assigned_people, source: :client
-  has_many :assigners_with_designation, through: :hired_designated_people, source: :client
-  has_many :designated_assignees, through: :designated_people, source: :person
-  has_many :assignees, through: :assigned_people, source: :person
-
+  has_many :assigned_people, through: :assigned, source: :client
+  has_many :designated_people, through: :designated, source: :client
 
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
 

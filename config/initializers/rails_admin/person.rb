@@ -1,6 +1,7 @@
 RailsAdmin.config do |config|
   config.included_models.push("Person")
   config.model "Person" do
+
     label_plural "Client Users"
 
     object_label_method do
@@ -189,76 +190,9 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client_portal?
         end
       end
-      field :assignees do
-        inline_add do
-          false
-        end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
-        visible do
-          bindings[:object].client?
-        end
-        associated_collection_scope do
-          normal_role = Role.normals.first
-          Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i  )
-          }
-        end
+      field :assigned_people do
       end
-
-      field :designated_assignees do
-        inline_add do
-          false
-        end
-        visible do
-          bindings[:object].client?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
-        associated_collection_scope do
-          normal_role = Role.normals.first
-          Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i  )
-          }
-        end
-      end
-
-      field :assigners_with_assignation do
-        inline_add do
-          false
-        end
-        visible do
-          bindings[:object].normal?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
-        associated_collection_scope do
-          client_role = Role.clients.first
-          Proc.new { |scope|
-            scope.where(role_id: client_role.try(:id).to_i )
-          }
-        end
-      end
-
-      field :assigners_with_designation do
-        inline_add do
-          false
-        end
-        visible do
-          bindings[:object].normal?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
-        associated_collection_scope do
-          client_role = Role.clients.first
-          Proc.new { |scope|
-            scope.where(role_id: client_role.try(:id).to_i )
-          }
-        end
+      field :designated_people do
       end
     end
 
