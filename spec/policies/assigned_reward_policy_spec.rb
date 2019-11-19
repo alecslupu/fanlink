@@ -19,23 +19,9 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    subject { described_class.new(nil, master_class) }
+    subject { described_class.new(build(:person), master_class) }
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
-    end
-  end
-  context "logged out user" do
-    subject { described_class.new(nil, master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        it { is_expected.to forbid_action(policy) }
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("reward") }
-      it { expect(subject.send(:super_admin?)).to be_nil }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
     end
   end
   context "logged in user with no permission" do
@@ -47,6 +33,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
       end
     end
     describe "protected methods" do
+      it { expect(subject.send(:module_name)).to eq("reward") }
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
@@ -83,7 +70,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, reward_read: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_read: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -116,7 +103,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, reward_update: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_update: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -149,7 +136,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, reward_delete: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_delete: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -182,7 +169,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, reward_export: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_export: true))
       end
       permission_list.each do |policy, value|
         if value
@@ -215,7 +202,7 @@ RSpec.describe AssignedRewardPolicy, type: :policy do
 
     describe "permissions" do
       before :each do
-        allow_any_instance_of(ApplicationPolicy).to receive(:access).and_return(build(:portal_access, reward_history: true))
+        allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, reward_history: true))
       end
       permission_list.each do |policy, value|
         if value

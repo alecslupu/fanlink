@@ -28,16 +28,20 @@ class ConfigItem < ApplicationRecord
     )
   end
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
+  def formatted_value
+    item_value
+  end
 
-  validates :type, inclusion: { in: %w(
+  validates :type, inclusion: {in: %w[
             StringConfigItem
             ArrayConfigItem
             BooleanConfigItem
             RootConfigItem
             IntegerConfigItem
-  ),  message: "%{value} is not a valid type" }
+            ColorConfigItem
+  ], message: "%{value} is not a valid type"}
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }

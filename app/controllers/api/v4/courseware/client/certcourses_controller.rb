@@ -1,136 +1,64 @@
-class Api::V4::Courseware::Client::CertcoursesController < ApiController
-  def index
-    @certificate = Certificate.find_by(id: params[:certificate_id])
-    if @certificate.nil?
-      order = rand(4000)
-      orders = Certificate.all.map(&:certificate_order)
-      while order.in? orders
-        order = rand(4000)
-      end
-      @certificate = Certificate.create(
-        id: params[:certificate_id],
-        long_name: "First Certificate Test",
-        short_name: "1st Cert Test",
-        description: "This is the first certificate ever created",
-        certificate_order: order,
-        color_hex: "#000000",
-        status: "entry",
-        room_id: nil,
-        is_free: false,
-        sku_ios: "com.musicto.fanlink.caned.demo_nevada_dispensary_education",
-        sku_android: "1111",
-        validity_duration: 1000000,
-        access_duration: 1000000,
-        certificate_issuable: false,
-        created_at: DateTime.parse("Thu, 21 Feb 2019 15 :14:58 UTC +00:00"),
-        updated_at: DateTime.parse("Mon, 11 Mar 2019 14 :02:52 UTC +00:00"),
-        template_image_file_name: "Certificate_-_V1.jpg",
-        template_image_content_type: "image/jpeg",
-        template_image_file_size: 679079,
-        template_image_updated_at: DateTime.parse("Mon, 11 Mar 2019 14 :02:49 UTC +00:00"),
-        product_id: current_user.product.id
-      )
-    end
-    id = Certcourse.last.nil? ? 1 : Certcourse.last.id
-    if params[:certificate_id] == "1"
-      @certcourses = [Certcourse.create( id: id + 1, long_name: "Test no pages 9", short_name: "Test no pages 11", description: "Completed", color_hex: "#000000", status: "live", duration: 100000, is_completed: true, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 10 )]
-      @certcourses << Certcourse.create( id: id + 2, long_name: "Test no pages 10", short_name: "Test no pages 12", description: "Completed", color_hex: "#000000", status: "live", duration: 100000, is_completed: true, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 10 )
-      @certcourses << Certcourse.create( id: id + 3, long_name: "Test no pages 11", short_name: "Test no pages 13", description: "Completed", color_hex: "#000000", status: "live", duration: 100000, is_completed: true, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 10 )
-      @certcourses << Certcourse.create( id: id + 4, long_name: "Test no pages 12", short_name: "Test no pages 14", description: "Completed", color_hex: "#000000", status: "live", duration: 100000, is_completed: true, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 10 )
-    else
-      @certcourses = [Certcourse.create( id: id + 1, long_name: "Test no pages 8", short_name: "Test no pages 8", description: "Test no pages 8", color_hex: "#000000", status: "entry", duration: 5568798, is_completed: false, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:20 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:20 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 2 )]
-      @certcourses << Certcourse.create( id: id + 2, long_name: "Test no pages 9", short_name: "Test no pages 9", description: "Test no pages 9", color_hex: "#000000", status: "live", duration: 100000, is_completed: false, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 3 )
-      @certcourses << Certcourse.create( id: id + 3, long_name: "Test no pages 9", short_name: "Test no pages 10", description: "Not started", color_hex: "#000000", status: "live", duration: 100000, is_completed: false, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 3 )
-      @certcourses << Certcourse.create( id: id + 4, long_name: "Test no pages 9", short_name: "Test no pages 11", description: "Completed", color_hex: "#000000", status: "live", duration: 100000, is_completed: true, copyright_text: "text", created_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), updated_at: DateTime.parse("Mon, 11 Mar 2019 18:34:41 UTC +00:00"), product_id: current_user.product.id, certcourse_pages_count: 10 )
-    end
+class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::Client::BaseController
+  # frozen_string_literal: true
 
-    orders = CertificateCertcourse.where(certificate_id: @certificate.id).map(&:certcourse_order)
-    number = rand(50000)
-    while number.in? orders
-      number = rand(50000)
+  def index
+    if PersonCertificate.where(person_id: params[:person_id], certificate_id: params[:certificate_id]).present?
+      @certificate = Certificate.find(params[:certificate_id])
+      @assignee = Person.find(params[:person_id])
+      @certcourses = @certificate.certcourses.live_status
+      return_the @certcourses, handler: :jb
+    else
+      render_422 _("This user does not have the requested certificate.")
     end
-    CertificateCertcourse.create(certificate_id: @certificate.id, certcourse_id: @certcourses.first.id, certcourse_order: number)
-    orders << number
-    while number.in? orders
-      number = rand(50000)
-    end
-    CertificateCertcourse.create(certificate_id: @certificate.id, certcourse_id: @certcourses.second.id, certcourse_order: number)
-      orders << number
-    while number.in? orders
-      number = rand(50000)
-    end
-    CertificateCertcourse.create(certificate_id: @certificate.id, certcourse_id: @certcourses.third.id, certcourse_order: number)
-    orders << number
-    while number.in? orders
-      number = rand(50000)
-    end
-    CertificateCertcourse.create(certificate_id: @certificate.id, certcourse_id: @certcourses.last.id, certcourse_order: number)
-    @certificate.reload
-    return_the @certcourses, handler: :jb
   end
 
   def show
-    quiz1 = {
-      id: 1,
-      is_optional: false,
-      no_of_failed_attempts: rand(20),
-      quiz_text: "Specify the missing word. Never say _",
-      answer_text: "never",
-      certcourse_pages_count: 25,
-      page_order: 12,
-      is_correct: true,
-      is_survey: false
-    }
+    #  fill in response on person quizz is not taken into consideration YET
+    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz")
+    if certcourse_pages.present?
+      @quizzes = []
+      certcourse_pages.each do |certcourse_page|
+        quiz_page = QuizPage.find_by(certcourse_page_id: certcourse_page.id)
 
-    quiz2 = {
-      id: 2,
-      is_optional: true,
-      no_of_failed_attempts: 1,
-      quiz_text: "maybe maybe",
-      answer_text: "never never",
-      certcourse_pages_count: 36,
-      page_order: 8,
-      is_correct: false,
-      is_survey: false
-    }
+        next unless quiz_page.present?
 
-    quiz3 = {
-      id: 3,
-      is_optional: false,
-      no_of_failed_attempts: 0,
-      quiz_text: "Why?",
-      answer_text: "maybe",
-      certcourse_pages_count: 25,
-      page_order: 12,
-      is_correct: true,
-      is_survey: false
-    }
+        correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
+        person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
+        failed_attempts = person_responses.where.not(answer_id: correct_answer.id)
+        no_of_failed_attempts = failed_attempts.count
 
-    quiz4 = {
-      id: 4,
-      is_optional: true,
-      no_of_failed_attempts: 0,
-      quiz_text:"Never say?",
-      answer_text: "Never!",
-      certcourse_pages_count: 36,
-      page_order: 8,
-      is_correct: true,
-      is_survey: true
-    }
+        # change this with "where" and the response in case of multiple correct answer possibility
+        person_correct_answer = person_responses.find_by(answer_id: correct_answer.id) unless no_of_failed_attempts == person_responses.count
 
-    quiz5 = {
-      id: 5,
-      is_optional: false,
-      no_of_failed_attempts: rand(20),
-      quiz_text: "What?",
-      answer_text: "Yes",
-      certcourse_pages_count: 25,
-      page_order: 12,
-      is_correct: false,
-      is_survey: false
-    }
+        if person_correct_answer.present?
+          answer_text = correct_answer.description
+          is_correct = true
+        # elsif quiz_page.is_survey
+        #   is_correct = true
+        #   answer_text = person_response.fill_in_response.present?
+        else
+          answer_text = Answer.find(failed_attempts.last.answer_id).description
+          is_correct = false
+        end
 
-    @quizzes = [quiz1, quiz2, quiz3, quiz4, quiz5]
-    return_the @quizzes, handler: :jb
+        quiz = {
+          id: quiz_page.id,
+          is_optional: quiz_page.is_optional,
+          is_survey: quiz_page.is_survey,
+          quiz_text: quiz_page.quiz_text,
+          certcourse_pages_count: Certcourse.find(certcourse_page.certcourse_id).certcourse_pages_count,
+          page_order: certcourse_page.certcourse_page_order,
+          no_of_failed_attempts: no_of_failed_attempts,
+          answer_text: answer_text,
+          is_correct: is_correct
+        }
+
+        @quizzes << quiz
+      end
+
+      return_the @quizzes, handler: :jb
+    else
+      render_404(_("This certificates has no quiz page."))
+    end
   end
 end
