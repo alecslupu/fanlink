@@ -32,18 +32,6 @@ as defined by the routes in the `admin/` namespace
     <div style="margin-top: 25px;">
       <p><strong><hr></strong></p>
     </div>
-    <% exceptions = ['sessions'] %>
-    <% unless controller.action_name == "select_form" %>
-      <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-        <% unless (!current_user.super_admin? && resource.resource == "products") || exceptions.include?(resource.resource) %>
-          <%= link_to(
-            display_resource_name(resource).titleize,
-            [namespace, resource_index_route_key(resource)],
-            class: "navigation__link navigation__link--#{nav_link_state(resource)}"
-          ) %>
-        <% end %>
-      <% end %>
-    <% end %>
     <%= link_to "Logout", admin_logout_path, class: 'button' %>
   <% end %>
 </nav>
