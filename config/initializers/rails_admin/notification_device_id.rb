@@ -4,7 +4,7 @@ RailsAdmin.config do |config|
   config.model "NotificationDeviceId" do
     list do
       fields :id,
-             :person_id,
+             :person,
              :not_registered,
              :device_identifier,
              :device_type
@@ -12,7 +12,7 @@ RailsAdmin.config do |config|
 
     show do
       fields :id,
-             :person_id,
+             :person,
              :not_registered,
              :device_identifier,
              :device_type
