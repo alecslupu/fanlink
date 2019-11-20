@@ -274,7 +274,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         room = create(:room, created_by: person, status: :active)
-        expect(room.last_message_timestamp).to eq(nil)
+        expect(room.last_message_timestamp).to eq(0)
 
         room.members << person
         other_member = create(:person, product: person.product)

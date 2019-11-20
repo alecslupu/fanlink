@@ -67,6 +67,10 @@ FactoryBot.define do
       role { create(:role_admin) }
     end
 
+    factory :client_user do
+      role { create(:role_client) }
+    end
+
     factory :super_admin do
       role { create(:role_super_admin) }
     end
