@@ -2,9 +2,11 @@
 #
 # Table name: client_infos
 #
-#  id           :bigint(8)        not null, primary key
-#  client_id    :integer          not_null
-#  info         :string           not null
+#  id         :bigint(8)        not null, primary key
+#  client_id  :integer          not null
+#  code       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class ClientInfo < ApplicationRecord
