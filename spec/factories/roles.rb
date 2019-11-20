@@ -31,6 +31,8 @@ FactoryBot.define do
     internal_name { Faker::Lorem.word }
 
     factory :role_admin do
+      name { 'admin' }
+      internal_name { 'admin' }
     end
 
     factory :role_normal do

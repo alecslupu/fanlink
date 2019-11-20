@@ -32,3 +32,4 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
       render_404 if @person_certificate.blank?
     end
 end
+

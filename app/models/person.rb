@@ -123,8 +123,8 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
-  has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
-  has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
+  has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
   has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
   has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
@@ -458,6 +458,10 @@ class Person < ApplicationRecord
 
   def root?
     %w[root].include?(assigned_role.internal_name)
+  end
+
+  def admin?
+    %w[admin].include?(assigned_role.internal_name)
   end
 
   def super_admin?
