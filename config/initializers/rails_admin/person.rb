@@ -191,8 +191,38 @@ RailsAdmin.config do |config|
         end
       end
       field :assigned_people do
+        inline_add do
+          false
+        end
+        visible do
+          bindings[:object].client?
+        end
+        hide do
+          bindings[:view]._current_user.client_portal?
+        end
+        associated_collection_scope do
+          normal_role = Role.normals.first
+          Proc.new { |scope|
+            scope.where(role_id: normal_role.try(:id).to_i  )
+          }
+        end
       end
       field :designated_people do
+        inline_add do
+          false
+        end
+        visible do
+          bindings[:object].client?
+        end
+        hide do
+          bindings[:view]._current_user.client_portal?
+        end
+        associated_collection_scope do
+          normal_role = Role.normals.first
+          Proc.new { |scope|
+            scope.where(role_id: normal_role.try(:id).to_i  )
+          }
+        end
       end
     end
 
