@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191021100219) do
+ActiveRecord::Schema.define(version: 20191113222534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,12 +227,31 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.index ["room_id"], name: "idx_certificates_room"
   end
 
+  create_table "client_infos", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_infos_on_client_id"
+    t.index ["code"], name: "index_client_infos_on_code"
+  end
+
+  create_table "client_to_people", force: :cascade do |t|
+    t.integer "relation_type", null: false
+    t.integer "status", null: false
+    t.integer "client_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_to_people_on_client_id"
+  end
+
   create_table "config_items", force: :cascade do |t|
     t.bigint "product_id"
     t.string "item_key"
     t.string "item_value"
     t.string "type"
-    t.boolean "enabled", default: false
+    t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parent_id"
@@ -534,7 +553,7 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.boolean "do_not_message_me", default: false, null: false
     t.boolean "pin_messages_from", default: false, null: false
     t.boolean "auto_follow", default: false, null: false
-    t.integer "role", default: 0, null: false
+    t.integer "old_role", default: 0, null: false
     t.text "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
@@ -551,6 +570,8 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
+    t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -559,6 +580,7 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username"], name: "index_people_on_product_id_and_username"
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
+    t.index ["role_id"], name: "index_people_on_role_id"
   end
 
   create_table "permission_policies", force: :cascade do |t|
@@ -716,6 +738,8 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.integer "courseware", default: 0, null: false
     t.integer "trivia", default: 0, null: false
     t.integer "admin"
+    t.integer "root", default: 0
+    t.integer "portal_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -869,6 +893,7 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.string "color_accent", default: "FFF537"
     t.string "color_accent_text", default: "FFF537"
     t.string "color_title_text", default: "FFF537"
+    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
@@ -1026,9 +1051,24 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "internal_name", null: false
-    t.integer "role_enum", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post", default: 0, null: false
+    t.integer "chat", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "beacon", default: 0, null: false
+    t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
+    t.integer "admin", default: 0, null: false
+    t.integer "root", default: 0, null: false
+    t.integer "user", default: 0, null: false
+    t.integer "portal_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -1056,7 +1096,7 @@ ActiveRecord::Schema.define(version: 20191021100219) do
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
     t.integer "order", default: 0, null: false
-    t.bigint "last_message_timestamp"
+    t.bigint "last_message_timestamp", default: 0
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
@@ -1074,13 +1114,12 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.jsonb "content", default: "{}", null: false
-    t.jsonb "title", default: "{}", null: false
+    t.jsonb "content", default: {}, null: false
+    t.jsonb "title", default: {}, null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id", "slug"], name: "unq_static_contents_product_slug"
     t.index ["slug"], name: "index_static_contents_on_slug", unique: true
   end
 
@@ -1352,6 +1391,7 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   end
 
   add_foreign_key "activity_types", "quest_activities", column: "activity_id", name: "fk_activity_types_quest_activities"
+  add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
   add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
@@ -1359,19 +1399,30 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
   add_foreign_key "badge_awards", "people", name: "fk_badge_awards_people", on_delete: :cascade
   add_foreign_key "badges", "action_types", name: "fk_badges_action_type", on_delete: :restrict
+  add_foreign_key "badges", "products", name: "fk_badges_product", on_delete: :cascade
+  add_foreign_key "badges", "products", name: "fk_badges_products", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocked_id", name: "fk_blocks_people_blocked", on_delete: :cascade
   add_foreign_key "blocks", "people", column: "blocker_id", name: "fk_blocks_people_blocker", on_delete: :cascade
   add_foreign_key "certcourse_pages", "certcourses", name: "fk_certcourse_pages_certcourse"
+  add_foreign_key "certcourse_pages", "products", name: "fk_certcourse_pages_products", on_delete: :cascade
+  add_foreign_key "certcourses", "products", name: "fk_certcourses_products", on_delete: :cascade
   add_foreign_key "certificate_certcourses", "certcourses", name: "fk_certificate_certcourses_certcourse"
   add_foreign_key "certificate_certcourses", "certificates", name: "fk_certificate_certcourses_certificate"
+  add_foreign_key "certificate_certcourses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
+  add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "config_items", "products"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
+  add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
   add_foreign_key "followings", "people", column: "follower_id", name: "fk_followings_follower_id"
   add_foreign_key "image_pages", "certcourse_pages", name: "fk_image_pages_certcourse_page"
+  add_foreign_key "image_pages", "products", name: "fk_image_products", on_delete: :cascade
+  add_foreign_key "interests", "products", name: "fk_interests_products"
+  add_foreign_key "levels", "products", name: "fk_levels_products"
+  add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
   add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
   add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people", on_delete: :cascade
   add_foreign_key "message_reports", "messages", name: "fk_message_reports_message", on_delete: :cascade
@@ -1381,6 +1432,8 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
   add_foreign_key "notifications", "people"
+  add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "people", "roles"
   add_foreign_key "person_certcourses", "certcourses", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "person_certificates", "certificates", name: "fk_person_certificates_certificate"
@@ -1393,6 +1446,7 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   add_foreign_key "person_quizzes", "people", name: "fk_person_quiz_pages_person"
   add_foreign_key "person_quizzes", "quiz_pages", name: "fk_person_quiz_pages_quiz_page_id"
   add_foreign_key "poll_options", "polls", name: "idx_poll_options_poll"
+  add_foreign_key "polls", "products", name: "fk_polls_products", on_delete: :cascade
   add_foreign_key "portal_notifications", "products", name: "fk_portal_notifications_products", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "people", name: "fk_post_comment_mentions_people", on_delete: :cascade
   add_foreign_key "post_comment_mentions", "post_comments", name: "fk_post_comment_mentions_post_comments", on_delete: :cascade
@@ -1405,40 +1459,59 @@ ActiveRecord::Schema.define(version: 20191021100219) do
   add_foreign_key "post_reports", "people", name: "fk_post_reports_people", on_delete: :cascade
   add_foreign_key "post_reports", "posts", name: "fk_post_reports_post", on_delete: :cascade
   add_foreign_key "posts", "people", name: "fk_posts_people", on_delete: :cascade
+  add_foreign_key "product_beacons", "products", name: "fk_beacons_products"
   add_foreign_key "push_notifications", "products", name: "fk_push_notifications_products", on_delete: :cascade
   add_foreign_key "quest_activities", "rewards", name: "fk_quest_activities_rewards"
   add_foreign_key "quest_activities", "steps", name: "fk_activities_steps"
   add_foreign_key "quest_completed", "people", name: "fk_quest_completeds_people"
   add_foreign_key "quest_completed", "quests", name: "fk_quest_completeds_quests"
   add_foreign_key "quest_completions", "steps", name: "fk_completions_steps"
+  add_foreign_key "quests", "products", name: "fk_quests_products"
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
+  add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
+  add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
+  add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
   add_foreign_key "trivia_answers", "people", name: "trivia_answers_person_id_fkey"
+  add_foreign_key "trivia_answers", "products", name: "fk_trivia_answers_products", on_delete: :cascade
   add_foreign_key "trivia_answers", "trivia_questions", name: "trivia_answers_questions_id_fkey"
+  add_foreign_key "trivia_available_answers", "products", name: "fk_trivia_available_answers_products", on_delete: :cascade
   add_foreign_key "trivia_available_answers", "trivia_available_questions", column: "trivia_question_id"
+  add_foreign_key "trivia_available_questions", "products", name: "fk_trivia_available_questions_products", on_delete: :cascade
   add_foreign_key "trivia_available_questions", "trivia_topics", column: "topic_id"
   add_foreign_key "trivia_game_leaderboards", "people"
+  add_foreign_key "trivia_game_leaderboards", "products", name: "fk_trivia_game_leaderboards_products", on_delete: :cascade
   add_foreign_key "trivia_game_leaderboards", "trivia_games"
+  add_foreign_key "trivia_games", "products"
   add_foreign_key "trivia_games", "rooms"
+  add_foreign_key "trivia_picture_available_answers", "products", name: "fk_trivia_picture_available_answers_products", on_delete: :cascade
   add_foreign_key "trivia_picture_available_answers", "trivia_available_questions", column: "question_id"
+  add_foreign_key "trivia_prizes", "products", name: "fk_trivia_prizes_products", on_delete: :cascade
   add_foreign_key "trivia_prizes", "trivia_games"
   add_foreign_key "trivia_question_leaderboards", "people"
+  add_foreign_key "trivia_question_leaderboards", "products", name: "fk_trivia_question_leaderboards_products", on_delete: :cascade
   add_foreign_key "trivia_question_leaderboards", "trivia_questions"
+  add_foreign_key "trivia_questions", "products", name: "fk_trivia_questions_products", on_delete: :cascade
   add_foreign_key "trivia_questions", "trivia_available_questions", column: "available_question_id"
   add_foreign_key "trivia_questions", "trivia_rounds"
   add_foreign_key "trivia_round_leaderboards", "people"
+  add_foreign_key "trivia_round_leaderboards", "products", name: "fk_trivia_round_leaderboards_products", on_delete: :cascade
   add_foreign_key "trivia_round_leaderboards", "trivia_rounds"
+  add_foreign_key "trivia_rounds", "products", name: "fk_trivia_rounds_products", on_delete: :cascade
   add_foreign_key "trivia_rounds", "trivia_games"
   add_foreign_key "trivia_subscribers", "people"
+  add_foreign_key "trivia_subscribers", "products", name: "fk_trivia_subscribers_products", on_delete: :cascade
   add_foreign_key "trivia_subscribers", "trivia_games"
+  add_foreign_key "trivia_topics", "products", name: "fk_trivia_topics_products", on_delete: :cascade
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
+  add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

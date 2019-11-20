@@ -6,7 +6,6 @@ RailsAdmin.config do |config|
     end
     configure :id do
       label "Post ID"
-      column_width 30
     end
     list do
       field :person do
@@ -25,6 +24,9 @@ RailsAdmin.config do |config|
         column_width 30
       end
       field :global do
+        column_width 30
+      end
+      field :recommended do
         column_width 30
       end
       field :starts_at do

@@ -1,8 +1,12 @@
 require "spec_helper"
 
+
 RSpec.describe Api::V2::MessagesController, type: :controller do
 
   describe "create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+    end
     it "should create a new message with an attached image" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -45,13 +49,16 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
   end
 
   describe 'index' do
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     it "should get a paginated list of messages with page 1"
     it "should get only pinned messages with page 1"
     it "should get only nonpinned messages"
     it "should get all pinned and nonpinned messages"
 
     it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
@@ -80,7 +87,7 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
       end
     end
     it 'returns all the messages with the attached audio' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
@@ -111,7 +118,7 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
 
   describe "show" do
     it 'returns the message with the attached picture' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         private_room = create(:room, public: false, status: :active)
@@ -130,7 +137,7 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
     end
 
     it 'returns the message with the attached audio' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         private_room = create(:room, public: false, status: :active)
@@ -151,25 +158,25 @@ RSpec.describe Api::V2::MessagesController, type: :controller do
 
   describe "list" do
     it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        create_list(
-          :message,
-          3,
-          created_at: to,
-          room: private_room,
-          body: "this is my body",
-          picture: fixture_file_upload('images/better.png', 'image/png')
-        )
+
+        allow(subject).to receive(:apply_filters).and_return build_list(
+                                                               :message,
+                                                               3,
+                                                               created_at: to,
+                                                               room: private_room,
+                                                               body: "this is my body",
+                                                               picture: fixture_file_upload('images/better.png', 'image/png'))
         get :list
 
         expect(response).to be_successful
-        expect(json['messages'].size).to eq(3)
+        expect(json['messages'].count).to eq(3)
         json['messages'].each do |message|
           expect(message['picture_url']).not_to eq(nil)
         end

@@ -4,7 +4,7 @@ RSpec.describe Api::V4::Trivia::PrizesController, type: :controller do
   # TODO: auto-generated
   describe "GET index" do
     it 'returns all merchandises with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         trivia_game = create(:trivia_game)

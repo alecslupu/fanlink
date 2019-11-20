@@ -21,9 +21,5 @@ module Trivia
 
     acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
-
-    rails_admin do
-      navigation_label "Answer"
-    end
   end
 end

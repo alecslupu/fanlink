@@ -14,14 +14,15 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
     end
   end
 
+
   # TODO: auto-generated
   describe "GET index" do
     it "should return the people objects with their attached picture" do
       person = create(:person, picture: fixture_file_upload("images/better.png", "image/png"))
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:person,3, picture: fixture_file_upload("images/better.png", "image/png"))
-
         login_as(person)
+        allow(Person).to receive(:order).and_return build_list(:person, 3, picture: fixture_file_upload("images/better.png", "image/png"))
+
         get :index
 
         expect(response).to be_successful
@@ -80,7 +81,7 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
   # TODO: auto-generated
   describe "PUT update" do
     it "updates a person's picture" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
