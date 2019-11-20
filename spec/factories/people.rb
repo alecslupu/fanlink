@@ -63,6 +63,10 @@ FactoryBot.define do
       recommended { true }
     end
 
+    factory :client_user do
+      role { create(:role_client) }
+    end
+
     factory :admin_user do
       role { create(:role_admin) }
     end

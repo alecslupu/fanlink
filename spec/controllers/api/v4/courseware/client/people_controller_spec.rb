@@ -15,7 +15,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
     end
 
     it "return only the client's assignees" do
-      person = create(:person, role: :client)
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         person2 = create(:person, username: 'pers2', email: 'pers2@example.com')
@@ -31,7 +31,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
     end
 
     it "paginates the answer" do
-      person = create(:person, role: :client)
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         person2 = create(:person, username: 'pers2', email: 'pers2@example.com')
@@ -48,7 +48,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
     end
 
     it 'gets the correct people with username filter' do
-      person = create(:person, role: :client)
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         person2 = create(:person, username: 'pers2', email: 'pers2@example.com')

@@ -35,7 +35,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("user") }
+      it { expect(subject.send(:module_name)).to eq("admin") }
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
