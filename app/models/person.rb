@@ -53,7 +53,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum old_role: %i[ normal staff admin super_admin ]
+  enum old_role: %i[ normal staff admin super_admin root client client_portal]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -124,7 +124,7 @@ class Person < ApplicationRecord
   has_many :followers, through: :passive_followings, source: :follower
 
 
-  has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
   has_many :assigned, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
   has_many :designated, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy

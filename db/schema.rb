@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20191119155550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
@@ -119,10 +120,10 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.datetime "issued_from"
-    t.datetime "issued_to"
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.datetime "issued_from"
+    t.datetime "issued_to"
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
@@ -459,9 +460,9 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
-    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
@@ -507,8 +508,10 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.datetime "audio_updated_at"
     t.index ["body"], name: "index_messages_on_body"
     t.index ["created_at"], name: "index_messages_on_created_at"
+    t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -517,7 +520,6 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "device_type", default: 0, null: false
-    t.boolean "not_registered", default: false, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
   end
@@ -568,9 +570,10 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
-    t.boolean "authorized", default: true, null: false
     t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
     t.index ["created_at"], name: "index_people_on_created_at"
+    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -712,7 +715,7 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-09-10 13:54:50"
+    t.datetime "end_date", default: "2019-02-07 01:46:08"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -890,6 +893,7 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.string "color_accent", default: "FFF537"
     t.string "color_accent_text", default: "FFF537"
     t.string "color_title_text", default: "FFF537"
+    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
@@ -1110,13 +1114,12 @@ ActiveRecord::Schema.define(version: 20191119155550) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.text "content", null: false
-    t.string "title", null: false
+    t.jsonb "content", default: {}, null: false
+    t.jsonb "title", default: {}, null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id", "slug"], name: "unq_static_contents_product_slug"
     t.index ["slug"], name: "index_static_contents_on_slug", unique: true
   end
 

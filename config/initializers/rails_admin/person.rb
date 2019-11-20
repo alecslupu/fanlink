@@ -2,6 +2,7 @@ RailsAdmin.config do |config|
   config.included_models.push("Person")
   config.model "Person" do
 
+
     label_plural "Client Users"
 
     object_label_method do
@@ -202,8 +203,11 @@ RailsAdmin.config do |config|
         end
         associated_collection_scope do
           normal_role = Role.normals.first
+          client_ids = bindings[:object].clients.pluck(:client_id)
+
+          Rails.logger.debug("\n\n\n#{client_ids.inspect}\n\n\n\n")
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i  )
+            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: client_ids)
           }
         end
       end
@@ -219,8 +223,9 @@ RailsAdmin.config do |config|
         end
         associated_collection_scope do
           normal_role = Role.normals.first
+          client_ids = bindings[:object].clients.pluck(:client_id)
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i  )
+            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: client_ids)
           }
         end
       end
