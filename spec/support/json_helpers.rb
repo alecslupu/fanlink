@@ -12,10 +12,12 @@ module JsonHelpers
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/block_response.json"))
     schema.valid?(block.compact)
   end
+
   def event_json(event)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/event_response.json"))
     schema.valid?(event.compact)
   end
+
   def following_json(following, currnt_user = nil)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/following_response.json"))
     following["follower"] = following["follower"].compact
@@ -80,7 +82,7 @@ module JsonHelpers
   end
 
   def person_json(person, potential_follower = nil, lang = nil)
-    following = (potential_follower) ? potential_follower.following_for_person(person) : nil
+    following = potential_follower ? potential_follower.following_for_person(person) : nil
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/person_response.json"))
     person["following_id"] = following.id if following
 
@@ -124,12 +126,12 @@ module JsonHelpers
 
     post["person"] = post["person"].compact
     post["category"] = post["category"].compact unless post["category"].nil?
-    post["tags"].each do |idx, tag|
+    post["tags"]&.each do |idx, tag|
       post["tags"][idx] = tag.compact
-    end unless post["tags"].nil?
-    post["post_reaction_counts"] = nil #Not easily testable via json schema validation
-    post["post_reaction"] = post["post_reaction"].compact unless  post["post_reaction"].nil?
- 
+    end
+    post["post_reaction_counts"] = nil # Not easily testable via json schema validation
+    post["post_reaction"] = post["post_reaction"].compact unless post["post_reaction"].nil?
+
     schema.valid?(post.compact)
   end
 
@@ -144,9 +146,9 @@ module JsonHelpers
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_list_response.json"))
     post["person"] = post["person"].compact
     post["category"] = post["category"].compact unless post["category"].nil?
-    post["tags"].each do |idx, tag|
+    post["tags"]&.each do |idx, tag|
       post["tags"][idx] = tag.compact
-    end unless post["tags"].nil?
+    end
 
     schema.valid?(post.compact)
   end
@@ -163,7 +165,7 @@ module JsonHelpers
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_report_response.json"))
 
     # puts schema.validate(post_report.compact).to_a
-    
+
     schema.valid?(post_report.compact)
   end
 
@@ -172,5 +174,11 @@ module JsonHelpers
     relationship["requested_by"] = relationship["requested_by"].compact
     relationship["requested_to"] = relationship["requested_to"].compact
     schema.valid?(relationship.compact)
+  end
+
+  def static_content_json(static_content)
+    schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/static_content.json"))
+
+    schema.valid?(static_content.compact)
   end
 end

@@ -1,8 +1,8 @@
 json = {}
 
 json[:recommended_people] = @people.map do |person|
-  Rails.cache.fetch ["v4", "person", @req_source, person.id, person.updated_at.to_i] do
-    render partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: 'jb'
+  Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, person) do
+    render partial: "api/v4/people/#{@req_source}", locals: { person: person }, handlers: "jb"
   end
 end
 

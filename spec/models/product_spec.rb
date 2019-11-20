@@ -1,8 +1,7 @@
 RSpec.describe Product, type: :model do
-
   context "Validation" do
     it "should create a valid product" do
-      expect(create(:product)).to be_valid
+      expect(build(:product)).to be_valid
     end
   end
 
@@ -15,9 +14,13 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe "#people_count" do
+    pending
+  end
+
   describe "#name" do
     it "should accept a good name format" do
-      appl = create(:product, name: "My App")
+      appl = build(:product, name: "My App")
       expect(appl).to be_valid
     end
     it "should not accept a format that is shorter than 3 characters" do
@@ -72,9 +75,8 @@ RSpec.describe Product, type: :model do
 
   describe "#to_s" do
     it "should return the product internal name" do
-      prod = create(:product)
+      prod = build(:product)
       expect(prod.to_s).to eq(prod.internal_name)
     end
   end
-
 end

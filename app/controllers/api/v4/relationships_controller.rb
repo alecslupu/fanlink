@@ -12,12 +12,12 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
         @relationships += Relationship.pending_to_person(person)
       end
     end
-    return_the @relationships, handler: 'jb'
+    return_the @relationships, handler: tpl_handler
   end
 
   def show
     @relationship = current_user.relationships.find(params[:id])
-    return_the @relationship, handler: 'jb'
+    return_the @relationship, handler: tpl_handler
   end
 
   def create
@@ -35,7 +35,7 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
         if @relationship.valid?
           update_relationship_count(@relationship.requested_to, @api_version)
           @relationship.friend_request_received_push
-          return_the @relationship, handler: 'jb', using: :show
+          return_the @relationship, handler: tpl_handler, using: :show
         else
           render_422 @relationship.errors
         end
@@ -80,7 +80,7 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
             if @relationship.destroyed?
               head :ok
             else
-              return_the @relationship, handler: 'jb', using: :show
+              return_the @relationship, handler: tpl_handler, using: :show
             end
           else
             render_422("You cannot change to the relationship to that status.")
@@ -92,7 +92,13 @@ class Api::V4::RelationshipsController < Api::V3::RelationshipsController
         render_error("That status is invalid")
       end
     else
-      return_the @relationship, handler: 'jb', using: :show
+      return_the @relationship, handler: tpl_handler, using: :show
     end
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190313184556) do
+ActiveRecord::Schema.define(version: 20191113222534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true, null: false
+    t.integer "badge_actions_count"
+    t.integer "badges_count"
     t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
     t.index ["name"], name: "unq_action_types_name", unique: true
   end
@@ -125,6 +127,8 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
+    t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
+    t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "index_badges_on_product_id"
   end
 
@@ -148,6 +152,12 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.index ["name"], name: "idx_category_names"
     t.index ["product_id"], name: "index_categories_on_product_id"
     t.index ["role"], name: "idx_category_roles"
+  end
+
+  create_table "censored_words", force: :cascade do |t|
+    t.string "word"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "certcourse_pages", force: :cascade do |t|
@@ -175,6 +185,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.integer "certcourse_pages_count", default: 0
     t.index ["product_id"], name: "idx_certcourses_product"
   end
 
@@ -185,6 +196,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.index ["certcourse_id", "certificate_id"], name: "idx_uniq_cid_cid", unique: true
     t.index ["certcourse_id"], name: "idx_certificate_certcourses_certcourse"
     t.index ["certificate_id"], name: "idx_certificate_certcourses_certificate"
     t.index ["product_id"], name: "idx_certificate_certcourses_product"
@@ -215,6 +227,43 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.index ["room_id"], name: "idx_certificates_room"
   end
 
+  create_table "client_infos", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_infos_on_client_id"
+    t.index ["code"], name: "index_client_infos_on_code"
+  end
+
+  create_table "client_to_people", force: :cascade do |t|
+    t.integer "relation_type", null: false
+    t.integer "status", null: false
+    t.integer "client_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_to_people_on_client_id"
+  end
+
+  create_table "config_items", force: :cascade do |t|
+    t.bigint "product_id"
+    t.string "item_key"
+    t.string "item_value"
+    t.string "type"
+    t.boolean "enabled", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "parent_id"
+    t.integer "lft", default: 0, null: false
+    t.integer "rgt", default: 0, null: false
+    t.integer "depth", default: 0, null: false
+    t.integer "children_count", default: 0
+    t.string "item_url"
+    t.string "item_description"
+    t.index ["product_id"], name: "index_config_items_on_product_id"
+  end
+
   create_table "contests", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name", null: false
@@ -236,6 +285,16 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.text "url"
     t.boolean "deleted", default: false
     t.index ["product_id"], name: "index_coupons_on_product_id"
+  end
+
+  create_table "course_page_progresses", force: :cascade do |t|
+    t.boolean "passed", default: false
+    t.bigint "certcourse_page_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certcourse_page_id"], name: "index_course_page_progresses_on_certcourse_page_id"
+    t.index ["person_id"], name: "index_course_page_progresses_on_person_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -263,6 +322,20 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "download_file_pages", force: :cascade do |t|
+    t.bigint "certcourse_page_id"
+    t.bigint "product_id"
+    t.string "document_file_name"
+    t.string "document_content_type"
+    t.integer "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "caption"
+    t.index ["certcourse_page_id"], name: "index_download_file_pages_on_certcourse_page_id"
+    t.index ["product_id"], name: "index_download_file_pages_on_product_id"
   end
 
   create_table "event_checkins", force: :cascade do |t|
@@ -438,6 +511,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -448,6 +522,16 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.integer "device_type", default: 0, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "for_followers", default: false, null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_notifications_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -469,14 +553,14 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.boolean "do_not_message_me", default: false, null: false
     t.boolean "pin_messages_from", default: false, null: false
     t.boolean "auto_follow", default: false, null: false
-    t.integer "role", default: 0, null: false
+    t.integer "old_role", default: 0, null: false
     t.text "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -486,13 +570,17 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
+    t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
     t.index ["created_at"], name: "index_people_on_created_at"
+    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username"], name: "index_people_on_product_id_and_username"
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
+    t.index ["role_id"], name: "index_people_on_role_id"
   end
 
   create_table "permission_policies", force: :cascade do |t|
@@ -527,6 +615,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["certcourse_id"], name: "idx_person_certcourses_certcourse"
+    t.index ["person_id", "certcourse_id"], name: "idx_uniq_pc_pid_cid2", unique: true
     t.index ["person_id"], name: "idx_person_certcourses_person"
   end
 
@@ -555,7 +644,10 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.string "issued_certificate_pdf_content_type"
     t.integer "issued_certificate_pdf_file_size"
     t.datetime "issued_certificate_pdf_updated_at"
+    t.string "receipt_id"
+    t.boolean "is_completed", default: false
     t.index ["certificate_id"], name: "idx_person_certificates_certificate"
+    t.index ["person_id", "certificate_id"], name: "idx_uniq_pc_pid_cid", unique: true
     t.index ["person_id"], name: "idx_person_certificates_person"
   end
 
@@ -601,6 +693,9 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.integer "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["person_id", "room_id"], name: "index_pin_messages_on_person_id_and_room_id"
+    t.index ["person_id"], name: "index_pin_messages_on_person_id"
+    t.index ["room_id"], name: "index_pin_messages_on_room_id"
   end
 
   create_table "poll_options", force: :cascade do |t|
@@ -608,6 +703,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "description", default: {}, null: false
+    t.integer "person_poll_options_count"
     t.index ["poll_id"], name: "idx_poll_options_poll"
   end
 
@@ -619,7 +715,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-01-28 16:43:52"
+    t.datetime "end_date", default: "2019-02-07 01:46:08"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -639,6 +735,11 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.integer "beacon", default: 0, null: false
     t.integer "reporting", default: 0, null: false
     t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
+    t.integer "admin"
+    t.integer "root", default: 0
+    t.integer "portal_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -772,8 +873,8 @@ ActiveRecord::Schema.define(version: 20190313184556) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.text "name", null: false
-    t.text "internal_name", null: false
+    t.string "name", null: false
+    t.string "internal_name", null: false
     t.boolean "enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -783,23 +884,25 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.string "logo_content_type"
     t.integer "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string "color_primary", default: "#4B73D7"
-    t.string "color_primary_dark", default: "#4B73D7"
-    t.string "color_primary_66", default: "#A94B73D7"
-    t.string "color_primary_text", default: "#FFFFFFF"
-    t.string "color_secondary", default: "#CDE5FF"
-    t.string "color_secondary_text", default: "#000000"
-    t.string "color_tertiary", default: "#FFFFFF"
-    t.string "color_tertiary_text", default: "#000000"
-    t.string "color_accent", default: "#FFF537"
-    t.string "color_accent_50", default: "#FFF537"
-    t.string "color_accent_text", default: "#FFF537"
-    t.string "color_title_text", default: "#FFF537"
+    t.string "color_primary", default: "4B73D7"
+    t.string "color_primary_text", default: "FFFFFF"
+    t.string "color_secondary", default: "CDE5FF"
+    t.string "color_secondary_text", default: "000000"
+    t.string "color_tertiary", default: "FFFFFF"
+    t.string "color_tertiary_text", default: "000000"
+    t.string "color_accent", default: "FFF537"
+    t.string "color_accent_text", default: "FFF537"
+    t.string "color_title_text", default: "FFF537"
+    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
-    t.string "color_accessory", default: "000000"
     t.integer "features", default: 0, null: false
+    t.string "contact_email"
+    t.text "privacy_url"
+    t.text "terms_url"
+    t.text "android_url"
+    t.text "ios_url"
     t.index ["internal_name"], name: "unq_products_internal_name", unique: true
     t.index ["name"], name: "unq_products_name", unique: true
   end
@@ -895,6 +998,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "product_id", null: false
+    t.boolean "is_survey", default: false
     t.index ["certcourse_page_id"], name: "idx_quiz_pages_certcourse_page"
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
@@ -947,9 +1051,24 @@ ActiveRecord::Schema.define(version: 20190313184556) do
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "internal_name", null: false
-    t.integer "role_enum", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post", default: 0, null: false
+    t.integer "chat", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "beacon", default: 0, null: false
+    t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
+    t.integer "admin", default: 0, null: false
+    t.integer "root", default: 0, null: false
+    t.integer "user", default: 0, null: false
+    t.integer "portal_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -977,6 +1096,7 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
     t.integer "order", default: 0, null: false
+    t.bigint "last_message_timestamp", default: 0
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
@@ -991,6 +1111,16 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["product_id"], name: "index_semesters_on_product_id"
+  end
+
+  create_table "static_contents", force: :cascade do |t|
+    t.jsonb "content", default: {}, null: false
+    t.jsonb "title", default: {}, null: false
+    t.string "slug", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_static_contents_on_slug", unique: true
   end
 
   create_table "step_completed", force: :cascade do |t|
@@ -1040,6 +1170,193 @@ ActiveRecord::Schema.define(version: 20190313184556) do
     t.integer "posts_count", default: 0
     t.index ["name"], name: "idx_tag_names"
     t.index ["product_id"], name: "idx_tag_products"
+  end
+
+  create_table "trivia_answers", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "trivia_question_id"
+    t.string "answered"
+    t.integer "time"
+    t.boolean "is_correct", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_trivia_answers_on_person_id"
+    t.index ["product_id"], name: "idx_trivia_answers_product"
+    t.index ["trivia_question_id"], name: "index_trivia_answers_on_trivia_question_id"
+  end
+
+  create_table "trivia_available_answers", force: :cascade do |t|
+    t.bigint "trivia_question_id"
+    t.string "name"
+    t.string "hint"
+    t.boolean "is_correct", default: false, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_available_answers_product"
+    t.index ["trivia_question_id"], name: "index_trivia_available_answers_on_trivia_question_id"
+  end
+
+  create_table "trivia_available_questions", force: :cascade do |t|
+    t.string "title"
+    t.integer "cooldown_period"
+    t.integer "time_limit"
+    t.integer "status"
+    t.string "type"
+    t.integer "topic_id"
+    t.integer "complexity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_available_questions_product"
+  end
+
+  create_table "trivia_game_leaderboards", force: :cascade do |t|
+    t.bigint "trivia_game_id"
+    t.integer "points"
+    t.integer "position"
+    t.integer "average_time", default: 0
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_trivia_game_leaderboards_on_person_id"
+    t.index ["product_id"], name: "idx_trivia_game_leaderboards_product"
+    t.index ["trivia_game_id"], name: "index_trivia_game_leaderboards_on_trivia_game_id"
+  end
+
+  create_table "trivia_games", force: :cascade do |t|
+    t.text "description", default: "", null: false
+    t.integer "round_count"
+    t.string "long_name", null: false
+    t.string "short_name", null: false
+    t.bigint "room_id"
+    t.bigint "product_id"
+    t.integer "status", default: 0, null: false
+    t.integer "leaderboard_size", default: 100
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "start_date"
+    t.integer "end_date"
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.index ["product_id"], name: "index_trivia_games_on_product_id"
+    t.index ["room_id"], name: "index_trivia_games_on_room_id"
+  end
+
+  create_table "trivia_picture_available_answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.boolean "is_correct", default: false, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_picture_available_answers_product"
+    t.index ["question_id"], name: "index_trivia_picture_available_answers_on_question_id"
+  end
+
+  create_table "trivia_prizes", force: :cascade do |t|
+    t.bigint "trivia_game_id"
+    t.integer "status", default: 0, null: false
+    t.text "description"
+    t.integer "position", default: 1, null: false
+    t.string "photo_file_name"
+    t.integer "photo_file_size"
+    t.string "photo_content_type"
+    t.string "photo_updated_at"
+    t.boolean "is_delivered", default: false
+    t.integer "prize_type", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_prizes_product"
+    t.index ["trivia_game_id"], name: "index_trivia_prizes_on_trivia_game_id"
+  end
+
+  create_table "trivia_question_leaderboards", force: :cascade do |t|
+    t.bigint "trivia_question_id"
+    t.integer "points"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_trivia_question_leaderboards_on_person_id"
+    t.index ["product_id"], name: "idx_trivia_question_leaderboards_product"
+    t.index ["trivia_question_id"], name: "index_trivia_question_leaderboards_on_trivia_question_id"
+  end
+
+  create_table "trivia_questions", force: :cascade do |t|
+    t.bigint "trivia_round_id"
+    t.integer "time_limit"
+    t.string "type"
+    t.integer "question_order", default: 1, null: false
+    t.integer "cooldown_period", default: 5
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "start_date"
+    t.integer "end_date"
+    t.integer "available_question_id"
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_questions_product"
+    t.index ["trivia_round_id"], name: "index_trivia_questions_on_trivia_round_id"
+  end
+
+  create_table "trivia_round_leaderboards", force: :cascade do |t|
+    t.bigint "trivia_round_id"
+    t.integer "points"
+    t.integer "position"
+    t.bigint "person_id"
+    t.integer "average_time", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_trivia_round_leaderboards_on_person_id"
+    t.index ["product_id"], name: "idx_trivia_round_leaderboards_product"
+    t.index ["trivia_round_id"], name: "index_trivia_round_leaderboards_on_trivia_round_id"
+  end
+
+  create_table "trivia_rounds", force: :cascade do |t|
+    t.integer "question_count"
+    t.bigint "trivia_game_id"
+    t.integer "leaderboard_size", default: 100
+    t.integer "status", default: 0, null: false
+    t.integer "complexity", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "start_date"
+    t.integer "end_date"
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_rounds_product"
+    t.index ["trivia_game_id"], name: "index_trivia_rounds_on_trivia_game_id"
+  end
+
+  create_table "trivia_subscribers", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "trivia_game_id"
+    t.boolean "subscribed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_trivia_subscribers_on_person_id"
+    t.index ["product_id"], name: "idx_trivia_subscribers_product"
+    t.index ["trivia_game_id"], name: "index_trivia_subscribers_on_trivia_game_id"
+  end
+
+  create_table "trivia_topics", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.index ["product_id"], name: "idx_trivia_topics_product"
   end
 
   create_table "urls", force: :cascade do |t|
@@ -1094,6 +1411,9 @@ ActiveRecord::Schema.define(version: 20190313184556) do
   add_foreign_key "certificate_certcourses", "products", name: "fk_certificate_certcourses_products", on_delete: :cascade
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
+  add_foreign_key "config_items", "products"
+  add_foreign_key "download_file_pages", "certcourse_pages"
+  add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
   add_foreign_key "events", "products", name: "fk_events_products"
   add_foreign_key "followings", "people", column: "followed_id", name: "fk_followings_followed_id"
@@ -1111,7 +1431,9 @@ ActiveRecord::Schema.define(version: 20190313184556) do
   add_foreign_key "messages", "people", name: "fk_portal_access_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
+  add_foreign_key "notifications", "people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "people", "roles"
   add_foreign_key "person_certcourses", "certcourses", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "person_certificates", "certificates", name: "fk_person_certificates_certificate"
@@ -1159,6 +1481,37 @@ ActiveRecord::Schema.define(version: 20190313184556) do
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
+  add_foreign_key "trivia_answers", "people", name: "trivia_answers_person_id_fkey"
+  add_foreign_key "trivia_answers", "products", name: "fk_trivia_answers_products", on_delete: :cascade
+  add_foreign_key "trivia_answers", "trivia_questions", name: "trivia_answers_questions_id_fkey"
+  add_foreign_key "trivia_available_answers", "products", name: "fk_trivia_available_answers_products", on_delete: :cascade
+  add_foreign_key "trivia_available_answers", "trivia_available_questions", column: "trivia_question_id"
+  add_foreign_key "trivia_available_questions", "products", name: "fk_trivia_available_questions_products", on_delete: :cascade
+  add_foreign_key "trivia_available_questions", "trivia_topics", column: "topic_id"
+  add_foreign_key "trivia_game_leaderboards", "people"
+  add_foreign_key "trivia_game_leaderboards", "products", name: "fk_trivia_game_leaderboards_products", on_delete: :cascade
+  add_foreign_key "trivia_game_leaderboards", "trivia_games"
+  add_foreign_key "trivia_games", "products"
+  add_foreign_key "trivia_games", "rooms"
+  add_foreign_key "trivia_picture_available_answers", "products", name: "fk_trivia_picture_available_answers_products", on_delete: :cascade
+  add_foreign_key "trivia_picture_available_answers", "trivia_available_questions", column: "question_id"
+  add_foreign_key "trivia_prizes", "products", name: "fk_trivia_prizes_products", on_delete: :cascade
+  add_foreign_key "trivia_prizes", "trivia_games"
+  add_foreign_key "trivia_question_leaderboards", "people"
+  add_foreign_key "trivia_question_leaderboards", "products", name: "fk_trivia_question_leaderboards_products", on_delete: :cascade
+  add_foreign_key "trivia_question_leaderboards", "trivia_questions"
+  add_foreign_key "trivia_questions", "products", name: "fk_trivia_questions_products", on_delete: :cascade
+  add_foreign_key "trivia_questions", "trivia_available_questions", column: "available_question_id"
+  add_foreign_key "trivia_questions", "trivia_rounds"
+  add_foreign_key "trivia_round_leaderboards", "people"
+  add_foreign_key "trivia_round_leaderboards", "products", name: "fk_trivia_round_leaderboards_products", on_delete: :cascade
+  add_foreign_key "trivia_round_leaderboards", "trivia_rounds"
+  add_foreign_key "trivia_rounds", "products", name: "fk_trivia_rounds_products", on_delete: :cascade
+  add_foreign_key "trivia_rounds", "trivia_games"
+  add_foreign_key "trivia_subscribers", "people"
+  add_foreign_key "trivia_subscribers", "products", name: "fk_trivia_subscribers_products", on_delete: :cascade
+  add_foreign_key "trivia_subscribers", "trivia_games"
+  add_foreign_key "trivia_topics", "products", name: "fk_trivia_topics_products", on_delete: :cascade
   add_foreign_key "video_pages", "certcourse_pages", name: "fk_video_pages_certcourse_page"
   add_foreign_key "video_pages", "products", name: "fk_video_products", on_delete: :cascade
 end

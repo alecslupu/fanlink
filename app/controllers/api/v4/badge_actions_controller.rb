@@ -7,8 +7,8 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
           break
         else
           next if PersonReward.exists?(person_id: current_user.id, reward_id: reward.id)
-          badge_action = current_user.badge_actions.create(action_type: @action_type, identifier: params[:badge_action][:identifier])
-          if badge_action.valid?
+          badge_action = current_user.badge_actions.new(action_type: @action_type, identifier: params[:badge_action][:identifier])
+          if badge_action.save
             @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
             @progress.series = @action_type.internal_name || nil
             @progress.actions["badge_action"] ||= 0
@@ -18,7 +18,7 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
             if @progress.present? && @progress.save
               @series_total = RewardProgress.where(person_id: current_user.id, series: @action_type.internal_name).sum(:total) || @progress.total
               broadcast(:reward_progress_created, current_user, @progress, @series_total)
-              return_the @progress, handler: 'jb'
+              return_the @progress, handler: tpl_handler
             else
               if @progress.blank?
                 render json: { errors: { base: _("Reward does not exist for that action type.") } }, status: :not_found
@@ -33,6 +33,14 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
           end
         end
       end
+    else
+      render json: { errors: { base: _("Reward does not exist for that action type.") } }, status: :not_found
     end
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

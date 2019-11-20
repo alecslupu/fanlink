@@ -4,7 +4,7 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
     if @post.person.try(:product) == current_user.product
       @post_reaction = @post.reactions.create(parms)
       if @post_reaction.valid?
-        return_the @post_reaction, handler: 'jb', using: :show
+        return_the @post_reaction, handler: tpl_handler, using: :show
       else
         render_422 @post_reaction.errors
       end
@@ -17,7 +17,7 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
     if params.has_key?(:post_reaction)
       if @post_reaction.person == current_user
         if @post_reaction.update_attributes(post_reaction_params)
-          return_the @post_reaction, handler: 'jb'
+          return_the @post_reaction, handler: tpl_handler
         else
           render_422 @post_reaction.errors
         end
@@ -25,7 +25,13 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
         render_not_found
       end
     else
-      return_the @post_reaction, handler: 'jb', using: :show
+      return_the @post_reaction, handler: tpl_handler, using: :show
     end
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

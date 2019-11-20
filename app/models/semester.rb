@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: semesters
+#
+#  id          :bigint(8)        not null, primary key
+#  product_id  :integer          not null
+#  name        :text             not null
+#  description :text             not null
+#  start_date  :datetime         not null
+#  end_date    :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  deleted     :boolean          default(FALSE)
+#
+
 class Semester < ApplicationRecord
   acts_as_tenant(:product)
 

@@ -1,14 +1,14 @@
 RSpec.describe Message, type: :model do
+  # before(:all) do
+  #   @product = create(:product)
+  #   @room = create(:room, product: @product)
+  #   ActsAsTenant.current_tenant = @product
+  # end
 
-  before(:all) do
-    @product = create(:product)
-    @room = create(:room, product: @product)
-    ActsAsTenant.current_tenant = @product
-  end
-
+  let(:room) { create(:room) }
   context "Valid" do
     it "should create a valid message" do
-      expect(create(:message)).to be_valid
+      expect(build(:message)).to be_valid
     end
   end
 
@@ -32,11 +32,11 @@ RSpec.describe Message, type: :model do
   describe ".for_date_range" do
     frozen_time = Time.local(2018, 1, 10, 12, 0, 0)
     Timecop.freeze(frozen_time) do
-      let! (:room) { create(:room, created_at: frozen_time - 1.month) }
-      let! (:msg1) { create(:message, room: room, created_at: frozen_time) }
-      let! (:msg2) { create(:message, room: room, created_at: frozen_time - 1.day) }
-      let! (:msg3) { create(:message, room: room, created_at: frozen_time - 2.days) }
-      let! (:old_msg) { create(:message, room: room, created_at: frozen_time - 10.days) }
+      let!(:room) { create(:room, created_at: frozen_time - 1.month) }
+      let!(:msg1) { create(:message, room: room, created_at: frozen_time) }
+      let!(:msg2) { create(:message, room: room, created_at: frozen_time - 1.day) }
+      let!(:msg3) { create(:message, room: room, created_at: frozen_time - 2.days) }
+      let!(:old_msg) { create(:message, room: room, created_at: frozen_time - 10.days) }
       it "should get messages for a date range with no limit" do
         msgs = Message.for_date_range(room, Date.parse("2018-01-02"), Date.parse("2018-01-10"))
         expect(msgs.to_a).to eq([msg1, msg2, msg3])
@@ -88,18 +88,18 @@ RSpec.describe Message, type: :model do
 
   describe "#visible?" do
     it "should return true if message not hidden" do
-      msg = create(:message)
+      msg = build(:message)
       expect(msg.visible?).to be_truthy
     end
     it "should return false if message hidden" do
-      msg = create(:message, hidden: true)
+      msg = build(:message, hidden: true)
       expect(msg.visible?).to be_falsey
     end
   end
 
   describe "#product" do
     it "should return the product of the room" do
-      msg = create(:message)
+      msg = build(:message)
       expect(msg.product).to eq(msg.room.product)
     end
   end
@@ -109,9 +109,214 @@ RSpec.describe Message, type: :model do
       blocker = create(:person)
       blocked = create(:person)
       blocker.block(blocked)
-      msg = create(:message, room: @room, person_id: blocked.id)
+      msg = create(:message, room: room, person_id: blocked.id)
       expect(Message.unblocked(blocker.blocked_people)).not_to include(msg)
     end
   end
 
+  # TODO: auto-generated
+  describe "#as_json" do
+    it "works" do
+      message = build(:message)
+      result = message.as_json
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#create_time" do
+    it "works" do
+      message = Message.new
+      result = message.create_time
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#mentions" do
+    it "works" do
+      message = Message.new
+      result = message.mentions
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#mentions=" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#name" do
+    it "works" do
+      message = build(:message)
+      expect(message.name).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#product" do
+    it "works" do
+      message = build(:message)
+      expect(message.product).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reported?" do
+    it "works" do
+      message = build(:message)
+      expect(message.reported?).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#username" do
+    it "works" do
+      message = build(:message)
+      expect(message.username).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#visible?" do
+    it "works" do
+      message = build(:message)
+      expect(message.visible?).to be_truthy
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#parse_content" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#pinned" do
+    pending
+  end
+
+  describe ".delete_real_time" do
+    it "responds to " do
+      expect(Message.new).to respond_to(:delete_real_time)
+    end
+    pending
+  end
+  describe ".post" do
+    it "responds to " do
+      expect(Message.new).to respond_to(:post)
+    end
+    pending
+  end
+  describe ".private_message_push" do
+    it "responds to " do
+      expect(Message.new).to respond_to(:private_message_push)
+    end
+    pending
+  end
+
+  context "Scopes" do
+    describe ".id_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:id_filter)
+      end
+      pending
+    end
+    describe ".person_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:person_filter)
+      end
+      pending
+    end
+    describe ".room_id_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:room_id_filter)
+      end
+      pending
+    end
+    describe ".body_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:body_filter)
+      end
+      pending
+    end
+    describe ".created_after_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:created_after_filter)
+      end
+      pending
+    end
+    describe ".created_before_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:created_before_filter)
+      end
+      pending
+    end
+    describe ".reported_filter" do
+      it "responds to" do
+        expect(Message).to respond_to(:reported_filter)
+      end
+      pending
+    end
+
+    # ====
+
+    describe ".person_name_query" do
+      it "responds to" do
+        expect(Message).to respond_to(:person_name_query)
+      end
+      pending
+    end
+    describe ".person_username_query" do
+      it "responds to" do
+        expect(Message).to respond_to(:person_username_query)
+      end
+      pending
+    end
+    describe ".room_query" do
+      it "responds to" do
+        expect(Message).to respond_to(:room_query)
+      end
+      pending
+    end
+    describe ".id_query" do
+      it "responds to" do
+        expect(Message).to respond_to(:id_query)
+      end
+      pending
+    end
+    describe ".body_query" do
+      it "responds to" do
+        expect(Message).to respond_to(:body_query)
+      end
+      pending
+    end
+    describe ".sorted_by" do
+      it "responds to" do
+        expect(Message).to respond_to(:sorted_by)
+      end
+      pending
+    end
+    describe ".with_reported_status" do
+      it "responds to" do
+        expect(Message).to respond_to(:with_reported_status)
+      end
+      pending
+    end
+
+  end
+  describe ".options_for_reported_status_filter" do
+    it "responds to" do
+      expect(Message).to respond_to(:options_for_reported_status_filter)
+    end
+    pending
+  end
 end

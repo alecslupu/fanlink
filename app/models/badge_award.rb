@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: badge_awards
+#
+#  id         :bigint(8)        not null, primary key
+#  person_id  :integer          not null
+#  badge_id   :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class BadgeAward < ApplicationRecord
   belongs_to :badge
   belongs_to :person, touch: true
@@ -11,20 +22,20 @@ class BadgeAward < ApplicationRecord
     badge_pending = {}
     best_perc = 0.0
     already_earned = badge_action.person.badges
-    badge_action.action_type.badges.each do |b|
-      next if already_earned.include?(b) || !b.current?
-      achieved = b.action_count_earned_by(badge_action.person)
-      required = b.action_requirement
+    badge_action.action_type.badges.each do |badge|
+      next if already_earned.include?(badge) || !badge.current?
+      achieved = badge.action_count_earned_by(badge_action.person)
+      required = badge.action_requirement
       if achieved >= required
-        create(person: badge_action.person, badge: b)
-        badge_awards << b
+        create(person: badge_action.person, badge: badge)
+        badge_awards << badge
       end
       if badge_awards.empty?
-        perc = (achieved * 1.0) / b.action_requirement
+        perc = (achieved * 1.0) / badge.action_requirement
         if perc > best_perc
           best_perc = perc
           badge_pending.clear
-          badge_pending[b] = achieved
+          badge_pending[badge] = achieved
         end
       end
     end

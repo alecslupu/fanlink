@@ -1,20 +1,18 @@
 RSpec.describe BadgeAction, type: :model do
   subject { FactoryBot.create(:badge_action, action_type_id: FactoryBot.create(:action_type).id, person_id: FactoryBot.create(:person).id, identifier: "myaction") }
+
+  context "Valid factory" do
+    it { expect(build(:badge_action)).to be_valid }
+  end
   context "Associations" do
     describe "#belongs_to" do
-      it "should belong to action" do
-        should belong_to(:action_type)
-      end
-      it "should belong to and touch person" do
-        should belong_to(:person).touch(true)
-      end
+      it { should belong_to(:action_type) }
+      it { should belong_to(:person).touch(true) }
     end
   end
   context "Validations" do
     describe "Uniqueness" do
-      it "should validate uniqueness of the identifier in respect to person_id and action_type_id" do
-        should validate_uniqueness_of(:identifier).scoped_to(%i[ person_id action_type_id ]).allow_nil.with_message(_("Sorry, you cannot get credit for that action again."))
-      end
+      it { should validate_uniqueness_of(:identifier).scoped_to(%i[person_id action_type_id]).allow_nil.with_message(_("Sorry, you cannot get credit for that action again.")) }
     end
   end
   describe "#identifier" do
@@ -56,8 +54,8 @@ RSpec.describe BadgeAction, type: :model do
       ActsAsTenant.with_tenant(person.product) do
         action_type1 = create(:action_type)
         action_type2 = create(:action_type)
-        ba1 = BadgeAction.create(action_type_id: action_type1.id, person_id: person.id, identifier: ident)
-        ba2 = BadgeAction.create(action_type_id: action_type2.id, person_id: person.id, identifier: ident)
+        ba1 = BadgeAction.new(action_type_id: action_type1.id, person_id: person.id, identifier: ident)
+        ba2 = BadgeAction.new(action_type_id: action_type2.id, person_id: person.id, identifier: ident)
         expect(ba2).to be_valid
       end
     end

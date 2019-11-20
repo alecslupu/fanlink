@@ -1,5 +1,5 @@
 RSpec.describe Post, type: :model do
-  before(:all) do
+  before(:each) do
     @product = Product.first || create(:product)
     ActsAsTenant.current_tenant = @product
     @person = create(:person)
@@ -13,13 +13,60 @@ RSpec.describe Post, type: :model do
     @followed1_post1 = create(:post, created_at: created_in_range - 1.minute, person: @followed1)
     @followed1_post2 = create(:post, created_at: created_in_range, person: @followed1)
     @followed2_post1 = create(:post, created_at: created_in_range + 1.minute, person: @followed2)
-    @before_range = create(:post, created_at: @start_date - 1.day, person: @followed1) #before range
-    create(:post, created_at: @end_date + 1.day) #after range
+    @before_range = create(:post, created_at: @start_date - 1.day, person: @followed1) # before range
+    create(:post, created_at: @end_date + 1.day) # after range
   end
 
   context "Valid" do
     it "should create a valid post" do
-      expect(create(:post)).to be_valid
+      expect(build(:post)).to be_valid
+    end
+  end
+
+  describe "scopes" do
+    describe ".id_filter" do
+      it do
+        expect(Post).to respond_to(:id_filter)
+      end
+      pending
+    end
+    describe ".person_id_filter" do
+      it do
+        expect(Post).to respond_to(:person_id_filter)
+      end
+      pending
+    end
+
+    describe ".person_filter" do
+      it do
+        expect(Post).to respond_to(:person_filter)
+      end
+      pending
+    end
+
+    describe ".body_filter" do
+      it do
+        expect(Post).to respond_to(:body_filter)
+      end
+      pending
+    end
+    describe ".posted_after_filter" do
+      it do
+        expect(Post).to respond_to(:posted_after_filter)
+      end
+      pending
+    end
+    describe ".posted_before_filter" do
+      it do
+        expect(Post).to respond_to(:posted_before_filter)
+      end
+      pending
+    end
+    describe ".status_filter" do
+      it do
+        expect(Post).to respond_to(:status_filter)
+      end
+      pending
     end
   end
 
@@ -95,4 +142,141 @@ RSpec.describe Post, type: :model do
       expect(post.errors[:starts_at]).not_to be_empty
     end
   end
+
+  # TODO: auto-generated
+  describe "#cache_key" do
+    it "works" do
+      post = build(:post)
+      result = post.cache_key
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#comments" do
+    it "works" do
+      post = Post.new
+      result = post.comments
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#product" do
+    it "works" do
+      post = build(:post)
+      result = post.product
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # # TODO: auto-generated
+  # describe "#cached_person" do
+  #   it "works" do
+  #     post = build(:post)
+  #     result = post.cached_person
+  #     expect(result).not_to be_nil
+  #   end
+  #   pending
+  # end
+  #
+
+  # TODO: auto-generated
+  describe "#cached_for_product" do
+    it "works" do
+      post = create(:post)
+      product = post.product
+      result = Post.cached_for_product(product)
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#process_et_response" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#video_thumbnail" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#flush_cache" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reaction_breakdown" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_reaction_count" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#cached_tags" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reactions" do
+    it "works" do
+      post = create(:post)
+      result = post.reactions
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#reported?" do
+    it "works" do
+      post = Post.new
+      result = post.reported?
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#visible?" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#start_listener" do
+    pending
+  end
+
+  # TODO: auto-generated
+  describe "#published?" do
+    it "works" do
+      post = Post.new
+      result = post.published?
+      expect(result).not_to be_nil
+    end
+    pending
+  end
+
+
+  describe "#delete_real_time" do
+    it "responds to method " do
+      expect(Post.new).to respond_to(:delete_real_time)
+    end
+    pending
+  end
+  describe "#post" do
+    it "responds to method " do
+      expect(Post.new).to respond_to(:post)
+    end
+    pending
+  end
+
 end

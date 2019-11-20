@@ -1,5 +1,28 @@
+# == Schema Information
+#
+# Table name: rewards
+#
+#  id                     :bigint(8)        not null, primary key
+#  product_id             :integer          not null
+#  name                   :jsonb            not null
+#  internal_name          :text             not null
+#  reward_type            :integer          default("badge"), not null
+#  reward_type_id         :integer          not null
+#  series                 :text
+#  completion_requirement :integer          default(1), not null
+#  points                 :integer          default(0)
+#  status                 :integer          default("active"), not null
+#  deleted                :boolean          default(FALSE)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#
+
 class Reward < ApplicationRecord
   include TranslationThings
+  include Reward::Badges
+  include Reward::Contests
+  include Reward::Coupons
+  include Reward::Urls
   enum reward_type: %i[ badge url coupon ]
   enum status: %i[ active inactive ]
 

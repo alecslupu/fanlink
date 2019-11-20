@@ -8,7 +8,7 @@ module Apigen
     ##
     # Endpoint is a definition of a specific endpoint in the API, e.g. /users with GET method.
     class Endpoint
-      PATH_PARAMETER_REGEX = /\{(\w+)\}/
+      PATH_PARAMETER_REGEX = /\{(\w+)\}/.freeze
 
       attribute_setter_getter :name
       attribute_setter_getter :description
@@ -29,19 +29,18 @@ module Apigen
         @tags = []
       end
 
-
       def tag(name, description = nil, externalDocs = {})
         return @tags unless name
+
         @tags << name
-        if description
-          Apigen::Rest::Api.set_tag(name, description, externalDocs)
-        end
+        Apigen::Rest::Api.set_tag(name, description, externalDocs) if description
       end
 
       #
       # Declares the HTTP method.
       def method(method = nil)
         return @method unless method
+
         case method
         when :get, :post, :put, :delete
           @method = method
@@ -54,6 +53,7 @@ module Apigen
       # Declares the endpoint path relative to the host.
       def path(path = nil, &block)
         return @path unless path
+
         @path = path
         if PATH_PARAMETER_REGEX.match path
           set_path_parameters(path, &block)
@@ -66,6 +66,7 @@ module Apigen
       # Declares query parameters.
       def query(&block)
         raise 'You must pass a block when calling `query`.' unless block_given?
+
         @query_parameters.instance_eval(&block)
       end
 
@@ -73,6 +74,7 @@ module Apigen
       # Declares the input type of an endpoint.
       def input(&block)
         return @input unless block_given?
+
         @input = Input.new
         @input.instance_eval(&block)
       end
@@ -81,9 +83,11 @@ module Apigen
       # Declares the output of an endpoint for a given status code.
       def output(name, &block)
         raise "Endpoint :#{@name} declares the output :#{name} twice." if @outputs.find { |o| o.name == name }
+
         output = Output.new name
         @outputs << output
         raise 'You must pass a block when calling `output`.' unless block_given?
+
         output.instance_eval(&block)
         output
       end
@@ -94,6 +98,7 @@ module Apigen
         output = @outputs.find { |o| o.name == name }
         raise "Endpoint :#{@name} never declares the output :#{name} so it cannot be updated." unless output
         raise 'You must pass a block when calling `update_output`.' unless block_given?
+
         output.instance_eval(&block)
         output
       end
@@ -160,6 +165,7 @@ module Apigen
 
       def validate_required_input(model_registry)
         raise "Use `input { type :typename }` to assign an input type to :#{@name}." unless @input
+
         @input.validate(model_registry)
       end
 
@@ -173,6 +179,7 @@ module Apigen
 
       def validate_outputs(model_registry)
         raise "Endpoint :#{@name} does not declare any outputs" if @outputs.empty?
+
         @outputs.each do |output|
           output.validate model_registry
         end

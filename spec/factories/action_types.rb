@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: action_types
+#
+#  id                  :bigint(8)        not null, primary key
+#  name                :text             not null
+#  internal_name       :text             not null
+#  seconds_lag         :integer          default(0), not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  active              :boolean          default(TRUE), not null
+#  badge_actions_count :integer
+#  badges_count        :integer
+#
+
 FactoryBot.define do
   factory :action_type do
     sequence(:name) { |n| "Action #{n}" }

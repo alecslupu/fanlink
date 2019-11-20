@@ -36,10 +36,10 @@ class Api::V3::PollsController < ApiController
   def create
     parms = poll_params
     @poll = Poll.create(parms)
-    @poll.poll_type_id = params[params[:poll][:poll_type]+"_id"]
+    @poll.poll_type_id = params[params[:poll][:poll_type] + "_id"]
     if @poll.valid?
       @poll.save
-      return_the @poll, handler: 'jb', using: :show
+      return_the @poll, handler: tpl_handler, using: :show
     else
       render_422 @poll.errors
     end
@@ -68,7 +68,7 @@ class Api::V3::PollsController < ApiController
   # *
 
   def destroy
-    if @post.person == current_user || current_user.some_admin?
+    if @post.person == current_user || some_admin?
       @poll.destroy
       head :ok
     else
@@ -131,13 +131,16 @@ class Api::V3::PollsController < ApiController
 
   def list
     @polls = Poll.all
-    return_the @polls, handler: 'jb'
+    return_the @polls, handler: tpl_handler
   end
 
-private
+  protected
 
-  def poll_params
-    params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: {})
-  end
+    def tpl_handler
+      :jb
+    end
+
+    def poll_params
+      params.require(:poll).permit(:description, :start_date, :duration, :poll_status, :poll_type, :poll_type_id, description: {})
+    end
 end
-

@@ -1,0 +1,2 @@
+class CertificateCertcoursePolicy < CoursewareModulePolicy
+end

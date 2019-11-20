@@ -170,7 +170,7 @@ class Api::V3::PostsController < Api::V2::PostsController
       if person
         @posts = paginate(Post.visible.for_person(person).unblocked(current_user.blocked_people).order(created_at: :desc))
       else
-        render_422(_("Cannot find that person.")) && return
+        render_422(_("Cannot find that person."))
       end
     else
       @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
@@ -284,7 +284,7 @@ class Api::V3::PostsController < Api::V2::PostsController
   # *
 
   def show
-    if current_user.try(:some_admin?) && @req_source == "web"
+    if current_user.try(:some_admin?) && web_request?
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
     else
       @post = Post.for_product(ActsAsTenant.current_tenant).unblocked(current_user.blocked_people).find(params[:id])
@@ -407,39 +407,39 @@ class Api::V3::PostsController < Api::V2::PostsController
     Poll.create(params)
 
     #       Connection.create(
-     #       from_member_id: target_from.id,
-      #      to_member_id: target_to.id,
-       #     rank: rank,
-        #    answered_survey: answered_survey
-    #)
+    #       from_member_id: target_from.id,
+    #      to_member_id: target_to.id,
+    #     rank: rank,
+    #    answered_survey: answered_survey
+    # )
   end
 
-  private
+  protected
 
-  def get_product
-    product = nil
-    if params[:product].present?
-      product = Product.find_by(internal_name: params[:product])
-    end
-    product
-  end
-
-  def apply_filters
-    posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
-    params.each do |p, v|
-      if p.end_with?("_filter") && Post.respond_to?(p)
-        posts = posts.send(p, v)
+    def get_product
+      product = nil
+      if params[:product].present?
+        product = Product.find_by(internal_name: params[:product])
       end
+      product
     end
-    posts
-  end
 
-  def load_post
-    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
-  end
+    def apply_filters
+      posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
+      params.each do |p, v|
+        if p.end_with?("_filter") && Post.respond_to?(p)
+          posts = posts.send(p, v)
+        end
+      end
+      posts
+    end
 
-  def post_params
-    params.require(:post).permit(%i[ body audio picture video global starts_at ends_at repost_interval status priority notify_followers category_id ] +
-                                 ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended, :pinned, body: {}] : []))
-  end
+    def load_post
+      @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
+    end
+
+    def post_params
+      params.require(:post).permit(%i[ body audio picture video global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+                                   ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended, :pinned, body: {}] : []))
+    end
 end

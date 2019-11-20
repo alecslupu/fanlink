@@ -14,6 +14,7 @@ module Apigen
 
     def add_endpoint(name, &block)
       raise 'You must pass a block when calling `add_endpoint`.' unless block_given?
+
       @api.endpoint(name, &block)
     end
 
@@ -25,6 +26,7 @@ module Apigen
                 'You must pass a block when calling `update_endpoint`.'
               end
       raise error unless error.nil?
+
       endpoint.instance_eval(&block)
     end
 
@@ -49,6 +51,7 @@ module Apigen
                 'You must pass a block when calling `update_model`.'
               end
       raise error unless error.nil?
+
       model.instance_eval(&block)
     end
 

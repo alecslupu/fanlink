@@ -1,0 +1,2 @@
+class StringConfigItemPolicy < ConfigItemPolicy
+end

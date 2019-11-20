@@ -1,6 +1,24 @@
+# == Schema Information
+#
+# Table name: portal_notifications
+#
+#  id          :bigint(8)        not null, primary key
+#  product_id  :integer          not null
+#  body        :jsonb            not null
+#  send_me_at  :datetime         not null
+#  sent_status :integer          default("pending"), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class PortalNotification < ApplicationRecord
-  include PortalNotification::RealTime
   include TranslationThings
+
+  attr_accessor :trigger_admin_notification
+  after_commit -> { enqueue_push }, on: :create, if: proc { |record| record.trigger_admin_notification }
+  after_commit -> { update_push }, on: :update, if: proc { |record|
+    record.trigger_admin_notification == true && record.previous_changes.keys.include?("send_me_at")
+  }
 
   # specify languages not used for respective fields
   IGNORE_TRANSLATION_LANGS = { body: ["un"] }
@@ -27,12 +45,31 @@ class PortalNotification < ApplicationRecord
 
   def push_topics
     topics = {}
-    LANGS.keys.each do |l|
-      topics[l] = "#{product.internal_name}-portal_notices-#{l}" unless ignore_translation_lang?(:body, l)
+    LANGS.keys.each do |language|
+      topics[language] = "#{product.internal_name}-portal_notices-#{language}" unless ignore_translation_lang?(:body, language)
     end
     topics
   end
+
+  def enqueue_push
+    if pending? && self.send_me_at > Time.zone.now
+      Delayed::Job.enqueue(PortalNotificationPushJob.new(self.id), run_at: self.send_me_at)
+    end
+  end
+
+  def update_push
+    if pending? && self.send_me_at > Time.zone.now
+      get_job.try(:destroy)
+      enqueue_push
+    end
+  end
 private
+
+  # Yes this is too much coupled with DJ's internals, but that is because DJ makes it too hard to do this. Only
+  # real solution is to switch to a job framework that does not have this limitation.
+  def get_job
+    Delayed::Job.find_by("handler like '%portal_notification_id: #{self.id}%'")
+  end
 
   def sensible_send_time
     unless persisted?

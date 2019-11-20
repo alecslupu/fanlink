@@ -5,46 +5,6 @@ class Api::V3::PeopleController < Api::V2::PeopleController
   skip_before_action :require_login, only: %i[ create ]
   skip_before_action :require_login, :set_product, only: %i[ public ]
 
-
-  # **
-  # @api {patch} /people/:id/change_password Change your password.
-  # @apiName ChangePassword
-  # @apiGroup People
-  # @apiVersion 1.0.0
-  #
-  # @apiDescription
-  #   This is used to change the logged in user's password.
-  #
-  # @apiParam (path) {Object} id
-  #   The person id.
-  # @apiParam (body) {Object} person
-  #   The person's information.
-  # @apiParam (body) {String} person.current_password
-  #   Current password.
-  # @apiParam (body) {String} [person.new_password]
-  #   New password.
-  #
-  # @apiSuccessExample {json} Success-Response:
-  #     HTTP/1.1 200 Ok or 422
-  # *
-
-  def change_password
-    if @person == current_user
-      if @person.valid_password?(person_params[:current_password])
-        @person.password = person_params[:new_password]
-        if @person.save
-          head :ok
-        else
-          render_422 @person.errors
-        end
-      else
-        render_422(_("The password is incorrect"))
-      end
-    else
-      render_not_found
-    end
-  end
-
   # **
   # @api {post} /people Create person.
   # @apiName CreatePerson
@@ -157,7 +117,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
 
   def index
     @people = paginate apply_filters
-    @people = @people.reject {|person| person==current_user}
+    @people = @people.reject { |person| person == current_user }
     return_the @people
   end
 
@@ -272,7 +232,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       if !check_gender
         render_422("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
-        if @person == current_user || current_user.some_admin? || current_user.product_account
+        if @person == current_user || some_admin? || current_user.product_account
           if person_params.has_key?(:terminated) && @person.some_admin?
             return render_422 _("You cannot ban administative accounts.")
           end
@@ -298,7 +258,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       @person = Person.find(params[:id])
       @person.destroy
       head :ok
-    elsif current_user.some_admin?
+    elsif some_admin?
       @person.update(deleted: true)
       head :ok
     else
@@ -312,24 +272,10 @@ class Api::V3::PeopleController < Api::V2::PeopleController
 
 private
 
-  def apply_filters
-    people = Person.order(created_at: :desc)
-    params.each do |p, v|
-      if p.end_with?("_filter") && Person.respond_to?(p)
-        people = people.send(p,v, current_user)
-      end
-    end
-    people
-  end
-
-  def check_gender
-    params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
-  end
-
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password do_not_message_me ] +
                                    ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended pin_messages_from auto_follow ] : []) +
-                                   ((current_user.present? && current_user.some_admin?) ? %i[ chat_banned role tester product_account designation terminated terminated_reason ] : []))
+                                   ((current_user.present? && some_admin?) ? %i[ chat_banned role tester product_account designation terminated terminated_reason ] : []))
   end
 end

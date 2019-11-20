@@ -6,35 +6,41 @@ class Api::V4::CategoriesController < Api::V3::CategoriesController
     @categories = @categories.for_staff if current_user.staff?
     @categories = @categories.for_user if current_user.normal?
     @categories = @categories.for_product_account if current_user.product_account?
-    return_the @categories, handler: 'jb'
+    return_the @categories, handler: tpl_handler
   end
 
   def show
     @category = Category.find(params[:id])
-    return_the @category, handler: 'jb'
+    return_the @category, handler: tpl_handler
   end
 
   def create
     @category = Category.create(category_params)
-    return_the @category, handler: 'jb', using: :show
+    return_the @category, handler: tpl_handler, using: :show
   end
 
   def update
     if params.has_key?(:category)
       if @category.update_attributes(category_params)
         broadcast(:category_updated, current_user, @category)
-        return_the @category, handler: 'jb', using: :show
+        return_the @category, handler: tpl_handler, using: :show
       else
         render_422 @category.errors
       end
     else
-      return_the @category, handler: 'jb', using: :show
+      return_the @category, handler: tpl_handler, using: :show
     end
   end
 
   def posts
     @posts = paginate Post.for_category(params[:category_name])
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-    return_the @posts, handler: 'jb'
+    return_the @posts, handler: tpl_handler
   end
+
+  protected
+
+    def tpl_handler
+      :jb
+    end
 end

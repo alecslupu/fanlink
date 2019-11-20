@@ -1,4 +1,4 @@
-class Api::V3::ActivityTypesController <Api::V2::ActivityTypesController
+class Api::V3::ActivityTypesController < Api::V2::ActivityTypesController
   load_up_the QuestActivity, from: :activity_id, only: %i[ create index ]
   load_up_the ActivityType, only: %i[ show update destroy ]
   # **
@@ -225,7 +225,7 @@ class Api::V3::ActivityTypesController <Api::V2::ActivityTypesController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @activity_type.update(deleted: true)
         head :ok
       else

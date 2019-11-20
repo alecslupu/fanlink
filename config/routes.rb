@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-  if Rails.env.development?
-    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
-  end
+  get "/config/:internal_name" => "config#show"
 
-  post "/graphql", to: "graphql#execute"
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+  mount RailsAdmin::Engine => "/admin_portal", :as => "rails_admin"
 
-  
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
   end
@@ -14,14 +13,25 @@ Rails.application.routes.draw do
   # draw :v3
   draw :jko
 
-  post '/aws/video_transcoded' => 'aws#video_transcoded'
+  draw :trivia unless Rails.env.production?
 
-  get '/status' => 'application#status'
-  #temporary hack to get around need for Accept header with api stuff
+  post "/aws/video_transcoded" => "aws#video_transcoded"
+
+  get "/status" => "application#status"
+  # temporary hack to get around need for Accept header with api stuff
   # TODO: move the password reset controller update out of the api
   post "/people/password_reset" => "api/v1/password_resets#update"
-  draw :administrate
-  if Rails.env.development?
-    match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
+  namespace :admin do
+
+    post "login" => "sessions#create"
+    get "logout" => "sessions#destroy"
+    get ":product_internal_name" => "sessions#login_redirect"
+
+    get ":product_internal_name/login" => "sessions#new", as: :login_screen
+    root to: redirect("/admin_portal")
   end
+  get ":product/share_post/:post_id", to: "posts#share", as: "cache_post"
+  get "/:product_id/static_content/:slug" => "static_contents#show"
+
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
 end

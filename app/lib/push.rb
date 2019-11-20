@@ -63,12 +63,24 @@ module Push
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
   end
 
+  def simple_notification_push(notification, current_user, receipents)
+    tokens = []
+    receipents.each do |person|
+      tokens += person.notification_device_ids.map { |ndi| ndi.device_identifier }
+    end
+    do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
+  end
+
 private
 
   def push_client
-    @fbcm ||= FCM.new(FIREBASE_CM_KEY)
+    @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
   end
   module_function :push_client
+
+  def disconnect
+    @fbcm = nil
+  end
 
   def do_push(tokens, title, body, type, data = {})
     unless tokens.empty?
@@ -81,17 +93,36 @@ private
       options[:data] = data
       options[:data][:notification_type] = type
       options[:data][:priority] = "high"
-      Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
-      resp = push_client.send(tokens, options)
-      Rails.logger.error("Got FCM response: #{resp.inspect}")
+      push_with_retry(options, tokens)
     end
   end
   module_function :do_push
 
+  def push_with_retry(options, tokens)
+    resp = nil
+    begin
+      retries ||= 0
+      Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
+      resp = push_client.send(tokens.sort, options)
+      Rails.logger.error("Got FCM response: #{resp.inspect}")
+    rescue Errno::EPIPE
+      # FLAPI-839
+      disconnect
+      retry if (retries += 1) < 2
+    end
+    resp
+  end
+
   def do_topic_push(topic, msg)
-    Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
-    resp = push_client.send_to_topic(topic, notification: { body: msg })
-    Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
+    begin
+      Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
+      resp = push_client.send_to_topic(topic, notification: { body: msg })
+      Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
+    rescue Errno::EPIPE
+      # FLAPI-839
+      disconnect
+      retry if (retries += 1) < 2
+    end
     resp[:status_code] == 200
   end
 end

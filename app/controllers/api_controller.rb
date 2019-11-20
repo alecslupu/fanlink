@@ -8,54 +8,25 @@ class ApiController < ApplicationController
 
   set_current_tenant_through_filter
 
-  before_action :set_language, :set_product, :set_api_version, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned
+  before_action :set_language, :set_product, :set_api_version, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned, :set_default_format
   after_action :unset_person, :unset_app
 
-  #
-  # Respond to an API request with an object. If the object is invalid
-  # (i.e. responds to `valid?` and `valid?` is false) then we will send
-  # back `{ :errors => obj.errors }` in JSON with a 402 response code;
-  # otherwise we will respond by rendering the current action's view.
-  #
-  # You can use the `:using` option to specify a different action. A common
-  # use would be something like this:
-  #
-  #     return_the @thing, :using => :show
-  #
-  # This is a homebrew replacement for `respond_with` which disappeared
-  # in Rails4.
-  #
-  # @param [Object] obj
-  #   The object to respond with.
-  # @param [Hash] opts
-  #   Options. We currently only have a `:using` option that defaults
-  #   to the current `params[:action]` value.
-  #
-  def return_the(obj, opts = {})
-    opts = { using: params[:action], handler: "jbuilder", postfix: "base" }.merge(opts)
-    # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller] #ActAsApi
-    #
-    # If `obj` doesn't know what `valid?` means then we're presumably
-    # dealing with a simple Hash or something and such things are presumably
-    # okay. If `obj.destroyed?` then we're presumably responding to a
-    # successful DESTROY call. The `valid?` should should take care of
-    # everything else.
-    #
-    if obj.nil?
-      render_404(_("Not found.")) and return
-      # return
-    elsif (obj.respond_to?(:valid?) && !obj.valid?)
-      render_422(obj.errors) and return
-      # return
-    elsif (!obj.respond_to?(:valid?) || obj.destroyed? || obj.valid?)
-      render action: opts[:using], formats: %i[json], handlers: opts[:handler] && return
-    end
-  end
 
 protected
+  def set_default_format
+    request.format = :json
+  end
+
+  def some_admin?
+    !%w[normal client client_portal].include?(current_user.assigned_role.internal_name)
+  end
+
+  def web_request?
+    @req_source == :web
+  end
 
   def admin_only
-    head :unauthorized unless current_user.some_admin?
+    head :unauthorized unless some_admin?
   end
 
   def super_admin_only
@@ -66,15 +37,15 @@ protected
     if controller.nil?
       render_404(_("Not found."))
     else
-      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}")
-      "#{controller.to_s.downcase.singularize}_#{version.to_s}_#{using}".to_sym
+      Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version}_#{using}")
+      "#{controller.to_s.downcase.singularize}_#{version}_#{using}".to_sym
     end
   end
 
   def set_api_version
     # /api\/(?<version>v[0-9]+)\/(?<template>\w+)/ =~ params[:controller]
     # /\Aapplication\/vnd\.api\.v(?<version>[0-9]+)\+json\z/ =~ request.headers['Accept']a
-    @api_version = 5
+    @api_version = 4
   end
 
   def check_banned
@@ -139,16 +110,14 @@ protected
         if request.headers["X-Current-Product"].present?
           product = Product.find_by(internal_name: request.headers["X-Current-Product"])
         else
-          if params[:product]
-            product = Product.find_by(internal_name: params[:product])
-          end
+          product = Product.find_by(internal_name: params[:product]) if params[:product]
           product = current_user.try(:product) if product.nil?
         end
       end
     end
     product = (current_user.present? && current_user.try(:product)) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
-      render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
+      render json: {errors: "You must supply a valid product"}, status: :unprocessable_entity
     else
       set_current_tenant(product)
       cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
@@ -171,11 +140,8 @@ protected
 
   def set_app
     @device = find_device_type
-    if @device.to_s == "web"
-      @req_source = @device.to_s
-    else
-      @req_source = "app"
-    end
+    @req_source = "app"
+    @req_source = @device.to_s if @device.to_s == "web"
   end
 
   def unset_app

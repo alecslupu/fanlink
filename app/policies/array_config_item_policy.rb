@@ -1,0 +1,2 @@
+class ArrayConfigItemPolicy < ConfigItemPolicy
+end

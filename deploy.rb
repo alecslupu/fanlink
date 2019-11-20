@@ -10,6 +10,18 @@ class Deploy < Thor
 
     current = `git rev-parse --abbrev-ref HEAD`.chomp
 
+    if dest == "staging"
+      say "This deploy script has been deprecated.", :red
+      say "Internally invoking ", :green
+      say " cap staging deploy ", :yellow
+      say " ", :yellow
+      Open3.popen2(*%w[cap staging deploy]) do |input, output, _|
+        input.close
+        output.each { |line| puts line }
+      end
+      exit
+    end
+
     if current != branch
       say "Not on the branch #{branch}.  Switch away from #{current}", :red
       exit

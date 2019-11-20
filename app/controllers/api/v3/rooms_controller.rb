@@ -51,8 +51,8 @@ class Api::V3::RoomsController < Api::V2::RoomsController
     @room = Room.create(room_params.merge(status: :active, created_by_id: current_user.id).except(:member_ids))
     if @room.valid?
       if !@room.public
-        blocks_with = current_user.blocks_with.map { |b| b.id }
-        members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map { |m| m.to_i } : []
+        blocks_with = current_user.blocks_with.map(&:id)
+        members_ids = room_params[:member_ids].is_a?(Array) ? room_params[:member_ids].map(&:to_i) : []
         members_ids << current_user.id
         members_ids.uniq.each do |i|
           unless blocks_with.include?(i)
@@ -88,7 +88,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   # *
   def destroy
     @room = Room.find(params[:id])
-    if @room.created_by_id == current_user.id || current_user.some_admin?
+    if @room.created_by_id == current_user.id || some_admin?
       @room.deleted!
       @room.delete_me(@api_version)
       head :ok
@@ -161,7 +161,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   def update
     @room = Room.find(params[:id])
     if params.has_key?(:room)
-      if current_user.some_admin?
+      if some_admin?
         if @room.update_attributes(room_params)
           return_the @room
         else
@@ -182,11 +182,11 @@ class Api::V3::RoomsController < Api::V2::RoomsController
   end
 
   private
-  def room_params
-    allowed_params = [ :name, :picture, member_ids: [] ]
-    if current_user.admin? || current_user.product_account? || current_user.super_admin?
-      allowed_params += [ :description, :public, :order ]
+    def room_params
+      allowed_params = [ :name, :picture, member_ids: [] ]
+      if current_user.admin? || current_user.product_account? || current_user.super_admin?
+        allowed_params += [ :description, :public, :order ]
+      end
+      params.require(:room).permit(allowed_params)
     end
-    params.require(:room).permit(allowed_params)
-  end
 end

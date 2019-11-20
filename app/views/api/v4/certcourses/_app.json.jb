@@ -1,3 +1,4 @@
+last_person_certcourse = certcourse.person_certcourses.for_person(person).last
 json = {
   id: certcourse.id,
   certificate_id: @certificate.id,
@@ -7,9 +8,10 @@ json = {
   description: certcourse.description,
   duration: certcourse.duration,
   color_hex: certcourse.color_hex,
-  page_count: certcourse.certcourse_pages.count,
-  is_completed: certcourse.person_certcourses.for_person(person).present? ? certcourse.person_certcourses.for_person(person).last.last_completed_page_id == certcourse.certcourse_pages.order("certcourse_page_order").last.id : false ,
-  last_completed_page_id: certcourse.person_certcourses.for_person(person).present? ? certcourse.person_certcourses.for_person(person).last.last_completed_page_id : 0,
-  copyright_text: certcourse.copyright_text
+  page_count: certcourse.certcourse_pages.size,
+  is_completed: last_person_certcourse.nil? ? false : last_person_certcourse.is_completed,
+  last_completed_page_id: last_person_certcourse.nil? ? nil : last_person_certcourse.last_completed_page_id,
+  copyright_text: certcourse.copyright_text,
+  is_started: certcourse.certcourse_pages.joins(:course_page_progresses).where(course_page_progresses: {person_id: person.id}).count > 0
 }
 json

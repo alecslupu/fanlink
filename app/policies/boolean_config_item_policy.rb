@@ -1,0 +1,2 @@
+class BooleanConfigItemPolicy < ConfigItemPolicy
+end

@@ -23,6 +23,7 @@ JkoApi.routes self do
         post "password_forgot" => "password_resets#create"
         post "password_reset" => "password_resets#update"
         get "recommended" => "recommended_people#index"
+        post "send_certificate"
       end
     end
     get "post_comments/list" => "post_comments#list"
@@ -49,7 +50,6 @@ JkoApi.routes self do
         delete "" => "session#destroy"
       end
     end
-
   end
 
   version 2 do
@@ -57,11 +57,9 @@ JkoApi.routes self do
 
     resources :merchandise, only: %i[ create update destroy ]
 
-    resources :activities, :controller => "quest_activities", only: %i[ update show destroy ] do
-      resources :types, :controller => "activity_types", only: %i[ create index ]
+    resources :activities, controller: "quest_activities", only: %i[ update show destroy ] do
+      resources :types, controller: "activity_types", only: %i[ create index ]
     end
-
-
 
     resources :activity_types, only: %i[ show update destroy ] do
       collection do
@@ -73,7 +71,7 @@ JkoApi.routes self do
       get "badges" => "badges#index"
     end
 
-    resources :beacons, :controller => "product_beacons" do
+    resources :beacons, controller: "product_beacons" do
       collection do
         get "list" => "product_beacons#list"
         get "select" => "product_beacons#index"
@@ -94,21 +92,21 @@ JkoApi.routes self do
 
     resources :quests do
       resources :steps, only: %i[ create index ]
-      resources :completions, :controller => "quest_completions", only: %i[ create index ]
+      resources :completions, controller: "quest_completions", only: %i[ create index ]
       collection do
         get "list" => "quests#list"
         get "select" => "quests#index"
       end
     end
 
-    resources :completions, :controller => "quest_completions", only: %i[ index update show ] do
+    resources :completions, controller: "quest_completions", only: %i[ index update show ] do
       collection do
         get "list" => "quest_completions#list"
       end
     end
     resources :steps, only: %i[ show update destroy ] do
-      resources :activities, :controller => "quest_activities", only: %i[ create index ]
-      resources :completions, :controller => "quest_completions", only: %i[ create index ]
+      resources :activities, controller: "quest_activities", only: %i[ create index ]
+      resources :completions, controller: "quest_completions", only: %i[ create index ]
     end
     resources :tags, only: %i[ index ]
   end
@@ -121,7 +119,7 @@ JkoApi.routes self do
       end
     end
 
-    resources :activities, :controller => "quest_activities", except: %i[ create index show update ] do
+    resources :activities, controller: "quest_activities", except: %i[ create index show update ] do
       collection do
         post "complete" => "reward_progresses#create"
       end
@@ -152,7 +150,7 @@ JkoApi.routes self do
 
     resources :lessons, except: %i[ index create ]
 
-    resources :people, only: %i[ create index show update destroy] do
+    resources :people, only: %i[ create index show update destroy ] do
       member do
         get "interests" => "people#interests"
         get "public" => "people#public"
@@ -166,13 +164,13 @@ JkoApi.routes self do
       post "pin" => "pin_messages#pin_to"
     end
 
-    resources :pin_messages, only: %i[ destroy], path: :pinned
+    resources :pin_messages, only: %i[ destroy ], path: :pinned
 
     resources :portal_notifications
 
     resources :posts, except: %i[ new edit ] do
-      resources :polls,  :controller => "polls", only: %i[ create update destroy ] do
-        resources :poll_options, :controller => "poll_options", only: %i[ create update list destroy ] do
+      resources :polls, controller: "polls", only: %i[ create update destroy ] do
+        resources :poll_options, controller: "poll_options", only: %i[ create update list destroy ] do
           post "/cast_vote" => "poll_options#cast_vote"
           delete "/delete_votes" => "poll_options#delete_votes"
         end
@@ -187,7 +185,7 @@ JkoApi.routes self do
     end
 
     resources :polls, only: %i[ index ] do
-      resources :poll_options, :controller => "poll_options", only: %i[ show index cast_vote ]
+      resources :poll_options, controller: "poll_options", only: %i[ show index cast_vote ]
     end
 
     resources :quests, except: %i[ create index show update ] do
@@ -217,19 +215,32 @@ JkoApi.routes self do
         post "complete" => "reward_progresses#create"
       end
     end
-
   end
 
   version 4 do
-    #to be modified
-    resources :certificates do
-      resources :certcourses, only:[:index]
+    resources :session, only: %i[ create index ] do
+      post :token, on: :collection
     end
-    resources :certcourses, only: [:show, :create]
-    resources :person_certificates, only: [:create]
-    resources :person_certcourses, only: [:create]
-    resources :video_pages, only: [:create]
-    resources :image_pages, only: [:create]
+
+    # to be modified
+    resources :certificates do
+      resources :certcourses, only: [:index]
+    end
+
+    resources :certcourses, only: [:show, :create, :destroy ]  do
+      resources :certcourse_pages, only: [ :send_email ]
+    end
+    resources :person_certificates, only: [:create] do
+      collection do
+        get ":unique_id" => "person_certificates#show"
+      end
+    end
+    resources :person_certcourses, only: [:create, :send_email ] do
+      collection do
+        post :send_email
+      end
+    end
+
     resources :messages, except: %i[ create index show update ] do
       collection do
         get "stats" => "messages#stats"
@@ -248,37 +259,25 @@ JkoApi.routes self do
         get "stats" => "posts#stats"
       end
     end
-  end
-
-  version 5 do
-    resources :categories do 
-      collection do
-        get "select" => "categories#select"
-      end
-    end
-    
     resources :interests do
       collection do
-        get "shared" => "interests#shared"
+        get "match" => "interests#match"
       end
     end
-    resources :polls do
-      resources :poll_options, controller: "poll_options", only: %i[ index create ]
-      collection do
-        get "list" => "polls#list"
-        get "select" => "polls#select"
+
+    namespace :courseware do
+      namespace :client do
+        resources :people, only: [:index] do
+          resources :certificates, only: [:index] do
+            member do
+              post 'send_email'
+              get 'download'
+            end
+            resources :certcourses, only: [:index, :show]
+          end
+        end
       end
     end
-    resources :poll_options, only: %i[ show update destroy cast_vote ]
-    resources :products do
-      collection do
-        get "config/:internal_name" => "products#setup"
-      end
-    end
-    resources :people do
-      collection do
-        get "list" => "people#list"
-      end
-    end
+    resources :notifications, only: [:create]
   end
 end

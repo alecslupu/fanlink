@@ -1,4 +1,3 @@
 class Api::V3::ContestsController < ApiController
-
-private
+  private
 end

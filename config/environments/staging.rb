@@ -1,4 +1,4 @@
-#require "json"
+# require "json"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
@@ -7,7 +7,7 @@ Rails.application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  config.cache_store = :redis_store, "#{ENV['REDIS_URL']}/0/cache", { expires_in: 30.minutes }
+  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", {expires_in: 30.minutes}
 
   # Disable full error reports.
   config.consider_all_requests_local = true
@@ -23,12 +23,11 @@ Rails.application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  config.logger = Logger.new(STDOUT)
-  config.log_level = :debug
+  # config.logger = Logger.new(STDOUT)
+  config.log_level = :info
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
-
 
   # This is the default, I'll leave it here as a reminder though.
   config.action_controller.action_on_unpermitted_parameters = false
@@ -50,32 +49,13 @@ Rails.application.configure do
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
 
-  config.redis_url = "#{ENV['REDIS_URL']}/stagerank"
+  config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
   config.eager_load = true
-  config.force_ssl = false
-
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger = Timber::Logger.new(STDOUT)
-    logger.level = config.log_level
-    # logger.formatter = config.log_formatter
-    config.logger = ActiveSupport::TaggedLogging.new(logger)
-  end
-
-  config.fanlink = {
-    :aws => {
-      hls_server: 'http://d9f7ufze0iovw.cloudfront.net/',
-      rtmp_server: 'rtmp://s153hddjp1ltg0.cloudfront.net/',
-      transcoder_key: ENV['AWS_TRANSCODER_KEY'],
-      transcoder_secret: ENV['AWS_TRANSCODER_SECRET'],
-      s3_bucket: ENV['AWS_BUCKET'],
-      transcoder_pipeline_id: ENV['AWS_PIPELINE_ID'],
-    }
-  }
-
+  config.force_ssl = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.enabled = true
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

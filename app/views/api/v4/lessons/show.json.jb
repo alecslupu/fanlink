@@ -3,4 +3,3 @@
     render(partial: @req_source, locals: { lesson: @lesson, lang: @lang }, handlers: "jb")
   }
 }
-

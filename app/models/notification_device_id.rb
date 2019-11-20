@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: notification_device_ids
+#
+#  id                :bigint(8)        not null, primary key
+#  person_id         :integer          not null
+#  device_identifier :text             not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  device_type       :integer          default("unknown"), not null
+#
+
 class NotificationDeviceId < ApplicationRecord
   belongs_to :person
 
@@ -7,5 +19,5 @@ class NotificationDeviceId < ApplicationRecord
 
   validates :device_identifier,
             uniqueness: { message: _("That device id is already registered.") },
-            presence: { message: _("Device identifier is required.")}
+            presence: { message: _("Device identifier is required.") }
 end

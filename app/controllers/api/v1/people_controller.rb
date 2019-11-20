@@ -31,11 +31,15 @@ class Api::V1::PeopleController < ApiController
   def change_password
     if @person == current_user
       if @person.valid_password?(person_params[:current_password])
-        @person.password = person_params[:new_password]
-        if @person.save
-          head :ok
+        if person_params[:current_password] == person_params[:new_password]
+          render_error(_("New password can't be identical to your current one"))
         else
-          render_error(@person.errors)
+          @person.password = person_params[:new_password]
+          if @person.save
+            head :ok
+          else
+            render_error(@person.errors)
+          end
         end
       else
         render_error(_("The password is incorrect"))
@@ -267,13 +271,13 @@ class Api::V1::PeopleController < ApiController
     end
   end
 
-private
+protected
 
   def apply_filters
     people = Person.order(created_at: :desc)
     params.each do |p, v|
       if p.end_with?("_filter") && Person.respond_to?(p)
-        people = people.send(p, v)
+        people = people.send(p, v, current_user)
       end
     end
     people
@@ -282,6 +286,7 @@ private
   def check_gender
     params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
   end
+private
 
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code

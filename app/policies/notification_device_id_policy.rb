@@ -1,0 +1,2 @@
+class NotificationDeviceIdPolicy < ApplicationPolicy
+end

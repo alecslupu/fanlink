@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "create_time": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "mentions": {
+      "type": "array",
+      "items": {
+        "$ref": "./mention_response.json"
+      }
+    },
+    "person": {
+      "$ref": "./person_response.json"
+    }
+  },
+  "required": [
+    "id",
+    "create_time",
+    "body",
+    "person"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

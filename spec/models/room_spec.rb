@@ -1,6 +1,5 @@
 RSpec.describe Room, type: :model do
-
-  before(:all) do
+  before(:each) do
     @name = "abc"
     @room = create(:room, name: @name, public: true)
     ActsAsTenant.current_tenant = @room.product
@@ -25,17 +24,13 @@ RSpec.describe Room, type: :model do
       it "#members" do
         should have_many(:members).through(:room_memberships)
       end
-
-      it "#messages" do
-        should have_many(:messages).dependent(:restrict_with_error)
-      end
     end
   end
 
   context "Validation" do
     describe "should create a valid room" do
       it do
-        expect(create(:room)).to be_valid
+        expect(build(:room)).to be_valid
       end
     end
     describe "should not allow private rooms to have pictures" do
@@ -56,7 +51,7 @@ RSpec.describe Room, type: :model do
       end
     end
 
-    describe "#is_member" do
+    describe "#is_member?" do
       let(:member) { create(:person) }
       let(:non_member) { create(:person) }
       let(:room) { create(:room, public: false) }
@@ -67,6 +62,40 @@ RSpec.describe Room, type: :model do
       it "should return false for non room member" do
         expect(room.is_member?(non_member)).to be_falsey
       end
+    end
+    describe "#private?" do
+      pending
+    end
+
+    describe "#clear_message_counter" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:clear_message_counter)
+      end
+      pending
+    end
+    describe "#delete_me" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:delete_me)
+      end
+      pending
+    end
+    describe "#post" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:post)
+      end
+      pending
+    end
+    describe "#increment_message_counters" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:increment_message_counters)
+      end
+      pending
+    end
+    describe "#new_room" do
+      it "responds to method" do
+        expect(Room.new).to respond_to(:new_room)
+      end
+      pending
     end
   end
 

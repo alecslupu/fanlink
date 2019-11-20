@@ -7,6 +7,9 @@ Rails.application.configure do
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
+  config.action_controller.perform_caching = false
+  config.cache_store = :null_store
+
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
   # preloads Rails for running tests, you may have to set it to true.
@@ -23,7 +26,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = true
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
@@ -34,7 +37,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  Delayed::Worker.delay_jobs = false
+  # Delayed::Worker.delay_jobs = false
 
   config.log_level = :debug
 
@@ -42,13 +45,5 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
   end
-
-  # Install the Timber.io logger
-  # ----------------------------
-  # `nil` is passed to disable logging. It's important to keep the `Timber::Logger`
-  # because it provides an API for logging structured data and capturing context.
-  logger = Timber::Logger.new(nil)
-  logger.level = config.log_level
-  config.logger = ActiveSupport::TaggedLogging.new(logger)
 
 end

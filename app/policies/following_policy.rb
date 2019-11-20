@@ -1,0 +1,2 @@
+class FollowingPolicy < UserModulePolicy
+end

@@ -1,12 +1,30 @@
+# == Schema Information
+#
+# Table name: action_types
+#
+#  id                  :bigint(8)        not null, primary key
+#  name                :text             not null
+#  internal_name       :text             not null
+#  seconds_lag         :integer          default(0), not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  active              :boolean          default(TRUE), not null
+#  badge_actions_count :integer
+#  badges_count        :integer
+#
+
 class ActionType < ApplicationRecord
   default_scope { where(active: true) }
-  has_many :badges # all badges that implement this type
+  has_many :badges, dependent: :restrict_with_error
   has_many :assigned_rewards, as: :assigned
   has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "ActionType"
+  has_many :badge_actions, dependent: :restrict_with_error
+
+  has_many :hacked_metrics, dependent: :destroy
 
   has_paper_trail
 
-  before_destroy :check_usage
+  # before_destroy :check_usage
 
   validates :internal_name,
             presence: { message: _("Internal name is required.") },
@@ -20,29 +38,6 @@ class ActionType < ApplicationRecord
             uniqueness: { message: _("There is already an action type with that name.") }
 
   def in_use?
-    actions_using? || badge_using.present?
-  end
-
-private
-
-  def actions_using?
-    BadgeAction.where(action_type: self).exists?
-  end
-
-  def badge_using
-    Badge.unscoped.where(action_type_id: self.id).first
-  end
-
-  def check_usage
-    if actions_using?
-      errors.add(:base, :in_use, message: _("You cannot destroy this action type because users have already received credit for it."))
-      throw :abort
-    else
-      badge = badge_using
-      if badge
-        errors.add(:base, :badge_credit, message: _("You cannot destroy this action type because badge named: '%{badge_name}' is using it.") % { badge_name: badge.name })
-        throw :abort
-      end
-    end
+    badge_actions.size > 0 || badges.size > 0
   end
 end

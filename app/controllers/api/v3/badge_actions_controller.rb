@@ -90,23 +90,23 @@ class Api::V3::BadgeActionsController < Api::V2::BadgeActionsController
 
   private
 
-  def load_action_type
-    if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
-      render_422(_("You must supply a badge action type."))
-    else
-      @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
-      if @action_type.present?
-        #,,, Gross hack for now
-        HackedMetric.create(
-          person_id: current_user.id,
-          product_id: ActsAsTenant.current_tenant.id,
-          action_type_id: @action_type.id,
-          identifier: params[:badge_action][:identifier]
-        )
-        @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
+    def load_action_type
+      if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
+        render_422(_("You must supply a badge action type."))
       else
-        render_422(_("Action type is invalid."))
+        @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
+        if @action_type.present?
+          # ,,, Gross hack for now
+          HackedMetric.create(
+            person_id: current_user.id,
+            product_id: ActsAsTenant.current_tenant.id,
+            action_type_id: @action_type.id,
+            identifier: params[:badge_action][:identifier]
+          )
+          @rewards = Reward.where(product_id: ActsAsTenant.current_tenant.id).joins(:assigned_rewards).where(assigned_rewards: { assigned_type: "ActionType", assigned_id: @action_type.id }).order(completion_requirement:  :asc)
+        else
+          render_422(_("Action type is invalid."))
+        end
       end
     end
-  end
 end

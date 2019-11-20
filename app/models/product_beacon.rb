@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: product_beacons
+#
+#  id          :bigint(8)        not null, primary key
+#  product_id  :integer          not null
+#  beacon_pid  :text             not null
+#  attached_to :integer
+#  deleted     :boolean          default(FALSE)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  uuid        :uuid
+#  lower       :integer          not null
+#  upper       :integer          not null
+#
+
 class ProductBeacon < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
@@ -10,8 +26,6 @@ class ProductBeacon < ApplicationRecord
 
   # default_scope { order(created_at: :desc) }
   def self.for_id_or_pid(id)
-    id = id.to_s
-    query = id.include?("-") ? { beacon_pid: id } : { id: id.to_i }
-    ProductBeacon.find_by(query)
+    where(id: id).or(where(beacon_pid: id))
   end
 end

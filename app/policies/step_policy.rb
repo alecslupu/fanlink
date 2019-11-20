@@ -1,0 +1,2 @@
+class StepPolicy < QuestModulePolicy
+end

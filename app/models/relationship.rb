@@ -1,6 +1,28 @@
+# == Schema Information
+#
+# Table name: relationships
+#
+#  id              :bigint(8)        not null, primary key
+#  requested_by_id :integer          not null
+#  requested_to_id :integer          not null
+#  status          :integer          default("requested"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class Relationship < ApplicationRecord
-  include Relationship::RealTime
+  # include Relationship::RealTime
   enum status: %i[ requested friended ]
+
+  #  Relationship::RealTime
+
+  def friend_request_accepted_push
+    Delayed::Job.enqueue(FriendRequestAcceptedPushJob.new(self.id))
+  end
+  def friend_request_received_push
+    Delayed::Job.enqueue(FriendRequestReceivedPushJob.new(self.id))
+  end
+  # eof Relationship::RealTime
 
   has_paper_trail
 
@@ -12,7 +34,7 @@ class Relationship < ApplicationRecord
   validate :valid_status_transition
 
   scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
-  scope :for_people, -> (person1, person2) { where(requested_to: [person1, person2]).where(requested_by: [person1, person2]) }
+  scope :for_people, -> (source_person, target_person) { where(requested_to: [source_person, target_person]).where(requested_by: [source_person, target_person]) }
   scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
 
   def person_involved?(person)

@@ -1,0 +1,2 @@
+class AnswerPolicy < CoursewareModulePolicy
+end

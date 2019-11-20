@@ -187,25 +187,25 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
 
   private
 
-  def apply_filters
-    post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
-    params.each do |p, v|
-      if p.end_with?("_filter") && PostComment.respond_to?(p)
-        post_comments = post_comments.send(p, v)
+    def apply_filters
+      post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
+      params.each do |p, v|
+        if p.end_with?("_filter") && PostComment.respond_to?(p)
+          post_comments = post_comments.send(p, v)
+        end
+      end
+      post_comments
+    end
+
+    # fload up doesn't work well at this point with nested tenancy type things like this (the post being only indirectly tenanted).
+    def load_post
+      @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:post_id])
+      if @post.nil?
+        render_not_found
       end
     end
-    post_comments
-  end
 
-  # fload up doesn't work well at this point with nested tenancy type things like this (the post being only indirectly tenanted).
-  def load_post
-    @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:post_id])
-    if @post.nil?
-      render_not_found
+    def post_comment_params
+      params.require(:post_comment).permit(:body, mentions: %i[ person_id location length ]).merge(person_id: current_user.id)
     end
-  end
-
-  def post_comment_params
-    params.require(:post_comment).permit(:body, mentions: %i[ person_id location length ]).merge(person_id: current_user.id)
-  end
 end

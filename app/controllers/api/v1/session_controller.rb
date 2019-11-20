@@ -31,7 +31,7 @@ class Api::V1::SessionController < ApiController
   def index
     if @person = current_user
       if @person.terminated
-        return head :unauthorized
+        head :unauthorized
       else
         return_the @person
       end
@@ -73,8 +73,11 @@ class Api::V1::SessionController < ApiController
     @person = nil
     if params["facebook_auth_token"].present?
       @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
-      render_503(_("Unable to find user from token. Likely a problem contacting Facebook.")) && return if @person.nil?
-      auto_login(@person)
+      if @person.nil?
+        render_503(_("Unable to find user from token. Likely a problem contacting Facebook."))
+        return
+      end
+      @person = auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
       if @person
@@ -84,7 +87,10 @@ class Api::V1::SessionController < ApiController
           @person = login(@person.email, params[:password]) if @person
         end
       end
-      render_error(_("Invalid login.")) && return if @person.nil?
+      if @person.nil?
+        render_error(_("Invalid login."))
+        return
+      end
     end
     return_the @person
   end

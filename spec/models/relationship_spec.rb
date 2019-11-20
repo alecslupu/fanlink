@@ -1,25 +1,16 @@
 RSpec.describe Relationship, type: :model do
 
-  before(:all) do
-    ActsAsTenant.current_tenant = current_product
-  end
-
   context "Associations" do
     describe "should belong to" do
-      it "#requested_by" do
-        should belong_to(:requested_by).class_name("Person").touch(true)
-      end
-
-      it "#requested_to" do
-        should belong_to(:requested_to).class_name("Person").touch(true)
-      end
+      it { should belong_to(:requested_by).class_name("Person").touch(true) }
+      it { should belong_to(:requested_to).class_name("Person").touch(true) }
     end
   end
 
   context "Validation" do
     describe "should create a valid relationship" do
       it do
-        expect(create(:relationship)).to be_valid
+        expect(build(:relationship)).to be_valid
       end
     end
   end
@@ -63,7 +54,39 @@ RSpec.describe Relationship, type: :model do
     end
   end
 
-  #TODO this should be renamed friendships or made to return persons
+  describe ".person_involved?" do
+    it "is checking requested by" do
+      person = create(:person)
+      rel = create(:relationship, requested_by: person)
+      expect(rel.person_involved?(person)).to be_truthy
+    end
+    it "is checking requested by to be false" do
+      person = create(:person)
+      rel = create(:relationship)
+      expect(rel.person_involved?(person)).to be_falsey
+    end
+    it "is checking requested to" do
+      person = create(:person)
+      rel = create(:relationship, requested_to: person)
+      expect(rel.person_involved?(person)).to be_truthy
+    end
+  end
+  describe ".for_person" do
+    it "should get one relationship between two people" do
+      rel = create(:relationship)
+      relationships = Relationship.for_person(rel.requested_by)
+      expect(relationships.count).to eq(1)
+      expect(relationships.first).to eq(rel)
+    end
+    it "should get one relationship between two people" do
+      rel = create(:relationship)
+      relationships = Relationship.for_person(rel.requested_to)
+      expect(relationships.count).to eq(1)
+      expect(relationships.first).to eq(rel)
+    end
+  end
+
+  # TODO this should be renamed friendships or made to return persons
   describe "#friends" do
     it "should get all friendships of a person" do
       per = create(:person)
@@ -87,7 +110,7 @@ RSpec.describe Relationship, type: :model do
       expect(rel.friended?).to be_truthy
     end
     it "should allow transitions from requested" do
-      allowed = %i[ friended ]
+      allowed = %i[friended]
       rel = create(:relationship)
       expect(rel.requested?).to be_truthy
       allowed.each do |s|
@@ -98,14 +121,25 @@ RSpec.describe Relationship, type: :model do
     end
     it "should disallow transitions from friended" do
       rel = create(:relationship)
-      %i[ requested ].each do |s|
+      %i[requested].each do |s|
         rel.update_column(:status, Relationship.statuses[:friended])
         rel.status = s
         invalid_status(rel)
       end
     end
   end
-
+  describe "#friend_request_accepted_push" do
+    it "responds to method " do
+      expect(Relationship.new).to respond_to(:friend_request_accepted_push)
+    end
+    pending
+  end
+  describe "#friend_request_received_push" do
+    it "responds to method " do
+      expect(Relationship.new).to respond_to(:friend_request_received_push)
+    end
+    pending
+  end
 
 private
 

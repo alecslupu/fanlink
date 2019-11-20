@@ -34,17 +34,19 @@ module JSONErrors
     render_errors(errors, 422)
   end
 
-    # Will be used once the alls to all the render_422 method are removed from the controllers
+  # Will be used once the alls to all the render_422 method are removed from the controllers
   def unprocessable_entity(exception)
     render json: { errors: exception.record.errors.messages.values.flatten }, status: :unprocessable_entity
-    return
+    nil
   end
 
   def render_500(errors)
-    logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-    errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test? || errors.is_a?(String)
-    render json: {errors: errors.message}.to_json, status: 500
-    return
+    unless (Rails.env.test? && ENV["ROLLBAR_ENABLED"])
+      logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)
+      errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) }  unless errors.is_a?(String)
+    end
+    render json: { errors: errors.message }.to_json, status: 500
+    nil
   end
 
   def render_503(errors = "service unavailable")
@@ -53,19 +55,19 @@ module JSONErrors
 
   def render_errors(errors, status = 400)
     errors = Array.wrap(errors) unless errors.is_a?(Array)
-    if status == 500
-      # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
-      # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
-      Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
-    else
-      # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
-      Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
-    end
+    # if status == 500
+    #   # logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow) unless Rails.env.test?
+    #   # errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) } unless Rails.env.test?
+    #   # Rollbar.error(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
+    # else
+    #   # logger.warn ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)  unless Rails.env.test?
+    #   # Rollbar.warning(errors.join(", "), status: status) unless Rails.env.development? || Rails.env.test?
+    # end
     data = {
       errors: errors
     }
     render json: data, status: status
-    return
+    nil
   end
 
 

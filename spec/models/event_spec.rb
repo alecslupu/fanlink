@@ -1,13 +1,11 @@
 RSpec.describe Event, type: :model do
   context "Valid" do
-    it "should create a valid event" do
-      expect(create(:event)).to be_valid
-    end
+    it { expect(build(:event)).to be_valid }
   end
-  
+
   describe "#ends_at" do
     it "should not have an ends_at that is before the starts_at" do
-      event = create(:event)
+      event = build(:event)
       event.ends_at = event.starts_at - 1.day
       expect(event).not_to be_valid
       expect(event.errors[:ends_at]).not_to be_empty
@@ -29,7 +27,7 @@ RSpec.describe Event, type: :model do
 
   describe "#place_identifier" do
     it "should normalize blank to nil" do
-      event = create(:event, place_identifier: "")
+      event = build(:event, place_identifier: "")
       expect(event.place_identifier).to be_nil
     end
   end
@@ -40,5 +38,10 @@ RSpec.describe Event, type: :model do
       expect(event).not_to be_valid
       expect(event.errors[:starts_at]).not_to be_blank
     end
+  end
+
+  # TODO: auto-generated
+  describe "#place_info" do
+    pending
   end
 end

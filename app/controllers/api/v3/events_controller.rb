@@ -102,7 +102,7 @@ class Api::V3::EventsController < Api::V2::EventsController
       end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.now + 3.years).end_of_day
       query = (current_user&.role == "super_admin") ? Event : Event.where(deleted: false)
       @events = paginate(query.in_date_range(start_boundary, end_boundary).order(starts_at: :asc))
-      return_the @events, handler: "jb"
+      return_the @events, handler: tpl_handler
     end
   end
 
@@ -114,13 +114,13 @@ class Api::V3::EventsController < Api::V2::EventsController
       @event_checkins = paginate(@event.event_checkins.includes(:person).joins(person: :person_interests).where("person_interests.interest_id IN (?)", interests).order(created_at: :desc))
     end
 
-    return_the @event_checkins, handler: "jb"
+    return_the @event_checkins, handler: tpl_handler
   end
 
   def checkin
     @event_checkin = EventCheckin.create(person_id: current_user.id, event_id: @event.id)
     if @event_checkin.valid?
-      return_the @event_checkin, handler: "jb"
+      return_the @event_checkin, handler: tpl_handler
     else
       render json: { errors: [@event_checkin.errors.messages] }, status: :unprocessable_entity
     end
@@ -170,7 +170,7 @@ class Api::V3::EventsController < Api::V2::EventsController
 
   def show
     @event = Event.find(params[:id])
-    return_the @event, handler: "jb"
+    return_the @event, handler: tpl_handler
   end
 
   # **
@@ -200,7 +200,7 @@ class Api::V3::EventsController < Api::V2::EventsController
     @event = Event.create(event_params)
     if @event.valid?
       broadcast(:event_created, current_user, @event)
-      return_the @event, handler: "jb", using: :show
+      return_the @event, handler: tpl_handler, using: :show
     else
       render_422 @event.errors
     end
@@ -234,12 +234,12 @@ class Api::V3::EventsController < Api::V2::EventsController
     if params.has_key?(:event)
       if @event.update_attributes(event_params)
         broadcast(:event_updated, current_user, @event)
-        return_the @event, handler: "jb", using: :show
+        return_the @event, handler: tpl_handler, using: :show
       else
         render_422 @event.errors
       end
     else
-      return_the @event, handler: "jb", using: :show
+      return_the @event, handler: tpl_handler, using: :show
     end
   end
 
@@ -266,7 +266,7 @@ class Api::V3::EventsController < Api::V2::EventsController
   # *
 
   def destroy
-    if current_user.some_admin?
+    if some_admin?
       if @event.update(deleted: true)
         head :ok
       else
@@ -277,8 +277,14 @@ class Api::V3::EventsController < Api::V2::EventsController
     end
   end
 
-private
-  def event_params
-    params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier, :longitude, :latitude)
-  end
+  protected
+
+    def tpl_handler
+      "jb"
+    end
+
+  private
+    def event_params
+      params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier, :longitude, :latitude)
+    end
 end

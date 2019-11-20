@@ -1,12 +1,10 @@
 RSpec.describe Level, type: :model do
   context "Valid" do
-    it "should create a valid level" do
-      expect(create(:level)).to be_valid
-    end
+    it { expect(build(:level)).to be_valid }
   end
   describe "#internal_name" do
     it "should allow an internal name with lower case letters numbers and underscores" do
-      expect(create(:level, internal_name: "abc_d12"))
+      expect(build(:level, internal_name: "abc_d12"))
     end
     it "should not allow an internal name with spaces" do
       at = build(:level, internal_name: "abc d12")
@@ -60,13 +58,19 @@ RSpec.describe Level, type: :model do
     end
   end
   describe "#name" do
+
+    it "returns the untranslated version" do
+      expect(build(:level, name: {"un" => "something untranslated"}).name).to eq("something untranslated")
+    end
+    it "returns the translated version" do
+      expect(build(:level, name: {"un" => "something untranslated", "en" => "something in english"}).name).to eq("something in english")
+    end
+
     it "should allow a name with spaces" do
-      at = build(:level, name: "Abc d12")
-      expect(at).to be_valid
+      expect(build(:level, name: "Abc d12")).to be_valid
     end
     it "should allow a name with exclamation" do
-      at = build(:level, name: "abc_d12!")
-      expect(at).to be_valid
+      expect(build(:level, name: "abc_d12!")).to be_valid
     end
   end
   describe "#points" do
@@ -89,11 +93,9 @@ RSpec.describe Level, type: :model do
       end
     end
     it "should let levels share point values in different products" do
-      points = 10
-      l1 = create(:level, points: points)
+      l1 = create(:level, points: 10)
       ActsAsTenant.with_tenant(create(:product)) do
-        l2 = create(:level, points: points)
-        expect(l2).to be_valid
+        expect(build(:level, points: l1.points)).to be_valid
       end
     end
   end
