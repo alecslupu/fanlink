@@ -520,6 +520,7 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "device_type", default: 0, null: false
+    t.boolean "not_registered", default: false, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
   end
@@ -572,6 +573,7 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.boolean "deleted", default: false
     t.bigint "role_id"
     t.boolean "authorized", default: true, null: false
+    t.bigint "role_id"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
