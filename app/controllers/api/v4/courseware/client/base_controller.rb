@@ -11,7 +11,7 @@ class Api::V4::Courseware::Client::BaseController < ApiController
     end
 
     def check_if_clients_assignee
-      if params[:person_id].present? && Person.find(params[:person_id]).assigners.exclude?(current_user)
+      if params[:person_id].present? && ClientInfo.where(client_id: current_user.id, person_id: Person.find(params[:person_id]).id).blank?
         render_401 _("You can only see your assignee's info.")
       end
     end
