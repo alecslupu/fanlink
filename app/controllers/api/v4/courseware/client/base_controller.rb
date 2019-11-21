@@ -6,7 +6,7 @@ class Api::V4::Courseware::Client::BaseController < ApiController
 
   protected
   def assignee_ids
-    Courseware::Client::ClientToPerson.where(client_id: current_user.id, user_id: params[:person]).blank?
+    current_user.hired_people.pluck(:person_id)
   end
 
   private
