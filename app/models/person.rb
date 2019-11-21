@@ -187,6 +187,11 @@ class Person < ApplicationRecord
   validates :country_code, length: { is: 2 }, allow_blank: true
   validate :client_role_changing, on: :update
 
+  def assignees
+    Person.where(id: Courseware::Client::ClientToPerson.where(client_id: id).map(&:id))
+  end
+
+
   def country_code=(c)
     write_attribute :country_code, (c.nil?) ? nil : c.upcase
   end
@@ -202,16 +207,6 @@ class Person < ApplicationRecord
   #
   def self.canonicalize(username)
     StringUtil.search_ify(username)
-  end
-
-  def add_designation_and_status(client_to_person)
-      client_to_person.relation_type = :designated
-      client_to_person.status = :active
-  end
-
-  def add_assignation_and_status(client_to_person)
-      client_to_person.relation_type = :assigned
-      client_to_person.status = :active
   end
 
   def self.cached_find(id)
