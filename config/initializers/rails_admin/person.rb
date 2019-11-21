@@ -192,6 +192,7 @@ RailsAdmin.config do |config|
         end
       end
       field :assigned_people do
+        label "Assigned Users"
         inline_add do
           false
         end
@@ -208,6 +209,7 @@ RailsAdmin.config do |config|
         end
       end
       field :designated_people do
+        label "Designated Users"
         inline_add do
           false
         end
@@ -225,6 +227,7 @@ RailsAdmin.config do |config|
       end
 
       field :clients_assigned do
+        label "Clients - Assigned"
         inline_add do
           false
         end
@@ -241,6 +244,7 @@ RailsAdmin.config do |config|
         end
       end
       field :clients_designated do
+        label "Clients - Designated"
         inline_add do
           false
         end
