@@ -199,7 +199,7 @@ RailsAdmin.config do |config|
           bindings[:object].client?
         end
         hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].normal?
+          bindings[:view]._current_user.client_portal? || !bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -218,7 +218,7 @@ RailsAdmin.config do |config|
           bindings[:object].client?
         end
         hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].normal?
+          bindings[:view]._current_user.client_portal? || !bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -238,7 +238,7 @@ RailsAdmin.config do |config|
           bindings[:object].normal?
         end
         hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].client?
+          bindings[:view]._current_user.client_portal? || !bindings[:object].normal?
         end
         associated_collection_scope do
           normal_role = Role.clients.first
@@ -257,7 +257,7 @@ RailsAdmin.config do |config|
           bindings[:object].normal?
         end
         hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].client?
+          bindings[:view]._current_user.client_portal? || !bindings[:object].normal?
         end
         associated_collection_scope do
           normal_role = Role.clients.first
