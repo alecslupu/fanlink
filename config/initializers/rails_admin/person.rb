@@ -198,9 +198,6 @@ RailsAdmin.config do |config|
         visible do
           bindings[:object].client?
         end
-        hide do
-          bindings[:view]._current_user.client_portal? || !bindings[:object].client?
-        end
         associated_collection_scope do
           normal_role = Role.normals.first
           designated_people_ids = bindings[:object].designated_people.pluck(:id)
@@ -216,9 +213,6 @@ RailsAdmin.config do |config|
         end
         visible do
           bindings[:object].client?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal? || !bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -237,9 +231,6 @@ RailsAdmin.config do |config|
         visible do
           bindings[:object].normal?
         end
-        hide do
-          bindings[:view]._current_user.client_portal? || !bindings[:object].normal?
-        end
         associated_collection_scope do
           normal_role = Role.clients.first
           clients_designated_ids = bindings[:object].clients_designated.pluck(:id)
@@ -255,9 +246,6 @@ RailsAdmin.config do |config|
         end
         visible do
           bindings[:object].normal?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal? || !bindings[:object].normal?
         end
         associated_collection_scope do
           normal_role = Role.clients.first
