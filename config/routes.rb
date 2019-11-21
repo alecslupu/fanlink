@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get "/config/:internal_name" => "config#show"
+  get "/config/:internal_name" => "config#index"
+  get "/config/:internal_name/:id" => "config#show"
 
   mount Rswag::Ui::Engine => "/api-docs"
   mount Rswag::Api::Engine => "/api-docs"
