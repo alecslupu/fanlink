@@ -187,11 +187,6 @@ class Person < ApplicationRecord
   validates :country_code, length: { is: 2 }, allow_blank: true
   validate :client_role_changing, on: :update
 
-  def assignees
-    Person.where(id: Courseware::Client::ClientToPerson.where(client_id: id).map(&:id))
-  end
-
-
   def country_code=(c)
     write_attribute :country_code, (c.nil?) ? nil : c.upcase
   end
