@@ -160,10 +160,16 @@ RSpec.describe Person, type: :model do
 
       it { should have_many(:hired_people) }
       it { should have_many(:clients) }
+      it { should have_many(:assigned_assignees) }
+      it { should have_many(:designated_assignees) }
+      it { should have_many(:assigned_clients) }
+      it { should have_many(:designated_clients) }
 
-      it { should have_many(:assigners).through(:hired_people) }
-      it { should have_many(:assignees).through(:clients) }
-      # it { should have_many(:relationships) }
+      it { should have_many(:assigned_people).through(:assigned_assignees) }
+      it { should have_many(:designated_people).through(:designated_assignees) }
+      it { should have_many(:clients_assigned).through(:assigned_clients) }
+      it { should have_many(:clients_designated).through(:designated_clients) }
+
     end
 
     describe "#has_one" do
@@ -633,39 +639,36 @@ RSpec.describe Person, type: :model do
 
   describe "#send_onboarding_email" do
     it "enqueues an onboarding email" do
-      expect(Delayed::Job.count).to eq 0
       person = create(:person)
+      expect(Delayed::Job).to receive(:enqueue)
       person.send_onboarding_email
-      expect(Delayed::Job.count).to eq 1
     end
   end
 
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
-      expect(Delayed::Job.count).to eq 0
       person = create(:person)
+      expect(Delayed::Job).to receive(:enqueue)
       person.send_password_reset_email
-      expect(Delayed::Job.count).to eq 1
     end
   end
 
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
-      expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
+      expect(Delayed::Job).to receive(:enqueue)
       pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
-      expect(Delayed::Job.count).to eq 1
     end
   end
 
   describe "#send_course_attachment_email" do
     it "sends a course on email" do
-      expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
+      expect(Delayed::Job).to receive(:enqueue)
       pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
-      expect(Delayed::Job.count).to eq 1
     end
   end
+
 
   describe "full_permission_list" do
     it "responds to" do
@@ -729,12 +732,12 @@ RSpec.describe Person, type: :model do
       expect(to_test).to eq(Role.last)
     end
   end
+
   describe "#send_assignee_certificate_email" do
     it "enqueues a certificate email" do
-      expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
+      expect(Delayed::Job).to receive(:enqueue)
       pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
-      expect(Delayed::Job.count).to eq 1
     end
   end
 

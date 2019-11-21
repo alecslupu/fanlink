@@ -64,11 +64,15 @@ FactoryBot.define do
     end
 
     factory :admin_user do
-      role { create(:role_admin) }
+      role { Role.where(internal_name: 'admin').first ||  create(:role_admin) }
+    end
+
+    factory :client_user do
+      role { Role.where(internal_name: 'client').first || create(:role_client) }
     end
 
     factory :super_admin do
-      role { create(:role_super_admin) }
+      role { Role.where(internal_name: 'super_admin').first || create(:role_super_admin) }
     end
   end
 end

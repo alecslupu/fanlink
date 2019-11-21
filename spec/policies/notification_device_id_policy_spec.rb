@@ -2,6 +2,7 @@
 
 require "spec_helper"
 
+
 RSpec.describe NotificationDeviceIdPolicy, type: :policy do
   let(:master_class) { NotificationDeviceId.new }
   subject { described_class.new(build(:person), master_class) }
@@ -35,7 +36,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("user") }
+      it { expect(subject.send(:module_name)).to eq("admin") }
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
@@ -69,7 +70,9 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_read: true).person, master_class) }
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_read: true))
+    end
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -100,8 +103,10 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_update: true).person, master_class) }
 
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_update: true))
+    end
     describe "permissions" do
       permission_list.each do |policy, value|
         if value
@@ -131,8 +136,10 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_delete: true).person, master_class) }
 
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_delete: true))
+    end
     describe "permissions" do
       permission_list.each do |policy, value|
         if value
@@ -162,8 +169,10 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_export: true).person, master_class) }
 
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_export: true))
+    end
     describe "permissions" do
       permission_list.each do |policy, value|
         if value
@@ -193,8 +202,10 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       show_in_app: false,
       select_product: false,
     }
-    subject { described_class.new(create(:portal_access, user_history: true).person, master_class) }
 
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_history: true))
+    end
     describe "permissions" do
       permission_list.each do |policy, value|
         if value
