@@ -6,25 +6,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
     let(:created_in_range) { Date.parse("2018-01-02").end_of_day }
     let(:from) { "2018-01-01" }
     let(:to) { "2018-01-03" }
-    it "should get a list of posts for a date range without limit" do
-      person = create(:person)
-      ActsAsTenant.with_tenant(person.product) do
-        people = create_list(:person, 2)
-        person.follow(people.first)
-        person.follow(people.last)
-
-        postloggedin = create(:published_post, person: person, created_at: created_in_range + 31.minutes)
-        post11 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 1.hour)
-        post12 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 30.minutes)
-        post21 = create(:published_post, person: people.last, status: :published, created_at: created_in_range)
-        post22 = create(:published_post, person: people.last, status: :published, created_at: created_in_range + 30.minutes)
-        login_as(person)
-        get :index, params: {from_date: from, to_date: to}
-        expect(response).to be_successful
-        expect(json["posts"].map { |p| p["id"].to_i }).to eq([postloggedin.id, post22.id, post21.id, post12.id, post11.id])
-      end
-    end
-
     it 'returns all the posts with the attachments' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -60,28 +41,46 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       end
     end
 
-    # it "returns all the posts after the given one in the correct order" do
-    #   person = create(:admin_user)
-    #   ActsAsTenant.with_tenant(person.product) do
-    #     login_as(person)
-    #     room = create(:published_post)
-    #     msg1 = create(:published_post, room_id: room.id)
-    #     msg2 = create(:published_post, room_id: room.id, created_at: DateTime.now + 1)
-    #     msg3 = create(:published_post, room_id: room.id, created_at: msg2.created_at + 1)
-    #     msg4 = create(:message, room_id: room.id, created_at: msg2.created_at + 2)
+    it "should get a list of posts for a date range without limit" do
+      person = create(:person)
+      ActsAsTenant.with_tenant(person.product) do
+        people = create_list(:person, 2)
+        person.follow(people.first)
+        person.follow(people.last)
 
-    #     get :index,
-    #       params: {
-    #         room_id: room.id,
-    #         message_id: msg2.id,
-    #         chronologically: 'after'
-    #     }
+        postloggedin = create(:published_post, person: person, created_at: created_in_range + 31.minutes)
+        post11 = create(:published_post, person: people.first, created_at: created_in_range - 1.hour)
+        post12 = create(:published_post, person: people.first, created_at: created_in_range - 30.minutes)
+        post21 = create(:published_post, person: people.last, created_at: created_in_range)
+        post22 = create(:published_post, person: people.last, created_at: created_in_range + 30.minutes)
+        login_as(person)
+        get :index, params: {from_date: from, to_date: to}
+        expect(response).to be_successful
+        expect(json["posts"].map { |p| p["id"].to_i }).to eq([postloggedin.id, post22.id, post12.id, post12.id, post11.id])
+      end
+    end
 
-    #     expect(response).to be_successful
-    #     expect(json['messages'].size).to eq(2)
-    #     expect(json['messages'].map { |m| m['id'] }).to eq([msg3.id, msg4.id])
-    #   end
-    # end
+
+    it "returns a list of posts after the given one in the correct order" do
+      # pica ptr ca e admin si se iau post-urile de 2 ori, si a doua oara nu e nimic o data in if-ul cu some_admin si web_request? si al doiela la unless web_request?
+      person = create(:admin_user)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        post1 = create(:published_post)
+        post2 = create(:published_post, created_at:DateTime.now + 1)
+        post3 = create(:published_post, created_at:DateTime.now + 2)
+        post4 = create(:published_post, created_at:DateTime.now + 3)
+        get :index,
+          params: {
+            post_id: post2.id,
+            chronologically: 'after'
+        }
+
+        expect(response).to be_successful
+        expect(json['posts'].size).to eq(2)
+        expect(json['posts'].map { |p| p['id'] }).to eq([post3.id, post4.id])
+      end
+    end
 
     # it "returns all the room's messages before the given one in the correct order" do
     #   person = create(:admin_user)

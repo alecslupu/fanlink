@@ -50,7 +50,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         end
       end
     end
-    @posts = @posts("posts.created_at #{ordering}, posts.id #{ordering} ")
+    @posts = @posts.order("posts.created_at #{ordering}, posts.id #{ordering} ")
 
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
     # @posts = @posts.includes([:person])
