@@ -21,7 +21,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         login_as(person)
         get :index, params: {from_date: from, to_date: to}
         expect(response).to be_successful
-        expect(json["posts"].map { |p| p["id"] }).to eq([postloggedin.id, post22.id, post21.id, post12.id, post11.id])
+        expect(json["posts"].map { |p| p["id"].to_i }).to eq([postloggedin.id, post22.id, post21.id, post12.id, post11.id])
       end
     end
 
