@@ -1,67 +1,5 @@
 Rails.application.routes.draw do
-  scope(constraints: Routing::Constraints::V4, module: "api/v4", defaults: {format: :json}) do
-    resources :session, only: %i[create index] do
-      post :token, on: :collection
-    end
-
-    # to be modified
-    resources :certificates do
-      resources :certcourses, only: [:index]
-    end
-
-    resources :certcourses, only: [:show, :create, :destroy] do
-      resources :certcourse_pages, only: [:send_email]
-    end
-    resources :person_certificates, only: [:create] do
-      collection do
-        get ":unique_id" => "person_certificates#show"
-      end
-    end
-    resources :person_certcourses, only: [:create, :send_email] do
-      collection do
-        post :send_email
-      end
-    end
-
-    resources :messages, except: %i[create index show update] do
-      collection do
-        get "stats" => "messages#stats"
-      end
-    end
-    resources :people, except: %i[create index show update] do
-      collection do
-        get "stats" => "people#stats"
-        get "person/:username" => "people#show"
-      end
-    end
-
-    resources :followings, only: %i[index]
-    resources :posts, only: %i[index] do
-      collection do
-        get "stats" => "posts#stats"
-      end
-    end
-    resources :interests do
-      collection do
-        get "match" => "interests#match"
-      end
-    end
-
-    namespace :courseware do
-      namespace :client do
-        resources :people, only: [:index] do
-          resources :certificates, only: [:index, :show] do
-            member do
-              post "send_email"
-              get "download"
-            end
-            resources :certcourses, only: [:index, :show]
-          end
-        end
-      end
-    end
-    resources :notifications, only: [:create]
-
+  scope(constraints: Routing::Constraints::V3, module: "api/v3", defaults: {format: :json}) do
     resources :action_types do
       collection do
         get "select" => "action_types#index"
@@ -271,26 +209,6 @@ Rails.application.routes.draw do
     resources :session, only: %i[create index] do
       collection do
         delete "" => "session#destroy"
-      end
-    end
-    namespace :trivia do
-      resources :picture_available_answers, only: [:show]
-      resources :games, only: [:index] do
-        get :completed, on: :collection
-
-        resource :subscription, except: [:new, :edit]
-
-        resources :prizes, only: [:index]
-
-        resources :rounds, only: [:index] do
-          post :change_status
-          resources :round_leaderboards, path: :leaderboard, only: [:index] do
-            get :me, on: :collection
-          end
-        end
-        resources :game_leaderboards, path: :leaderboard, only: [:index] do
-          get :me, on: :collection
-        end
       end
     end
   end

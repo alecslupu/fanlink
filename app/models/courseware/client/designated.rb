@@ -11,18 +11,12 @@
 #  type       :string           not null
 #
 
+
+
 module Courseware
   module Client
-    class ClientToPerson < ApplicationRecord
-      has_paper_trail
-      belongs_to :person, class_name: "Person", foreign_key: :person_id  #, touch: true
-      belongs_to :client, class_name: "Person", foreign_key: :client_id #, touch: true
+    class Designated < ClientToPerson
 
-      enum status: %i[active terminated]
-
-      after_initialize do
-        self.status = 'active'
-      end
     end
   end
 end

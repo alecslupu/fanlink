@@ -1,6 +1,8 @@
 RailsAdmin.config do |config|
   config.included_models.push("Person")
   config.model "Person" do
+
+
     label_plural "Client Users"
 
     object_label_method do
@@ -189,74 +191,72 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client_portal?
         end
       end
-      field :assignees do
-        inline_add do
-          false
-        end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
-        visible do
-          bindings[:object].client?
-        end
-        associated_collection_scope do
-          normal_role = Role.normals.first
-          Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i  )
-          }
-        end
-      end
-
-      field :designated_assignees do
+      field :assigned_people do
+        label "Assigned Users"
         inline_add do
           false
         end
         visible do
           bindings[:object].client?
         end
-        hide do
-          bindings[:view]._current_user.client_portal?
+        associated_collection_scope do
+          normal_role = Role.normals.first
+          designated_people_ids = bindings[:object].designated_people.pluck(:id)
+
+          Proc.new { |scope|
+            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
+          }
+        end
+      end
+      field :designated_people do
+        label "Designated Users"
+        inline_add do
+          false
+        end
+        visible do
+          bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
+          assigned_people_ids = bindings[:object].assigned_people.pluck(:id)
+
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i  )
+            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
           }
         end
       end
 
-      field :assigners_with_assignation do
+      field :clients_assigned do
+        label "Clients - Assigned"
         inline_add do
           false
         end
         visible do
           bindings[:object].normal?
         end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
         associated_collection_scope do
-          client_role = Role.clients.first
+          normal_role = Role.clients.first
+          clients_designated_ids = bindings[:object].clients_designated.pluck(:id)
+
           Proc.new { |scope|
-            scope.where(role_id: client_role.try(:id).to_i )
+            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
           }
         end
       end
-
-      field :assigners_with_designation do
+      field :clients_designated do
+        label "Clients - Designated"
         inline_add do
           false
         end
         visible do
           bindings[:object].normal?
         end
-        hide do
-          bindings[:view]._current_user.client_portal?
-        end
         associated_collection_scope do
-          client_role = Role.clients.first
+          normal_role = Role.clients.first
+          clients_assigned_ids = bindings[:object].clients_assigned.pluck(:id)
+
           Proc.new { |scope|
-            scope.where(role_id: client_role.try(:id).to_i )
+            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
           }
         end
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191113222534) do
+ActiveRecord::Schema.define(version: 20191119155550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,12 +237,12 @@ ActiveRecord::Schema.define(version: 20191113222534) do
   end
 
   create_table "client_to_people", force: :cascade do |t|
-    t.integer "relation_type", null: false
     t.integer "status", null: false
     t.integer "client_id", null: false
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type", null: false
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -520,6 +520,7 @@ ActiveRecord::Schema.define(version: 20191113222534) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "device_type", default: 0, null: false
+    t.boolean "not_registered", default: false, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
   end
@@ -572,6 +573,7 @@ ActiveRecord::Schema.define(version: 20191113222534) do
     t.boolean "deleted", default: false
     t.bigint "role_id"
     t.boolean "authorized", default: true, null: false
+    t.bigint "role_id"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"

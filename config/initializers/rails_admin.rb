@@ -44,6 +44,10 @@ RailsAdmin.config do |config|
   #   ## To disable Gravatar integration in Navigation Bar set to false
   #   # config.show_gravatar = true
 
+  # config.included_models.push("Courseware::Client::ClientToPerson")
+  # config.included_models.push("Courseware::Client::Assigned")
+  # config.included_models.push("Courseware::Client::Designated")
+
   config.actions do
     forget_action do
       only [ "PersonCertcourse" ]

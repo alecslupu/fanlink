@@ -18,13 +18,13 @@ module ApplicationHelper
     else
       data = {}
       if node.children.enabled.size.zero?
-        data = node.item_value
+        data = node.formatted_value
       else
         node.children.enabled.each do |child|
           if child.children.enabled.size > 0
             data[child.item_key] = parse_node(child)
           else
-            data[child.item_key] = child.item_value
+            data[child.item_key] = child.formatted_value
           end
         end
       end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :controller do
   describe 'GET index' do
     it "return error code 401 for a non client user" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -14,7 +14,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
     end
 
     it "return error code 401 for a client user that searches for a person that it's not his assignee" do
-      person = create(:person, role: create(:role, internal_name: "client"))
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
@@ -26,11 +26,11 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
     end
 
     it "return error code 422 for a client user that searches for a certificate that does not belong to the assignee" do
-      person = create(:person, role: create(:role, internal_name: "client"))
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
 
         get :index, params: { person_id: person1.id, certificate_id: 1 }
 
@@ -39,11 +39,11 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
     end
 
     it "returns all the certificate's live certcourses" do
-      person = create(:person, role: create(:role, internal_name: "client"))
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id )
         certificate = create(:certificate)
         person1.certificates << certificate
 
@@ -65,11 +65,11 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
 
   describe "GET show" do
     it "returns all the neccessary information" do
-      person = create(:person, role: create(:role, internal_name: "client"))
+      person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
         certificate = create(:certificate)
         person1.certificates << certificate
 
@@ -109,11 +109,11 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
     end
 
     it "return error code 404 when the requested certcourse has not quiz page" do
-        person = create(:person, role: create(:role, internal_name: "client"))
+        person = create(:client_user)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
           person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-          Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+          Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
           certificate = create(:certificate)
           person1.certificates << certificate
 
