@@ -1,12 +1,33 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
+    ordering = 'DESC'
+    if params[:post_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
+      chronological = true
+      post = Post.find(params[:post_id])
+      if params[:chronologically] == 'after'
+        sign = '>'
+        ordering = 'ASC'
+      else
+        sign = '<'
+      end
+    else
+      chronological = false
+    end
     if params[:promoted].present? && params[:promoted] == "true"
-      @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+      if chronological
+        @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).chronological(sign, post.created_at, post.id).includes([:poll])
+      else
+        @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+      end
     else
       if web_request? && some_admin?
         @posts = paginate apply_filters
       else
-        @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
+        if chronological
+          @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id)
+        else
+          @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
+        end
       end
       if params[:tag].present? || params[:categories].present?
         @posts = @posts.for_tag(params[:tag]) if params[:tag]

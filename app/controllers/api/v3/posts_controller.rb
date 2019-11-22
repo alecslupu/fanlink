@@ -425,7 +425,11 @@ class Api::V3::PostsController < Api::V2::PostsController
     end
 
     def apply_filters
-      posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
+      if chronological
+        posts = Post.for_product(ActsAsTenant.current_tenant).chronological(sign, post.created_at, post.id)
+      else
+        posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
+      end
       params.each do |p, v|
         if p.end_with?("_filter") && Post.respond_to?(p)
           posts = posts.send(p, v)
