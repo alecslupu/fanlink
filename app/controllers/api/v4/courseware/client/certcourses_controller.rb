@@ -19,9 +19,12 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
       @quizzes = []
       certcourse_pages.each do |certcourse_page|
         quiz_page = QuizPage.find_by(certcourse_page_id: certcourse_page.id)
+
+        next if quiz_page.blank?
+
         person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
 
-        next if quiz_page.blank? || person_responses.blank?
+        next if person_responses.blank?
 
         correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
         failed_attempts = person_responses.where.not(answer_id: correct_answer.id)
