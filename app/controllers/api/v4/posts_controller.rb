@@ -41,9 +41,16 @@ class Api::V4::PostsController < Api::V3::PostsController
           render_422(_("Cannot find that person.")) && return
         end
       else
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless web_request?
       end
     end
+      @messages = paginate(
+                    msgs
+                      .visible
+                      .unblocked(current_user.blocked_people)
+                      .order("messages.created_at #{ordering}, messages.id #{ordering} ")
+                  )
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
     # @posts = @posts.includes([:person])
     return_the @posts, handler: tpl_handler
