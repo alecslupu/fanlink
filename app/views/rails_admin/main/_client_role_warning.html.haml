@@ -34,10 +34,21 @@
     jQuery('#{form.jquery_namespace(field)}').change(function() {
 
       if ( jQuery('#{form.jquery_namespace(field)}').find(":selected").val() == '#{client_id}') {
-        alert("root")
+        $( function() {
+          $( ".strong hello!" ).dialog({
+            title: 'WARNING!',
+            width: 500,
+            height: 300,
+            modal: true,
+            resizable: false,
+            draggable: false,
+          });
+        } );
+        $( ".selector" ).dialog( "option", "buttons", { "Ok": function() { $(this).dialog("close"); } } );
       }
     })
   })
+
 - selected_id = (hdv = field.form_default_value).nil? ? selected_id : hdv
 = form.select field.method_name, collection, { selected: selected_id, include_blank: true }, field.html_attributes.reverse_merge({ data: { filteringselect: true, options: js_data.to_json }, placeholder: t('admin.misc.search'), style: "float: left" })
 
@@ -48,3 +59,5 @@
 
 - if edit_url.present? && field.inline_edit
   = link_to "<i class=\"icon-pencil icon-white\"></i> ".html_safe + wording_for(:link, :edit, config.abstract_model), '#', data: { link: edit_url }, class: "btn btn-info update #{field.value.nil? && 'disabled'}", style: 'margin-left:10px'
+
+
