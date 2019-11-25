@@ -242,3 +242,8 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
+# https://github.com/rails/jquery-rails
+gem 'jquery-rails'
+
+# https://github.com/jquery-ui-rails/jquery-ui-rails
+gem 'jquery-ui-rails'
