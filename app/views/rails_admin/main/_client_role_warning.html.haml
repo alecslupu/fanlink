@@ -28,26 +28,39 @@
     xhr: xhr,
     remote_source: index_path(config.abstract_model.to_param, source_object_id: form.object.id, source_abstract_model: source_abstract_model.to_param, associated_collection: field.name, current_action: current_action, compact: true)
   }
+%script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous")
+%link(rel="stylesheet" type="text/css"
+         href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css")
+
+
 
 :javascript
   $(document).ready( function() {
     jQuery('#{form.jquery_namespace(field)}').change(function() {
 
       if ( jQuery('#{form.jquery_namespace(field)}').find(":selected").val() == '#{client_id}') {
-        $( function() {
-          $( ".strong hello!" ).dialog({
-            title: 'WARNING!',
-            width: 500,
-            height: 300,
-            modal: true,
-            resizable: false,
-            draggable: false,
-          });
-        } );
-        $( ".selector" ).dialog( "option", "buttons", { "Ok": function() { $(this).dialog("close"); } } );
+        $("<div style='color:red'> <strong>Saving a user with the Client role is final and can not be changed to another role later on!</strong> <div>").dialog({
+          closeOnEscape: false,
+          title: 'Warning',
+          width: 500,
+          height: 200,
+          resizable: false,
+          draggable: false,
+          open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+          buttons: [
+            {
+              text: 'Ok',
+              click: function() {
+                $(this).dialog('close');
+              }
+            }
+          ]
+        });
       }
-    })
-  })
+    });
+  });
 
 - selected_id = (hdv = field.form_default_value).nil? ? selected_id : hdv
 = form.select field.method_name, collection, { selected: selected_id, include_blank: true }, field.html_attributes.reverse_merge({ data: { filteringselect: true, options: js_data.to_json }, placeholder: t('admin.misc.search'), style: "float: left" })
