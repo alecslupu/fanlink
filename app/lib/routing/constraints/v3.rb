@@ -1,9 +1,8 @@
 module Routing
   module Constraints
-    class V3
+    class V3 < BaseApiVersion
       def self.matches?(request)
-        request.headers['Accept'] &&
-        request.headers['Accept'].equal?("application/vnd.api.v3+json")
+        super request, "v3"
       end
     end
   end
