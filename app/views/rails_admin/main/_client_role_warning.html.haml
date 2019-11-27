@@ -42,8 +42,8 @@
 
       if ( jQuery('#{form.jquery_namespace(field)}').find(":selected").val() == '#{client_id}') {
         $("<div style='color:red'> <strong>Saving a user with the Client role is final and can not be changed to another role later on!</strong> <div>").dialog({
-          modal:true,
           closeOnEscape: false,
+          modal:true,
           title: 'Warning',
           width: 500,
           height: 200,
