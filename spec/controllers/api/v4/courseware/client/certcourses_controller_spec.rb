@@ -61,6 +61,38 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         expect(json['certcourses'].map { |cert| cert['id']}.sort).to eq (certcourses.first(2).map(&:id))
       end
     end
+
+    it "returns all the certificate's live certcourses only once even if assigned to multiple certificates" do
+      person = create(:client_user)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id )
+        certificate = create(:certificate)
+        certificate2 = create(:certificate)
+        certificate3 = create(:certificate)
+        person1.certificates << certificate
+        person1.certificates << certificate2
+
+        certcourses = create_list(:certcourse, 3)
+        entry_certcourse = create(:certcourse, status: "entry")
+
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: entry_certcourse.id, certcourse_order: 3)
+        CertificateCertcourse.create(certificate_id: certificate2.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate2.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate2.id, certcourse_id: entry_certcourse.id, certcourse_order: 3)
+        CertificateCertcourse.create(certificate_id: certificate3.id, certcourse_id: certcourses.first.id, certcourse_order: 1)
+        CertificateCertcourse.create(certificate_id: certificate3.id, certcourse_id: certcourses.second.id, certcourse_order: 2)
+        CertificateCertcourse.create(certificate_id: certificate3.id, certcourse_id: entry_certcourse.id, certcourse_order: 3)
+
+        get :index, params: { person_id: person1.id, certificate_id: certificate.id }
+        expect(response).to be_successful
+        expect(json['certcourses'].count).to eq(2)
+        expect(json['certcourses'].map { |cert| cert['id']}.sort).to eq (certcourses.first(2).map(&:id))
+      end
+    end
   end
 
   describe "GET show" do
@@ -109,24 +141,20 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
     end
 
     it "return error code 404 when the requested certcourse has not quiz page" do
-        person = create(:client_user)
-        ActsAsTenant.with_tenant(person.product) do
-          login_as(person)
-          person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
-          Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
-          certificate = create(:certificate)
-          person1.certificates << certificate
-
-          certcourse = create(:certcourse)
-          CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourse.id, certcourse_order: 1)
-          certcourse_pages = create(:certcourse_page, certcourse: certcourse, content_type: "not_quiz")
-
-          expect(certcourse.certcourse_pages.count).to eq(1)
-
-          get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
-
-          expect(response).to be_not_found
-        end
+      person = create(:client_user)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
+        certificate = create(:certificate)
+        person1.certificates << certificate
+        certcourse = create(:certcourse)
+        CertificateCertcourse.create(certificate_id: certificate.id, certcourse_id: certcourse.id, certcourse_order: 1)
+        certcourse_pages = create(:certcourse_page, certcourse: certcourse, content_type: "not_quiz")
+        expect(certcourse.certcourse_pages.count).to eq(1)
+        get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
+        expect(response).to be_not_found
       end
     end
+  end
 end
