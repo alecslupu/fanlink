@@ -1,8 +1,9 @@
 %script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous")
+
 %link(rel="stylesheet" type="text/css"
-         href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css")
+         href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
 
 :ruby
   config = field.associated_model_config
@@ -41,6 +42,7 @@
 
       if ( jQuery('#{form.jquery_namespace(field)}').find(":selected").val() == '#{client_id}') {
         $("<div style='color:red'> <strong>Saving a user with the Client role is final and can not be changed to another role later on!</strong> <div>").dialog({
+          href: "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css",
           modal: true,
           closeOnEscape: false,
           title: 'Warning',
