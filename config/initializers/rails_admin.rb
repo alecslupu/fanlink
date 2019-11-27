@@ -49,6 +49,18 @@ RailsAdmin.config do |config|
   # config.included_models.push("Courseware::Client::Designated")
 
   config.actions do
+    dashboard                     # mandatory
+    index                         # mandatory
+    new
+    export
+    bulk_delete
+    show
+    edit
+    delete
+    show_in_app
+    history_index
+    history_show
+
     forget_action do
       only [ "PersonCertcourse" ]
     end

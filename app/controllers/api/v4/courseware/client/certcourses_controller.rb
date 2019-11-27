@@ -40,8 +40,8 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
         #   is_correct = true
         #   answer_text = person_response.fill_in_response.present?
         else
-          answer_text = Answer.find(failed_attempts.last.answer_id).description
           is_correct = false
+          answer_text = failed_attempts.present? ? Answer.find(failed_attempts.last.answer_id).description : nil
         end
 
         quiz = {

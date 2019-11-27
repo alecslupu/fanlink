@@ -192,14 +192,12 @@ RailsAdmin.config do |config|
         end
       end
       field :assigned_people do
+        label "Assigned Users"
         inline_add do
           false
         end
         visible do
           bindings[:object].client?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].normal?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -211,14 +209,12 @@ RailsAdmin.config do |config|
         end
       end
       field :designated_people do
+        label "Designated Users"
         inline_add do
           false
         end
         visible do
           bindings[:object].client?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].normal?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -231,14 +227,12 @@ RailsAdmin.config do |config|
       end
 
       field :clients_assigned do
+        label "Clients - Assigned"
         inline_add do
           false
         end
         visible do
           bindings[:object].normal?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.clients.first
@@ -250,14 +244,12 @@ RailsAdmin.config do |config|
         end
       end
       field :clients_designated do
+        label "Clients - Designated"
         inline_add do
           false
         end
         visible do
           bindings[:object].normal?
-        end
-        hide do
-          bindings[:view]._current_user.client_portal? || bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.clients.first
