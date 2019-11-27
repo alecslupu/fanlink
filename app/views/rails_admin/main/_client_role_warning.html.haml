@@ -22,14 +22,17 @@
     xhr: xhr,
     remote_source: index_path(config.abstract_model.to_param, source_object_id: form.object.id, source_abstract_model: source_abstract_model.to_param, associated_collection: field.name, current_action: current_action, compact: true)
   }
+
 %script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous")
+
 :javascript
   $(document).ready( function() {
     jQuery('#{form.jquery_namespace(field)}').change(function() {
       if ( jQuery('#{form.jquery_namespace(field)}').find(":selected").val() == '#{client_id}') {
         $("<div style='color:red'> <strong>Saving a user with the Client role is final and can not be changed to another role later on!</strong> <div>").dialog({
+          href: "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css",
           modal: true,
           closeOnEscape: false,
           title: 'Warning',
