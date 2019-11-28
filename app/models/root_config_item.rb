@@ -22,4 +22,12 @@
 class RootConfigItem < ConfigItem
   has_paper_trail
 
+  def to_s
+    if item_value.present?
+      "#{item_key} (#{item_value})"
+    else
+      item_key
+    end
+  end
+
 end
