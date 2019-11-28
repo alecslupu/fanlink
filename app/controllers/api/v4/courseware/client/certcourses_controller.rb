@@ -44,6 +44,11 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
           answer_text = failed_attempts.present? ? Answer.find(failed_attempts.last.answer_id).description : nil
         end
 
+        if answer_text.nil? && quiz_page.is_optional
+          answer_text = "User has not responded to this quiz"
+          no_of_failed_attempts = 1
+        end
+
         quiz = {
           id: quiz_page.id,
           is_optional: quiz_page.is_optional,
