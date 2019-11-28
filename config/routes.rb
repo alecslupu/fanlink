@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get "/config/:internal_name" => "config#show"
+  get "/config/:internal_name" => "config#index"
+  get "/config/:internal_name/:id" => "config#show"
 
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
