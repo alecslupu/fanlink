@@ -14,7 +14,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
   def show
     #  fill in response on person quizz is not taken into consideration YET
-    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz")
+    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz").order(:certcourse_page_order)
     if certcourse_pages.present?
       @quizzes = []
       certcourse_pages.each do |certcourse_page|
@@ -44,6 +44,11 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
           answer_text = failed_attempts.present? ? Answer.find(failed_attempts.last.answer_id).description : nil
         end
 
+        if answer_text.nil? && quiz_page.is_optional
+          answer_text = "User has not responded to this quiz"
+          no_of_failed_attempts = 1
+        end
+
         quiz = {
           id: quiz_page.id,
           is_optional: quiz_page.is_optional,
@@ -61,7 +66,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
       return_the @quizzes, handler: :jb
     else
-      render_404(_("This certificates has no quiz page."))
+      render_404("This course has no quiz page.")
     end
   end
 end
