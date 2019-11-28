@@ -186,6 +186,11 @@ RailsAdmin.config do |config|
         end
       end
       fields :authorized, :password
+      field :facebookid do
+        hide do
+          bindings[:view]._current_user.client_portal?
+        end
+      end
       field :designation, :translated do
         hide do
           bindings[:view]._current_user.client_portal?
