@@ -14,7 +14,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
   def show
     #  fill in response on person quizz is not taken into consideration YET
-    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz")
+    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz").order(:certcourse_page_order)
     if certcourse_pages.present?
       @quizzes = []
       certcourse_pages.each do |certcourse_page|
