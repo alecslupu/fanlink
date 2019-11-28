@@ -84,7 +84,6 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
                           to_values: {email: p.email, name: p.name})).to_not be_nil
       end
     end
-
     it "should sign up new user with FB auth token and send onboarding email", :run_delayed_jobs do
       tok = "1234"
       username = "newuser#{Time.now.to_i}"
