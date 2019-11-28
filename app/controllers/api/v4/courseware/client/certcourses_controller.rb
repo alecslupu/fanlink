@@ -61,7 +61,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
       return_the @quizzes, handler: :jb
     else
-      render_404(_("This certificates has no quiz page."))
+      render_404("This course has no quiz page.")
     end
   end
 end
