@@ -12,6 +12,6 @@ class ConfigController < ApplicationController
   def index
     @product = Product.enabled.where(internal_name: params[:internal_name]).first!
     @root = @product.config_items.enabled.roots.last
-    return_the @root, handler: :jb, template: :show
+    return_the @root, handler: :jb
   end
 end
