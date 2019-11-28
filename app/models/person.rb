@@ -164,7 +164,7 @@ class Person < ApplicationRecord
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
   scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
 
-  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
+  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, allow_blank: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
   validates :username, uniqueness: { scope: :product_id, message: _("The username has already been taken.") }
 
