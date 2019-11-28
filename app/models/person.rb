@@ -149,6 +149,7 @@ class Person < ApplicationRecord
   before_validation :assign_role
 
   after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
+  before_save :check_facebookid
 
   after_commit :flush_cache
 
@@ -471,6 +472,11 @@ class Person < ApplicationRecord
   end
 
   private
+
+  def check_facebookid
+    facebookid = nil if facebookid == ""
+  end
+
   def canonicalize(name)
     self.class.canonicalize(name)
   end
