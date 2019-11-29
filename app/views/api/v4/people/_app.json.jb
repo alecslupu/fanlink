@@ -1,3 +1,4 @@
+person = person.reload
 progress = person.level_progresses
 level = person.level_earned_from_progresses(progress)
 json = {
