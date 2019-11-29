@@ -10,6 +10,6 @@
 #
 
 class PinMessage < ApplicationRecord
-  belongs_to :person
-  belongs_to :room
+  belongs_to :person, touch: true
+  belongs_to :room, touch: true
 end
