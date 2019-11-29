@@ -59,8 +59,10 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(:room, 3, public: false, status: :active)
-
+        create_list(:room, 2, public: false, status: :active, created_by_id: person.id)
+        Room.last(2).each do |room|
+          room.members << person
+        end
         get :index, params: { private: true }
 
         expect(response).to be_successful
