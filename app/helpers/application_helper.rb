@@ -12,7 +12,7 @@ module ApplicationHelper
         if child.children.enabled.length > 0
           data[child.item_key] = parse_node(child)
         else
-          data[child.item_key] = child.item_value
+          data[child.item_key] = child.formatted_value
         end
       end
     else
