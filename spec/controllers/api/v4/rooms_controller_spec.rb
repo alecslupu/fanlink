@@ -72,6 +72,24 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         end
       end
     end
+
+    it "should returns private rooms with their members having the updated info" do
+      person = create(:person, pin_messages_from: false)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, public: false, status: :active, created_by_id: person.id)
+        room.members << person
+        person.update(pin_messages_from: true)
+        expect(person.pin_messages_from).to eq(true)
+
+        person.update(pin_messages_from: false)
+        expect(person.pin_messages_from).to eq(false)
+        get :index, params: { private: true }
+
+        expect(response).to be_successful
+        expect(json["rooms"].first["members"].first["pin_messages_from"]).to eq(false)
+      end
+    end
   end
 
   describe "GET show" do
