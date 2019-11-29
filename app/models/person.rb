@@ -441,8 +441,17 @@ class Person < ApplicationRecord
     Rails.cache.delete([self.class.name, id])
   end
 
+
+  def summarize_permissions
+    permission_list = assigned_role.summarize.dup
+    individual_access.summarize.each do |key, value|
+      permission_list[key] = value if value == true
+    end
+    permission_list
+  end
+
   def full_permission_list
-    assigned_role.summarize.select { |_, v| v }.keys + individual_access.summarize.select { |_, v| v }.keys
+    summarize_permissions.select { |_, v| v }.keys
   end
 
   def individual_access
