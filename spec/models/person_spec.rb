@@ -751,4 +751,12 @@ RSpec.describe Person, type: :model do
       expect { person.update(role: client_role) }.to change { ClientInfo.count }.by(1)
     end
   end
+
+  describe "#check_facebookid" do
+    it "updates facebook id if blank" do
+      person = create(:person, facebookid: "")
+
+      expect(person.facebookid).to eq(nil)
+    end
+  end
 end

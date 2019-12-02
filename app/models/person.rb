@@ -53,7 +53,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum old_role: %i[ normal staff admin super_admin ]
+  enum old_role: %i[ normal staff admin super_admin root client client_portal]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -123,24 +123,18 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+  has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
+  has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
+  has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
+  has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
+  has_many :designated_clients, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
 
-  # has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
-  # has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
-
-  # has_many :assigners, through: :hired_people, source: :client
-  # has_many :assignees, through: :clients, source: :person
-
-  has_many :hired_assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "person_id", dependent: :destroy
-  has_many :hired_designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "person_id", dependent: :destroy
-
-  has_many :assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "client_id", dependent: :destroy
-  has_many :designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "client_id", dependent: :destroy
-
-  has_many :assigners_with_assignation, through: :hired_assigned_people, source: :client
-  has_many :assigners_with_designation, through: :hired_designated_people, source: :client
-  has_many :designated_assignees, through: :designated_people, source: :person
-  has_many :assignees, through: :assigned_people, source: :person
+  has_many :assigned_people, through: :assigned_assignees, source: :person
+  has_many :designated_people, through: :designated_assignees, source: :person
+  has_many :clients_assigned, through: :assigned_clients, source: :client
+  has_many :clients_designated, through: :designated_clients, source: :client
 
 
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
@@ -155,6 +149,7 @@ class Person < ApplicationRecord
   before_validation :assign_role
 
   after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
+  before_save :check_facebookid, if: -> { self.facebookid == "" }
 
   after_commit :flush_cache
 
@@ -208,16 +203,6 @@ class Person < ApplicationRecord
   #
   def self.canonicalize(username)
     StringUtil.search_ify(username)
-  end
-
-  def add_designation_and_status(client_to_person)
-      client_to_person.relation_type = :designated
-      client_to_person.status = :active
-  end
-
-  def add_assignation_and_status(client_to_person)
-      client_to_person.relation_type = :assigned
-      client_to_person.status = :active
   end
 
   def self.cached_find(id)
@@ -475,6 +460,10 @@ class Person < ApplicationRecord
     %w[root].include?(assigned_role.internal_name)
   end
 
+  def admin?
+    %w[admin].include?(assigned_role.internal_name)
+  end
+
   def super_admin?
     %w[super_admin].include?(assigned_role.internal_name) || root?
   end
@@ -492,6 +481,11 @@ class Person < ApplicationRecord
   end
 
   private
+
+  def check_facebookid
+    self.facebookid = nil if self.facebookid == ""
+  end
+
   def canonicalize(name)
     self.class.canonicalize(name)
   end
