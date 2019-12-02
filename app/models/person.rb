@@ -544,9 +544,9 @@ class Person < ApplicationRecord
   end
 
   def generate_unique_client_code
-    code = SecureRandom.hex(4)[0..-2]
-    while code.in?(ClientInfo.all.map(&:code))
-      code = SecureRandom.hex(4)[0..-2]
+    code = SecureRandom.uuid.first(7)
+    while ClientInfo.where(code: code).first.present?
+      code = SecureRandom.uuid.first(7)
     end
     ClientInfo.create(client_id: self.id, code: code)
   end
