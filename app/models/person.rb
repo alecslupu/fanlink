@@ -21,7 +21,7 @@
 #  do_not_message_me               :boolean          default(FALSE), not null
 #  pin_messages_from               :boolean          default(FALSE), not null
 #  auto_follow                     :boolean          default(FALSE), not null
-#  old_role                        :integer          default(0), not null
+#  old_role                        :integer          default("normal"), not null
 #  reset_password_token            :text
 #  reset_password_token_expires_at :datetime
 #  reset_password_email_sent_at    :datetime
@@ -44,14 +44,6 @@
 
 class Person < ApplicationRecord
   include AttachmentSupport
-  # include Person::Blocks
-  # include Person::Facebook
-  # include Person::Filters
-  # include Person::Followings
-  # include Person::Levels
-  # include Person::Mailing
-  # include Person::Profile
-
   include TranslationThings
   authenticates_with_sorcery!
 
@@ -61,7 +53,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum role: %i[ normal staff admin super_admin client ]
+  enum old_role: %i[ normal staff admin super_admin root client client_portal]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -131,16 +123,33 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
-  has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
-  has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
+  has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
-  has_many :assigners, through: :hired_people, source: :client
-  has_many :assignees, through: :clients, source: :person
+  has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
+  has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
+  has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
+  has_many :designated_clients, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
+
+  has_many :assigned_people, through: :assigned_assignees, source: :person
+  has_many :designated_people, through: :designated_assignees, source: :person
+  has_many :clients_assigned, through: :assigned_clients, source: :client
+  has_many :clients_designated, through: :designated_clients, source: :client
+
+
+  has_one :client_info, foreign_key: "client_id", dependent: :destroy
+
 
   has_many :notifications, dependent: :destroy
 
+  belongs_to :role, optional: true
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
+  before_validation :assign_role
+
+  after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
+  before_save :check_facebookid, if: -> { self.facebookid == "" }
 
   after_commit :flush_cache
 
@@ -196,7 +205,6 @@ class Person < ApplicationRecord
     StringUtil.search_ify(username)
   end
 
-
   def self.cached_find(id)
     Rails.cache.fetch([name, id]) { find(id) }
   end
@@ -224,6 +232,10 @@ class Person < ApplicationRecord
 
   def send_certificate_email(certificate_id, email)
     Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
+  end
+
+  def send_assignee_certificate_email(person_certificate, assignee_id, email)
+    Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate.id, email))
   end
 
   def send_course_attachment_email(certcourse_page)
@@ -396,14 +408,11 @@ class Person < ApplicationRecord
   def permissions
     1
   end
+  #
+  # def roles_for_select
+  #   (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
+  # end
 
-  def roles_for_select
-    (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
-  end
-
-  def some_admin?
-    !normal?
-  end
 
   def to_s
     name || username
@@ -417,32 +426,91 @@ class Person < ApplicationRecord
     Rails.cache.delete([self.class.name, id])
   end
 
+
+  def summarize_permissions
+    permission_list = assigned_role.summarize.dup
+    individual_access.summarize.each do |key, value|
+      permission_list[key] = value if value == true
+    end
+    permission_list
+  end
+
+  def full_permission_list
+    summarize_permissions.select { |_, v| v }.keys
+  end
+
+  def individual_access
+    portal_access || build_portal_access
+  end
+
+  def assigned_role
+    role || build_role(internal_name: "normal", name: "Normal")
+  end
+  before_validation :assign_role
+
+  def assign_role
+    self.role = Role.where(internal_name: "normal").first if role_id.nil?
+  end
+
+  def normal?
+    %w[normal].include?(assigned_role.internal_name)
+  end
+
+  def root?
+    %w[root].include?(assigned_role.internal_name)
+  end
+
+  def admin?
+    %w[admin].include?(assigned_role.internal_name)
+  end
+
+  def super_admin?
+    %w[super_admin].include?(assigned_role.internal_name) || root?
+  end
+
+  def client?
+    %w[client].include?(assigned_role.internal_name)
+  end
+
+  def client_portal?
+    %w[client_portal].include?(assigned_role.internal_name)
+  end
+
+  def some_admin?
+    super_admin? || client_portal?
+  end
+
   private
-    def canonicalize(name)
-      self.class.canonicalize(name)
-    end
 
-    def canonicalize_username
-      if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
-        errors.add(:username, :username_in_use, message: _("The username has already been taken."))
-        false
-      else
-        self.username_canonical = canonicalize(self.username)
-        true
-      end
-    end
+  def check_facebookid
+    self.facebookid = nil if self.facebookid == ""
+  end
 
-    def check_role
-      if super_admin? && !product.can_have_supers
-        errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
-      end
-    end
+  def canonicalize(name)
+    self.class.canonicalize(name)
+  end
 
-    def validate_age
-      if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-        errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
-      end
+  def canonicalize_username
+    if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+      errors.add(:username, :username_in_use, message: _("The username has already been taken."))
+      false
+    else
+      self.username_canonical = canonicalize(self.username)
+      true
     end
+  end
+
+  def check_role
+    if super_admin? && !product.can_have_supers?
+      errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
+    end
+  end
+
+  def validate_age
+    if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
+      errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
+    end
+  end
 
   def valid_country_code
     if country_code.present? && ISO3166::Country.find_country_by_alpha2(country_code).nil?
@@ -450,20 +518,29 @@ class Person < ApplicationRecord
     end
   end
 
-    def normalize_email
-      self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
-      true
-    end
+  def normalize_email
+    self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
+    true
+  end
 
-    def valid_username
-      if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
-        errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
-      end
+  def valid_username
+    if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
+      errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
 
   def client_role_changing
-    if self.role_was == 'client' && self.role != 'client'
-      self.errors[:base] << "You cannot change the 'client' role"
+    if self.role_id_changed?
+      previous_role = Role.where(id: self.role_id_was).first
+      errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == "client"
     end
+  end
+
+  def generate_unique_client_code
+    code = SecureRandom.hex(4)[0..-2]
+    while code.in?(ClientInfo.all.map(&:code))
+      code = SecureRandom.hex(4)[0..-2]
+    end
+    ClientInfo.create(client_id: self.id, code: code)
   end
 end

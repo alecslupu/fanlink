@@ -4,7 +4,7 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
   # TODO: auto-generated
   describe 'POST create' do
     it 'shold attach picture to public rooms when provided' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -48,7 +48,7 @@ RSpec.describe Api::V3::RoomsController, type: :controller do
 
   describe 'PUT update' do
     it "should let an admin update a public room's picture" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active)
