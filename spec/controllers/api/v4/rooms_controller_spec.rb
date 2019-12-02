@@ -82,12 +82,10 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         person.update(pin_messages_from: true)
         expect(person.pin_messages_from).to eq(true)
 
-        person.update(pin_messages_from: false)
-        expect(person.pin_messages_from).to eq(false)
         get :index, params: { private: true }
 
         expect(response).to be_successful
-        expect(json["rooms"].first["members"].first["pin_messages_from"]).to eq(false)
+        expect(json["rooms"].first["members"].first["pin_messages_from"]).to eq(true)
       end
     end
   end
