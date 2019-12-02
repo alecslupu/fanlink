@@ -19,12 +19,7 @@
 #  item_description :string
 #
 
-class IntegerConfigItem < ConfigItem
+class ColorConfigItem < ConfigItem
   has_paper_trail
-
-  validates :item_value, numericality: true, presence: true
-
-  def formatted_value
-    item_value.try(:to_i)
-  end
+  validates :item_value, css_hex_color: true
 end
