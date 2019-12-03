@@ -35,6 +35,7 @@ module Courseware
         def check_uniqueness
           record = ClientToPerson.find_by(client_id: client_id, person_id: person_id)
           if record.present?
+            record.destroy
             errors.add(:person, _("A user can have only one type of relation to the same client"))
           end
         end
