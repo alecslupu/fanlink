@@ -1,6 +1,5 @@
 RailsAdmin.config do |config|
   config.included_models.push("Interest")
-
   config.model "Interest" do
 
     list do
@@ -10,8 +9,8 @@ RailsAdmin.config do |config|
              :order
     end
     edit do
+      field :title, :translated
       fields :parent_id,
-             :title,
              :order
     end
     show do

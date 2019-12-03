@@ -21,7 +21,7 @@ class Interest < ApplicationRecord
   has_many :children, class_name: "Interest", foreign_key: "parent_id", dependent: :destroy
   has_many :person_interests, dependent: :destroy
 
-  validates :title, presence: { message: "Title is required" }
+  # validates :title, presence: { message: "Title is required" }
 
   scope :interests, -> (product) { where(product_id: product.id, parent_id: nil).order(order: :desc) }
 end
