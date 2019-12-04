@@ -136,6 +136,13 @@ class Message < ApplicationRecord
   scope :pinned, -> (param) { joins(:person).where("people.pin_messages_from = ?", (param.downcase == "yes") ? true : false) }
   scope :publics, -> { joins(:room).where("rooms.public = ?", true) }
   scope :reported_action_needed, -> { joins(:message_reports).where("message_reports.status = ?", MessageReport.statuses[:pending]) }
+  scope :not_reported_by_user, -> (person_id) {
+    where("NOT EXISTS (
+      SELECT 1 FROM message_reports
+      WHERE message_reports.message_id = messages.id
+      AND message_reports.person_id = ?
+    )", person_id)
+  }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> { where(hidden: false) }
   scope :room_date_range, -> (from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
