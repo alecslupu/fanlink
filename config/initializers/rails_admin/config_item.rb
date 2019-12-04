@@ -6,7 +6,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      fields :product, :item_key, :item_value, :item_url, :item_description
+      fields :item_key, :item_value, :item_url, :item_description
     end
   end
   %w[
@@ -15,13 +15,14 @@ RailsAdmin.config do |config|
     BooleanConfigItem
     RootConfigItem
     IntegerConfigItem
+    ColorConfigItem
   ].each do |model|
     config.included_models << model
     config.model model do
       parent "ConfigItem"
 
       edit do
-        fields :product, :item_key, :item_value, :item_url, :item_description
+        fields :item_key, :item_value, :item_url, :item_description
       end
     end
   end

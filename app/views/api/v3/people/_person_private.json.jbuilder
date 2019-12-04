@@ -28,11 +28,7 @@ else
     end
   end
 end
-if person.admin? && person.portal_access.present?
-  json.permissions person.portal_access.summarize
-else
-  json.permissions nil
-end
+json.permissions person.summarize_permissions
 
 if person.pinned_to.present?
   json.pin_messages_to do

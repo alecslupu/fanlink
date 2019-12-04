@@ -14,16 +14,19 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
   def show
     #  fill in response on person quizz is not taken into consideration YET
-    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz")
+    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz").order(:certcourse_page_order)
     if certcourse_pages.present?
       @quizzes = []
       certcourse_pages.each do |certcourse_page|
         quiz_page = QuizPage.find_by(certcourse_page_id: certcourse_page.id)
 
-        next unless quiz_page.present?
+        next if quiz_page.blank?
+
+        person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
+
+        next if person_responses.blank? && certcourse_page.course_page_progresses.where(person_id: params[:person_id], passed: true).blank?
 
         correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
-        person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
         failed_attempts = person_responses.where.not(answer_id: correct_answer.id)
         no_of_failed_attempts = failed_attempts.count
 
@@ -37,8 +40,13 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
         #   is_correct = true
         #   answer_text = person_response.fill_in_response.present?
         else
-          answer_text = Answer.find(failed_attempts.last.answer_id).description
           is_correct = false
+          answer_text = failed_attempts.present? ? Answer.find(failed_attempts.last.answer_id).description : nil
+        end
+
+        if answer_text.nil? && quiz_page.is_optional
+          answer_text = "User has not responded to this quiz"
+          no_of_failed_attempts = 1
         end
 
         quiz = {
@@ -58,7 +66,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
       return_the @quizzes, handler: :jb
     else
-      render_404(_("This certificates has no quiz page."))
+      render_404("This course has no quiz page.")
     end
   end
 end

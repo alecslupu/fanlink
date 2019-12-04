@@ -62,7 +62,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
 
 
     it "returns a list of posts after the given one in the correct order" do
-      # pica ptr ca e admin si se iau post-urile de 2 ori, si a doua oara nu e nimic o data in if-ul cu some_admin si web_request? si al doiela la unless web_request?
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
