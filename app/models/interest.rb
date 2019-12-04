@@ -23,13 +23,13 @@ class Interest < ApplicationRecord
   has_many :person_interests, dependent: :destroy
 
   accepts_nested_attributes_for :children, allow_destroy: true
-  
+
   validate :title_not_empty
 
   scope :interests, -> (product) { where(product_id: product.id, parent_id: nil).order(order: :desc) }
 
   protected
   def title_not_empty
-    errors.add(:title, _("Cannot save, no title has been set")) unless  self.title.present?
+    errors.add(:title, _("can't be empty.")) unless  self.title.present?
   end
 end
