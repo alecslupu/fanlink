@@ -27,8 +27,8 @@
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
