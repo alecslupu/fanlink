@@ -69,7 +69,10 @@ class Api::V4::MessagesController < Api::V3::MessagesController
           broadcast(:message_created, @message.id, room.product_id)
           if room.private?
             room.increment_message_counters(current_user.id)
-            @message.private_message_push
+            # @message.private_message_push
+            @message.private_chat_push
+          else
+            @message.public_chat_push
           end
           return_the @message, handler: tpl_handler, using: :show
         else
