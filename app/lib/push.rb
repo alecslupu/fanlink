@@ -104,6 +104,18 @@ module Push
     end
   end
 
+  # will be later changed to accept language to subscribe to the correct marketing topic
+  def subscribe_to_topic
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_subscription(topic, [token])
+  end
+
+  # will be later changed to accept language to unsubscribe to the correct marketing topic
+  def unsubscribe_to_topic
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_unsubscription(topic, [token])
+  end
+
 
 private
   def push_client
