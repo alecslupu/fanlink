@@ -107,17 +107,22 @@ module Push
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_to_topic(tokens)
     topic = "marketing_en-US"
-    response = push_client.batch_topic_subscription(topic, tokens)
+    response = push_client.batch_topic_subscription(topic, make_array(tokens))
   end
 
   # will be later changed to accept language to unsubscribe to the correct marketing topic
   def unsubscribe_to_topic(tokens)
     topic = "marketing_en-US"
-    response = push_client.batch_topic_unsubscription(topic, tokens)
+    response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
   end
 
 
 private
+
+  def make_array(elem)
+    elem.is_a?(Array) ? elem : [elem]
+  end
+
   def push_client
     @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
   end
