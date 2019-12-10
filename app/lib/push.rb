@@ -137,7 +137,7 @@ private
     options[:android] = create_android_options
     options[:apns] = create_apns_options
 
-    push_with_retry(options, tokens)
+    push_with_retry(options.with_indifferent_access, tokens)
   end
   module_function :create_notification
 
