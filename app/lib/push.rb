@@ -230,6 +230,7 @@ private
   def clean_notification_device_ids(resp)
     delete_not_registered_device_ids(resp)
     mark_not_registered_device_ids(resp)
+    unsubscribe_to_topic(resp)
   end
 
   def mark_not_registered_device_ids(device_ids)
