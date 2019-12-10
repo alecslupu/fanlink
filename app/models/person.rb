@@ -182,6 +182,8 @@ class Person < ApplicationRecord
 
   # Check if username has any special characters and if length is between 5 and 25
   validate :valid_username
+  validate :read_only_username
+
   enum gender: %i[ unspecified male female ]
 
   validate :valid_country_code
@@ -529,6 +531,11 @@ class Person < ApplicationRecord
     end
   end
 
+  def read_only_username
+    return if new_record?
+    errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
+  end
+
   def client_role_changing
     if self.role_id_changed?
       previous_role = Role.where(id: self.role_id_was).first
@@ -537,9 +544,9 @@ class Person < ApplicationRecord
   end
 
   def generate_unique_client_code
-    code = SecureRandom.hex(4)[0..-2]
-    while code.in?(ClientInfo.all.map(&:code))
-      code = SecureRandom.hex(4)[0..-2]
+    code = SecureRandom.uuid.first(7)
+    while ClientInfo.where(code: code).first.present?
+      code = SecureRandom.uuid.first(7)
     end
     ClientInfo.create(client_id: self.id, code: code)
   end

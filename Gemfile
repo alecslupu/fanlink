@@ -242,3 +242,4 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
+
