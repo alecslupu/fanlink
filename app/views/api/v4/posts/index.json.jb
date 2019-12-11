@@ -16,10 +16,6 @@ json[:posts] = @posts.map do |post|
   end
   p[:post_reaction_counts] = post.reaction_breakdown
 
-  if @device.to_s == "ios"
-    p[:post_reaction_counts].to_json unless p[:post_reaction_counts].nil?
-  end
-
   if post.poll.present?
     p[:poll] = Rails.cache.fetch ["v4", "poll", @req_source, post.poll.id, post.poll.updated_at.to_i] do
       render(partial: "api/v4/polls/#{@req_source}", locals: { poll: post.poll }, handlers: "jb")
