@@ -23,7 +23,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless web_request?
       end
     end
-    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    # @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
     # @posts = @posts.includes([:person])
     return_the @posts, handler: tpl_handler
   end
