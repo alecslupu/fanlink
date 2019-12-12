@@ -27,8 +27,8 @@
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -149,6 +149,7 @@ class Person < ApplicationRecord
   before_validation :assign_role
 
   after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
+  before_save :check_facebookid, if: -> { self.facebookid == "" }
 
   after_commit :flush_cache
 
@@ -425,8 +426,17 @@ class Person < ApplicationRecord
     Rails.cache.delete([self.class.name, id])
   end
 
+
+  def summarize_permissions
+    permission_list = assigned_role.summarize.dup
+    individual_access.summarize.each do |key, value|
+      permission_list[key] = value if value == true
+    end
+    permission_list
+  end
+
   def full_permission_list
-    assigned_role.summarize.select { |_, v| v }.keys + individual_access.summarize.select { |_, v| v }.keys
+    summarize_permissions.select { |_, v| v }.keys
   end
 
   def individual_access
@@ -471,6 +481,11 @@ class Person < ApplicationRecord
   end
 
   private
+
+  def check_facebookid
+    self.facebookid = nil if self.facebookid == ""
+  end
+
   def canonicalize(name)
     self.class.canonicalize(name)
   end
@@ -522,9 +537,9 @@ class Person < ApplicationRecord
   end
 
   def generate_unique_client_code
-    code = SecureRandom.hex(4)[0..-2]
-    while code.in?(ClientInfo.all.map(&:code))
-      code = SecureRandom.hex(4)[0..-2]
+    code = SecureRandom.uuid.first(7)
+    while ClientInfo.where(code: code).first.present?
+      code = SecureRandom.uuid.first(7)
     end
     ClientInfo.create(client_id: self.id, code: code)
   end
