@@ -190,14 +190,18 @@ class Post < ApplicationRecord
   end
 
   def reaction_breakdown
-    Rails.cache.fetch([cache_key, __method__]) {
-      (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
-    }
+    (post_reactions.count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
   end
 
-  def cached_reaction_count
-    Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
-  end
+  # def reaction_breakdown
+  #   Rails.cache.fetch([cache_key, __method__]) {
+  #     (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
+  #   }
+  # end
+
+  # def cached_reaction_count
+  #   Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
+  # end
 
   def cached_tags
     Rails.cache.fetch([self, "tags"]) { tags }
