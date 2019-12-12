@@ -1,5 +1,6 @@
 class Api::V4::TagsController < Api::V3::TagsController
   def index
+    binding.pry
     if params[:tag_name].present?
       @posts = paginate Post.visible.for_tag(params[:tag_name])
       return_the @posts, handler: tpl_handler

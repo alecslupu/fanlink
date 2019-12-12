@@ -1,5 +1,6 @@
 json = {}
 if @posts
+binding.pry
   json[:posts] = @posts.map do |post|
     Rails.cache.fetch ["v4", "post", @req_source, post.id, post.updated_at.to_i] do
       render partial: "api/v4/posts/#{@req_source}", locals: { post: post }, handlers: "jb"
