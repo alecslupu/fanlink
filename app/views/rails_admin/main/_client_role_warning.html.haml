@@ -34,7 +34,7 @@
     jQuery('#{form.jquery_namespace(field)}').change(function() {
 
       if ( jQuery('#{form.jquery_namespace(field)}').find(":selected").val() == '#{client_id}') {
-        alert("Warning! Saving a user with the Client role is final and can not be changed to another role later on!")
+        alert("Saving a user with the Client role is final and can not be changed to another role later on!")
       }
     })
   })
