@@ -246,7 +246,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         patch :update, params: { id: post.id, post: { recommended: true}  }
 
         expect(response).to be_successful
-        binding.pry
         expect(json["post"]["poll"]["id"]).not_to eq(nil)
         expect(json["post"]["poll"]["type"]).not_to eq(nil)
         expect(json["post"]["poll"]["type_id"]).not_to eq(nil)

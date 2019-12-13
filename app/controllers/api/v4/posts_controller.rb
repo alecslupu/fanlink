@@ -93,7 +93,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         render_422 @post.errors
       end
     else
-      return_the @post, handler: tpl_handler, using: :show
+      return_the @post, handler: tpl_handler
     end
   end
 
