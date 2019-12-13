@@ -6,13 +6,7 @@ end
 json[:post][:pinned] = @post.pinned
 
 if defined?(@post_reaction) && @post_reaction.present?
-  json[:post][:post_reaction] =
-  {
-    id: @post_reaction.id,
-    post_id: @post_reaction.post_id,
-    person_id: @post_reaction.person_id,
-    reaction: @post_reaction.reaction
-  }
+  json[:post][:post_reaction] = render partial: @req_source, locals: { post_reaction: @post_reaction }
 else
   json[:post][:post_reaction] = nil
 end
@@ -32,6 +26,9 @@ if @post.poll.present?
     end
   end
 end
-json[:post][:post_reaction_counts] = @post.reaction_breakdown
-
+if @device.to_s == "ios"
+  json[:post][:post_reaction_counts] = @post.reaction_breakdown.to_json
+else
+  json[:post][:post_reaction_counts] = @post.reaction_breakdown
+end
 json
