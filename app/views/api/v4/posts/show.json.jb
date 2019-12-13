@@ -18,7 +18,7 @@ else
 end
 if @post.poll.present?
   json[:post][:poll] = Rails.cache.fetch ["v4", "poll", @req_source, @post.poll.id, @post.poll.updated_at.to_i] do
-    render(partial: "api/v4/polls/#{@req_source}", locals: { poll: @post.poll }, handlers: "jb")
+    render(partial: "api/v4/polls/app", locals: { poll: @post.poll }, handlers: "jb")
   end
   json[:post][:poll][:closed] = @post.poll.closed?
   if @post.poll.poll_options.present?
