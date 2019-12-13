@@ -20,7 +20,9 @@
 #
 
 class ConfigItem < ApplicationRecord
-  acts_as_nested_set
+  acts_as_nested_set(
+    counter_cache: :children_count, touch: true
+  )
   acts_as_tenant(:product)
   rails_admin do
     nested_set(
@@ -45,6 +47,7 @@ class ConfigItem < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
+
   def to_s
     item_key
   end

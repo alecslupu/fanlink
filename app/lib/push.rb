@@ -71,7 +71,57 @@ module Push
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
+  def private_chat_push(message, room, product)
+    tokens = []
+    room.members.each do |m|
+      blocks_with = message.person.blocks_with.map { |b| b.id }
+      next if m == message.person
+      next if blocks_with.include?(m.id)
+      tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
+    end
+
+    unless tokens.empty?
+      deep_link = "#{product.internal_name}/rooms/#{room.id}"
+      data = create_data_segment(message, "private_chat", deep_link)
+      create_notification(tokens, data)
+    end
+  end
+
+  # the logic will be changed
+  def public_chat_push(message, room, product, message_text)
+    tokens = []
+    room.members.each do |m|
+      blocks_with = message.person.blocks_with.map { |b| b.id }
+      next if m == message.person
+      next if blocks_with.include?(m.id)
+      tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
+    end
+
+    unless tokens.empty?
+      deep_link = "#{product.internal_name}/rooms/#{room.id}"
+      data = create_data_segment(message, "public_chat", deep_link)
+      create_notification(tokens, data)
+    end
+  end
+
+  # will be later changed to accept language to subscribe to the correct marketing topic
+  def subscribe_to_topic(tokens)
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_subscription(topic, make_array(tokens))
+  end
+
+  # will be later changed to accept language to unsubscribe to the correct marketing topic
+  def unsubscribe_to_topic(tokens)
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
+  end
+
+
 private
+
+  def make_array(elem)
+    elem.is_a?(Array) ? elem : [elem]
+  end
 
   def push_client
     @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
@@ -98,6 +148,16 @@ private
   end
   module_function :do_push
 
+  def create_notification(tokens, data)
+    options = {}
+    options[:data] = data
+    options[:android] = create_android_options
+    options[:apns] = create_apns_options
+
+    push_with_retry(options.with_indifferent_access, tokens)
+  end
+  module_function :create_notification
+
   def push_with_retry(options, tokens)
     resp = nil
     begin
@@ -105,7 +165,7 @@ private
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
       resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
-      delete_not_registered_device_ids(resp[:not_registered_ids])
+      clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -119,7 +179,7 @@ private
       Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
       resp = push_client.send_to_topic(topic, notification: { body: msg })
       Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
-      delete_not_registered_device_ids(resp[:not_registered_ids])
+      clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -128,7 +188,57 @@ private
     resp[:status_code] == 200
   end
 
+  def create_data_segment(message, type, deep_link)
+    data = {}
+    data[:type] = "user"
+    user_payload = {}
+    user_payload[:type] = type
+    user_payload[:title] = "Message received"
+    user_payload[:message_short] = "short text message"
+    user_payload[:message_long] = message.body
+    user_payload[:image_url] = message.picture_url
+    user_payload[:deep_link] = deep_link
+    data[:payload] = user_payload
+
+    return data
+  end
+
+  def create_android_options
+    android = {}
+    android[:priority] = "high"
+    android[:ttl] = "86400s"
+    android[:collapse_key] = "collapse_key"
+    android[:fcm_options] = {}
+    android[:fcm_options][:analytics_label] = "test"
+
+    return android
+  end
+
+  def create_apns_options
+    apns = {}
+    apns['headers'] = {}
+    apns['headers']['apns-priority'] = "5"
+    apns['headers']['apns-expiration'] = "1575567810"
+    apns['fcm_options'] = {}
+    apns['fcm_options']['analytics_label'] = "test"
+    apns['payload'] = {}
+    apns['payload']['aps'] = {}
+    apns['payload']['aps']['content-available'] = 1
+
+    return apns
+  end
+
   def delete_not_registered_device_ids(device_ids)
     NotificationDeviceId.where(device_identifier: device_ids).destroy_all
+  end
+
+  def clean_notification_device_ids(resp)
+    delete_not_registered_device_ids(resp)
+    mark_not_registered_device_ids(resp)
+    unsubscribe_to_topic(resp)
+  end
+
+  def mark_not_registered_device_ids(device_ids)
+    NotificationDeviceId.where(device_identifier: device_ids).update_all(not_registered: true)
   end
 end
