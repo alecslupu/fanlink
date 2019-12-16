@@ -26,6 +26,9 @@ if @post.poll.present?
     end
   end
 end
-json[:post][:post_reaction_counts] = @post.reaction_breakdown
-
+if @device.to_s == "ios"
+  json[:post][:post_reaction_counts] = @post.reaction_breakdown.to_json
+else
+  json[:post][:post_reaction_counts] = @post.reaction_breakdown
+end
 json
