@@ -246,15 +246,18 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         patch :update, params: { id: post.id, post: { recommended: true}  }
 
         expect(response).to be_successful
-        expect(json["post"]["poll"]["id"]).not_to eq(nil)
-        expect(json["post"]["poll"]["type"]).not_to eq(nil)
-        expect(json["post"]["poll"]["type_id"]).not_to eq(nil)
-        expect(json["post"]["poll"]["description"]).not_to eq(nil)
-        expect(json["post"]["poll"]["start_date"]).not_to eq(nil)
-        expect(json["post"]["poll"]["duration"]).not_to eq(nil)
-        expect(json["post"]["poll"]["end_date"]).not_to eq(nil)
-        expect(json["post"]["poll"]["create_time"]).not_to eq(nil)
-        expect(json["post"]["poll"]["closed"]).not_to eq(nil)
+
+        poll = json["post"]["poll"]
+
+        expect(poll["id"]).not_to eq(nil)
+        expect(poll["type"]).not_to eq(nil)
+        expect(poll["type_id"]).not_to eq(nil)
+        expect(poll["description"]).not_to eq(nil)
+        expect(poll["start_date"]).not_to eq(nil)
+        expect(poll["duration"]).not_to eq(nil)
+        expect(poll["end_date"]).not_to eq(nil)
+        expect(poll["create_time"]).not_to eq(nil)
+        expect(poll["closed"]).not_to eq(nil)
 
       end
     end
