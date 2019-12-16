@@ -21,6 +21,7 @@ RSpec.describe Api::V4::TagsController, type: :controller do
         person2.follow(person)
 
         get :index, params: { tag_name: tag.name }
+
         expect(response).to be_successful
         post = json["posts"].first
 
