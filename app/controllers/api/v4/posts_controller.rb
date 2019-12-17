@@ -1,12 +1,33 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
+    ordering = 'DESC'
+    if params[:post_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
+      chronological = true
+      post = Post.find(params[:post_id])
+      if params[:chronologically] == 'after'
+        sign = '>'
+        ordering = 'ASC'
+      else
+        sign = '<'
+      end
+    else
+      chronological = false
+    end
     if params[:promoted].present? && params[:promoted] == "true"
-      @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+      if chronological
+        @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).chronological(sign, post.created_at, post.id).includes([:poll])
+      else
+        @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+      end
     else
       if web_request? && some_admin?
         @posts = paginate apply_filters
       else
-        @posts = paginate Post.visible.unblocked(current_user.blocked_people).order(created_at: :desc).includes([:poll])
+        if chronological
+          @posts = paginate Post.visible.unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id).includes([:poll])
+        else
+          @posts = paginate Post.visible.unblocked(current_user.blocked_people).includes([:poll])
+        end
       end
       if params[:tag].present? || params[:categories].present?
         @posts = @posts.for_tag(params[:tag]) if params[:tag]
@@ -20,10 +41,18 @@ class Api::V4::PostsController < Api::V3::PostsController
           render_422(_("Cannot find that person.")) && return
         end
       else
-        @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc).includes([:poll])) unless web_request?
+        unless web_request?
+          if chronological
+            @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id).includes([:poll]))
+          else
+            @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll]))
+          end
+        end
       end
     end
-    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    @posts = @posts.order("posts.created_at #{ordering}, posts.id #{ordering} ")
+    # @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+
     # @posts = @posts.includes([:person])
     return_the @posts, handler: tpl_handler
   end
@@ -88,12 +117,12 @@ class Api::V4::PostsController < Api::V3::PostsController
   def update
     if params.has_key?(:post)
       if @post.update_attributes(post_params)
-        return_the @post, handler: tpl_handler, using: :show
+        render :show
       else
         render_422 @post.errors
       end
     else
-      return_the @post, handler: tpl_handler, using: :show
+      render :show
     end
   end
 
