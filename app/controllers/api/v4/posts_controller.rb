@@ -24,9 +24,9 @@ class Api::V4::PostsController < Api::V3::PostsController
         @posts = paginate apply_filters
       else
         if chronological
-          @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id)
+          @posts = paginate Post.visible.unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id).includes([:poll])
         else
-          @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people)
+          @posts = paginate Post.visible.unblocked(current_user.blocked_people).includes([:poll])
         end
       end
       if params[:tag].present? || params[:categories].present?
@@ -43,9 +43,9 @@ class Api::V4::PostsController < Api::V3::PostsController
       else
         unless web_request?
           if chronological
-            @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id))
+            @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id).includes([:poll]))
           else
-            @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people))
+            @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll]))
           end
         end
       end
