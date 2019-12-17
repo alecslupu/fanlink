@@ -6,7 +6,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       if web_request? && some_admin?
         @posts = paginate apply_filters
       else
-        @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
+        @posts = paginate Post.visible.unblocked(current_user.blocked_people).order(created_at: :desc).includes([:poll])
       end
       if params[:tag].present? || params[:categories].present?
         @posts = @posts.for_tag(params[:tag]) if params[:tag]
@@ -20,7 +20,7 @@ class Api::V4::PostsController < Api::V3::PostsController
           render_422(_("Cannot find that person.")) && return
         end
       else
-        @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless web_request?
+        @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc).includes([:poll])) unless web_request?
       end
     end
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
