@@ -6,10 +6,11 @@ end
 json[:post][:pinned] = @post.pinned
 
 if defined?(@post_reaction) && @post_reaction.present?
-  json[:post][:post_reaction] = render partial: @req_source, locals: { post_reaction: @post_reaction }
+  json[:post][:post_reaction] = render partial: @req_source, locals: { post_reaction: @post_reaction, post: @post }
 else
   json[:post][:post_reaction] = nil
 end
+
 if @post.poll.present?
   json[:post][:poll] = Rails.cache.fetch ["v4", "poll", @req_source, @post.poll.id, @post.poll.updated_at.to_i] do
     render(partial: "api/v4/polls/app", locals: { poll: @post.poll }, handlers: "jb")
