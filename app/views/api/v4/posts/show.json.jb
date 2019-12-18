@@ -33,6 +33,6 @@ if @post.poll.present?
   end
 end
 
-p[:post_reaction_counts] = @post.reaction_breakdown
+json[:post][:post_reaction_counts] = @post.reaction_breakdown
 
 json
