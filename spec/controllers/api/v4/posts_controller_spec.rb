@@ -106,11 +106,18 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post = create(:post, person: person)
         tag = create(:tag)
         post.tags << tag
-        create(:post_reaction, person: person, post: post)
+        post_reaction = create(:post_reaction, person: person, post: post)
 
         get :show, params: { id: post.id }
 
         expect(response).to be_successful
+
+        pr = json["post"]["post_reaction"]
+        expect(json["post"]["tags"]).to include(tag.name)
+        expect(pr["id"]).to eq(post_reaction.id)
+        expect(pr["post_id"]).to eq(post_reaction.post_id)
+        expect(pr["person_id"]).to eq(post_reaction.person_id)
+        expect(pr["reaction"]).to eq(post_reaction.reaction)
       end
     end
   end
