@@ -125,4 +125,15 @@ private
     end
     resp[:status_code] == 200
   end
+
+  def create_android_options
+    android = {}
+    android[:priority] = "high"
+    android[:ttl] = "86400s"
+    android[:collapse_key] = "collapse_key"
+    android[:fcm_options] = {}
+    android[:fcm_options][:analytics_label] = "string"
+
+    return android
+  end
 end
