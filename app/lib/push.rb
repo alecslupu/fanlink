@@ -71,6 +71,10 @@ module Push
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
+  def android_notification
+    build_data_android(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+  end
+
 private
 
   def push_client
@@ -97,6 +101,17 @@ private
     end
   end
   module_function :do_push
+
+  def android_notification_push(tokens, data)
+    options = {}
+    options[:data] = data
+
+    # this may be used for v1 implementation
+    # options[:android] = build_android_options
+
+    push_with_retry(options, tokens)
+  end
+  module_function :push_notification
 
   def push_with_retry(options, tokens)
     resp = nil
@@ -126,14 +141,31 @@ private
     resp[:status_code] == 200
   end
 
-  def create_android_options
-    android = {}
-    android[:priority] = "high"
-    android[:ttl] = "86400s"
-    android[:collapse_key] = "collapse_key"
-    android[:fcm_options] = {}
-    android[:fcm_options][:analytics_label] = "string"
+  def build_data_android
+    data = {}
+    data[:type] = "user"
+    data[:context] = context
+    data[:title] = title
+    data[:message_short] = message_short
+    data[:message_placeholder] = message_placeholder
+    data[:message_long] = message_long
+    data[:image_url] = image_url
+    data[:room_id] = room_id
+    data[:relationship_id] = relationship_id
+    data[:deep_link] = deep_link
 
-    return android
+    return data
   end
+
+  # def build_android_options
+  #   android = {}
+  #   android[:priority] = "high"
+  #   android[:ttl] = "86400s"
+  #   android[:collapse_key] = "collapse_key"
+  #   android[:fcm_options] = {}
+  #   android[:fcm_options][:analytics_label] = "string"
+
+  #   return android
+  # end
+
 end
