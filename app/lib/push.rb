@@ -72,7 +72,13 @@ module Push
   end
 
   def android_notification
-    build_data_android(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+    options = {}
+    options[:data] = build_data_android(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+
+    # this may be used for v1 implementation
+    # options[:android] = build_android_options
+
+    push_with_retry(options, tokens)
   end
 
 private
@@ -101,17 +107,6 @@ private
     end
   end
   module_function :do_push
-
-  def android_notification_push(tokens, data)
-    options = {}
-    options[:data] = data
-
-    # this may be used for v1 implementation
-    # options[:android] = build_android_options
-
-    push_with_retry(options, tokens)
-  end
-  module_function :push_notification
 
   def push_with_retry(options, tokens)
     resp = nil
