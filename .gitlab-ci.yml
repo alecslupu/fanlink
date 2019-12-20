@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - report
+  - rspec
   - deploy
 
 variables:
@@ -140,15 +141,45 @@ test:erd:
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-test:rspec:
+test:rspec51:
   extends: .base_db
-  stage: test
+  stage: rspec
   artifacts:
-    name: coverage_report
+    name: coverage_report51
     paths:
-      - coverage/
+      - coverage51/
   script:
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - mv coverage coverage51
+
+test:rspec52:
+  extends: .base_db
+  stage: rspec
+  allow_failure: true
+  variables:
+    RAILS52: true
+  artifacts:
+    name: coverage_report52
+    paths:
+      - coverage52/
+  script:
+    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - mv coverage coverage52
+
+test:rspec6:
+  extends: .base_db
+  stage: rspec
+  variables:
+    RAILS6: true
+  allow_failure: true
+  artifacts:
+    name: coverage_report6
+    paths:
+      - coverage6/
+  script:
+    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - mv coverage coverage6
+
 
 pages:
   extends: .base_minimal
@@ -158,22 +189,22 @@ pages:
     - test:brakeman
     - test:dawnscanner
     - test:erd
-    - test:rspec
     - test:rubycritic
+    - test:rubocop
   artifacts:
     name: my_app_artifacts
     paths:
       - public/brakeman
-      - public/coverage
+      - # public/coverage
       - public/dawnscanner
-      - public/dawnscanner
+      - public/rubocop
       - public/erd.pdf
       - public/rubycritic
   only:
     - master
   script:
     - mv brakeman public/ || true
-    - mv coverage public/ || true
+    - # mv coverage public/ || true
     - mv dawnscanner public/ || true
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
