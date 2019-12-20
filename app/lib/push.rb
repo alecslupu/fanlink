@@ -72,7 +72,7 @@ module Push
   end
 
   def android_tokens_notification_push
-    notification = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+    notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
 
     push_with_retry(notification, tokens)
   end
@@ -132,7 +132,7 @@ private
     resp[:status_code] == 200
   end
 
-  def build_android_notification
+  def build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
     # options = {}     ?????????????????????????????????????
     data = {}
     data[:type] = "user"
