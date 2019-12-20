@@ -71,14 +71,10 @@ module Push
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
-  def android_notification
-    options = {}
-    options[:data] = build_data_android(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+  def android_tokens_notification_push
+    notification = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
 
-    # this may be used for v1 implementation
-    # options[:android] = build_android_options
-
-    push_with_retry(options, tokens)
+    push_with_retry(notification, tokens)
   end
 
 private
@@ -136,7 +132,8 @@ private
     resp[:status_code] == 200
   end
 
-  def build_data_android
+  def build_android_notification
+    # options = {}     ?????????????????????????????????????
     data = {}
     data[:type] = "user"
     data[:context] = context
@@ -148,8 +145,13 @@ private
     data[:room_id] = room_id
     data[:relationship_id] = relationship_id
     data[:deep_link] = deep_link
+    options[:data] = data
 
-    return data
+
+    # this may be used for v1 implementation
+    # options[:android] = build_android_options
+
+    return option
   end
 
   # def build_android_options
