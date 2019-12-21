@@ -61,7 +61,13 @@ module Push
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
-    android_tokens_notification_push("user", )
+    context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link
+    android_token_notification_push(
+      "user",
+      context: "private_chat",
+      title: message.person.username,
+      message_short: ""
+    )
   end
 
   def simple_notification_push(notification, current_user, receipents)
@@ -71,7 +77,6 @@ module Push
     end
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
-
 
 private
 
@@ -128,31 +133,21 @@ private
     resp[:status_code] == 200
   end
 
-  def android_tokens_notification_push
-    notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+  def android_token_notification_push(tokens, data = {})
+    notification_body = build_android_notification(data)
 
     push_with_retry(notification_body, tokens)
   end
 
-  # def ios_tokens_notification_push
+  # def ios_token_notification_push
   #   notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
 
-  #   push_with_retry(notification, tokens)
+  #   push_with_retry(notification_body, tokens)
   # end
 
-  def build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+  def build_android_notification(data)
     options = {}
-    data = {}
     data[:type] = "user"
-    data[:context] = context
-    data[:title] = title
-    data[:message_short] = message_short
-    data[:message_placeholder] = message_placeholder
-    data[:message_long] = message_long
-    data[:image_url] = image_url
-    data[:room_id] = room_id
-    data[:relationship_id] = relationship_id
-    data[:deep_link] = deep_link
     options[:data] = data
 
     # this may be used for v1 implementation
