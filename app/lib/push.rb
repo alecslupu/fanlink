@@ -61,6 +61,7 @@ module Push
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
+    android_tokens_notification_push("user", )
   end
 
   def simple_notification_push(notification, current_user, receipents)
@@ -71,11 +72,6 @@ module Push
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
-  def android_tokens_notification_push
-    notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
-
-    push_with_retry(notification, tokens)
-  end
 
 private
 
@@ -132,8 +128,20 @@ private
     resp[:status_code] == 200
   end
 
+  def android_tokens_notification_push
+    notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+
+    push_with_retry(notification_body, tokens)
+  end
+
+  # def ios_tokens_notification_push
+  #   notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+
+  #   push_with_retry(notification, tokens)
+  # end
+
   def build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
-    # options = {}     ?????????????????????????????????????
+    options = {}
     data = {}
     data[:type] = "user"
     data[:context] = context
@@ -147,12 +155,12 @@ private
     data[:deep_link] = deep_link
     options[:data] = data
 
-
     # this may be used for v1 implementation
     # options[:android] = build_android_options
 
-    return option
+    return options
   end
+
 
   # def build_android_options
   #   android = {}
