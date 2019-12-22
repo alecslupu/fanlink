@@ -152,7 +152,7 @@ test:rspec51:
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage51
 
-test:rspec52:
+.test:rspec52:
   extends: .base_db
   stage: rspec
   allow_failure: true
@@ -169,7 +169,7 @@ test:rspec52:
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
 
-test:rspec6:
+.test:rspec6:
   extends: .base_db
   stage: rspec
   allow_failure: true
