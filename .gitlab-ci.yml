@@ -164,6 +164,7 @@ test:rspec52:
       - coverage52/
   script:
     - export RAILS52=true
+    - bundle update rails
     - bundle install
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
@@ -178,6 +179,7 @@ test:rspec6:
       - coverage6/
   script:
     - export RAILS6=true
+    - bundle update rails
     - bundle install
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage6
