@@ -157,26 +157,28 @@ test:rspec52:
   stage: rspec
   allow_failure: true
   variables:
-    RAILS52: true
+    RAILS_ENV: test
   artifacts:
     name: coverage_report52
     paths:
       - coverage52/
   script:
+    - export RAILS52=true
+    - bundle install
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
 
 test:rspec6:
   extends: .base_db
   stage: rspec
-  variables:
-    RAILS6: true
   allow_failure: true
   artifacts:
     name: coverage_report6
     paths:
       - coverage6/
   script:
+    - export RAILS6=true
+    - bundle install
     - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage6
 
@@ -195,7 +197,7 @@ pages:
     name: my_app_artifacts
     paths:
       - public/brakeman
-      - # public/coverage
+      # -public/coverage
       - public/dawnscanner
       - public/rubocop
       - public/erd.pdf
@@ -204,10 +206,10 @@ pages:
     - master
   script:
     - mv brakeman public/ || true
-    - # mv coverage public/ || true
     - mv dawnscanner public/ || true
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
+    # - mv coverage public/ || true
 
 deploy:staging:
   extends: .base
