@@ -53,8 +53,8 @@ module Push
   end
 
   def private_message_push(message)
-    tokens = []
     room = message.room
+    android_tokens, ios_tokens = get_room_members_tokens(room.members)
     room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
@@ -74,8 +74,27 @@ module Push
       image_url: message.picture_url,
       room_id: room.id.to_s,
       deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
-    ) unless tokens.empty?
+    ) unless android_tokens.empty?
   end
+
+  # def public_message_push
+  #   tokens = []
+  #   room = message.room
+  #   get_room_members_tokens(room.members)
+
+  #   message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
+  #   android_token_notification_push(
+  #     tokens,
+  #     context: "private_chat",
+  #     title: message.person.username,
+  #     message_short: message_short,
+  #     message_placeholder: message.person.username,
+  #     message_long: message.body,
+  #     image_url: message.picture_url,
+  #     room_id: room.id.to_s,
+  #     deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+  #   ) unless tokens.empty?
+  # end
 
   def simple_notification_push(notification, current_user, receipents)
     tokens = []
@@ -161,6 +180,18 @@ private
     # options[:android] = build_android_options
 
     return options
+  end
+
+  def get_room_members_tokens(members)
+    members.each do |m|
+      blocks_with = message.person.blocks_with.map { |b| b.id }
+      next if m == message.person
+      next if blocks_with.include?(m.id)
+      android_tokens += m.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
+      ios_tokens += m.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+    end
+
+    return android_tokens, ios_tokens
   end
 
 
