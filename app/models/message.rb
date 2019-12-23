@@ -109,13 +109,10 @@ class Message < ApplicationRecord
     Delayed::Job.enqueue(PrivateMessagePushJob.new(id))
   end
 
-  # def private_chat_push
-    # Delayed::Job.enqueue(PrivateChatPushJob.new(id))
-  # end
+  def public_room_message_push
+    Delayed::Job.enqueue(PublicMessagePushJob.new(id))
+  end
 
-  # def public_chat_push
-    # Delayed::Job.enqueue(PublicChatPushJob.new(id))
-  # end
   # include Message::RealTime
 
   # replicated_model
