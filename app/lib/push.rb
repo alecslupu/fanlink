@@ -54,20 +54,27 @@ module Push
 
   def private_message_push(message)
     tokens = []
-    message.room.members.each do |m|
+    room = message.room
+    room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
-    context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link
+
+    message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
-      "user",
+      tokens,
       context: "private_chat",
       title: message.person.username,
-      message_short: ""
-    )
+      message_short: message_short,
+      message_placeholder: message.person.username,
+      message_long: message.body,
+      image_url: message.picture_url,
+      room_id: room.id.to_s,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless tokens.empty?
   end
 
   def simple_notification_push(notification, current_user, receipents)
