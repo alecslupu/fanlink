@@ -21,7 +21,7 @@ if step.step_completed.present?
 else
   json[:status] = step.initial_status
 end
-unlocks_at ||= Time.now.to_s
+unlocks_at ||= Time.zone.now.to_s
 if @req_source == "web"
   json[:delay_unlock] = step.delay_unlock || 0
 end

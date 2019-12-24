@@ -20,7 +20,7 @@ if step.step_completed.present?
 else
   json[:status] = step.initial_status
 end
-unlocks_at ||= Time.now.to_s
+unlocks_at ||= Time.zone.now.to_s
 json[:unlocks_at] = unlocks_at.to_datetime().utc.iso8601
 
 json

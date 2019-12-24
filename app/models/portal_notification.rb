@@ -73,7 +73,7 @@ private
 
   def sensible_send_time
     unless persisted?
-      if send_me_at.present? && send_me_at < Time.now
+      if send_me_at.present? && send_me_at < Time.zone.now
         errors.add(:send_me_at, :sensible_send_time, message: _("You cannot set the send time to a time before now."))
       end
     end

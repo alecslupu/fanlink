@@ -47,7 +47,7 @@ describe "PostReports (v1)" do
         @index_posts << create(:post, person: @index_people.sample)
       end
       @index_reports = []
-      base_time = Time.now - 4.days
+      base_time = Time.zone.now - 4.days
       5.times do |n|
         @index_reports << create(:post_report, post: @index_posts.sample, person: @reporting_people.sample, status: PostReport.statuses.keys.sample, created_at: base_time + n.hours)
       end

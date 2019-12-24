@@ -35,8 +35,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(response).to be_successful
         post = Post.last
         expect(post.global).to be_truthy
-        expect(post.starts_at).to eq(Time.parse(startat))
-        expect(post.ends_at).to eq(Time.parse(endat))
+        expect(post.starts_at).to eq(Time.zone.parse(startat))
+        expect(post.ends_at).to eq(Time.zone.parse(endat))
         expect(post.repost_interval).to eq(rpi)
         expect(post.status).to eq("rejected")
         expect(post.priority).to eq(prior)
@@ -76,8 +76,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(response).to be_successful
         post = Post.last
         expect(post.global).to be_truthy
-        expect(post.starts_at).to eq(Time.parse(startat))
-        expect(post.ends_at).to eq(Time.parse(endat))
+        expect(post.starts_at).to eq(Time.zone.parse(startat))
+        expect(post.ends_at).to eq(Time.zone.parse(endat))
         expect(post.repost_interval).to eq(rpi)
         expect(post.status).to eq("rejected")
         expect(post.priority).to eq(prior)
@@ -811,7 +811,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        flinkpost = create(:published_post, person: person, starts_at: Time.now - 1.hour, ends_at: Time.now + 1.hour)
+        flinkpost = create(:published_post, person: person, starts_at: Time.zone.now - 1.hour, ends_at: Time.zone.now + 1.hour)
         get :show, params: {id: flinkpost.id}
         expect(response).to be_successful
         expect(post_json(json["post"])).to be true
@@ -878,8 +878,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost.reload
         expect(flinkpost.body).to eq(newbody)
         expect(flinkpost.global).to eq(global)
-        expect(flinkpost.starts_at).to eq(Time.parse(starts_at))
-        expect(flinkpost.ends_at).to eq(Time.parse(ends_at))
+        expect(flinkpost.starts_at).to eq(Time.zone.parse(starts_at))
+        expect(flinkpost.ends_at).to eq(Time.zone.parse(ends_at))
         expect(flinkpost.repost_interval).to eq(repost_interval)
         expect(flinkpost.status).to eq(status)
         expect(flinkpost.priority).to eq(priority)

@@ -137,7 +137,7 @@ RSpec.describe Post, type: :model do
 
   describe "#starts_at" do
     it "should not let you create a post that starts after it ends" do
-      post = build(:post, starts_at: Time.now + 1.day, ends_at: Time.now + 23.hours)
+      post = build(:post, starts_at: Time.zone.now + 1.day, ends_at: Time.zone.now + 23.hours)
       expect(post).not_to be_valid
       expect(post.errors[:starts_at]).not_to be_empty
     end

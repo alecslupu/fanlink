@@ -31,6 +31,6 @@ FactoryBot.define do
     name { "Quest 1" }
     internal_name { "quest_1" }
     description { Faker::Lorem.paragraph }
-    starts_at { Time.now }
+    starts_at { Time.zone.now }
   end
 end

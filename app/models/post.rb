@@ -43,8 +43,8 @@ class Post < ApplicationRecord
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
   scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
   scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
-  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.zone.parse(query)) }
+  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.zone.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   # include Post::PortalFilters
   include TranslationThings
@@ -101,7 +101,7 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
+          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.zone.now, Time.zone.now)
         }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }

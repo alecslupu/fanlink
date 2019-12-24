@@ -47,7 +47,7 @@ describe "PostCommentReports (v1)" do
         @index_post_comments << create(:post_comment, person: @index_people.sample)
       end
       @index_reports = []
-      base_time = Time.now - 4.days
+      base_time = Time.zone.now - 4.days
       5.times do |n|
         @index_reports << create(:post_comment_report, post_comment: @index_post_comments.sample,
                                  person: @reporting_people.sample, status: PostCommentReport.statuses.keys.sample,
