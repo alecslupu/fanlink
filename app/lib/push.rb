@@ -53,8 +53,9 @@ module Push
   end
 
   def private_message_push(message)
+    tokens = []
     room = message.room
-    android_tokens, ios_tokens = get_room_members_tokens(room.members)
+    android_tokens, ios_tokens = get_room_members_tokens(room.members, message)
     room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
@@ -65,7 +66,7 @@ module Push
 
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
-      tokens,
+      android_tokens,
       context: "private_chat",
       title: message.person.username,
       message_short: message_short,
@@ -83,7 +84,7 @@ module Push
   #   get_room_members_tokens(room.members)
 
   #   message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
-  #   android_token_notification_push(
+  #   android_tokens(
   #     tokens,
   #     context: "private_chat",
   #     title: message.person.username,
@@ -102,39 +103,6 @@ module Push
       tokens += person.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
-  end
-
-  def private_chat_push(message, room, product)
-    tokens = []
-    room.members.each do |m|
-      blocks_with = message.person.blocks_with.map { |b| b.id }
-      next if m == message.person
-      next if blocks_with.include?(m.id)
-      tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
-    end
-
-    unless tokens.empty?
-      deep_link = "#{product.internal_name}/rooms/#{room.id}"
-      data = create_data_segment(message, "private_chat", deep_link)
-      create_notification(tokens, data)
-    end
-  end
-
-  # the logic will be changed
-  def public_chat_push(message, room, product, message_text)
-    tokens = []
-    room.members.each do |m|
-      blocks_with = message.person.blocks_with.map { |b| b.id }
-      next if m == message.person
-      next if blocks_with.include?(m.id)
-      tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
-    end
-
-    unless tokens.empty?
-      deep_link = "#{product.internal_name}/rooms/#{room.id}"
-      data = create_data_segment(message, "public_chat", deep_link)
-      create_notification(tokens, data)
-    end
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
@@ -180,16 +148,6 @@ private
     end
   end
   module_function :do_push
-
-  def create_notification(tokens, data)
-    options = {}
-    options[:data] = data
-    options[:android] = create_android_options
-    options[:apns] = create_apns_options
-
-    push_with_retry(options.with_indifferent_access, tokens)
-  end
-  module_function :create_notification
 
   def push_with_retry(options, tokens)
     resp = nil
@@ -258,7 +216,9 @@ private
     return options
   end
 
-  def get_room_members_tokens(members)
+  def get_room_members_tokens(members, message)
+    android_tokens = []
+    ios_tokens = []
     members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
