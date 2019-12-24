@@ -120,6 +120,10 @@ module Push
 
 private
 
+  def make_array(elem)
+    elem.is_a?(Array) ? elem : [elem]
+  end
+
   def push_client
     @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
   end
