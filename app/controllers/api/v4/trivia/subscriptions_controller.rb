@@ -6,7 +6,7 @@ class Api::V4::Trivia::SubscriptionsController < ApiController
 
   def update
     @subscriber = datasource.first!
-    if @subscriber.update_attributes(subscribed: params[:subscribed] || false)
+    if @subscriber.update(subscribed: params[:subscribed] || false)
       return_the @subscriber, handler: tpl_handler
     else
       render_422 @subscriber.errors

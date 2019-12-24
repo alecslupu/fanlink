@@ -185,7 +185,7 @@ class Api::V2::QuestActivitiesController < ApiController
   # *
 
   def update
-    @quest_activity.update_attributes(activity_params)
+    @quest_activity.update(activity_params)
     return_the @quest_activity
   end
 

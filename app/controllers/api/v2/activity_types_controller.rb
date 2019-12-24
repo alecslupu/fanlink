@@ -160,7 +160,7 @@ class Api::V2::ActivityTypesController < ApiController
   # *
 
   def update
-    @activity_type.update_attributes(type_params)
+    @activity_type.update(type_params)
     return_the @activity_type
   end
 

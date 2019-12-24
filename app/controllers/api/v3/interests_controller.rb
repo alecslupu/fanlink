@@ -45,7 +45,7 @@ class Api::V3::InterestsController < ApiController
   def update
     if params.has_key?(:interest)
       if some_admin?
-        if @interest.update_attributes(interest_params)
+        if @interest.update(interest_params)
           return_the @interest
         else
           render_422 @interest.errors

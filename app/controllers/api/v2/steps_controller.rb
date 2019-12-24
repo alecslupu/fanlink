@@ -165,7 +165,7 @@ class Api::V2::StepsController < ApiController
   # *
 
   def update
-    @step.update_attributes(step_params)
+    @step.update(step_params)
     return_the @step
   end
 

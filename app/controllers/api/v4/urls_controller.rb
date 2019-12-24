@@ -20,7 +20,7 @@ class Api::V4::UrlsController < Api::V3::UrlsController
   end
 
   def update
-    @url.update_attributes(url_params)
+    @url.update(url_params)
     broadcast(:url_updated, current_user, @url)
     return_the @url, handler: tpl_handler, using: :show
   end

@@ -74,7 +74,7 @@ class Api::V3::QuestCompletionsController < Api::V2::QuestCompletionsController
   # *
   def update
     if params.has_key?(:quest_completion)
-      if @completion.update_attributes(completion_params)
+      if @completion.update(completion_params)
         return_the @completion
       else
         render_422 @completion.errors

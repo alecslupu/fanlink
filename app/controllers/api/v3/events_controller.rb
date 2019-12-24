@@ -232,7 +232,7 @@ class Api::V3::EventsController < Api::V2::EventsController
 
   def update
     if params.has_key?(:event)
-      if @event.update_attributes(event_params)
+      if @event.update(event_params)
         broadcast(:event_updated, current_user, @event)
         return_the @event, handler: tpl_handler, using: :show
       else

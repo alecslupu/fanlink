@@ -16,7 +16,7 @@ class Api::V4::BadgesController < Api::V3::BadgesController
 
   def update
     if params.has_key?(:badge)
-      @badge.update_attributes(badge_params)
+      @badge.update(badge_params)
     end
     return_the @badge, handler: tpl_handler, using: :show
   end

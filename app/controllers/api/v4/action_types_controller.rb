@@ -21,7 +21,7 @@ class Api::V4::ActionTypesController < Api::V3::ActionTypesController
   def update
     @action_type = ActionType.find(params[:id])
     if params.has_key?(:action_type)
-      @action_type.update_attributes(action_params)
+      @action_type.update(action_params)
     end
     return_the @action_type, handler: tpl_handler, using: :show
   end

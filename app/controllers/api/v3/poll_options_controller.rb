@@ -115,7 +115,7 @@ class Api::V3::PollOptionsController < ApiController
 
   def update
     if params.has_key?(:poll_option)
-      if @poll_option.update_attributes(poll_option_params)
+      if @poll_option.update(poll_option_params)
         return_the @poll_option
       else
         render_422 @poll_option.errors
