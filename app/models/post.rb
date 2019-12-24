@@ -162,7 +162,7 @@ class Post < ApplicationRecord
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
     post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
-    return unless post.present?
+    return if post.blank?
 
     if (msg["userMetadata"]["sizer"])
       # There should be exactly one entry in `outputs`.

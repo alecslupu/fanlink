@@ -88,7 +88,7 @@ class Api::V3::PostsController < Api::V2::PostsController
     else
       @post = Post.create(post_params.merge(person_id: current_user.id))
       if @post.valid?
-        unless post_params["status"].present?
+        if post_params["status"].blank?
           @post.published!
         end
         @post.post if @post.published?

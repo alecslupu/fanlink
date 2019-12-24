@@ -10,7 +10,7 @@ module MandrillMailerHelper
   private
 
   def check_merge_vars(merge_vars, vars)
-    return merge_vars.empty? if vars.nil? || vars.empty?
+    return merge_vars.empty? if vars.blank?
     if vars
       return false if merge_vars.empty?
       vars.each do |k, v|

@@ -2,7 +2,7 @@ class RewardsListener
   include RealTimeHelpers
 
   def self.reward_progress_created(user, progress, series_total = nil)
-    series_total = progress.total unless series_total.present?
+    series_total = progress.total if series_total.blank?
     if series_total >= progress.reward.completion_requirement
       rewarded = PersonReward.where(person_id: user.id, reward_id: progress.reward.id, source: "reward")
       if !rewarded.exists?

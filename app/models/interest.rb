@@ -30,6 +30,6 @@ class Interest < ApplicationRecord
 
   protected
   def title_not_empty
-    errors.add(:title, _("can't be empty.")) unless  self.title.present?
+    errors.add(:title, _("can't be empty.")) if  self.title.blank?
   end
 end

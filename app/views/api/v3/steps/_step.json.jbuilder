@@ -25,7 +25,7 @@ unlocks_at = step.unlocks_at || nil
 # json.step_completed step.step_completed
 if step.step_completed.present?
   json.status step.step_completed.status
-  unlocks_at = step.step_completed.created_at.to_datetime.utc + step.delay_unlock.minute unless unlocks_at.present?
+  unlocks_at = step.step_completed.created_at.to_datetime.utc + step.delay_unlock.minute if unlocks_at.blank?
 else
   json.status step.initial_status
 end

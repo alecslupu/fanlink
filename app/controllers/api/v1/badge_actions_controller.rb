@@ -60,7 +60,7 @@ private
       render_error(_("You must supply a badge action type."))
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
-      render_error("Action type is invalid.") unless @action_type.present?
+      render_error("Action type is invalid.") if @action_type.blank?
     end
   end
 end

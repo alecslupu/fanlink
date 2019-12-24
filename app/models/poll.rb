@@ -62,7 +62,7 @@ class Poll < ApplicationRecord
   end
 
   def description_cannot_be_empty
-    if !description.present? || description.empty?
+    if description.blank? || description.empty?
       errors.add(:description_error, "description can't be empty")
     end
   end
