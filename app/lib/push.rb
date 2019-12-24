@@ -53,8 +53,9 @@ module Push
   end
 
   def private_message_push(message)
+    tokens = []
     room = message.room
-    android_tokens, ios_tokens = get_room_members_tokens(room.members)
+    android_tokens, ios_tokens = get_room_members_tokens(room.members, message)
     room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
@@ -65,7 +66,7 @@ module Push
 
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
-      tokens,
+      android_tokens,
       context: "private_chat",
       title: message.person.username,
       message_short: message_short,
@@ -83,7 +84,7 @@ module Push
   #   get_room_members_tokens(room.members)
 
   #   message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
-  #   android_token_notification_push(
+  #   android_tokens(
   #     tokens,
   #     context: "private_chat",
   #     title: message.person.username,
@@ -103,6 +104,19 @@ module Push
     end
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
+
+  # will be later changed to accept language to subscribe to the correct marketing topic
+  def subscribe_to_topic(tokens)
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_subscription(topic, make_array(tokens))
+  end
+
+  # will be later changed to accept language to unsubscribe to the correct marketing topic
+  def unsubscribe_to_topic(tokens)
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
+  end
+
 
 private
 
@@ -182,7 +196,9 @@ private
     return options
   end
 
-  def get_room_members_tokens(members)
+  def get_room_members_tokens(members, message)
+    android_tokens = []
+    ios_tokens = []
     members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
