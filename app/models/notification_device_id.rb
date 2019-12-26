@@ -8,6 +8,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  device_type       :integer          default("unknown"), not null
+#  not_registered    :boolean          default(FALSE), not null
 #
 
 class NotificationDeviceId < ApplicationRecord

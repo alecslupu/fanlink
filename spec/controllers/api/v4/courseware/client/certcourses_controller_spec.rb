@@ -144,6 +144,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
       person = create(:client_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+        person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
         certificate = create(:certificate)
         person1.certificates << certificate
