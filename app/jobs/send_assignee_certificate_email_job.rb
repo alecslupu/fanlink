@@ -2,7 +2,7 @@ class SendAssigneeCertificateEmailJob < Struct.new(:person_id, :assignee_id, :pe
   def perform
     person = Person.find(person_id)
     assignee = Person.find(assignee_id)
-    certificate = PersonCertificate.where.(id: person_certificate_id).last
+    certificate = PersonCertificate.where(id: person_certificate_id).last
 
     PersonMailer.send_assignee_certificate(person, assignee, certificate, email).deliver
   end

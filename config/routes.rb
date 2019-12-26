@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
-  get "/config/:internal_name" => "config#show"
-
-  mount Rswag::Ui::Engine => "/api-docs"
-  mount Rswag::Api::Engine => "/api-docs"
-  mount RailsAdmin::Engine => "/admin_portal", :as => "rails_admin"
+  get "/config/:internal_name" => "config#index"
+  get "/config/:internal_name/:id" => "config#show"
 
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
@@ -25,11 +22,16 @@ Rails.application.routes.draw do
     get "logout" => "sessions#destroy"
     get ":product_internal_name" => "sessions#login_redirect"
 
-    get ":product_internal_name/login" => "sessions#new", :as => :login_screen
+    get ":product_internal_name/login" => "sessions#new", as: :login_screen
     root to: redirect("/admin_portal")
   end
   get ":product/share_post/:post_id", to: "posts#share", as: "cache_post"
   get "/:product_id/static_content/:slug" => "static_contents#show"
 
-  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
+  match "/delayed_job" => DelayedJobWeb, anchor: false, via: [:get, :post]
+
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+  mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
+
 end

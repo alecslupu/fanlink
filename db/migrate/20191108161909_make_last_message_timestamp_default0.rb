@@ -4,6 +4,6 @@ class MakeLastMessageTimestampDefault0 < ActiveRecord::Migration[5.1]
   end
 
   def down
-    change_column :rooms, :last_message_timestamp, :bigint
+    change_column :rooms, :last_message_timestamp, :bigint, default: nil
   end
 end

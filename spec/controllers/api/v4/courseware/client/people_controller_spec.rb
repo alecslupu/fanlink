@@ -4,7 +4,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
   describe 'GET index' do
 
     it "return error code 401 for a non client user" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -19,7 +19,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
       ActsAsTenant.with_tenant(person.product) do
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         person2 = create(:person, username: 'pers2', email: 'pers2@example.com')
-        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
         login_as(person)
 
         get :index
@@ -35,14 +35,14 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
       ActsAsTenant.with_tenant(person.product) do
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         person2 = create(:person, username: 'pers2', email: 'pers2@example.com')
-        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
-        Courseware::Client::ClientToPerson.create(person_id: person2.id, client_id: person.id, status: :active, relation_type: :assigned)
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
+        Courseware::Client::Assigned.create(person_id: person2.id, client_id: person.id)
         login_as(person)
 
-        get :index, params: { per_page: 1, page: 1 }
+        get :index, params: {per_page: 1, page: 1}
 
         expect(response).to be_successful
-        expect(person.assignees.count).to eq(2)
+        expect(person.hired_people.count).to eq(2)
         expect(json['people'].count).to eq(1)
       end
     end
@@ -53,12 +53,12 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
         person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
         person2 = create(:person, username: 'pers2', email: 'pers2@example.com')
         person3 = create(:person, username: 'psers3', email: 'pers3@example.com')
-        Courseware::Client::ClientToPerson.create(person_id: person1.id, client_id: person.id, status: :active, relation_type: :assigned)
-        Courseware::Client::ClientToPerson.create(person_id: person2.id, client_id: person.id, status: :active, relation_type: :assigned)
-        Courseware::Client::ClientToPerson.create(person_id: person3.id, client_id: person.id, status: :active, relation_type: :assigned)
+        Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)
+        Courseware::Client::Assigned.create(person_id: person2.id, client_id: person.id)
+        Courseware::Client::Assigned.create(person_id: person3.id, client_id: person.id)
         login_as(person)
 
-        get :index, params: { username_filter: 'per' }
+        get :index, params: {username_filter: 'per'}
 
         expect(response).to be_successful
         expect(json['people'].count).to eq(2)
@@ -68,5 +68,3 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
     end
   end
 end
-
-

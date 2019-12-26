@@ -20,7 +20,9 @@
 #
 
 class ConfigItem < ApplicationRecord
-  acts_as_nested_set
+  acts_as_nested_set(
+    counter_cache: :children_count, touch: true
+  )
   acts_as_tenant(:product)
   rails_admin do
     nested_set(
@@ -28,19 +30,24 @@ class ConfigItem < ApplicationRecord
     )
   end
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, ->(product) { where(product_id: product.id) }
 
+  def formatted_value
+    item_value
+  end
 
-  validates :type, inclusion: { in: %w(
+  validates :type, inclusion: {in: %w[
             StringConfigItem
             ArrayConfigItem
             BooleanConfigItem
             RootConfigItem
             IntegerConfigItem
-  ),  message: "%{value} is not a valid type" }
+            ColorConfigItem
+  ], message: "%{value} is not a valid type"}
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }
+
   def to_s
     item_key
   end

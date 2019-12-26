@@ -28,6 +28,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
                     msgs
                       .visible
                       .unblocked(current_user.blocked_people)
+                      .not_reported_by_user(current_user.id)
                       .order(Arel.sql "messages.created_at #{ordering}, messages.id #{ordering} ")
                   )
 
