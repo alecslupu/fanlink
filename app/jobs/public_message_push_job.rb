@@ -1,10 +1,10 @@
-class PrivateMessagePushJob < Struct.new(:message_id)
+class PublicMessagePushJob < Struct.new(:message_id)
   include Push
 
   def perform
     message = Message.find(message_id)
     ActsAsTenant.with_tenant(message.room.product) do
-      private_message_push(message)
+      public_message_push(message)
     end
   end
 

@@ -54,14 +54,48 @@ module Push
 
   def private_message_push(message)
     tokens = []
-    message.room.members.each do |m|
+    room = message.room
+    android_tokens, ios_tokens = get_room_members_tokens(room.members, message)
+    room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
     do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
+
+    message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
+    android_token_notification_push(
+      android_tokens,
+      context: "private_chat",
+      title: message.person.username,
+      message_short: message_short,
+      message_placeholder: message.person.username,
+      message_long: message.body,
+      image_url: message.picture_url,
+      room_id: room.id.to_s,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless android_tokens.empty?
   end
+
+  # def public_message_push
+  #   tokens = []
+  #   room = message.room
+  #   get_room_members_tokens(room.members)
+
+  #   message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
+  #   android_tokens(
+  #     tokens,
+  #     context: "private_chat",
+  #     title: message.person.username,
+  #     message_short: message_short,
+  #     message_placeholder: message.person.username,
+  #     message_long: message.body,
+  #     image_url: message.picture_url,
+  #     room_id: room.id.to_s,
+  #     deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+  #   ) unless tokens.empty?
+  # end
 
   def simple_notification_push(notification, current_user, receipents)
     tokens = []
@@ -70,6 +104,19 @@ module Push
     end
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
+
+  # will be later changed to accept language to subscribe to the correct marketing topic
+  def subscribe_to_topic(tokens)
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_subscription(topic, make_array(tokens))
+  end
+
+  # will be later changed to accept language to unsubscribe to the correct marketing topic
+  def unsubscribe_to_topic(tokens)
+    topic = "marketing_en-US"
+    response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
+  end
+
 
 private
 
@@ -125,4 +172,54 @@ private
     end
     resp[:status_code] == 200
   end
+
+  def android_token_notification_push(tokens, data = {})
+    notification_body = build_android_notification(data)
+
+    push_with_retry(notification_body, tokens)
+  end
+
+  # def ios_token_notification_push
+  #   notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+
+  #   push_with_retry(notification_body, tokens)
+  # end
+
+  def build_android_notification(data)
+    options = {}
+    data[:type] = "user"
+    options[:data] = data
+
+    # this may be used for v1 implementation
+    # options[:android] = build_android_options
+
+    return options
+  end
+
+  def get_room_members_tokens(members, message)
+    android_tokens = []
+    ios_tokens = []
+    members.each do |m|
+      blocks_with = message.person.blocks_with.map { |b| b.id }
+      next if m == message.person
+      next if blocks_with.include?(m.id)
+      android_tokens += m.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
+      ios_tokens += m.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+    end
+
+    return android_tokens, ios_tokens
+  end
+
+
+  # def build_android_options
+  #   android = {}
+  #   android[:priority] = "high"
+  #   android[:ttl] = "86400s"
+  #   android[:collapse_key] = "collapse_key"
+  #   android[:fcm_options] = {}
+  #   android[:fcm_options][:analytics_label] = "string"
+
+  #   return android
+  # end
+
 end
