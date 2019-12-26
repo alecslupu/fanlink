@@ -16,6 +16,7 @@ SimpleCov.start "rails" do
   minimum_coverage 0
 end
 require File.expand_path("../../config/environment", __FILE__)
+require 'paper_trail/frameworks/rspec'
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
@@ -138,10 +139,6 @@ RSpec.configure do |config|
       # ActsAsTenant.current_tenant = nil
     end
   end
-
-  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
-  # config.include Sorcery::TestHelpers::Rails::Controller # , type: :request
-  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
 
   config.include Sorcery::TestHelpers::Rails::Controller, type: :controller
   config.include Sorcery::TestHelpers::Rails::Integration, type: :feature
