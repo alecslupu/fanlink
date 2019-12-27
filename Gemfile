@@ -28,7 +28,7 @@ elsif ENV["RAILS6"]
   gem "rails", "~> 6"
 else
   # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 5.1.4"
+  gem "rails", "~> 5.1.6"
   # Use Puma as the app server
   gem "puma", "~> 3.7"
   # Use SCSS for stylesheets
@@ -188,7 +188,7 @@ gem "goldiloader"
 gem "google_places"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
-gem "jko_api" # api versioning
+#gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
