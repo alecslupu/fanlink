@@ -211,7 +211,7 @@ deploy:staging:
   only:
     - staging
   script:
-    - echo "Deploying to Staging..."
+    - cap staging deploy
 
 deploy:production:
   extends: .base
