@@ -1,9 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'rails', '5.0.0.1'
-
-gem 'bson_ext'
-gem 'mongoid', '>= 6.0.2'
-
-gem 'shared_engine', path: '../shared_engine'
-gem 'acts_as_api', path: '../../'

@@ -1,6 +1,0 @@
-[submodule "task"]
-	path = task
-	url = git://github.com/godfat/gemgem.git
-[submodule "rest-builder"]
-	path = rest-builder
-	url = git://github.com/godfat/rest-builder.git

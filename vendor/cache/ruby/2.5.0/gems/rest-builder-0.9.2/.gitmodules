@@ -1,6 +1,0 @@
-[submodule "task"]
-	path = task
-	url = git://github.com/godfat/gemgem
-[submodule "promise_pool"]
-	path = promise_pool
-	url = git://github.com/godfat/promise_pool.git
