@@ -242,10 +242,7 @@ ActiveRecord::Schema.define(version: 20191226081348) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
-<<<<<<< HEAD
     t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
-=======
->>>>>>> 98283dcffdea648f0c260d6ecdb0723e4940850d
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
