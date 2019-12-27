@@ -1,8 +1,8 @@
 stages:
   - build
   - test
-  - rspec
   - report
+  - rspec
   - deploy
 
 .base_minimal:
