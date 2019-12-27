@@ -125,8 +125,7 @@ class Person < ApplicationRecord
 
 
   has_many :room_subscribers, dependent: :destroy
-
-
+  has_many :owned_rooms, through: :room_subscribers, source: :room
 
   # has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
   # has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
