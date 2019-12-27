@@ -94,6 +94,8 @@ group :development, :test do
   gem 'rubocop-rails'
   gem "rubocop-rspec"
   gem 'rubocop-performance'
+
+  gem 'rails-erd'
 end
 
 group :development do
@@ -110,7 +112,7 @@ group :development do
     gem 'spring-watcher-listen', '~> 2.0.0'
   elsif ENV["RAILS6"]
       # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-      gem "rails", "~> 6"
+      #gem "rails", "~> 6"
   else
     # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
     gem "web-console", ">= 3.3.0"
