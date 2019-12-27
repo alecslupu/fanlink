@@ -9,7 +9,7 @@ class RoomSubscriber < ApplicationRecord
 
   private
 
-  def check_private
-    errors.add(:room_id, :not_public, message: _("must be public to have owners.")) if room.private?
-  end
+    def check_private
+      errors.add(:room_id, :not_public, message: _("must be public to have owners.")) if room.private?
+    end
 end
