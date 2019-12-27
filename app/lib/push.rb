@@ -62,7 +62,7 @@ module Push
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
-    do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
+    do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
 
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
@@ -78,24 +78,24 @@ module Push
     ) unless android_tokens.empty?
   end
 
-  # def public_message_push
-  #   tokens = []
-  #   room = message.room
-  #   get_room_members_tokens(room.members)
+  def public_message_push
+    tokens = []
+    room = message.room
+    get_room_members_tokens(room.members)
 
-  #   message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
-  #   android_tokens(
-  #     tokens,
-  #     context: "private_chat",
-  #     title: message.person.username,
-  #     message_short: message_short,
-  #     message_placeholder: message.person.username,
-  #     message_long: message.body,
-  #     image_url: message.picture_url,
-  #     room_id: room.id.to_s,
-  #     deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
-  #   ) unless tokens.empty?
-  # end
+    message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
+    android_tokens(
+      tokens,
+      context: "private_chat",
+      title: message.person.username,
+      message_short: message_short,
+      message_placeholder: message.person.username,
+      message_long: message.body,
+      image_url: message.picture_url,
+      room_id: room.id.to_s,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless tokens.empty?
+  end
 
   def simple_notification_push(notification, current_user, receipents)
     tokens = []
