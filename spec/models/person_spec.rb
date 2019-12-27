@@ -161,6 +161,8 @@ RSpec.describe Person, type: :model do
       it { should have_many(:hired_people) }
       it { should have_many(:clients) }
 
+      it { should have_many(:room_subscribers) }
+
       it { should have_many(:assigners).through(:hired_people) }
       it { should have_many(:assignees).through(:clients) }
       # it { should have_many(:relationships) }
