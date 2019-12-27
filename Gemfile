@@ -194,6 +194,8 @@ gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
 gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandrill"
+#
+gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
 gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
