@@ -1,0 +1,71 @@
+ifdef::env-github[]
+NOTE: For the best reading experience,
+please view this documentation at https://www.elastic.co/guide/en/apm/agent/ruby[elastic.co]
+endif::[]
+
+[[supported-technologies]]
+== Supported technologies
+
+The Elastic APM Ruby Agent has built-in support for many frameworks and
+libraries.
+
+Generally we want to support all the most popular libraries, so if your favorite
+is missing feel free so request it in an issue or better yet supply a pull
+request.
+
+[float]
+[[supported-technologies-ruby]]
+=== Ruby
+
+We follow Ruby's own maintenance policy and officially support all currently
+maintained versions per
+https://www.ruby-lang.org/en/downloads/branches/[Ruby Maintenance Branches].
+
+[float]
+[[supported-technologies-web]]
+=== Web Frameworks and Libraries
+
+We have automatic support for Ruby on Rails and all Rack compatible web
+frameworks.
+
+We test against all supported minor versions of Rails and Sinatra.
+
+[float]
+[[supported-technologies-rails]]
+==== Ruby on Rails
+
+We currently support all versions of Rails since 4.2.
+This follows Rails' own https://rubyonrails.org/security/[Security policy].
+
+See <<getting-started-rails>>.
+
+[float]
+[[supported-technologies-sinatra]]
+==== Sinatra
+
+We currently support all versions of Sinatra since 1.0.
+
+See <<getting-started-rack>>.
+
+[float]
+[[supported-technologies-databases]]
+=== Databases
+
+We automatically instrument database actions using:
+
+- ActiveRecord (v4.2+)
+- Elasticsearch (v0.9+)
+- Mongo (v2.1+)
+- Redis (v3.1+)
+- Sequel (v4.35+)
+
+[float]
+[[supported-technologies-http]]
+=== External HTTP requests
+
+We automatically instrument and add support for distributed tracing to external
+requests using these libraries:
+
+- `net/http`
+- Http.rb (v0.6+)
+- Faraday (v0.2.1+)

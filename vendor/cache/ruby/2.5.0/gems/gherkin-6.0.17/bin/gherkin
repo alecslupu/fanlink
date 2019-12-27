@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+$VERBOSE=nil # Shut up JRuby warnings on Travis
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__),"../lib"))
+
+require 'optparse'
+require 'json'
+require 'gherkin/gherkin'
+
+options = {
+  include_source: true,
+  include_gherkin_document: true,
+  include_pickles: true,
+  protobuf: false
+}
+
+OptionParser.new do |opts|
+  opts.on("--[no-]source", "Don't print source messages") do |v|
+    options[:include_source] = v
+  end
+  opts.on("--[no-]ast", "Don't print ast messages") do |v|
+    options[:include_gherkin_document] = v
+  end
+  opts.on("--[no-]pickles", "Don't print pickle messages") do |v|
+    options[:include_pickles] = v
+  end
+end.parse!
+
+def include_messages(messages)
+  messages.each do |message|
+    json = message.class.encode_json(message)
+    ob = JSON.parse(json)
+    remove_empties(ob)
+    puts JSON.generate(ob)
+  end
+end
+
+def remove_empties(ob)
+  if Hash === ob
+    ob.each do |key, value|
+      if value == []
+        ob.delete(key)
+      else
+        remove_empties(value)
+      end
+    end
+  elsif Array === ob
+    ob.each do |value|
+      remove_empties(value)
+    end
+  end
+end
+
+messages = ARGV.empty? ? 
+  # Read protobuf from STDIN
+  Gherkin::ProtobufCucumberMessages.new(STDIN).messages
+  :
+  Gherkin::Gherkin.from_paths(
+    ARGV,
+    options
+  )
+include_messages(messages)

@@ -1,0 +1,2501 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&location=-33.86705220,151.19573620&radius=200
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:15:57 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:20:57 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '10600'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "next_page_token" : "CoQC9gAAAAM6nB6598sSf25GUv90hEcALO2H5ByPJoVEaj-ZBjN6-fU9QAlAuDB2YqI5p6VaOWf7a011yRnsBfD8NdtZnwZsHlB-tz6yIhaFn8PAwDERInuHN7Cqt_uTX2bSaLRMHdGQzXKojotamqoOY2eBdHQRfgwpIVNdX1V8GSOHUpuGmFlNyKW86VAT0C5JiAxN0g2H5XK-0cXCC6Va95vvrtkxe1y_aub9dXuc-bzDEnKMZ71g55CV3PMEjhiC5WreBtU0z1dv7qCrIosHM5ciqqwuuHF2dJpA_L5Sj1jK-IrGuyAMS-qy9m6R9--bURwGBGZsTOrHAifGoiXmMDHj1jISEPuFQ7XAMxqv4aQJv9hOOcEaFB23dqkO-Vb1s8B6r49lt906z_5b",
+           "results" : [
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8688197,
+                       "lng" : 151.2092955
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.5782519,
+                          "lng" : 151.3429976
+                       },
+                       "southwest" : {
+                          "lat" : -34.118328,
+                          "lng" : 150.5209286
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+                 "id" : "044785c67d3ee62545861361f8173af6c02f4fae",
+                 "name" : "Sydney",
+                 "photos" : [
+                    {
+                       "height" : 2448,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/101793126109209980882/photos\"\u003eHatim Ghadhban Abood\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAObh8-dsxJCSPKn99imZWh92ankpJLcKOFdf9n7yNCcju3G1vDydKMM8Tf_MqmECQa635qigb91ubn1W63CbKKommeWjS8ZRGvYTCqboCJ4Y9I6HQ2Wkxqt9RJKA_ubg4GsLD6wd13XFYCjH-BaO_vjPxHMolPeRGSTg2ssn5JkhEhBrHGwtXDt8zqbwTQ9dWGMdGhTFtIzknE4pVhdnLvIis0FbQhpHnQ",
+                       "width" : 3264
+                    }
+                 ],
+                 "place_id" : "ChIJP3Sa8ziYEmsRUKgyFmh9AQM",
+                 "reference" : "CmRbAAAAZgSw3HzMaBAr_g0PGraqx6rvfCWLrhavv8HvrD03nveyW-Y4fosadeAWAIOSP5MHSuG0_bGpaRPRdriBSu6tSb2KFrOgqHGloSxbyPG-gmB19KTSdmeJmgHokjPCIvzZEhDe9w3uinzAFAFMxlt3fTcCGhTpGoi2a2CzmlUPA8x5uGR19TLQfA",
+                 "scope" : "GOOGLE",
+                 "types" : [ "colloquial_area", "locality", "political" ],
+                 "vicinity" : "Sydney"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.868111,
+                       "lng" : 151.195219
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.868011,
+                          "lng" : 151.19567405
+                       },
+                       "southwest" : {
+                          "lat" : -33.868411,
+                          "lng" : 151.19385385
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+                 "id" : "461d123aeb1c1648abdd5e535989d2bc518cf28e",
+                 "name" : "Astral Tower & Residences",
+                 "photos" : [
+                    {
+                       "height" : 645,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/106711896502688882221/photos\"\u003eAstral Tower &amp; Residences\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAPRqnx1SfN3WnDnO0_NZlGMlQPO-jt7vl1auyUlorMCANm1Z-MpHCtBOOwYS1Bt5sgpd7CXIgi0_AEQHV2vIkjaJSxVfMWILiG8SHpTL4CZcwqtPxXc_yncGKIZBWdqbSPv1_CawBmzc26ChROS50Zs40ihIVn6FwvicQ-230h4nEhDGIJ5Vlrl3NuXFaGUBFtdbGhQlYhPbF3QAX6SLdG-6u7H36VDMHQ",
+                       "width" : 1024
+                    }
+                 ],
+                 "place_id" : "ChIJq6qq6jauEmsR46KYci7M5Jc",
+                 "rating" : 4.2,
+                 "reference" : "CmRSAAAA1iG8KWnnyGoTir482WPUCk2VE683VBmzQeP8WYK0qfGERenvYP-vq6T-3J2sfgFtCVWItoUGRDqgGDHFHrh560xQg78sa7u48TQfV3Ajn_G5bm5xBABgUg91LE3Yh4PNEhByPW5CP1N0TopRzeW5C2yUGhSTbLlgyKXqheUroQ5WeBGekD8HMA",
+                 "scope" : "GOOGLE",
+                 "types" : [ "lodging", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Sydney"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86799999999999,
+                       "lng" : 151.195
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86779065,
+                          "lng" : 151.19531415
+                       },
+                       "southwest" : {
+                          "lat" : -33.86862805,
+                          "lng" : 151.19405755
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "0761a21e23eda2598330d428413cb59431316a61",
+                 "name" : "Lobby Lounge",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 816,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110208511255995075770/photos\"\u003eJonathan O&#39;Brien\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBcwAAAIEXEpDgyQ5M5AWOlyNpouGLeIiaMSOq5z4dKG78x8jfteruljTOng4mOxX-dc_vSLzwzJVDZpoYlIis1hEEW5gfJZY0nFWzkTVA39ZdLorxXPKSEloUZQvSJ3rrunihnUXtuyixsbabOSb5apNattuQuKuPp5bb7n6NIdBuJ2xuEhCr-PPh-DbCor2oWGci14rjGhSSGgfYgyflC5sdcHl264Po5bNkeg",
+                       "width" : 488
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRHbUt24abGq8",
+                 "rating" : 3.9,
+                 "reference" : "CmRSAAAAMLVkxMpOwOCVaAd58hRzO_d4Qd6GbNmOm25bBSyT2kGAjccbM2O2JBc8OwSp5vopBegxdueeNT3UqUDa9Vazp0iq_pW86NVUTN9oOSaX5RaP-M3MCxnOfyy_tIg9FdLGEhAyOGcZrTDbAEz3nzv-sbSWGhTDQj5Jy5MaG8pdIe3fXeYOISho5w",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.867567,
+                       "lng" : 151.193742
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86754850000001,
+                          "lng" : 151.1940063
+                       },
+                       "southwest" : {
+                          "lat" : -33.86760009999999,
+                          "lng" : 151.1936539
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "00060cf64f16375913ec49d25cbb7829d3e08a88",
+                 "name" : "Blue Eye Dragon",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1536,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/114550096924148386356/photos\"\u003eBlue Eye Dragon\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAB-FaQsJBefDrRcxSfzQ_6mDR9xMcFoS4XEiwxbpnseg4gAQMEPdE7OdMMWJshSIWXcZCDSDukEj861ZQwAvDxO6a4CJ5dw5LfyXgqWylYzBhIy0BaDHN9QrK3hD-lnMVEkhqp9Jlxyo9GCvVD1GA5ShqiTf_bUSeTjvONyEnoVrEhAvNyUG7ubdXjOHBkS7K0b6GhRNBjW3GdPykD9ncOcXgAPpQ7PM7Q",
+                       "width" : 2048
+                    }
+                 ],
+                 "place_id" : "ChIJuZqIiTauEmsRJF_TK9Vpfmw",
+                 "price_level" : 3,
+                 "rating" : 4.5,
+                 "reference" : "CmRRAAAAyyMbFNzIEzrtybZUd4HSOq9c2EM9L_GsXM1wmHqTkLTClAMQtW1mhWS6YhIWfQAkns7u6nG3trwM9ORZq_dgGqqr4sjSUmQo88gjC0avzohCq7QfuCfvw9He8iVRCS5TEhCN6UG_W9wtJYihBG5KJ8heGhRCNgb_JJkxLj10Y7EVuDfemfPUnw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "37 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.866651,
+                       "lng" : 151.195827
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86656485,
+                          "lng" : 151.196029
+                       },
+                       "southwest" : {
+                          "lat" : -33.86690944999999,
+                          "lng" : 151.195221
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "4f89212bf76dde31f092cfc14d7506555d85b5c7",
+                 "name" : "Google",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2992,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/111101164564146083832/photos\"\u003eChris Harte\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAIl3xo6TTlrbQeSoleHdwB-HVG2oY9ishJ00dHlIirtawYf8izQjFy6Y7KLXoj2F_2KB3GXVjA42JKnZiqozY4xcY-v14H0cyt8WfVANQUXvV4VQfNL1YloJ9eyaGjKaOfSrt9WXuVE30Kbf5zZh9RQxe3UIhchzAfmj1Ww9bYt4EhCUUdYN3Ysf54zJDNVE_PpRGhQpENvh19lr-hbjKlQfoweIubSw8Q",
+                       "width" : 4000
+                    }
+                 ],
+                 "place_id" : "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                 "rating" : 4.6,
+                 "reference" : "CmRSAAAAlMhBaMJm3aYVn_GIag79sEzIfUoZUOXir8beahSj1xjPYvqRtUqypaQpUijOBqW7WKO5RI8-aW7-4CEfHx2Z5CSwy0vjoQS_aoH2ht5ldNykRpsfh2-YBQ_bN5EgJ-mtEhB1vkRieVhmCAEPeWaLQDP-GhQKyYImUskavWZcT2S7mlOLUm4Y6w",
+                 "scope" : "GOOGLE",
+                 "types" : [ "point_of_interest", "establishment" ],
+                 "vicinity" : "5, 48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8679724,
+                       "lng" : 151.1952317
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86580425,
+                          "lng" : 151.1973838
+                       },
+                       "southwest" : {
+                          "lat" : -33.87093845,
+                          "lng" : 151.1929602
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+                 "id" : "44fdc977984610cd873c790a7d850e8185ed0e5e",
+                 "name" : "The Star",
+                 "photos" : [
+                    {
+                       "height" : 1782,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/108010117506893215344/photos\"\u003eBrett Freer\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAJgZiiwJcPSUDhvWmJXLAyPy39M4THKqp9nyb3xmAR4W327irJ5ge-UNMSxcsjfsZrD304YGCcnYJsq7NBWO1IraaDARRm8f0dctL4q5FAmdOt3JkQ3dmokBTOTZbe2M7NPSSLp4Zqzf_a054_84xZOTHfWvcMZsOSQhd6EbnDuLEhAZ__k5CPWn8FbfGgpk5hlpGhSsQj91jy4GowjS1YF7RaFrYpZ4Jw",
+                       "width" : 4930
+                    }
+                 ],
+                 "place_id" : "ChIJq6qq6jauEmsRJAf7FjrKnXI",
+                 "rating" : 3.9,
+                 "reference" : "CmRRAAAApxIzt4GWe3AL3b8f7271bzUTuDjb6ddeJHxgNE0q9IoJyOZd0uzS23Mu8N0L-IAG_DvBqI5OdTom1y6ldHs_S9WyEeqSGvT8qf65n9o752jJkc6Pdp0pOGAeoy4dYZfoEhBYepXP0pYXcpx2rt07eMHrGhRVDCJHoDQDhsWYTcbTYjqDWnI33g",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "casino",
+                    "spa",
+                    "lodging",
+                    "restaurant",
+                    "food",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.868516,
+                       "lng" : 151.1946897
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86815675,
+                          "lng" : 151.19488215
+                       },
+                       "southwest" : {
+                          "lat" : -33.86863575,
+                          "lng" : 151.19411235
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "61f6d719f3d208ab2875bb2bfa164029c609c797",
+                 "name" : "Avis",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2448,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110282762934738586599/photos\"\u003eCorey Brand\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAM3UaXbV9_rmYcu7iiWB7s7_MZWEajDm1Isp1sx5qJ9EEi5-SRe5f6KVSGl2HWidJSE2RI66qPAx4rHaoISwA9vdzTreLg3cyJj11upC8EiFBDmF0E1lx07JwEcW1SD1_Uc41ekctxkJIB1CStj5-Sb3yDkgXoD4tt9XZj2fL_C1EhA6kKMXR1T6FhdBUnyg2TMQGhSL46BWWID54XiwXfYjC7J-kOLTLQ",
+                       "width" : 3264
+                    }
+                 ],
+                 "place_id" : "ChIJHTvh5jauEmsRRVTSKo0XD94",
+                 "rating" : 5,
+                 "reference" : "CmRSAAAAX_icsFMBwrdZmD74zKpEpXrLkmhfZC2F3JfjiVI-9xWj0YxyHdgyiq6qI9KdIw7juSy0MEPq_gVWWxckDe8JdyNv29QCVlHMrw8XV7VxxOg3EpNig2igPGAM8AJodkeJEhC2bSkGSxq59AtBKRSC42ROGhQ3d9mwdGzH5J7cgMAD4b-mWIU6hw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "car_rental", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.866649,
+                       "lng" : 151.195766
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8665761,
+                          "lng" : 151.19594645
+                       },
+                       "southwest" : {
+                          "lat" : -33.86686770000001,
+                          "lng" : 151.19522465
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "3ef986cd56bb3408bc1cf394f3dad9657c1d30f6",
+                 "name" : "Doltone House - Darling Island Wharf",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1210,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/108270736464416141350/photos\"\u003eDoltone House - Darling Island Wharf\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAABSc-jiw5ykZpo62gEy_mgo5WB6jYtF6gY3fmDHl-eWkD1FCfr18ToRHpECuOBm6Dy4x2n9eJ18iB7mQwFLiiwU33SZhwrgYJS1Q0dNtQLs4XpDvWmKj6atrpSrsGupCU7p6q_HofuTUVtwrpEn1eXKV4OHl4YXDGXrbWAhXBE78EhAL_dpvZ-8vifOZTOmZL7erGhR6hvvfDGO78bIDawiAINxSFFwk-w",
+                       "width" : 2000
+                    }
+                 ],
+                 "place_id" : "ChIJ5xQ7szeuEmsRs6Kj7YFZE9k",
+                 "rating" : 4.2,
+                 "reference" : "CmRSAAAA_z48QHjro9P4YppyhYjNa-L6gY8Wt4r5MJBGw8qRM4bBhdsNs_kDLLfu04zCB97Xl6ODnbDeIi0hoVnIdAV_ANrWpjF56cZJfCQdV4kbLtoWhmLpKYLOcrbkiF8QUuiyEhCQ82H9eSbo3iunZvtVvk7zGhTb2yAJbtQiR9EMlO32hvR9Q_BDAw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Ground, 48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8657776,
+                       "lng" : 151.1949072
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8656057,
+                          "lng" : 151.19510545
+                       },
+                       "southwest" : {
+                          "lat" : -33.8662933,
+                          "lng" : 151.19431245
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "19cdf89322aa1fc3523c583a74a27645b11430e8",
+                 "name" : "Seven Group",
+                 "photos" : [
+                    {
+                       "height" : 4032,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/106141648197938449131/photos\"\u003eBrendan Hong\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAB4rJprNrimYW5gMYZ8pJP4ivRavUWOBBUuk1_k563s-sAufF-4Iqp_NZ7vlhLBI2rnP4hz0Qpir-pc9UFcBdCj1mM-NdxlctNA-sepiRc4TAAh_gQewXmmiMyDcdXZ0lXpbtUejtIMhGeeHTXqXoNwPtYdsP1X_tnjCZ3gLxyjSEhD58HQxnJEM03eT88bu1vxlGhQch-DjNyMMRsLAzzP-taLlyXRCxQ",
+                       "width" : 3024
+                    }
+                 ],
+                 "place_id" : "ChIJz2EHuEmuEmsR9FZySlT-kNI",
+                 "rating" : 5,
+                 "reference" : "CmRSAAAArZ7bHH4uXa3kHCjtnu7xJ5DsdNktl9_hxMraJm2liYa98t_XrzZcStJ22IZNMdvjzonWvaeXfLaBhAgmI9vQop4ckJVqzN-rtjpz5LhUht3G724_S1_EH9zoR6woFQkaEhDoRGdjnCyY7vdCZ0uW9mtNGhQ4_DNhafwfN70LKtcxXRhgTI4FQg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "point_of_interest", "establishment" ],
+                 "vicinity" : "38-42 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8685682,
+                       "lng" : 151.1962433
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86806060000001,
+                          "lng" : 151.19651105
+                       },
+                       "southwest" : {
+                          "lat" : -33.8687374,
+                          "lng" : 151.19615405
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "172b11b0164ac9ae1f16c6802ed759445f6eacb7",
+                 "name" : "Sydney Lyric Theatre",
+                 "photos" : [
+                    {
+                       "height" : 800,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/106181226772401075883/photos\"\u003eSydney Lyric Theatre\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAF1yqiWmKkDAP0pkuf9CxN3QC5VkodNa81CZjal5A9GMtaLHsXkTADguvqSGSsBw6VCdh9tnYKEOCMpDlpnIQgJ9mhVWsUbq2S-7Wvx3bmM_U0GqCDb4qSZun26-n3aGbaSNnfvz2l2Pjndc4mDfat231IWOWGoRKa3-Q661ru0TEhAUanFKOjJVgqQIDOh-L8DWGhSqUoq2P88kHYLjB0zppIRrg3HwZg",
+                       "width" : 801
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRxXV8BJ53Fq4",
+                 "rating" : 4.3,
+                 "reference" : "CmRSAAAAeG91TLK6qFtAMVQpnqrE4otYFL_lyvjB0SGF0iAfIX5bdkVEtT2E3YUtfCtghNZpXHM00srf-fWXIKGCP78GHhV5moFIrCXTUXLBuUek-AqNUEtX9unU00ojXh0KiTEeEhDxkZ4T-vthUfe9wNsctFI2GhR1UDxXvfOR-QUPYVceE1bScmRmhg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "point_of_interest", "establishment" ],
+                 "vicinity" : "Pirrama Road, Pyrmont, Sydney"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8674084,
+                       "lng" : 151.1954141
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86720425,
+                          "lng" : 151.1958917
+                       },
+                       "southwest" : {
+                          "lat" : -33.86747644999999,
+                          "lng" : 151.1952549
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+                 "id" : "2428201e8793d9c59b9431dc92c5d33fde3b9a1d",
+                 "name" : "Marquee Sydney, The Star",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 992,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/118358919801355721751/photos\"\u003eMarquee Sydney, The Star\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAGdkbLMvgE4BZn5Ebamoh7V8JgpqDz9vSh_P-99RQiCsQZ-RTNeG7gvRTTl3kengqVpov4rO7Ls9ObAnnuC8LiT8r0HEC8BU1MN12lKf2yK2f4qNJ_UePEkvtrLLVmBqWyMCq51a1WHdfzm0_Il4V4oX794upt8U-oXcbUufCO1rEhB3sd0FBmc6nRra9RV4Ps0NGhR6x8e3n-m4Gt7gOwyg7RIltzhDEg",
+                       "width" : 1577
+                    }
+                 ],
+                 "place_id" : "ChIJYdJUVDauEmsRp-7oNoEMhuQ",
+                 "rating" : 3.7,
+                 "reference" : "CmRSAAAAXjIy6LY0H7eBzFPAzAH1f5Fsd4rAY7DN2Wfzpyb1TMM57W8xV14bUXGidcbl0dKX-YtrMVySRsbDXV1bby52Ol5CFzH3YW81DxYeg1r-zHsLuZ3IzJ7ZjC4Lf6Ys2LcQEhBO76OR99R9oL-xk5RgXLEvGhRjbLyP6NKTVO_R0v5MYyB3YntKTg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "night_club", "bar", "point_of_interest", "establishment" ],
+                 "vicinity" : "Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8683385,
+                       "lng" : 151.1954624
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8677086,
+                          "lng" : 151.195688
+                       },
+                       "southwest" : {
+                          "lat" : -33.8702282,
+                          "lng" : 151.1947856
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "a6e36e20e63dfff2f8d5ef4dfa7c55f2c32d524c",
+                 "name" : "Adriano Zumbo at the Star",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2988,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/113294393643690798201/photos\"\u003eLucy Del Casale\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAANwOfkIb_nkpBUiDy5B28PYozgSngu3w9NXZxp6UTsaRtP_DWedS2rHNWd6nP3SX1suO8KEYdrJROWKbyMe9PKEjQwuHZ-8WZnmJqbsexa56yTdyBzho6xWE_1EjaGE5qfVsPq27n5Mrt8ZU_h2c9rIswN_gKQUHgW8kToqpVOCwEhCxqp52VIwefg-5S6HEX8u-GhTMEehFN6x6noAesgtszN_ExIMwIA",
+                       "width" : 5312
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRco4bALTgoMo",
+                 "rating" : 4.1,
+                 "reference" : "CmRSAAAAAkkeGg3iDk_aw7HqHEXUL8XmmwOzNWAX41U5OOMMv5p_poZepozrK8V_k63_nBNb5IyipFNiVBCemD48iEfYF5Zz6gBQS1DKROzTbt1MKNmtrys2o_nj6cKXbnnPDrusEhC3ntQq4shFiUTiR5sjjd7RGhSDR4cUSnhmn8yCb1FkpwMFy3G8nQ",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "bakery",
+                    "cafe",
+                    "food",
+                    "store",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "The Star Casino, 31/80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86679699999999,
+                       "lng" : 151.1973652
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86669799999999,
+                          "lng" : 151.1983189
+                       },
+                       "southwest" : {
+                          "lat" : -33.867094,
+                          "lng" : 151.1970473
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "dd030d236b8ccdc525f7a40893eb492f8fc5d55d",
+                 "name" : "LuMi Bar & Dining",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1296,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/104200466008610392938/photos\"\u003eLuMi Bar &amp; Dining\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAOXY0_T_DOdvrZwcMxUV6znPWkGhHM_Cz9qxfwTQOX5SbZviZRyltt0XEC3TZ89EhlUt75hncntmX4hYP033okfkp5CtRC0_Be1ZmcahqHB_H_iWoDQux__KEuLYLtDNPSL9As6Zd1_rLvsB_-2pseFtkdCchZLR8hMzIYKZp0LNEhBZ3e5q1zrFLnIYnCCYC7H1GhS8i7ATq1LzJxBoAzsky_jl4d9jzw",
+                       "width" : 1299
+                    }
+                 ],
+                 "place_id" : "ChIJDZzo5DeuEmsRsi1wzrIp6HY",
+                 "price_level" : 3,
+                 "rating" : 4.3,
+                 "reference" : "CmRRAAAADVB1S4_3dad_gJFgfX2LyfjeUzXjLiRsDzrkH4WUyHCbuNZdu526Y6bhWaOyhKSPTVCdtGHlTmZ0qIqGSy2_VbFjbuz06wKvTfHpv62zsJ-vkf6RDVyaUr1ZeyPGY28BEhAfT-9t_RC_AW0Dsb31CbfBGhThyEmkr8iH4BuHi67VFG5lfJ5p9w",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "56 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8675674,
+                       "lng" : 151.1956091
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8674243,
+                          "lng" : 151.1960002
+                       },
+                       "southwest" : {
+                          "lat" : -33.8676151,
+                          "lng" : 151.1954274
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+                 "id" : "ff51b76a7f07bc276c612d2d3d41efa0a82c2b64",
+                 "name" : "Cherry",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 270,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/113210398723584203092/photos\"\u003eCherry\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAGkbaf-efb7sMr0biHN2qMrRpcX29-YtApeZgIiCkJDoyIQJXL8mjT1Ds9mzVCQnO9zzSXnTwM3leqyURorLALaJOiUMDrjRgjRTMYYuRVbNTAucvXs13SUK-fYvzzKrwKAv9bv4pP2JhrFxV3OQY22nYNoj7vi3UaHSc-4qhz1cEhB9BAvcFAkJpjharFDc-Wy-GhQb_wpAw-KvLEFCjIJy-pFysvDxFA",
+                       "width" : 270
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsR41TkSleEZ-U",
+                 "rating" : 4.8,
+                 "reference" : "CmRSAAAAOQL_RkZ6k0Pb7cGwF5nrKUxMclGrZjkV1t8gBhPjJv5PqFAV3MpIQN5_GM6TnlO2oxBDu7MAks71ITP2gr4zBwxtLO3RN9fXR1g08aaYlSFh9h3_vdEqtZYJa2QSaXfFEhC0UvT_4Q53uEG70u2No0jcGhSRjxGO97L5MWopesJ7H_MAjLAF2w",
+                 "scope" : "GOOGLE",
+                 "types" : [ "night_club", "bar", "point_of_interest", "establishment" ],
+                 "vicinity" : "The Star, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8666463,
+                       "lng" : 151.1958544
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8665539,
+                          "lng" : 151.19606765
+                       },
+                       "southwest" : {
+                          "lat" : -33.8669235,
+                          "lng" : 151.19521465
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "7eaf747a3f6dc078868cd65efc8d3bc62fff77d7",
+                 "name" : "Biaggio Cafe",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 608,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/116750797999944764767/photos\"\u003eJessica Pfund\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAEgXawenU7fJymIhs3OJi9HBrAoZ8TZ3GmrArvbVGBEBLKqG6AO143Q_FG4YddHnTHCOanHgIsKZt-e6psRJkzIixJIE0cZcjHc37wAtA_eKfb6mH8G_YV_a179ta8j0C63dJjHQNGs-R8rnegeCA4dA4vuu8TzjmG5q_Iks9oYTEhC7yTLB8KCQMXW-Pk1unC8YGhQWOkW4N_3Efp6746sEz1bLCH6Pcg",
+                       "width" : 1080
+                    }
+                 ],
+                 "place_id" : "ChIJIfBAsjeuEmsRdgu9Pl1Ps48",
+                 "price_level" : 1,
+                 "rating" : 2.7,
+                 "reference" : "CmRSAAAAQhP3yrmURscckW0mknEpQ93veUQ38Of17QUKX5i21VHfnWEEyQICmpFKSe5skEhYYT-dT1Mn2sfhPsV949AAJyXaRHXxMpYk0gf_WHaYMmIIydfZutlv_k758NGVvvazEhAD5ezJ3frSH38O44NXRVguGhTBCGihT1H3jZ2XHELCB-6mHuIcbQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86815199999999,
+                       "lng" : 151.1949404
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86800784999999,
+                          "lng" : 151.19521845
+                       },
+                       "southwest" : {
+                          "lat" : -33.86858444999998,
+                          "lng" : 151.19410625
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+                 "id" : "cb1001b033f082340237c216f7c8bee2bb1dfc2b",
+                 "name" : "Gelato Messina - Pyrmont",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1000,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/105536533916815068309/photos\"\u003eGelato Messina - Pyrmont\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAALRCQcdI87XHcq1bCgJmJ3u-WwTOR96Y0jXqV6SsdglgWfrTSs2pASYNEQopvXK-ulZ7Z8CovkD1AoiCMx6pMx6bE7kkmF8ZuZsRXthMY2xUETJUKLZzjskOYXrP0F_UBclA1-O4_z6ZCjmXcCR570Y3RxymDlCIEa0UODnJ8gxwEhBXas0DSrDS3Ts-6HIMYf1sGhQs0rXse6ezvDNRWkBkPQva4M0RAA",
+                       "width" : 1500
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsR6WtO5HuvUrU",
+                 "rating" : 4.6,
+                 "reference" : "CmRSAAAA2IAVk5QXddX2ejAE3liFUBRc4rC0Ik7zZv9-mKsr277ehUsd8o-m5e6V8ElNsi6kf13tkKsTnP_PTcpyEU5YWeTGttRA9yct8iRjW2pq17_RSlQOcaaCEBZJ2B99Qf6CEhCt3tMwezrYE4SHvcY7KI93GhSlzaAIL-PxgyTe4ftbMaLW_V_pog",
+                 "scope" : "GOOGLE",
+                 "types" : [ "food", "store", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8680309,
+                       "lng" : 151.1955118
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86780835,
+                          "lng" : 151.1960651
+                       },
+                       "southwest" : {
+                          "lat" : -33.86869855,
+                          "lng" : 151.1938519
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "08c0f74375ca1956d8ae2919512171adcd8266d7",
+                 "name" : "Balla",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2976,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/116060194460169514612/photos\"\u003eMoana Amoa\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAMG3FEZ7d-wxrEFNIzJzGJADokoCWqdJKFVNP4I3RHjlVuleoO4iptRZZh1MYoPc3XiAYjZJxHUq3qWeK5xpheOKP467OE1SWzJ3bQYTGPrcLxJRsAgggLDXeRFX4tkycN_XIPe6Fs9EW44Os1zzHvCHtT_Wxs_QGkEqQni1-zIXEhDS0nd4U3NtdcKdTKFfXFy0GhQTaOHe1DtHTUh1cNWG-xkt1J4jvQ",
+                       "width" : 2976
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRFBHuvMmwNyA",
+                 "price_level" : 3,
+                 "rating" : 3.6,
+                 "reference" : "CmRRAAAASqqpuBF6sznUEOLrXi0x5ZNnuV2z6g4-9WXUtyHqkLgiB-0tRii1QyZHELaODlo4jtpwGbWT2jKsgtRKoKHaAkO31-iERHqiUmI0O2olCbYafH1sA3WTaWwqiEHlI8AcEhAuCOK8PqotuGXNcmRVxTKLGhQYQO_JjxiVNcW_0F2sm6GTtaj0DQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "The Star, G, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8677499,
+                       "lng" : 151.1956285
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8675642,
+                          "lng" : 151.19634395
+                       },
+                       "southwest" : {
+                          "lat" : -33.868307,
+                          "lng" : 151.19348215
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "e188acf29a29bc46f1cf844c0bf78f8b1464bd6f",
+                 "name" : "BLACK Bar & Grill",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 873,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/117734569092187224916/photos\"\u003eBLACK Bar &amp; Grill\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAKO_Sytx280NxmxXZEIpZhpCwx7d8iBXE1MwXZN0pj2jRy3A4JMNi4tpZa-5LT8fCktNEmOceAhwKO87nI77sYlMQhwjfRBynbaTYHFgkqqcUc9pc3vSQXTw8gMmhR8zmpwITxPX0ooExS764uvbplYlhPs64wZLIhjAd5NqJy0xEhBTr55tKFSG3JoDNR-dkADAGhThAx_H-oCVjE2VtPNs-6RuMsm-mQ",
+                       "width" : 1600
+                    }
+                 ],
+                 "place_id" : "ChIJ9ZCzFzGuEmsR_EwB_qra-W4",
+                 "rating" : 4.2,
+                 "reference" : "CmRRAAAAyd_kEc6zoT3kvnSwsEpoCCdzpoT4qXz-ZDDRPsvy2bHM_e_3CC2xQJHVhoY4bNszb1LFDxKsSeLnyvvDBg_0h6eaficwGU5wV3zYZYMuGvNAjDka8tpAL57q3eAXPq5wEhCJi6IkAdir8OfbEruoMw0KGhSOM6jDYgJRH5FJOT4T-s58Xdn33g",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Harbourside, The Star Level G/, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8677499,
+                       "lng" : 151.1956285
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8674622,
+                          "lng" : 151.19628415
+                       },
+                       "southwest" : {
+                          "lat" : -33.868613,
+                          "lng" : 151.19366155
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "882abf952e4d0e6dd96294459abe076c90c127dd",
+                 "name" : "24/7 Sports Bar",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : true,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 638,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110708522016398060959/photos\"\u003e24/7 Sports Bar\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAANokcZRcLyXrZVCXMkOFGBG_Fb5pyBgHMYV27h_5C5cRhdiBkauRq1dijljqKL8eBGgTDb02o-14AM0f4vSIkzSuWXdGDIQjOKJivfjA4ReMBfiSxmUn2adiMiN7aToZtsaUDsYFiAaRWg1DRFfgOJbP3yY-DoZKIgTEiLoiSk6NEhD7LIQs2Id3RuW99Ad_VOj-GhRdQ4wcD8qWA9qEsewREoCkWTBahg",
+                       "width" : 960
+                    }
+                 ],
+                 "place_id" : "ChIJ77Cd7TauEmsRBV42CMtSans",
+                 "rating" : 3.4,
+                 "reference" : "CmRRAAAAwXK3y3u2Cjj2ccBNi2yk5ojmQxCWYzEzJfUllhSC1KHM3b5oz4_J6mr7pzoSTDjvOVfdUWQxib3ngZ7tTt9VDlmSkiX5F7DwUXRJ7O6pcQXVkzdLPuVYXDOVtMJkuPuDEhBdx2uNSEf3dykSmyIeHHvnGhT2aCPvF2EDc1GHZskY_BhNa9-vbw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8737167,
+                       "lng" : 151.1956918
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8625219,
+                          "lng" : 151.198773
+                       },
+                       "southwest" : {
+                          "lat" : -33.8760938,
+                          "lng" : 151.186625
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+                 "id" : "40840d476baa531e0227a353b1bef70262f66e7e",
+                 "name" : "Pyrmont",
+                 "photos" : [
+                    {
+                       "height" : 1536,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/116834444001829540421/photos\"\u003eMaurice van Creij\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAPwSqjtBAgNmxUyGvA_exvceLWEgfY8X0qsnGiLN20_-UBX7SJC46TCGZqoLM98-xFCzVaPPBKWxOGYN1XONWdWhbiXC2GCbSvQMYgnk8HrtSmFiaH-yySXxe9BXyZq3-5TwhUA07-wHQjGpHnootHDX5pdhPRbtesgFqOifJDtTEhAbvdm4u7iheBaN_lKJbpyKGhS8eYgEIq24NmVONnAD5IFcemoDsQ",
+                       "width" : 2048
+                    }
+                 ],
+                 "place_id" : "ChIJAWLZAzSuEmsRkMcyFmh9AQU",
+                 "reference" : "CmRbAAAA50hc5NiP1NRb4pLV1r_2o0i-g0WCfFJyJm6uxw2qpaPJ7MDZlldSJn-OFkAj7ikWLkLVmwp0FCcvKOd5cnI7I0Y4S3UIqt4Xzc31OcAvAeg9w-i8YCGP8lUBXqNja74REhA5v8-W0ByViPAIGE7oABeyGhQCy0NZXAK4XRDtj1U9prNid07K7A",
+                 "scope" : "GOOGLE",
+                 "types" : [ "locality", "political" ],
+                 "vicinity" : "Pyrmont"
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:15:58 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&radius=200
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:15:57 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:20:57 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:15:58 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&radius=200
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:15:58 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:20:58 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:15:59 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&radius=200
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:15:59 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:20:59 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:00 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&radius=200
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:00 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:00 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:01 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&query=Statue%20of%20liberty,%20New%20York
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:02 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:02 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '991'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [
+              {
+                 "formatted_address" : "New York, NY, United States",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 40.6892494,
+                       "lng" : -74.04450039999999
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 40.71823,
+                          "lng" : -73.99872490000001
+                       },
+                       "southwest" : {
+                          "lat" : 40.6795892,
+                          "lng" : -74.05975889999998
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+                 "id" : "5a0d7e67078e35af0c456a277df9ffba7c1e4da6",
+                 "name" : "Statue of Liberty National Monument",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : true,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 3464,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/102603982411260017180/photos\"\u003eLauren\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAADTYYFkQSN0ozXJgnxESYqZ5-7HVZgGywruOt0TK2a2X4jK-N0zldtE3AckXR3XzuX9GZhKvps14nWwP1hg5FS0kIn9N3Ibet2Hx0Y8k47X64ae9Ilge1qOgbSC0R9_S3e3Gw1n3I9O8ChhMIbOe9yCBsNFAgtOMHqo9UIJTD4VEEhAK2hk9MT0rSj72wYjNbt2lGhT6ld0QDkB8I69o32EZdsYh7P_G2Q",
+                       "width" : 4618
+                    }
+                 ],
+                 "place_id" : "ChIJPTacEpBQwokRKwIlDXelxkA",
+                 "rating" : 4.5,
+                 "reference" : "CmRRAAAA9-Qf_jdmxGW-RZHtwqvg4PsYCnR6d9LKRfk7lmBK-2eDGWDK-Yyc8cU6keAHFwuFGE-SwBqC4-sefqhQV96WNJB6zZpkJ4VhinqDSIN3Gl61igU7FVVhie9AZDF_03auEhAvVQB28o1mTJ_oJrTSheXWGhT179I1KrRaZZBZqjhI-DNNHGfPag",
+                 "types" : [ "park", "point_of_interest", "establishment" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:03 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:03 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:03 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:04 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:04 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:04 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:05 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:05 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:05 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:06 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:06 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:06 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '86'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [],
+           "status" : "INVALID_REQUEST"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:07 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&keyword=&language=&location=-33.86705220,151.19573620&name=&radius=200&rankby=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:19 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:19 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '10610'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "next_page_token" : "CoQC9gAAAOynZRxgOccEfa1TJEuYuGj47L9AlSTZvt1721jMwlyZayU5ym9eVq6W1BfgkhNeGcKvOKpwQaczI7iaEyDYBF8fGuCdBt9WQ1cMDZgpyJ42AM4APU1IzU_c44AY_k7ean3J0pl1UYmzve-58IG2qEyf8GgJVHsnKpl3bk1e9_yKZK5WMI9dEPyOdaR1F8hkUkrALP_UtfcQ2UTfMkUVvNtYQBdeo8tRaafhxayd5APN-q66ISuHLpJP3XG-uOTQWAca7Ts-o9zI4c0wcbCy9zZVM29m_06_AUMA0IVebnSuMCTiIMK_YVRMuLhzHc6koNuE95baIbtwAxZKV6s8v5USEDWIP1iQHTEMnLfAUt0WzSwaFLz6r5rw3Ur9YTVPWYJPtT3Aef6d",
+           "results" : [
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8688197,
+                       "lng" : 151.2092955
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.5782519,
+                          "lng" : 151.3429976
+                       },
+                       "southwest" : {
+                          "lat" : -34.118328,
+                          "lng" : 150.5209286
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+                 "id" : "044785c67d3ee62545861361f8173af6c02f4fae",
+                 "name" : "Sydney",
+                 "photos" : [
+                    {
+                       "height" : 2448,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/101793126109209980882/photos\"\u003eHatim Ghadhban Abood\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAOK1HlrtrCZ9Lbe0FXBK5BHe_UKb63jMcenDY_qmWzUm5og66sYuvCUJyFpBpkmhh4OilgrmQqBsmtCDlrcFw8YFeD3PAGaDIoGJc-bXCQDARErPE9wpAk4qd2EqIVaSu1sufpmGBw-Py77CB3tVCGKV7Uv03L18Ze9EC6j8aPEQEhDNvwwmBlkjmfjf8Ibd7IITGhTZ5JbRwTtHcHxv1Q-bevO6IwprIQ",
+                       "width" : 3264
+                    }
+                 ],
+                 "place_id" : "ChIJP3Sa8ziYEmsRUKgyFmh9AQM",
+                 "reference" : "CmRbAAAARsBlazLYbLddwIbya6GA2bOsJXbyXzIGoBPdkv3fvRP5lG9QxsXkNd9tDX-jswKzk7hKRRurLsYa57ahVLpzHMANqLQ3wrQX-Xyx_TFDr3eHXIafJ3-gklILhBLZZ1LhEhBdQ4pu99jUPbVpYAzmqbG4GhTxmtFTSZ1cru0xf6ukFZTxUGntUA",
+                 "scope" : "GOOGLE",
+                 "types" : [ "colloquial_area", "locality", "political" ],
+                 "vicinity" : "Sydney"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.868111,
+                       "lng" : 151.195219
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.868011,
+                          "lng" : 151.19567405
+                       },
+                       "southwest" : {
+                          "lat" : -33.868411,
+                          "lng" : 151.19385385
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+                 "id" : "461d123aeb1c1648abdd5e535989d2bc518cf28e",
+                 "name" : "Astral Tower & Residences",
+                 "photos" : [
+                    {
+                       "height" : 645,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/106711896502688882221/photos\"\u003eAstral Tower &amp; Residences\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAABdgEY3F6pH_s92Zr_ZPVpDkBFjENtvGX6RN1R7o7iKvL9rzdu-0psTEYLFIGgEPMxdpL2AYssWuFE6Dc24p8nmsBeLtK8y2uIXzY9S9xaISxWXxhBOEx7TKERDk40B4nWKfXqwB5tvVLYzkt3zp_qA2D8_JvmGK9HmJKgpC1bWJEhCv97pXRRrO6ioUQa84ZoV7GhSqPcO71km6HjWbSjsYdSeCXcED3A",
+                       "width" : 1024
+                    }
+                 ],
+                 "place_id" : "ChIJq6qq6jauEmsR46KYci7M5Jc",
+                 "rating" : 4.2,
+                 "reference" : "CmRSAAAASnCZkJViJ2c-P5ufF_uGeTRnRMwL0IyKdFhgQoxYloJJtvVfMw0Ux_3V93I23GLycZJ-M_dZUtQiCXjsNMQgqtbX3z8wLCKhvhUlaRrrvOnRKedwObv2oxadGFPZe1GWEhCRC6jN6ImLxSqR-a7IHR_RGhR_e0D4n3N2FzvaVToBmxza5ZFLRA",
+                 "scope" : "GOOGLE",
+                 "types" : [ "lodging", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Sydney"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86799999999999,
+                       "lng" : 151.195
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86779065,
+                          "lng" : 151.19531415
+                       },
+                       "southwest" : {
+                          "lat" : -33.86862805,
+                          "lng" : 151.19405755
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "0761a21e23eda2598330d428413cb59431316a61",
+                 "name" : "Lobby Lounge",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 816,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110208511255995075770/photos\"\u003eJonathan O&#39;Brien\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBcwAAAB_8zn_UzzuDuvOtlLJmYcS2Ttc8q5og1dcc7C6cjgfpdsVk9-6D3M2hkecsXe3KHaoBi-IxsPeyBmpKI36yjUwemrHIzPK6esOHe5ExU8SK-ZRJDDutZPgq4WN8Cdi8qSMZDfMVctsxX0G3LQdUYnHhpl-JbVxyGDpnVPWM639DEhCZFrVt9PWS4O78CJFUcxX1GhSTrSeQWEjCaSR1nLCsCf7DIlfT1Q",
+                       "width" : 488
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRHbUt24abGq8",
+                 "rating" : 3.9,
+                 "reference" : "CmRSAAAAJvtRnOZ6frCMI5aSPBIarOPiXOALZEfaTE5XxqU3E7tSdpMcEnVBzX08GAyHDEoZtKrkXxVtZYQ3b_0RYt6OMqCEzoObmX7q_6oKH8Kgq7tl3yMNCVqL_iHtq_RmsmjlEhB2rLTNNa7sX5DkQvFh6imfGhSchBcS0z8na1zOvEKkI0suUZkjZw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.867567,
+                       "lng" : 151.193742
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86754850000001,
+                          "lng" : 151.1940063
+                       },
+                       "southwest" : {
+                          "lat" : -33.86760009999999,
+                          "lng" : 151.1936539
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "00060cf64f16375913ec49d25cbb7829d3e08a88",
+                 "name" : "Blue Eye Dragon",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1536,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/114550096924148386356/photos\"\u003eBlue Eye Dragon\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAPuFOy8DfUJQylIUTIDuqyazK-GFGrIle2jdlhXYElgU_Jl22y8cK5zZag-pPhigOzXEJ7UakOfqfjTYmWtqrSEEMT1zu2vn_-A9pVO4GKiJPqZlcY0PCePpvZiT_6aGcjd7Y4d95lxnImbL1upiBh6Aiv_2O9lTSBFctFydNDnaEhDR6IN-aifrOf8rp63x55tIGhS5onZm25nJ7M4FEFYjBzb0YDDPBA",
+                       "width" : 2048
+                    }
+                 ],
+                 "place_id" : "ChIJuZqIiTauEmsRJF_TK9Vpfmw",
+                 "price_level" : 3,
+                 "rating" : 4.5,
+                 "reference" : "CmRRAAAAqwOJvO_L9SqQ0hW6tCTBr8KaVGHhgFk1oJ8aVJEgBe8piislJ9I_TLz7GaSJnhNtlUXN9i3keuKD1oqB2JKxisGpvQKRLoBmVW7uZJ5rk4xYPr3pSq4Q6q9qk3bjNU99EhBQ2Um28JaDYkgTvdacKdMzGhQ4GuIR3B_3qplXqI57qrLaqwKuRw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "37 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.866651,
+                       "lng" : 151.195827
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86656485,
+                          "lng" : 151.196029
+                       },
+                       "southwest" : {
+                          "lat" : -33.86690944999999,
+                          "lng" : 151.195221
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "4f89212bf76dde31f092cfc14d7506555d85b5c7",
+                 "name" : "Google",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2992,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/111101164564146083832/photos\"\u003eChris Harte\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAADq0AchDSawwS35b6wwTKt242posKwULY9zRkl93_GDCkqu8HKlA9mqLbe8gTKBzAm6lBqTHK95zfpWR1JuvzrfYM8y_d0BL9Y6ciCA7F2u4EUouhOcCqJJE2g68pbjplTFqqgqb1RCa9_7D6e5vDO4Fv9lrGaWzxVg40MWaYHkiEhA0tHql8FdjLam7rCcuTpenGhS5f10Ugz9YibZIS770OvFGGsqtyQ",
+                       "width" : 4000
+                    }
+                 ],
+                 "place_id" : "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                 "rating" : 4.6,
+                 "reference" : "CmRSAAAABVOdrkfNv5hMJbb0KaJe2lBzZ-KJ0_8GzwCMckJmazHn7JtMkfLlDHxpAypTExvyz-9x8snff-SYiJT_D5v7qZ9lQQBHcVa3hqduNPENSJW3Wa-D8Ui59eIQOHSoqxrXEhB3_XPM_YqDI0vClmPqtPSKGhQL6Pgsbve95dTSXGj9KcS5Spdfmw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "point_of_interest", "establishment" ],
+                 "vicinity" : "5, 48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8679724,
+                       "lng" : 151.1952317
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86580425,
+                          "lng" : 151.1973838
+                       },
+                       "southwest" : {
+                          "lat" : -33.87093845,
+                          "lng" : 151.1929602
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+                 "id" : "44fdc977984610cd873c790a7d850e8185ed0e5e",
+                 "name" : "The Star",
+                 "photos" : [
+                    {
+                       "height" : 1782,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/108010117506893215344/photos\"\u003eBrett Freer\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAKdnKAygoy4U3rR1cKMvj2sKhFNbBdyX_KBrudepmN2wWEKNxOu5ncQ4z7YTS24nns5JfMIE4JzGrTfRYUxEwxg9o9sLBYZHOz1jzq8qO9N28dM_rKO_ydA3rYCY67RpFpzW2TWatALuj_rtiLHDsr32xgN0Cn7mtcrCRYcCHzt6EhBmkHW63BdRbXUEN-GYHfi5GhTgLrYbb2kqySkkXVRYZOGbCnq8kw",
+                       "width" : 4930
+                    }
+                 ],
+                 "place_id" : "ChIJq6qq6jauEmsRJAf7FjrKnXI",
+                 "rating" : 3.9,
+                 "reference" : "CmRRAAAAQKRl2sK4HxHhJdt8clgn6sg8koF1uZF3QcUdPe6lKf7Bj_ObXbhOVOPYSXl_HcpibaycZBfR2J3H70RZH9d_Y8BipZDOVzl6gSOYv0i4dzqE4rrRQa5Bwb99y9QNjH3UEhAZgPSbmtG1lHH1QlpFZCS7GhTRvH3buo9ymbDKTmY8Pe_z2TNq8A",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "casino",
+                    "spa",
+                    "lodging",
+                    "restaurant",
+                    "food",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.868516,
+                       "lng" : 151.1946897
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86815675,
+                          "lng" : 151.19488215
+                       },
+                       "southwest" : {
+                          "lat" : -33.86863575,
+                          "lng" : 151.19411235
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "61f6d719f3d208ab2875bb2bfa164029c609c797",
+                 "name" : "Avis",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2448,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110282762934738586599/photos\"\u003eCorey Brand\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAF1SrUZsJFhs0jdoOPzjlJmChRdNQNmJgsfzr0PZgsXi6Z_1Zj_1dJTMtRmb6fDW9FUbS7iIiGC6hizKYKGL3_EIfXXNTMJFEQUMVWFM4g5NRRj1S21gGu2mUNn-j-zP2LuuUa20QA_ikO2pQYPw1nep3cKQWLGO6vZh4qH60LFpEhBhcfEjta4QMiGVVrhkTDV0GhT7bTs0nnrLExNcfh1mhQ80Fh3ISQ",
+                       "width" : 3264
+                    }
+                 ],
+                 "place_id" : "ChIJHTvh5jauEmsRRVTSKo0XD94",
+                 "rating" : 5,
+                 "reference" : "CmRSAAAAK-IAAZ8fOPrjM-JtiWXwBrIBGeV384-aFV6SQ2CX80-gSy0FPej9bDS0-TZZJ-dQ-quZ_9N3HetQ4uZKmotP7AitbNwK6OsgORhDR987j2BkfOEQT5EauSOulmLyFqA_EhAcpdnRE4cqeUYfAttHCzdhGhScGmn_LzTP1aTebo28S9UKLcUT7A",
+                 "scope" : "GOOGLE",
+                 "types" : [ "car_rental", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.866649,
+                       "lng" : 151.195766
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8665761,
+                          "lng" : 151.19594645
+                       },
+                       "southwest" : {
+                          "lat" : -33.86686770000001,
+                          "lng" : 151.19522465
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "3ef986cd56bb3408bc1cf394f3dad9657c1d30f6",
+                 "name" : "Doltone House - Darling Island Wharf",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1210,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/108270736464416141350/photos\"\u003eDoltone House - Darling Island Wharf\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAKT4dvmcYWBJQyQF-xlAdFMng8wMtxK7ARzHwqMGoqCjE_wumJX8umOm3hS9rxGJZoo5sGHU0-H5FjJRWM81ac9zpcj54BtSDikrBCzo__jfcELa2aFTCpE4RghtvKtnS-wGXeBepx1oxUZfdcMFanIx2Xx9WzX83_wrqSft8iG1EhARvcMs2jFbTpqA-2Sj86JEGhTSd-Z_3LBHAiGX6wDoZcIVTxXB2g",
+                       "width" : 2000
+                    }
+                 ],
+                 "place_id" : "ChIJ5xQ7szeuEmsRs6Kj7YFZE9k",
+                 "rating" : 4.2,
+                 "reference" : "CmRSAAAANXtDEDw2Q7-YgacA78UGsjGoEW2tydcC3opp-SA1rLIOFneOEXn3qZbAoQXQO0VdwTgR8zNDeAIcx-GmuqlwW-ovp-ZQ6L5BGs5NaO7xnhGVvcceFUKyhyB4GFtKaB6SEhAuMv_hRvAI8fb10gCUmxckGhQI8WSDTtv_X9g0ygcAqIN-uXAbyg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Ground, 48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8657776,
+                       "lng" : 151.1949072
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8656057,
+                          "lng" : 151.19510545
+                       },
+                       "southwest" : {
+                          "lat" : -33.8662933,
+                          "lng" : 151.19431245
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "19cdf89322aa1fc3523c583a74a27645b11430e8",
+                 "name" : "Seven Group",
+                 "photos" : [
+                    {
+                       "height" : 4032,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/106141648197938449131/photos\"\u003eBrendan Hong\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAJ013Mqt1mmcOIOY7Ly8e7p1j8mZHuvY508-ySZD-SRa749gw3FuZbtusOkQF72SbbWV-w-dNNSLIyndrp1z83PzVieWiqG8j2eMJlU5KRrxlpmW6YETsrQ6JUmdQyGY9dQVJsjcrRuyuSghlgGGXqi70rbjayqK5xyCslA51Ah1EhBCbsV0Q8u_HtghKSIBSMB7GhRoU_UTZC2hbsLcTSS46uEwB8S0IQ",
+                       "width" : 3024
+                    }
+                 ],
+                 "place_id" : "ChIJz2EHuEmuEmsR9FZySlT-kNI",
+                 "rating" : 5,
+                 "reference" : "CmRSAAAA88oPYeXQopc6_Uhen6tpLuiASNsQmnA7H-727sLaYpwY3SJhZfPk5E0_5fxXVToh0qibI7YCMGzHm0nwGUYd-M2F8YsNSaTu47IK6LHOGpTbp3N23TEQqE8W1tJnSkz0EhAfy9x48V9flRHvoQPXfK86GhTo5LQwEsQ7sM7xhtvYzol620N27g",
+                 "scope" : "GOOGLE",
+                 "types" : [ "point_of_interest", "establishment" ],
+                 "vicinity" : "38-42 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8685682,
+                       "lng" : 151.1962433
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86806060000001,
+                          "lng" : 151.19651105
+                       },
+                       "southwest" : {
+                          "lat" : -33.8687374,
+                          "lng" : 151.19615405
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+                 "id" : "172b11b0164ac9ae1f16c6802ed759445f6eacb7",
+                 "name" : "Sydney Lyric Theatre",
+                 "photos" : [
+                    {
+                       "height" : 800,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/106181226772401075883/photos\"\u003eSydney Lyric Theatre\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAL7zBzsNbQHJ_-kPr_9Gr-iVglQ7dTrk2yLcy8DHnhjLPGtXxaOsrPhWN0i1Nx_ebFajv-YleJFRA-F5wAHoFMb7GTm_jqOssKU4GApWrU8KOA0GnBtlPafMmWdj-Q_AS8AH-oihNEB4ZaXq21UWhiff9IdKk_C4-Zz_HY0k6wDwEhBAqpK13jZbWxUAuqylMAFeGhSrRzStvomWClW0fSFNcG6Z1EHAMg",
+                       "width" : 801
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRxXV8BJ53Fq4",
+                 "rating" : 4.3,
+                 "reference" : "CmRSAAAAru0tgGWGrxzzft9qJ-edMONTeCH5aWnj3Ksr4Llr9HZqNIokbnozBmrOTF8hLCHlJIsz28asDox5BnFjUVhJmR3GWOKMit3cwaP5QiyiY_GwBjuynugJoPfmfPzUyqmOEhD9FdJdfqPL5gJi3ul-YWWZGhRz8Ueysu06nE5kUdFeQOk3TMwXuw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "point_of_interest", "establishment" ],
+                 "vicinity" : "Pirrama Road, Pyrmont, Sydney"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8674084,
+                       "lng" : 151.1954141
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86720425,
+                          "lng" : 151.1958917
+                       },
+                       "southwest" : {
+                          "lat" : -33.86747644999999,
+                          "lng" : 151.1952549
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+                 "id" : "2428201e8793d9c59b9431dc92c5d33fde3b9a1d",
+                 "name" : "Marquee Sydney, The Star",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 992,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/118358919801355721751/photos\"\u003eMarquee Sydney, The Star\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAG6DuVqXwBXs8yz_aophPlxFIRz4SW0aI7_zB3839ccU5DD0VIvfa3GFjK2ec5-AgalPg4-33Ev4WwvR-rqcVFzajA6DuVNh-ZsqLv7G1nrrjfx-pyPSqSH3vqvOfQh2occ6Glr9njaaASRe79Eetsy6b5RUP00hrXteaJnRN-GDEhBdr8bMgtt8nhCqCIVW6E7XGhSg6_yGIaSQJOMxYzmLrtsD9h4zlg",
+                       "width" : 1577
+                    }
+                 ],
+                 "place_id" : "ChIJYdJUVDauEmsRp-7oNoEMhuQ",
+                 "rating" : 3.7,
+                 "reference" : "CmRSAAAACaDeQy96FRrXt0x2efeH2JMz6ACbUBoXTbmHQAwfwy5U10ghjgivdKAIwLvoPCqr8PFnRuwNxT3YJNBj6yH7DGO_CUb5yDSdhHHoVm5LwcBiLI4Vw9XlydYYNjMMmP5WEhCJfvxytUNYbVGDf8I8dwtnGhRZaGOf9-3oYJgef8eBTjPU4f7jLw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "night_club", "bar", "point_of_interest", "establishment" ],
+                 "vicinity" : "Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8683385,
+                       "lng" : 151.1954624
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8677086,
+                          "lng" : 151.195688
+                       },
+                       "southwest" : {
+                          "lat" : -33.8702282,
+                          "lng" : 151.1947856
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "a6e36e20e63dfff2f8d5ef4dfa7c55f2c32d524c",
+                 "name" : "Adriano Zumbo at the Star",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2988,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/113294393643690798201/photos\"\u003eLucy Del Casale\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAKYf9HfsTfGkajoMRWRQo88oAiA95H4ZJcmWjRo6kugPJZBCkfnAWF03LUz-U3OI2axsNdxmb3emd9MDzV6v8aTtHEXIw6ekmYAN-cjdUDHgDy4wJ4mu8lP4TApa_IxJGRA_-QNwEZZ_oJx9Ao484q5CagJ9rMqmWORzc1UclhfpEhBpQlHagzIiIA6Bf3kEk36uGhSI0G8-YZqHTlI0E_yyMV8R4xx2Yg",
+                       "width" : 5312
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRco4bALTgoMo",
+                 "rating" : 4.1,
+                 "reference" : "CmRSAAAAKkYnEBajmGsBYcNTdKZs3BnU6oMW3QWkIVouCtmTZkSNNbLQUK3wtmbULc3SfflBEcCSrsJeYrOOb7xoVjy2WMT7UqY9SzgVWVQaUGVQYvxhFV_S7Ocg0nOiZE7q7DYvEhDnSLMS7D7tHqxK9qhA_9s9GhTIKvhrzb49hwSKWHqZ-X3LCmuQug",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "bakery",
+                    "cafe",
+                    "food",
+                    "store",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "The Star Casino, 31/80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86679699999999,
+                       "lng" : 151.1973652
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86669799999999,
+                          "lng" : 151.1983189
+                       },
+                       "southwest" : {
+                          "lat" : -33.867094,
+                          "lng" : 151.1970473
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "dd030d236b8ccdc525f7a40893eb492f8fc5d55d",
+                 "name" : "LuMi Bar & Dining",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1296,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/104200466008610392938/photos\"\u003eLuMi Bar &amp; Dining\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAANfIY__duQVhRIqkbmchhYOEngUGp7dyaPdkLfBzpBtpoWKdciIVOf3Euv291Uont1WxRqZX_KT6pr7b_0BAEvs9XlTDIXczFm1zBtGN5y_qyg0CeBtmxZnqDcUT1sK44snMOX2DewA4sod1DlLqs97QZxiOWu1EkFh1zDahW42XEhD4-1E619uyf_VAeDZlWJSNGhQ_tqX7kxZx0enV1W3fTnu5-Ki7SQ",
+                       "width" : 1299
+                    }
+                 ],
+                 "place_id" : "ChIJDZzo5DeuEmsRsi1wzrIp6HY",
+                 "price_level" : 3,
+                 "rating" : 4.3,
+                 "reference" : "CmRRAAAACEsi9GP0ARxbIOU1KU_6Lhd3xgNhecLoMbHL-UvyC1BVM09Po7CjIPxx8ORUmo2R_UtMz1XiOKoY7YuSGkmA7xaDY5AzgH9XEWmICGTjSbsLV1GGsFrowiClEOuv0GB7EhAeL2SbXtkWF0aNKFZZmgzdGhRAlGqIeaFxmdMMJizW89tEnfMpXg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "56 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8675674,
+                       "lng" : 151.1956091
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8674243,
+                          "lng" : 151.1960002
+                       },
+                       "southwest" : {
+                          "lat" : -33.8676151,
+                          "lng" : 151.1954274
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+                 "id" : "ff51b76a7f07bc276c612d2d3d41efa0a82c2b64",
+                 "name" : "Cherry",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 270,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/113210398723584203092/photos\"\u003eCherry\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAJGFaLFmtnvGoqXVGgT6lSQpQgDP8hvNeS9OmJRAY1xvERBSuGib8k3HS-uMnhakV-2UuoDbGia3Du6SCkT9GyPRf-i8yU19qBIMWp-R3Wxit0iORbIgMDxH2hLoRON_jLzzN_81lXPuF26q77FnoFmhVnNmSwWN2Y7XtsxcEX6wEhAoyNeePVJ2dOBBGLjN-De2GhQ34QuGmrm7PQlqamZgPbXaXT7Krw",
+                       "width" : 270
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsR41TkSleEZ-U",
+                 "rating" : 4.8,
+                 "reference" : "CmRSAAAAnG4oc1p3e9eDKxRUzkccmFL1AF32NT8js4weHdMJnNM9iiz_71AsgIOB2fOVrPlce6Ec_y_u7YeYOOgPHdZShZsAhUJuaacbcAOm9vMbFn4E3xKbsiu-p22OPztOUp6LEhByjGeulrfBEr2HscWWKThBGhTT1uvu2IsdfMumhYnUj8-cNwcUEg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "night_club", "bar", "point_of_interest", "establishment" ],
+                 "vicinity" : "The Star, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8666463,
+                       "lng" : 151.1958544
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8665539,
+                          "lng" : 151.19606765
+                       },
+                       "southwest" : {
+                          "lat" : -33.8669235,
+                          "lng" : 151.19521465
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "7eaf747a3f6dc078868cd65efc8d3bc62fff77d7",
+                 "name" : "Biaggio Cafe",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 608,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/116750797999944764767/photos\"\u003eJessica Pfund\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAADoqKBvipwbG0BMRHJKu5BSZQlGRVKREg_quLplJ794i3ackm_GIDvxwrTq-F0nxYjRf38WEKr4g8JoBoCDUvZbxFCix7bZUBPKEdFmb5p82q-7yKhVP_oQCFyURX8QMha6NOTF30WD7J7Ifc3RhB68TlxRDXaUgyaQBex5ZtlmUEhAXxn-UrBaN3yY59GDmFHTVGhQEwB0rvt0vYePpmJhKHcHroqWzEQ",
+                       "width" : 1080
+                    }
+                 ],
+                 "place_id" : "ChIJIfBAsjeuEmsRdgu9Pl1Ps48",
+                 "price_level" : 1,
+                 "rating" : 2.7,
+                 "reference" : "CmRSAAAAeDm3J7-zW7e5cliibxd1qZRGNUH-NaVh6lnnOD4rMVr8a0q3QTvsKYeK8TdS9EPDDPg4KmE8gzGbU3eQW_XNdNYmA_i7gj_y4xn7we7vIsY_UBCgYtY7l69WceVmpfnWEhDg108FrW7fRPQ8cb99cYqyGhTjccLtwlCeUZPt4wuk4m12mXIhxg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86815199999999,
+                       "lng" : 151.1949404
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86800784999999,
+                          "lng" : 151.19521845
+                       },
+                       "southwest" : {
+                          "lat" : -33.86858444999998,
+                          "lng" : 151.19410625
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+                 "id" : "cb1001b033f082340237c216f7c8bee2bb1dfc2b",
+                 "name" : "Gelato Messina - Pyrmont",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 1000,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/105536533916815068309/photos\"\u003eGelato Messina - Pyrmont\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAM19MdzEfDVoaDa9H2HoDnecJPzIG6h6Vl_PXmwgPmoly7g832kvn7a6OlmYT6Ljc9U03hugJsgjMIDILRuXpS7NnyHxxuN-OcmAhNjZ5LxjXa5uIqQ46eWB-I0y17NlFMLvzT3f97WgI0eu0dgnDpXUj54I-tH95CzglQBShztkEhB0um5u6d_8GWdWjIGK8k4LGhRSigS3drwFv5mQ04j3s82tOJivJQ",
+                       "width" : 1500
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsR6WtO5HuvUrU",
+                 "rating" : 4.6,
+                 "reference" : "CmRSAAAAUydvyOgiljHLAONyzNLGulgxJctym4A8j8O9xvMYXLOWb6RyCv9jue_0OzOpQGc2V1Ulk5LFqQBUZDsEv--hf_JYzCj8eZWfOOw0439LI615Hnl47hsREZ37j9TIStscEhAFJFo2MDKTYc1u7RA9iD7FGhR5eoT2VxInWwFsp8wV2OEA8zWkNw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "food", "store", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8680309,
+                       "lng" : 151.1955118
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86780835,
+                          "lng" : 151.1960651
+                       },
+                       "southwest" : {
+                          "lat" : -33.86869855,
+                          "lng" : 151.1938519
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "08c0f74375ca1956d8ae2919512171adcd8266d7",
+                 "name" : "Balla",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2976,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/116060194460169514612/photos\"\u003eMoana Amoa\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAANey3Khtx-Aem0hkS863sktMhfydWsJQT5CHP5muHcOYuQy28o0kdi-KO7gB6J1LMuIqsMc9ROpCR6A8KWaL_eUkIuPLvdGPopYnTGCv-mdLcBInmJv3ADgod8Tu5jOHF3nc-4GX6-W7qgs14vaA_0L62APPAxGQevhku7wV1aozEhATxRafM_hHFbjvinQn7-H7GhSMadxCcwoys3TL_EHUBabbpeFfdQ",
+                       "width" : 2976
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRFBHuvMmwNyA",
+                 "price_level" : 3,
+                 "rating" : 3.6,
+                 "reference" : "CmRRAAAAW_oaH0jJUkfMXB3g1jNThLUlEfiaUVp1c9h61xduuFiJtcZBmZ1mtL36XvI6-neOk0RcSinMSxYGBsWRiTdtn8Vjm6MWO2EyXED8nKtg1irMP_6wbwIszDy83QCPr05uEhCx-Vnb9TgKhu2hE7f3awtFGhRSzljAnw8AauedOWET_dlZN6pJaA",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "The Star, G, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8677499,
+                       "lng" : 151.1956285
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8675642,
+                          "lng" : 151.19634395
+                       },
+                       "southwest" : {
+                          "lat" : -33.868307,
+                          "lng" : 151.19348215
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "e188acf29a29bc46f1cf844c0bf78f8b1464bd6f",
+                 "name" : "BLACK Bar & Grill",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 873,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/117734569092187224916/photos\"\u003eBLACK Bar &amp; Grill\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAEyO7o84Hp0TNJ8yU5Z0XhEs3xGp_S2y4mqz3ZeMkRR0zBpGFhnfeVUtj_bS-wRBw5wPIQgaQPxW7AnDJytlKSCuUjrnZAqxFGShi9Dz5LNb8683D9AUabuhMcG6V71IHltF5IqT8PgRNcZ0tWXTALLnWChhr6jtu2niuk2-e8o9EhAe-yTWVOzNuPW4PYadGaSrGhSgGLD_zUdT9_RGOILaK6tATC8mRQ",
+                       "width" : 1600
+                    }
+                 ],
+                 "place_id" : "ChIJ9ZCzFzGuEmsR_EwB_qra-W4",
+                 "rating" : 4.2,
+                 "reference" : "CmRRAAAAgqMTJgwddMk4-NaYPvH_Y4OaWz1EWDqvuFpt-wQ1ZWuHeYgj4Yrmr_ad5fAwBD448ou_BUC1pxquLziA3Vw5AqfUb3fUTBHP7lcVfAshtWZkJOUcR_2IXN67znngEhzQEhD-GOgrX_ZoddMJ8JKHm_WUGhTrMmYnpootfh-Ae7RV-IYoYmCZwQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Harbourside, The Star Level G/, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8677499,
+                       "lng" : 151.1956285
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8674622,
+                          "lng" : 151.19628415
+                       },
+                       "southwest" : {
+                          "lat" : -33.868613,
+                          "lng" : 151.19366155
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "882abf952e4d0e6dd96294459abe076c90c127dd",
+                 "name" : "24/7 Sports Bar",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : true,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 638,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110708522016398060959/photos\"\u003e24/7 Sports Bar\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAPRSv_CkuzQ9hFePQxHbA6XDzrnWqSJ2w13ayBR_W8f5ZkTniAtaRZC8T-yhQJ9vNOj4P6WjNpTzpEyy86I_UhEWjhmsXxKNIGFLhDzWE2RwBJbHexzb3aG5RHXGoJ27pJOb2eKvV7D6nRNw4SNvMrj_93sylcKh2tbHaUxOkjZQEhBkaJgIOBQ7oMXdCEmriUGNGhRA0v0HFOks4seEIx1TZ_Zw3Po3NQ",
+                       "width" : 960
+                    }
+                 ],
+                 "place_id" : "ChIJ77Cd7TauEmsRBV42CMtSans",
+                 "rating" : 3.4,
+                 "reference" : "CmRRAAAARj6v-XHURttNKo0IsEZ42XpESEjHVcn8M8SdPBqDrwpGal5PIfdiHkprAfaeXHfO-0ZYuqvlecx90OPnC9KsUaUS6Rc2nX8l0T42T9LYdxEHdCUAnvO0XkMQA_DaagjyEhDpkQXAJSoO7quTSzc1l70JGhRsVWXW5-LLT5CN07zVx_OUcnfzZQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8737167,
+                       "lng" : 151.1956918
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8625219,
+                          "lng" : 151.198773
+                       },
+                       "southwest" : {
+                          "lat" : -33.8760938,
+                          "lng" : 151.186625
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+                 "id" : "40840d476baa531e0227a353b1bef70262f66e7e",
+                 "name" : "Pyrmont",
+                 "photos" : [
+                    {
+                       "height" : 1536,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/116834444001829540421/photos\"\u003eMaurice van Creij\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAL2fJ3B9h0SgN8Q-Rk8cqOlfrSuF5L76zysoM7S1sJjFkBe4dP7LI2koqK_YGb8KJlzby8TCWhrNDfQuv1mFeP2c4AdlyAZgwdO2envM5lt6vN07czwOtzkCPgGEryzhl3VGfpwUHqfRKiZQqD4fH26ejZHsJFVQzyYVsgWUgzg7EhDoEVdWbs7gdEz0eBUIrlWWGhRhqcY4fbA3CSuqXFGyAuLY0TIz9Q",
+                       "width" : 2048
+                    }
+                 ],
+                 "place_id" : "ChIJAWLZAzSuEmsRkMcyFmh9AQU",
+                 "reference" : "CmRbAAAA1JqSknhjsDkZN9Y4ob7YwkLqvyT3P01t2UN4St_t4V7TrDQgyCUOACxPURLAqPnYAZy-yC70dWyKD5zYc1Vh73JhHEtm-X8xOcQ5FrBvgmg28OlNXj8wJIsoZfKyJDb0EhB27AIn9pHr2VJMalQNNGxYGhR3mNt8uMC9nfS8jLUhywZ_IUlvAQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "locality", "political" ],
+                 "vicinity" : "Pyrmont"
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:20 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&language=&query=Statue%20of%20liberty,%20New%20York&rankby=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:32 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:32 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '995'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [
+              {
+                 "formatted_address" : "New York, NY, United States",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 40.6892494,
+                       "lng" : -74.04450039999999
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 40.71823,
+                          "lng" : -73.99872490000001
+                       },
+                       "southwest" : {
+                          "lat" : 40.6795892,
+                          "lng" : -74.05975889999998
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+                 "id" : "5a0d7e67078e35af0c456a277df9ffba7c1e4da6",
+                 "name" : "Statue of Liberty National Monument",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : true,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 3464,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/102603982411260017180/photos\"\u003eLauren\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAACb_4pP6x5meywMfuYNXVTEPCcWGjHA2BPo321THh4iUkb7GjqfUWCmZ0aLqKYTg19vruATuZyPP-gNd2aZ3Uh0sgK8H5FDCGCof-pd4XgHmqG7SnxmfyezRS4gzVVpKJ4yXnQKhi0R_BYN2Q8TajyX5rCmprU4lfuhlLO8ID9n4EhBT0MDyLgXoq0CFFdJ7llY5GhSTChW5ZOunRKg3eY1YHIiBTB5vyQ",
+                       "width" : 4618
+                    }
+                 ],
+                 "place_id" : "ChIJPTacEpBQwokRKwIlDXelxkA",
+                 "rating" : 4.5,
+                 "reference" : "CmRRAAAAjc8PO2KXgJZx5L5DJuIDLUkJyAmImn7n69KW_D-5nYSGzTT5lYcFkjLE6eFlgg399utKh02yF_VHbhFWIEbx5-XHq59ERcLtNRiqIpbxISa7kVkGseyYzCesaByNN1IUEhDXXqCZnwbuBqOoByT-p68oGhTuhqu_2NXn7fRgr1rkwDy8B4hWvA",
+                 "types" : [ "park", "point_of_interest", "establishment" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:33 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&language=&query=Statue%20of%20liberty,%20New%20York&rankby=&region=ca
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 24 Jan 2018 12:18:14 GMT
+      Expires:
+      - Wed, 24 Jan 2018 12:23:14 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - scaffolding on HTTPServer2
+      Content-Length:
+      - '949'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - hq=":443"; ma=2592000; quic=51303431; quic=51303339; quic=51303338; quic=51303337;
+        quic=51303335,quic=":443"; ma=2592000; v="41,39,38,37,35"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [
+              {
+                 "formatted_address" : "New York, NY, United States",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 40.6892494,
+                       "lng" : -74.04450039999999
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 40.71823,
+                          "lng" : -73.99872490000001
+                       },
+                       "southwest" : {
+                          "lat" : 40.6795892,
+                          "lng" : -74.05975889999998
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+                 "id" : "5a0d7e67078e35af0c456a277df9ffba7c1e4da6",
+                 "name" : "Statue of Liberty National Monument",
+                 "opening_hours" : {
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 667,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/114885487034263057803/photos\"\u003eManish Sharma\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CmRZAAAApIdeJ7LZhzqa-SfazEF4feWIFXt09HK-g8xV90QE1Y7qkyjFdtiM7meBrsWZ_i_-2Wbr5LPNpoO4AMVpRNDjsZbh3yCGRuTvKU43rcKdX_31ktO-rDtNps9t23WOBiF4EhBWFUzvr4jjtQ--j5PHX9UXGhQ03NED1g5rdXui4yMazYKFiKKC-A",
+                       "width" : 1000
+                    }
+                 ],
+                 "place_id" : "ChIJPTacEpBQwokRKwIlDXelxkA",
+                 "rating" : 4.6,
+                 "reference" : "CmRRAAAALN3WhgFKsd3Zwc8OuQZsFiKk3KYfwqd6jys7771vFQNoKFTwULh4l911ax0Sce1XywmtqFKoREYVaN6mzeqKD9SUa8bERwYQMtsCDYmSIBSZuOYQUVDOJdNBXZ49CsxgEhAgMeVxYVCP8AdoyXyoezmXGhTf5UmS27ih7GQL7Cnz44xlEHtx9A",
+                 "types" : [ "park", "point_of_interest", "establishment" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version:
+  recorded_at: Wed, 24 Jan 2018 12:18:14 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&language=&query=Statue%20of%20liberty,%20New%20York&rankby=&region=us
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 24 Jan 2018 12:18:15 GMT
+      Expires:
+      - Wed, 24 Jan 2018 12:23:15 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - scaffolding on HTTPServer2
+      Content-Length:
+      - '939'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - hq=":443"; ma=2592000; quic=51303431; quic=51303339; quic=51303338; quic=51303337;
+        quic=51303335,quic=":443"; ma=2592000; v="41,39,38,37,35"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [
+              {
+                 "formatted_address" : "New York, NY",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 40.6892494,
+                       "lng" : -74.04450039999999
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 40.71823,
+                          "lng" : -73.99872490000001
+                       },
+                       "southwest" : {
+                          "lat" : 40.6795892,
+                          "lng" : -74.05975889999998
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+                 "id" : "5a0d7e67078e35af0c456a277df9ffba7c1e4da6",
+                 "name" : "Statue of Liberty National Monument",
+                 "opening_hours" : {
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 667,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/114885487034263057803/photos\"\u003eManish Sharma\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CmRZAAAAWX4o1rEMvvWFN4QMewxBGxi-aAFTY42528CaKXiwPa7emFYaj0Wg-9skfqkQehjf1xTTKQi7q5VrbMjmmAlpmABf8v6YRcaIbpZG6QWOXO70EnbrO0Eht2OS3bsplrmZEhAPAr0iUM2kcMJQcEYkL0eLGhQ71THLSgBL7YPwFtKCqWa3S4iUeA",
+                       "width" : 1000
+                    }
+                 ],
+                 "place_id" : "ChIJPTacEpBQwokRKwIlDXelxkA",
+                 "rating" : 4.6,
+                 "reference" : "CmRRAAAAwPI8lLjxL_DyyktO_JdjvdEiNXho7mMyB8UMV3R904Un27yS5lqCT0ulfvPLF0uE2f87Ayosb34vZq0T23h9zxZ1H4oN4uASk7mOV0QlXldh2fm53mlgYcAkLy9Zr8kXEhDcmwk0tyU1rWCqJzRvtFArGhRXRyC-f_tRlJVmFTsDketKi0U1EA",
+                 "types" : [ "park", "point_of_interest", "establishment" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version:
+  recorded_at: Wed, 24 Jan 2018 12:18:15 GMT
+recorded_with: VCR 2.9.3

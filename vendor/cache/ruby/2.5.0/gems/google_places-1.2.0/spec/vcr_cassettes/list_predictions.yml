@@ -1,0 +1,268 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/autocomplete/json?input=query&key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:15:56 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:15:56 GMT
+      Cache-Control:
+      - private, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "predictions" : [
+              {
+                 "description" : "Query Jr Henry C, Manchester Road, Wheaton, IL, United States",
+                 "id" : "023a27834f518f2af4cdb9cf37087958cd969ea3",
+                 "matched_substrings" : [
+                    {
+                       "length" : 5,
+                       "offset" : 0
+                    }
+                 ],
+                 "place_id" : "ChIJ6eYdBKhVDogRIDxU2xTHpqE",
+                 "reference" : "ClRMAAAAk5zwTqK1YB9M7L8XfKRyJB7C0oh_hy7VJa_LZ6EGqhDexfhuxxFzASnVegoveVcxeIitYmZDqbTZTnwPb9fQiKcap15wJDxDuqVygHjdoX0SEIypCf4Ds5vOh9OzE_6dtbsaFH-l3R6UlXmgExFZfdO1WtUkMl93",
+                 "structured_formatting" : {
+                    "main_text" : "Query Jr Henry C",
+                    "main_text_matched_substrings" : [
+                       {
+                          "length" : 5,
+                          "offset" : 0
+                       }
+                    ],
+                    "secondary_text" : "Manchester Road, Wheaton, IL, United States"
+                 },
+                 "terms" : [
+                    {
+                       "offset" : 0,
+                       "value" : "Query Jr Henry C"
+                    },
+                    {
+                       "offset" : 18,
+                       "value" : "Manchester Road"
+                    },
+                    {
+                       "offset" : 35,
+                       "value" : "Wheaton"
+                    },
+                    {
+                       "offset" : 44,
+                       "value" : "IL"
+                    },
+                    {
+                       "offset" : 48,
+                       "value" : "United States"
+                    }
+                 ],
+                 "types" : [ "establishment" ]
+              },
+              {
+                 "description" : "Query Street, New Bedford, MA, United States",
+                 "id" : "7ec01a04e7ff7a326e0de7e787c5fd03de916371",
+                 "matched_substrings" : [
+                    {
+                       "length" : 5,
+                       "offset" : 0
+                    }
+                 ],
+                 "place_id" : "EixRdWVyeSBTdHJlZXQsIE5ldyBCZWRmb3JkLCBNQSwgVW5pdGVkIFN0YXRlcw",
+                 "reference" : "CjQwAAAAn4jhp-M6Efz7HMgnUzJTxKWiaUVl1WAmWkgCNZtlvfRSZEK29cL1_174bLoyXTTnEhCOLtSno63Cx4nn3NG9tKwOGhRIjZRdEaXwgiaap7QT5JTt7mAIdw",
+                 "structured_formatting" : {
+                    "main_text" : "Query Street",
+                    "main_text_matched_substrings" : [
+                       {
+                          "length" : 5,
+                          "offset" : 0
+                       }
+                    ],
+                    "secondary_text" : "New Bedford, MA, United States"
+                 },
+                 "terms" : [
+                    {
+                       "offset" : 0,
+                       "value" : "Query Street"
+                    },
+                    {
+                       "offset" : 14,
+                       "value" : "New Bedford"
+                    },
+                    {
+                       "offset" : 27,
+                       "value" : "MA"
+                    },
+                    {
+                       "offset" : 31,
+                       "value" : "United States"
+                    }
+                 ],
+                 "types" : [ "route", "geocode" ]
+              },
+              {
+                 "description" : "Query Insurance Agency Inc, May Mart Drive, Rochelle, IL, United States",
+                 "id" : "4abf09d82ceabfb0e47f1ca5848447d6b18ef704",
+                 "matched_substrings" : [
+                    {
+                       "length" : 5,
+                       "offset" : 0
+                    }
+                 ],
+                 "place_id" : "ChIJh5XzRpjfCIgRI9JWlbnqpQ8",
+                 "reference" : "CmRVAAAA6Z4nXiVtRRoy_bAK8i4UgiWoHLzuBTteZxZEsEOS7RAIgLTguxMBfl1iunCkTMYa8tPtS3z-i7NJTGADDTy2Lqbg9FyRU7LarrXIjIgVcEiqWTSAJqV-wT5cymrHEqbkEhCGAV0sEFYUOYHz6SalatPVGhQop1vOWLiGp9SY9ew_6LiC4GuS7A",
+                 "structured_formatting" : {
+                    "main_text" : "Query Insurance Agency Inc",
+                    "main_text_matched_substrings" : [
+                       {
+                          "length" : 5,
+                          "offset" : 0
+                       }
+                    ],
+                    "secondary_text" : "May Mart Drive, Rochelle, IL, United States"
+                 },
+                 "terms" : [
+                    {
+                       "offset" : 0,
+                       "value" : "Query Insurance Agency Inc"
+                    },
+                    {
+                       "offset" : 28,
+                       "value" : "May Mart Drive"
+                    },
+                    {
+                       "offset" : 44,
+                       "value" : "Rochelle"
+                    },
+                    {
+                       "offset" : 54,
+                       "value" : "IL"
+                    },
+                    {
+                       "offset" : 58,
+                       "value" : "United States"
+                    }
+                 ],
+                 "types" : [ "establishment" ]
+              },
+              {
+                 "description" : "Query Mill Road, North Potomac, MD, United States",
+                 "id" : "684b9d636594b43a973e1d259ec5d35ee61117d8",
+                 "matched_substrings" : [
+                    {
+                       "length" : 5,
+                       "offset" : 0
+                    }
+                 ],
+                 "place_id" : "EjFRdWVyeSBNaWxsIFJvYWQsIE5vcnRoIFBvdG9tYWMsIE1ELCBVbml0ZWQgU3RhdGVz",
+                 "reference" : "CkQ1AAAAMghGzCblh60vH1EXLEMUceBlHB-BkwcbZfB5hXj7pkrl1pjL06RZfxmi8v2sjuM1c3dDVcUKx7uHWTGmrp7kDBIQtFPZ0-whXob0uP975A9rNRoUHz7Ax9RnPORAD12ooxsEkofwAQQ",
+                 "structured_formatting" : {
+                    "main_text" : "Query Mill Road",
+                    "main_text_matched_substrings" : [
+                       {
+                          "length" : 5,
+                          "offset" : 0
+                       }
+                    ],
+                    "secondary_text" : "North Potomac, MD, United States"
+                 },
+                 "terms" : [
+                    {
+                       "offset" : 0,
+                       "value" : "Query Mill Road"
+                    },
+                    {
+                       "offset" : 17,
+                       "value" : "North Potomac"
+                    },
+                    {
+                       "offset" : 32,
+                       "value" : "MD"
+                    },
+                    {
+                       "offset" : 36,
+                       "value" : "United States"
+                    }
+                 ],
+                 "types" : [ "route", "geocode" ]
+              },
+              {
+                 "description" : "Query Insurance Agency, Inc., East Blackhawk Drive, Byron, IL, United States",
+                 "id" : "e4590492d84034b6464505f502765446c9ac5bce",
+                 "matched_substrings" : [
+                    {
+                       "length" : 5,
+                       "offset" : 0
+                    }
+                 ],
+                 "place_id" : "ChIJJVbNptrxCIgRiWmwVkK0IvI",
+                 "reference" : "CmRbAAAA2jtKQRttS3STPPkP6Oj0WwvTt6vSE8PVWfkME6De15H9efGaxqwFAHwyiuNemRkIqE1UyUsDJYL4qe0gsYIfTPnqE4vOUyt0NSEfSIDzf5EEunzmkgCBvinQ0AIp6MYnEhANvDSWC8lIefG58PzCaYGPGhRr7C-t7vBu9cMp5nmWc5kP6BgJ1A",
+                 "structured_formatting" : {
+                    "main_text" : "Query Insurance Agency, Inc.",
+                    "main_text_matched_substrings" : [
+                       {
+                          "length" : 5,
+                          "offset" : 0
+                       }
+                    ],
+                    "secondary_text" : "East Blackhawk Drive, Byron, IL, United States"
+                 },
+                 "terms" : [
+                    {
+                       "offset" : 0,
+                       "value" : "Query Insurance Agency, Inc."
+                    },
+                    {
+                       "offset" : 30,
+                       "value" : "East Blackhawk Drive"
+                    },
+                    {
+                       "offset" : 52,
+                       "value" : "Byron"
+                    },
+                    {
+                       "offset" : 59,
+                       "value" : "IL"
+                    },
+                    {
+                       "offset" : 63,
+                       "value" : "United States"
+                    }
+                 ],
+                 "types" : [ "establishment" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:15:57 GMT
+recorded_with: VCR 2.9.3

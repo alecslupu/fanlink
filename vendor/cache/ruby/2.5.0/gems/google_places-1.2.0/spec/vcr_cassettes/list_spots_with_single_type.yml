@@ -1,0 +1,413 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAKeN0XMV5LqJmqBrZZ1K8qMipFW7-Eybg&keyword=&language=&location=-33.86705220,151.19573620&name=&radius=200&rankby=&types=cafe
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 07 Feb 2017 16:16:20 GMT
+      Expires:
+      - Tue, 07 Feb 2017 16:21:20 GMT
+      Cache-Control:
+      - public, max-age=300
+      Vary:
+      - Accept-Language
+      Server:
+      - pablo
+      Content-Length:
+      - '4534'
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="35,34"
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "html_attributions" : [],
+           "results" : [
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86799999999999,
+                       "lng" : 151.195
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86779065,
+                          "lng" : 151.19531415
+                       },
+                       "southwest" : {
+                          "lat" : -33.86862805,
+                          "lng" : 151.19405755
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "0761a21e23eda2598330d428413cb59431316a61",
+                 "name" : "Lobby Lounge",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 816,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/110208511255995075770/photos\"\u003eJonathan O&#39;Brien\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBcwAAADHkHDySHYAwGS5zjGMAudEAG17uSLjac_VIT0OPkDoCSanXq6ZHNQC24ad25OOZXy4szgLuYIhGl63j3BG5s8c38PHzbCgHdeO38yPpotemgSvKY_bsQcgQp1ya4dfyXWSBLoX4e_wpx4aZHE_nNFnLMG2-4wM9LJCNt0-RWm7kEhDWoUHP5FQRJUwQIB5enOoSGhSVffd0OYj9OjnaG27OgNJwJlkljA",
+                       "width" : 488
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRHbUt24abGq8",
+                 "rating" : 3.9,
+                 "reference" : "CmRSAAAABa713ZOgGiPZau6gscxUr-IHmiheVaf8ryIxgX0lFeL7FxBaYRZ9o-sfzKSBuKzNbvecbSXAOkC_cJdILZhInkurVnSy4Mp6oycGiIwATWyxOxULNkkZVikQSfXFwf54EhDgn3fieTTqvrttQ8WlvXTUGhSmuqZawWRsKplMo5nKMTgd6-7jmQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "food", "store", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8683385,
+                       "lng" : 151.1954624
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8677086,
+                          "lng" : 151.195688
+                       },
+                       "southwest" : {
+                          "lat" : -33.8702282,
+                          "lng" : 151.1947856
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "a6e36e20e63dfff2f8d5ef4dfa7c55f2c32d524c",
+                 "name" : "Adriano Zumbo at the Star",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2988,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/113294393643690798201/photos\"\u003eLucy Del Casale\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAALaUFFK2zTwHM5ZGF347F4Q_cQzyw0lRiszroPfdPtPx-tJ153QCJz6rrg5Igu13n4duW67JySafxAYWR55yIFIBtxdJ928trz_9FyqP5xs2meEl2NNMbftqxhsbiXrsQzBJ7vmrJjEtuqfw6yOazpcZg3BsfVbIx_9PSAeyc1GGEhBbxPbZPHVnp6dHQg5-cBWXGhRSs64bTSsgoEzhfVWO4ttEEXfwug",
+                       "width" : 5312
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRco4bALTgoMo",
+                 "rating" : 4.1,
+                 "reference" : "CmRSAAAAaIgmm3a6Sd2C1EpwGx_AyuITaoeIpp8TnRnR9krJJ0gSyjxKcs3Qu0WfUmvUGt3EC5Y22RunAXJV3LCUXMMP9HHxW9HWN8clqXa15uuvqR2FYu_yEvGKDxlOPXyxTkQ6EhCdg7qBmDLmml-FJRqXFTHIGhRkR8k74QQ7lDg-ZdYHTa5Hqhgu0A",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "bakery",
+                    "cafe",
+                    "food",
+                    "store",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "The Star Casino, 31/80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8681732,
+                       "lng" : 151.1946516
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86810430000001,
+                          "lng" : 151.19482295
+                       },
+                       "southwest" : {
+                          "lat" : -33.8683799,
+                          "lng" : 151.19413755
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "dcc2d5fcdc143f1b328dbcb823357b4f2b74998a",
+                 "name" : "Cafe Court",
+                 "place_id" : "ChIJ1-v38TauEmsRCO5mmZZfvXs",
+                 "reference" : "CmRRAAAAoOOXXn5fYx8Nat34S0hAUfHfRBqrGQNqtzIvX7S2aZLgroZQ6J28873mHGHNCRMjStXleo0f7lpG7v5N17xWitb6myDkQg6JezOMSIZJZspao17rfl2r6KCYJF0tDbL2EhCywz_EEhdkoorrUl-XXyI_GhRJzA43vcJnKooEo6-25pGTeZXjKw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8677499,
+                       "lng" : 151.1956285
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8674622,
+                          "lng" : 151.19628415
+                       },
+                       "southwest" : {
+                          "lat" : -33.868613,
+                          "lng" : 151.19366155
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "5895b175f4c2a8535294f5587fe089fc7d5135ea",
+                 "name" : "Pulse Express",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 992,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/111520138479080816365/photos\"\u003ePulse Express\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAHEYvd3pMuFK01yZ_Oqyz4yW2_D4zAOUogVIEM9Np4yKuUyc_Bi9xEf9szoWtZ8v5Z74IIA1bX9fPDzSTFoEbBPGaxgJVrPiWdLtyyFrMEEIrKrmdwhJHHbPzRaJTK6LQALY_jpcbKjbyZwf6CMGlisXMtQek6Smtb8t_vKrXgUPEhBP8fCJKE1E8Z00s66a6nYFGhQ1-yOHcTwATHq7-5CnjvjyPkrX7g",
+                       "width" : 1618
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRJxe1QBBHBGU",
+                 "rating" : 2,
+                 "reference" : "CmRRAAAA3FHzXcZCl8r9_lWFcj3VixKcoTx0CHG75sN3WbQDb8KAYhcvOEhCW7HnN_xZU43LZi811oX9xWma41ev89rHZO1uPHb2NKywu8bMHakvJK64aDhw5pHu4hvG0yBVLulAEhDPwiE2BDgiRA6RGypsvs4fGhSVynjw133g9G4iOa6Lk4oCjI_EIw",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "restaurant", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8683278,
+                       "lng" : 151.1949473
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.8682828,
+                          "lng" : 151.19526235
+                       },
+                       "southwest" : {
+                          "lat" : -33.86834279999999,
+                          "lng" : 151.19400215
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "df8498c40e304679e2e066fb9f47b8e6ab578b48",
+                 "name" : "Food Quarter",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2448,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/108010117506893215344/photos\"\u003eBrett Freer\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAORh0RN-r0xTFBqaB-9u_c2p1V8-Dc0HER2kXUVWFP2nkPzt9ue_tNiZ4w9vI6pxuyfIQtOttnYD28zU6SyJEI30gS5Pix93nmt7jQGqbRp3dic_TsFcWI2iW8ndKg8t_zXzEVd-HK1wyg-t0hhu1S4jS4qRdYTK7FCqLZMSHPWTEhD4LBElIGyTIqT_lJgaLeloGhQdXq50Ss0Jw1VdEOjqkag5LK_wkA",
+                       "width" : 3264
+                    }
+                 ],
+                 "place_id" : "ChIJ1-v38TauEmsRP8ap8MBE1Bs",
+                 "reference" : "CmRRAAAAinmj7YOLDucK4tbN0Gs4toWsf5wjmswMVVxNXOkdwJC9-IvTr_0dpayM-DXqKPFEK6ix4PxTj25a14WCwK8xuV1hxeWNydvyqZ3OyJrdKoolcgY1g0FC84onNoR3jHuhEhAGOqtEHsHP52PmAlUyQ8O2GhSDMpPI8W74AM-yO6LEaRJqJsSncg",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "restaurant",
+                    "cafe",
+                    "food",
+                    "store",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "The Star, 1, 80 Pyrmont Street, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8664812,
+                       "lng" : 151.196061
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                 "id" : "91509349e192972859b886e62f11827e5bd0072f",
+                 "name" : "Esky Cafe",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "photos" : [
+                    {
+                       "height" : 2048,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/112860740202184755379/photos\"\u003ePaul Toogood\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAAAhtgW-HKyaL8y_ABUnWr6ezOzqCQrD9h2h9tFdGglx4A_KpD69PTw_HXnKWB1StxqTHrs4TFOWyWYjGVmMqsSOOGTZkgLN9r2z5-akSfEwO6NKEZElIOmszS6v1Kwu-R4m5Ha6MedwV1K_9qrfHNN-hXyXPH-I4WU6BAgBfga_EEhDtfnyivCSBuZT7w_wb0s_3GhSgqXxhDAMAf8Iw_RLafWvIqLvmug",
+                       "width" : 1536
+                    }
+                 ],
+                 "place_id" : "ChIJm3d7yTeuEmsRC2wYUB24q9I",
+                 "rating" : 4.6,
+                 "reference" : "CmRSAAAAD55FlPG5Z44DqD-jjdJh9gzNh3GDg5MA3yc7IzXx1cotq5L-HtMYql-ycn4ADuN3bJxrYwLyAolJS9fiSO-dIR6SJejUqIgs5UHanffqQHtyrEsLh2mnsjWajGr4zlqMEhB4riKVneajTAVA0LUa7WC_GhRV1UxpqmviyKc2z7b-ij3eSrSCog",
+                 "scope" : "GOOGLE",
+                 "types" : [ "restaurant", "cafe", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Workplace 6, 48 Pirrama Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8662322,
+                       "lng" : 151.1945581
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86608374999999,
+                          "lng" : 151.1950735
+                       },
+                       "southwest" : {
+                          "lat" : -33.86667755,
+                          "lng" : 151.1943863
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "7501fca2fd726963a0f5b79f8e86a8006b48f968",
+                 "name" : "Astoria Sydney",
+                 "photos" : [
+                    {
+                       "height" : 2136,
+                       "html_attributions" : [
+                          "\u003ca href=\"https://maps.google.com/maps/contrib/108730707735467966973/photos\"\u003eStephen Ma\u003c/a\u003e"
+                       ],
+                       "photo_reference" : "CoQBdwAAANS6Kjnan3HO-i1X8kr8GKoM_h0SgVzBaeZ50JfdD6-hqqiUJxAZQiw_SLigcg-nc-ytfNb7M945DFeh4e-vHlnTbgDW3SDjVD3r51V5EN2lwSqQd04QpqmVa32oEEI8ckNeOYjwPekn9n7Nh6Axj2B_pcfX5GDNAO2_ZjkQsL6aEhC8Ojdy4LxmU1th-kqpyUyAGhQR2myEt5k_T4q9pdlB_W5QahZV5Q",
+                       "width" : 2848
+                    }
+                 ],
+                 "place_id" : "ChIJhRs1RzauEmsRLE2K9do7mcg",
+                 "rating" : 4.3,
+                 "reference" : "CmRSAAAAV9Dt0ZJlz9pbEufgakj05W91GWS6kUPdJjdGWQIs9-doKJKcvf_BlTFK1bG3mt_RIYmT2a5YHzCZKqHZWO5LkhLUlVNlMkklAD4zjV4iImWH0-vtW9ehugWska54q0yJEhDNuMQRPcREXmahFj3zSWa6GhRcX2KoNgaT2SZO8o2ut83Dy1mCYQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "8 Jones Bay Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8683095,
+                       "lng" : 151.1962191
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "003482fdacacd82b58523069512b453e7f5ab539",
+                 "name" : "Karima Brassiere & Cafe Bar",
+                 "place_id" : "ChIJ1-v38TauEmsRbMuLkvV78Q0",
+                 "reference" : "CmRRAAAAfq0iuYMzyWFik_DLel6738v7YD4z3RXtXdHHtam3gIXNEgrVjzORsSnynuHyJyS6sOiWXP7OCXcZ9BovYh39AJdNg7Me4ku55qJ8VeMqDQemO6w3JsQfeoRuoJR-vcApEhBICY443PuoPMEpAEnaBvNDGhSKlfoK7ZIENOFfq6Zorz3cd1oHVA",
+                 "scope" : "GOOGLE",
+                 "types" : [
+                    "cafe",
+                    "bar",
+                    "restaurant",
+                    "food",
+                    "point_of_interest",
+                    "establishment"
+                 ],
+                 "vicinity" : "Star City Casino Parking, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.8654589,
+                       "lng" : 151.1962134
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86500814999999,
+                          "lng" : 151.19659225
+                       },
+                       "southwest" : {
+                          "lat" : -33.86560915,
+                          "lng" : 151.19507685
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "6eb2ce2c7da69a217c7b368188ce3bdf6a82a8d2",
+                 "name" : "Park Lane",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "place_id" : "ChIJfWbVKUiuEmsRbBZZu6H77s4",
+                 "reference" : "CmRSAAAAZ5-56d9x0COI6n340vFNI-dOOdjk3pRCyZAlL-qVqdACwUdS-s-VjjUs9dSx-C-t-efmFH43UI1SdOmt3tIYwg0h0T8OFsLJ0LHc5yO-rFVMg4WZztrmL8g3K7i_F9diEhD0ztCFaNG6y1U5txb7ay5eGhRLdI16jFakAsZ5DiL3ul50TOLCDg",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Google Level, 2/1 Darling Island Road, Pyrmont"
+              },
+              {
+                 "geometry" : {
+                    "location" : {
+                       "lat" : -33.86530380000001,
+                       "lng" : 151.1962412
+                    },
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : -33.86476604999999,
+                          "lng" : 151.1965554
+                       },
+                       "southwest" : {
+                          "lat" : -33.86548305000002,
+                          "lng" : 151.1952986
+                       }
+                    }
+                 },
+                 "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                 "id" : "fae3157418ceaca243cdc11dff779d6dc1de4bf5",
+                 "name" : "Cafe Laneway",
+                 "opening_hours" : {
+                    "exceptional_date" : [],
+                    "open_now" : false,
+                    "weekday_text" : []
+                 },
+                 "place_id" : "ChIJpWVSKEiuEmsR2xgW7hRnQfM",
+                 "reference" : "CmRSAAAA4LMSEsadtd_iUDMZQRrAmuRTx-9KWOZgk4hhE9d4xBpp66F_eTAPL7uUK7NdHgBSkakfk8giDrZJM3ZbmdLbAbAUOu-oCB7PqjgoznohbvIiVysqnC_YcEv5qZoTTFBKEhDeolW091z2t1J7PYmg_dwSGhS8y0OscusIBPkY7_CrKbFMiS_0FQ",
+                 "scope" : "GOOGLE",
+                 "types" : [ "cafe", "food", "point_of_interest", "establishment" ],
+                 "vicinity" : "Level 2/1 Darling Island Road, Pyrmont"
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 16:16:21 GMT
+recorded_with: VCR 2.9.3

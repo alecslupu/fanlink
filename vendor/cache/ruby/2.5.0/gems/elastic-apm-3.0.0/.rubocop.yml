@@ -1,0 +1,88 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'elastic-apm.gemspec'
+    - 'vendor/**/*'
+    - 'bench/*'
+
+Layout/AlignArguments:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/IndentFirstParameter:
+  Enabled: false
+
+Layout/AlignHash:
+  Exclude:
+    - 'Gemfile'
+
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
+Lint/RescueException:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Naming/PredicateName:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - 'lib/elastic-apm.rb'
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Style/Alias:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/PerlBackrefs:
+  Enabled: false
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
+
+Style/MissingRespondToMissing:
+  Enabled: false

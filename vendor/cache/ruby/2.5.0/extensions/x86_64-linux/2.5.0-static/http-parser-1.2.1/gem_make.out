@@ -1,0 +1,5 @@
+current directory: /home/cristi/Desktop/projects/fanlink/vendor/cache/ruby/2.5.0/gems/http-parser-1.2.1/ext
+/home/cristi/.rubies/ruby-2.5.1/bin/ruby -rrubygems /home/cristi/Desktop/projects/fanlink/vendor/cache/ruby/2.5.0/gems/rake-12.3.3/exe/rake RUBYARCHDIR=/home/cristi/Desktop/projects/fanlink/vendor/cache/ruby/2.5.0/extensions/x86_64-linux/2.5.0-static/http-parser-1.2.1 RUBYLIBDIR=/home/cristi/Desktop/projects/fanlink/vendor/cache/ruby/2.5.0/extensions/x86_64-linux/2.5.0-static/http-parser-1.2.1
+mkdir -p x86_64-linux/http-parser
+gcc -fexceptions -O -fno-omit-frame-pointer -fno-strict-aliasing -Wall -Wextra -O3 -fPIC   -o x86_64-linux/http-parser/http_parser.o -c ./http-parser/http_parser.c
+gcc -shared -o x86_64-linux/libhttp-parser-ext.so x86_64-linux/http-parser/http_parser.o -fexceptions 

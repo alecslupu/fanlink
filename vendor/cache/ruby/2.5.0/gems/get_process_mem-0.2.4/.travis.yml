@@ -1,0 +1,20 @@
+language: ruby
+os:
+  - linux
+  - osx
+
+before_install:
+  - gem install bundler -v 1.12.5
+
+rvm:
+  - 2.2.0
+  - 2.5.0
+  - ruby-head
+  - jruby-19mode
+  - rbx-19mode
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: rbx-19mode
+    - rvm: jruby-19mode

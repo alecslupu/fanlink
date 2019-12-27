@@ -1,0 +1,6 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "origin"]
+	url = https://markfraser@bitbucket.org/markfraser/administrate-field-enum.git
