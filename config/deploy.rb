@@ -2,7 +2,7 @@
 lock "~> 3.11.1"
 
 set :application, "flapi"
-set :repo_url, "git@bitbucket.org:mtoserver/fanlink.git"
+set :repo_url, "git@gitlab.fan.link:fanlink/fanlink.git"
 
 set :deploy_via, :remote_cache
 set :deploy_to, "/home/ubuntu/sites/#{fetch(:application)}"

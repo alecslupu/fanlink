@@ -6,7 +6,7 @@ end
 json[:post][:pinned] = @post.pinned
 
 if defined?(@post_reaction) && @post_reaction.present?
-  json[:post][:post_reaction] = render partial: @req_source, locals: { post_reaction: @post_reaction, post: @post }
+  json[:post][:post_reaction] = render partial: "api/v4/post_reactions/app", locals: { post_reaction: @post_reaction }
 else
   json[:post][:post_reaction] = nil
 end
