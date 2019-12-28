@@ -137,7 +137,7 @@ test:rspec51:
     paths:
       - coverage51/
   script:
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage51
 
 .test:rspec52:
@@ -154,7 +154,7 @@ test:rspec51:
     - export RAILS52=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
 
 .test:rspec6:
@@ -169,7 +169,7 @@ test:rspec51:
     - export RAILS6=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage6
 
 
