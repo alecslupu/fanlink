@@ -1,8 +1,8 @@
 stages:
   - build
   - test
-  - report
   - rspec
+  - report
   - deploy
 
 .base_minimal:
@@ -29,7 +29,7 @@ stages:
     RAILS_ENV: test
     FANLINK_PG_USER: $POSTGRES_USER
     FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
-    FANLINK_PG_HOST: postgres
+    FANLINK_PG_HOST: $POSTGRES_HOST
     FANLINK_PG_DATABASE: $POSTGRES_DB
     POSTGRES_USER: $POSTGRES_USER
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
@@ -201,6 +201,7 @@ pages:
     - mv dawnscanner public/ || true
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
+    - mv rubocop public/ || true
     - mv coverage51 public/ || true
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
@@ -208,10 +209,11 @@ pages:
 deploy:staging:
   extends: .base
   stage: deploy
+  when: manual
   only:
     - staging
   script:
-    - cap staging deploy
+    - bundle exec cap staging deploy
 
 deploy:production:
   extends: .base
