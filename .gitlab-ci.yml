@@ -209,10 +209,11 @@ pages:
 deploy:staging:
   extends: .base
   stage: deploy
+  when: manual
   only:
     - staging
   script:
-    - cap staging deploy
+    - bundle exec cap staging deploy
 
 deploy:production:
   extends: .base
