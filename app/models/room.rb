@@ -76,7 +76,7 @@ class Room < ApplicationRecord
 
   has_many :members, through: :room_memberships, source: :person
   has_many :pin_from, through: :pin_messages, source: :person
-  has_many :owners, through: :room_subscribers, source: :person
+  has_many :subscribers, through: :room_subscribers, source: :person
 
   has_paper_trail
 
