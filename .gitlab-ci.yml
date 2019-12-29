@@ -240,7 +240,7 @@ deploy:staging:
     - chmod 400 ~/.ssh/id_rsa
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
-    - ssh-agent
+    - ssh-add
     - ssh-add -l
 
 deploy:production:
