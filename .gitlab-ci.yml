@@ -235,11 +235,13 @@ deploy:staging:
     - staging
     - ale-staging
   script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | base64 -d | ssh-add -
-    - git config --global user.name "$CI_SERVER_NAME"
-    - cap staging deploy
+    - ssh-agent
+    - ssh-add -l
 
 deploy:production:
   extends: .base
