@@ -8,6 +8,9 @@ stages:
 .base_minimal:
   image: alpine:latest
   cache: {}
+  tags:
+    - anything
+
 
 .base:
   image: ruby:2.5.1
@@ -20,9 +23,13 @@ stages:
   before_script:
     - gem install bundler -v $BUNDLER_VERSION
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+  tags:
+    - anything
 
 .base_db:
   extends: .base
+  tags:
+    - anything
   services:
     - postgres:latest
   variables:
@@ -206,14 +213,21 @@ pages:
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
 
-.deploy:
+
+deploy:staging:
   extends: .base
   stage: deploy
   when: manual
+  tags:
+    - anything
+    - deploy
   environment:
     name: production
     url: https://fan.link
-  before_script:
+  only:
+    - staging
+    - ale-staging
+  script:
     - mkdir ~/.ssh/
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
     - chmod 400 ~/.ssh/id_rsa
@@ -221,18 +235,15 @@ pages:
     - eval $(ssh-agent -s)
     - ssh-add
     - gem install capistrano
-# ssh-add  <(echo -e "$SSH_PRIVATE_KEY")
-
-deploy:staging:
-  extends: .deploy
-  only:
-    - staging
-    - ale-staging
-  script:
     - cap staging deploy
 
 deploy:production:
-  extends: .deploy
+  extends: .base
+  stage: deploy
+  when: manual
+  tags:
+    - anything
+    - deploy
   environment:
     name: production
     url: https://fan.link
