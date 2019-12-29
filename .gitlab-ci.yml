@@ -218,6 +218,8 @@ deploy:staging:
   extends: .base
   stage: deploy
   when: manual
+  variables:
+    RAILS_ENV: development
   tags:
     - anything
     - deploy
@@ -241,6 +243,8 @@ deploy:production:
   extends: .base
   stage: deploy
   when: manual
+  variables:
+    RAILS_ENV: development
   tags:
     - anything
     - deploy
