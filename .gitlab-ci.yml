@@ -240,13 +240,9 @@ deploy:staging:
     - chmod 400 ~/.ssh/id_rsa
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
-    - ssh-add
+    - ssh-add -
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - git config --global user.name "$CI_SERVER_NAME"
-    - gem install capistrano
-    - gem install capistrano-bundler
-    - gem install capistrano-rails
-    - gem install slackistrano
-    - gem install capistrano3-puma
     - cap staging deploy
 
 deploy:production:
