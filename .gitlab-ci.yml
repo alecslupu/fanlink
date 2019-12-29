@@ -214,10 +214,13 @@ pages:
     name: production
     url: https://fan.link
   before_script:
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
-    - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
+    - ssh-add
     - gem install capistrano
+# ssh-add  <(echo -e "$SSH_PRIVATE_KEY")
 
 deploy:staging:
   extends: .deploy
