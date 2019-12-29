@@ -241,6 +241,7 @@ deploy:staging:
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
     - ssh-add
+    - git config --global user.name "$CI_SERVER_NAME"
     - gem install capistrano
     - gem install capistrano-bundler
     - gem install capistrano-rails
