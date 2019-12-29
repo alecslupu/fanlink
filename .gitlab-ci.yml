@@ -1,9 +1,9 @@
 stages:
+  - deploy
   - build
   - test
   - rspec
   - report
-  - deploy
 
 .base_minimal:
   image: alpine:latest
@@ -206,19 +206,29 @@ pages:
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
 
-deploy:staging:
+.deploy:
   extends: .base
   stage: deploy
   when: manual
+  environment:
+    name: production
+    url: https://fan.link
+  before_script:
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo -e "$SSH_PRIVATE_KEY")
+    - gem install capistrano
+
+deploy:staging:
+  extends: .deploy
   only:
     - staging
+    - ale-staging
   script:
-    - bundle exec cap staging deploy
+    - cap staging deploy
 
 deploy:production:
-  extends: .base
-  stage: deploy
-  when: manual
+  extends: .deploy
   environment:
     name: production
     url: https://fan.link
