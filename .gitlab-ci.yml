@@ -218,6 +218,11 @@ deploy:staging:
   extends: .base
   stage: deploy
   when: manual
+  artifacts:
+    name: rubocop
+    when: always
+    paths:
+      - log/
   variables:
     RAILS_ENV: development
   tags:
@@ -237,7 +242,11 @@ deploy:staging:
     - eval $(ssh-agent -s)
     - ssh-add
     - gem install capistrano
-    - bundle exec cap staging deploy
+    - gem install capistrano-bundler
+    - gem install capistrano-rails
+    - gem install slackistrano
+    - gem install capistrano3-puma
+    - cap staging deploy
 
 deploy:production:
   extends: .base
