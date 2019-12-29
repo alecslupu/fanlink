@@ -237,7 +237,7 @@ deploy:staging:
     - eval $(ssh-agent -s)
     - ssh-add
     - gem install capistrano
-    - cap staging deploy
+    - bundle exec cap staging deploy
 
 deploy:production:
   extends: .base
