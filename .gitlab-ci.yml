@@ -243,6 +243,7 @@ deploy:staging:
     - ssh-add
     - ssh-add -l
     - git config --global user.name "$CI_SERVER_NAME"
+    - git ls-remote git@gitlab.fan.link:fanlink/fanlink.git HEAD
     - bundle exec cap staging deploy
 
 deploy:production:
