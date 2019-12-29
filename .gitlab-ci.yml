@@ -242,6 +242,8 @@ deploy:staging:
     - eval $(ssh-agent -s)
     - ssh-add
     - ssh-add -l
+    - git config --global user.name "$CI_SERVER_NAME"
+    - cap staging deploy
 
 deploy:production:
   extends: .base
