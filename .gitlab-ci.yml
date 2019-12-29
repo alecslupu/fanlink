@@ -244,7 +244,8 @@ deploy:staging:
     - eval $(ssh-agent -s)
     - ssh-add
     - ssh-add -l
-    - git config --global user.name "$CI_SERVER_NAME"
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - git ls-remote git@gitlab.fan.link:fanlink/fanlink.git HEAD
     - bundle exec cap staging deploy
 
