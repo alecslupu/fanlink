@@ -237,11 +237,11 @@ deploy:staging:
   script:
     - mkdir ~/.ssh/
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - chmod 400 ~/.ssh/id_rsa
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
-    - ssh-add -
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - ssh-add
     - git config --global user.name "$CI_SERVER_NAME"
     - cap staging deploy
 
