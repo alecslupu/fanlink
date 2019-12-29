@@ -129,7 +129,7 @@ test:erd:
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-test:rspec51:
+.test:rspec51:
   extends: .base_db
   stage: rspec
   artifacts:
@@ -216,6 +216,7 @@ pages:
   before_script:
     - mkdir ~/.ssh/
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
     - ssh-add
