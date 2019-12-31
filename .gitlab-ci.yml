@@ -136,7 +136,7 @@ test:erd:
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-.test:rspec51:
+test:rspec51:
   extends: .base_db
   stage: rspec
   artifacts:
@@ -212,6 +212,7 @@ pages:
     - mv coverage51 public/ || true
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
+    - cp $PAGES_INDEX_FILE public/index.html
 
 
 deploy:staging:
