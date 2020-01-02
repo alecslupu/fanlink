@@ -149,6 +149,28 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         expect(json['post']['video_url']).not_to eq(nil)
       end
     end
+
+    it 'returns the post with reactions and tags' do
+      person = create(:admin_user)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        post = create(:post, person: person)
+        tag = create(:tag)
+        post.tags << tag
+        post_reaction = create(:post_reaction, person: person, post: post)
+
+        get :show, params: { id: post.id }
+
+        expect(response).to be_successful
+
+        pr = json["post"]["post_reaction"]
+        expect(json["post"]["tags"]).to include(tag.name)
+        expect(pr["id"]).to eq(post_reaction.id)
+        expect(pr["post_id"]).to eq(post_reaction.post_id)
+        expect(pr["person_id"]).to eq(post_reaction.person_id)
+        expect(pr["reaction"]).to eq(post_reaction.reaction)
+      end
+    end
   end
 
   # TODO: auto-generated
