@@ -1,13 +1,16 @@
 stages:
   - build
   - test
-  - report
   - rspec
+  - report
   - deploy
 
 .base_minimal:
   image: alpine:latest
   cache: {}
+  tags:
+    - anything
+
 
 .base:
   image: ruby:2.5.1
@@ -20,16 +23,20 @@ stages:
   before_script:
     - gem install bundler -v $BUNDLER_VERSION
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+  tags:
+    - anything
 
 .base_db:
   extends: .base
+  tags:
+    - anything
   services:
     - postgres:latest
   variables:
     RAILS_ENV: test
     FANLINK_PG_USER: $POSTGRES_USER
     FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
-    FANLINK_PG_HOST: postgres
+    FANLINK_PG_HOST: $POSTGRES_HOST
     FANLINK_PG_DATABASE: $POSTGRES_DB
     POSTGRES_USER: $POSTGRES_USER
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
@@ -137,7 +144,7 @@ test:rspec51:
     paths:
       - coverage51/
   script:
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage51
 
 .test:rspec52:
@@ -154,7 +161,7 @@ test:rspec51:
     - export RAILS52=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
 
 .test:rspec6:
@@ -169,7 +176,7 @@ test:rspec51:
     - export RAILS6=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage6
 
 
@@ -201,28 +208,75 @@ pages:
     - mv dawnscanner public/ || true
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
+    - mv rubocop public/ || true
     - mv coverage51 public/ || true
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
+    - cp $PAGES_INDEX_FILE public/index.html
+
 
 deploy:staging:
   extends: .base
   stage: deploy
+  when: manual
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
+  variables:
+    RAILS_ENV: development
+  tags:
+    - deploy
+  environment:
+    name: staging
+    url: https://staging.fan.link
   only:
     - staging
   script:
-    - cap staging deploy
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap staging deploy
 
 deploy:production:
   extends: .base
   stage: deploy
   when: manual
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
+  variables:
+    RAILS_ENV: development
+  tags:
+    - deploy
   environment:
     name: production
-    url: https://fan.link
+    url: https://portal.fan.link
   only:
     - master
   script:
-    - echo "Deploying to Production..."
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap staging deploy
 
 
