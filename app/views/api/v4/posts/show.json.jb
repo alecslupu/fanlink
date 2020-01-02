@@ -34,9 +34,9 @@ if @post.poll.present?
 end
 
 if @device.to_s == "ios"
-  p[:post_reaction_counts] = post.reaction_breakdown.to_json
+ json[:post][:post_reaction_counts] = @post.reaction_breakdown.to_json
 else
-  p[:post_reaction_counts] = post.reaction_breakdown
+  json[:post][:post_reaction_counts] = @post.reaction_breakdown
 end
 
 json
