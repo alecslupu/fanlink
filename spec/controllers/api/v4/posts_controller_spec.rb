@@ -27,7 +27,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
             from_date: from,
             to_date: to
           }
-
         expect(response).to be_successful
         expect(json['posts'].size).to eq(3)
         json['posts'].each do |post|
@@ -109,7 +108,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post_reaction = create(:post_reaction, person: person, post: post)
 
         get :show, params: { id: post.id }
-
         expect(response).to be_successful
 
         pr = json["post"]["post_reaction"]
