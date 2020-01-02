@@ -4,13 +4,7 @@ json[:posts] = posts.map do |post|
   p = render(partial: "api/v4/posts/#{@req_source}", locals: { post: post }, handlers: "jb")
 
   if defined?(post_reactions[post.id]) && post_reactions[post.id].present?
-    p[:post_reaction] =
-    {
-      id: post_reactions[post.id].id,
-      post_id: post_reactions[post.id].post_id,
-      person_id: post_reactions[post.id].person_id,
-      reaction: post_reactions[post.id].reaction
-    }
+    p[:post_reaction] = render partial: @req_source, locals: { post_reaction: post_reactions[post.id] }
   else
     p[:post_reaction] = nil
   end

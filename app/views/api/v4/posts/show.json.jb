@@ -10,6 +10,7 @@ if defined?(@post_reaction) && @post_reaction.present?
 else
   json[:post][:post_reaction] = nil
 end
+
 if @post.poll.present?
   json[:post][:poll] = Rails.cache.fetch ["v4", "poll", @req_source, @post.poll.id, @post.poll.updated_at.to_i] do
     render(partial: "api/v4/polls/#{@req_source}", locals: { poll: @post.poll }, handlers: "jb")
@@ -27,6 +28,10 @@ if @post.poll.present?
   end
 end
 
-json[:post][:post_reaction_counts] = @post.reaction_breakdown
+if @device.to_s == "ios"
+ json[:post][:post_reaction_counts] = @post.reaction_breakdown.to_json
+else
+  json[:post][:post_reaction_counts] = @post.reaction_breakdown
+end
 
 json
