@@ -55,8 +55,6 @@ module Messaging
 private
 
   def client_update_call(payload)
-
-    Rails.logger.debug(client.update("", payload).response.status)
     client.update("", payload).response.status == 200
   end
 
