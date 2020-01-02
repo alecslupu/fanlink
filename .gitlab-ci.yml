@@ -1,9 +1,9 @@
 stages:
-  - deploy
   - build
   - test
   - rspec
   - report
+  - deploy
 
 .base_minimal:
   image: alpine:latest
@@ -136,7 +136,7 @@ test:erd:
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-.test:rspec51:
+test:rspec51:
   extends: .base_db
   stage: rspec
   artifacts:
@@ -212,48 +212,71 @@ pages:
     - mv coverage51 public/ || true
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
+    - cp $PAGES_INDEX_FILE public/index.html
 
 
 deploy:staging:
   extends: .base
   stage: deploy
   when: manual
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
   variables:
     RAILS_ENV: development
   tags:
-    - anything
     - deploy
   environment:
-    name: production
-    url: https://fan.link
+    name: staging
+    url: https://staging.fan.link
   only:
     - staging
-    - ale-staging
   script:
     - mkdir ~/.ssh/
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
     - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - eval $(ssh-agent -s)
     - ssh-add
-    - gem install capistrano
-    - cap staging deploy
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap staging deploy
 
 deploy:production:
   extends: .base
   stage: deploy
   when: manual
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
   variables:
     RAILS_ENV: development
   tags:
-    - anything
     - deploy
   environment:
     name: production
-    url: https://fan.link
+    url: https://portal.fan.link
   only:
     - master
   script:
-    - echo "Deploying to Production..."
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap staging deploy
 
 
