@@ -7,7 +7,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server "54.183.29.51", user: "ubuntu", roles: %w{app db web worker}
+server "172.30.0.54", user: "ubuntu", roles: %w{app db web worker}
 
 set :rails_env, "staging"
 set :branch, "staging"
