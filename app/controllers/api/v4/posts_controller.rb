@@ -12,13 +12,13 @@ class Api::V4::PostsController < Api::V3::PostsController
     end
     if params[:promoted].present? && params[:promoted] == "true"
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
-      @posts = @posts.chronological(sign, post.starts_at, post.id) if chronological?
+      @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
     else
       if web_request? && some_admin?
         @posts = apply_filters
       else
         @posts = Post.visible.unblocked(current_user.blocked_people).includes([:poll])
-        @posts = @posts.chronological(sign, post.starts_at, post.id) if chronological?
+        @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
       end
       @posts = paginate @posts
 
@@ -36,7 +36,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       else
         unless web_request?
           @posts = Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll])
-          @posts = @posts.chronological(sign, post.starts_at, post.id) if chronological?
+          @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
           @posts = paginate(@posts)
         end
       end
@@ -132,7 +132,7 @@ class Api::V4::PostsController < Api::V3::PostsController
     posts = Post.for_product(ActsAsTenant.current_tenant)
 
     posts = if chronological?
-              posts.chronological(sign, post.starts_at, post.id)
+              posts.chronological(sign, post.created_at, post.id)
             else
               posts.order(created_at: :desc)
             end
