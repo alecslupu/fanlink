@@ -41,7 +41,7 @@ json.cache! ["v3", post] do
 
   if post.poll.present?
     json.poll do
-      json.poll_id post.poll.id
+      json.id post.poll.id
       json.description post.poll.description
       json.start_date post.poll.start_date
       json.duration post.poll.duration
