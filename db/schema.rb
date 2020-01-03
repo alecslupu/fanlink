@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191226081348) do
+ActiveRecord::Schema.define(version: 20200103121328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1087,6 +1087,7 @@ ActiveRecord::Schema.define(version: 20191226081348) do
     t.datetime "updated_at", null: false
     t.index ["last_message_id"], name: "index_room_subscribers_on_last_message_id"
     t.index ["person_id"], name: "index_room_subscribers_on_person_id"
+    t.index ["room_id", "person_id"], name: "unq_room_person", unique: true
     t.index ["room_id"], name: "index_room_subscribers_on_room_id"
   end
 
