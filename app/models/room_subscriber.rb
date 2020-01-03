@@ -5,6 +5,8 @@ class RoomSubscriber < ApplicationRecord
 
   validate :check_private
 
+  validates_uniqueness_of :person_id, scope: :room_id
+
   before_create :set_last_notification_time
 
   scope :for_product, ->(product) { joins(:person).where( people: { product_id: product.id }) }
