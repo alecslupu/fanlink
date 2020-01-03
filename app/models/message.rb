@@ -110,7 +110,7 @@ class Message < ApplicationRecord
   end
 
   def public_room_message_push
-    if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).exists?
+    if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: person_id).exists?
       Delayed::Job.enqueue(PublicMessagePushJob.new(id))
     end
   end
