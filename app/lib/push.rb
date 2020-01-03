@@ -86,7 +86,8 @@ module Push
     android_tokens, ios_tokens = get_tokens(Person.where(id: room_subscribers_ids), message)
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
 
-    room_subscribers.update_all(last_notification_time: DateTime.now)
+    room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
+
     android_token_notification_push(
       android_tokens,
       context: "public_chat",
