@@ -3,12 +3,22 @@ RailsAdmin.config do |config|
   config.model "Room" do
     configure :name_un do
     end
+    # configure :subscribers do
+    #   hide do
+    #     bindings[:object].private?
+    #   end
+    # end
     list do
       scopes [:publics, nil, :privates]
       fields :id,
              :name_un,
              :picture,
              :status
+      field :subscribers do
+        hide do
+          bindings[:object].private?
+        end
+      end
     end
     edit do
       field :name, :translated
@@ -17,6 +27,11 @@ RailsAdmin.config do |config|
              :description,
              :picture,
              :status
+      field :subscribers do
+        visible do
+          !bindings[:object].private?
+        end
+      end
     end
     show do
       fields :id,
@@ -27,6 +42,11 @@ RailsAdmin.config do |config|
              :created_by,
              :status,
              :public
+      field :subscribers do
+        visible do
+          bindings[:view].scope.include?(:publics)
+        end
+      end
     end
   end
 end
