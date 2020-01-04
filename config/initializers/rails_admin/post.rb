@@ -88,5 +88,9 @@ RailsAdmin.config do |config|
              :status,
              :priority
     end
+
+    export do
+      configure :body, :string
+    end
   end
 end

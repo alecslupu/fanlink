@@ -29,5 +29,10 @@ RailsAdmin.config do |config|
              :picture,
              :available
     end
+
+    export do
+      configure :name, :string
+      configure :description, :string
+    end
   end
 end
