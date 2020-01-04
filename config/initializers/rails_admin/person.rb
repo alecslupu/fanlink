@@ -269,6 +269,7 @@ RailsAdmin.config do |config|
 
     export do
       fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
+      configure :designation, :string
     end
   end
 end
