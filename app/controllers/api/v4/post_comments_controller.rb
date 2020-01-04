@@ -1,6 +1,6 @@
 class Api::V4::PostCommentsController < Api::V3::PostCommentsController
   def index
-    @post_comments = paginate @post.comments.visible.order(created_at: :desc)
+    @post_comments = paginate @post.comments.visible.not_reported.order(created_at: :desc)
     return_the @post_comments, handler: tpl_handler
   end
 
