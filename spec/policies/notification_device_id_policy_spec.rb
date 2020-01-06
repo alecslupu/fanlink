@@ -36,7 +36,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("admin") }
+      it { expect(subject.send(:module_name)).to eq("portal_notification") }
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
@@ -71,7 +71,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       select_product: false,
     }
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_read: true))
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, portal_notification_read: true))
     end
 
     describe "permissions" do
@@ -105,7 +105,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_update: true))
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, portal_notification_update: true))
     end
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -138,7 +138,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_delete: true))
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, portal_notification_delete: true))
     end
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -171,7 +171,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_export: true))
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, portal_notification_export: true))
     end
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -204,7 +204,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
     }
 
     before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, admin_history: true))
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, portal_notification_history: true))
     end
     describe "permissions" do
       permission_list.each do |policy, value|
