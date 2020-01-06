@@ -170,6 +170,7 @@ RSpec.describe Person, type: :model do
       it { should have_many(:clients_assigned).through(:assigned_clients) }
       it { should have_many(:clients_designated).through(:designated_clients) }
 
+      it { should have_many(:room_subscribers) }
     end
 
     describe "#has_one" do

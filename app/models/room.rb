@@ -71,10 +71,12 @@ class Room < ApplicationRecord
 
   has_many :pin_messages, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
+  has_many :room_subscribers, dependent: :destroy
 
 
   has_many :members, through: :room_memberships, source: :person
   has_many :pin_from, through: :pin_messages, source: :person
+  has_many :subscribers, through: :room_subscribers, source: :person
 
   has_paper_trail
 

@@ -109,9 +109,11 @@ class Message < ApplicationRecord
     Delayed::Job.enqueue(PrivateMessagePushJob.new(id))
   end
 
-  # def public_room_message_push
-  #   Delayed::Job.enqueue(PublicMessagePushJob.new(id))
-  # end
+  def public_room_message_push
+    if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: person_id).exists?
+      Delayed::Job.enqueue(PublicMessagePushJob.new(id))
+    end
+  end
 
   # include Message::RealTime
 
@@ -131,6 +133,7 @@ class Message < ApplicationRecord
 
   has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy
+
   has_paper_trail
 
   scope :for_date_range, -> (room, from, to, limit = nil) {
@@ -156,7 +159,6 @@ class Message < ApplicationRecord
 
   scope :reported, -> { joins(:message_reports) }
   scope :not_reported, -> { left_joins(:message_reports).where(message_reports: {id: nil} ) }
-
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],

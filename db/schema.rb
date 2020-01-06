@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191203153623) do
+ActiveRecord::Schema.define(version: 20200103130024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1078,6 +1078,19 @@ ActiveRecord::Schema.define(version: 20191203153623) do
     t.index ["room_id", "person_id"], name: "unq_room_memberships_room_person", unique: true
   end
 
+  create_table "room_subscribers", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "person_id", null: false
+    t.bigint "last_message_id"
+    t.datetime "last_notification_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_message_id"], name: "index_room_subscribers_on_last_message_id"
+    t.index ["person_id"], name: "index_room_subscribers_on_person_id"
+    t.index ["room_id", "person_id"], name: "unq_room_person", unique: true
+    t.index ["room_id"], name: "index_room_subscribers_on_room_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -1096,6 +1109,13 @@ ActiveRecord::Schema.define(version: 20191203153623) do
     t.bigint "last_message_timestamp", default: 0
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
+  end
+
+  create_table "rooms_owners", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "room_id"
+    t.index ["person_id"], name: "index_rooms_owners_on_person_id"
+    t.index ["room_id"], name: "index_rooms_owners_on_room_id"
   end
 
   create_table "semesters", force: :cascade do |t|
@@ -1473,6 +1493,9 @@ ActiveRecord::Schema.define(version: 20191203153623) do
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
+  add_foreign_key "room_subscribers", "messages", column: "last_message_id"
+  add_foreign_key "room_subscribers", "people"
+  add_foreign_key "room_subscribers", "rooms"
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
