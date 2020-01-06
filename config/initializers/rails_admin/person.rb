@@ -202,7 +202,7 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-          bindings[:object].client?
+          bindings[:object].client? && ( bindings[:view]._current_user.client_portal? || bindings[:view]._current_user.super_admin?)
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -219,7 +219,7 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-          bindings[:object].client?
+          bindings[:object].client? && ( bindings[:view]._current_user.client_portal? || bindings[:view]._current_user.super_admin?)
         end
         associated_collection_scope do
           normal_role = Role.normals.first
@@ -237,7 +237,7 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-          bindings[:object].normal?
+          bindings[:object].normal? && ( bindings[:view]._current_user.client_portal? || bindings[:view]._current_user.super_admin?)
         end
         associated_collection_scope do
           normal_role = Role.clients.first
@@ -254,7 +254,7 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-          bindings[:object].normal?
+          bindings[:object].normal? && ( bindings[:view]._current_user.client_portal? || bindings[:view]._current_user.super_admin?)
         end
         associated_collection_scope do
           normal_role = Role.clients.first
@@ -269,6 +269,7 @@ RailsAdmin.config do |config|
 
     export do
       fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
+      configure :designation, :string
     end
   end
 end

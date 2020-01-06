@@ -214,6 +214,26 @@ RSpec.describe Api::V4::PostsController, type: :controller do
     #     expect(json['messages'].size).to eq(2)
     #   end
     # end
+    it 'returns all the posts with the attachments' do
+      person = create(:admin_user)
+      ActsAsTenant.with_tenant(person.product) do
+        person2 = create(:person)
+        login_as(person)
+        person.follow(person2)
+        person2.follow(person)
+        poll = create(:poll)
+        poll.post.update(person_id: person2.id, status: :published)
+
+        get :index, params: {
+          promoted: true
+        }
+        json['posts'].each do |post|
+          expect(post['picture_url']).not_to eq(nil)
+          expect(post['audio_url']).not_to eq(nil)
+          expect(post['video_url']).not_to eq(nil)
+        end
+      end
+    end
   end
 
   # TODO: auto-generated
