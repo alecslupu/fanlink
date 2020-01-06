@@ -2,17 +2,67 @@ module Push
   include ActionView::Helpers::TextHelper
 
   def friend_request_accepted_push(relationship)
+    to = relationship.requested_to
+    from = relationship.requested_by
+    android_tokens = from.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
+    ios_tokens = from.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+
     if relationship.friended?
       do_push(relationship.requested_by.device_tokens,
               "Friend Request Accepted",
               "#{relationship.requested_to.username} accepted your friend request",
               "friend_accepted",
               person_id: relationship.requested_to.id)
+
+      android_token_notification_push(
+        android_tokens,
+        context: "friend_accepted",
+        title: "Friend request accepted by #{to.username}",
+        message_short: "Friend request accepted by #{to.username}",
+        message_placeholder: to.username,
+        deep_link: "#{from.product.internal_name}://users/#{to.id}"
+      ) unless android_tokens.empty?
+
+      ios_token_notification_push(
+        ios_tokens,
+        "Friend request accepted by #{to.username}",
+        "Friend request accepted by #{to.username}",
+        "AcceptOrIgnore",
+        context: "friend_accepted",
+        deep_link: "#{from.product.internal_name}://users/#{to.id}"
+      ) unless ios_tokens.empty?
     end
   end
 
-  def friend_request_received_push(from, to)
+  def friend_request_received_push(relationship)
+    from = relationship.requested_by
+    to = relationship.requested_to
+    android_tokens = to.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
+    ios_tokens = to.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
+
+    android_token_notification_push(
+      android_tokens,
+      context: "friend_requested",
+      title: "Friend request",
+      message_short: "New friend request from #{from.username}",
+      message_placeholder: from.username,
+      image_url: from.picture_url,
+      relationship_id: relationship.id,
+      deep_link: "#{from.product.internal_name}://users/#{from.id}"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      "Friend request",
+      "New friend request from #{from.username}",
+      "AcceptOrIgnore",
+      context: "friend_requested",
+      relationship_id: relationship.id,
+      image_url: from.picture_url,
+      deep_link: "#{from.product.internal_name}://users/#{from.id}"
+    ) unless ios_tokens.empty?
   end
 
   def message_mention_push(message_mention)
@@ -161,11 +211,13 @@ private
 
   def android_token_notification_push(tokens, data = {})
     notification_body = build_android_notification(data)
+    binding.pry
     push_with_retry(notification_body, tokens)
   end
 
   def ios_token_notification_push(tokens, title, body, click_action, data = {})
     notification_body = build_ios_notification(title, body, click_action, data)
+    binding.pry
     push_with_retry(notification_body, tokens)
   end
 
