@@ -66,7 +66,8 @@ module Push
 
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
 
-    build_chat_notification(android_tokens, message, room, "private_chat")
+    build_chat_notification_android(android_tokens, message, room, "private_chat")
+    build_chat_notification_ios(ios_tokens, message, room, "public_chat")
   end
 
   def public_message_push(message)
@@ -78,7 +79,9 @@ module Push
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
 
     room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
-    build_chat_notification(android_tokens, message, room, "public_chat")
+
+    build_chat_notification_android(android_tokens, message, room, "public_chat")
+    build_chat_notification_ios(ios_tokens, message, room, "public_chat")
   end
 
   def simple_notification_push(notification, current_user, receipents)
@@ -162,11 +165,11 @@ private
     push_with_retry(notification_body, tokens)
   end
 
-  # def ios_token_notification_push
-  #   notification_body = build_ios_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
+  def ios_token_notification_push
+    notification_body = build_ios_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
 
-  #   push_with_retry(notification_body, tokens)
-  # end
+    push_with_retry(notification_body, tokens)
+  end
 
   def build_android_notification(data)
     options = {}
@@ -193,7 +196,7 @@ private
     return android_tokens, ios_tokens
   end
 
-  def build_chat_notification(android_tokens, message, room, context)
+  def build_chat_notification_android(android_tokens, message, room, context)
     android_token_notification_push(
       android_tokens,
       context: context,
