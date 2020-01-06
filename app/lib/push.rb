@@ -55,47 +55,31 @@ module Push
   def private_message_push(message)
     tokens = []
     room = message.room
-    android_tokens, ios_tokens = get_room_members_tokens(room.members, message)
+    android_tokens, ios_tokens = get_tokens(room.members, message)
     room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
-    do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: message.room.id, message_id: message.id)
+    do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
 
-    message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
-    android_token_notification_push(
-      android_tokens,
-      context: "private_chat",
-      title: message.person.username,
-      message_short: message_short,
-      message_placeholder: message.person.username,
-      message_long: message.body,
-      image_url: message.picture_url,
-      room_id: room.id.to_s,
-      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
-    ) unless android_tokens.empty?
+    android_chat_notification(android_tokens, message, room, "private_chat")
+    ios_chat_notification(ios_tokens, message, room, "private_chat")
   end
 
-  # def public_message_push
-  #   tokens = []
-  #   room = message.room
-  #   get_room_members_tokens(room.members)
+  def public_message_push(message)
+    tokens = []
+    room = message.room
+    room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
+    room_subscribers_ids = room_subscribers.pluck(:person_id)
+    android_tokens, ios_tokens = get_tokens(Person.where(id: room_subscribers_ids), message)
 
-  #   message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
-  #   android_tokens(
-  #     tokens,
-  #     context: "private_chat",
-  #     title: message.person.username,
-  #     message_short: message_short,
-  #     message_placeholder: message.person.username,
-  #     message_long: message.body,
-  #     image_url: message.picture_url,
-  #     room_id: room.id.to_s,
-  #     deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
-  #   ) unless tokens.empty?
-  # end
+    room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
+
+    android_chat_notification(android_tokens, message, room, "public_chat")
+    ios_chat_notification(ios_tokens, message, room, "public_chat")
+  end
 
   def simple_notification_push(notification, current_user, receipents)
     tokens = []
@@ -195,15 +179,13 @@ private
 
   def android_token_notification_push(tokens, data = {})
     notification_body = build_android_notification(data)
-
     push_with_retry(notification_body, tokens)
   end
 
-  # def ios_token_notification_push
-  #   notification_body = build_android_notification(type, context, title, message_short, message_placeholder, message_long, image_url, room_id, relationship_id, deep_link)
-
-  #   push_with_retry(notification_body, tokens)
-  # end
+  def ios_token_notification_push(tokens, title, body, click_action, data = {})
+    notification_body = build_ios_notification(title, body, click_action, data)
+    push_with_retry(notification_body, tokens)
+  end
 
   def build_android_notification(data)
     options = {}
@@ -216,7 +198,24 @@ private
     return options
   end
 
-  def get_room_members_tokens(members, message)
+  def build_ios_notification(title, body, click_action, data)
+    options = {}
+    options[:notification] = {}
+
+    options[:notification][:title] = title
+    options[:notification][:body] = body
+    options[:notification][:click_action] = click_action
+    options[:notification][:sound] = "default"
+    options[:notification][:mutable_content] = "true"
+
+    options[:data] = data
+    options[:data][:priority] = "high"
+    options[:data][:time_to_live] = "2419200"
+
+    return options
+  end
+
+  def get_tokens(members, message)
     android_tokens = []
     ios_tokens = []
     members.each do |m|
@@ -230,6 +229,35 @@ private
     return android_tokens, ios_tokens
   end
 
+  def android_chat_notification(android_tokens, message, room, context)
+    message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
+    android_token_notification_push(
+      android_tokens,
+      context: context,
+      title: message.person.username,
+      message_short: message_short,
+      message_placeholder: message.person.username,
+      message_long: message.body,
+      image_url: message.picture_url,
+      room_id: room.id.to_s,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless android_tokens.empty?
+  end
+
+  def ios_chat_notification(ios_tokens, message, room, context)
+    body = message.picture_url.present? ? "You’ve got a 📸" : message.body
+
+    ios_token_notification_push(
+      ios_tokens,
+      message.person.username,
+      body,
+      "ReplyToMessage",
+      context: context,
+      room_id: room.id.to_s,
+      image_url: message.picture_url,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless ios_tokens.empty?
+  end
 
   # def build_android_options
   #   android = {}
