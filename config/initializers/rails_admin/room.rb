@@ -15,9 +15,6 @@ RailsAdmin.config do |config|
              :picture,
              :status
       field :subscribers do
-        hide do
-          bindings[:object].private?
-        end
       end
     end
     edit do
@@ -28,8 +25,8 @@ RailsAdmin.config do |config|
              :picture,
              :status
       field :subscribers do
-        visible do
-          !bindings[:object].private?
+        hide do
+          bindings[:object].private?
         end
       end
     end
@@ -42,11 +39,6 @@ RailsAdmin.config do |config|
              :created_by,
              :status,
              :public
-      field :subscribers do
-        visible do
-          bindings[:view].scope.include?(:publics)
-        end
-      end
     end
   end
 end
