@@ -144,6 +144,15 @@ class Message < ApplicationRecord
   scope :publics, -> { joins(:room).where( rooms: { public: true } ) }
   scope :reported_action_needed, -> { joins(:message_reports).where( message_reports: { status: MessageReport.statuses[:pending] } ) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
+
+  scope :not_reported_by_user, -> (person_id) {
+    where("NOT EXISTS (
+      SELECT 1 FROM message_reports
+      WHERE message_reports.message_id = messages.id
+      AND message_reports.person_id = ?
+    )", person_id)
+  }
+
   scope :visible, -> { where(hidden: false) }
   scope :room_date_range, ->(from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
   scope :chronological, ->(sign, created_at, id) { where("messages.created_at #{sign} ? AND messages.id #{sign} ?", created_at, id) }

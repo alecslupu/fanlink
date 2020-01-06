@@ -1,0 +1,2 @@
+class ColorConfigItemPolicy < ConfigItemPolicy
+end
