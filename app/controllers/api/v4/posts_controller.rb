@@ -88,12 +88,12 @@ class Api::V4::PostsController < Api::V3::PostsController
   def update
     if params.has_key?(:post)
       if @post.update(post_params)
-        return_the @post, handler: tpl_handler, using: :show
+        render :show
       else
         render_422 @post.errors
       end
     else
-      return_the @post, handler: tpl_handler, using: :show
+      render :show
     end
   end
 
