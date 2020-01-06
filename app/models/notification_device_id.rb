@@ -21,11 +21,11 @@ class NotificationDeviceId < ApplicationRecord
             uniqueness: { message: _("That device id is already registered.") },
             presence: { message: _("Device identifier is required.") }
 
-  def subscribe_to_topic(person_id)
-    Delayed::Job.enqueue(SubscribeToTopicJob.new(id))
-  end
+  # def subscribe_to_topic(person_id)
+  #   Delayed::Job.enqueue(SubscribeToTopicJob.new(id))
+  # end
 
-  def unsubscribe_to_topic(person_id)
-    Delayed::Job.enqueue(UnsubscribeToTopicJob.new(id))
-  end
+  # def unsubscribe_to_topic(person_id)
+  #   Delayed::Job.enqueue(UnsubscribeToTopicJob.new(id))
+  # end
 end
