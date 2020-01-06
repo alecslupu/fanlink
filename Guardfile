@@ -24,7 +24,7 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec rspec --exclude-pattern \"spec/requests/**/*_spec.rb\"" do
+guard :rspec, cmd: "bundle exec rspec  spec/requests/" do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
