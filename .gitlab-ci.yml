@@ -218,7 +218,6 @@ pages:
 deploy:staging:
   extends: .base
   stage: deploy
-  when: manual
   artifacts:
     name: "$CI_JOB_NAME-capistrano-log"
     when: on_failure
