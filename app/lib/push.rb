@@ -4,7 +4,7 @@ module Push
   def friend_request_accepted_push(relationship)
     to = relationship.requested_to
     from = relationship.requested_by
-    android_tokens, ios_tokens = get_tokens(from)
+    android_tokens, ios_tokens = get_device_tokens(from)
 
     if relationship.friended?
       do_push(relationship.requested_by.device_tokens,
@@ -36,7 +36,7 @@ module Push
   def friend_request_received_push(relationship)
     from = relationship.requested_by
     to = relationship.requested_to
-    android_tokens, ios_tokens = get_tokens(from)
+    android_tokens, ios_tokens = get_device_tokens(from)
 
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
@@ -93,7 +93,7 @@ module Push
     do_push(post_comment_mention.person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
               "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(post_comment_mention.person.id)
 
-
+    android_tokens, ios_tokens = get_device_tokens(post_comment_mention.person)
   end
 
   # sends to posts followers
@@ -105,7 +105,7 @@ module Push
   def private_message_push(message)
     tokens = []
     room = message.room
-    android_tokens, ios_tokens = get_room_members_tokens(room.members, message)
+    android_tokens, ios_tokens = get_room_members_device_tokens(room.members, message)
     room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
@@ -123,7 +123,7 @@ module Push
     room = message.room
     room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
     room_subscribers_ids = room_subscribers.pluck(:person_id)
-    android_tokens, ios_tokens = get_room_members_tokens(Person.where(id: room_subscribers_ids), message)
+    android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers_ids), message)
 
     room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
 
@@ -249,7 +249,7 @@ private
     return options
   end
 
-  def get_room_members_tokens(members, message)
+  def get_room_members_device_tokens(members, message)
     android_tokens = []
     ios_tokens = []
     members.each do |m|
@@ -263,7 +263,7 @@ private
     return android_tokens, ios_tokens
   end
 
-  def get_tokens(person)
+  def get_device_tokens(person)
     android_tokens = person.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
     ios_tokens = person.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
 
