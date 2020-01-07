@@ -1,10 +1,6 @@
 json = {}
 if @posts
-  json[:posts] = @posts.map do |post|
-    Rails.cache.fetch ["v4", "post", @req_source, post.id, post.updated_at.to_i] do
-      render partial: "api/v4/posts/#{@req_source}", locals: { post: post }, handlers: "jb"
-    end
-  end
+ json = render(partial: "api/v4/posts/rendered_posts", locals: { posts: @posts })
 else
   json[:tags] = @tags.map do |tag|
     Rails.cache.fetch ["v4", "tag", @req_source, tag.id, tag.updated_at.to_i] do
