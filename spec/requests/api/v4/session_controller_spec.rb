@@ -38,7 +38,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
       tags "Session"
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-      parameter name: :product, in: :formData, type: :string
+      parameter name: :product, in: :formData,  schema: {type: :string}
       parameter name: :facebook_auth_token, in: :formData, schema: {type: :string}, required: false
       parameter name: :password, in: :formData,schema: {type: :string}, required: false
       parameter name: :email_or_username, in: :formData, schema: {type: :string}, required: false
