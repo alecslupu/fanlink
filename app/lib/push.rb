@@ -84,7 +84,7 @@ module Push
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "You’ve been mentioned by #{mentioner.username}",
+      "#{person.username} mentioned you",
       nil,
       context: "message_mentioned",
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
@@ -132,7 +132,7 @@ module Push
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "You’ve been mentioned by #{person.username}",
+      "#{person.username} mentioned you",
       nil,
       context: "comment_mentioned",
       deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
@@ -141,27 +141,28 @@ module Push
 
   # sends to posts followers
   def post_push(post)
-    do_push(NotificationDeviceId.where(person_id: post.person.followers).map { |ndi| ndi.device_identifier },
-              "New Post", "#{post.person.username} posted", "new_post", post_id: post.id)
+    person = post.person
+    do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
+              "New Post", "#{person.username} posted", "new_post", post_id: post.id)
 
-    android_tokens, ios_tokens = get_followers_device_tokens(post.person)
+    android_tokens, ios_tokens = get_followers_device_tokens(person)
 
     android_token_notification_push(
       android_tokens,
-      context: "comment_mentioned",
-      title: "Mention",
-      message_short: "You’ve been mentioned",
+      context: "feed_post",
+      title: "New post",
+      message_short: "New post from #{person.username}",
       message_placeholder: person.username,
-      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+      deep_link: "#{person.product.internal_name}://posts/#{post.id}"
     ) unless android_tokens.empty?
 
     ios_token_notification_push(
       ios_tokens,
-      "Mention",
-      "You’ve been mentioned by #{person.username}",
+      "New Post",
+      "New post from #{person.username}",
       nil,
-      context: "comment_mentioned",
-      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+      context: "feed_post",
+      deep_link: "#{person.product.internal_name}://posts/#{post.id}"
     ) unless ios_tokens.empty?
   end
 
