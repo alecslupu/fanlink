@@ -4,8 +4,7 @@ module Push
   def friend_request_accepted_push(relationship)
     to = relationship.requested_to
     from = relationship.requested_by
-    android_tokens = from.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
-    ios_tokens = from.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+    android_tokens, ios_tokens = get_tokens(from)
 
     if relationship.friended?
       do_push(relationship.requested_by.device_tokens,
@@ -37,8 +36,7 @@ module Push
   def friend_request_received_push(relationship)
     from = relationship.requested_by
     to = relationship.requested_to
-    android_tokens = to.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
-    ios_tokens = to.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+    android_tokens, ios_tokens = get_tokens(from)
 
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
@@ -261,6 +259,13 @@ private
       android_tokens += m.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
       ios_tokens += m.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
     end
+
+    return android_tokens, ios_tokens
+  end
+
+  def get_tokens(person)
+    android_tokens = person.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
+    ios_tokens = person.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
 
     return android_tokens, ios_tokens
   end
