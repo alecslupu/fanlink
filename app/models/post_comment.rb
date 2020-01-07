@@ -18,6 +18,10 @@ class PostComment < ApplicationRecord
   # include PostComment::PortalFilters
   # include PostComment::RealTime
 
+  scope :reported, -> { joins(:post_comment_reports) }
+  scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: {id: nil} ) }
+
+
   def post_me
     post_comment_mentions.each do |mention|
       Rails.logger.debug("mention: #{mention.inspect}")
@@ -46,6 +50,10 @@ class PostComment < ApplicationRecord
     mention_params.each do |mp|
       post_comment_mentions.build(person_id: mp["person_id"].to_i, location: mp["location"].to_i, length: mp["length"].to_i)
     end
+  end
+
+  def name
+    body
   end
 
   def product
