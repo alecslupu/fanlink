@@ -1771,7 +1771,9 @@
           {
             "name": "device_id",
             "in": "formData",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1800,17 +1802,23 @@
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "unique_id",
             "in": "path",
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "required": true
           }
         ],
@@ -1850,12 +1858,16 @@
           {
             "name": "password",
             "in": "formData",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "product",
             "in": "formData",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1892,19 +1904,25 @@
           {
             "name": "facebook_auth_token",
             "in": "formData",
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "required": false
           },
           {
             "name": "password",
             "in": "formData",
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "required": false
           },
           {
             "name": "email_or_username",
             "in": "formData",
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "required": false
           }
         ],
@@ -1958,18 +1976,24 @@
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2005,28 +2029,38 @@
           {
             "name": "X-Per-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2062,22 +2096,30 @@
           {
             "name": "X-Per-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2113,22 +2155,30 @@
           {
             "name": "X-Per-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2164,18 +2214,24 @@
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2211,24 +2267,32 @@
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "round_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2264,34 +2328,46 @@
           {
             "name": "X-Per-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "round_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2327,28 +2403,38 @@
           {
             "name": "X-Per-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "X-Page",
             "in": "header",
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2377,24 +2463,32 @@
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "round_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "token",
             "in": "formData",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "status",
             "in": "formData",
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "enum": [
               "locked",
               "published",
@@ -2404,7 +2498,9 @@
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2437,17 +2533,23 @@
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           }
         ],
@@ -2485,17 +2587,23 @@
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           }
         ],
@@ -2530,23 +2638,31 @@
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "subscribed",
             "in": "formData",
-            "type": "boolean"
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -2583,23 +2699,31 @@
           {
             "name": "X-App",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "X-Current-Product",
             "in": "header",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "game_id",
             "in": "path",
-            "type": "integer",
+            "schema": {
+              "type": "integer"
+            },
             "required": true
           },
           {
             "name": "subscribed",
             "in": "formData",
-            "type": "boolean"
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {

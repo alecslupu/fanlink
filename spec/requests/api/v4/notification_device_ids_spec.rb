@@ -7,7 +7,7 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-      parameter name: :device_id, in: :formData, type: :string
+      parameter name: :device_id, in: :formData, schema: { type: :string }
 
       response "200", "" do
         before do |example|

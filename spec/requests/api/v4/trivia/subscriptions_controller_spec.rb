@@ -6,9 +6,9 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
-      parameter name: :game_id, in: :path, type: :integer
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
+      parameter name: :game_id, in: :path, schema: {type: :integer}
       response "200", "displays completed games" do
         let(:user) { create(:person) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id)}" }
@@ -44,9 +44,9 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
 
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
-      parameter name: :game_id, in: :path, type: :integer
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
+      parameter name: :game_id, in: :path, schema: {type: :integer}
       response "204", "displays completed games" do
         let(:user) { create(:person) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id)}" }
@@ -79,10 +79,10 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
-      parameter name: :game_id, in: :path, type: :integer
-      parameter name: :subscribed, in: :formData, type: :boolean
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
+      parameter name: :game_id, in: :path, schema: {type: :integer}
+      parameter name: :subscribed, in: :formData, schema: {type: :boolean}
       response "200", "displays completed games" do
         let(:user) { create(:person) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id)}" }
@@ -116,10 +116,10 @@ RSpec.describe "Api::V4::Trivia::SubscriptionsController", type: :request, swagg
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
-      parameter name: :game_id, in: :path, type: :integer
-      parameter name: :subscribed, in: :formData, type: :boolean
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header,schema: {type: :string}
+      parameter name: :game_id, in: :path, schema: {type: :integer}
+      parameter name: :subscribed, in: :formData, schema: {type: :boolean}
 
       response "200", "displays completed games" do
         let(:user) { create(:person) }
