@@ -143,6 +143,26 @@ module Push
   def post_push(post)
     do_push(NotificationDeviceId.where(person_id: post.person.followers).map { |ndi| ndi.device_identifier },
               "New Post", "#{post.person.username} posted", "new_post", post_id: post.id)
+
+    android_tokens, ios_tokens = get_followers_device_tokens(post.person)
+
+    android_token_notification_push(
+      android_tokens,
+      context: "comment_mentioned",
+      title: "Mention",
+      message_short: "You’ve been mentioned",
+      message_placeholder: person.username,
+      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      "Mention",
+      "You’ve been mentioned by #{person.username}",
+      nil,
+      context: "comment_mentioned",
+      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+    ) unless ios_tokens.empty?
   end
 
   def private_message_push(message)
@@ -307,6 +327,13 @@ private
   def get_device_tokens(person)
     android_tokens = person.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
     ios_tokens = person.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+
+    return android_tokens, ios_tokens
+  end
+
+  def get_followers_device_tokens(person)
+    android_tokens = NotificationDeviceId.where(person_id: person.followers, device_type: :android).pluck(:device_identifier)
+    ios_tokens = NotificationDeviceId.where(person_id: person.followers, device_type: :ios).pluck(:device_identifier)
 
     return android_tokens, ios_tokens
   end
