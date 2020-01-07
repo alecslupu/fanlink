@@ -6,10 +6,10 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: "X-Per-Page", in: :header, type: :integer
-      parameter name: "X-Page", in: :header, type: :integer
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
+      parameter name: "X-Per-Page", in: :header, schema: {type: :integer}
+      parameter name: "X-Page", in: :header, schema: {type: :integer}
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
       response "200", "displays completed games" do
         let(:user) { create(:person) }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id)}" }
@@ -39,10 +39,10 @@ RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc:
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: "X-Per-Page", in: :header, type: :integer
-      parameter name: "X-Page", in: :header, type: :integer
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
+      parameter name: "X-Per-Page", in: :header, schema: {type: :integer}
+      parameter name: "X-Page", in: :header, schema: {type: :integer}
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
       response "200", "displays future and on going games" do
         schema "$ref": "#/definitions/trivia_games_list"
         let(:user) { create(:person) }

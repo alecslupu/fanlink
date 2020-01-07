@@ -7,9 +7,9 @@ RSpec.describe "Api::V4::Trivia::RoundLeaderboardsController", type: :request, s
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: :game_id, in: :path, type: :integer
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
+      parameter name: :game_id, in: :path, schema: {type: :integer}
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
 
       let('X-Per-Page') { 2 }
       let('X-App') { 'app' }
@@ -50,11 +50,11 @@ RSpec.describe "Api::V4::Trivia::RoundLeaderboardsController", type: :request, s
       tags "Trivia"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
-      parameter name: "X-Per-Page", in: :header, type: :integer
-      parameter name: "X-Page", in: :header, type: :integer
-      parameter name: :game_id, in: :path, type: :integer
-      parameter name: "X-App", in: :header, type: :string
-      parameter name: "X-Current-Product", in: :header, type: :string
+      parameter name: "X-Per-Page", in: :header, schema: {type: :integer}
+      parameter name: "X-Page", in: :header, schema: {type: :integer}
+      parameter name: :game_id, in: :path, schema: {type: :integer}
+      parameter name: "X-App", in: :header, schema: {type: :string}
+      parameter name: "X-Current-Product", in: :header, schema: {type: :string}
 
       let('X-Per-Page') { 2 }
       let('X-Page') { 1 }
