@@ -76,7 +76,7 @@ module Push
       android_tokens,
       context: "message_mentioned",
       title: "Mention",
-      message_short: "You’ve been mentioned",
+      message_short: "#{mentioner.username} mentioned you",
       message_placeholder: mentioner.username,
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
     ) unless android_tokens.empty?
@@ -124,7 +124,7 @@ module Push
       android_tokens,
       context: "comment_mentioned",
       title: "Mention",
-      message_short: "You’ve been mentioned",
+      message_short: "#{person.username} mentioned you",
       message_placeholder: person.username,
       deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
     ) unless android_tokens.empty?
