@@ -153,7 +153,7 @@ module Push
       title: "New post",
       message_short: "New post from #{person.username}",
       message_placeholder: person.username,
-      deep_link: "#{person.product.internal_name}://posts/#{post.id}"
+      deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
     ) unless android_tokens.empty?
 
     ios_token_notification_push(
@@ -162,7 +162,7 @@ module Push
       "New post from #{person.username}",
       nil,
       context: "feed_post",
-      deep_link: "#{person.product.internal_name}://posts/#{post.id}"
+      deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
     ) unless ios_tokens.empty?
   end
 
