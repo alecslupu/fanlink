@@ -2,7 +2,7 @@
 #
 # Table name: posts
 #
-#  id                   :bigint(8)        not null, primary key
+#  id                   :bigint           not null, primary key
 #  person_id            :integer          not null
 #  body_text_old        :text
 #  global               :boolean          default(FALSE), not null
@@ -46,6 +46,7 @@ class Post < ApplicationRecord
   scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
   scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
   include TranslationThings
 
