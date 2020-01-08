@@ -133,7 +133,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    puts "Running before clean \n"
+    Rails.logger.debug("Running before clean")
 
     DatabaseCleaner.cleaning do
       Rails.logger.debug("RSPEC: #{example.description}")

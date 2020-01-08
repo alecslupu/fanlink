@@ -2,7 +2,7 @@ require "spec_helper"
 
 def run_single_test!(&block)
   before(:example) do |example|
-    puts "Running Swagger \n"
+    Rails.logger.debug("Running Swagger")
     submit_request(example.metadata)
   end
 
