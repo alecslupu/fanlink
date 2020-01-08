@@ -1,7 +1,5 @@
 json = {}
-json[:post] = Rails.cache.fetch ["v4", "post", @req_source, @post.id, @post.updated_at.to_i] do
-  render(partial: @req_source, locals: { post: @post }, handlers: "jb")
-end
+json[:post] = render(partial: @req_source, locals: {post: @post}, handlers: "jb")
 
 json[:post][:pinned] = @post.pinned
 

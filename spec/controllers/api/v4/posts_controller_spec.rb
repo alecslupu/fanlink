@@ -306,7 +306,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post_reaction = create(:post_reaction, person: person, post: post)
 
         get :show, params: { id: post.id }
-
         expect(response).to be_successful
 
         pr = json["post"]["post_reaction"]
