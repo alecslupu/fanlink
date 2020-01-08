@@ -4,7 +4,14 @@ RailsAdmin.config do |config|
   config.model "Certificate" do
     navigation_label "Courseware"
 
-    configure :is_paid do
+    configure :is_paid, :boolean do
+      pretty_value do
+        bindings[:object].is_paid?
+      end
+
+      export_value do
+        bindings[:object].is_paid?.inspect
+      end
     end
 
     show do
@@ -50,12 +57,20 @@ RailsAdmin.config do |config|
              :short_name,
              :certificate_order
       field :is_paid, :boolean do
-        pretty_value do
-          bindings[:object].is_paid?
-        end
+        #pretty_value do
+        #  bindings[:object].is_paid?
+        #end
       end
       fields :status,
              :certcourses
+    end
+    export do
+      field :is_paid, :boolean do
+        pretty_value do
+          bindings[:object].is_paid?
+        end
+
+      end
     end
   end
 end
