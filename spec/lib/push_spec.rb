@@ -32,13 +32,13 @@ describe "Push" do
     it "should send push" do
       from_person = create(:person)
       ActsAsTenant.with_tenant(from_person.product) do
-        create(:relationship, requested_by: from_person, requested_to: target_person)
+        relationship = create(:relationship, requested_by: from_person, requested_to: target_person)
         expect_any_instance_of(FBCMStub).to receive(:send).with(tokens,
                                                                 get_options("New Friend Request",
-                                                                            "#{from_person.username} sent you a friend request",
+                                                                            "#{relationship.requested_by.username} sent you a friend request",
                                                                             "friend_requested",
-                                                                            person_id: from_person.id))
-        @implementer.friend_request_received_push(from_person, target_person)
+                                                                            person_id: relationship.requested_by.id))
+        @implementer.friend_request_received_push(relationship)
       end
     end
   end

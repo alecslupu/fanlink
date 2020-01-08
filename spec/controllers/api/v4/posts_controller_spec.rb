@@ -26,10 +26,11 @@ RSpec.describe Api::V4::PostsController, type: :controller do
             created_at: to
         )
         get :index,
-          params: {
-            from_date: from,
-            to_date: to
-          }
+            params: {
+                from_date: from,
+                to_date: to
+            }
+
         expect(response).to be_successful
         expect(json['posts'].size).to eq(3)
         json['posts'].each do |post|

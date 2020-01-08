@@ -126,13 +126,13 @@ class Person < ApplicationRecord
   has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
   has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
+  has_many :room_subscribers, dependent: :destroy
+  has_many :subscribed_rooms, through: :room_subscribers, source: :room
+
   has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
   has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
   has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
   has_many :designated_clients, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
-
-  has_many :room_subscribers, dependent: :destroy
-  has_many :subscribed_rooms, through: :room_subscribers, source: :room
 
   has_many :assigned_people, through: :assigned_assignees, source: :person
   has_many :designated_people, through: :designated_assignees, source: :person

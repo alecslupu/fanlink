@@ -2,23 +2,93 @@ module Push
   include ActionView::Helpers::TextHelper
 
   def friend_request_accepted_push(relationship)
+    to = relationship.requested_to
+    from = relationship.requested_by
+    android_tokens, ios_tokens = get_device_tokens(from)
+
     if relationship.friended?
       do_push(relationship.requested_by.device_tokens,
               "Friend Request Accepted",
               "#{relationship.requested_to.username} accepted your friend request",
               "friend_accepted",
               person_id: relationship.requested_to.id)
+
+      android_token_notification_push(
+        android_tokens,
+        context: "friend_accepted",
+        title: "Friend request accepted by #{to.username}",
+        message_short: "Friend request accepted by #{to.username}",
+        message_placeholder: to.username,
+        deep_link: "#{from.product.internal_name}://users/#{to.id}"
+      ) unless android_tokens.empty?
+
+      ios_token_notification_push(
+        ios_tokens,
+        "Friend request accepted by #{to.username}",
+        "Friend request accepted by #{to.username}",
+        "AcceptOrIgnore",
+        context: "friend_accepted",
+        deep_link: "#{from.product.internal_name}://users/#{to.id}"
+      ) unless ios_tokens.empty?
     end
   end
 
-  def friend_request_received_push(from, to)
+  def friend_request_received_push(relationship)
+    from = relationship.requested_by
+    to = relationship.requested_to
+    android_tokens, ios_tokens = get_device_tokens(from)
+
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
+
+    android_token_notification_push(
+      android_tokens,
+      context: "friend_requested",
+      title: "Friend request",
+      message_short: "New friend request from #{from.username}",
+      message_placeholder: from.username,
+      image_url: from.picture_url,
+      relationship_id: relationship.id,
+      deep_link: "#{from.product.internal_name}://users/#{from.id}"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      "Friend request",
+      "New friend request from #{from.username}",
+      "AcceptOrIgnore",
+      context: "friend_requested",
+      relationship_id: relationship.id,
+      image_url: from.picture_url,
+      deep_link: "#{from.product.internal_name}://users/#{from.id}"
+    ) unless ios_tokens.empty?
   end
 
   def message_mention_push(message_mention)
     blocks_with = message_mention.message.person.blocks_with.map { |b| b.id }
-    do_push(message_mention.person.device_tokens, "Mention", "#{message_mention.message.person.username} mentioned you in a message.",
+    mentioner = message_mention.message.person
+
+    android_tokens, ios_tokens = get_device_tokens(message_mention.person)
+
+    do_push(message_mention.person.device_tokens, "Mention", "#{mentioner.username} mentioned you in a message.",
                               "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
+
+    android_token_notification_push(
+      android_tokens,
+      context: "message_mentioned",
+      title: "Mention",
+      message_short: "#{mentioner.username} mentioned you",
+      message_placeholder: mentioner.username,
+      deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      "Mention",
+      "#{person.username} mentioned you",
+      nil,
+      context: "message_mentioned",
+      deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
+    ) unless ios_tokens.empty?
   end
 
   def portal_notification_push(portal_notification)
@@ -42,20 +112,64 @@ module Push
 
   def post_comment_mention_push(post_comment_mention)
     blocks_with = post_comment_mention.post_comment.person.blocks_with.map { |b| b.id }
-    do_push(post_comment_mention.person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(post_comment_mention.person.id)
+    person = post_comment_mention.person
+    post_id = post_comment_mention.post_comment.post_id
+
+    do_push(person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
+              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(person.id)
+
+    android_tokens, ios_tokens = get_device_tokens(person)
+
+    android_token_notification_push(
+      android_tokens,
+      context: "comment_mentioned",
+      title: "Mention",
+      message_short: "#{person.username} mentioned you",
+      message_placeholder: person.username,
+      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      "Mention",
+      "#{person.username} mentioned you",
+      nil,
+      context: "comment_mentioned",
+      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+    ) unless ios_tokens.empty?
   end
 
   # sends to posts followers
   def post_push(post)
-    do_push(NotificationDeviceId.where(person_id: post.person.followers).map { |ndi| ndi.device_identifier },
-              "New Post", "#{post.person.username} posted", "new_post", post_id: post.id)
+    person = post.person
+    do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
+              "New Post", "#{person.username} posted", "new_post", post_id: post.id)
+
+    android_tokens, ios_tokens = get_followers_device_tokens(person)
+
+    android_token_notification_push(
+      android_tokens,
+      context: "feed_post",
+      title: "New post",
+      message_short: "New post from #{person.username}",
+      message_placeholder: person.username,
+      deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      "New Post",
+      "New post from #{person.username}",
+      nil,
+      context: "feed_post",
+      deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
+    ) unless ios_tokens.empty?
   end
 
   def private_message_push(message)
     tokens = []
     room = message.room
-    android_tokens, ios_tokens = get_tokens(room.members, message)
+    android_tokens, ios_tokens = get_room_members_device_tokens(room.members, message)
     room.members.each do |m|
       blocks_with = message.person.blocks_with.map { |b| b.id }
       next if m == message.person
@@ -73,7 +187,7 @@ module Push
     room = message.room
     room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
     room_subscribers_ids = room_subscribers.pluck(:person_id)
-    android_tokens, ios_tokens = get_tokens(Person.where(id: room_subscribers_ids), message)
+    android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers_ids), message)
 
     room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
 
@@ -215,7 +329,7 @@ private
     return options
   end
 
-  def get_tokens(members, message)
+  def get_room_members_device_tokens(members, message)
     android_tokens = []
     ios_tokens = []
     members.each do |m|
@@ -225,6 +339,20 @@ private
       android_tokens += m.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
       ios_tokens += m.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
     end
+
+    return android_tokens, ios_tokens
+  end
+
+  def get_device_tokens(person)
+    android_tokens = person.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
+    ios_tokens = person.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
+
+    return android_tokens, ios_tokens
+  end
+
+  def get_followers_device_tokens(person)
+    android_tokens = NotificationDeviceId.where(person_id: person.followers, device_type: :android).pluck(:device_identifier)
+    ios_tokens = NotificationDeviceId.where(person_id: person.followers, device_type: :ios).pluck(:device_identifier)
 
     return android_tokens, ios_tokens
   end
