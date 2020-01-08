@@ -2,10 +2,11 @@
 #
 # Table name: marketing_notifications
 #
-#  id        :bigint(8)        not null, primary key
-#  title     :string           not null
-#  body      :text             not null
-#  person_id :integer          not null, foreign key
+#  id         :bigint(8)        not null, primary key
+#  title      :string           not null
+#  body       :text             not null
+#  person_id  :integer          not null, foreign key
+#  product_id :integer          not null, foreign key
 #
 
 class MarketingNotification < ApplicationRecord
@@ -21,7 +22,6 @@ class MarketingNotification < ApplicationRecord
   private
 
     def notify
-      binding.pry
-      Delayed::Job.enqueue(MarketingNotificationPushJob.new(self.id))
+      Delayed::Job.enqueue(MarketingNotificationPushJob.new(id))
     end
 end
