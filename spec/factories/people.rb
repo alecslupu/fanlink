@@ -57,7 +57,7 @@ FactoryBot.define do
     # biography { Faker::Lorem.paragraph(sentence_count: 2)}
     # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
 
-    # role { create(:role_normal) }
+    role { create(:role_normal) }
 
     factory :recommended_person do
       recommended { true }

@@ -1,4 +1,16 @@
-require "rails_helper"
+require "spec_helper"
+
+def run_single_test!(&block)
+  before(:example) do |example|
+    puts "Running Swagger \n"
+    submit_request(example.metadata)
+  end
+
+  it "returns a #{metadata[:response][:code]} response" do |example|
+    assert_response_matches_metadata(example.metadata, &block)
+    example.instance_exec(response, &block) if block_given?
+  end
+end
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
