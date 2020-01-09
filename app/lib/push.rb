@@ -203,7 +203,7 @@ module Push
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
-  def marketing_notification_push(notification, current_user, receipents)
+  def marketing_notification_push(notification)
     android_data = build_data(
                     title: notification.title,
                     context: "marketing",
@@ -213,25 +213,22 @@ module Push
                     deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
                     )
     android_notification_body = build_android_notification(android_data)
+    notification_topic_push("marketing_en_android-US", android_notification_body)
 
     ios_data = build_data(context: "marketing", deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile")
-    ios_notification_body = build_ios_notification(
-                              notification.title,
-                              notification.body,
-                              ios_data
-                            )
+    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, ios_data)
+    notification_topic_push("marketing_en_ios-US", ios_notification_body)
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_device_to_topic(notification_device_id)
-    response = push_client.batch_topic_subscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
+    response = push_client.topic_subscription(get_topic(notification_device_id), notification_device_id.device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
   # will be later changed to accept language to unsubscribe to the correct marketing topic
   def unsubscribe_device_to_topic(notification_device_id)
     response = push_client.batch_topic_unsubscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
-
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
