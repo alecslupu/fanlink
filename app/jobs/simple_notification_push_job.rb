@@ -6,7 +6,7 @@ class SimpleNotificationPushJob < Struct.new(:notification_id)
   def perform
     notification = Notification.find(notification_id)
     ActsAsTenant.with_tenant(notification.product) do
-      current_user = Person.find(notification.person_id)
+      current_user = notification.person
 
       if notification.for_followers
         current_user.followers.find_in_batches(batch_size: BATCH_SIZE) do |receipents|
