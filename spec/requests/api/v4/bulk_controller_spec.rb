@@ -228,85 +228,7 @@ require "swagger_helper"
 #end
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
-  #
-  #path "/people" do
-  #  get "" do
-  #    tags ["users", 'android-old']
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context  "email_filer" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context  "username_filter" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/people/{id}" do
-  #  patch "" do
-  #    tags ["users", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    context "first" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "sal" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/people/{id}/change_password" do
-  #  patch "" do
-  #    tags ["users", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
+
   #path "/rooms" do
   #  get "" do
   #    tags ["chat", 'android-old']
@@ -826,36 +748,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   #end
-  #path "/people/{id}" do
-  #  get "" do
-  #    tags ["quests", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  patch "" do
-  #    tags ["quests", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
   #path "/posts/{id}" do
   #  patch "" do
   #    tags ["post", 'android-old']
@@ -988,23 +880,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["config", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/people" do
-  #  post "" do
-  #    tags ["user", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
   #    response "200", "" do
   #      run_test!
   #    end
@@ -1172,26 +1047,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
   #    context  "product_account_filter" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/people" do
-  #  get "" do
-  #    tags ["user", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context  "product_account_filter" do
-  #
   #      response "200", "" do
   #        run_test!
   #      end

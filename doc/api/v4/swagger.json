@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
   "info": {
     "title": "API V4",
     "version": "v4"
@@ -13,1744 +13,6 @@
     }
   },
   "paths": {
-    "/people": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "user",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "user",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/{id}": {
-      "patch": {
-        "summary": "",
-        "tags": [
-          [
-            "quests",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "quests",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/{id}/change_password": {
-      "patch": {
-        "summary": "",
-        "tags": [
-          [
-            "users",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/rooms": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        },
-        "consumes": [
-          "multipart/form-data"
-        ]
-      }
-    },
-    "/rooms/{room_id}/messages/{id}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/rooms/{id}/messages": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/tags": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/{id}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "patch": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        },
-        "consumes": [
-          "multipart/form-data"
-        ]
-      },
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/rooms/{room_id}/message_reports": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/post_comment_reports": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "summary": "",
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/post_reports": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/{post_id}/comments/{id}": {
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/rooms/{id}": {
-      "patch": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "chat",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/relationships": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "relations",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "relations",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/relationships/{id}": {
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "relation",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "patch": {
-        "summary": "",
-        "tags": [
-          [
-            "relations",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/blocks": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "relation",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/{id}/reactions": {
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/quests": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "quests",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/quests/{id}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "quests",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/steps/{stepId}/completions": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "steps",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/message_reports": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "steps",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/categories": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "categories",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/events": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "events",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/events/{id}/checkins": {
-      "delete": {
-        "summary": "",
-        "tags": [
-          [
-            "events",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "events",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "events",
-            "android-old"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "config/{app}.json": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "config",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/password_forgot": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "user",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/badge_actions": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "badge",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/levels": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "badge",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/badges": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "badge",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people{id}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "user",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/person/{username}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "user",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/recommended": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "user",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/{id}/polls/{poll_id}/poll_options/{poll_option_id}/cast_vote": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/recommended": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/posts/{id}/comments": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "post",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/certificates": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/certificates/{certificateId}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/certificates/{certificateId}/certcourses": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/person_certificates": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/send_certificate": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/certcourses/{id}": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/person_certcourses": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/person_certcourses/send_email": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "education",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/interests/{id}/add": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "interests",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/interests/{id}/remove": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "interests",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/interests": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "interests",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/people/{user_id}/interests": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "interests",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/interests/match": {
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "interests",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/followings": {
-      "post": {
-        "summary": "",
-        "tags": [
-          [
-            "relations",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "summary": "",
-        "tags": [
-          [
-            "relations",
-            "kotlin"
-          ]
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/notification_device_ids": {
       "post": {
         "summary": "",
@@ -1785,6 +47,162 @@
           },
           "422": {
             "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "formData",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "product_account_filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email_filer",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "username_filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/session_jwt"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "tags": [
+          "user"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[email]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[username]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[password]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[picture]",
+            "in": "formData",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -1798,20 +216,14 @@
         "produces": [
           "application/vnd.api.v4+json"
         ],
+        "consumes": [
+          "application/vnd.api.v4+json"
+        ],
         "parameters": [
           {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
+            "name": "product",
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "unique_id",
@@ -1831,6 +243,9 @@
           },
           "404": {
             "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -1879,6 +294,9 @@
           },
           "422": {
             "description": "Invalid login"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -1899,7 +317,9 @@
           {
             "name": "product",
             "in": "formData",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "facebook_auth_token",
@@ -1952,792 +372,9 @@
         "responses": {
           "200": {
             "description": ""
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/leaderboard/me": {
-      "get": {
-        "summary": "displays my possition leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
           },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_leaderboard"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/leaderboard": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_leaderboard_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/completed": {
-      "get": {
-        "summary": "displays completed games",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games": {
-      "get": {
-        "summary": "displays future and on going games",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays future and on going games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/prizes": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_game_prize_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds/{round_id}/leaderboard/me": {
-      "get": {
-        "summary": "displays my possition leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "round_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_rounds_leaderboard"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds/{round_id}/leaderboard": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "round_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_rounds_leaderboard_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_round_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds/{round_id}/change_status": {
-      "post": {
-        "summary": "Changes the status of a round",
-        "tags": [
-          "Trivia"
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "round_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "token",
-            "in": "formData",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "status",
-            "in": "formData",
-            "schema": {
-              "type": "string"
-            },
-            "enum": [
-              "locked",
-              "published",
-              "running"
-            ]
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Set the status"
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/subscription": {
-      "get": {
-        "summary": "Show the subscription information",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_user_subscribed"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "remove a subscription",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "displays completed games"
-          },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
-          }
-        }
-      },
-      "put": {
-        "summary": "updates the subscription information",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "subscribed",
-            "in": "formData",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_user_subscribed"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
-          }
-        }
-      },
-      "post": {
-        "summary": "creates the subscription information",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true
-          },
-          {
-            "name": "subscribed",
-            "in": "formData",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_user_subscribed"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -2756,6 +393,152 @@
             "type": "datetime"
           }
         }
+      }
+    },
+    "public_person": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "country_code": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "string",
+          "format": "date"
+        },
+        "biography": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "product_account": {
+          "type": "boolean"
+        },
+        "recommended": {
+          "type": "boolean"
+        },
+        "chat_banned": {
+          "type": "boolean"
+        },
+        "tester": {
+          "type": "boolean"
+        },
+        "terminated": {
+          "type": "boolean"
+        },
+        "terminated_reason": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "designation": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "role": {
+          "type": "string"
+        },
+        "do_not_message_me": {
+          "type": "boolean"
+        },
+        "pin_messages_from": {
+          "type": "boolean"
+        },
+        "auto_follow": {
+          "type": "boolean"
+        },
+        "num_followers": {
+          "type": "integer"
+        },
+        "num_following": {
+          "type": "integer"
+        },
+        "facebookid": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "facebook_picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "badge_points": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "following_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/relationships"
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "requested_by": {
+          "type": "object",
+          "$ref": "#/definitions/public_person"
+        },
+        "requested_to": {
+          "type": "object",
+          "$ref": "#/definitions/public_person"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/public_person"
       }
     },
     "session_jwt": {

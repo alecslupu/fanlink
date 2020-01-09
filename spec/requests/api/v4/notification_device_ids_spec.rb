@@ -7,78 +7,66 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
 
-      parameter name: :device_id, in: :formData, schema: {type: :string}
+      parameter name: :device_id, in: :formData, schema: { type: :string }
 
       response "200", "" do
         let(:person) { FactoryBot.create(:person).reload}
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:device_id) { Faker::Crypto.sha1 }
-        run_single_test!
+        run_test!
       end
 
       response "401", "" do
         let(:Authorization) { "" }
         let(:device_id) { Faker::Crypto.sha1 }
-        run_single_test!
+        run_test!
       end
 
       response "422", "" do
         let(:person) { FactoryBot.create(:person).reload }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:device_id) { "" }
-        run_single_test!
+        run_test!
+      end
+
+
+      response 500, "Internal server error" do
+        let(:Authorization) { "" }
+        let(:device_id) { Faker::Crypto.sha1 }
+        document_response_without_test!
+      end
+    end
+    delete "" do
+      security [Bearer: []]
+
+      produces "application/vnd.api.v4+json"
+      consumes "multipart/form-data"
+
+      parameter name: :device_id, in: :formData, schema: { type: :string }
+
+      response "200", "" do
+        let(:device) { create(:notification_device_id)}
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: device.person.id)}" }
+        let(:device_id) { device.device_identifier }
+        run_test!
+      end
+      response "401", "" do
+        let(:device) { create(:notification_device_id)}
+        let(:Authorization) { "" }
+        let(:device_id) { device.device_identifier }
+        run_test!
+      end
+      response "404", "" do
+        let(:device) { create(:notification_device_id)}
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: device.person.id)}" }
+        let(:device_id) { "Faulty-#{device.device_identifier}"}
+        run_test!
+      end
+      response 500, "Internal server error" do
+        let(:Authorization) { "" }
+        let(:device_id) { Faker::Crypto.sha1 }
+        document_response_without_test!
       end
     end
   end
-
-
-  
-  #path "/notification_device_ids" do
-  #  post "" do
-  #      before do |example|
-  #        submit_request(example.metadata)
-  #      end
-  #      it "should insert a new device id" do
-  #        expect(person.notification_device_ids.where(device_identifier: "dfadfa").exists?).to be_truthy
-  #      end
-  #    end
-  #    response "401", "" do
-  #      let(:Authorization) { "Bearer empgg" }
-  #      let(:device_id) { 'dfadfa' }
-  #
-  #      run_test!
-  #    end
-  #    response "422", "" do
-
-  #
-  #      let!(:person) { create(:person) }
-  #      let(:Authorization) { "Bearer #{::TokenProvider.issue_token( user_id: person.id ) }" }
-  #      let(:device_id) { '' }
-  #
-  #      run_test!
-  #    end
-  #    #response "404", "" do
-  #    #  let(:device_id) { "aaa" }
-  #    #  run_test!
-  #    #end
-  #  end
-  #  #delete "" do
-  #  #  produces "application/vnd.api.v4+json"
-  #  #  consumes "multipart/form-data"
-  #  #  parameter name: :device_id, in: :formData, type: :string
-  #  #
-  #  #  response "200", "" do
-  #  #    let(:device_id) { "aaa" }
-  #  #    run_test!
-  #  #  end
-  #  #  response "401", "" do
-  #  #    let(:device_id) { "aaa" }
-  #  #    run_test!
-  #  #  end
-  #  #  response "404", "" do
-  #  #    let(:device_id) { "aaa" }
-  #  #    run_test!
-  #  #  end
-  #  #end
-  #end
 end
