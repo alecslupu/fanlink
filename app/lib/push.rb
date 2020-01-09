@@ -278,7 +278,7 @@ private
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
       resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
-      clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
+      clean_notification_device_ids(resp[:not_registered_ids], phone_os) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -292,7 +292,7 @@ private
       Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
       resp = push_client.send_to_topic(topic, notification: { body: msg })
       Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
-      clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
+      clean_notification_device_ids(resp[:not_registered_ids], phone_os) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -319,10 +319,10 @@ private
     NotificationDeviceId.where(device_identifier: device_ids).destroy_all
   end
 
-  def clean_notification_device_ids(resp)
+  def clean_notification_device_ids(resp, phone_os)
     delete_not_registered_device_ids(resp)
     mark_not_registered_device_ids(resp)
-    unsubscribe_to_topic(resp)
+    unsubscribe_to_topic(resp, phone_os)
   end
 
   def mark_not_registered_device_ids(device_ids)
