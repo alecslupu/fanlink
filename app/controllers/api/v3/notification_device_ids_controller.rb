@@ -25,7 +25,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V2::NotificationDeviceIdsC
       NotificationDeviceId.find_by(device_identifier: params[:device_id]).destroy if NotificationDeviceId.where(device_identifier: params[:device_id]).exists?
       ndi = current_user.notification_device_ids.create(device_identifier: params[:device_id], device_type: find_device_type)
       if ndi.valid?
-        # ndi.subscribe_to_topic
+        ndi.subscribe_to_topic
         head :ok
       else
         render_422(ndi.errors)

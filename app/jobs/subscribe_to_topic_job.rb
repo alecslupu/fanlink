@@ -5,7 +5,7 @@ class SubscribeToTopicJob < Struct.new(:notification_device_id)
     notification_device =  NotificationDeviceId.find(notification_device_id)
     ActsAsTenant.with_tenant(notification_device.person.product) do
       # TODO add  topic option
-      subscribe_to_topic(notification_device.device_identifier)
+      subscribe_device_to_topic(notification_device)
     end
   end
 

@@ -203,20 +203,44 @@ module Push
     do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
   end
 
+  def marketing_notification_push(notification, current_user, receipents)
+    android_data = build_data(
+                    title: notification.title,
+                    context: "marketing",
+                    message_short: notification.body,
+                    message_placeholder: notification.person.username,
+                    message_long: notification.body,
+                    deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
+                    )
+    android_notification_body = build_android_notification(android_data)
+
+    ios_data = build_data(context: "marketing", deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile")
+    ios_notification_body = build_ios_notification(
+                              notification.title,
+                              notification.body,
+                              ios_data
+                            )
+  end
+
   # will be later changed to accept language to subscribe to the correct marketing topic
-  def subscribe_to_topic(tokens)
-    topic = "marketing_en-US"
-    response = push_client.batch_topic_subscription(topic, make_array(tokens))
+  def subscribe_device_to_topic(notification_device_id)
+    response = push_client.batch_topic_subscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
+    Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
   # will be later changed to accept language to unsubscribe to the correct marketing topic
-  def unsubscribe_to_topic(tokens)
-    topic = "marketing_en-US"
-    response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
+  def unsubscribe_device_to_topic(notification_device_id)
+    response = push_client.batch_topic_unsubscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
+
+    Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
 
 private
+
+  def get_topic(notification_device_id)
+    notification_device_id.device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
+  end
 
   def make_array(elem)
     elem.is_a?(Array) ? elem : [elem]
@@ -242,19 +266,19 @@ private
       options[:data] = data
       options[:data][:notification_type] = type
       options[:data][:priority] = "high"
-      push_with_retry(options, tokens)
+      push_with_retry(options, tokens, nil)
     end
   end
   module_function :do_push
 
-  def push_with_retry(options, tokens)
+  def push_with_retry(options, tokens, phone_os)
     resp = nil
     begin
       retries ||= 0
       Rails.logger.error("Sending push with: tokens: #{tokens.inspect} and options: #{options.inspect}")
       resp = push_client.send(tokens.sort, options)
       Rails.logger.error("Got FCM response: #{resp.inspect}")
-      clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
+      clean_notification_device_ids(resp[:not_registered_ids], phone_os) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -268,7 +292,7 @@ private
       Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
       resp = push_client.send_to_topic(topic, notification: { body: msg })
       Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
-      clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
+      clean_notification_device_ids(resp[:not_registered_ids], phone_os) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
@@ -277,14 +301,28 @@ private
     resp[:status_code] == 200
   end
 
+  def notification_topic_push(topic, options)
+    begin
+      Rails.logger.debug("Sending topic push with: topic: #{topic}")
+      resp = push_client.send_to_topic(topic, options)
+      Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
+      # clean_notification_device_ids(resp[:not_registered_ids]) unless resp.nil?
+    rescue Errno::EPIPE
+      # FLAPI-839
+      disconnect
+      retry if (retries += 1) < 2
+    end
+    resp
+  end
+
   def delete_not_registered_device_ids(device_ids)
     NotificationDeviceId.where(device_identifier: device_ids).destroy_all
   end
 
-  def clean_notification_device_ids(resp)
+  def clean_notification_device_ids(resp, phone_os)
     delete_not_registered_device_ids(resp)
     mark_not_registered_device_ids(resp)
-    unsubscribe_to_topic(resp)
+    unsubscribe_to_topic(resp, phone_os)
   end
 
   def mark_not_registered_device_ids(device_ids)
@@ -293,12 +331,12 @@ private
 
   def android_token_notification_push(tokens, data = {})
     notification_body = build_android_notification(data)
-    push_with_retry(notification_body, tokens)
+    push_with_retry(notification_body, tokens, "android")
   end
 
   def ios_token_notification_push(tokens, title, body, click_action, data = {})
     notification_body = build_ios_notification(title, body, click_action, data)
-    push_with_retry(notification_body, tokens)
+    push_with_retry(notification_body, tokens, "ios")
   end
 
   def build_android_notification(data)
@@ -385,6 +423,23 @@ private
       image_url: message.picture_url,
       deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
     ) unless ios_tokens.empty?
+  end
+
+  def build_data(data = {})
+    data
+  end
+
+  def unsubscribe_to_topic(tokens, phone_os)
+    case phone_os
+    when nil
+      ["marketing_en_ios-US", "marketing_en_android-US"].each do |topic|
+        response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
+      end
+    when "android"
+      response = push_client.batch_topic_unsubscription("marketing_en_android-US", make_array(tokens))
+    when "ios"
+      response = push_client.batch_topic_unsubscription("marketing_en_ios-US", make_array(tokens))
+    end
   end
 
   # def build_android_options

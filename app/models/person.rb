@@ -147,6 +147,8 @@ class Person < ApplicationRecord
 
   belongs_to :role, optional: true
 
+  has_one :marketing_notification, dependent: :destroy
+
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
   before_validation :assign_role
