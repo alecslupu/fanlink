@@ -218,6 +218,7 @@ module Push
     ios_notification_body = build_ios_notification(
                               notification.title,
                               notification.body,
+                              nil,
                               ios_data
                             )
   end
