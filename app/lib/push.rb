@@ -266,12 +266,12 @@ private
       options[:data] = data
       options[:data][:notification_type] = type
       options[:data][:priority] = "high"
-      push_with_retry(options, tokens)
+      push_with_retry(options, tokens, nil)
     end
   end
   module_function :do_push
 
-  def push_with_retry(options, tokens)
+  def push_with_retry(options, tokens, phone_os)
     resp = nil
     begin
       retries ||= 0
@@ -331,12 +331,12 @@ private
 
   def android_token_notification_push(tokens, data = {})
     notification_body = build_android_notification(data)
-    push_with_retry(notification_body, tokens)
+    push_with_retry(notification_body, tokens, "android")
   end
 
   def ios_token_notification_push(tokens, title, body, click_action, data = {})
     notification_body = build_ios_notification(title, body, click_action, data)
-    push_with_retry(notification_body, tokens)
+    push_with_retry(notification_body, tokens, "ios")
   end
 
   def build_android_notification(data)
@@ -427,6 +427,19 @@ private
 
   def build_data(data = {})
     data
+  end
+
+  def unsubscribe_to_topic(tokens, phone_os)
+    case phone_os
+    when nil
+      ["marketing_en_ios-US", "marketing_en_android-US"].each do |topic|
+        response = push_client.batch_topic_unsubscription(topic, make_array(tokens))
+      end
+    when "android"
+      response = push_client.batch_topic_unsubscription("marketing_en_android-US", make_array(tokens))
+    when "ios"
+      response = push_client.batch_topic_unsubscription("marketing_en_ios-US", make_array(tokens))
+    end
   end
 
   # def build_android_options
