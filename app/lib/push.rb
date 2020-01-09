@@ -225,14 +225,13 @@ module Push
 
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_device_to_topic(notification_device_id)
-    response = push_client.batch_topic_subscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
+    response = push_client.topic_subscription(get_topic(notification_device_id), notification_device_id.device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
   # will be later changed to accept language to unsubscribe to the correct marketing topic
   def unsubscribe_device_to_topic(notification_device_id)
     response = push_client.batch_topic_unsubscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
-
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
