@@ -222,11 +222,11 @@ module Push
                     message_long: notification.body,
                     deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
                     )
-    android_notification_body = build_android_notification(android_data, notification.time_to_live)
+    android_notification_body = build_android_notification(android_data, (notification.ttl_hours * 3600).to_s)
     notification_topic_push("marketing_en_android-US", android_notification_body)
 
     ios_data = build_data(context: "marketing", deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile")
-    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, notification.time_to_live, ios_data)
+    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, (notification.ttl_hours * 3600).to_s, ios_data)
     notification_topic_push("marketing_en_ios-US", ios_notification_body)
   end
 
