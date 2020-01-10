@@ -15,6 +15,7 @@ module Push
 
       android_token_notification_push(
         android_tokens,
+        "2419200",
         context: "friend_accepted",
         title: "Friend request accepted by #{to.username}",
         message_short: "Friend request accepted by #{to.username}",
@@ -27,6 +28,7 @@ module Push
         "Friend request accepted by #{to.username}",
         "Friend request accepted by #{to.username}",
         "AcceptOrIgnore",
+        "2419200",
         context: "friend_accepted",
         deep_link: "#{from.product.internal_name}://users/#{to.id}"
       ) unless ios_tokens.empty?
@@ -42,6 +44,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "friend_requested",
       title: "Friend request",
       message_short: "New friend request from #{from.username}",
@@ -56,6 +59,7 @@ module Push
       "Friend request",
       "New friend request from #{from.username}",
       "AcceptOrIgnore",
+      "2419200",
       context: "friend_requested",
       relationship_id: relationship.id,
       image_url: from.picture_url,
@@ -74,6 +78,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "message_mentioned",
       title: "Mention",
       message_short: "#{mentioner.username} mentioned you",
@@ -86,6 +91,7 @@ module Push
       "Mention",
       "#{person.username} mentioned you",
       nil,
+      "2419200",
       context: "message_mentioned",
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
     ) unless ios_tokens.empty?
@@ -122,6 +128,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "comment_mentioned",
       title: "Mention",
       message_short: "#{person.username} mentioned you",
@@ -134,6 +141,7 @@ module Push
       "Mention",
       "#{person.username} mentioned you",
       nil,
+      "2419200",
       context: "comment_mentioned",
       deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
     ) unless ios_tokens.empty?
@@ -149,6 +157,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "feed_post",
       title: "New post",
       message_short: "New post from #{person.username}",
@@ -161,6 +170,7 @@ module Push
       "New Post",
       "New post from #{person.username}",
       nil,
+      "2419200",
       context: "feed_post",
       deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
     ) unless ios_tokens.empty?
@@ -212,11 +222,11 @@ module Push
                     message_long: notification.body,
                     deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
                     )
-    android_notification_body = build_android_notification(android_data)
+    android_notification_body = build_android_notification(android_data, notification.time_to_live)
     notification_topic_push("marketing_en_android-US", android_notification_body)
 
     ios_data = build_data(context: "marketing", deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile")
-    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, ios_data)
+    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, notification.time_to_live, ios_data)
     notification_topic_push("marketing_en_ios-US", ios_notification_body)
   end
 
@@ -326,20 +336,24 @@ private
     NotificationDeviceId.where(device_identifier: device_ids).update_all(not_registered: true)
   end
 
-  def android_token_notification_push(tokens, data = {})
-    notification_body = build_android_notification(data)
+  def android_token_notification_push(tokens, ttl, data = {})
+    notification_body = build_android_notification(data, ttl)
     push_with_retry(notification_body, tokens, "android")
   end
 
-  def ios_token_notification_push(tokens, title, body, click_action, data = {})
-    notification_body = build_ios_notification(title, body, click_action, data)
+  def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
+    notification_body = build_ios_notification(title, body, click_action, ttl, data)
     push_with_retry(notification_body, tokens, "ios")
   end
 
-  def build_android_notification(data)
+  def build_android_notification(data, ttl)
     options = {}
     data[:type] = "user"
     options[:data] = data
+    options[:priority] = "high"
+    options[:content_available] = true
+    options[:mutable_content] = true
+    options[:time_to_live] = ttl
 
     # this may be used for v1 implementation
     # options[:android] = build_android_options
@@ -347,7 +361,7 @@ private
     return options
   end
 
-  def build_ios_notification(title, body, click_action, data)
+  def build_ios_notification(title, body, click_action, ttl, data)
     options = {}
     options[:notification] = {}
 
@@ -359,7 +373,7 @@ private
 
     options[:data] = data
     options[:data][:priority] = "high"
-    options[:data][:time_to_live] = "2419200"
+    options[:data][:time_to_live] = ttl
 
     return options
   end
@@ -396,6 +410,7 @@ private
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: context,
       title: message.person.username,
       message_short: message_short,
@@ -415,6 +430,7 @@ private
       message.person.username,
       body,
       "ReplyToMessage",
+      "2419200",
       context: context,
       room_id: room.id.to_s,
       image_url: message.picture_url,
