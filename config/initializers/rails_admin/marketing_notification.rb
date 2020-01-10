@@ -6,18 +6,29 @@ RailsAdmin.config do |config|
       fields :id,
              :person,
              :title,
-             :body
+             :body,
+             :deep_link_action,
+             :deep_link_value,
+             :ttl_hours
     end
 
     show do
       fields :id,
              :person,
              :title,
-             :body
+             :body,
+             :deep_link_action,
+             :deep_link_value,
+             :ttl_hours
     end
 
     edit do
-      fields :title, :body
+      fields :title,
+             :body,
+             :deep_link_action,
+             :deep_link_value,
+             :ttl_hours
+
 
       field :person_id, :hidden do
         default_value do
