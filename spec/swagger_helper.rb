@@ -121,12 +121,12 @@ RSpec.configure do |config|
           properties: {
             id: {type: :string},
             username: {type: :string},
-            name: {type: :string},
+            name:  {type: :string, 'x-nullable': true},
             email: {type: :string},
             gender: {type: :string},
             city: {type: :string, 'x-nullable': true},
-            country_code: {type: :string},
-            birthdate: { type: :string, format: "date"},
+            country_code: {type: :string, 'x-nullable': true},
+            birthdate: { type: :string, format: "date", 'x-nullable': true},
             biography: {type: :string, 'x-nullable': true},
             picture_url: {type: :string, 'x-nullable': true},
             product_account: {type: :boolean},
@@ -182,11 +182,11 @@ RSpec.configure do |config|
               properties: {
                 id: {type: :string},
                 username: {type: :string},
-                name: {type: :string},
+                name:  {type: :string, 'x-nullable': true},
                 gender: {type: :string},
                 city: {type: :string, 'x-nullable': true},
-                country_code: {type: :string},
-                birthdate: { type: :string, format: "date"},
+                country_code: {type: :string, 'x-nullable': true},
+                birthdate: { type: :string, format: "date", 'x-nullable': true},
                 biography: {type: :string, 'x-nullable': true},
                 picture_url: {type: :string, 'x-nullable': true},
                 product_account: {type: :boolean},
@@ -376,6 +376,12 @@ RSpec.configure do |config|
           },
           required: ["trivia_game_id"],
         },
+        faulty: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+          }
+        }
       },
     }
   }

@@ -229,134 +229,21 @@ require "swagger_helper"
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
 
-  #path "/rooms" do
-  #  get "" do
-  #    tags ["chat", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    context "private" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "all" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/rooms/{room_id}/messages/{id}" do
-  #  get "" do
-  #    tags ["chat", 'android-old']
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  delete "" do
-  #    tags ["chat", 'android-old']
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/rooms/{id}/messages" do
-  #  get "" do
-  #    tags ["chat", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "Date range" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "all" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "pinned" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #
-  #  end
-  #  post "" do
-  #    tags ["chat", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
   #path "/posts/tags" do
   #  get "" do
   #    tags ["post", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
   #    response "200", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #    response "401", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #    response "404", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #  end
@@ -367,12 +254,15 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    response "200", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #    response "401", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #    response "404", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #  end
@@ -381,9 +271,11 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    response "200", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #    response "401", "" do
+  #      schema "$ref": "#/definitions/faulty"
   #      run_test!
   #    end
   #    response "404", "" do
@@ -423,22 +315,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #  end
   #  post "" do
   #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/rooms/{room_id}/message_reports" do
-  #  post "" do
-  #    tags ["chat", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
   #    response "200", "" do
@@ -500,55 +376,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #path "/posts/{post_id}/comments/{id}" do
   #  delete "" do
   #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/rooms/{room_id}/messages/{id}" do
-  #  delete "" do
-  #    tags ["chat", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/rooms/{id}" do
-  #  patch "" do
-  #    tags ["chat", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  delete "" do
-  #    tags ["chat", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
@@ -905,53 +732,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #    response "404", "" do
   #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/rooms/{id}/messages" do
-  #  post "" do
-  #    tags ["chat", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/rooms" do
-  #  get "" do
-  #    tags ["chat", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "all rooms" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "private rooms" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
   #    end
   #  end
   #end
