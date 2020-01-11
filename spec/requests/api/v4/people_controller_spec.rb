@@ -173,24 +173,6 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       response 500, "Internal server error" do
         document_response_without_test!
       end
-
-
-
-    #  patch "" do
-    #    tags ["quests", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
     end
 
     get "" do
