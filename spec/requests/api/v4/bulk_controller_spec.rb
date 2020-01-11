@@ -1,174 +1,374 @@
 require "swagger_helper"
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
+  path "/posts" do
+    get "" do
+      tags ["post", 'android-old']
 
-  #path "/posts/tags" do
-  #  get "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts/{id}" do
-  #  get "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #  end
-  #  delete "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      schema "$ref": "#/definitions/faulty"
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts" do
-  #  get "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    context "categories" do
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "promoted" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #
-  #  end
-  #  post "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/post_comment_reports" do
-  #  post "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  get "" do
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/post_reports" do
-  #  post "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts/{post_id}/comments/{id}" do
-  #  delete "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/relationships" do
+      produces "application/vnd.api.v4+json"
+      context "categories" do
+        response "200", "" do
+          run_test!
+        end
+        response "401", "" do
+          run_test!
+        end
+        response "404", "" do
+          run_test!
+        end
+      end
+      tags ["post", 'kotlin']
+
+      produces "application/vnd.api.v4+json"
+      consumes "multipart/form-data"
+      response "200", "" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+      context "promoted" do
+
+        response "200", "" do
+          run_test!
+        end
+        response "401", "" do
+          run_test!
+        end
+        response "404", "" do
+          run_test!
+        end
+      end
+
+    end
+    post "" do
+      tags ["post", 'android-old']
+
+      produces "application/vnd.api.v4+json"
+      response "200", "" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+    end
+  end
+
+  path "/posts/{id}" do
+    #  patch "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+    #  get "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #  end
+    #  delete "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/posts/{post_id}/comments/{id}" do
+    #  delete "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/posts/{id}/comments" do
+    #  get "" do
+    #    tags ["post", 'kotlin']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+    #  post "" do
+    #    tags ["post", 'kotlin']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/posts/{id}/reactions" do
+    #  delete "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+    #  post "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/posts/{id}/polls/{poll_id}/poll_options/{poll_option_id}/cast_vote" do
+    #  post "" do
+    #    tags ["post", 'kotlin']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/post_reports" do
+    #  post "" do
+    #    tags ["post", 'kotlin']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/posts/tags" do
+    #  get "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      schema "$ref": "#/definitions/faulty"
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/posts/recommended" do
+    #  get "" do
+    #    tags ["post", 'kotlin']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/post_comment_reports" do
+    #  post "" do
+    #    tags ["post", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+    #  get "" do
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/message_reports" do
+    #  get "" do
+    #    tags ["steps", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/quests" do
+    #  get "" do
+    #    tags ["quests", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+  path "/quests/{id}" do
+    #  get "" do
+    #    tags ["quests", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+  path "/categories" do
+    #  get "" do
+    #    tags ["categories", 'android-old']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
+
+
+
+  path "/blocks" do
   #  post "" do
   #    tags ["relation", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
   #    response "200", "" do
   #      run_test!
   #    end
@@ -179,192 +379,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #  get "" do
-  #    tags ["relation", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "all" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "with_id" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #
-  #path "/relationships/{id}" do
-  #  delete "" do
-  #    tags ["relation", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  patch "" do
-  #    tags ["relation", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "denied" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "friended" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "withdrawn" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/blocks" do
-  #  post "" do
-  #    tags ["relation", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts/{id}/reactions" do
-  #  delete "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  post "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/quests" do
-  #  get "" do
-  #    tags ["quests", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/quests/{id}" do
-  #  get "" do
-  #    tags ["quests", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts/{id}" do
-  #  patch "" do
-  #    tags ["post", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/steps/{stepId}/completions" do
+  end
+  path "/steps/{stepId}/completions" do
   #  post "" do
   #    tags ["steps", 'android-old']
   #
@@ -379,40 +395,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/message_reports" do
-  #  get "" do
-  #    tags ["steps", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/categories" do
-  #  get "" do
-  #    tags ["categories", 'android-old']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/events" do
+  end
+  path "/events" do
   #  get "" do
   #    tags ["events", 'android-old']
   #
@@ -427,8 +411,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/events/{id}/checkins" do
+  end
+  path "/events/{id}/checkins" do
   #  delete "" do
   #    tags ["events", 'android-old']
   #
@@ -472,10 +456,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #
   #  end
-  #end
+  end
   #
   ## kotlin stuff
-  #path "config/{app}.json" do
+  path "config/{app}.json" do
   #  get "" do
   #    tags ["config", 'kotlin']
   #
@@ -490,8 +474,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/people/password_forgot" do
+  end
+  path "/people/password_forgot" do
   #  post "" do
   #    tags ["user", 'kotlin']
   #
@@ -507,8 +491,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/badge_actions" do
+  end
+  path "/badge_actions" do
   #  post "" do
   #    tags ["badge", 'kotlin']
   #
@@ -524,8 +508,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #        run_test!
   #      end
   #  end
-  #end
-  #path "/levels" do
+  end
+  path "/levels" do
   #  get "" do
   #    tags ["badge", 'kotlin']
   #
@@ -541,8 +525,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #        run_test!
   #      end
   #  end
-  #end
-  #path "/badges" do
+  end
+  path "/badges" do
   #  get "" do
   #    tags ["badge", 'kotlin']
   #
@@ -558,8 +542,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #        run_test!
   #      end
   #  end
-  #end
-  #path "/people{id}" do
+  end
+  path "/people/person/{username}" do
   #  get "" do
   #    tags ["user", 'kotlin']
   #
@@ -575,25 +559,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #        run_test!
   #      end
   #  end
-  #end
-  #path "/people/person/{username}" do
-  #  get "" do
-  #    tags ["user", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #  end
-  #end
-  #path "/people/recommended" do
+  end
+  path "/people/recommended" do
   #  get "" do
   #    tags ["user", 'kotlin']
   #
@@ -611,199 +578,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      end
   #    end
   #  end
-  #end
-  #path "/relationships/{id}" do
-  #  patch "" do
-  #    tags ["relations", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "denied" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "friended" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "withdrawn" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/relationships" do
-  #  post "" do
-  #    tags ["relations", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  get "" do
-  #    tags ["relations", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "all" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #    context "with_id" do
-  #
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #    end
-  #  end
-  #end
-  #path "/posts/{id}/polls/{poll_id}/poll_options/{poll_option_id}/cast_vote" do
-  #  post "" do
-  #    tags ["post", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/post_reports" do
-  #  post "" do
-  #    tags ["post", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts" do
-  #  get "" do
-  #    tags ["post", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts/recommended" do
-  #  get "" do
-  #    tags ["post", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/posts/{id}/comments" do
-  #  get "" do
-  #    tags ["post", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #  post "" do
-  #    tags ["post", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
-  #path "/certificates" do
+  end
+  path "/certificates" do
   #  get "" do
   #    tags ["education", 'kotlin']
   #
@@ -819,8 +595,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/certificates/{certificateId}" do
+  end
+  path "/certificates/{certificateId}" do
   #  get "" do
   #    tags ["education", 'kotlin']
   #
@@ -836,8 +612,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/certificates/{certificateId}/certcourses" do
+  end
+  path "/certificates/{certificateId}/certcourses" do
   #  get "" do
   #    tags ["education", 'kotlin']
   #
@@ -853,8 +629,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/person_certificates" do
+  end
+  path "/person_certificates" do
   #  post "" do
   #    tags ["education", 'kotlin']
   #
@@ -885,8 +661,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      end
   #    end
   #  end
-  #end
-  #path "/people/send_certificate" do
+  end
+  path "/people/send_certificate" do
   #
   #  post "" do
   #    tags ["education", 'kotlin']
@@ -903,8 +679,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/certcourses/{id}" do
+  end
+  path "/certcourses/{id}" do
   #  get "" do
   #    tags ["education", 'kotlin']
   #
@@ -920,8 +696,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/person_certcourses" do
+  end
+  path "/person_certcourses" do
   #  post "" do
   #    tags ["education", 'kotlin']
   #
@@ -937,8 +713,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/person_certcourses/send_email" do
+  end
+  path "/person_certcourses/send_email" do
   #  post "" do
   #    tags ["education", 'kotlin']
   #
@@ -954,8 +730,9 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/interests/{id}/add" do
+  end
+
+  path "/interests/{id}/add" do
   #  post "" do
   #    tags ["interests", 'kotlin']
   #
@@ -971,8 +748,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/interests/{id}/remove" do
+  end
+  path "/interests/{id}/remove" do
   #  post "" do
   #    tags ["interests", 'kotlin']
   #
@@ -988,8 +765,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/interests" do
+  end
+  path "/interests" do
   #  get "" do
   #    tags ["interests", 'kotlin']
   #
@@ -1005,8 +782,25 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/people/{user_id}/interests" do
+  end
+  path "/people/{user_id}/interests" do
+    #get "" do
+  #    tags ["interests", 'kotlin']
+  #
+  #    produces "application/vnd.api.v4+json"
+  #    consumes "multipart/form-data"
+  #    response "200", "" do
+  #      run_test!
+  #    end
+  #    response "401", "" do
+  #      run_test!
+  #    end
+  #    response "404", "" do
+  #      run_test!
+  #    end
+  #  end
+  end
+  path "/interests/match" do
   #  get "" do
   #    tags ["interests", 'kotlin']
   #
@@ -1022,22 +816,5 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #  end
-  #end
-  #path "/interests/match" do
-  #  get "" do
-  #    tags ["interests", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  #end
+  end
 end
