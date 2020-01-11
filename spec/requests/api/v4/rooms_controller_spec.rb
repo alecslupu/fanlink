@@ -1,80 +1,96 @@
 require "swagger_helper"
 
 RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swagger.json" do
-  #
-  #path "/rooms" do
-  #  post "" do
-  #    security [Bearer: []]
-  #    tags "chat" # 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #
-  #    parameter name: :room, in: :formData, type: :array
-  #    let(:Authorization) { "" }
-  #
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "422", "" do
-  #      let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-  #
-  #      run_test!
-  #    end
-  #    response 500, "Internal server error" do
-  #      document_response_without_test!
-  #    end
-  #  end
-  #
-  #  get "" do
-  #    security [Bearer: []]
-  #    tags "chat" # 'kotlin']
-  #    let(:Authorization) { "" }
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    context "all rooms" do
-  #      response "200", "" do
-  #        schema "$ref": "#/definitions/faulty"
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        schema "$ref": "#/definitions/faulty"
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        schema "$ref": "#/definitions/faulty"
-  #        run_test!
-  #      end
-  #      response 500, "Internal server error" do
-  #        document_response_without_test!
-  #      end
-  #
-  #    end
-  #    context "private rooms" do
-  #      response "200", "" do
-  #        schema "$ref": "#/definitions/faulty"
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        schema "$ref": "#/definitions/faulty"
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        schema "$ref": "#/definitions/faulty"
-  #        run_test!
-  #      end
-  #      response 500, "Internal server error" do
-  #        document_response_without_test!
-  #      end
-  #
-  #    end
-  #  end
-  #end
-  #
+
+  path "/rooms" do
+    post "" do
+      security [Bearer: []]
+      tags "chat" # 'kotlin']
+
+      produces "application/vnd.api.v4+json"
+      consumes "multipart/form-data"
+
+      parameter name: :"room[name]", in: :formData, type: :string, required: false
+      parameter name: :"room[picture]", in: :formData, type: :file, required: false
+      parameter name: :"room[member_ids][]", in: :formData, type: :array, required: false
+      let(:Authorization) { "" }
+
+      let(:message) { create(:message, room: create(:private_active_room)) }
+
+      response "200", "" do
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
+        let("room[name]") { "Room name" }
+        let("room[member_ids][]") { create(:person).id }
+        let("room[member_ids][]") { create(:person).id }
+
+        run_test!
+      end
+      response "400", "" do
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "422", "" do
+        let("room[picture]") { fixture_file_upload('images/better.png', 'image/png') }
+
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
+
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
+    end
+
+    get "" do
+      security [Bearer: []]
+      tags "chat" # 'kotlin']
+      parameter name: :"private", in: :query, type: :string, required: false
+      let(:Authorization) { "" }
+
+
+      let(:message) { create(:message, room: create(:private_active_room)) }
+      let(:room) { message.room }
+      #let(:id) { room.id }
+
+      produces "application/vnd.api.v4+json"
+      consumes "multipart/form-data"
+      context "all rooms" do
+        response "200", "" do
+          let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
+
+          schema "$ref": "#/definitions/faulty"
+          run_test!
+        end
+        response "401", "" do
+          run_test!
+        end
+        response 500, "Internal server error" do
+          document_response_without_test!
+        end
+
+      end
+      context "private rooms" do
+        let(:private) { true }
+        response "200", "" do
+          let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
+
+          schema "$ref": "#/definitions/faulty"
+          run_test!
+        end
+        response "401", "" do
+          run_test!
+        end
+        response 500, "Internal server error" do
+          document_response_without_test!
+        end
+
+      end
+    end
+  end
+
   path "/rooms/{id}" do
     patch "" do
       security [Bearer: []]
