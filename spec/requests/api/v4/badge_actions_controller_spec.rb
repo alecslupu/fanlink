@@ -27,12 +27,10 @@ RSpec.describe "Api::V4::BadgeActionsController", type: :request, swagger_doc: "
       response "404", "Not found. A reward is not associated with the badge action" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: badge_action.person_id)}" }
         let("badge_action[action_type]") {  badge_action.action_type.internal_name }
-
         run_test!
       end
       response "422", "Unprocessable Entity. Usually occurs when a field is invalid or missing." do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: badge_action.person_id)}" }
-
         run_test!
       end
       response 429, "Not enough time since last submission of this action type or duplicate action type, person, identifier combination" do

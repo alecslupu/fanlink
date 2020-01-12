@@ -8,7 +8,7 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
 
-      parameter name: :device_id, in: :formData, schema: { type: :string }
+      parameter name: :device_id, in: :formData, type: :string
 
       response "200", "" do
         let(:person) { FactoryBot.create(:person).reload}
@@ -44,7 +44,7 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
 
-      parameter name: :device_id, in: :formData, schema: { type: :string }
+      parameter name: :device_id, in: :formData, type: :string
 
       response "200", "" do
         let(:device) { create(:notification_device_id)}

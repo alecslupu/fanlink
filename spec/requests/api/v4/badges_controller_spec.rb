@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe "Api::V4::BadgesController", type: :request, swagger_doc: "v4/swagger.json" do
   path "/badges" do
-    get "" do
+    get "List of the badges" do
       security [Bearer: []]
       tags "Badges"
 
@@ -17,7 +17,7 @@ RSpec.describe "Api::V4::BadgesController", type: :request, swagger_doc: "v4/swa
       parameter name: :person_id, in: :query, type: :integer, required: false
       response "200", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/BadgesArray"
         context "current_user" do
           let(:award) { create(:badge_award, person: person) }
           run_test!
@@ -29,7 +29,7 @@ RSpec.describe "Api::V4::BadgesController", type: :request, swagger_doc: "v4/swa
         end
 
       end
-      response "401", "" do
+      response "401", "Unauthorized" do
         run_test!
       end
       response 500, "Internal server error" do

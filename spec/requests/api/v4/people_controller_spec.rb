@@ -246,4 +246,23 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       end
     end
   end
+
+
+  path "/people/password_forgot" do
+    #  post "" do
+    #    tags ["user", 'kotlin']
+    #
+    #    produces "application/vnd.api.v4+json"
+    #    consumes "multipart/form-data"
+    #    response "200", "" do
+    #      run_test!
+    #    end
+    #    response "401", "" do
+    #      run_test!
+    #    end
+    #    response "404", "" do
+    #      run_test!
+    #    end
+    #  end
+  end
 end

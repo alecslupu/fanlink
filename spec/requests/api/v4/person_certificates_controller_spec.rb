@@ -7,7 +7,9 @@ RSpec.describe "Api::V4::Trivia::PersonCertificatesController", type: :request, 
       produces "application/vnd.api.v4+json"
       consumes "application/vnd.api.v4+json"
       parameter name: :product, in: :query,  type: :string
-      parameter name: :unique_id, in: :path, schema: { type: :string }
+      parameter name: :unique_id, in: :path, type: :string
+      let(:unique_id) { "Faulty" }
+      let(:product) { create(:product).internal_name }
 
       response "200", "displays valid certificate" do
        let(:person_certificate) { create(:person_certificate) }
@@ -18,16 +20,13 @@ RSpec.describe "Api::V4::Trivia::PersonCertificatesController", type: :request, 
       end
 
       response 404, "" do
-       let(:unique_id) { "Faulty" }
-       let(:product) { create(:product).internal_name }
        run_test!
       end
 
       response 500, "Internal server error" do
-        let(:unique_id) { "Faulty" }
-        let(:product) { create(:product).internal_name }
         document_response_without_test!
       end
     end
   end
 end
+

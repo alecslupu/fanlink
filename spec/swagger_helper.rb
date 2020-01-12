@@ -67,10 +67,10 @@ RSpec.configure do |config|
         #  name: "Blocks",
         #  description: "Block a person",
         #},
-        #{
-        #  name: "Categories",
-        #  description: "Categories",
-        #},
+        {
+          name: "Categories",
+          description: "Categories",
+        },
         #{
         #  name: "Events",
         #  description: "Events",
@@ -99,10 +99,10 @@ RSpec.configure do |config|
           name: "NotificationDeviceIds",
           description: "Notification Device IDs",
         },
-        #{
-        #  name: "PasswordResets",
-        #  description: "Password Reset",
-        #},
+        {
+          name: "PasswordResets",
+          description: "Password Reset",
+        },
         {
           name: "People",
           description: "Users",
@@ -188,13 +188,50 @@ RSpec.configure do |config|
       definitions: {
         certificate_information: {
           type: :object,
-          certificate: {
-            type: :object,
-            properties: {
-              name: {type: :string},
-              issue_: {type: :datetime},
+          properties: {
+            certificate: {
+              type: :object,
+              properties: {
+                name: {type: :string},
+                issued_date: {type: :string, format: "date", 'x-nullable': true},
+                certificate_image_url: {type: :string},
+              },
             },
           },
+        },
+        CategoryArray: {
+          type: :object,
+          properties: {
+            categories: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  category: { "$ref": "#/definitions/CategoryJson" }
+                }
+              }
+            }
+          }
+        },
+        CategoryJson: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            name: {type: :string},
+            product_id: {type: :string},
+            color: {type: :string},
+            role: {type: :string},
+            posts: {
+              type: :array,
+              items: {
+                "$ref": "#/definitions/PostJson"
+              }
+            }
+          },
+          "description": "Category Reponse"
+        },
+        PostJson: {
+
         },
         BadgeJson: {
           type: :object,
@@ -497,6 +534,75 @@ RSpec.configure do |config|
             id: {type: :integer},
           },
         },
+        SuccessMessage: {
+          type: :object,
+          properties: {
+             message: { type: :string }
+          }
+        },
+        ErrorMessage: {
+          type: :object,
+          properties: {
+             message: { type: :string }
+          }
+        },
+        FollowersArray: {
+          type: :object,
+          properties: {
+            followers: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  badge: { "$ref": "#/definitions/FollowingObject" }
+                }
+              }
+            }
+          }
+        },
+        FollowingObject: {
+          type: :object,
+          properties: {
+            following: { "$ref": "#/definitions/FollowingJson" }
+          }
+        },
+        FollowingJson: {
+          type: :object,
+          "properties": {
+            id: { type: :string },
+            follower: { "$ref": "#/definitions/public_person" },
+            followed: { "$ref": "#/definitions/public_person" }
+          },
+          "description": "Following Response"
+        },
+
+        BadgeJson: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            "name": {type: :string},
+            "internal_name": {type: :string},
+            "description": {type: :string,  'x-nullable': true},
+            "picture_url": {type: :string},
+            action_requirement: {type: :integer},
+            point_value: {type: :integer},
+          },
+          "description": "Badge Response"
+        },
+        BadgesArray: {
+          type: :object,
+          properties: {
+            badges: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  badge: { "$ref": "#/definitions/BadgeJson" }
+                }
+              }
+            }
+          }
+        }
       },
     },
   }
