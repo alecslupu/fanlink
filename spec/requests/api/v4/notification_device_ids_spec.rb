@@ -3,6 +3,7 @@ require 'swagger_helper'
 RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagger_doc: "v4/swagger.json" do
   path "/notification_device_ids" do
     post "" do
+      tags "NotificationDeviceIds"
       security [Bearer: []]
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -37,6 +38,7 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
       end
     end
     delete "" do
+      tags "NotificationDeviceIds"
       security [Bearer: []]
 
       produces "application/vnd.api.v4+json"

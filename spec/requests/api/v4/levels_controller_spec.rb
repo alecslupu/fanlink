@@ -4,7 +4,7 @@ RSpec.describe "Api::V4::LevelsController", type: :request, swagger_doc: "v4/swa
   path "/levels" do
     get "" do
       security [Bearer: []]
-      tags "badge"
+      tags "Levels"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"

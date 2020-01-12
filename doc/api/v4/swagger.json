@@ -12,10 +12,56 @@
       "in": "header"
     }
   },
+  "tags": [
+    {
+      "name": "BadgeActions",
+      "description": "Badge Actions"
+    },
+    {
+      "name": "Badges",
+      "description": "Badges"
+    },
+    {
+      "name": "Followings",
+      "description": "Followers and following"
+    },
+    {
+      "name": "Levels",
+      "description": "Levels"
+    },
+    {
+      "name": "MessageReports",
+      "description": "Message Reports"
+    },
+    {
+      "name": "Messages",
+      "description": "Messages"
+    },
+    {
+      "name": "NotificationDeviceIds",
+      "description": "Notification Device IDs"
+    },
+    {
+      "name": "People",
+      "description": "Users"
+    },
+    {
+      "name": "Relationships",
+      "description": "User's relationships"
+    },
+    {
+      "name": "Rooms",
+      "description": "Chat rooms"
+    },
+    {
+      "name": "Session",
+      "description": "User session management."
+    }
+  ],
   "paths": {
     "/badge_actions": {
       "post": {
-        "summary": "",
+        "summary": "POST create a badge action",
         "security": [
           {
             "Bearer": [
@@ -24,7 +70,7 @@
           }
         ],
         "tags": [
-          "Badge"
+          "BadgeActions"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -43,20 +89,23 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/BadgeActionsPending"
             }
           },
           "401": {
-            "description": ""
+            "description": "Unauthorized."
           },
           "404": {
-            "description": ""
+            "description": "Not found. A reward is not associated with the badge action"
           },
           "422": {
-            "description": ""
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "429": {
+            "description": "Not enough time since last submission of this action type or duplicate action type, person, identifier combination"
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
           }
         }
       }
@@ -72,7 +121,7 @@
           }
         ],
         "tags": [
-          "badge"
+          "Badges"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -183,7 +232,7 @@
           }
         ],
         "tags": [
-          "relations"
+          "Followings"
         ],
         "parameters": [
           {
@@ -223,7 +272,7 @@
           }
         ],
         "tags": [
-          "relations"
+          "Followings"
         ],
         "parameters": [
           {
@@ -292,7 +341,7 @@
           }
         ],
         "tags": [
-          "badge"
+          "Levels"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -338,6 +387,9 @@
     "/notification_device_ids": {
       "post": {
         "summary": "",
+        "tags": [
+          "NotificationDeviceIds"
+        ],
         "security": [
           {
             "Bearer": [
@@ -377,6 +429,9 @@
       },
       "delete": {
         "summary": "",
+        "tags": [
+          "NotificationDeviceIds"
+        ],
         "security": [
           {
             "Bearer": [
@@ -543,7 +598,7 @@
           }
         ],
         "tags": [
-          "user"
+          "People"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -641,7 +696,7 @@
           }
         ],
         "tags": [
-          "user"
+          "People"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -684,7 +739,7 @@
           }
         ],
         "tags": [
-          "user"
+          "People"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -785,7 +840,7 @@
           }
         ],
         "tags": [
-          "relations"
+          "Relationships"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -837,7 +892,7 @@
           }
         ],
         "tags": [
-          "relations"
+          "Relationships"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -889,7 +944,7 @@
           }
         ],
         "tags": [
-          "relations"
+          "Relationships"
         ],
         "parameters": [
           {
@@ -930,7 +985,7 @@
           }
         ],
         "tags": [
-          "relations"
+          "Relationships"
         ],
         "parameters": [
           {
@@ -984,7 +1039,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Rooms"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -1040,7 +1095,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Rooms"
         ],
         "parameters": [
           {
@@ -1083,7 +1138,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Rooms"
         ],
         "parameters": [
           {
@@ -1148,7 +1203,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Rooms"
         ],
         "parameters": [
           {
@@ -1194,7 +1249,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Messages"
         ],
         "parameters": [
           {
@@ -1280,7 +1335,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Messages"
         ],
         "parameters": [
           {
@@ -1334,7 +1389,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Messages"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -1387,7 +1442,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "Messages"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -1439,7 +1494,7 @@
           }
         ],
         "tags": [
-          "chat"
+          "MessageReports"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -1631,6 +1686,57 @@
           },
           "issue_": {
             "type": "datetime"
+          }
+        }
+      }
+    },
+    "BadgeJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "internal_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "picture_url": {
+          "type": "string"
+        },
+        "action_requirement": {
+          "type": "integer"
+        },
+        "point_value": {
+          "type": "integer"
+        }
+      },
+      "description": "Badge Response"
+    },
+    "BadgeActionsPending": {
+      "type": "object",
+      "properties": {
+        "pending_badge": {
+          "type": "object",
+          "properties": {
+            "badge_action_count": {
+              "type": "integer"
+            },
+            "badge": {
+              "$ref": "#/definitions/BadgeJson"
+            }
+          }
+        },
+        "badges_awarded": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "$ref": "#/definitions/BadgeJson"
+            }
           }
         }
       }

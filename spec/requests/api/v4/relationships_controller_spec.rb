@@ -6,7 +6,7 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
     post "" do
       security [Bearer: []]
 
-      tags "relations"
+      tags "Relationships"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -48,7 +48,7 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
     get "" do
       security [Bearer: []]
 
-      tags "relations"
+      tags "Relationships"
       let(:Authorization) { "" }
 
       produces "application/vnd.api.v4+json"
@@ -101,7 +101,7 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
   path "/relationships/{id}" do
     delete "" do
       security [Bearer: []]
-      tags "relations"
+      tags "Relationships"
       let(:Authorization) { "" }
       let(:relation) { create(:relationship, status: 'friended') }
       let(:id) { 0 }
@@ -130,7 +130,7 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
     end
     patch "" do
       security [Bearer: []]
-      tags "relations"
+      tags "Relationships"
       let(:Authorization) { "" }
 
       parameter name: :id, in: :path, type: :string

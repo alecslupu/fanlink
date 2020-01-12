@@ -1,23 +1,11 @@
 require "spec_helper"
 
-# def run_single_test!(&block)
-#   before(:example) do |example|
-#     Rails.logger.debug("Running Swagger")
-#     submit_request(example.metadata)
-#   end
-#
-#   it "returns a #{metadata[:response][:code]} response" do |example|
-#     assert_response_matches_metadata(example.metadata, &block)
-#     example.instance_exec(response, &block) if block_given?
-#   end
-# end
-
 def document_response_without_test!
   before do |example|
     submit_request(example.metadata)
   end
 
-  it 'adds documentation without testing the response' do |example|
+  it "adds documentation without testing the response" do |example|
     # Only check that the response is present
     expect(example.metadata[:response]).to be_present
   end
@@ -37,59 +25,6 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    "v1/swagger.json" => {
-      swagger: "2.0",
-      info: {
-        title: "API V1",
-        version: "v1",
-      },
-      paths: {},
-
-      securityDefinitions: {
-        Bearer: {
-          description: "...",
-          type: :apiKey,
-          name: "Authorization",
-          in: :header,
-        },
-      },
-
-    },
-    "v2/swagger.json" => {
-      swagger: "2.0",
-      info: {
-        title: "API V2",
-        version: "v2",
-      },
-      paths: {},
-
-      securityDefinitions: {
-        Bearer: {
-          description: "...",
-          type: :apiKey,
-          name: "Authorization",
-          in: :header,
-        },
-      },
-
-    },
-    "v3/swagger.json" => {
-      swagger: "2.0",
-      info: {
-        title: "API V3",
-        version: "v3",
-      },
-      paths: {},
-
-      securityDefinitions: {
-        Bearer: {
-          description: "...",
-          type: :apiKey,
-          name: "Authorization",
-          in: :header,
-        },
-      },
-    },
     "v4/swagger.json" => {
       swagger: "2.0",
       info: {
@@ -104,6 +39,151 @@ RSpec.configure do |config|
           in: :header,
         },
       },
+      tags: [
+        #{
+        #  name: "ActionTypes",
+        #  description: "Action types allow the apps to send actions that count towards badge/reward unlocks.(Super Admin Only)",
+        #},
+        #{
+        #  name: "ActivityTypes",
+        #  "description": "Activity Types",
+        #},
+        #{
+        #  name: "AssignedRewards",
+        #  "description": "This allows admins to assign rewards to other systems. Currently supports ActionType, Quest, Step, and QuestActivity.",
+        #},
+        {
+          name: "BadgeActions",
+          description: "Badge Actions",
+        },
+        {
+          name: "Badges",
+          description: "Badges",
+        },
+        #{
+        #  name: "Base",
+        #},
+        #{
+        #  name: "Blocks",
+        #  description: "Block a person",
+        #},
+        #{
+        #  name: "Categories",
+        #  description: "Categories",
+        #},
+        #{
+        #  name: "Events",
+        #  description: "Events",
+        #},
+        {
+          name: "Followings",
+          description: "Followers and following",
+        },
+        {
+          name: "Levels",
+          description: "Levels",
+        },
+        #{
+        #  name: "Merchandise",
+        #  description: "Product Merchandise",
+        #},
+        {
+          name: "MessageReports",
+          description: "Message Reports",
+        },
+        {
+          name: "Messages",
+          description: "Messages",
+        },
+        {
+          name: "NotificationDeviceIds",
+          description: "Notification Device IDs",
+        },
+        #{
+        #  name: "PasswordResets",
+        #  description: "Password Reset",
+        #},
+        {
+          name: "People",
+          description: "Users",
+        },
+        #{
+        #  name: "PostCommentReports",
+        #  description: "Reported comments on posts",
+        #},
+        #{
+        #  name: "PostComments",
+        #  description: "Comments on a post",
+        #},
+        #{
+        #  name: "PostReactions",
+        #  description: "User reactions to a post",
+        #},
+        #{
+        #  name: "PostReports",
+        #  description: "Posts reported by a user",
+        #},
+        #{
+        #  name: "Posts",
+        #  description: "User/product posts",
+        #},
+        #{
+        #  name: "ProductBeacons",
+        #  description: "Beacons assigned to a product",
+        #},
+        #{
+        #  name: "Products",
+        #  description: "Products",
+        #},
+        #{
+        #  name: "QuestActivities",
+        #  description: "Quest Activities",
+        #},
+        #{
+        #  name: "QuestCompletions",
+        #  description: "This is used to register an activity as completed.",
+        #},
+        #{
+        #  name: "Quests",
+        #  description: "Quests",
+        #},
+        #{
+        #  name: "RecommendedPeople",
+        #  description: "Recommended People",
+        #},
+        #{
+        #  name: "RecommendedPosts",
+        #  description: "Recommended posts",
+        #},
+        {
+          name: "Relationships",
+          description: "User's relationships",
+        },
+        #{
+        #  name: "Rewards",
+        #  description: "Reward system. Handles linking rewards to various things.",
+        #},
+        #{
+        #  name: "RoomMemberships",
+        #  description: "What rooms a user belongs to.",
+        #},
+        {
+          name: "Rooms",
+          description: "Chat rooms",
+        },
+        {
+          name: "Session",
+          description: "User session management.",
+        },
+        #{
+        #  name: "Steps",
+        #  description: "Steps for a quest",
+        #},
+        #{
+        #  name: "Tags",
+        #  description: "Tags",
+        #},
+      ],
       paths: {},
       definitions: {
         certificate_information: {
@@ -116,17 +196,52 @@ RSpec.configure do |config|
             },
           },
         },
+        BadgeJson: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            name: {type: :string},
+            internal_name: {type: :string},
+            description: {type: :string},
+            picture_url: {type: :string},
+            action_requirement: {type: :integer},
+            point_value: {type: :integer}
+          },
+          description: "Badge Response"
+        },
+        BadgeActionsPending: {
+          type: :object,
+          properties: {
+            pending_badge: {
+              type: :object,
+              properties: {
+                badge_action_count: {
+                  type: :integer
+                },
+                badge: {
+                  "$ref": "#/definitions/BadgeJson"
+                }
+              }
+            },
+            badges_awarded: {
+              type: :object,
+              properties: {
+                badge: { "$ref": "#/definitions/BadgeJson" }
+              }
+            }
+          }
+        },
         public_person: {
           type: :object,
           properties: {
             id: {type: :string},
             username: {type: :string},
-            name:  {type: :string, 'x-nullable': true},
+            name: {type: :string, 'x-nullable': true},
             email: {type: :string},
             gender: {type: :string},
             city: {type: :string, 'x-nullable': true},
             country_code: {type: :string, 'x-nullable': true},
-            birthdate: { type: :string, format: "date", 'x-nullable': true},
+            birthdate: {type: :string, format: "date", 'x-nullable': true},
             biography: {type: :string, 'x-nullable': true},
             picture_url: {type: :string, 'x-nullable': true},
             product_account: {type: :boolean},
@@ -146,27 +261,27 @@ RSpec.configure do |config|
             facebook_picture_url: {type: :string, 'x-nullable': true},
             badge_points: {type: :integer},
             level: {type: :integer, 'x-nullable': true},
-            created_at: { type: :string, format: "date-time"},
-            updated_at: { type: :string, format: "date-time"},
+            created_at: {type: :string, format: "date-time"},
+            updated_at: {type: :string, format: "date-time"},
             following_id: {type: :integer, 'x-nullable': true},
             relationships: {
               type: :array,
               items: {
-                "$ref" => "#/definitions/relationships"
-              }
+                "$ref" => "#/definitions/relationships",
+              },
             },
-          }
+          },
         },
         relationships: {
           type: :object,
           properties: {
             id: {type: :string},
             status: {type: :string},
-            requested_by: {type: :object, "$ref" => "#/definitions/public_person"},
-            requested_to: {type: :object, "$ref" => "#/definitions/public_person"},
-            created_at: { type: :string, format: "date-time"},
-            updated_at: { type: :string, format: "date-time"}
-          }
+            requested_by: {:type => :object, "$ref" => "#/definitions/public_person"},
+            requested_to: {:type => :object, "$ref" => "#/definitions/public_person"},
+            created_at: {type: :string, format: "date-time"},
+            updated_at: {type: :string, format: "date-time"},
+          },
         },
         people: {
           type: :array,
@@ -182,11 +297,11 @@ RSpec.configure do |config|
               properties: {
                 id: {type: :string},
                 username: {type: :string},
-                name:  {type: :string, 'x-nullable': true},
+                name: {type: :string, 'x-nullable': true},
                 gender: {type: :string},
                 city: {type: :string, 'x-nullable': true},
                 country_code: {type: :string, 'x-nullable': true},
-                birthdate: { type: :string, format: "date", 'x-nullable': true},
+                birthdate: {type: :string, format: "date", 'x-nullable': true},
                 biography: {type: :string, 'x-nullable': true},
                 picture_url: {type: :string, 'x-nullable': true},
                 product_account: {type: :boolean},
@@ -206,8 +321,8 @@ RSpec.configure do |config|
                 facebook_picture_url: {type: :string, 'x-nullable': true},
                 badge_points: {type: :integer},
                 level: {type: :integer, 'x-nullable': true},
-                created_at: { type: :string, format: "date-time"},
-                updated_at: { type: :string, format: "date-time"},
+                created_at: {type: :string, format: "date-time"},
+                updated_at: {type: :string, format: "date-time"},
                 following_id: {type: :integer, 'x-nullable': true},
                 email: {type: :string},
                 product: {
@@ -380,9 +495,13 @@ RSpec.configure do |config|
           type: :object,
           properties: {
             id: {type: :integer},
-          }
-        }
+          },
+        },
       },
-    }
+    },
   }
+
+  config.swagger_docs["v1/swagger.json"] = JSON.parse(File.read(Rails.root.join("doc/open_api/V1.json")))
+  config.swagger_docs["v2/swagger.json"] = JSON.parse(File.read(Rails.root.join("doc/open_api/V2.json")))
+  config.swagger_docs["v3/swagger.json"] = JSON.parse(File.read(Rails.root.join("doc/open_api/V3.json")))
 end

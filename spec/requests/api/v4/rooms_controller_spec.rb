@@ -5,7 +5,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
   path "/rooms" do
     post "" do
       security [Bearer: []]
-      tags "chat" # 'kotlin']
+      tags "Rooms" # 'kotlin']
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -46,7 +46,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
     get "" do
       security [Bearer: []]
-      tags "chat" # 'kotlin']
+      tags "Rooms" # 'kotlin']
       parameter name: :"private", in: :query, type: :string, required: false
       let(:Authorization) { "" }
 
@@ -94,7 +94,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
   path "/rooms/{id}" do
     patch "" do
       security [Bearer: []]
-      tags "chat" #'android-old']
+      tags "Rooms" #'android-old']
       parameter name: :id, in: :path, type: :string
       parameter name: :"room[name]", in: :formData, type: :string, required: false
       parameter name: :"room[picture]", in: :formData, type: :file, required: false
@@ -130,7 +130,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
     end
     delete "" do
       security [Bearer: []]
-      tags "chat" # 'android-old']
+      tags "Rooms" # 'android-old']
       parameter name: :id, in: :path, type: :string
 
       let(:Authorization) { "" }
@@ -165,7 +165,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
   path "/rooms/{id}/messages" do
     get "" do
       security [Bearer: []]
-      tags "chat" # 'android-old']
+      tags "Messages" # 'android-old']
       parameter name: :id, in: :path, type: :string
       parameter name: :from_date, in: :query, type: :string, required: false
       parameter name: :to_date, in: :query, type: :string, required: false
@@ -245,7 +245,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
     end
     post "" do
       security [Bearer: []]
-      tags "chat" # 'kotlin']
+      tags "Messages" # 'kotlin']
       parameter name: :id, in: :path, type: :string
       parameter name: :"message[body]", in: :formData, type: :string
 
@@ -301,7 +301,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
     get "" do
       security [Bearer: []]
-      tags "chat" # 'android-old']
+      tags "Messages" # 'android-old']
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -346,7 +346,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
     end
     delete "" do
       security [Bearer: []]
-      tags "chat" # 'android-old']
+      tags "Messages" # 'android-old']
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
 
@@ -392,7 +392,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
   path "/rooms/{room_id}/message_reports" do
     post "" do
       security [Bearer: []]
-      tags "chat" # 'android-old']
+      tags "MessageReports" # 'android-old']
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"

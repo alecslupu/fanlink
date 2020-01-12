@@ -116,7 +116,7 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
   path "/people/{id}" do
     patch "" do
       security [Bearer: []]
-      tags 'user'
+      tags 'People'
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -177,7 +177,7 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
 
     get "" do
       security [Bearer: []]
-      tags "user" # old android
+      tags "People" # old android
 
       produces "application/vnd.api.v4+json"
 
@@ -211,7 +211,7 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
   path "/people/{id}/change_password" do
     patch "" do
       security [Bearer: []]
-      tags "user" # old android
+      tags "People" # old android
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
