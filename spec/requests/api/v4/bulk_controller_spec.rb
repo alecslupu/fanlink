@@ -492,57 +492,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   end
-  path "/badge_actions" do
-  #  post "" do
-  #    tags ["badge", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #  end
-  end
-  path "/levels" do
-  #  get "" do
-  #    tags ["badge", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #  end
-  end
-  path "/badges" do
-  #  get "" do
-  #    tags ["badge", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #      response "200", "" do
-  #        run_test!
-  #      end
-  #      response "401", "" do
-  #        run_test!
-  #      end
-  #      response "404", "" do
-  #        run_test!
-  #      end
-  #  end
-  end
+
+
   path "/people/person/{username}" do
   #  get "" do
   #    tags ["user", 'kotlin']
