@@ -25,9 +25,9 @@ module Push
 
       ios_token_notification_push(
         ios_tokens,
+        "Friend request accepted",
         "Friend request accepted by #{to.username}",
-        "Friend request accepted by #{to.username}",
-        "AcceptOrIgnore",
+        nil,
         "2419200",
         context: "friend_accepted",
         deep_link: "#{from.product.internal_name}://users/#{to.id}"
@@ -69,8 +69,8 @@ module Push
   end
 
   def message_mention_push(message_mention)
-    blocks_with = message_mention.message.person.blocks_with.map { |b| b.id }
     mentioner = message_mention.message.person
+    blocks_with = mentioner.blocks_with.map { |b| b.id }
 
     android_tokens, ios_tokens = get_device_tokens(message_mention.person)
 
@@ -85,17 +85,17 @@ module Push
       message_short: "#{mentioner.username} mentioned you",
       message_placeholder: mentioner.username,
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
-    ) unless android_tokens.empty?
+    ) unless android_tokens.empty? || blocks_with.include?(message_mention.person.id)
 
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "#{person.username} mentioned you",
+      "#{mentioner.username} mentioned you",
       nil,
       "2419200",
       context: "message_mentioned",
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
-    ) unless ios_tokens.empty?
+    ) unless ios_tokens.empty? || blocks_with.include?(message_mention.person.id)
   end
 
   def portal_notification_push(portal_notification)
@@ -118,34 +118,35 @@ module Push
   end
 
   def post_comment_mention_push(post_comment_mention)
-    blocks_with = post_comment_mention.post_comment.person.blocks_with.map { |b| b.id }
-    person = post_comment_mention.person
+    mentioned_person = post_comment_mention.person
+    mentionner = post_comment_mention.post_comment.person
+    blocks_with = mentionner.blocks_with.map { |b| b.id }
     post_id = post_comment_mention.post_comment.post_id
 
-    do_push(person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(person.id)
+    do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
+              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
 
-    android_tokens, ios_tokens = get_device_tokens(person)
+    android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
     android_token_notification_push(
       android_tokens,
       "2419200",
       context: "comment_mentioned",
       title: "Mention",
-      message_short: "#{person.username} mentioned you",
-      message_placeholder: person.username,
-      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
-    ) unless android_tokens.empty?
+      message_short: "#{mentionner.username} mentioned you",
+      message_placeholder: mentionner.username,
+      deep_link: "#{mentionner.product.internal_name}://posts/#{post_id}/comments"
+    ) unless android_tokens.empty? || blocks_with.include?(mentioned_person.id)
 
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "#{person.username} mentioned you",
+      "#{mentionner.username} mentioned you",
       nil,
       "2419200",
       context: "comment_mentioned",
-      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
-    ) unless ios_tokens.empty?
+      deep_link: "#{mentionner.product.internal_name}://posts/#{post_id}/comments"
+    ) unless ios_tokens.empty? || blocks_with.include?(mentioned_person.id)
   end
 
   # sends to posts followers
