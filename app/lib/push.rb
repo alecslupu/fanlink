@@ -232,21 +232,21 @@ module Push
 
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_device_to_topic(notification_device_id)
-    response = push_client.topic_subscription(get_topic(notification_device_id), notification_device_id.device_identifier)
+    response = push_client.topic_subscription(get_topic(notification_device_id.device_type), notification_device_id.device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
   # will be later changed to accept language to unsubscribe to the correct marketing topic
-  def unsubscribe_device_to_topic(notification_device_id)
-    response = push_client.batch_topic_unsubscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
+  def unsubscribe_device_to_topic(device_identifier, device_type)
+    response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
 
 private
 
-  def get_topic(notification_device_id)
-    notification_device_id.device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
+  def get_topic(device_type)
+    device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
   end
 
   def make_array(elem)
