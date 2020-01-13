@@ -39,6 +39,7 @@ module Push
     from = relationship.requested_by
     to = relationship.requested_to
     android_tokens, ios_tokens = get_device_tokens(to)
+    profile_picture_url = from.picture_url.present? ? from.picture_url : from.facebook_picture_url
 
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
@@ -49,7 +50,7 @@ module Push
       title: "Friend request",
       message_short: "New friend request from #{from.username}",
       message_placeholder: from.username,
-      image_url: from.picture_url,
+      image_url: profile_picture_url,
       relationship_id: relationship.id,
       deep_link: "#{from.product.internal_name}://users/#{from.id}"
     ) unless android_tokens.empty?
@@ -62,7 +63,7 @@ module Push
       "2419200",
       context: "friend_requested",
       relationship_id: relationship.id,
-      image_url: from.picture_url,
+      image_url: profile_picture_url,
       deep_link: "#{from.product.internal_name}://users/#{from.id}"
     ) unless ios_tokens.empty?
   end
