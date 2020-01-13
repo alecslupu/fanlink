@@ -38,7 +38,7 @@ module Push
   def friend_request_received_push(relationship)
     from = relationship.requested_by
     to = relationship.requested_to
-    android_tokens, ios_tokens = get_device_tokens(from)
+    android_tokens, ios_tokens = get_device_tokens(to)
 
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
