@@ -69,12 +69,12 @@ module Push
   end
 
   def message_mention_push(message_mention)
-    mentioner = message_mention.message.person
-    blocks_with = mentioner.blocks_with.map { |b| b.id }
+    mentionner = message_mention.message.person
+    blocks_with = mentionner.blocks_with.map { |b| b.id }
 
     android_tokens, ios_tokens = get_device_tokens(message_mention.person)
 
-    do_push(message_mention.person.device_tokens, "Mention", "#{mentioner.username} mentioned you in a message.",
+    do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
                               "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
 
     android_token_notification_push(
@@ -82,15 +82,15 @@ module Push
       "2419200",
       context: "message_mentioned",
       title: "Mention",
-      message_short: "#{mentioner.username} mentioned you",
-      message_placeholder: mentioner.username,
+      message_short: "#{mentionner.username} mentioned you",
+      message_placeholder: mentionner.username,
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
     ) unless android_tokens.empty? || blocks_with.include?(message_mention.person.id)
 
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "#{mentioner.username} mentioned you",
+      "#{mentionner.username} mentioned you",
       nil,
       "2419200",
       context: "message_mentioned",
