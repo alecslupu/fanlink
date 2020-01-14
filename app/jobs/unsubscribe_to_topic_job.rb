@@ -1,12 +1,12 @@
-class UnsubscribeToTopicJob < Struct.new(:notification_device_id)
+class UnsubscribeToTopicJob < Struct.new(:device_identifier, :device_type, :product_id)
   include Push
 
   def perform
-    notification_device =  NotificationDeviceId.where(id: notification_device_id).first
+    product = Product.find(product_id)
 
-    ActsAsTenant.with_tenant(notification_device.person.product) do
+    ActsAsTenant.with_tenant(product) do
       # TODO add  topic option
-      unsubscribe_device_to_topic(notification_device)
+      unsubscribe_device_to_topic(device_identifier, device_type)
     end
   end
 
