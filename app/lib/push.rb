@@ -15,6 +15,7 @@ module Push
 
       android_token_notification_push(
         android_tokens,
+        "2419200",
         context: "friend_accepted",
         title: "Friend request accepted by #{to.username}",
         message_short: "Friend request accepted by #{to.username}",
@@ -24,9 +25,10 @@ module Push
 
       ios_token_notification_push(
         ios_tokens,
+        "Friend request accepted",
         "Friend request accepted by #{to.username}",
-        "Friend request accepted by #{to.username}",
-        "AcceptOrIgnore",
+        nil,
+        "2419200",
         context: "friend_accepted",
         deep_link: "#{from.product.internal_name}://users/#{to.id}"
       ) unless ios_tokens.empty?
@@ -36,17 +38,19 @@ module Push
   def friend_request_received_push(relationship)
     from = relationship.requested_by
     to = relationship.requested_to
-    android_tokens, ios_tokens = get_device_tokens(from)
+    android_tokens, ios_tokens = get_device_tokens(to)
+    profile_picture_url = from.picture_url.present? ? from.picture_url : from.facebook_picture_url
 
     do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "friend_requested",
       title: "Friend request",
       message_short: "New friend request from #{from.username}",
       message_placeholder: from.username,
-      image_url: from.picture_url,
+      image_url: profile_picture_url,
       relationship_id: relationship.id,
       deep_link: "#{from.product.internal_name}://users/#{from.id}"
     ) unless android_tokens.empty?
@@ -56,39 +60,42 @@ module Push
       "Friend request",
       "New friend request from #{from.username}",
       "AcceptOrIgnore",
+      "2419200",
       context: "friend_requested",
       relationship_id: relationship.id,
-      image_url: from.picture_url,
+      image_url: profile_picture_url,
       deep_link: "#{from.product.internal_name}://users/#{from.id}"
     ) unless ios_tokens.empty?
   end
 
   def message_mention_push(message_mention)
-    blocks_with = message_mention.message.person.blocks_with.map { |b| b.id }
-    mentioner = message_mention.message.person
+    mentionner = message_mention.message.person
+    blocks_with = mentionner.blocks_with.map { |b| b.id }
 
     android_tokens, ios_tokens = get_device_tokens(message_mention.person)
 
-    do_push(message_mention.person.device_tokens, "Mention", "#{mentioner.username} mentioned you in a message.",
+    do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
                               "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "message_mentioned",
       title: "Mention",
-      message_short: "#{mentioner.username} mentioned you",
-      message_placeholder: mentioner.username,
+      message_short: "#{mentionner.username} mentioned you",
+      message_placeholder: mentionner.username,
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
-    ) unless android_tokens.empty?
+    ) unless android_tokens.empty? || blocks_with.include?(message_mention.person.id)
 
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "#{person.username} mentioned you",
+      "#{mentionner.username} mentioned you",
       nil,
+      "2419200",
       context: "message_mentioned",
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
-    ) unless ios_tokens.empty?
+    ) unless ios_tokens.empty? || blocks_with.include?(message_mention.person.id)
   end
 
   def portal_notification_push(portal_notification)
@@ -111,32 +118,35 @@ module Push
   end
 
   def post_comment_mention_push(post_comment_mention)
-    blocks_with = post_comment_mention.post_comment.person.blocks_with.map { |b| b.id }
-    person = post_comment_mention.person
+    mentioned_person = post_comment_mention.person
+    mentionner = post_comment_mention.post_comment.person
+    blocks_with = mentionner.blocks_with.map { |b| b.id }
     post_id = post_comment_mention.post_comment.post_id
 
-    do_push(person.device_tokens, "Mention", "#{post_comment_mention.post_comment.person.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(person.id)
+    do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
+              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
 
-    android_tokens, ios_tokens = get_device_tokens(person)
+    android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "comment_mentioned",
       title: "Mention",
-      message_short: "#{person.username} mentioned you",
-      message_placeholder: person.username,
-      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
-    ) unless android_tokens.empty?
+      message_short: "#{mentionner.username} mentioned you",
+      message_placeholder: mentionner.username,
+      deep_link: "#{mentionner.product.internal_name}://posts/#{post_id}/comments"
+    ) unless android_tokens.empty? || blocks_with.include?(mentioned_person.id)
 
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "#{person.username} mentioned you",
+      "#{mentionner.username} mentioned you",
       nil,
+      "2419200",
       context: "comment_mentioned",
-      deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
-    ) unless ios_tokens.empty?
+      deep_link: "#{mentionner.product.internal_name}://posts/#{post_id}/comments"
+    ) unless ios_tokens.empty? || blocks_with.include?(mentioned_person.id)
   end
 
   # sends to posts followers
@@ -149,6 +159,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: "feed_post",
       title: "New post",
       message_short: "New post from #{person.username}",
@@ -161,6 +172,7 @@ module Push
       "New Post",
       "New post from #{person.username}",
       nil,
+      "2419200",
       context: "feed_post",
       deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
     ) unless ios_tokens.empty?
@@ -212,31 +224,31 @@ module Push
                     message_long: notification.body,
                     deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
                     )
-    android_notification_body = build_android_notification(android_data)
+    android_notification_body = build_android_notification(android_data, (notification.ttl_hours * 3600).to_s)
     notification_topic_push("marketing_en_android-US", android_notification_body)
 
     ios_data = build_data(context: "marketing", deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile")
-    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, ios_data)
+    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, (notification.ttl_hours * 3600).to_s, ios_data)
     notification_topic_push("marketing_en_ios-US", ios_notification_body)
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_device_to_topic(notification_device_id)
-    response = push_client.topic_subscription(get_topic(notification_device_id), notification_device_id.device_identifier)
+    response = push_client.topic_subscription(get_topic(notification_device_id.device_type), notification_device_id.device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
   # will be later changed to accept language to unsubscribe to the correct marketing topic
-  def unsubscribe_device_to_topic(notification_device_id)
-    response = push_client.batch_topic_unsubscription(get_topic(notification_device_id), [notification_device_id.device_identifier])
+  def unsubscribe_device_to_topic(device_identifier, device_type)
+    response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
 
 private
 
-  def get_topic(notification_device_id)
-    notification_device_id.device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
+  def get_topic(device_type)
+    device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
   end
 
   def make_array(elem)
@@ -326,20 +338,24 @@ private
     NotificationDeviceId.where(device_identifier: device_ids).update_all(not_registered: true)
   end
 
-  def android_token_notification_push(tokens, data = {})
-    notification_body = build_android_notification(data)
+  def android_token_notification_push(tokens, ttl, data = {})
+    notification_body = build_android_notification(data, ttl)
     push_with_retry(notification_body, tokens, "android")
   end
 
-  def ios_token_notification_push(tokens, title, body, click_action, data = {})
-    notification_body = build_ios_notification(title, body, click_action, data)
+  def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
+    notification_body = build_ios_notification(title, body, click_action, ttl, data)
     push_with_retry(notification_body, tokens, "ios")
   end
 
-  def build_android_notification(data)
+  def build_android_notification(data, ttl)
     options = {}
     data[:type] = "user"
     options[:data] = data
+    options[:priority] = "high"
+    options[:content_available] = true
+    options[:mutable_content] = true
+    options[:time_to_live] = ttl
 
     # this may be used for v1 implementation
     # options[:android] = build_android_options
@@ -347,7 +363,7 @@ private
     return options
   end
 
-  def build_ios_notification(title, body, click_action, data)
+  def build_ios_notification(title, body, click_action, ttl, data)
     options = {}
     options[:notification] = {}
 
@@ -359,7 +375,7 @@ private
 
     options[:data] = data
     options[:data][:priority] = "high"
-    options[:data][:time_to_live] = "2419200"
+    options[:data][:time_to_live] = ttl
 
     return options
   end
@@ -396,6 +412,7 @@ private
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
       android_tokens,
+      "2419200",
       context: context,
       title: message.person.username,
       message_short: message_short,
@@ -415,6 +432,7 @@ private
       message.person.username,
       body,
       "ReplyToMessage",
+      "2419200",
       context: context,
       room_id: room.id.to_s,
       image_url: message.picture_url,
