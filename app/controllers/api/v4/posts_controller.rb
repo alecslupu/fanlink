@@ -48,6 +48,7 @@ class Api::V4::PostsController < Api::V3::PostsController
     return_the @posts, handler: tpl_handler
   end
 
+
   def list
     @posts = paginate apply_filters
     @posts = @posts.for_tag(params[:tag]) if params[:tag]
