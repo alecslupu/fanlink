@@ -5,7 +5,7 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
   path "/people" do
     get "" do
       security [Bearer: []]
-      tags "user"
+      tags "People"
 
       produces "application/vnd.api.v4+json"
       consumes "application/vnd.api.v4+json"
@@ -78,7 +78,7 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
     end
 
     post "" do
-      tags "user" #kotlin
+      tags "People" #kotlin
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -247,22 +247,38 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
     end
   end
 
+  path "/people/{user_id}/interests" do
+    get "" do
+      security [Bearer: []]
+      tags "Interests"
 
-  path "/people/password_forgot" do
-    #  post "" do
-    #    tags ["user", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+      parameter name: :user_id, in: :path, type: :string
+
+      produces "application/vnd.api.v4+json"
+      consumes "multipart/form-data"
+
+      let(:person) { create(:person) }
+      let(:Authorization) { "" }
+      let(:user_id) { 0 }
+
+      response "200", "" do
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
+        let(:user_id) { person.id }
+        schema "$ref": "#/definitions/faulty"
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
+
+        let(:user_id) { Time.zone.now.to_i }
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
+    end
   end
 end

@@ -30,6 +30,10 @@
       "description": "Followers and following"
     },
     {
+      "name": "Interests",
+      "description": "Interests"
+    },
+    {
       "name": "Levels",
       "description": "Levels"
     },
@@ -347,6 +351,191 @@
         }
       }
     },
+    "/interests/match": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "parameters": [
+          {
+            "name": "interest_ids",
+            "type": "string",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests/{id}/add": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "interest[title]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "interest[parent_id]",
+            "in": "formData",
+            "type": "integer"
+          },
+          {
+            "name": "interest[order]",
+            "in": "formData",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests/{id}/remove": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/levels": {
       "get": {
         "summary": "",
@@ -541,7 +730,7 @@
           }
         ],
         "tags": [
-          "user"
+          "People"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -592,7 +781,7 @@
       "post": {
         "summary": "",
         "tags": [
-          "user"
+          "People"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -839,6 +1028,52 @@
             "schema": {
               "$ref": "#/definitions/faulty"
             }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/{user_id}/interests": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1786,34 +2021,6 @@
     },
     "PostJson": {
     },
-    "BadgeJson": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "internal_name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "picture_url": {
-          "type": "string"
-        },
-        "action_requirement": {
-          "type": "integer"
-        },
-        "point_value": {
-          "type": "integer"
-        }
-      },
-      "description": "Badge Response"
-    },
     "BadgeActionsPending": {
       "type": "object",
       "properties": {
@@ -2397,6 +2604,9 @@
       "properties": {
         "id": {
           "type": "integer"
+        },
+        "faulty": {
+          "type": "string"
         }
       }
     },
@@ -2454,6 +2664,34 @@
         }
       },
       "description": "Following Response"
+    },
+    "BadgeJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "internal_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "picture_url": {
+          "type": "string"
+        },
+        "action_requirement": {
+          "type": "integer"
+        },
+        "point_value": {
+          "type": "integer"
+        }
+      },
+      "description": "Badge Response"
     },
     "BadgesArray": {
       "type": "object",

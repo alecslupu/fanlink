@@ -40,7 +40,7 @@ RSpec.describe "Api::V4::FollowingsController", type: :request, swagger_doc: "v4
       parameter name: :per_page, in: :query, type: :integer, required: false, description: " Lorem ipsum", default: 25
       parameter name: :followed_id, in: :formData, type: :string, required: false
       parameter name: :follower_id, in: :formData, type: :string, required: false
-      
+
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
       context "" do

@@ -21,10 +21,10 @@ RSpec.describe "Api::V4::CategoriesController", type: :request, swagger_doc: "v4
         run_test!
       end
       response "401", "Unauthorized. " do
-        run_test!
+        document_response_without_test!
       end
       response "404", "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header." do
-        run_test!
+        document_response_without_test!
       end
       response 500, "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated." do
         document_response_without_test!
@@ -32,4 +32,3 @@ RSpec.describe "Api::V4::CategoriesController", type: :request, swagger_doc: "v4
     end
   end
 end
-
