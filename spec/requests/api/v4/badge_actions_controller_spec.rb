@@ -42,4 +42,3 @@ RSpec.describe "Api::V4::BadgeActionsController", type: :request, swagger_doc: "
     end
   end
 end
-
