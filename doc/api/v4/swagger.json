@@ -818,6 +818,12 @@
             "name": "person[picture]",
             "in": "formData",
             "type": "file"
+          },
+          {
+            "name": "referer",
+            "in": "formData",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
