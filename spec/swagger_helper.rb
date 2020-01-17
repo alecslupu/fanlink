@@ -80,6 +80,10 @@ RSpec.configure do |config|
           description: "Followers and following",
         },
         {
+          name: "Interests",
+          description: "Interests",
+        },
+        {
           name: "Levels",
           description: "Levels",
         },
@@ -233,31 +237,14 @@ RSpec.configure do |config|
         PostJson: {
 
         },
-        BadgeJson: {
-          type: :object,
-          properties: {
-            id: {type: :integer},
-            name: {type: :string},
-            internal_name: {type: :string},
-            description: {type: :string},
-            picture_url: {type: :string},
-            action_requirement: {type: :integer},
-            point_value: {type: :integer}
-          },
-          description: "Badge Response"
-        },
         BadgeActionsPending: {
           type: :object,
           properties: {
             pending_badge: {
               type: :object,
               properties: {
-                badge_action_count: {
-                  type: :integer
-                },
-                badge: {
-                  "$ref": "#/definitions/BadgeJson"
-                }
+                badge_action_count: { type: :integer },
+                badge: { "$ref": "#/definitions/BadgeJson" }
               }
             },
             badges_awarded: {
@@ -532,6 +519,7 @@ RSpec.configure do |config|
           type: :object,
           properties: {
             id: {type: :integer},
+            faulty: { type: :string }
           },
         },
         SuccessMessage: {
