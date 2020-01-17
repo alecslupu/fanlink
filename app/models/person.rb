@@ -166,8 +166,13 @@ class Person < ApplicationRecord
 
   scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
   scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
-  scope :with_friendships, -> { Person.received_friendships.or(requested_friendships) }
-  scope :without_friendships, -> { Person.where.not(id: with_friendships.select(:id)) }
+  scope :with_friendships, -> { received_friendships.or(requested_friendships) }
+  scope :without_friendships, -> { where.not(id: with_friendships.select(:id)) }
+
+  scope :has_interests, -> { joins(:person_interests).group(:id) }
+  scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").group(:id) }
+  scope :has_posts, -> { joins(:posts).group(:id) }
+  scope :has_facebook_id, -> { where.not(facebookid: nil) }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
