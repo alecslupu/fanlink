@@ -173,6 +173,8 @@ class Person < ApplicationRecord
   scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").group(:id) }
   scope :has_posts, -> { joins(:posts).group(:id) }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
+  scope :has_created_acc_last_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
+  scope :has_created_acc_last_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
