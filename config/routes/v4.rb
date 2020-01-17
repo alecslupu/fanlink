@@ -293,5 +293,14 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    resources :people, except: %i[create index show update] do
+      collection do
+        scope "/referal" do
+          get "/me" => "referal/user_code#index"
+        end
+      end
+    end
+
   end
 end

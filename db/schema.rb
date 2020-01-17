@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191119155550) do
+ActiveRecord::Schema.define(version: 20200117193814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
+    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -573,7 +574,6 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.boolean "deleted", default: false
     t.bigint "role_id"
     t.boolean "authorized", default: true, null: false
-    t.bigint "role_id"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -1005,6 +1005,24 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
 
+  create_table "referal_refered_people", force: :cascade do |t|
+    t.bigint "inviter_id"
+    t.bigint "invited_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_id"], name: "index_referal_refered_people_on_invited_id"
+    t.index ["inviter_id"], name: "index_referal_refered_people_on_inviter_id"
+  end
+
+  create_table "referal_user_codes", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "unique_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_referal_user_codes_on_person_id"
+    t.index ["unique_code"], name: "index_referal_user_codes_on_unique_code", unique: true
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "requested_by_id", null: false
     t.integer "requested_to_id", null: false
@@ -1081,6 +1099,18 @@ ActiveRecord::Schema.define(version: 20191119155550) do
     t.integer "message_count", default: 0, null: false
     t.index ["person_id"], name: "idx_room_memberships_person"
     t.index ["room_id", "person_id"], name: "unq_room_memberships_room_person", unique: true
+  end
+
+  create_table "room_subscribers", force: :cascade do |t|
+    t.bigint "room_id"
+    t.bigint "person_id"
+    t.bigint "last_message_id"
+    t.datetime "last_notification_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_message_id"], name: "index_room_subscribers_on_last_message_id"
+    t.index ["person_id"], name: "index_room_subscribers_on_person_id"
+    t.index ["room_id"], name: "index_room_subscribers_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -1472,11 +1502,17 @@ ActiveRecord::Schema.define(version: 20191119155550) do
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
   add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
+  add_foreign_key "referal_refered_people", "people", column: "invited_id"
+  add_foreign_key "referal_refered_people", "people", column: "inviter_id"
+  add_foreign_key "referal_user_codes", "people"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
+  add_foreign_key "room_subscribers", "messages", column: "last_message_id"
+  add_foreign_key "room_subscribers", "people"
+  add_foreign_key "room_subscribers", "rooms"
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"

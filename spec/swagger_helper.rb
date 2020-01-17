@@ -160,6 +160,10 @@ RSpec.configure do |config|
         #  description: "Recommended posts",
         #},
         {
+            name: "Referal",
+            description: "Referal system "
+        },
+        {
           name: "Relationships",
           description: "User's relationships",
         },
@@ -576,6 +580,13 @@ RSpec.configure do |config|
             point_value: {type: :integer},
           },
           "description": "Badge Response"
+        },
+        ReferalCode: {
+          type: :object,
+          properties: {
+            person_id: {type: :integer},
+            unique_code: {type: :string},
+          }
         },
         BadgesArray: {
           type: :object,

@@ -1,0 +1,4 @@
+{
+    person_id:  @referal_code.person_id,
+    unique_code: @referal_code.unique_code
+}

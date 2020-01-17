@@ -58,6 +58,10 @@
       "description": "Users"
     },
     {
+      "name": "Referal",
+      "description": "Referal system "
+    },
+    {
       "name": "Relationships",
       "description": "User's relationships"
     },
@@ -1121,6 +1125,41 @@
           },
           "404": {
             "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referal/me": {
+      "get": {
+        "summary": "List the referal code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ReferalCode"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal server error"
@@ -2698,6 +2737,17 @@
         }
       },
       "description": "Badge Response"
+    },
+    "ReferalCode": {
+      "type": "object",
+      "properties": {
+        "person_id": {
+          "type": "integer"
+        },
+        "unique_code": {
+          "type": "string"
+        }
+      }
     },
     "BadgesArray": {
       "type": "object",

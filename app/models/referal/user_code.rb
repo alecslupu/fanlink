@@ -10,7 +10,7 @@ module Referal
 
     def generate_unique_key(field_name)
       loop do
-        key = SecureRandom.urlsafe_base64(9).gsub(/-|_/,('a'..'z').to_a[rand(26)])
+        key = SecureRandom.uuid.split("-").first
         break key unless Referal::UserCode.exists?("#{field_name}": key)
       end
     end
