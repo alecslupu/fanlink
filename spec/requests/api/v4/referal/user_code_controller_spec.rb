@@ -27,4 +27,3 @@ RSpec.describe "Api::V4::Referal::UserCodeControllerSpec", type: :request, swagg
     end
   end
 end
-
