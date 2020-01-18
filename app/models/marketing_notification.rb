@@ -25,8 +25,7 @@ class MarketingNotification < ApplicationRecord
     feed_screen: 4,
     profile_screen: 5,
     chat_room: 6,
-    comments_screen: 7,
-    certificate_screen: 8
+    certificate_screen: 7
   }
 
   validates :body, presence: true
