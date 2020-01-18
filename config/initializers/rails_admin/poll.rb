@@ -2,6 +2,8 @@ RailsAdmin.config do |config|
   config.included_models.push("Poll")
 
   config.model "Poll" do
+
+
     list do
       fields :id,
              :poll_type
@@ -17,6 +19,10 @@ RailsAdmin.config do |config|
              :poll_status,
              :product_id
       field :description, :translated
+    end
+
+    export do
+      configure :description, :string
     end
   end
 end
