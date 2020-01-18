@@ -40,6 +40,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
 
           params_hash = params.except(:controller, :action, :format ).to_unsafe_h
           params_hash[:person].delete(:password)
+          params_hash[:person].delete(:picture)
           broadcast(:person_created, @person.id, params_hash)
 
           return_the @person, handler: tpl_handler
