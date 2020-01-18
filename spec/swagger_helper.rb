@@ -160,6 +160,10 @@ RSpec.configure do |config|
         #  description: "Recommended posts",
         #},
         {
+            name: "Referal",
+            description: "Referal system "
+        },
+        {
           name: "Relationships",
           description: "User's relationships",
         },
@@ -577,6 +581,13 @@ RSpec.configure do |config|
           },
           "description": "Badge Response"
         },
+        ReferalCode: {
+            type: :object,
+            properties: {
+                person_id: {type: :integer},
+                unique_code: {type: :string},
+            }
+        },
         BadgesArray: {
           type: :object,
           properties: {
@@ -588,6 +599,43 @@ RSpec.configure do |config|
                   badge: { "$ref": "#/definitions/BadgeJson" }
                 }
               }
+            }
+          }
+        },
+        "LevelJson": {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            name: {type: :string},
+            internal_name: {type: :string},
+            description: {type: :string},
+            points: {type: :integer},
+            picture_url: {type: :string},
+          },
+          "description": "Level Response"
+        },
+        personMini: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            username: {type: :string},
+            picture_url: {type: :string},
+            designation: {type: :string},
+            facebook_picture_url: {type: :string},
+            badge_points: {type: :integer},
+            level: {
+              "$ref": "#/definitions/LevelJson", 'x-nullable': true
+            }
+          }
+        },
+        MiniPeopleArray: {
+          type: :object,
+          properties: {
+            people: {
+              type: :array,
+              items: {
+                "$ref" => "#/definitions/personMini",
+              },
             }
           }
         }
