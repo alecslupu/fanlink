@@ -246,7 +246,7 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id, :email, :picture])
+      results = graph.get_object("me", fields: %w(id email picture.width(320).height(320)))
     rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
