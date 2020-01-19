@@ -1,5 +1,6 @@
 require 'swagger_helper'
 
+
 RSpec.describe "Api::V4::Courseware::WishlistController", type: :request, swagger_doc: "v4/swagger.json" do
   path "/courseware/wishlists" do
     get "" do
@@ -17,7 +18,7 @@ RSpec.describe "Api::V4::Courseware::WishlistController", type: :request, swagge
 
       response "200", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        #schema "$ref": "#/definitions/ReferalCode"
+        schema "$ref": "#/definitions/CertificateWishlist"
         run_test!
       end
       response "401", "Unauthorized" do
@@ -42,7 +43,6 @@ RSpec.describe "Api::V4::Courseware::WishlistController", type: :request, swagge
 
       response "200", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        #schema "$ref": "#/definitions/ReferalCode"
         run_test!
       end
 
@@ -83,7 +83,6 @@ RSpec.describe "Api::V4::Courseware::WishlistController", type: :request, swagge
       response "200", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: wishlist.person.id)}" }
         let(:id) { wishlist.id }
-        #schema "$ref": "#/definitions/ReferalCode"
         run_test!
       end
 
