@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200117193814) do
+ActiveRecord::Schema.define(version: 20200119065803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -308,6 +308,15 @@ ActiveRecord::Schema.define(version: 20200117193814) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["semester_id"], name: "index_courses_on_semester_id"
+  end
+
+  create_table "courseware_wishlist_wishlists", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "certificate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certificate_id"], name: "index_courseware_wishlist_wishlists_on_certificate_id"
+    t.index ["person_id"], name: "index_courseware_wishlist_wishlists_on_person_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -1458,6 +1467,8 @@ ActiveRecord::Schema.define(version: 20200117193814) do
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "config_items", "products"
+  add_foreign_key "courseware_wishlist_wishlists", "certificates"
+  add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
