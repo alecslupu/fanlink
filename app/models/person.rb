@@ -175,6 +175,9 @@ class Person < ApplicationRecord
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
   scope :has_created_acc_last_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
   scope :has_created_acc_last_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
+  scope :has_enrolled_certificate, -> { joins(:certificates).where("certificates.is_free = ?", true) }
+  scope :has_paid_certificate, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0") }
+  scope :has_certificate_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
