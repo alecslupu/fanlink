@@ -944,7 +944,7 @@
             "name": "person[email]",
             "in": "formData",
             "type": "string",
-            "required": true
+            "required": false
           },
           {
             "name": "person[username]",
@@ -956,12 +956,18 @@
             "name": "person[password]",
             "in": "formData",
             "type": "string",
-            "required": true
+            "required": false
           },
           {
             "name": "person[picture]",
             "in": "formData",
             "type": "file"
+          },
+          {
+            "name": "facebook_auth_token",
+            "in": "formData",
+            "type": "string",
+            "required": false
           },
           {
             "name": "referer",

@@ -23,8 +23,8 @@ class Api::V4::PeopleController < Api::V3::PeopleController
       if !check_gender
         render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
-        if person_params[:facebook_auth_token].present?
-          @person = Person.create_from_facebook(person_params[:facebook_auth_token], person_params[:username])
+        if params[:facebook_auth_token].present?
+          @person = Person.create_from_facebook(params[:facebook_auth_token], person_params[:username])
           if @person.nil?
             (render json: { errors: _("There was a problem contacting Facebook.") }, status: :service_unavailable) && return
           end
