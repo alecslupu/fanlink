@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200116155237) do
+ActiveRecord::Schema.define(version: 20200120094453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -455,8 +455,7 @@ ActiveRecord::Schema.define(version: 20200116155237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ttl_hours", default: 670, null: false
-    t.integer "deep_link_action", default: 0, null: false
-    t.string "deep_link_value"
+    t.integer "person_filter"
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
 
