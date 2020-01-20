@@ -58,6 +58,10 @@
       "description": "Users"
     },
     {
+      "name": "Posts",
+      "description": "User/product posts"
+    },
+    {
       "name": "Relationships",
       "description": "User's relationships"
     },
@@ -1114,6 +1118,127 @@
             }
           },
           "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "promoted",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "name": "post_id",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "chronologically",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "enum": [
+              "before",
+              "after"
+            ],
+            "default": "after"
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "categories",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_id",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "id_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_id_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "body_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "posted_after_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "posted_before_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "status_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
             "description": ""
           },
           "500": {
