@@ -124,7 +124,7 @@ module Push
     post_id = post_comment_mention.post_comment.post_id
 
     do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
+              "comment_mentioned", post_id: post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
 
     android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
@@ -222,7 +222,7 @@ module Push
                     message_short: notification.body,
                     message_placeholder: notification.person.username,
                     message_long: notification.body,
-                    deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
+                    deep_link: notification.deep_link
                     )
     android_notification_body = build_android_notification(android_data, (notification.ttl_hours * 3600).to_s)
     notification_topic_push("marketing_en_android-US", android_notification_body)
