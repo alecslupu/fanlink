@@ -210,18 +210,27 @@ RSpec.describe Person, type: :model do
     describe "#with_friendships" do
       it { expect(Person).to respond_to(:with_friendships)}
     end
-
     describe "#without_friendships" do
       it { expect(Person).to respond_to(:without_friendships)}
     end
     describe "has_interests" do
       it { expect(Person).to respond_to(:has_interests)}
     end
+
+    describe "has_no_interests" do
+      it { expect(Person).to respond_to(:has_no_interests)}
+    end
     describe "#has_followings" do
       it { expect(Person).to respond_to(:has_followings)}
     end
+    describe "#has_no_followings" do
+      it { expect(Person).to respond_to(:has_no_followings)}
+    end
     describe "#has_posts" do
       it { expect(Person).to respond_to(:has_posts)}
+    end
+    describe "#has_no_posts" do
+      it { expect(Person).to respond_to(:has_no_posts)}
     end
     describe "has_facebook_id" do
       it { expect(Person).to respond_to(:has_facebook_id)}
@@ -232,14 +241,20 @@ RSpec.describe Person, type: :model do
     describe "#has_created_acc_last_7days" do
       it { expect(Person).to respond_to(:has_created_acc_last_7days)}
     end
-    describe "has_enrolled_certificate" do
-      it { expect(Person).to respond_to(:has_enrolled_certificate)}
+    describe "has_no_enrolled_certificate" do
+      it { expect(Person).to respond_to(:has_no_enrolled_certificate)}
     end
     describe "#has_enrolled_certificate" do
       it { expect(Person).to respond_to(:has_enrolled_certificate)}
     end
     describe "#has_certificate_generated" do
       it { expect(Person).to respond_to(:has_certificate_generated)}
+    end
+    describe "#has_paid_certificate" do
+      it { expect(Person).to respond_to(:has_paid_certificate)}
+    end
+    describe "#has_no_paid_certificate" do
+      it { expect(Person).to respond_to(:has_no_paid_certificate)}
     end
   end
 
