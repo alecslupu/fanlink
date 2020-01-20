@@ -176,8 +176,8 @@ class Person < ApplicationRecord
   scope :has_posts, -> { joins(:posts).group(:id) }
   scope :has_no_posts, -> { where.not(id: has_posts.select(:id)) }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
-  scope :has_created_acc_last_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
-  scope :has_created_acc_last_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
+  scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
+  scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
   scope :has_enrolled_certificate, -> { joins(:certificates).where("certificates.is_free = ?", true) }
   scope :has_no_enrolled_certificate, -> { where.not(id: has_enrolled_certificate.select(:id))}
   scope :has_paid_certificate, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0") }
