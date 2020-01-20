@@ -27,7 +27,7 @@ class MarketingNotification < ApplicationRecord
   #   certificate_screen: 7
   # }
 
-  enum user_filter: {
+  enum person_filter: {
     send_to_all: 0,
     has_certificate_enrolled: 1,
     has_no_certificate_enrolled: 2,
@@ -43,8 +43,8 @@ class MarketingNotification < ApplicationRecord
     has_created_posts: 12,
     has_no_created_posts: 13,
     has_facebook_id: 14,
-    acc_created_past_24h: 15,
-    acc_created_past_7_days: 16
+    account_created_past_24h: 15,
+    accoount_created_past_7_days: 16
   }
 
   validates :body, presence: true
