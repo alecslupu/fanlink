@@ -58,8 +58,8 @@
       "description": "Users"
     },
     {
-      "name": "Referal",
-      "description": "Referal system "
+      "name": "Referral",
+      "description": "Referral system "
     },
     {
       "name": "Relationships",
@@ -1278,9 +1278,9 @@
         }
       }
     },
-    "/people/referal": {
+    "/people/referral": {
       "get": {
-        "summary": "List the referal code",
+        "summary": "List the referral code",
         "security": [
           {
             "Bearer": [
@@ -1332,9 +1332,9 @@
         }
       }
     },
-    "/people/referal/purchased": {
+    "/people/referral/purchased": {
       "get": {
-        "summary": "List the referal code",
+        "summary": "List the referral code",
         "security": [
           {
             "Bearer": [
@@ -1386,9 +1386,9 @@
         }
       }
     },
-    "/people/referal/me": {
+    "/people/referral/me": {
       "get": {
-        "summary": "List the referal code",
+        "summary": "List the referral code",
         "security": [
           {
             "Bearer": [
@@ -1409,7 +1409,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/ReferalCode"
+              "$ref": "#/definitions/ReferralCode"
             }
           },
           "401": {
@@ -2335,11 +2335,9 @@
           }
         },
         "badges_awarded": {
-          "type": "object",
-          "properties": {
-            "badge": {
-              "$ref": "#/definitions/BadgeJson"
-            }
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BadgeJson"
           }
         }
       }
@@ -2992,7 +2990,7 @@
       },
       "description": "Badge Response"
     },
-    "ReferalCode": {
+    "ReferralCode": {
       "type": "object",
       "properties": {
         "person_id": {

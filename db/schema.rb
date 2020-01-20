@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200119065803) do
+ActiveRecord::Schema.define(version: 20200120182704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1027,22 +1027,22 @@ ActiveRecord::Schema.define(version: 20200119065803) do
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
 
-  create_table "referal_refered_people", force: :cascade do |t|
+  create_table "referral_referred_people", force: :cascade do |t|
     t.bigint "inviter_id"
     t.bigint "invited_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["invited_id"], name: "index_referal_refered_people_on_invited_id"
-    t.index ["inviter_id"], name: "index_referal_refered_people_on_inviter_id"
+    t.index ["invited_id"], name: "index_referral_referred_people_on_invited_id"
+    t.index ["inviter_id"], name: "index_referral_referred_people_on_inviter_id"
   end
 
-  create_table "referal_user_codes", force: :cascade do |t|
+  create_table "referral_user_codes", force: :cascade do |t|
     t.bigint "person_id"
     t.string "unique_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_referal_user_codes_on_person_id"
-    t.index ["unique_code"], name: "index_referal_user_codes_on_unique_code", unique: true
+    t.index ["person_id"], name: "index_referral_user_codes_on_person_id"
+    t.index ["unique_code"], name: "index_referral_user_codes_on_unique_code", unique: true
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -1528,9 +1528,9 @@ ActiveRecord::Schema.define(version: 20200119065803) do
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
   add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
-  add_foreign_key "referal_refered_people", "people", column: "invited_id"
-  add_foreign_key "referal_refered_people", "people", column: "inviter_id"
-  add_foreign_key "referal_user_codes", "people"
+  add_foreign_key "referral_referred_people", "people", column: "invited_id"
+  add_foreign_key "referral_referred_people", "people", column: "inviter_id"
+  add_foreign_key "referral_user_codes", "people"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
