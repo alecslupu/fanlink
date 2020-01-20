@@ -1,8 +1,8 @@
 require 'swagger_helper'
 
-RSpec.describe "Api::V4::Referal::ReferalController", type: :request, swagger_doc: "v4/swagger.json" do
-  path "/people/referal" do
-    get "List the referal code" do
+RSpec.describe "Api::V4::Referral::ReferralController", type: :request, swagger_doc: "v4/swagger.json" do
+  path "/people/referral" do
+    get "List the referral code" do
 
       security [Bearer: []]
       tags "Referal"
@@ -29,8 +29,8 @@ RSpec.describe "Api::V4::Referal::ReferalController", type: :request, swagger_do
     end
   end
 
-  path "/people/referal/purchased" do
-    get "List the referal code" do
+  path "/people/referral/purchased" do
+    get "List the referral code" do
 
       security [Bearer: []]
       tags "Referal"

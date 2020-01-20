@@ -1,7 +1,7 @@
 require 'swagger_helper'
 
-RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swagger.json" do
 
+RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swagger.json" do
   path "/people" do
     get "" do
       security [Bearer: []]

@@ -1,5 +1,5 @@
-module Refered
+module Referral
   def self.table_name_prefix
-    'refered_'
+    'referral_'
   end
 end

@@ -3,10 +3,10 @@ Rails.application.routes.draw do
 
     resources :people, except: %i[create index show update] do
       collection do
-        resources :referal, path: :referal, only: [:index], module: "referal" do
+        resources :referral, path: :referral, only: [:index], module: "referral" do
           collection do
             get :purchased
-            get "/me" => "referal/user_code#index"
+            get "/me" => "user_code#index"
           end
         end
       end

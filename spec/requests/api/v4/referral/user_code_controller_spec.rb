@@ -1,8 +1,8 @@
 require 'swagger_helper'
 
-RSpec.describe "Api::V4::Referal::UserCodeControllerSpec", type: :request, swagger_doc: "v4/swagger.json" do
-  path "/people/referal/me" do
-    get "List the referal code" do
+RSpec.describe "Api::V4::Referral::UserCodeControllerSpec", type: :request, swagger_doc: "v4/swagger.json" do
+  path "/people/referral/me" do
+    get "List the referral code" do
 
       security [Bearer: []]
       tags "Referal"
@@ -14,7 +14,7 @@ RSpec.describe "Api::V4::Referal::UserCodeControllerSpec", type: :request, swagg
       let(:person) { create(:person) }
       response "200", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/ReferalCode"
+        schema "$ref": "#/definitions/ReferralCode"
         run_test!
       end
 

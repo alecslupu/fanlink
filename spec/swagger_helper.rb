@@ -160,8 +160,8 @@ RSpec.configure do |config|
         #  description: "Recommended posts",
         #},
         {
-            name: "Referal",
-            description: "Referal system "
+            name: "Referral",
+            description: "Referral system "
         },
         {
           name: "Relationships",
@@ -252,9 +252,9 @@ RSpec.configure do |config|
               }
             },
             badges_awarded: {
-              type: :object,
-              properties: {
-                badge: { "$ref": "#/definitions/BadgeJson" }
+              type: :array,
+              items: {
+                "$ref": "#/definitions/BadgeJson"
               }
             }
           }
@@ -581,7 +581,7 @@ RSpec.configure do |config|
           },
           "description": "Badge Response"
         },
-        ReferalCode: {
+        ReferralCode: {
             type: :object,
             properties: {
                 person_id: {type: :integer},

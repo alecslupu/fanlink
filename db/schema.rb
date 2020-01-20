@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200117193814) do
+ActiveRecord::Schema.define(version: 20200120182704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,15 @@ ActiveRecord::Schema.define(version: 20200117193814) do
     t.index ["semester_id"], name: "index_courses_on_semester_id"
   end
 
+  create_table "courseware_wishlist_wishlists", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "certificate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certificate_id"], name: "index_courseware_wishlist_wishlists_on_certificate_id"
+    t.index ["person_id"], name: "index_courseware_wishlist_wishlists_on_person_id"
+  end
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
@@ -446,6 +455,19 @@ ActiveRecord::Schema.define(version: 20200117193814) do
     t.jsonb "name", default: {}, null: false
     t.index ["product_id", "internal_name"], name: "unq_levels_product_internal_name"
     t.index ["product_id", "points"], name: "unq_levels_product_points"
+  end
+
+  create_table "marketing_notifications", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.bigint "person_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ttl_hours", default: 670, null: false
+    t.integer "deep_link_action", default: 0, null: false
+    t.string "deep_link_value"
+    t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
 
   create_table "merchandise", force: :cascade do |t|
@@ -1005,22 +1027,22 @@ ActiveRecord::Schema.define(version: 20200117193814) do
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
 
-  create_table "referal_refered_people", force: :cascade do |t|
+  create_table "referral_referred_people", force: :cascade do |t|
     t.bigint "inviter_id"
     t.bigint "invited_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["invited_id"], name: "index_referal_refered_people_on_invited_id"
-    t.index ["inviter_id"], name: "index_referal_refered_people_on_inviter_id"
+    t.index ["invited_id"], name: "index_referral_referred_people_on_invited_id"
+    t.index ["inviter_id"], name: "index_referral_referred_people_on_inviter_id"
   end
 
-  create_table "referal_user_codes", force: :cascade do |t|
+  create_table "referral_user_codes", force: :cascade do |t|
     t.bigint "person_id"
     t.string "unique_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_referal_user_codes_on_person_id"
-    t.index ["unique_code"], name: "index_referal_user_codes_on_unique_code", unique: true
+    t.index ["person_id"], name: "index_referral_user_codes_on_person_id"
+    t.index ["unique_code"], name: "index_referral_user_codes_on_unique_code", unique: true
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -1102,14 +1124,15 @@ ActiveRecord::Schema.define(version: 20200117193814) do
   end
 
   create_table "room_subscribers", force: :cascade do |t|
-    t.bigint "room_id"
-    t.bigint "person_id"
+    t.bigint "room_id", null: false
+    t.bigint "person_id", null: false
     t.bigint "last_message_id"
-    t.datetime "last_notification_time"
+    t.datetime "last_notification_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["last_message_id"], name: "index_room_subscribers_on_last_message_id"
     t.index ["person_id"], name: "index_room_subscribers_on_person_id"
+    t.index ["room_id", "person_id"], name: "unq_room_person", unique: true
     t.index ["room_id"], name: "index_room_subscribers_on_room_id"
   end
 
@@ -1444,6 +1467,8 @@ ActiveRecord::Schema.define(version: 20200117193814) do
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "config_items", "products"
+  add_foreign_key "courseware_wishlist_wishlists", "certificates"
+  add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
@@ -1454,6 +1479,7 @@ ActiveRecord::Schema.define(version: 20200117193814) do
   add_foreign_key "image_pages", "products", name: "fk_image_products", on_delete: :cascade
   add_foreign_key "interests", "products", name: "fk_interests_products"
   add_foreign_key "levels", "products", name: "fk_levels_products"
+  add_foreign_key "marketing_notifications", "people"
   add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
   add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
   add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people", on_delete: :cascade
@@ -1502,9 +1528,9 @@ ActiveRecord::Schema.define(version: 20200117193814) do
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
   add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
-  add_foreign_key "referal_refered_people", "people", column: "invited_id"
-  add_foreign_key "referal_refered_people", "people", column: "inviter_id"
-  add_foreign_key "referal_user_codes", "people"
+  add_foreign_key "referral_referred_people", "people", column: "invited_id"
+  add_foreign_key "referral_referred_people", "people", column: "inviter_id"
+  add_foreign_key "referral_user_codes", "people"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
