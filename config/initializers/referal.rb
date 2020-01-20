@@ -1,1 +1,1 @@
-Person.send(:include, Referal::PersonRelation)
+Person.send(:include, Referral::PersonRelation)

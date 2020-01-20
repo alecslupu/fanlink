@@ -1,4 +1,4 @@
-module Referal
+module Referral
   class UserCode < ApplicationRecord
     belongs_to :person
 
@@ -11,7 +11,7 @@ module Referal
     def generate_unique_key(field_name)
       loop do
         key = SecureRandom.uuid.split("-").first
-        break key unless Referal::UserCode.exists?("#{field_name}": key)
+        break key unless Referral::UserCode.exists?("#{field_name}": key)
       end
     end
   end

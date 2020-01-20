@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :referal_user_code, class: 'Referal::UserCode' do
+  factory :referral_user_code, class: 'Referral::UserCode' do
     person { create(:person) }
     unique_code { "MyString" }
   end

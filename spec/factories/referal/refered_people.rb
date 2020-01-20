@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :referal_refered_person, class: 'Referal::ReferedPerson' do
+  factory :referral_referred_person, class: 'Referral::ReferredPerson' do
     inviter { nil }
     invited { nil }
   end
