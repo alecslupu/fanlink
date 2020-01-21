@@ -218,30 +218,51 @@ module Push
   end
 
   def marketing_notification_push(notification)
-    person_ids = get_person_ids(notification)
+    if notification.send_to_all?
+      android_notification_body = build_android_notification(
+                                    (notification.ttl_hours * 3600).to_s,
+                                    context: "marketing",
+                                    title: notification.title,
+                                    message_short: notification.body,
+                                    deep_link: notification.deep_link
+                                  )
 
-    NotificationDeviceId.where(person_id: person_ids, device_type: :ios).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
-      ios_token_notification_push(
-        notification_device_ids.pluck(:device_identifier),
-        notification.title,
-        notification.body,
-        nil,
-        (notification.ttl_hours * 3600).to_s,
-        context: "marketing",
-        deep_link: notification.deep_link
-      )
-    end
+      ios_notification_body = build_ios_notification(
+                                notification.title,
+                                notification.body,
+                                nil,
+                                (notification.ttl_hours * 3600).to_s,
+                                context: "marketing",
+                                deep_link: notification.deep_link
+                              )
+      notification_topic_push("marketing_en_ios-US", ios_notification_body)
+      notification_topic_push("marketing_en_android-US", android_notification_body)
+    else
+      person_ids = get_person_ids(notification)
 
-     NotificationDeviceId.where(person_id: person_ids, device_type: :android).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
-      android_token_notification_push(
-        notification_device_ids.pluck(:device_identifier),
-        (notification.ttl_hours * 3600).to_s,
-        context: "marketing",
-        title: notification.title,
-        message_short: notification.body,
-        deep_link: notification.deep_link
+      NotificationDeviceId.where(person_id: person_ids, device_type: :ios).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
+        ios_token_notification_push(
+          notification_device_ids.pluck(:device_identifier),
+          notification.title,
+          notification.body,
+          nil,
+          (notification.ttl_hours * 3600).to_s,
+          context: "marketing",
+          deep_link: notification.deep_link
         )
-     end
+      end
+
+      NotificationDeviceId.where(person_id: person_ids, device_type: :android).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
+        android_token_notification_push(
+          notification_device_ids.pluck(:device_identifier),
+          (notification.ttl_hours * 3600).to_s,
+          context: "marketing",
+          title: notification.title,
+          message_short: notification.body,
+          deep_link: notification.deep_link
+        )
+      end
+    end
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
@@ -351,7 +372,7 @@ private
   end
 
   def android_token_notification_push(tokens, ttl, data = {})
-    notification_body = build_android_notification(data, ttl)
+    notification_body = build_android_notification(ttl, data)
     push_with_retry(notification_body, tokens, "android")
   end
 
@@ -360,7 +381,7 @@ private
     push_with_retry(notification_body, tokens, "ios")
   end
 
-  def build_android_notification(data, ttl)
+  def build_android_notification(ttl, data = {})
     options = {}
     data[:type] = "user"
     options[:data] = data
@@ -375,7 +396,7 @@ private
     return options
   end
 
-  def build_ios_notification(title, body, click_action, ttl, data)
+  def build_ios_notification(title, body, click_action, ttl, data = {})
     options = {}
     options[:notification] = {}
 
@@ -452,10 +473,6 @@ private
     ) unless ios_tokens.empty?
   end
 
-  def build_data(data = {})
-    data
-  end
-
   def unsubscribe_to_topic(tokens, phone_os)
     case phone_os
     when nil
@@ -471,9 +488,6 @@ private
 
   def get_person_ids(notification)
     case notification.person_filter
-    when "send_to_all"
-      notification_topic_push("marketing_en_android-US", android_notification_body)
-      notification_topic_push("marketing_en_ios-US", ios_notification_body)
     when "has_certificate_enrolled"
       person_ids = Person.has_enrolled_certificate.select(:id)
     when "has_no_certificate_enrolled"
