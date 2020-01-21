@@ -235,11 +235,11 @@ RSpec.describe Person, type: :model do
     describe "has_facebook_id" do
       it { expect(Person).to respond_to(:has_facebook_id)}
     end
-    describe "#has_created_acc_last_24h" do
-      it { expect(Person).to respond_to(:has_created_acc_last_24h)}
+    describe "#has_created_acc_past_24h" do
+      it { expect(Person).to respond_to(:has_created_acc_past_24h)}
     end
-    describe "#has_created_acc_last_7days" do
-      it { expect(Person).to respond_to(:has_created_acc_last_7days)}
+    describe "#has_created_acc_past_7days" do
+      it { expect(Person).to respond_to(:has_created_acc_past_7days)}
     end
     describe "has_no_enrolled_certificate" do
       it { expect(Person).to respond_to(:has_no_enrolled_certificate)}
