@@ -158,6 +158,14 @@ class Person < ApplicationRecord
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
   scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
+  scope :with_same_interests, -> (interest_ids, current_user_id) {
+    joins(:person_interests)
+    .where("people.product_account = false")
+    .where("person_interests.interest_id IN (?)", interest_ids)
+    .where("person_interests.person_id != ?", current_user_id)
+    .group("people.id")
+    .order("count(person_interests.*) DESC")
+  }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
