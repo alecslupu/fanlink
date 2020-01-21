@@ -17,7 +17,7 @@ module Push
 
       android_token_notification_push(
         android_tokens,
-        "2419200",
+        2419200,
         context: "friend_accepted",
         title: "Friend request accepted by #{to.username}",
         message_short: "Friend request accepted by #{to.username}",
@@ -30,7 +30,7 @@ module Push
         "Friend request accepted",
         "Friend request accepted by #{to.username}",
         nil,
-        "2419200",
+        2419200,
         context: "friend_accepted",
         deep_link: "#{from.product.internal_name}://users/#{to.id}"
       ) unless ios_tokens.empty?
@@ -47,7 +47,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "friend_requested",
       title: "Friend request",
       message_short: "New friend request from #{from.username}",
@@ -62,7 +62,7 @@ module Push
       "Friend request",
       "New friend request from #{from.username}",
       "AcceptOrIgnore",
-      "2419200",
+      2419200,
       context: "friend_requested",
       relationship_id: relationship.id,
       image_url: profile_picture_url,
@@ -81,7 +81,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "message_mentioned",
       title: "Mention",
       message_short: "#{mentionner.username} mentioned you",
@@ -94,7 +94,7 @@ module Push
       "Mention",
       "#{mentionner.username} mentioned you",
       nil,
-      "2419200",
+      2419200,
       context: "message_mentioned",
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
     ) unless ios_tokens.empty? || blocks_with.include?(message_mention.person.id)
@@ -132,7 +132,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "comment_mentioned",
       title: "Mention",
       message_short: "#{mentionner.username} mentioned you",
@@ -145,7 +145,7 @@ module Push
       "Mention",
       "#{mentionner.username} mentioned you",
       nil,
-      "2419200",
+      2419200,
       context: "comment_mentioned",
       deep_link: "#{mentionner.product.internal_name}://posts/#{post_id}/comments"
     ) unless ios_tokens.empty? || blocks_with.include?(mentioned_person.id)
@@ -161,7 +161,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "feed_post",
       title: "New post",
       message_short: "New post from #{person.username}",
@@ -174,7 +174,7 @@ module Push
       "New Post",
       "New post from #{person.username}",
       nil,
-      "2419200",
+      2419200,
       context: "feed_post",
       deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
     ) unless ios_tokens.empty?
@@ -220,7 +220,7 @@ module Push
   def marketing_notification_push(notification)
     if notification.send_to_all?
       android_notification_body = build_android_notification(
-                                    (notification.ttl_hours * 3600).to_s,
+                                    notification.ttl_hours * 3600,
                                     context: "marketing",
                                     title: notification.title,
                                     message_short: notification.body,
@@ -231,10 +231,11 @@ module Push
                                 notification.title,
                                 notification.body,
                                 nil,
-                                (notification.ttl_hours * 3600).to_s,
+                                notification.ttl_hours * 3600,
                                 context: "marketing",
                                 deep_link: notification.deep_link
                               )
+      binding.pry
       notification_topic_push("marketing_en_ios-US", ios_notification_body)
       notification_topic_push("marketing_en_android-US", android_notification_body)
     else
@@ -246,7 +247,7 @@ module Push
           notification.title,
           notification.body,
           nil,
-          (notification.ttl_hours * 3600).to_s,
+          notification.ttl_hours * 3600,
           context: "marketing",
           deep_link: notification.deep_link
         )
@@ -255,7 +256,7 @@ module Push
       NotificationDeviceId.where(person_id: person_ids, device_type: :android).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
         android_token_notification_push(
           notification_device_ids.pluck(:device_identifier),
-          (notification.ttl_hours * 3600).to_s,
+          notification.ttl_hours * 3600,
           context: "marketing",
           title: notification.title,
           message_short: notification.body,
@@ -445,7 +446,7 @@ private
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: context,
       title: message.person.username,
       message_short: message_short,
@@ -465,7 +466,7 @@ private
       message.person.username,
       body,
       "ReplyToMessage",
-      "2419200",
+      2419200,
       context: context,
       room_id: room.id.to_s,
       image_url: message.picture_url,
