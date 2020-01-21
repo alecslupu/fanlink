@@ -50,13 +50,12 @@ class MarketingNotification < ApplicationRecord
   validates :body, presence: true
   validates :title, presence: true
   validates :ttl_hours, presence: true
-  validates :deep_link_action, presence: true
 
+  # validates :deep_link_action, presence: true
   # validate :check_deep_link_pair
   # validate :check_deep_link_value_for_action
 
   after_create :notify
-
 
   private
 
