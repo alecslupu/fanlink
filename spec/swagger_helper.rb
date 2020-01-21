@@ -127,10 +127,10 @@ RSpec.configure do |config|
         #  name: "PostReports",
         #  description: "Posts reported by a user",
         #},
-        #{
-        #  name: "Posts",
-        #  description: "User/product posts",
-        #},
+        {
+          name: "Posts",
+          description: "User/product posts",
+        },
         #{
         #  name: "ProductBeacons",
         #  description: "Beacons assigned to a product",
