@@ -484,6 +484,7 @@ class Person < ApplicationRecord
     self.select("people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids")
       .joins(:person_interests).where("person_interests.interest_id in (?)", interest_ids)
       .where("person_interests.person_id != (?)", person_id)
+      .where("people.product_account = false")
       .group("people.id")
       .order("count(person_interests.*) DESC")
   end

@@ -5,6 +5,7 @@
     r = Relationship.for_people(current_user, p.id)
     rel = render(partial: "api/v4/relationships/rel_mini", collection: r, as: :relationship)
     {
+      person: person,
       relationship: rel.first,
       matched_interest_ids: p.matched_ids
     }
