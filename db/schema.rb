@@ -595,11 +595,8 @@ ActiveRecord::Schema.define(version: 20200121082504) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.bigint "role_id"
-<<<<<<< HEAD
     t.datetime "last_activity_at"
-=======
     t.boolean "authorized", default: true, null: false
->>>>>>> fe8e91788bf91a8c0a5806828658977521adad6c
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
