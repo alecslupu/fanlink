@@ -1,6 +1,8 @@
 module Push
   include ActionView::Helpers::TextHelper
 
+  BATCH_SIZE = 50.freeze
+
   def friend_request_accepted_push(relationship)
     to = relationship.requested_to
     from = relationship.requested_by
@@ -15,7 +17,7 @@ module Push
 
       android_token_notification_push(
         android_tokens,
-        "2419200",
+        2419200,
         context: "friend_accepted",
         title: "Friend request accepted by #{to.username}",
         message_short: "Friend request accepted by #{to.username}",
@@ -28,7 +30,7 @@ module Push
         "Friend request accepted",
         "Friend request accepted by #{to.username}",
         nil,
-        "2419200",
+        2419200,
         context: "friend_accepted",
         deep_link: "#{from.product.internal_name}://users/#{to.id}"
       ) unless ios_tokens.empty?
@@ -45,7 +47,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "friend_requested",
       title: "Friend request",
       message_short: "New friend request from #{from.username}",
@@ -60,7 +62,7 @@ module Push
       "Friend request",
       "New friend request from #{from.username}",
       "AcceptOrIgnore",
-      "2419200",
+      2419200,
       context: "friend_requested",
       relationship_id: relationship.id,
       image_url: profile_picture_url,
@@ -79,7 +81,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "message_mentioned",
       title: "Mention",
       message_short: "#{mentionner.username} mentioned you",
@@ -92,7 +94,7 @@ module Push
       "Mention",
       "#{mentionner.username} mentioned you",
       nil,
-      "2419200",
+      2419200,
       context: "message_mentioned",
       deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
     ) unless ios_tokens.empty? || blocks_with.include?(message_mention.person.id)
@@ -124,13 +126,13 @@ module Push
     post_id = post_comment_mention.post_comment.post_id
 
     do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_comment_mention.post_comment.post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
+              "comment_mentioned", post_id: post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
 
     android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "comment_mentioned",
       title: "Mention",
       message_short: "#{mentionner.username} mentioned you",
@@ -143,7 +145,7 @@ module Push
       "Mention",
       "#{mentionner.username} mentioned you",
       nil,
-      "2419200",
+      2419200,
       context: "comment_mentioned",
       deep_link: "#{mentionner.product.internal_name}://posts/#{post_id}/comments"
     ) unless ios_tokens.empty? || blocks_with.include?(mentioned_person.id)
@@ -159,7 +161,7 @@ module Push
 
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: "feed_post",
       title: "New post",
       message_short: "New post from #{person.username}",
@@ -172,7 +174,7 @@ module Push
       "New Post",
       "New post from #{person.username}",
       nil,
-      "2419200",
+      2419200,
       context: "feed_post",
       deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
     ) unless ios_tokens.empty?
@@ -216,20 +218,52 @@ module Push
   end
 
   def marketing_notification_push(notification)
-    android_data = build_data(
-                    title: notification.title,
-                    context: "marketing",
-                    message_short: notification.body,
-                    message_placeholder: notification.person.username,
-                    message_long: notification.body,
-                    deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile"
-                    )
-    android_notification_body = build_android_notification(android_data, (notification.ttl_hours * 3600).to_s)
-    notification_topic_push("marketing_en_android-US", android_notification_body)
+    if notification.send_to_all?
+      android_notification_body = build_android_notification(
+                                    notification.ttl_hours * 3600,
+                                    context: "marketing",
+                                    title: notification.title,
+                                    message_short: notification.body,
+                                    deep_link: notification.deep_link
+                                  )
 
-    ios_data = build_data(context: "marketing", deep_link: "#{notification.product.internal_name}://users/#{notification.person.id}/profile")
-    ios_notification_body = build_ios_notification(notification.title, notification.body, nil, (notification.ttl_hours * 3600).to_s, ios_data)
-    notification_topic_push("marketing_en_ios-US", ios_notification_body)
+      ios_notification_body = build_ios_notification(
+                                notification.title,
+                                notification.body,
+                                nil,
+                                notification.ttl_hours * 3600,
+                                context: "marketing",
+                                deep_link: notification.deep_link
+                              )
+      binding.pry
+      notification_topic_push("marketing_en_ios-US", ios_notification_body)
+      notification_topic_push("marketing_en_android-US", android_notification_body)
+    else
+      person_ids = get_person_ids(notification)
+
+      NotificationDeviceId.where(person_id: person_ids, device_type: :ios).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
+        ios_token_notification_push(
+          notification_device_ids.pluck(:device_identifier),
+          notification.title,
+          notification.body,
+          nil,
+          notification.ttl_hours * 3600,
+          context: "marketing",
+          deep_link: notification.deep_link
+        )
+      end
+
+      NotificationDeviceId.where(person_id: person_ids, device_type: :android).select(:id, :device_identifier).find_in_batches(batch_size: BATCH_SIZE) do |notification_device_ids|
+        android_token_notification_push(
+          notification_device_ids.pluck(:device_identifier),
+          notification.ttl_hours * 3600,
+          context: "marketing",
+          title: notification.title,
+          message_short: notification.body,
+          deep_link: notification.deep_link
+        )
+      end
+    end
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
@@ -339,7 +373,7 @@ private
   end
 
   def android_token_notification_push(tokens, ttl, data = {})
-    notification_body = build_android_notification(data, ttl)
+    notification_body = build_android_notification(ttl, data)
     push_with_retry(notification_body, tokens, "android")
   end
 
@@ -348,7 +382,7 @@ private
     push_with_retry(notification_body, tokens, "ios")
   end
 
-  def build_android_notification(data, ttl)
+  def build_android_notification(ttl, data = {})
     options = {}
     data[:type] = "user"
     options[:data] = data
@@ -363,7 +397,7 @@ private
     return options
   end
 
-  def build_ios_notification(title, body, click_action, ttl, data)
+  def build_ios_notification(title, body, click_action, ttl, data = {})
     options = {}
     options[:notification] = {}
 
@@ -412,7 +446,7 @@ private
     message_short = message.picture_url.present? ? "You’ve got a 📸" : message.body
     android_token_notification_push(
       android_tokens,
-      "2419200",
+      2419200,
       context: context,
       title: message.person.username,
       message_short: message_short,
@@ -432,16 +466,12 @@ private
       message.person.username,
       body,
       "ReplyToMessage",
-      "2419200",
+      2419200,
       context: context,
       room_id: room.id.to_s,
       image_url: message.picture_url,
       deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
     ) unless ios_tokens.empty?
-  end
-
-  def build_data(data = {})
-    data
   end
 
   def unsubscribe_to_topic(tokens, phone_os)
@@ -455,6 +485,48 @@ private
     when "ios"
       response = push_client.batch_topic_unsubscription("marketing_en_ios-US", make_array(tokens))
     end
+  end
+
+  def get_person_ids(notification)
+    case notification.person_filter
+    when "has_certificate_enrolled"
+      person_ids = Person.has_enrolled_certificate.select(:id)
+    when "has_no_certificate_enrolled"
+      person_ids = Person.has_no_enrolled_certificate.select(:id)
+    when "has_certificate_generated"
+      person_ids = Person.has_certificate_generated.select(:id)
+    when "has_paid_certificate"
+      person_ids = Person.has_paid_certificate.select(:id)
+    when "has_no_paid_certificate"
+      person_ids = Person.has_no_paid_certificate.select(:id)
+    when "has_friends"
+      person_ids = Person.with_friendships.select(:id)
+    when "has_no_friends"
+      person_ids = Person.without_friendships.select(:id)
+    when "has_followings"
+      person_ids = Person.has_followings.select(:id)
+    when "has_no_followings"
+      person_ids = Person.has_no_followings.select(:id)
+    when "has_interests"
+      person_ids = Person.has_interests.select(:id)
+    when "has_no_interests"
+      person_ids = Person.has_no_interests.select(:id)
+    when "has_created_posts"
+      person_ids = Person.has_posts.select(:id)
+    when "has_no_created_posts"
+      person_ids = Person.has_no_posts.select(:id)
+    when "has_facebook_id"
+      person_ids = Person.has_facebook_id.select(:id)
+    when "account_created_past_24h"
+      person_ids = Person.has_created_acc_past_24h.select(:id)
+    when "accoount_created_past_7_days"
+      person_ids = Person.has_created_acc_past_7days.select(:id)
+    end
+
+    return person_ids
+
+    # verifica daca e mai rapid asa sau sa faci cum ai in notepad sau
+    # si daca nu dai pluck la id, cand dai Persin.where(id: person ids) iti face din nou tot selectul in select
   end
 
   # def build_android_options
