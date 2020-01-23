@@ -1,0 +1,10 @@
+json = {}
+
+@wishlist.map do |item|
+  json[:wishlist][] = {
+    id: item.id,
+    certificate: render(partial: @req_source, locals: {certificate: item.certificate, user: current_user, pc: item.certificate.person_certificates}, handlers: "jb"),
+  }
+end
+
+json
