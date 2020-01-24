@@ -1,6 +1,6 @@
 class MentionPushNotification
   include Push
-  def self.message_created(msg_id, product_id)
+  def message_created(msg_id, product_id)
     Rails.logger.tagged("Message Created") { Rails.logger.debug "Message #{msg_id} created. Checking for mentions..." } unless Rails.env.production?
     msg = Message.find(msg_id)
     if msg.body

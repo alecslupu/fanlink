@@ -414,7 +414,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
 
         get :list, params: {person_filter: "customusername"}
-        posts = Post.where(person_id: person1.id)
+        posts = Post.where(person_id: person.id)
 
         expect(response).to be_successful
         expect(json["posts"].count).to eq(posts.count)

@@ -1,5 +1,6 @@
 require "spec_helper"
 
+
 RSpec.describe Api::V1::MessagesController, type: :controller do
   before(:each) do
     stub_wisper_publisher("MentionPushNotification",
@@ -15,6 +16,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         expect_any_instance_of(Message).to receive(:post)
         expect_any_instance_of(Room).not_to receive(:increment_message_counters) # msg counters are only for closers!..er, private rooms
         login_as(person)
+
         body = "Do you like my body?"
         room = create(:room, public: true, status: :active)
         post :create, params: {room_id: room.id, message: {body: body}}
