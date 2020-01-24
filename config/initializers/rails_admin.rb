@@ -44,27 +44,55 @@ RailsAdmin.config do |config|
   #   ## To disable Gravatar integration in Navigation Bar set to false
   #   # config.show_gravatar = true
 
+  # config.included_models.push("Courseware::Client::ClientToPerson")
+  # config.included_models.push("Courseware::Client::Assigned")
+  # config.included_models.push("Courseware::Client::Designated")
+
   config.actions do
+    dashboard                     # mandatory
+    index                         # mandatory
+    new
+    export
+    bulk_delete
+    show
+    edit
+    delete
+    show_in_app
+    history_index
+    history_show
+
     forget_action do
-      only [ "PersonCertcourse" ]
+      only ["PersonCertcourse"]
     end
     reset_progress_action do
-      only [ "PersonCertcourse" ]
+      only ["PersonCertcourse"]
     end
+
     hide_message_action do
-      only [ "MessageReport" ]
+      only ["MessageReport"]
     end
-    reanalyze_action do
-      only [ "MessageReport" ]
+    reanalyze_message_action do
+      only ["MessageReport"]
     end
-    ignore_action do
-      only [ "MessageReport" ]
+    ignore_message_action do
+      only ["MessageReport"]
     end
+    hide_post_report_action do
+      only ["PostReport"]
+    end
+    reanalyze_post_report_action do
+      only ["PostReport"]
+    end
+    ignore_post_report_action do
+      only ["PostReport"]
+    end
+
     hide_action do
-      only [ "Message" ]
+      only ["Message"]
     end
+
     unhide_action do
-      only [ "Message" ]
+      only ["Message"]
     end
     generate_game_action do
       only ["Trivia::Game"]

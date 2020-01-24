@@ -20,10 +20,13 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
       certcourse_pages.each do |certcourse_page|
         quiz_page = QuizPage.find_by(certcourse_page_id: certcourse_page.id)
 
-        next unless quiz_page.present?
+        next if quiz_page.blank?
+
+        person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
+
+        next if person_responses.blank?
 
         correct_answer = Answer.find_by(quiz_page_id: quiz_page.id, is_correct: true)
-        person_responses = PersonQuiz.where(person_id: params[:person_id], quiz_page_id: quiz_page.id)
         failed_attempts = person_responses.where.not(answer_id: correct_answer.id)
         no_of_failed_attempts = failed_attempts.count
 
@@ -37,8 +40,8 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
         #   is_correct = true
         #   answer_text = person_response.fill_in_response.present?
         else
-          answer_text = Answer.find(failed_attempts.last.answer_id).description
           is_correct = false
+          answer_text = failed_attempts.present? ? Answer.find(failed_attempts.last.answer_id).description : nil
         end
 
         quiz = {

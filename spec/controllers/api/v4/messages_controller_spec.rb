@@ -240,6 +240,28 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
         expect(json['messages'].size).to eq(2)
       end
     end
+
+    it "gets a list of messages not to include the ones reported by current user" do
+      person = create(:person)
+
+      ActsAsTenant.with_tenant(person.product) do
+        room = create(:room, public: true, status: :active)
+        login_as(person)
+
+        person2 = create(:person)
+        msg = create(:message, room_id: room.id)
+        reported_msg = create(:message, room_id: room.id)
+        not_user_reported_msg = create(:message, room_id: room.id)
+        create(:message_report, message: reported_msg, status: :pending, person_id: person.id)
+        create(:message_report, message: not_user_reported_msg, status: :pending, person_id: person2.id)
+
+        get :index, params: { room_id: room.id }
+
+        expect(response).to be_successful
+        expect(json["messages"].count).to eq(2)
+        expect(json['messages'].map { |m| m['id'] }.sort).to eq([msg.id, not_user_reported_msg.id])
+      end
+    end
   end
 
   # TODO: auto-generated
@@ -274,7 +296,7 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         room = create(:room, created_by: person, status: :active)
-        expect(room.last_message_timestamp).to eq(nil)
+        expect(room.last_message_timestamp).to eq(0)
 
         room.members << person
         other_member = create(:person, product: person.product)

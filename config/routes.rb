@@ -1,19 +1,15 @@
 Rails.application.routes.draw do
-  get "/config/:internal_name" => "config#show"
-
-  mount Rswag::Ui::Engine => "/api-docs"
-  mount Rswag::Api::Engine => "/api-docs"
-  mount RailsAdmin::Engine => "/admin_portal", :as => "rails_admin"
+  get "/config/:internal_name" => "config#index"
+  get "/config/:internal_name/:id" => "config#show"
 
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
   end
-  # draw :v1
-  # draw :v2
-  # draw :v3
-  draw :jko
 
-  draw :trivia unless Rails.env.production?
+  draw :v1
+  draw :v2
+  draw :v3
+  draw :v4
 
   post "/aws/video_transcoded" => "aws#video_transcoded"
 
@@ -22,7 +18,6 @@ Rails.application.routes.draw do
   # TODO: move the password reset controller update out of the api
   post "/people/password_reset" => "api/v1/password_resets#update"
   namespace :admin do
-
     post "login" => "sessions#create"
     get "logout" => "sessions#destroy"
     get ":product_internal_name" => "sessions#login_redirect"
@@ -33,5 +28,10 @@ Rails.application.routes.draw do
   get ":product/share_post/:post_id", to: "posts#share", as: "cache_post"
   get "/:product_id/static_content/:slug" => "static_contents#show"
 
-  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
+  match "/delayed_job" => DelayedJobWeb, anchor: false, via: [:get, :post]
+
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+  mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
+
 end

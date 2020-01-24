@@ -27,8 +27,8 @@
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -53,7 +53,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum old_role: %i[ normal staff admin super_admin ]
+  enum old_role: %i[ normal staff admin super_admin root client client_portal]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -123,24 +123,18 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+  has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
+  has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
+  has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
+  has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
+  has_many :designated_clients, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
 
-  # has_many :hired_people, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "person_id", dependent: :destroy
-  # has_many :clients, class_name:  "Courseware::Client::ClientToPerson", foreign_key: "client_id", dependent: :destroy
-
-  # has_many :assigners, through: :hired_people, source: :client
-  # has_many :assignees, through: :clients, source: :person
-
-  has_many :hired_assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "person_id", dependent: :destroy
-  has_many :hired_designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "person_id", dependent: :destroy
-
-  has_many :assigned_people, -> { where relation_type: :assigned }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_assignation_and_status, foreign_key: "client_id", dependent: :destroy
-  has_many :designated_people, -> { where relation_type: :designated }, class_name:  "Courseware::Client::ClientToPerson", after_add: :add_designation_and_status, foreign_key: "client_id", dependent: :destroy
-
-  has_many :assigners_with_assignation, through: :hired_assigned_people, source: :client
-  has_many :assigners_with_designation, through: :hired_designated_people, source: :client
-  has_many :designated_assignees, through: :designated_people, source: :person
-  has_many :assignees, through: :assigned_people, source: :person
+  has_many :assigned_people, through: :assigned_assignees, source: :person
+  has_many :designated_people, through: :designated_assignees, source: :person
+  has_many :clients_assigned, through: :assigned_clients, source: :client
+  has_many :clients_designated, through: :designated_clients, source: :client
 
 
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
@@ -155,6 +149,7 @@ class Person < ApplicationRecord
   before_validation :assign_role
 
   after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
+  before_save :check_facebookid, if: -> { self.facebookid == "" }
 
   after_commit :flush_cache
 
@@ -212,16 +207,6 @@ class Person < ApplicationRecord
     StringUtil.search_ify(username)
   end
 
-  def add_designation_and_status(client_to_person)
-      client_to_person.relation_type = :designated
-      client_to_person.status = :active
-  end
-
-  def add_assignation_and_status(client_to_person)
-      client_to_person.relation_type = :assigned
-      client_to_person.status = :active
-  end
-
   def self.cached_find(id)
     Rails.cache.fetch([name, id]) { find(id) }
   end
@@ -263,7 +248,7 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id, :email, :picture])
+      results = graph.get_object("me", fields: %w(id email picture.width(320).height(320)))
     rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
@@ -477,6 +462,10 @@ class Person < ApplicationRecord
     %w[root].include?(assigned_role.internal_name)
   end
 
+  def admin?
+    %w[admin].include?(assigned_role.internal_name)
+  end
+
   def super_admin?
     %w[super_admin].include?(assigned_role.internal_name) || root?
   end
@@ -494,6 +483,11 @@ class Person < ApplicationRecord
   end
 
   private
+
+  def check_facebookid
+    self.facebookid = nil if self.facebookid == ""
+  end
+
   def canonicalize(name)
     self.class.canonicalize(name)
   end
@@ -550,9 +544,9 @@ class Person < ApplicationRecord
   end
 
   def generate_unique_client_code
-    code = SecureRandom.hex(4)[0..-2]
-    while code.in?(ClientInfo.all.map(&:code))
-      code = SecureRandom.hex(4)[0..-2]
+    code = SecureRandom.uuid.first(7)
+    while ClientInfo.where(code: code).first.present?
+      code = SecureRandom.uuid.first(7)
     end
     ClientInfo.create(client_id: self.id, code: code)
   end

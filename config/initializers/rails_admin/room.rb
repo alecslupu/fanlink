@@ -28,5 +28,10 @@ RailsAdmin.config do |config|
              :status,
              :public
     end
+
+    export do
+      configure :name, :string
+      configure :description, :string
+    end
   end
 end

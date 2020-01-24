@@ -27,8 +27,8 @@
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -57,18 +57,22 @@ FactoryBot.define do
     # biography { Faker::Lorem.paragraph(sentence_count: 2)}
     # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
 
-    # role { create(:role_normal) }
+    role { Role.where(internal_name: 'normal').first || create(:role_normal) }
 
     factory :recommended_person do
       recommended { true }
     end
 
     factory :admin_user do
-      role { create(:role_admin) }
+      role { Role.where(internal_name: 'admin').first || create(:role_admin) }
+    end
+
+    factory :client_user do
+      role { Role.where(internal_name: 'client').first || create(:role_client) }
     end
 
     factory :super_admin do
-      role { create(:role_super_admin) }
+      role { Role.where(internal_name: 'super_admin').first || create(:role_super_admin) }
     end
   end
 end
