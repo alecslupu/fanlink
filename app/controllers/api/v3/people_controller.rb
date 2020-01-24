@@ -236,6 +236,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
           if person_params.has_key?(:terminated) && @person.some_admin?
             return render_422 _("You cannot ban administative accounts.")
           end
+          @person.trigger_admin = true
           @person.update(person_params)
           if @person.terminated && @person == current_user
             logout

@@ -31,6 +31,7 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       parameter name: :posted_before_filter, in: :query, type: :string, required: false
       parameter name: :status_filter, in: :query, type: :string, required: false
 
+      let(:tag) { nil }
       response "200", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         schema "$ref": "#/definitions/faulty"

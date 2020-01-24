@@ -9,7 +9,12 @@ RailsAdmin.config do |config|
       :username
     end
 
+    configure :trigger_admin do
+      visible false
+    end
+
     configure :level_earned do
+
     end
     configure :password do
     end
@@ -146,7 +151,6 @@ RailsAdmin.config do |config|
     end
 
     edit do
-
       fields :username, :email, :name, :picture
       field :role do
         def render
@@ -270,6 +274,16 @@ RailsAdmin.config do |config|
           Proc.new { |scope|
             scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
           }
+        end
+      end
+
+      field :trigger_admin, :hidden do
+        visible true
+        formatted_value do
+          "true"
+        end
+        default_value do
+          "true"
         end
       end
     end

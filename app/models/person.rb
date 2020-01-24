@@ -43,6 +43,8 @@
 #
 
 class Person < ApplicationRecord
+  attr_accessor :trigger_admin
+
   include AttachmentSupport
   include TranslationThings
   authenticates_with_sorcery!
@@ -565,6 +567,7 @@ class Person < ApplicationRecord
 
   def read_only_username
     return if new_record?
+    return if self.trigger_admin.present?
     errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
   end
 
