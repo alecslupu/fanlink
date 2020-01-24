@@ -407,16 +407,13 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     end
 
     it "should get the list of all posts filtered on full person username match" do
-      person = create(:admin_user)
+      person = create(:admin_user, username: "customusername")
       ActsAsTenant.with_tenant(person.product) do
-        create_list(:post, 9, created_at: 10.days.ago)
-
-        person1 = create(:person, username: "uniqueusername20191229")
-        create(:post, person: person1, created_at: 10.days.ago)
-
+        create_list(:post, 10, created_at: 10.days.ago)
+        create(:post, person: person)
         login_as(person)
 
-        get :list, params: { person_filter: "uniqueusername20191229" }
+        get :list, params: {person_filter: "customusername"}
         posts = Post.where(person_id: person1.id)
 
         expect(response).to be_successful
