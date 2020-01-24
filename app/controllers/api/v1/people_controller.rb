@@ -263,6 +263,7 @@ class Api::V1::PeopleController < ApiController
       render_error(_("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}"))
     else
       if @person == current_user || current_user.admin? || current_user.product_account
+        @person.trigger_admin = true
         @person.update(person_params)
         return_the @person
       else
