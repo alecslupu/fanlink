@@ -123,10 +123,10 @@ RSpec.configure do |config|
         #  name: "PostReactions",
         #  description: "User reactions to a post",
         #},
-        #{
-        #  name: "PostReports",
-        #  description: "Posts reported by a user",
-        #},
+        {
+          name: "PostReports",
+          description: "Posts reported by a user",
+        },
         {
           name: "Posts",
           description: "User/product posts",
