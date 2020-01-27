@@ -1,10 +1,11 @@
 class UserReferredListener
   def self.person_created(person_id, params)
-    return unless params && params[:referer].present?
+    return unless params && params[:referrer].present?
     person = Person.find(person_id)
-    code = Referral::UserCode.where(unique_code: params[:referer]).first!
+    code = Referral::UserCode.where(unique_code: params[:referrer]).first!
 
-    Referral::ReferredPerson.create!(invited_id: person_id, inviter_id: code.person_id)
+    Referral::ReferredPerson.create!(invited_id: person.id, inviter_id: code.person_id)
+
     true
   rescue ActiveRecord::RecordNotFound
     false
