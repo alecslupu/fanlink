@@ -10,7 +10,8 @@ module Referral
 
     def generate_unique_key(field_name)
       loop do
-        key = SecureRandom.uuid.split("-").first
+        # They want 7 chars
+        key = SecureRandom.uuid.split("-").first.chop!
         break key unless Referral::UserCode.exists?("#{field_name}": key)
       end
     end
