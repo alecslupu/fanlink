@@ -89,7 +89,7 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       parameter name: :"person[password]", in: :formData, type: :string, required: false
       parameter name: :"person[picture]", in: :formData,  type: :file
       parameter name: :facebook_auth_token, in: :formData, type: :string, required: false
-      parameter name: :referer, in: :formData,  type: :string, required: false
+      parameter name: :referrer, in: :formData,  type: :string, required: false
 
       let(:product) { }
       let("person[picture]") {  }

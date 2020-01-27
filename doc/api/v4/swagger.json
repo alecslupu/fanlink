@@ -830,7 +830,7 @@
             "required": false
           },
           {
-            "name": "referer",
+            "name": "referrer",
             "in": "formData",
             "type": "string",
             "required": false
