@@ -9,12 +9,24 @@ RailsAdmin.config do |config|
       :username
     end
 
+    configure :trigger_admin do
+      visible false
+    end
+
     configure :level_earned do
+
     end
     configure :password do
     end
 
     list do
+      if Person.current_user.admin? || Person.current_user.super_admin?
+      scopes [
+        nil, :has_interests, :has_no_interests, :has_followings, :has_no_followings, :with_friendships, :without_friendships, :has_posts, :has_no_posts,
+        :has_facebook_id, :has_created_acc_past_24h, :has_created_acc_past_7days, :has_enrolled_certificate, :has_no_enrolled_certificate,
+        :has_paid_certificate, :has_no_paid_certificate, :has_certificate_generated
+      ]
+      end
       field :username do
         column_width 150
       end
@@ -139,7 +151,6 @@ RailsAdmin.config do |config|
     end
 
     edit do
-
       fields :username, :email, :name, :picture
       field :role do
         def render
@@ -263,6 +274,16 @@ RailsAdmin.config do |config|
           Proc.new { |scope|
             scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
           }
+        end
+      end
+
+      field :trigger_admin, :hidden do
+        visible true
+        formatted_value do
+          "true"
+        end
+        default_value do
+          "true"
         end
       end
     end

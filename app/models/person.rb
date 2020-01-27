@@ -43,6 +43,8 @@
 #
 
 class Person < ApplicationRecord
+  attr_accessor :trigger_admin
+
   include AttachmentSupport
   include TranslationThings
   authenticates_with_sorcery!
@@ -101,7 +103,6 @@ class Person < ApplicationRecord
 
   has_many :badges, through: :badge_awards
 
-
   has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
   has_many :trivia_package_leaderboards, class_name: "Trivia::RoundLeaderboard"
   has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
@@ -142,7 +143,6 @@ class Person < ApplicationRecord
 
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
 
-
   has_many :notifications, dependent: :destroy
 
   belongs_to :role, optional: true
@@ -163,6 +163,26 @@ class Person < ApplicationRecord
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
   scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
+
+  scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
+  scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
+  scope :with_friendships, -> { received_friendships.or(requested_friendships) }
+  scope :without_friendships, -> { where.not(id: with_friendships.select(:id)) }
+
+  scope :has_interests, -> { joins(:person_interests).group(:id) }
+  scope :has_no_interests, -> { where.not(id: has_interests.select(:id)) }
+  scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").group(:id) }
+  scope :has_no_followings, -> { where.not(id: has_followings.select(:id)) }
+  scope :has_posts, -> { joins(:posts).group(:id) }
+  scope :has_no_posts, -> { where.not(id: has_posts.select(:id)) }
+  scope :has_facebook_id, -> { where.not(facebookid: nil) }
+  scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
+  scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
+  scope :has_enrolled_certificate, -> { joins(:certificates).where("certificates.is_free = ?", true) }
+  scope :has_no_enrolled_certificate, -> { where.not(id: has_enrolled_certificate.select(:id))}
+  scope :has_paid_certificate, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0") }
+  scope :has_no_paid_certificate, -> { where.not(id: has_paid_certificate.select(:id)) }
+  scope :has_certificate_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
@@ -487,6 +507,15 @@ class Person < ApplicationRecord
     super_admin? || client_portal?
   end
 
+  def self.with_matched_interests(interest_ids, person_id)
+    self.select("people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids")
+      .joins(:person_interests).where("person_interests.interest_id in (?)", interest_ids)
+      .where("person_interests.person_id != (?)", person_id)
+      .where("people.product_account = false")
+      .group("people.id")
+      .order("count(person_interests.*) DESC")
+  end
+
   private
 
   def check_facebookid
@@ -538,6 +567,7 @@ class Person < ApplicationRecord
 
   def read_only_username
     return if new_record?
+    return if self.trigger_admin.present?
     errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
   end
 
