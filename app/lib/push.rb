@@ -200,8 +200,7 @@ module Push
     tokens = []
     room = message.room
     room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
-    room_subscribers_ids = room_subscribers.pluck(:person_id)
-    android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers_ids), message)
+    android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers.pluck(:person_id)), message)
 
     room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
 
@@ -235,7 +234,6 @@ module Push
                                 context: "marketing",
                                 deep_link: notification.deep_link
                               )
-      binding.pry
       notification_topic_push("marketing_en_ios-US", ios_notification_body)
       notification_topic_push("marketing_en_android-US", android_notification_body)
     else
