@@ -98,6 +98,8 @@ class Api::V3::MessagesController < Api::V2::MessagesController
           if room.private?
             room.increment_message_counters(current_user.id)
             @message.private_message_push
+          else
+            @message.public_room_message_push
           end
           return_the @message
         else
