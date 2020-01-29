@@ -221,7 +221,7 @@ RailsAdmin.config do |config|
 
           Proc.new { |scope|
             scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
-            scope = scope.limit(10)
+            scope = scope.limit(50)
           }
         end
       end
@@ -239,7 +239,7 @@ RailsAdmin.config do |config|
 
           Proc.new { |scope|
             scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
-            scope = scope.limit(10)
+            scope = scope.limit(50)
           }
         end
       end
@@ -258,7 +258,7 @@ RailsAdmin.config do |config|
 
           Proc.new { |scope|
             scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
-            scope = scope.limit(10)
+            scope = scope.limit(50)
           }
         end
       end
@@ -276,7 +276,7 @@ RailsAdmin.config do |config|
 
           Proc.new { |scope|
             scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
-            scope = scope.limit(10)
+            scope = scope.limit(50)
           }
         end
       end
