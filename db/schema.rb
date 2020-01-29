@@ -92,8 +92,9 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.text "body", null: false
     t.bigint "person_id", null: false
     t.integer "criteria", null: false
-    t.boolean "enabled", null: false
+    t.boolean "enabled", default: false, null: false
     t.integer "product_id", null: false
+    t.datetime "last_sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["criteria"], name: "index_automated_notifications_on_criteria"
