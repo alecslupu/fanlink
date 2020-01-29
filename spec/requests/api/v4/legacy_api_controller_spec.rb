@@ -44,103 +44,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
 
     end
   end
-  path "/post_reports" do
-    #  post "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
-  path "/posts/tags" do
-    #  get "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #  end
-  end
-  path "/posts/recommended" do
-    #  get "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
-  path "/post_comment_reports" do
-    #  post "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #  get "" do
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
-  path "/message_reports" do
-    #  get "" do
-    #    tags ["steps", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
   path "/quests" do
     #  get "" do
     #    tags ["quests", 'android-old']
@@ -421,23 +324,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   end
-  path "/certcourses/{id}" do
-  #  get "" do
-  #    tags ["education", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  end
   path "/person_certcourses" do
   #  post "" do
   #    tags ["education", 'kotlin']
@@ -455,22 +341,4 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   end
-  path "/person_certcourses/send_email" do
-  #  post "" do
-  #    tags ["education", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  end
-
 end

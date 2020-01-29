@@ -25,6 +25,7 @@ RailsAdmin.config do |config|
              :picture,
              :status
       field :subscribers do
+        label "Owners"
         hide do
           bindings[:object].private?
         end

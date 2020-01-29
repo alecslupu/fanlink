@@ -2,19 +2,24 @@ RailsAdmin.config do |config|
   config.included_models.push("RoomSubscriber")
 
   config.model "RoomSubscriber" do
-    # list do
-    #   fields :id,
-    #          :title,
-    #          :content,
-    #          :slug
-    # end
-    #
-    # edit do
-    #   field :title, :translated
-    #   field :content, :translated do
-    #     html_attributes rows: 20, cols: 50
-    #   end
-    # end
+    label_plural "Room Owners"
+    list do
+      fields :id,
+             :person,
+             :room,
+             :last_message,
+             :last_notification_time
+    end
+    edit do
+      field :person
+      field :room do
+        associated_collection_scope do
+          Proc.new { |scope|
+            scope.where(public: true)
+          }
+        end
+      end
+    end
     #
     # show do
     #   fields :id,
