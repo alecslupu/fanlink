@@ -14,6 +14,7 @@ SimpleCov.start "rails" do
   add_group "Policies", "app/policies" # nothing here
 
   minimum_coverage 0
+  enable_coverage :branch
 end
 require File.expand_path("../../config/environment", __FILE__)
 require 'paper_trail/frameworks/rspec'
