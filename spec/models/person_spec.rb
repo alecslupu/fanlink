@@ -475,7 +475,7 @@ RSpec.describe Person, type: :model do
         expect(p).to eq(Person.last)
       end
       it "should return nil if api error" do
-        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: [:id, :email, :picture]).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: %w(id email picture.width(320).height(320))).and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.create_from_facebook("12345", "fdafafadadfa")).to be_nil
       end
     end
