@@ -1,6 +1,6 @@
 class Api::V4::PostCommentsController < Api::V3::PostCommentsController
   def index
-    @post_comments = paginate @post.comments.visible.order(created_at: :desc)
+    @post_comments = paginate @post.comments.visible.not_reported.order(created_at: :desc)
     return_the @post_comments, handler: tpl_handler
   end
 
@@ -28,4 +28,16 @@ class Api::V4::PostCommentsController < Api::V3::PostCommentsController
     def tpl_handler
       :jb
     end
+
+  private
+
+  def apply_filters
+    post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).visible.order(created_at: :desc)
+    params.each do |p, v|
+      if p.end_with?("_filter") && PostComment.respond_to?(p)
+        post_comments = post_comments.send(p, v)
+      end
+    end
+    post_comments
+  end
 end

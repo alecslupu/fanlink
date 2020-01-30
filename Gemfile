@@ -28,7 +28,7 @@ elsif ENV["RAILS6"]
   gem "rails", "~> 6"
 else
   # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 5.1.4"
+  gem "rails", "~> 5.1.6"
   # Use Puma as the app server
   gem "puma", "~> 3.7"
   # Use SCSS for stylesheets
@@ -94,6 +94,8 @@ group :development, :test do
   gem 'rubocop-rails'
   gem "rubocop-rspec"
   gem 'rubocop-performance'
+
+  gem 'rails-erd'
 end
 
 group :development do
@@ -110,7 +112,7 @@ group :development do
     gem 'spring-watcher-listen', '~> 2.0.0'
   elsif ENV["RAILS6"]
       # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-      gem "rails", "~> 6"
+      #gem "rails", "~> 6"
   else
     # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
     gem "web-console", ">= 3.3.0"
@@ -186,12 +188,14 @@ gem "goldiloader"
 gem "google_places"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
-gem "jko_api" # api versioning
+#gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
 gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandrill"
+#
+gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
 gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"

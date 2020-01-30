@@ -2,7 +2,7 @@ module RailsAdmin
   module Config
     module Actions
       module MessageReport
-        class IgnoreAction < RailsAdmin::Config::Actions::Base
+        class IgnoreMessageAction < RailsAdmin::Config::Actions::Base
           RailsAdmin::Config::Actions.register(self)
 
           register_instance_option :member do

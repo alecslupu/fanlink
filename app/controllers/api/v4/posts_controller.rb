@@ -1,34 +1,27 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
     ordering = 'DESC'
-    if params[:post_id].present? && (params[:chronologically] == 'after' || params[:chronologically] == 'before')
-      chronological = true
+    if chronological?
       post = Post.find(params[:post_id])
-      if params[:chronologically] == 'after'
+      if params[:chronologically] == "after"
         sign = '>'
         ordering = 'ASC'
       else
         sign = '<'
       end
-    else
-      chronological = false
     end
     if params[:promoted].present? && params[:promoted] == "true"
-      if chronological
-        @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).chronological(sign, post.created_at, post.id).includes([:poll])
-      else
-        @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
-      end
+      @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+      @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
     else
       if web_request? && some_admin?
-        @posts = paginate apply_filters
+        @posts = apply_filters
       else
-        if chronological
-          @posts = paginate Post.visible.unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id).includes([:poll])
-        else
-          @posts = paginate Post.visible.unblocked(current_user.blocked_people).includes([:poll])
-        end
+        @posts = Post.visible.unblocked(current_user.blocked_people).includes([:poll])
+        @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
       end
+      @posts = paginate @posts
+
       if params[:tag].present? || params[:categories].present?
         @posts = @posts.for_tag(params[:tag]) if params[:tag]
         @posts = @posts.for_category(params[:categories]) if params[:categories]
@@ -42,16 +35,14 @@ class Api::V4::PostsController < Api::V3::PostsController
         end
       else
         unless web_request?
-          if chronological
-            @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).chronological(sign, post.created_at, post.id).includes([:poll]))
-          else
-            @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll]))
-          end
+          @posts = Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll])
+          @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
+          @posts = paginate(@posts)
         end
       end
     end
     @posts = @posts.order("posts.created_at #{ordering}, posts.id #{ordering} ")
-    # @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+    @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
 
     # @posts = @posts.includes([:person])
     return_the @posts, handler: tpl_handler
@@ -127,18 +118,37 @@ class Api::V4::PostsController < Api::V3::PostsController
   end
 
   def stats
-    if params.has_key?(:days) && params[:days].respond_to?(:to_i)
-      time = params[:days].to_i
-    else
-      time = 1
-    end
+    time = if params.has_key?(:days) && params[:days].respond_to?(:to_i)
+             params[:days].to_i
+           else
+             1
+           end
     @posts = Post.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
     return_the @posts, handler: tpl_handler
   end
 
   protected
+  def apply_filters
+    posts = Post.for_product(ActsAsTenant.current_tenant)
 
-    def tpl_handler
-      :jb
+    posts = if chronological?
+              posts.chronological(sign, post.created_at, post.id)
+            else
+              posts.order(created_at: :desc)
+            end
+    params.each do |p, v|
+      if p.end_with?("_filter") && Post.respond_to?(p)
+        posts = posts.send(p, v)
+      end
     end
+    posts
+  end
+
+  def chronological?
+    params[:post_id].present? && %w[before after].include?(params[:chronologically])
+  end
+
+  def tpl_handler
+    :jb
+  end
 end

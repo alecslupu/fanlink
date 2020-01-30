@@ -57,14 +57,14 @@ FactoryBot.define do
     # biography { Faker::Lorem.paragraph(sentence_count: 2)}
     # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
 
-    # role { create(:role_normal) }
+    role { Role.where(internal_name: 'normal').first || create(:role_normal) }
 
     factory :recommended_person do
       recommended { true }
     end
 
     factory :admin_user do
-      role { Role.where(internal_name: 'admin').first ||  create(:role_admin) }
+      role { Role.where(internal_name: 'admin').first || create(:role_admin) }
     end
 
     factory :client_user do
