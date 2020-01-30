@@ -276,6 +276,27 @@ module Push
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
+  def automated_notification_android_push(device_identifiers, title, body, ttl_hours)
+    android_token_notification_push(
+      device_identifiers,
+      ttl_hours * 3600,
+      context: "marketing",
+      title: title,
+      message_short: body,
+    )
+  end
+
+  def automated_notification_ios_push(device_identifiers, title, body, ttl_hours)
+    ios_token_notification_push(
+      device_identifiers,
+      title,
+      body,
+      nil,
+      ttl_hours * 3600,
+      context: "marketing",
+    )
+  end
+
 
 private
 
