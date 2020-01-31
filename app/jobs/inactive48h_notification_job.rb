@@ -1,5 +1,5 @@
 class Inactive48hNotificationJob
-  BATCH_SIZE = 1000.freeze
+  BATCH_SIZE = 50.freeze
 
   def perform
     notification = AutomatedNotification.where(criteria: :inactive_48h, enabled: true).last
