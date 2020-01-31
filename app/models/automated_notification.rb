@@ -10,6 +10,7 @@
 #  enabled           :boolean          not null
 #  product_id        :integer          not null, foreign key
 #  last_sent_at      :datetime
+#  ttl_hours         :integer          not null, default: 672
 #
 
 class AutomatedNotification < ApplicationRecord
@@ -32,6 +33,6 @@ class AutomatedNotification < ApplicationRecord
   validates :criteria, presence: true
   validates :product_id, presence: true
   validates :person_id, presence: true
-  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 672 }
 
 end

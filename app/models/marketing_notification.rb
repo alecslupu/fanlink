@@ -6,7 +6,7 @@
 #  title             :string           not null
 #  body              :text             not null
 #  person_id         :integer          not null, foreign key
-#  ttl_hours         :integer          not null, default: 670
+#  ttl_hours         :integer          not null, default: 672
 #  person_filter     :integer          not null
 #  product_id        :integer          not null, foreign key
 #
@@ -39,7 +39,7 @@ class MarketingNotification < ApplicationRecord
 
   validates :body, presence: true
   validates :title, presence: true
-  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 672 }
   validates :person_filter, presence: true
   validates :product_id, presence: true
   validates :person_id, presence: true
