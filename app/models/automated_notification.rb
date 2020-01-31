@@ -32,5 +32,6 @@ class AutomatedNotification < ApplicationRecord
   validates :criteria, presence: true
   validates :product_id, presence: true
   validates :person_id, presence: true
+  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200129115849) do
+ActiveRecord::Schema.define(version: 20200131081930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.datetime "last_sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ttl_hours", default: 672, null: false
     t.index ["criteria"], name: "index_automated_notifications_on_criteria"
     t.index ["person_id"], name: "index_automated_notifications_on_person_id"
   end
@@ -256,7 +257,6 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
-    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -321,15 +321,6 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["semester_id"], name: "index_courses_on_semester_id"
-  end
-
-  create_table "courseware_wishlist_wishlists", force: :cascade do |t|
-    t.bigint "person_id"
-    t.bigint "certificate_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["certificate_id"], name: "index_courseware_wishlist_wishlists_on_certificate_id"
-    t.index ["person_id"], name: "index_courseware_wishlist_wishlists_on_person_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -478,7 +469,7 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ttl_hours", default: 672, null: false
-    t.integer "person_filter"
+    t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
@@ -605,8 +596,8 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
-    t.boolean "authorized", default: true, null: false
     t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
     t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -750,7 +741,7 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-09-10 13:54:50"
+    t.datetime "end_date", default: "2020-01-31 09:32:07"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -1037,24 +1028,6 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
 
-  create_table "referral_referred_people", force: :cascade do |t|
-    t.bigint "inviter_id"
-    t.bigint "invited_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["invited_id"], name: "index_referral_referred_people_on_invited_id"
-    t.index ["inviter_id"], name: "index_referral_referred_people_on_inviter_id"
-  end
-
-  create_table "referral_user_codes", force: :cascade do |t|
-    t.bigint "person_id"
-    t.string "unique_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_referral_user_codes_on_person_id"
-    t.index ["unique_code"], name: "index_referral_user_codes_on_unique_code", unique: true
-  end
-
   create_table "relationships", force: :cascade do |t|
     t.integer "requested_by_id", null: false
     t.integer "requested_to_id", null: false
@@ -1166,13 +1139,6 @@ ActiveRecord::Schema.define(version: 20200129115849) do
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 
-  create_table "rooms_owners", force: :cascade do |t|
-    t.integer "person_id"
-    t.integer "room_id"
-    t.index ["person_id"], name: "index_rooms_owners_on_person_id"
-    t.index ["room_id"], name: "index_rooms_owners_on_room_id"
-  end
-
   create_table "semesters", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name", null: false
@@ -1186,13 +1152,12 @@ ActiveRecord::Schema.define(version: 20200129115849) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.text "content", null: false
-    t.string "title", null: false
+    t.jsonb "content", default: "{}", null: false
+    t.jsonb "title", default: "{}", null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id", "slug"], name: "unq_static_contents_product_slug"
     t.index ["slug"], name: "index_static_contents_on_slug", unique: true
   end
 
@@ -1486,8 +1451,6 @@ ActiveRecord::Schema.define(version: 20200129115849) do
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "config_items", "products"
-  add_foreign_key "courseware_wishlist_wishlists", "certificates"
-  add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
@@ -1547,9 +1510,6 @@ ActiveRecord::Schema.define(version: 20200129115849) do
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
   add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
-  add_foreign_key "referral_referred_people", "people", column: "invited_id"
-  add_foreign_key "referral_referred_people", "people", column: "inviter_id"
-  add_foreign_key "referral_user_codes", "people"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade

@@ -39,7 +39,7 @@ class MarketingNotification < ApplicationRecord
 
   validates :body, presence: true
   validates :title, presence: true
-  validates :ttl_hours, presence: true
+  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :person_filter, presence: true
   validates :product_id, presence: true
   validates :person_id, presence: true

@@ -30,6 +30,7 @@ RailsAdmin.config do |config|
       field :enabled do
         column_width 30
       end
+      field :ttl_hours
     end
 
     show do
@@ -39,7 +40,8 @@ RailsAdmin.config do |config|
              :body,
              :criteria,
              :last_sent_at,
-             :enabled
+             :enabled,
+             :ttl_hours
     end
 
     edit do
@@ -47,7 +49,8 @@ RailsAdmin.config do |config|
              :title,
              :body,
              :criteria,
-             :enabled
+             :enabled,
+             :ttl_hours
 
 
       field :person_id, :hidden do
