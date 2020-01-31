@@ -543,9 +543,6 @@ private
     end
 
     return person_ids
-
-    # verifica daca e mai rapid asa sau sa faci cum ai in notepad sau
-    # si daca nu dai pluck la id, cand dai Persin.where(id: person ids) iti face din nou tot selectul in select
   end
 
   # def build_android_options
