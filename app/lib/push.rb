@@ -9,11 +9,11 @@ module Push
     android_tokens, ios_tokens = get_device_tokens(from)
 
     if relationship.friended?
-      do_push(relationship.requested_by.device_tokens,
-              "Friend Request Accepted",
-              "#{relationship.requested_to.username} accepted your friend request",
-              "friend_accepted",
-              person_id: relationship.requested_to.id)
+    #   do_push(relationship.requested_by.device_tokens,
+    #           "Friend Request Accepted",
+    #           "#{relationship.requested_to.username} accepted your friend request",
+    #           "friend_accepted",
+    #           person_id: relationship.requested_to.id)
 
       android_token_notification_push(
         android_tokens,
@@ -43,7 +43,7 @@ module Push
     android_tokens, ios_tokens = get_device_tokens(to)
     profile_picture_url = from.picture_url.present? ? from.picture_url : from.facebook_picture_url
 
-    do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
+    # do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
     android_token_notification_push(
       android_tokens,
@@ -76,8 +76,8 @@ module Push
 
     android_tokens, ios_tokens = get_device_tokens(message_mention.person)
 
-    do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
-                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
+    # do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
+    #                           "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
 
     android_token_notification_push(
       android_tokens,
@@ -125,8 +125,8 @@ module Push
     blocks_with = mentionner.blocks_with.map { |b| b.id }
     post_id = post_comment_mention.post_comment.post_id
 
-    do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
+    # do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
+    #           "comment_mentioned", post_id: post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
 
     android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
@@ -154,8 +154,8 @@ module Push
   # sends to posts followers
   def post_push(post)
     person = post.person
-    do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
-              "New Post", "#{person.username} posted", "new_post", post_id: post.id)
+    # do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
+    #           "New Post", "#{person.username} posted", "new_post", post_id: post.id)
 
     android_tokens, ios_tokens = get_followers_device_tokens(person)
 
@@ -190,7 +190,7 @@ module Push
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
-    do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
+    # do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
 
     android_chat_notification(android_tokens, message, room, "private_chat")
     ios_chat_notification(ios_tokens, message, room, "private_chat")
