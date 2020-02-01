@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 git_source(:fanlink) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://gitlab.fan.link/#{repo_name}.git"
+  "https://gitlab.fan.link/#{repo_name}"
 end
 
 ruby "2.5.1"
@@ -143,7 +143,7 @@ group :development do
 end
 
 group :test do
-  gem "cucumber-rails", "~>1.8.0", require: false
+  # gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
   gem "simplecov", "~>0.18", require: false
   gem "simplecov-console", require: false
@@ -196,7 +196,7 @@ gem "kaminari"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
-gem "mandrill-api", fanlink: "fanlink/mandrill-api-ruby", require: "mandrill"
+gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
 #
 gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
@@ -217,7 +217,7 @@ gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
 gem "uuidtools"
-gem "wisper", "2.0.0"
+gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 

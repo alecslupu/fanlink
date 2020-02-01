@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 def document_response_without_test!
   before do |example|
@@ -248,10 +248,8 @@ RSpec.configure do |config|
               }
             },
             badges_awarded: {
-              type: :object,
-              properties: {
-                badge: { "$ref": "#/definitions/BadgeJson" }
-              }
+              type: :array,
+              items: { "$ref": "#/definitions/BadgeJson" }
             }
           }
         },
