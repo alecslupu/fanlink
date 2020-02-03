@@ -6,26 +6,16 @@
 #  title             :string           not null
 #  body              :text             not null
 #  person_id         :integer          not null, foreign key
-#  ttl_hours         :integer          not null, default: 670
+#  ttl_hours         :integer          not null, default: 672
 #  person_filter     :integer          not null
 #  product_id        :integer          not null, foreign key
 #
 
 class MarketingNotification < ApplicationRecord
   belongs_to :person, touch: true
+  belongs_to :product
 
   acts_as_tenant(:product)
-
-  # enum deep_link_action: {
-  #   send_to_all: 0,
-  #   comments_screen: 1,
-  #   profile_screen: 2,
-  #   posts_screen: 3,
-  #   feed_screen: 4,
-  #   profile_screen: 5,
-  #   chat_room: 6,
-  #   certificate_screen: 7
-  # }
 
   enum person_filter: {
     send_to_all: 0,
@@ -49,11 +39,10 @@ class MarketingNotification < ApplicationRecord
 
   validates :body, presence: true
   validates :title, presence: true
-  validates :ttl_hours, presence: true
-
-  # validates :deep_link_action, presence: true
-  # validate :check_deep_link_pair
-  # validate :check_deep_link_value_for_action
+  validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 672 }
+  validates :person_filter, presence: true
+  validates :product_id, presence: true
+  validates :person_id, presence: true
 
   after_create :notify
 
