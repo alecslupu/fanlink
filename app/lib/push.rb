@@ -201,11 +201,33 @@ module Push
     room = message.room
     room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
     android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers.pluck(:person_id)), message)
-
+    binding.pry
     room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
 
-    android_chat_notification(android_tokens, message, room, "public_chat")
-    ios_chat_notification(ios_tokens, message, room, "public_chat")
+    android_token_notification_push(
+      android_tokens,
+      2419200,
+      context: "public_chat",
+      title: message.product.name,
+      message_short: "A new user wrote in the #{room.name}",
+      message_placeholder: message.person.username,
+      message_long: "A new user wrote in the #{room.name}",
+      image_url: message.picture_url,
+      room_id: room.id.to_s,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless android_tokens.empty?
+
+    ios_token_notification_push(
+      ios_tokens,
+      message.product.name,
+      "A new user wrote in the #{room.name}",
+      "ReplyToMessage",
+      2419200,
+      context: "public_chat",
+      room_id: room.id.to_s,
+      image_url: message.picture_url,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless ios_tokens.empty?
   end
 
   def simple_notification_push(notification, current_user, receipents)
@@ -393,11 +415,13 @@ private
 
   def android_token_notification_push(tokens, ttl, data = {})
     notification_body = build_android_notification(ttl, data)
+    binding.pry
     push_with_retry(notification_body, tokens, "android")
   end
 
   def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
     notification_body = build_ios_notification(title, body, click_action, ttl, data)
+    binding.pry
     push_with_retry(notification_body, tokens, "ios")
   end
 
