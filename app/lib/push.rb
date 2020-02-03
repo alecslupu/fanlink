@@ -286,8 +286,9 @@ module Push
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
-  def subscribe_device_to_topic(notification_device_id)
-    response = push_client.topic_subscription(get_topic(notification_device_id.device_type), notification_device_id.device_identifier)
+  def subscribe_device_to_topic(device_identifier, device_type)
+    binding.pry
+    response = push_client.topic_subscription(get_topic(device_type), device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
@@ -322,7 +323,11 @@ module Push
 private
 
   def get_topic(device_type)
-    device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
+    if device_type == "ios"
+      return "marketing_en_ios-US"
+    elsif device_type == "android"
+      return "marketing_en_android-US"
+    end
   end
 
   def make_array(elem)
