@@ -9,11 +9,11 @@ module Push
     android_tokens, ios_tokens = get_device_tokens(from)
 
     if relationship.friended?
-      do_push(relationship.requested_by.device_tokens,
-              "Friend Request Accepted",
-              "#{relationship.requested_to.username} accepted your friend request",
-              "friend_accepted",
-              person_id: relationship.requested_to.id)
+      # do_push(relationship.requested_by.device_tokens,
+      #         "Friend Request Accepted",
+      #         "#{relationship.requested_to.username} accepted your friend request",
+      #         "friend_accepted",
+      #         person_id: relationship.requested_to.id)
 
       android_token_notification_push(
         android_tokens,
@@ -43,7 +43,7 @@ module Push
     android_tokens, ios_tokens = get_device_tokens(to)
     profile_picture_url = from.picture_url.present? ? from.picture_url : from.facebook_picture_url
 
-    do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
+    # do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
     android_token_notification_push(
       android_tokens,
@@ -76,8 +76,8 @@ module Push
 
     android_tokens, ios_tokens = get_device_tokens(message_mention.person)
 
-    do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
-                              "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
+    # do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
+                              # "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
 
     android_token_notification_push(
       android_tokens,
@@ -125,8 +125,8 @@ module Push
     blocks_with = mentionner.blocks_with.map { |b| b.id }
     post_id = post_comment_mention.post_comment.post_id
 
-    do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
-              "comment_mentioned", post_id: post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
+    # do_push(mentioned_person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a comment.",
+    #           "comment_mentioned", post_id: post_id, comment_id: post_comment_mention.post_comment_id) unless blocks_with.include?(mentioned_person.id)
 
     android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
@@ -154,8 +154,8 @@ module Push
   # sends to posts followers
   def post_push(post)
     person = post.person
-    do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
-              "New Post", "#{person.username} posted", "new_post", post_id: post.id)
+    # do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
+    #           "New Post", "#{person.username} posted", "new_post", post_id: post.id)
 
     android_tokens, ios_tokens = get_followers_device_tokens(person)
 
@@ -190,7 +190,7 @@ module Push
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
-    do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
+    # do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
 
     android_chat_notification(android_tokens, message, room, "private_chat")
     ios_chat_notification(ios_tokens, message, room, "private_chat")
@@ -199,13 +199,34 @@ module Push
   def public_message_push(message)
     tokens = []
     room = message.room
-    room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
+    room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: message.person_id)
     android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers.pluck(:person_id)), message)
+    room_subscribers.update_all(last_notification_time: DateTime.current, last_message_id: message.id)
 
-    room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
+    android_token_notification_push(
+      android_tokens,
+      2419200,
+      context: "public_chat",
+      title: message.product.name,
+      message_short: "A new user wrote in the #{room.name}",
+      message_placeholder: message.person.username,
+      message_long: "A new user wrote in the #{room.name}",
+      image_url: message.picture_url,
+      room_id: room.id.to_s,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless android_tokens.empty?
 
-    android_chat_notification(android_tokens, message, room, "public_chat")
-    ios_chat_notification(ios_tokens, message, room, "public_chat")
+    ios_token_notification_push(
+      ios_tokens,
+      message.product.name,
+      "A new user wrote in the #{room.name}",
+      "ReplyToMessage",
+      2419200,
+      context: "public_chat",
+      room_id: room.id.to_s,
+      image_url: message.picture_url,
+      deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+    ) unless ios_tokens.empty?
   end
 
   def simple_notification_push(notification, current_user, receipents)
@@ -265,8 +286,9 @@ module Push
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
-  def subscribe_device_to_topic(notification_device_id)
-    response = push_client.topic_subscription(get_topic(notification_device_id.device_type), notification_device_id.device_identifier)
+  def subscribe_device_to_topic(device_identifier, device_type)
+    binding.pry
+    response = push_client.topic_subscription(get_topic(device_type), device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
@@ -276,11 +298,36 @@ module Push
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
 
+  def automated_notification_android_push(device_identifiers, title, body, ttl_hours)
+    android_token_notification_push(
+      device_identifiers,
+      ttl_hours * 3600,
+      context: "marketing",
+      title: title,
+      message_short: body,
+    )
+  end
+
+  def automated_notification_ios_push(device_identifiers, title, body, ttl_hours)
+    ios_token_notification_push(
+      device_identifiers,
+      title,
+      body,
+      nil,
+      ttl_hours * 3600,
+      context: "marketing",
+    )
+  end
+
 
 private
 
   def get_topic(device_type)
-    device_type == "ios" ? "marketing_en_ios-US" : "marketing_en_android-US"
+    if device_type == "ios"
+      return "marketing_en_ios-US"
+    elsif device_type == "android"
+      return "marketing_en_android-US"
+    end
   end
 
   def make_array(elem)
@@ -522,9 +569,6 @@ private
     end
 
     return person_ids
-
-    # verifica daca e mai rapid asa sau sa faci cum ai in notepad sau
-    # si daca nu dai pluck la id, cand dai Persin.where(id: person ids) iti face din nou tot selectul in select
   end
 
   # def build_android_options
