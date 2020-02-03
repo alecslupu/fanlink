@@ -14,6 +14,11 @@ module Push
       #         "#{relationship.requested_to.username} accepted your friend request",
       #         "friend_accepted",
       #         person_id: relationship.requested_to.id)
+    #   do_push(relationship.requested_by.device_tokens,
+    #           "Friend Request Accepted",
+    #           "#{relationship.requested_to.username} accepted your friend request",
+    #           "friend_accepted",
+    #           person_id: relationship.requested_to.id)
 
       android_token_notification_push(
         android_tokens,
@@ -78,6 +83,7 @@ module Push
 
     # do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
                               # "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
+    #                           "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
 
     android_token_notification_push(
       android_tokens,
@@ -287,7 +293,6 @@ module Push
 
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_device_to_topic(device_identifier, device_type)
-    binding.pry
     response = push_client.topic_subscription(get_topic(device_type), device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
