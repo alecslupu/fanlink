@@ -287,7 +287,6 @@ module Push
 
   # will be later changed to accept language to subscribe to the correct marketing topic
   def subscribe_device_to_topic(device_identifier, device_type)
-    binding.pry
     response = push_client.topic_subscription(get_topic(device_type), device_identifier)
     Rails.logger.error("Got FCM response: #{response.inspect}")
   end
