@@ -199,10 +199,9 @@ module Push
   def public_message_push(message)
     tokens = []
     room = message.room
-    room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.now - 2.minute).where.not(person_id: message.person_id)
+    room_subscribers = RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: message.person_id)
     android_tokens, ios_tokens = get_room_members_device_tokens(Person.where(id: room_subscribers.pluck(:person_id)), message)
-    binding.pry
-    room_subscribers.update_all(last_notification_time: DateTime.now, last_message_id: message.id)
+    room_subscribers.update_all(last_notification_time: DateTime.current, last_message_id: message.id)
 
     android_token_notification_push(
       android_tokens,
@@ -415,13 +414,11 @@ private
 
   def android_token_notification_push(tokens, ttl, data = {})
     notification_body = build_android_notification(ttl, data)
-    binding.pry
     push_with_retry(notification_body, tokens, "android")
   end
 
   def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
     notification_body = build_ios_notification(title, body, click_action, ttl, data)
-    binding.pry
     push_with_retry(notification_body, tokens, "ios")
   end
 
