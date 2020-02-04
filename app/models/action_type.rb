@@ -14,7 +14,6 @@
 #
 
 class ActionType < ApplicationRecord
-  default_scope { where(active: true) }
   has_many :badges, dependent: :restrict_with_error
   has_many :assigned_rewards, as: :assigned
   has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "ActionType"
