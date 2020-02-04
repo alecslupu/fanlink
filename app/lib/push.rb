@@ -75,35 +75,32 @@ module Push
     ) unless ios_tokens.empty?
   end
 
-  def message_mention_push(message_mention)
-    mentionner = message_mention.message.person
-    blocks_with = mentionner.blocks_with.map { |b| b.id }
-
-    android_tokens, ios_tokens = get_device_tokens(message_mention.person)
-
+  def message_mention_push(message, mentioned_person)
+    # mentionner = message_mention.message.person
+    # blocks_with = mentionner.blocks_with.map { |b| b.id }
     # do_push(message_mention.person.device_tokens, "Mention", "#{mentionner.username} mentioned you in a message.",
                               # "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
     #                           "message_mentioned", room_id: message_mention.message.room_id, message_id: message_mention.message_id) unless blocks_with.include?(message_mention.person.id)
+    android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
     android_token_notification_push(
       android_tokens,
       2419200,
       context: "message_mentioned",
       title: "Mention",
-      message_short: "#{mentionner.username} mentioned you",
-      message_placeholder: mentionner.username,
-      deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
-    ) unless android_tokens.empty? || blocks_with.include?(message_mention.person.id)
-
+      message_short: "#{message.person.username} mentioned you",
+      message_placeholder: mentioned_person.username,
+      deep_link: "#{message.product.internal_name}://rooms/#{message.room.id}"
+    ) unless android_tokens.empty?
     ios_token_notification_push(
       ios_tokens,
       "Mention",
-      "#{mentionner.username} mentioned you",
+      "#{message.person.username} mentioned you",
       nil,
       2419200,
       context: "message_mentioned",
-      deep_link: "#{message_mention.message.product.internal_name}://rooms/#{message_mention.message.room.id}"
-    ) unless ios_tokens.empty? || blocks_with.include?(message_mention.person.id)
+      deep_link: "#{message.product.internal_name}://rooms/#{message.room.id}"
+    ) unless ios_tokens.empty?
   end
 
   def portal_notification_push(portal_notification)
