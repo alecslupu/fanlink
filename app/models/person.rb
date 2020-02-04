@@ -103,7 +103,6 @@ class Person < ApplicationRecord
 
   has_many :badges, through: :badge_awards
 
-
   has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
   has_many :trivia_package_leaderboards, class_name: "Trivia::RoundLeaderboard"
   has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
@@ -140,7 +139,6 @@ class Person < ApplicationRecord
 
 
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
-
 
   has_many :notifications, dependent: :destroy
 
