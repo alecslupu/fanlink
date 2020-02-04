@@ -43,6 +43,8 @@
 #
 
 class Person < ApplicationRecord
+  attr_accessor :trigger_admin
+
   include AttachmentSupport
   include TranslationThings
   authenticates_with_sorcery!
@@ -182,6 +184,8 @@ class Person < ApplicationRecord
 
   # Check if username has any special characters and if length is between 5 and 25
   validate :valid_username
+  validate :read_only_username
+
   enum gender: %i[ unspecified male female ]
 
   validate :valid_country_code
@@ -527,6 +531,12 @@ class Person < ApplicationRecord
     if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
       errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
+
+  def read_only_username
+    return if new_record?
+    return if self.trigger_admin.present?
+    errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
   end
 
   def client_role_changing

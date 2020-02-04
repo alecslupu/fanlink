@@ -248,9 +248,9 @@ RSpec.configure do |config|
               }
             },
             badges_awarded: {
-              type: :object,
-              properties: {
-                badge: { "$ref": "#/definitions/BadgeJson" }
+              type: :array,
+              items: {
+                "$ref": "#/definitions/BadgeJson"
               }
             }
           }
