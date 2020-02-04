@@ -8,8 +8,10 @@ class MentionPushNotification
       if mentions
         mentions.each { |mentioned|
           blocks_with = msg.person.blocks_with.map { |b| b.id }
-          Push.do_push(mentioned.device_tokens, "Mention", "#{msg.person.username} mentioned you in a message.",
-            "message_mentioned", room_id: msg.room_id, message_id: msg.id) unless blocks_with.include?(mentioned.id)
+          # Push.do_push(mentioned.device_tokens, "Mention", "#{msg.person.username} mentioned you in a message.",
+          #   "message_mentioned", room_id: msg.room_id, message_id: msg.id) unless blocks_with.include?(mentioned.id)
+
+          message_mention_push(msg, mentioned) unless blocks_with.include?(mentioned.id)
         }
       end
     end
