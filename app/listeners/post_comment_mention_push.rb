@@ -8,7 +8,7 @@ class PostCommentMentionPush < BaseMention
       if mentions
         mentions.each do |mentioned|
           blocks_with = post_comment.person.blocks_with.map { |b| b.id }
-          message_mention_push(post_comment, mentioned) unless blocks_with.include?(mentioned.id)
+          post_comment_mention_push(post_comment, mentioned) unless blocks_with.include?(mentioned.id)
         end
       end
     end
