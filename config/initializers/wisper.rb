@@ -11,4 +11,5 @@ Rails.application.config.to_prepare do
   Wisper.subscribe(LevelsListener)
   Wisper.subscribe(TagsListener)
   Wisper.subscribe(UpdateTagPostsCount)
+  Wisper.subscribe(PostCommentMentionPush, async: true)
 end
