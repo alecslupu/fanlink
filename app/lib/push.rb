@@ -4,37 +4,37 @@ module Push
   BATCH_SIZE = 50.freeze
 
   def friend_request_accepted_push(relationship)
-    to = relationship.requested_to
-    from = relationship.requested_by
-    android_tokens, ios_tokens = get_device_tokens(from)
-
-    if relationship.friended?
-      # do_push(relationship.requested_by.device_tokens,
-      #         "Friend Request Accepted",
-      #         "#{relationship.requested_to.username} accepted your friend request",
-      #         "friend_accepted",
-      #         person_id: relationship.requested_to.id)
-
-      android_token_notification_push(
-        android_tokens,
-        2419200,
-        context: "friend_accepted",
-        title: "Friend request accepted by #{to.username}",
-        message_short: "Friend request accepted by #{to.username}",
-        message_placeholder: to.username,
-        deep_link: "#{from.product.internal_name}://users/#{to.id}"
-      ) unless android_tokens.empty?
-
-      ios_token_notification_push(
-        ios_tokens,
-        "Friend request accepted",
-        "Friend request accepted by #{to.username}",
-        nil,
-        2419200,
-        context: "friend_accepted",
-        deep_link: "#{from.product.internal_name}://users/#{to.id}"
-      ) unless ios_tokens.empty?
-    end
+    # to = relationship.requested_to
+    # from = relationship.requested_by
+    # android_tokens, ios_tokens = get_device_tokens(from)
+    #
+    # return unless relationship.friended?
+    #   # do_push(relationship.requested_by.device_tokens,
+    #   #         "Friend Request Accepted",
+    #   #         "#{relationship.requested_to.username} accepted your friend request",
+    #   #         "friend_accepted",
+    #   #         person_id: relationship.requested_to.id)
+    #
+    #   android_token_notification_push(
+    #     android_tokens,
+    #     2419200,
+    #     context: "friend_accepted",
+    #     title: "Friend request accepted by #{to.username}",
+    #     message_short: "Friend request accepted by #{to.username}",
+    #     message_placeholder: to.username,
+    #     deep_link: "#{from.product.internal_name}://users/#{to.id}"
+    #   ) unless android_tokens.empty?
+    #
+    #   ios_token_notification_push(
+    #     ios_tokens,
+    #     "Friend request accepted",
+    #     "Friend request accepted by #{to.username}",
+    #     nil,
+    #     2419200,
+    #     context: "friend_accepted",
+    #     deep_link: "#{from.product.internal_name}://users/#{to.id}"
+    #   ) unless ios_tokens.empty?
+    FriendPush.new.friend_request_accepted_push(relationship)
   end
 
   def friend_request_received_push(relationship)
@@ -114,7 +114,6 @@ module Push
 
   def post_comment_mention_push(post_comment, mentioned_person)
     PostPush.new.post_comment_mention_push(post_comment, mentioned_person)
-
   end
 
   # sends to posts followers
