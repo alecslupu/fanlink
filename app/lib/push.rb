@@ -113,27 +113,8 @@ module Push
   end
 
   def post_comment_mention_push(post_comment, mentioned_person)
-    android_tokens, ios_tokens = get_device_tokens(mentioned_person)
+    PostPush.new.post_comment_mention_push(post_comment, mentioned_person)
 
-    android_token_notification_push(
-      android_tokens,
-      2419200,
-      context: "comment_mentioned",
-      title: "Mention",
-      message_short: "#{post_comment.person.username} mentioned you",
-      message_placeholder: post_comment.person.username,
-      deep_link: "#{post_comment.person.product.internal_name}://posts/#{post_comment.post.id}/comments"
-    ) unless android_tokens.empty?
-
-    ios_token_notification_push(
-      ios_tokens,
-      "Mention",
-      "#{post_comment.person.username} mentioned you",
-      nil,
-      2419200,
-      context: "comment_mentioned",
-      deep_link: "#{post_comment.person.product.internal_name}://posts/#{post_comment.post.id}/comments"
-    ) unless ios_tokens.empty?
   end
 
   # sends to posts followers
@@ -306,6 +287,7 @@ module Push
 
 private
 
+  # WHAAA ?
   def get_topic(device_type)
     if device_type == "ios"
       return "marketing_en_ios-US"
@@ -314,15 +296,18 @@ private
     end
   end
 
+  # HUH ?
   def make_array(elem)
     elem.is_a?(Array) ? elem : [elem]
   end
 
+  # moved
   def push_client
     @fbcm ||= FCM.new(Rails.application.secrets.firebase_cm_key)
   end
   module_function :push_client
 
+  #moved
   def disconnect
     @fbcm = nil
   end
@@ -343,6 +328,7 @@ private
   end
   module_function :do_push
 
+  # TODO remove
   def push_with_retry(options, tokens, phone_os)
     resp = nil
     begin
@@ -387,23 +373,33 @@ private
     resp
   end
 
+  # TODO remove
   def delete_not_registered_device_ids(device_ids)
     NotificationDeviceId.where(device_identifier: device_ids).destroy_all
   end
 
+  # TODO removed
   def clean_notification_device_ids(resp, phone_os)
     delete_not_registered_device_ids(resp)
     mark_not_registered_device_ids(resp)
     unsubscribe_to_topic(resp, phone_os)
   end
 
+  # TODO remove
   def mark_not_registered_device_ids(device_ids)
     NotificationDeviceId.where(device_identifier: device_ids).update_all(not_registered: true)
   end
 
+  # TODO Remove
   def android_token_notification_push(tokens, ttl, data = {})
     notification_body = build_android_notification(ttl, data)
     push_with_retry(notification_body, tokens, "android")
+  end
+
+  # TODO remove
+  def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
+    notification_body = build_ios_notification(title, body, click_action, ttl, data)
+    push_with_retry(notification_body, tokens, "ios")
   end
 
   def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
@@ -411,6 +407,7 @@ private
     push_with_retry(notification_body, tokens, "ios")
   end
 
+  # TODO Remove
   def build_android_notification(ttl, data = {})
     options = {}
     data[:type] = "user"
@@ -425,6 +422,7 @@ private
 
     return options
   end
+  # TODO Remove
 
   def build_ios_notification(title, body, click_action, ttl, data = {})
     options = {}
@@ -457,6 +455,7 @@ private
     return android_tokens, ios_tokens
   end
 
+  # remove this
   def get_device_tokens(person)
     android_tokens = person.notification_device_ids.where(device_type: :android).map { |ndi| ndi.device_identifier }
     ios_tokens = person.notification_device_ids.where(device_type: :ios).map { |ndi| ndi.device_identifier }
@@ -503,6 +502,7 @@ private
     ) unless ios_tokens.empty?
   end
 
+  # TODO remove
   def unsubscribe_to_topic(tokens, phone_os)
     case phone_os
     when nil
