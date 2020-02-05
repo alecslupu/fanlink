@@ -2,12 +2,11 @@ class PostPushNotificationJob < Struct.new(:post_id)
   include Push
 
   def perform
-    Rails.logger.warn("performing push on post id #{post_id}")
     post = Post.find(post_id)
-    ActsAsTenant.with_tenant(post.person.product) do
-      if post.notify_followers
-        Rails.logger.warn("pushing post #{post.inspect} with post_id: #{post_id}")
-        post_push(post)
+    person = post.person
+    ActsAsTenant.with_tenant(person.product) do
+      if post.notify_followers && person.followers.exists?
+        Push::Post.new.push(person, post.id)
       end
     end
   end

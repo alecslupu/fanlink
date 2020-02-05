@@ -4,7 +4,7 @@ class PrivateMessagePushJob < Struct.new(:message_id)
   def perform
     message = Message.find(message_id)
     ActsAsTenant.with_tenant(message.room.product) do
-      private_message_push(message)
+      Push::PrivateMessage.new.push(message)
     end
   end
 
