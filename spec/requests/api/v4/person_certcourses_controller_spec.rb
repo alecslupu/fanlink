@@ -17,9 +17,8 @@ RSpec.describe "Api::V4::PersonCertcoursesController", type: :request, swagger_d
       let(:download_file_page) { create(:download_file_page, certcourse_page: certcourse_page)}
       let(:page_id) { download_file_page.certcourse_page.id }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response "401", "" do

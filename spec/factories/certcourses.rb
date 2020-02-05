@@ -20,7 +20,7 @@
 FactoryBot.define do
   factory :certcourse do
     product { current_product }
-    long_name { Faker::Lorem.name }
+    long_name { Faker::Lorem.sentence(word_count:  3) }
     short_name { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
     color_hex { Faker::Color.hex_color }

@@ -5,7 +5,7 @@ RSpec.describe "Api::V4::PostCommentsController", type: :request, swagger_doc: "
   path "/posts/{id}/comments" do
     get "" do
       security [Bearer: []]
-      tags "Posts"
+      tags "PostComments"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -15,9 +15,9 @@ RSpec.describe "Api::V4::PostCommentsController", type: :request, swagger_doc: "
       let(:person) { create(:person) }
       let(:id) { create(:post, person: person).id }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostCommentsArray"
 
         run_test!
       end
@@ -36,7 +36,7 @@ RSpec.describe "Api::V4::PostCommentsController", type: :request, swagger_doc: "
     end
     post "" do
       security [Bearer: []]
-      tags "Posts"
+      tags "PostComments"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -49,9 +49,9 @@ RSpec.describe "Api::V4::PostCommentsController", type: :request, swagger_doc: "
       parameter name: :"post_comment[body]", in: :formData, type: :string, required: true
       let("post_comment[body]") { "a comment" }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostCommentsObject"
 
         run_test!
       end
@@ -75,7 +75,7 @@ RSpec.describe "Api::V4::PostCommentsController", type: :request, swagger_doc: "
   path "/posts/{post_id}/comments/{id}" do
     delete "" do
       security [Bearer: []]
-      tags "Posts"
+      tags "PostComments"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -89,7 +89,7 @@ RSpec.describe "Api::V4::PostCommentsController", type: :request, swagger_doc: "
       let(:id) { post_comment.id }
       let(:post_id) { post_comment.post_id }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
       end

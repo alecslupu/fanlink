@@ -18,9 +18,8 @@ RSpec.describe "Api::V4::PostReportsController", type: :request, swagger_doc: "v
       let("post_report[reason]") { "Lorem Ipsum" }
       let("post_report[post_id]") { create(:post).id }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-
         run_test!
       end
       response 400, "Bad request" do

@@ -11,6 +11,7 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
 
       let(:Authorization) { "" }
       let(:person) { create(:person) }
+      let!(:posts) { create_list(:published_post, 2, person: person)}
 
       parameter name: :page, in: :query, type: :integer, required: false, description: " Lorem ipsum", default: 1, minimum: 1
       parameter name: :per_page, in: :query, type: :integer, required: false, description: " Lorem ipsum", default: 25
@@ -32,15 +33,15 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       parameter name: :status_filter, in: :query, type: :string, required: false
 
       let(:tag) { "" }
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostsArray"
         run_test!
       end
-      response "401", "" do
+      response "401", "Unauthorized." do
         run_test!
       end
-      response "422", "" do
+      response "422", "Unprocessable Entity. Usually occurs when a field is invalid or missing." do
         let(:person_id) { Time.zone.now.to_i }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
@@ -69,9 +70,9 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       let("post[audio]") {}
       let("post[video]") {}
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostsObject"
 
         run_test!
       end
@@ -103,9 +104,9 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostsObject"
         run_test!
       end
       response "401", "" do
@@ -133,9 +134,9 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostsObject"
         run_test!
       end
       response "401", "" do
@@ -144,7 +145,7 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:id) { Time.zone.now.to_i }
-        schema "$ref": "#/definitions/faulty"
+        # schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -164,7 +165,7 @@ RSpec.describe "Api::V4::PostsController", type: :request, swagger_doc: "v4/swag
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
       end

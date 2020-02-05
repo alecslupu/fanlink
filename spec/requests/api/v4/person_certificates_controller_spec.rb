@@ -11,16 +11,15 @@ RSpec.describe "Api::V4::Trivia::PersonCertificatesController", type: :request, 
       let(:unique_id) { "Faulty" }
       let(:product) { create(:product).internal_name }
 
-      response "200", "displays valid certificate" do
-       let(:person_certificate) { create(:person_certificate) }
-       let(:unique_id) { person_certificate.unique_id }
-       let(:product) { person_certificate.person.product.internal_name }
-       schema "$ref": "#/definitions/certificate_information"
-       run_test!
+      response "200", "HTTP/1.1 200 Ok" do
+        let(:person_certificate) { create(:person_certificate) }
+        let(:unique_id) { person_certificate.unique_id }
+        let(:product) { person_certificate.person.product.internal_name }
+        run_test!
       end
 
       response 404, "" do
-       run_test!
+        run_test!
       end
 
       response 500, "Internal server error" do

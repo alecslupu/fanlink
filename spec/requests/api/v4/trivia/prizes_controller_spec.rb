@@ -9,7 +9,7 @@ RSpec.describe "Api::V4::Trivia::PrizesController", type: :request, swagger_doc:
   #    parameter name: :game_id, in: :path, schema: {type: :integer}
   #    parameter name: "X-App", in: :header, schema: {type: :string}
   #    parameter name: "X-Current-Product", in: :header, schema: {type: :string}
-  #    response "200", "displays completed games" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      let(:user) { create(:person) }
   #      let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id)}" }
   #      let!(:games) {

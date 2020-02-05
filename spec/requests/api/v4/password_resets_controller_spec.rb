@@ -16,20 +16,16 @@ RSpec.describe "Api::V4::PasswordResetsController", type: :request, swagger_doc:
       let(:email_or_username) { user.email }
 
 
-      response "200", "" do
-        schema "$ref": "#/definitions/SuccessMessage"
+      response "200", "HTTP/1.1 200 Ok" do
         run_test!
       end
       response "422", "" do
         let(:product) { nil }
 
-        schema "$ref": "#/definitions/ErrorMessage"
         run_test!
       end
 
       response 500, "Internal server error" do
-        schema "$ref": "#/definitions/ErrorMessage"
-
         document_response_without_test!
       end
     end

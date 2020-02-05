@@ -49,7 +49,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
     #    tags ["quests", 'android-old']
     #
     #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
+    #    response "200", "HTTP/1.1 200 Ok" do
     #      run_test!
     #    end
     #    response "401", "" do
@@ -65,7 +65,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
     #    tags ["quests", 'android-old']
     #
     #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
+    #    response "200", "HTTP/1.1 200 Ok" do
     #      run_test!
     #    end
     #    response "401", "" do
@@ -81,7 +81,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["relation", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -97,7 +97,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["steps", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -113,7 +113,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -129,7 +129,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -143,7 +143,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -157,7 +157,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -176,7 +176,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    tags ["config", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -193,7 +193,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
-  #      response "200", "" do
+  #      response "200", "HTTP/1.1 200 Ok" do
   #        run_test!
   #      end
   #      response "401", "" do
@@ -211,7 +211,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
   #    context  "product_account_filter" do
-  #      response "200", "" do
+  #      response "200", "HTTP/1.1 200 Ok" do
   #        run_test!
   #      end
   #      response "401", "" do
@@ -229,7 +229,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -246,7 +246,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -263,7 +263,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -282,7 +282,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    consumes "multipart/form-data"
   #    context "set certificate name " do
   #
-  #      response "200", "" do
+  #      response "200", "HTTP/1.1 200 Ok" do
   #        run_test!
   #      end
   #      response "401", "" do
@@ -294,7 +294,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #    context "purchase certificate" do
   #
-  #      response "200", "" do
+  #      response "200", "HTTP/1.1 200 Ok" do
   #        run_test!
   #      end
   #      response "401", "" do
@@ -313,7 +313,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
@@ -330,7 +330,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #
   #    produces "application/vnd.api.v4+json"
   #    consumes "multipart/form-data"
-  #    response "200", "" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      run_test!
   #    end
   #    response "401", "" do
