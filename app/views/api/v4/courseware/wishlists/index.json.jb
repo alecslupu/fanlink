@@ -1,4 +1,4 @@
-json = {}
+json = { wishlist: [] }
 
 @wishlist.map do |item|
   json[:wishlist][] = {

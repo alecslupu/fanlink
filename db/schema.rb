@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200121082504) do
+ActiveRecord::Schema.define(version: 20200131081930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,21 @@ ActiveRecord::Schema.define(version: 20200121082504) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "ind_authentications_provider_uid"
+  end
+
+  create_table "automated_notifications", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.bigint "person_id", null: false
+    t.integer "criteria", null: false
+    t.boolean "enabled", default: false, null: false
+    t.integer "product_id", null: false
+    t.datetime "last_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ttl_hours", default: 672, null: false
+    t.index ["criteria"], name: "index_automated_notifications_on_criteria"
+    t.index ["person_id"], name: "index_automated_notifications_on_person_id"
   end
 
   create_table "badge_actions", force: :cascade do |t|
@@ -464,7 +479,7 @@ ActiveRecord::Schema.define(version: 20200121082504) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ttl_hours", default: 672, null: false
-    t.integer "person_filter"
+    t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
@@ -591,8 +606,8 @@ ActiveRecord::Schema.define(version: 20200121082504) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
-    t.boolean "authorized", default: true, null: false
     t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
     t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -736,7 +751,7 @@ ActiveRecord::Schema.define(version: 20200121082504) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-09-10 13:54:50"
+    t.datetime "end_date", default: "2020-02-04 16:42:01"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -1152,13 +1167,6 @@ ActiveRecord::Schema.define(version: 20200121082504) do
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
 
-  create_table "rooms_owners", force: :cascade do |t|
-    t.integer "person_id"
-    t.integer "room_id"
-    t.index ["person_id"], name: "index_rooms_owners_on_person_id"
-    t.index ["room_id"], name: "index_rooms_owners_on_room_id"
-  end
-
   create_table "semesters", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name", null: false
@@ -1172,13 +1180,12 @@ ActiveRecord::Schema.define(version: 20200121082504) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.text "content", null: false
-    t.string "title", null: false
+    t.jsonb "content", default: "{}", null: false
+    t.jsonb "title", default: "{}", null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id", "slug"], name: "unq_static_contents_product_slug"
     t.index ["slug"], name: "index_static_contents_on_slug", unique: true
   end
 
@@ -1453,6 +1460,7 @@ ActiveRecord::Schema.define(version: 20200121082504) do
   add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
   add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
+  add_foreign_key "automated_notifications", "people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
   add_foreign_key "badge_actions", "people", name: "fk_badge_actions_people", on_delete: :cascade
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
