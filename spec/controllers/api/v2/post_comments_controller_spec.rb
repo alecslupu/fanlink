@@ -14,50 +14,50 @@ RSpec.describe Api::V2::PostCommentsController, type: :controller do
         expect(post_comment_json(json["post_comment"])).to be true
       end
     end
-    it "should create a post comment with one mention" do
-      person = create(:person)
-      ActsAsTenant.with_tenant(person.product) do
-        followee2 = create(:person)
-        person.follow(followee2)
-        login_as(person)
-        po = create(:post, status: :published)
-        expect {
-          post :create, params: {post_id: po.id, post_comment: {
-            body: "a comment", mentions: [
-              {
-                person_id: followee2.id, location: 1, length: 2,
-              },
-            ],
-          },}
-        }.to change { po.comments.count }.by(1)
-        expect(response).to be_successful
-        comment = po.comments.last
-        expect(comment.mentions.count).to eq(1)
-        expect(post_comment_json(json["post_comment"])).to be true
-      end
-    end
-    it "should create a post comment with multiple mentions" do
-      person = create(:person)
-      ActsAsTenant.with_tenant(person.product) do
-        followee1 = create(:person)
-        followee2 = create(:person)
-        person.follow(followee1)
-        person.follow(followee2)
-        login_as(person)
-        po = create(:post, status: :published)
+    # it "should create a post comment with one mention" do
+    #   person = create(:person)
+    #   ActsAsTenant.with_tenant(person.product) do
+    #     followee2 = create(:person)
+    #     person.follow(followee2)
+    #     login_as(person)
+    #     po = create(:post, status: :published)
+    #     expect {
+    #       post :create, params: {post_id: po.id, post_comment: {
+    #         body: "a comment", mentions: [
+    #           {
+    #             person_id: followee2.id, location: 1, length: 2,
+    #           },
+    #         ],
+    #       },}
+    #     }.to change { po.comments.count }.by(1)
+    #     expect(response).to be_successful
+    #     comment = po.comments.last
+    #     expect(comment.mentions.count).to eq(1)
+    #     expect(post_comment_json(json["post_comment"])).to be true
+    #   end
+    # end
+    # it "should create a post comment with multiple mentions" do
+    #   person = create(:person)
+    #   ActsAsTenant.with_tenant(person.product) do
+    #     followee1 = create(:person)
+    #     followee2 = create(:person)
+    #     person.follow(followee1)
+    #     person.follow(followee2)
+    #     login_as(person)
+    #     po = create(:post, status: :published)
 
-        expect {
-          post :create, params: {post_id: po.id, post_comment: {body: "a comment", mentions: [
-            {person_id: followee2.id, location: 1, length: 2},
-            {person_id: followee1.id, location: 11, length: 3},
-          ],},}
-        }.to change { po.comments.count }.by(1)
-        expect(response).to be_successful
-        comment = po.comments.last
-        expect(comment.mentions.count).to eq(2)
-        expect(post_comment_json(json["post_comment"])).to be true
-      end
-    end
+    #     expect {
+    #       post :create, params: {post_id: po.id, post_comment: {body: "a comment", mentions: [
+    #         {person_id: followee2.id, location: 1, length: 2},
+    #         {person_id: followee1.id, location: 11, length: 3},
+    #       ],},}
+    #     }.to change { po.comments.count }.by(1)
+    #     expect(response).to be_successful
+    #     comment = po.comments.last
+    #     expect(comment.mentions.count).to eq(2)
+    #     expect(post_comment_json(json["post_comment"])).to be true
+    #   end
+    # end
 
     it "should not create a post comment if not logged in" do
       person = create(:person)
