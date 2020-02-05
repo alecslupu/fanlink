@@ -401,6 +401,14 @@ class Person < ApplicationRecord
     notification_device_ids.map(&:device_identifier)
   end
 
+  def ios_device_tokens
+    notification_device_ids.where(device_type: :ios).pluck(:device_identifier)
+  end
+
+  def android_device_tokens
+    notification_device_ids.where(device_type: :android).pluck(:device_identifier)
+  end
+
   #
   # Return a scoped query for people whose names match a string.
   #

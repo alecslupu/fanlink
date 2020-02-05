@@ -1,6 +1,4 @@
 class PostCommentMentionPush < BaseMention
-  include Push
-
   def self.post_comment_created(post_comment_id, product_id)
     post_comment = PostComment.find(post_comment_id)
     if post_comment.body
@@ -8,7 +6,7 @@ class PostCommentMentionPush < BaseMention
       if mentions
         mentions.each do |mentioned|
           blocks_with = post_comment.person.blocks_with.map { |b| b.id }
-          post_comment_mention_push(post_comment, mentioned) unless blocks_with.include?(mentioned.id)
+          Push::PostCommentMention.new.push(post_comment, mentioned) unless blocks_with.include?(mentioned.id)
         end
       end
     end
