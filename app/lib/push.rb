@@ -3,95 +3,95 @@ module Push
 
   BATCH_SIZE = 50.freeze
 
-  def friend_request_accepted_push(relationship)
-    to = relationship.requested_to
-    from = relationship.requested_by
-    android_tokens, ios_tokens = get_device_tokens(from)
+  # def friend_request_accepted_push(relationship)
+  #   to = relationship.requested_to
+  #   from = relationship.requested_by
+  #   android_tokens, ios_tokens = get_device_tokens(from)
 
-    if relationship.friended?
-      # do_push(relationship.requested_by.device_tokens,
-      #         "Friend Request Accepted",
-      #         "#{relationship.requested_to.username} accepted your friend request",
-      #         "friend_accepted",
-      #         person_id: relationship.requested_to.id)
+  #   if relationship.friended?
+  #     # do_push(relationship.requested_by.device_tokens,
+  #     #         "Friend Request Accepted",
+  #     #         "#{relationship.requested_to.username} accepted your friend request",
+  #     #         "friend_accepted",
+  #     #         person_id: relationship.requested_to.id)
 
-      android_token_notification_push(
-        android_tokens,
-        2419200,
-        context: "friend_accepted",
-        title: "Friend request accepted by #{to.username}",
-        message_short: "Friend request accepted by #{to.username}",
-        message_placeholder: to.username,
-        deep_link: "#{from.product.internal_name}://users/#{to.id}/profile"
-      ) unless android_tokens.empty?
+  #     android_token_notification_push(
+  #       android_tokens,
+  #       2419200,
+  #       context: "friend_accepted",
+  #       title: "Friend request accepted by #{to.username}",
+  #       message_short: "Friend request accepted by #{to.username}",
+  #       message_placeholder: to.username,
+  #       deep_link: "#{from.product.internal_name}://users/#{to.id}/profile"
+  #     ) unless android_tokens.empty?
 
-      ios_token_notification_push(
-        ios_tokens,
-        "Friend request accepted",
-        "Friend request accepted by #{to.username}",
-        nil,
-        2419200,
-        context: "friend_accepted",
-        deep_link: "#{from.product.internal_name}://users/#{to.id}/profile"
-      ) unless ios_tokens.empty?
-    end
-  end
+  #     ios_token_notification_push(
+  #       ios_tokens,
+  #       "Friend request accepted",
+  #       "Friend request accepted by #{to.username}",
+  #       nil,
+  #       2419200,
+  #       context: "friend_accepted",
+  #       deep_link: "#{from.product.internal_name}://users/#{to.id}/profile"
+  #     ) unless ios_tokens.empty?
+  #   end
+  # end
 
-  def friend_request_received_push(relationship)
-    from = relationship.requested_by
-    to = relationship.requested_to
-    android_tokens, ios_tokens = get_device_tokens(to)
-    profile_picture_url = from.picture_url.present? ? from.picture_url : from.facebook_picture_url
+  # def friend_request_received_push(relationship)
+  #   from = relationship.requested_by
+  #   to = relationship.requested_to
+  #   android_tokens, ios_tokens = get_device_tokens(to)
+  #   profile_picture_url = from.picture_url.present? ? from.picture_url : from.facebook_picture_url
 
-    # do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
+  #   # do_push(to.device_tokens, "New Friend Request", "#{from.username} sent you a friend request", "friend_requested", person_id: from.id)
 
-    android_token_notification_push(
-      android_tokens,
-      2419200,
-      context: "friend_requested",
-      title: "Friend request",
-      message_short: "New friend request from #{from.username}",
-      message_placeholder: from.username,
-      image_url: profile_picture_url,
-      relationship_id: relationship.id,
-      deep_link: "#{from.product.internal_name}://users/#{from.id}/profile"
-    ) unless android_tokens.empty?
+  #   android_token_notification_push(
+  #     android_tokens,
+  #     2419200,
+  #     context: "friend_requested",
+  #     title: "Friend request",
+  #     message_short: "New friend request from #{from.username}",
+  #     message_placeholder: from.username,
+  #     image_url: profile_picture_url,
+  #     relationship_id: relationship.id,
+  #     deep_link: "#{from.product.internal_name}://users/#{from.id}/profile"
+  #   ) unless android_tokens.empty?
 
-    ios_token_notification_push(
-      ios_tokens,
-      "Friend request",
-      "New friend request from #{from.username}",
-      "AcceptOrIgnore",
-      2419200,
-      context: "friend_requested",
-      relationship_id: relationship.id,
-      image_url: profile_picture_url,
-      deep_link: "#{from.product.internal_name}://users/#{from.id}/profile"
-    ) unless ios_tokens.empty?
-  end
+  #   ios_token_notification_push(
+  #     ios_tokens,
+  #     "Friend request",
+  #     "New friend request from #{from.username}",
+  #     "AcceptOrIgnore",
+  #     2419200,
+  #     context: "friend_requested",
+  #     relationship_id: relationship.id,
+  #     image_url: profile_picture_url,
+  #     deep_link: "#{from.product.internal_name}://users/#{from.id}/profile"
+  #   ) unless ios_tokens.empty?
+  # end
 
-  def message_mention_push(message, mentioned_person)
-    android_tokens, ios_tokens = get_device_tokens(mentioned_person)
+  # def message_mention_push(message, mentioned_person)
+  #   android_tokens, ios_tokens = get_device_tokens(mentioned_person)
 
-    android_token_notification_push(
-      android_tokens,
-      2419200,
-      context: "message_mentioned",
-      title: "Mention",
-      message_short: "#{message.person.username} mentioned you",
-      message_placeholder: mentioned_person.username,
-      deep_link: "#{message.product.internal_name}://rooms/#{message.room.id}"
-    ) unless android_tokens.empty?
-    ios_token_notification_push(
-      ios_tokens,
-      "Mention",
-      "#{message.person.username} mentioned you",
-      nil,
-      2419200,
-      context: "message_mentioned",
-      deep_link: "#{message.product.internal_name}://rooms/#{message.room.id}"
-    ) unless ios_tokens.empty?
-  end
+  #   android_token_notification_push(
+  #     android_tokens,
+  #     2419200,
+  #     context: "message_mentioned",
+  #     title: "Mention",
+  #     message_short: "#{message.person.username} mentioned you",
+  #     message_placeholder: mentioned_person.username,
+  #     deep_link: "#{message.product.internal_name}://rooms/#{message.room.id}"
+  #   ) unless android_tokens.empty?
+  #   ios_token_notification_push(
+  #     ios_tokens,
+  #     "Mention",
+  #     "#{message.person.username} mentioned you",
+  #     nil,
+  #     2419200,
+  #     context: "message_mentioned",
+  #     deep_link: "#{message.product.internal_name}://rooms/#{message.room.id}"
+  #   ) unless ios_tokens.empty?
+  # end
 
   def portal_notification_push(portal_notification)
     topics = portal_notification.push_topics
@@ -113,33 +113,33 @@ module Push
   end
 
   # sends to posts followers
-  def post_push(post)
-    person = post.person
-    # do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
-    #           "New Post", "#{person.username} posted", "new_post", post_id: post.id)
+  # def post_push(post)
+  #   person = post.person
+  #   # do_push(NotificationDeviceId.where(person_id: person.followers).map { |ndi| ndi.device_identifier },
+  #   #           "New Post", "#{person.username} posted", "new_post", post_id: post.id)
 
-    android_tokens, ios_tokens = get_followers_device_tokens(person)
+  #   android_tokens, ios_tokens = get_followers_device_tokens(person)
 
-    android_token_notification_push(
-      android_tokens,
-      2419200,
-      context: "feed_post",
-      title: "New post",
-      message_short: "New post from #{person.username}",
-      message_placeholder: person.username,
-      deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
-    ) unless android_tokens.empty?
+  #   android_token_notification_push(
+  #     android_tokens,
+  #     2419200,
+  #     context: "feed_post",
+  #     title: "New post",
+  #     message_short: "New post from #{person.username}",
+  #     message_placeholder: person.username,
+  #     deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
+  #   ) unless android_tokens.empty?
 
-    ios_token_notification_push(
-      ios_tokens,
-      "New Post",
-      "New post from #{person.username}",
-      nil,
-      2419200,
-      context: "feed_post",
-      deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
-    ) unless ios_tokens.empty?
-  end
+  #   ios_token_notification_push(
+  #     ios_tokens,
+  #     "New Post",
+  #     "New post from #{person.username}",
+  #     nil,
+  #     2419200,
+  #     context: "feed_post",
+  #     deep_link: "#{person.product.internal_name}://posts/#{post.id}/comments"
+  #   ) unless ios_tokens.empty?
+  # end
 
   def private_message_push(message)
     tokens = []
@@ -151,7 +151,6 @@ module Push
       next if blocks_with.include?(m.id)
       tokens += m.notification_device_ids.map { |ndi| ndi.device_identifier }
     end
-    # do_push(tokens, message.person.username, truncate(message.body), "message_received", room_id: room.id, message_id: message.id)
 
     android_chat_notification(android_tokens, message, room, "private_chat")
     ios_chat_notification(ios_tokens, message, room, "private_chat")
