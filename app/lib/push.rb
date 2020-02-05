@@ -22,7 +22,7 @@ module Push
         title: "Friend request accepted by #{to.username}",
         message_short: "Friend request accepted by #{to.username}",
         message_placeholder: to.username,
-        deep_link: "#{from.product.internal_name}://users/#{to.id}"
+        deep_link: "#{from.product.internal_name}://users/#{to.id}/profile"
       ) unless android_tokens.empty?
 
       ios_token_notification_push(
@@ -32,7 +32,7 @@ module Push
         nil,
         2419200,
         context: "friend_accepted",
-        deep_link: "#{from.product.internal_name}://users/#{to.id}"
+        deep_link: "#{from.product.internal_name}://users/#{to.id}/profile"
       ) unless ios_tokens.empty?
     end
   end
@@ -54,7 +54,7 @@ module Push
       message_placeholder: from.username,
       image_url: profile_picture_url,
       relationship_id: relationship.id,
-      deep_link: "#{from.product.internal_name}://users/#{from.id}"
+      deep_link: "#{from.product.internal_name}://users/#{from.id}/profile"
     ) unless android_tokens.empty?
 
     ios_token_notification_push(
@@ -66,7 +66,7 @@ module Push
       context: "friend_requested",
       relationship_id: relationship.id,
       image_url: profile_picture_url,
-      deep_link: "#{from.product.internal_name}://users/#{from.id}"
+      deep_link: "#{from.product.internal_name}://users/#{from.id}/profile"
     ) unless ios_tokens.empty?
   end
 
@@ -393,6 +393,7 @@ private
   # TODO Remove
   def android_token_notification_push(tokens, ttl, data = {})
     notification_body = build_android_notification(ttl, data)
+    binding.pry
     push_with_retry(notification_body, tokens, "android")
   end
 

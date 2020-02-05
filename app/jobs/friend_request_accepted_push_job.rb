@@ -4,7 +4,7 @@ class FriendRequestAcceptedPushJob < Struct.new(:relationship_id)
   def perform
     relationship = Relationship.find(relationship_id)
     ActsAsTenant.with_tenant(relationship.requested_by.product) do
-      friend_request_accepted_push(relationship)
+      Push::FriendRequestAccepted.new.push(relationship)
     end
   end
 
