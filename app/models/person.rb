@@ -43,6 +43,8 @@
 #
 
 class Person < ApplicationRecord
+  attr_accessor :trigger_admin
+
   include AttachmentSupport
   include TranslationThings
   authenticates_with_sorcery!
@@ -180,6 +182,8 @@ class Person < ApplicationRecord
 
   # Check if username has any special characters and if length is between 5 and 25
   validate :valid_username
+  validate :read_only_username
+
   enum gender: %i[ unspecified male female ]
 
   validate :valid_country_code
@@ -244,7 +248,7 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id, :email, :picture])
+      results = graph.get_object("me", fields: %w(id email picture.width(320).height(320)))
     rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
@@ -478,6 +482,15 @@ class Person < ApplicationRecord
     super_admin? || client_portal?
   end
 
+  def self.with_matched_interests(interest_ids, person_id)
+    self.select("people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids")
+      .joins(:person_interests).where("person_interests.interest_id in (?)", interest_ids)
+      .where("person_interests.person_id != (?)", person_id)
+      .where("people.product_account = false")
+      .group("people.id")
+      .order("count(person_interests.*) DESC")
+  end
+
   private
 
   def check_facebookid
@@ -525,6 +538,12 @@ class Person < ApplicationRecord
     if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
       errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
+
+  def read_only_username
+    return if new_record?
+    return if self.trigger_admin.present?
+    errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
   end
 
   def client_role_changing

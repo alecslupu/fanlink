@@ -9,7 +9,12 @@ RailsAdmin.config do |config|
       :username
     end
 
+    configure :trigger_admin do
+      visible false
+    end
+
     configure :level_earned do
+
     end
     configure :password do
     end
@@ -139,7 +144,6 @@ RailsAdmin.config do |config|
     end
 
     edit do
-
       fields :username, :email, :name, :picture
       field :role do
         def render
@@ -209,7 +213,8 @@ RailsAdmin.config do |config|
           designated_people_ids = bindings[:object].designated_people.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
+            scope = scope.limit(50)
           }
         end
       end
@@ -219,14 +224,15 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-          bindings[:object].client?
+        bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
           assigned_people_ids = bindings[:object].assigned_people.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
+            scope = scope.limit(50)
           }
         end
       end
@@ -244,7 +250,8 @@ RailsAdmin.config do |config|
           clients_designated_ids = bindings[:object].clients_designated.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
+            scope = scope.limit(50)
           }
         end
       end
@@ -261,8 +268,19 @@ RailsAdmin.config do |config|
           clients_assigned_ids = bindings[:object].clients_assigned.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
+            scope = scope.limit(50)
           }
+        end
+      end
+
+      field :trigger_admin, :hidden do
+        visible true
+        formatted_value do
+          "true"
+        end
+        default_value do
+          "true"
         end
       end
     end
