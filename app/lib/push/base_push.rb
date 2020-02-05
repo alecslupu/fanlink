@@ -1,7 +1,5 @@
 module Push
   class BasePush
-    attr_accessor :target_person
-
     protected
 
     def push_client
@@ -57,8 +55,15 @@ module Push
       unsubscribe_to_topic(resp, phone_os)
     end
 
-    def ios_token_notification_push( title, body, click_action, ttl, data = {})
-      tokens = @target_person.ios_device_tokens
+    def ios_token_notification_push(title, body, click_action, ttl, data = {})
+      if @target_person
+        tokens = @target_person.ios_device_tokens
+      elsif @target_people_ids
+        tokens = NotificationDeviceId.where(person_id: @target_people_ids, device_type: :ios).pluck(:device_identifier)
+      else
+        tokens = []
+      end
+
       return if tokens.empty?
 
       notification_body = build_ios_notification(title, body, click_action, ttl, data)
@@ -84,7 +89,14 @@ module Push
 
     # TODO rename this
     def android_token_notification_push(ttl, data = {})
-      tokens = @target_person.android_device_tokens
+      if @target_person
+        tokens = @target_person.android_device_tokens
+      elsif @target_people_ids
+        tokens = NotificationDeviceId.where(person_id: @target_people_ids, device_type: :android).pluck(:device_identifier)
+      else
+        tokens = []
+      end
+
       return if tokens.empty?
 
       notification_body = build_android_notification(ttl, data)

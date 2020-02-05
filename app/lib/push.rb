@@ -112,11 +112,6 @@ module Push
     end
   end
 
-  def post_comment_mention_push(post_comment, mentioned_person)
-    PostPush.new.post_comment_mention_push(post_comment, mentioned_person)
-
-  end
-
   # sends to posts followers
   def post_push(post)
     person = post.person
