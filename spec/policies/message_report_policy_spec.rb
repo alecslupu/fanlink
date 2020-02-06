@@ -217,8 +217,8 @@ RSpec.describe MessageReportPolicy, type: :policy do
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :no_action_needed)) }
 
       it { is_expected.to permit_action(:hide_message_action) }
-      it { is_expected.to permit_action(:reanalyze_action) }
-      it { is_expected.to forbid_action(:ignore_action) }
+      it { is_expected.to permit_action(:reanalyze_message_action) }
+      it { is_expected.to forbid_action(:ignore_message_action) }
     end
   end
 
@@ -227,9 +227,9 @@ RSpec.describe MessageReportPolicy, type: :policy do
       let(:portal_access) { create(:portal_access, chat_ignore: true) }
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :pending)) }
 
-      it { is_expected.to permit_action(:ignore_action) }
+      it { is_expected.to permit_action(:ignore_message_action) }
       it { is_expected.to forbid_action(:hide_message_action) }
-      it { is_expected.to forbid_action(:reanalyze_action) }
+      it { is_expected.to forbid_action(:reanalyze_message_action) }
     end
   end
 
@@ -250,3 +250,5 @@ RSpec.describe MessageReportPolicy, type: :policy do
     end
   end
 end
+
+

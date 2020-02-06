@@ -2,12 +2,16 @@ RailsAdmin.config do |config|
   config.included_models.push("Post")
 
   config.model "Post" do
+    navigation_label "Posts"
+
     configure :reported do
     end
     configure :id do
       label "Post ID"
     end
     list do
+      scopes [nil, :reported, :not_reported]
+
       field :person do
         column_width 75
       end
@@ -87,6 +91,10 @@ RailsAdmin.config do |config|
              :repost_interval,
              :status,
              :priority
+    end
+
+    export do
+      configure :body, :string
     end
   end
 end

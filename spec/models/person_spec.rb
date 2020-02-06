@@ -475,7 +475,7 @@ RSpec.describe Person, type: :model do
         expect(p).to eq(Person.last)
       end
       it "should return nil if api error" do
-        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: [:id, :email, :picture]).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: %w(id email picture.width(320).height(320))).and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.create_from_facebook("12345", "fdafafadadfa")).to be_nil
       end
     end
@@ -680,19 +680,20 @@ RSpec.describe Person, type: :model do
 
     it "returns values from portal access" do
       to_test = create(:portal_access, reward_read: true)
-      expect(to_test.person.full_permission_list).to eq([:reward_read])
+      expect(to_test.person.full_permission_list).to include(:reward_read)
     end
 
     it "returns values from role access" do
       to_test = create(:person, role: create(:role, post_update: true))
-      expect(to_test.full_permission_list).to eq([:post_update])
+      expect(to_test.full_permission_list).to include(:post_update)
     end
 
     it "returns values from both access" do
       to_test = create(:person, role: create(:role, post_update: true))
       to_test = create(:portal_access, person: to_test, reward_read: true).person
 
-      expect(to_test.full_permission_list).to eq([:post_update, :reward_read])
+      expect(to_test.full_permission_list).to include(:reward_read)
+      expect(to_test.full_permission_list).to include(:post_update)
     end
 
   end

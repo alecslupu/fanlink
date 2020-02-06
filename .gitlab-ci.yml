@@ -270,7 +270,6 @@ pages:
 deploy:staging:
   extends: .base
   stage: deploy
-  when: manual
   artifacts:
     name: "$CI_JOB_NAME-capistrano-log"
     when: on_failure
@@ -316,7 +315,7 @@ deploy:production:
     name: production
     url: https://portal.fan.link
   only:
-    - master
+    - tags
   script:
     - mkdir ~/.ssh/
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa

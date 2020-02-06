@@ -8,5 +8,6 @@ RSpec.configure do |config|
 
     stub_request(:patch, "https://fanlink-development.firebaseio.com/.json").
         to_return(status: 200, body: "{}", headers: { "Content-Type" => "application/json" })
+
   end
 end

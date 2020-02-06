@@ -121,23 +121,27 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.before(:suite) do
+    Rails.logger.debug("RSPEC: before suite")
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
-  config.before(:each) do
-    ActsAsTenant.current_tenant = nil
-  end
   config.after(:each) do
-    logout
+    Rails.logger.debug("RSPEC: after example")
     DatabaseCleaner.clean
-    # ActsAsTenant.current_tenant = nil
+    logout
+    ActsAsTenant.current_tenant = nil
   end
 
   config.around(:each) do |example|
+    Rails.logger.debug("Running before clean")
+
     DatabaseCleaner.cleaning do
+      Rails.logger.debug("RSPEC: #{example.description}")
       example.run
-      # ActsAsTenant.current_tenant = nil
+      Rails.logger.debug("RSPEC END: #{example.description}")
     end
+    logout
+    ActsAsTenant.current_tenant = nil
   end
 
   config.include Sorcery::TestHelpers::Rails::Controller, type: :controller

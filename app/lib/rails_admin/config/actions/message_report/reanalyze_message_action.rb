@@ -1,8 +1,8 @@
 module RailsAdmin
   module Config
     module Actions
-      module PostReport
-        class IgnorePostAction < RailsAdmin::Config::Actions::Base
+      module MessageReport
+        class ReanalyzeMessageAction < RailsAdmin::Config::Actions::Base
           RailsAdmin::Config::Actions.register(self)
 
           register_instance_option :member do
@@ -14,15 +14,15 @@ module RailsAdmin
           end
 
           register_instance_option :route_fragment do
-            :ignore_post_action
+            :reanalyze_action
           end
 
           register_instance_option :controller do
             proc do
-              @object.status = "no_action_needed"
-              post = @object.post
-              post.status = :published
-              if post.save
+              @object.status = "pending"
+              message = @object.message
+              message.hidden = false
+              if message.save
                 changes = @object.changes
                 if @object.save
                   @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
@@ -35,13 +35,12 @@ module RailsAdmin
                 flash[:error] = "Could not save associated message"
               end
 
-
               redirect_to action: :index
             end
           end
 
           register_instance_option :link_icon do
-            'icon-ok'
+            'icon-refresh'
           end
         end
       end

@@ -1,13 +1,27 @@
 class Api::V4::PostsController < Api::V3::PostsController
   def index
+    ordering = 'DESC'
+    if chronological?
+      post = Post.find(params[:post_id])
+      if params[:chronologically] == "after"
+        sign = '>'
+        ordering = 'ASC'
+      else
+        sign = '<'
+      end
+    end
     if params[:promoted].present? && params[:promoted] == "true"
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
+      @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
     else
       if web_request? && some_admin?
-        @posts = paginate apply_filters
+        @posts = apply_filters
       else
-        @posts = paginate Post.not_promoted.visible.unblocked(current_user.blocked_people).order(created_at: :desc)
+        @posts = Post.visible.unblocked(current_user.blocked_people).includes([:poll])
+        @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
       end
+      @posts = paginate @posts
+
       if params[:tag].present? || params[:categories].present?
         @posts = @posts.for_tag(params[:tag]) if params[:tag]
         @posts = @posts.for_category(params[:categories]) if params[:categories]
@@ -20,10 +34,16 @@ class Api::V4::PostsController < Api::V3::PostsController
           render_422(_("Cannot find that person.")) && return
         end
       else
-        @posts = paginate(Post.visible.not_promoted.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc)) unless web_request?
+        unless web_request?
+          @posts = Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).includes([:poll])
+          @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
+          @posts = paginate(@posts)
+        end
       end
     end
+    @posts = @posts.order("posts.created_at #{ordering}, posts.id #{ordering} ")
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+
     # @posts = @posts.includes([:person])
     return_the @posts, handler: tpl_handler
   end
@@ -108,8 +128,27 @@ class Api::V4::PostsController < Api::V3::PostsController
   end
 
   protected
+  def apply_filters
+    posts = Post.for_product(ActsAsTenant.current_tenant)
 
-    def tpl_handler
-      :jb
+    posts = if chronological?
+              posts.chronological(sign, post.created_at, post.id)
+            else
+              posts.order(created_at: :desc)
+            end
+    params.each do |p, v|
+      if p.end_with?("_filter") && Post.respond_to?(p)
+        posts = posts.send(p, v)
+      end
     end
+    posts
+  end
+
+  def chronological?
+    params[:post_id].present? && %w[before after].include?(params[:chronologically])
+  end
+
+  def tpl_handler
+    :jb
+  end
 end
