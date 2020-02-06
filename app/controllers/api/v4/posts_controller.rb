@@ -41,7 +41,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         end
       end
     end
-    @posts = @posts.order("posts.created_at #{ordering}, posts.id #{ordering} ")
+    @posts = @posts.order(Arel.sql("posts.created_at #{ordering}, posts.id #{ordering} "))
     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
 
     # @posts = @posts.includes([:person])
@@ -123,7 +123,7 @@ class Api::V4::PostsController < Api::V3::PostsController
     else
       time = 1
     end
-    @posts = Post.where("created_at >= ?", time.day.ago).order(Arel.sql "DATE(created_at) ASC").group(Arel.sql "Date(created_at)").count
+    @posts = Post.where("created_at >= ?", time.day.ago).order(Arel.sql("DATE(created_at) ASC")).group(Arel.sql("Date(created_at)")).count
     return_the @posts, handler: tpl_handler
   end
 
