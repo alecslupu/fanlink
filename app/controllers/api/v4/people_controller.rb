@@ -23,9 +23,8 @@ class Api::V4::PeopleController < Api::V3::PeopleController
       if !check_gender
         render_error("Gender is not valid. Valid genders: #{Person.genders.keys.join('/')}")
       else
-        parms = person_params
         if params[:facebook_auth_token].present?
-          @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
+          @person = Person.create_from_facebook(params[:facebook_auth_token], person_params[:username])
           if @person.nil?
             (render json: { errors: _("There was a problem contacting Facebook.") }, status: :service_unavailable) && return
           end
@@ -38,6 +37,12 @@ class Api::V4::PeopleController < Api::V3::PeopleController
           if @person.email.present?
             @person.send_onboarding_email
           end
+
+          params_hash = params.except(:controller, :action, :format ).to_unsafe_h
+          params_hash[:person].delete(:password)
+          params_hash[:person].delete(:picture)
+          broadcast(:person_created, @person.id, params_hash)
+
           return_the @person, handler: tpl_handler
         else
           render_422 @person.errors

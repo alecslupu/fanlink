@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
   scope(constraints: Routing::Constraints::V4, module: "api/v4", defaults: {format: :json}) do
+
+    resources :people, except: %i[create index show update] do
+      collection do
+        resources :referral, path: :referral, only: [:index], module: "referral" do
+          collection do
+            get :purchased
+            get "/me" => "user_code#index"
+          end
+        end
+      end
+    end
+
+
     resources :session, only: %i[create index] do
       post :token, on: :collection
     end
@@ -295,3 +308,4 @@ Rails.application.routes.draw do
     end
   end
 end
+

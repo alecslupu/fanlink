@@ -160,6 +160,10 @@ RSpec.configure do |config|
         #  description: "Recommended posts",
         # },
         {
+            name: "Referral",
+            description: "Referral system "
+        },
+        {
           name: "Relationships",
           description: "User's relationships",
         },
@@ -225,7 +229,7 @@ RSpec.configure do |config|
             },
           },
         },
-        "BadgesArray": {
+        BadgesArray: {
           type: :object,
           "properties": {
             "badges": {
@@ -991,7 +995,13 @@ RSpec.configure do |config|
           },
           "description": "Category Reponse",
         },
-
+        ReferralCode: {
+          type: :object,
+          properties: {
+            person_id: {type: :integer},
+            unique_code: {type: :string},
+          }
+        },
         "CategoryArray": {
           type: :object,
           "properties": {
@@ -1007,8 +1017,44 @@ RSpec.configure do |config|
               },
             },
           },
-
         },
+        "LevelJson": {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            name: {type: :string},
+            internal_name: {type: :string},
+            description: {type: :string},
+            points: {type: :integer},
+            picture_url: {type: :string},
+          },
+          "description": "Level Response"
+        },
+        personMini: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            username: {type: :string},
+            picture_url: {type: :string},
+            designation: {type: :string},
+            facebook_picture_url: {type: :string},
+            badge_points: {type: :integer},
+            level: {
+              "$ref": "#/definitions/LevelJson", 'x-nullable': true
+            }
+          }
+        },
+        MiniPeopleArray: {
+          type: :object,
+          properties: {
+            people: {
+              type: :array,
+              items: {
+                "$ref" => "#/definitions/personMini",
+              },
+            }
+          }
+        }
       },
       # definitions: {
       #   certificate_information: {

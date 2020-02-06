@@ -1,7 +1,7 @@
 require 'swagger_helper'
 
-RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swagger.json" do
 
+RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swagger.json" do
   path "/people" do
     get "" do
       security [Bearer: []]
@@ -84,11 +84,12 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       consumes "multipart/form-data"
 
       parameter name: :product, in: :query, type: :string, required: true
-      parameter name: :"person[email]", in: :formData, type: :string, required: true
+      parameter name: :"person[email]", in: :formData, type: :string, required: false
       parameter name: :"person[username]", in: :formData, type: :string, required: true
-      parameter name: :"person[password]", in: :formData, type: :string, required: true
+      parameter name: :"person[password]", in: :formData, type: :string, required: false
       parameter name: :"person[picture]", in: :formData,  type: :file
-
+      parameter name: :facebook_auth_token, in: :formData, type: :string, required: false
+      parameter name: :referrer, in: :formData,  type: :string, required: false
 
       let(:product) { }
       let("person[picture]") {  }
@@ -131,7 +132,6 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       parameter name: :"person[email]", in: :formData, type: :string
       parameter name: :"person[biography]", in: :formData, type: :string
       parameter name: :"person[name]", in: :formData, type: :string
-      parameter name: :"person[username]", in: :formData, type: :string
       parameter name: :"person[picture]", in: :formData,  type: :file
       parameter name: :"person[gender]", in: :formData, type: :string
       parameter name: :"person[birthdate]", in: :formData, type: :string
@@ -147,7 +147,6 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       let("person[picture]") {  }
       let("person[biography]") { Faker::Lorem.paragraph }
       let("person[name]") { Faker::Name.name }
-      let("person[username]") { "User2344" }
 
       response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }

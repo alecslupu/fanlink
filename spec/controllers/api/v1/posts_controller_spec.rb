@@ -406,13 +406,10 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       end
     end
     it "should get the list of all posts filtered on full person username match" do
-      person = create(:admin_user, username: "unique_username")
+      person = create(:admin_user, username: "customusername")
       ActsAsTenant.with_tenant(person.product) do
-        login_as(person)
         create_list(:post, 10, created_at: 10.days.ago)
-        create_list(:post, 2, created_at: 10.days.ago, person: person)
-        expect(Post.count).to eq(12)
-
+        person = Post.last.person
         get :list, params: {person_filter: person.username_canonical}
         posts = Post.where(person_id: person.id)
         expect(response).to be_successful

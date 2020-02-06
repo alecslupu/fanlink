@@ -74,6 +74,10 @@
       "description": "User/product posts"
     },
     {
+      "name": "Referral",
+      "description": "Referral system "
+    },
+    {
       "name": "Relationships",
       "description": "User's relationships"
     },
@@ -957,7 +961,7 @@
             "name": "person[email]",
             "in": "formData",
             "type": "string",
-            "required": true
+            "required": false
           },
           {
             "name": "person[username]",
@@ -969,12 +973,24 @@
             "name": "person[password]",
             "in": "formData",
             "type": "string",
-            "required": true
+            "required": false
           },
           {
             "name": "person[picture]",
             "in": "formData",
             "type": "file"
+          },
+          {
+            "name": "facebook_auth_token",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "referrer",
+            "in": "formData",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
@@ -1031,11 +1047,6 @@
           },
           {
             "name": "person[name]",
-            "in": "formData",
-            "type": "string"
-          },
-          {
-            "name": "person[username]",
             "in": "formData",
             "type": "string"
           },
@@ -2156,6 +2167,149 @@
           },
           "401": {
             "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referral": {
+      "get": {
+        "summary": "List the referral code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/MiniPeopleArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referral/purchased": {
+      "get": {
+        "summary": "List the referral code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/MiniPeopleArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referral/me": {
+      "get": {
+        "summary": "List the referral code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ReferralCode"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal server error"
@@ -3816,6 +3970,17 @@
       },
       "description": "Category Reponse"
     },
+    "ReferralCode": {
+      "type": "object",
+      "properties": {
+        "person_id": {
+          "type": "integer"
+        },
+        "unique_code": {
+          "type": "string"
+        }
+      }
+    },
     "CategoryArray": {
       "type": "object",
       "properties": {
@@ -3828,6 +3993,44 @@
                 "$ref": "#/definitions/CategoryJson"
               }
             }
+          }
+        }
+      }
+    },
+    "personMini": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "picture_url": {
+          "type": "string"
+        },
+        "designation": {
+          "type": "string"
+        },
+        "facebook_picture_url": {
+          "type": "string"
+        },
+        "badge_points": {
+          "type": "integer"
+        },
+        "level": {
+          "$ref": "#/definitions/LevelJson",
+          "x-nullable": true
+        }
+      }
+    },
+    "MiniPeopleArray": {
+      "type": "object",
+      "properties": {
+        "people": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/personMini"
           }
         }
       }
