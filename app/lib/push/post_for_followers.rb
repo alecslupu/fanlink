@@ -1,5 +1,5 @@
 module Push
-  class Post < BasePush
+  class PostForFollowers < BasePush
 
     def push(person, post_id)
       @target_people_ids = person.followers.pluck(:id)
