@@ -2,7 +2,7 @@ module Push
   class FriendRequestAccepted < BasePush
 
     def push(relationship)
-      @target_person = relationship.requested_to
+      @target_person = relationship.requested_by
 
       if relationship.friended?
         android_token_notification_push(
