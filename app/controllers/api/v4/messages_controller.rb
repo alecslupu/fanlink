@@ -29,7 +29,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
                       .visible
                       .unblocked(current_user.blocked_people)
                       .not_reported_by_user(current_user.id)
-                      .order("messages.created_at #{ordering}, messages.id #{ordering} ")
+                      .order(Arel.sql "messages.created_at #{ordering}, messages.id #{ordering} ")
                   )
 
       clear_count(room) if room.private?
@@ -105,7 +105,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     else
       time = 1
     end
-    @messages = Message.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    @messages = Message.where("created_at >= ?", time.day.ago).order(Arel.sql "DATE(created_at) ASC").group(Arel.sql "Date(created_at)").count
     return_the @messages, handler: tpl_handler
   end
 
