@@ -94,16 +94,16 @@ module Push
   end
 
   # will be later changed to accept language to subscribe to the correct marketing topic
-  def subscribe_device_to_topic(device_identifier, device_type)
-    response = push_client.topic_subscription(get_topic(device_type), device_identifier)
-    Rails.logger.error("Got FCM response: #{response.inspect}")
-  end
+  # def subscribe_device_to_topic(device_identifier, device_type)
+  #   response = push_client.topic_subscription(get_topic(device_type), device_identifier)
+  #   Rails.logger.error("Got FCM response: #{response.inspect}")
+  # end
 
-  # will be later changed to accept language to unsubscribe to the correct marketing topic
-  def unsubscribe_device_to_topic(device_identifier, device_type)
-    response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
-    Rails.logger.error("Got FCM response: #{response.inspect}")
-  end
+  # # will be later changed to accept language to unsubscribe to the correct marketing topic
+  # def unsubscribe_device_to_topic(device_identifier, device_type)
+  #   response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+  #   Rails.logger.error("Got FCM response: #{response.inspect}")
+  # end
 
   def automated_notification_android_push(device_identifiers, title, body, ttl_hours)
     android_token_notification_push(
