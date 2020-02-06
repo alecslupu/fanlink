@@ -11,9 +11,9 @@ module Push
         2419200,
         context: "public_chat",
         title: message.product.name,
-        message_short: "A new user wrote in the #{room.name}",
+        message_short: "A new user wrote in the #{room.name} Chat Room",
         message_placeholder: message.person.username,
-        message_long: "A new user wrote in the #{room.name}",
+        message_long: "A new user wrote in the #{room.name} Chat Room",
         image_url: message.picture_url,
         room_id: room.id.to_s,
         deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
@@ -21,7 +21,7 @@ module Push
 
       ios_token_notification_push(
         message.product.name,
-        "A new user wrote in the #{room.name}",
+        "A new user wrote in the #{room.name} Chat Room",
         "ReplyToMessage",
         2419200,
         context: "public_chat",
