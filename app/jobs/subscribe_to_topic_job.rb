@@ -6,7 +6,7 @@ class SubscribeToTopicJob < Struct.new(:device_identifier, :device_type, :produc
 
     ActsAsTenant.with_tenant(product) do
       # TODO add  topic option
-      subscribe_device_to_topic(device_identifier, device_type)
+      Push::TopicSubscription.new.subscribe_device(device_identifier, device_type)
     end
   end
 
