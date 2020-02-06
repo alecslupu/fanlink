@@ -1,5 +1,5 @@
 class BaseMention
-  def self.parse_content(content, product_id)
+  def self.parse_body_content(content, product_id)
     mentions = []
     if content.match?(/\[m\|((?:\w*\s*\w*))\]/i)
       content.scanm(/\[m\|((?:\w*\s*\w*))\]/i).each do |mention|

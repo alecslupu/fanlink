@@ -1,12 +1,9 @@
 module Push
-  class PostPush < BasePush
+  class PostCommentMention < BasePush
 
-    def post_comment_mention_push(post_comment, mentioned_person)
-      target_person = mentioned_person
+    def push(post_comment, mentioned_person)
+      @target_person = mentioned_person
 
-
-      # acum avem o problema :D facem Android tokens de mai multe ori ...
-      #
       android_token_notification_push(
         2419200,
         context: "comment_mentioned",
@@ -25,9 +22,5 @@ module Push
         deep_link: "#{post_comment.person.product.internal_name}://posts/#{post_comment.post.id}/comments"
       )
     end
-
-
-    protected
-
   end
 end

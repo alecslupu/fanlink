@@ -5,7 +5,7 @@ Rails.application.config.to_prepare do
   end
   Wisper.clear if Rails.env.development?
   Wisper::ActiveRecord.extend_all
-  Wisper.subscribe(MentionPushNotification, async: true)
+  Wisper.subscribe(MessageMentionPush, async: true)
   Wisper.subscribe(QuestsListener)
   Wisper.subscribe(RewardsListener)
   Wisper.subscribe(LevelsListener)
