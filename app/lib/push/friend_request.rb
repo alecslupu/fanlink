@@ -30,7 +30,7 @@ module Push
 
     def accepted_push(relationship)
       @target_person = relationship.requested_by
-      requested_to_person = relationship.requested_to_person
+      requested_to_person = relationship.requested_to
 
       return unless relationship.friended?
 
