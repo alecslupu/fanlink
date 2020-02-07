@@ -5,7 +5,7 @@ RSpec.describe "Api::V4::TagsController", type: :request, swagger_doc: "v4/swagg
   path "/posts/tags" do
     get "" do
       security [Bearer: []]
-      tags ["post", 'android-old']
+      tags "Tags"
 
       produces "application/vnd.api.v4+json"
 

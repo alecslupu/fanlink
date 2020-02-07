@@ -187,10 +187,10 @@ RSpec.configure do |config|
         #  name: "Steps",
         #  description: "Steps for a quest",
         # },
-        # {
-        #  name: "Tags",
-        #  description: "Tags",
-        # },
+        {
+         name: "Tags",
+         description: "Tags",
+        },
       ],
       paths: {},
       definitions: {
@@ -1012,13 +1012,13 @@ RSpec.configure do |config|
           properties: {
             id: {type: :string},
             username: {type: :string},
-            picture_url: {type: :string},
-            designation: {type: :string},
-            facebook_picture_url: {type: :string},
+            picture_url: {type: :string, 'x-nullable': true },
+            designation: {type: :string, 'x-nullable': true },
+            facebook_picture_url: {type: :string, 'x-nullable': true },
             badge_points: {type: :integer},
-            level: {
-              "$ref": "#/definitions/LevelJson", 'x-nullable': true
-            }
+            # level: {
+            #   "$ref": "#/definitions/LevelJson", 'nullable': true
+            # }
           }
         },
         MiniPeopleArray: {

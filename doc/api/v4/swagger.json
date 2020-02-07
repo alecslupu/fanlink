@@ -88,6 +88,10 @@
     {
       "name": "Session",
       "description": "User session management."
+    },
+    {
+      "name": "Tags",
+      "description": "Tags"
     }
   ],
   "paths": {
@@ -297,6 +301,63 @@
             "description": ""
           },
           "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "username_filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/MiniPeopleArray"
+            }
+          },
+          "401": {
             "description": ""
           },
           "500": {
@@ -585,6 +646,809 @@
             "description": "HTTP/1.1 200 Ok"
           },
           "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{id}/send_email": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{id}/download": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/quests": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/quests/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/blocks": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/steps/{step_id}/completions": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "step_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/events/{id}/checkins": {
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "config/{app}.json": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "app",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/person/{username}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/recommended": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/certificates": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/certificates/{certificate_id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/certificates/{certificate_id}/certcourses": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/person_certificates": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/send_certificate": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/person_certcourses": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
             "description": ""
           },
           "500": {
@@ -2185,7 +3049,7 @@
           }
         ],
         "tags": [
-          "Referal"
+          "Referral"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -2239,7 +3103,7 @@
           }
         ],
         "tags": [
-          "Referal"
+          "Referral"
         ],
         "parameters": [
           {
@@ -2293,7 +3157,7 @@
           }
         ],
         "tags": [
-          "Referal"
+          "Referral"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -3076,10 +3940,7 @@
           }
         ],
         "tags": [
-          [
-            "post",
-            "android-old"
-          ]
+          "Tags"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -4007,20 +4868,19 @@
           "type": "string"
         },
         "picture_url": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "designation": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "facebook_picture_url": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "badge_points": {
           "type": "integer"
-        },
-        "level": {
-          "$ref": "#/definitions/LevelJson",
-          "x-nullable": true
         }
       }
     },

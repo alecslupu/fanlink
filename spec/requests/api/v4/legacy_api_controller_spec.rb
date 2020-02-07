@@ -7,45 +7,122 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #courseware_client_person_certificate_certcourse GET      /courseware/client/people/:person_id/certificates/:certificate_id/certcourses/:id(.:format) api/v4/courseware/client/certcourses#show {:format=>:json}
   #courseware_client_person_certificates GET      /courseware/client/people/:person_id/certificates(.:format)                                 api/v4/courseware/client/certificates#index {:format=>:json}
   #courseware_client_person_certificate GET      /courseware/client/people/:person_id/certificates/:id(.:format)                             api/v4/courseware/client/certificates#show {:format=>:json}
-  #courseware_client_people GET      /courseware/client/people(.:format)                                                         api/v4/courseware/client/people#index {:format=>:json}
+
 
   path "/courseware/client/people/{person_id}/certificates/{id}/send_email" do
     post "" do
+      security [Bearer: []]
+      let(:Authorization) { "" }
 
+      parameter name: :person_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
+
+      produces "application/vnd.api.v4+json"
+
+      # tags "Courseware-tst"
+      response "200", "HTTP/1.1 200 Ok" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
     end
   end
   path "/courseware/client/people/{person_id}/certificates/{id}/download" do
     get "" do
+      security [Bearer: []]
+      let(:Authorization) { "" }
+      # tags "Courseware-tst"
+      parameter name: :person_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
 
+      produces "application/vnd.api.v4+json"
+      response "200", "HTTP/1.1 200 Ok" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
     end
   end
   path "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses" do
     get "" do
+      security [Bearer: []]
+      let(:Authorization) { "" }
+      # tags "Courseware-tst"
+      parameter name: :person_id, in: :path, type: :string
+      parameter name: :certificate_id, in: :path, type: :string
 
+      produces "application/vnd.api.v4+json"
+      response "200", "HTTP/1.1 200 Ok" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
     end
   end
   path "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses/{id}" do
     get "" do
+      security [Bearer: []]
+      let(:Authorization) { "" }
+      # tags "Courseware-tst"
+      parameter name: :person_id, in: :path, type: :string
+      parameter name: :certificate_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
 
+      produces "application/vnd.api.v4+json"
+      response "200", "HTTP/1.1 200 Ok" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
     end
   end
-  path "/courseware/client/people/{person_id}/certificates" do
-    get "" do
 
-    end
-  end
-  path "/courseware/client/people/{person_id}/certificates/{id}" do
-    get "" do
-
-    end
-  end
-  path "/courseware/client/people" do
-    get "" do
-
-    end
-  end
   path "/quests" do
      get "" do
+
+       security [Bearer: []]
+       let(:Authorization) { "" }
+       produces "application/vnd.api.v4+json"
+       response "200", "HTTP/1.1 200 Ok" do
+         run_test!
+       end
+       response "401", "" do
+         run_test!
+       end
+       response "404", "" do
+         run_test!
+       end
+       response 500, "Internal server error" do
+         document_response_without_test!
+       end
     #    tags ["quests", 'android-old']
     #
     #    produces "application/vnd.api.v4+json"
@@ -62,6 +139,23 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/quests/{id}" do
      get "" do
+       security [Bearer: []]
+       let(:Authorization) { "" }
+       parameter name: :id, in: :path, type: :string
+
+       produces "application/vnd.api.v4+json"
+       response "200", "HTTP/1.1 200 Ok" do
+         run_test!
+       end
+       response "401", "" do
+         run_test!
+       end
+       response "404", "" do
+         run_test!
+       end
+       response 500, "Internal server error" do
+         document_response_without_test!
+       end
     #    tags ["quests", 'android-old']
     #
     #    produces "application/vnd.api.v4+json"
@@ -78,6 +172,22 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/blocks" do
     post "" do
+
+      security [Bearer: []]
+      let(:Authorization) { "" }
+      produces "application/vnd.api.v4+json"
+      response "200", "HTTP/1.1 200 Ok" do
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
   #    tags ["relation", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -92,8 +202,25 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
     end
   end
-  path "/steps/{stepId}/completions" do
+  path "/steps/{step_id}/completions" do
    post "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     parameter name: :step_id, in: :path, type: :string
+
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["steps", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -110,6 +237,22 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/events" do
    get "" do
+
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -126,6 +269,23 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/events/{id}/checkins" do
    delete "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     parameter name: :id, in: :path, type: :string
+
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -140,6 +300,22 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
    end
    post "" do
+
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -154,6 +330,21 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
    end
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -173,6 +364,23 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   ## kotlin stuff
   path "config/{app}.json" do
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     parameter name: :app, in: :path, type: :string
+
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["config", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -189,6 +397,24 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/people/person/{username}" do
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     parameter name: :username, in: :path, type: :string
+
+
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["user", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -206,6 +432,21 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/people/recommended" do
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["user", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -225,6 +466,21 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/certificates" do
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -240,8 +496,25 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
    end
   end
-  path "/certificates/{certificateId}" do
+  path "/certificates/{certificate_id}" do
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     parameter name: :certificate_id, in: :path, type: :string
+
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -257,8 +530,25 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
    end
   end
-  path "/certificates/{certificateId}/certcourses" do
+  path "/certificates/{certificate_id}/certcourses" do
    get "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     parameter name: :certificate_id, in: :path, type: :string
+
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -276,6 +566,21 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/person_certificates" do
    post "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -308,6 +613,21 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/people/send_certificate" do
    post "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -325,6 +645,21 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   end
   path "/person_certcourses" do
    post "" do
+     security [Bearer: []]
+     let(:Authorization) { "" }
+     produces "application/vnd.api.v4+json"
+     response "200", "HTTP/1.1 200 Ok" do
+       run_test!
+     end
+     response "401", "" do
+       run_test!
+     end
+     response "404", "" do
+       run_test!
+     end
+     response 500, "Internal server error" do
+       document_response_without_test!
+     end
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
