@@ -68,6 +68,7 @@ module Push
       return if tokens.empty?
 
       notification_body = build_ios_notification(title, body, click_action, ttl, data)
+
       if tokens.size <= BATCH_SIZE
         push_with_retry(notification_body, tokens, "ios")
       else

@@ -37,13 +37,13 @@ module Push
   def post_comment_mention_push(post_comment, mentioned_person)
     PostPush.new.post_comment_mention_push(post_comment, mentioned_person)
   end
-  def simple_notification_push(notification, current_user, receipents)
-    tokens = []
-    receipents.each do |person|
-      tokens += person.notification_device_ids.map { |ndi| ndi.device_identifier }
-    end
-    do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
-  end
+  # def simple_notification_push(notification, current_user, receipents)
+  #   tokens = []
+  #   receipents.each do |person|
+  #     tokens += person.notification_device_ids.map { |ndi| ndi.device_identifier }
+  #   end
+  #   do_push(tokens, current_user.username, notification.body, 'manual_notification', notification_id: notification.id)
+  # end
 
   # def marketing_notification_push(notification)
   #   if notification.send_to_all?
