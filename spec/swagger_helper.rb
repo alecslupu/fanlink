@@ -480,29 +480,18 @@ RSpec.configure do |config|
             },
           },
         },
+
         "LevelJson": {
           type: :object,
-          "properties": {
-            "id": {
-              type: :integer,
-            },
-            "name": {
-              type: :string,
-            },
-            "internal_name": {
-              type: :string,
-            },
-            "description": {
-              type: :string,
-            },
-            "points": {
-              type: :integer,
-            },
-            "picture_url": {
-              type: :string,
-            },
+          properties: {
+            id: { type: :integer },
+            name: {type: :string},
+            internal_name: {type: :string},
+            description: {type: :string},
+            points: {type: :integer},
+            picture_url: {type: :string},
           },
-          "description": "Level Response",
+          "description": "Level Response"
         },
         "MessageReportsArray": {
           type: :object,
@@ -1017,18 +1006,6 @@ RSpec.configure do |config|
               },
             },
           },
-        },
-        "LevelJson": {
-          type: :object,
-          properties: {
-            id: { type: :integer },
-            name: {type: :string},
-            internal_name: {type: :string},
-            description: {type: :string},
-            points: {type: :integer},
-            picture_url: {type: :string},
-          },
-          "description": "Level Response"
         },
         personMini: {
           type: :object,

@@ -10,8 +10,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
       parameter name: :email_or_username, in: :formData, type: :string
       parameter name: :password, in: :formData, type: :string
       parameter name: :product, in: :formData, type: :string
-      # parameter name: "X-App", in: :header, type: :string
-      # parameter name: "X-Current-Product", in: :header, type: :string
 
       response "200", "HTTP/1.1 200 Ok" do
         let!(:user) { create(:person) }

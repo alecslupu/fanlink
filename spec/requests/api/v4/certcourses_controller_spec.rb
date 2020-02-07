@@ -27,11 +27,6 @@ RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v
             create(:video_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse ) )
           }
         }
-        # let!(:quiz_page) {
-        #   ActsAsTenant.with_tenant(person_certcourse.person.product) {
-        #     create(:quiz_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse ) )
-        #   }
-        # }
         let!(:download_file_page) {
           ActsAsTenant.with_tenant(person_certcourse.person.product) {
             create(:download_file_page, certcourse_page: create(:certcourse_page, certcourse: person_certcourse.certcourse ) )

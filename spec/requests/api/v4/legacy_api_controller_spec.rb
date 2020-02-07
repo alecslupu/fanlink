@@ -45,7 +45,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
     end
   end
   path "/quests" do
-    #  get "" do
+     get "" do
     #    tags ["quests", 'android-old']
     #
     #    produces "application/vnd.api.v4+json"
@@ -58,10 +58,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
     #    response "404", "" do
     #      run_test!
     #    end
-    #  end
+     end
   end
   path "/quests/{id}" do
-    #  get "" do
+     get "" do
     #    tags ["quests", 'android-old']
     #
     #    produces "application/vnd.api.v4+json"
@@ -74,10 +74,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
     #    response "404", "" do
     #      run_test!
     #    end
-    #  end
+     end
   end
   path "/blocks" do
-  #  post "" do
+    post "" do
   #    tags ["relation", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -90,10 +90,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+    end
   end
   path "/steps/{stepId}/completions" do
-  #  post "" do
+   post "" do
   #    tags ["steps", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -106,10 +106,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/events" do
-  #  get "" do
+   get "" do
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -122,10 +122,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/events/{id}/checkins" do
-  #  delete "" do
+   delete "" do
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -138,8 +138,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
-  #  post "" do
+   end
+   post "" do
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -152,8 +152,8 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
-  #  get "" do
+   end
+   get "" do
   #    tags ["events", 'android-old']
   #
   #    produces "application/vnd.api.v4+json"
@@ -167,12 +167,12 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      run_test!
   #    end
   #
-  #  end
+   end
   end
   #
   ## kotlin stuff
   path "config/{app}.json" do
-  #  get "" do
+   get "" do
   #    tags ["config", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -185,10 +185,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/people/person/{username}" do
-  #  get "" do
+   get "" do
   #    tags ["user", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -202,10 +202,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #      response "404", "" do
   #        run_test!
   #      end
-  #  end
+   end
   end
   path "/people/recommended" do
-  #  get "" do
+   get "" do
   #    tags ["user", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -221,10 +221,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #        run_test!
   #      end
   #    end
-  #  end
+   end
   end
   path "/certificates" do
-  #  get "" do
+   get "" do
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -238,10 +238,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/certificates/{certificateId}" do
-  #  get "" do
+   get "" do
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -255,10 +255,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/certificates/{certificateId}/certcourses" do
-  #  get "" do
+   get "" do
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -272,10 +272,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/person_certificates" do
-  #  post "" do
+   post "" do
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -304,11 +304,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #        run_test!
   #      end
   #    end
-  #  end
+   end
   end
   path "/people/send_certificate" do
-  #
-  #  post "" do
+   post "" do
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -322,10 +321,10 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
   path "/person_certcourses" do
-  #  post "" do
+   post "" do
   #    tags ["education", 'kotlin']
   #
   #    produces "application/vnd.api.v4+json"
@@ -339,6 +338,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    response "404", "" do
   #      run_test!
   #    end
-  #  end
+   end
   end
 end
