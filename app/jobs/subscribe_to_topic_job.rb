@@ -1,6 +1,4 @@
 class SubscribeToTopicJob < Struct.new(:device_identifier, :device_type, :product_id)
-  include Push
-
   def perform
     product = Product.find(product_id)
 
