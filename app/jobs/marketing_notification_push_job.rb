@@ -7,8 +7,7 @@ class MarketingNotificationPushJob < Struct.new(:notification_id)
     notification = MarketingNotification.find(notification_id)
 
     ActsAsTenant.with_tenant(notification.product) do
-      # current_user = notification.person
-      marketing_notification_push(notification)
+      Push::Marketing.new.push(notification)
     end
   end
 
