@@ -88,8 +88,8 @@ GEM
     arel (9.0.0)
     ast (2.4.0)
     attribute_normalizer (1.2.0)
-    awesome_nested_set (3.1.4)
-      activerecord (>= 4.0.0, < 5.3)
+    awesome_nested_set (3.2.0)
+      activerecord (>= 4.0.0, < 7.0)
     awesome_print (1.8.0)
     aws-eventstream (1.0.2)
     aws-partitions (1.104.0)
@@ -1483,4 +1483,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   2.0.1
+   2.1.2
