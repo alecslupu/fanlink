@@ -1,6 +1,6 @@
 module Push
   class BasePush
-    BATCH_SIZE = 100.freeze
+    BATCH_SIZE = 500.freeze
     protected
 
     def push_client
@@ -68,10 +68,10 @@ module Push
       return if tokens.empty?
 
       notification_body = build_ios_notification(title, body, click_action, ttl, data)
-      if tokens.size <= 500
+      if tokens.size <= BATCH_SIZE
         push_with_retry(notification_body, tokens, "ios")
       else
-        tokens.each_slice(500) do |firebase_tokens|
+        tokens.each_slice(BATCH_SIZE) do |firebase_tokens|
           push_with_retry(notification_body, firebase_tokens, "ios")
         end
       end
@@ -107,10 +107,10 @@ module Push
       return if tokens.empty?
 
       notification_body = build_android_notification(ttl, data)
-      if tokens.size <= 500
+      if tokens.size <= BATCH_SIZE
         push_with_retry(notification_body, tokens, "android")
       else
-        tokens.each_slice(500) do |firebase_tokens|
+        tokens.each_slice(BATCH_SIZE) do |firebase_tokens|
           push_with_retry(notification_body, firebase_tokens, "android")
         end
       end
