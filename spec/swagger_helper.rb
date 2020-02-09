@@ -112,8 +112,8 @@ RSpec.configure do |config|
           description: "Users",
         },
         {
-         name: "PostCommentReports",
-         description: "Reported comments on posts",
+          name: "PostCommentReports",
+          description: "Reported comments on posts",
         },
         {
           name: "PostComments",
@@ -160,8 +160,8 @@ RSpec.configure do |config|
         #  description: "Recommended posts",
         # },
         {
-            name: "Referral",
-            description: "Referral system "
+          name: "Referral",
+          description: "Referral system "
         },
         {
           name: "Relationships",
@@ -188,8 +188,8 @@ RSpec.configure do |config|
         #  description: "Steps for a quest",
         # },
         {
-         name: "Tags",
-         description: "Tags",
+          name: "Tags",
+          description: "Tags",
         },
       ],
       paths: {},
@@ -484,7 +484,7 @@ RSpec.configure do |config|
         "LevelJson": {
           type: :object,
           properties: {
-            id: { type: :integer },
+            id: {type: :integer},
             name: {type: :string},
             internal_name: {type: :string},
             description: {type: :string},
@@ -1012,9 +1012,9 @@ RSpec.configure do |config|
           properties: {
             id: {type: :string},
             username: {type: :string},
-            picture_url: {type: :string, 'x-nullable': true },
-            designation: {type: :string, 'x-nullable': true },
-            facebook_picture_url: {type: :string, 'x-nullable': true },
+            picture_url: {type: :string, 'x-nullable': true},
+            designation: {type: :string, 'x-nullable': true},
+            facebook_picture_url: {type: :string, 'x-nullable': true},
             badge_points: {type: :integer},
             # level: {
             #   "$ref": "#/definitions/LevelJson", 'nullable': true
@@ -1031,8 +1031,170 @@ RSpec.configure do |config|
               },
             }
           }
-        }
+        },
+        CertcoursePageArray: {
+          type: :object,
+          properties: {
+            certcourse_pages: {
+              type: :array,
+              items: {"$ref": "#/definitions/CertcoursePageJson"}
+            }
+          }
+        },
+        CertcoursePageJson: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            course_id: {type: :integer},
+            order: {type: :integer},
+            content_type: {type: :string},
+            timer: {type: :integer},
+            media_content_type: {type: :string},
+            media_url: {type: :string},
+            media_url_large: {type: :string},
+            background_color_hex: {type: :string},
+            is_passed: {type: :boolean},
+          }
+        },
+        CertificatesArray: {
+          type: :object,
+          properties: {
+            certificates: {
+              type: :array,
+              items: {"$ref": "#/definitions/CertificateJson"},
+            },
+          }
+        },
+        CertificateJson: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            order: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            color_hex: {type: :string},
+            chat_room_id: {type: :integer, 'x-nullable': true},
+            sku_android: {type: :string},
+            sku_ios: {type: :string},
+            is_free: {type: :boolean},
+            is_issuable: {type: :boolean},
+            is_completed: {type: :boolean},
+            is_purchased: {type: :boolean},
+            certificate_image_url: {type: :string, 'x-nullable': true},
+            issued_certificate_image_url: {type: :string, 'x-nullable': true},
+          },
+          description: "Certificate Response",
+        },
+        ClientCertcourseQuizzArray: {
+          type: :object,
+          properties: {
+            quizzes: {
+              type: :array,
+              items: {"$ref": "#/definitions/ClientCertcourseQuizzJson"},
+            }
+          }
+        },
+        ClientCertcourseQuizzJson: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            is_optional: {type: :boolean},
+            is_survey: {type: :boolean},
+            quiz_text: {type: :string},
+            certcourse_pages_count: {type: :integer},
+            page_order: {type: :integer},
+            no_of_failed_attempts: {type: :integer},
+            answer_text: {type: :string},
+            is_correct: {type: :boolean},
+          }
+        },
+        ClientCertcoursesArray: {
+          type: :object,
+          properties: {
+            certcourses: {
+              type: :array,
+              items: {"$ref": "#/definitions/ClientCertcoursesJson"},
+            }
+          }
+        },
+
+        ClientCertcoursesJson: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            certificate_id: {type: :integer},
+            order: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            duration: {type: :integer},
+            color_hex: {type: :string},
+            page_count: {type: :integer},
+            is_completed: {type: :boolean},
+            last_completed_page_id: {type: :integer},
+            copyright_text: {type: :string},
+            is_started: {type: :boolean},
+            last_completed_page_order: {type: :integer},
+          },
+        },
+        ClientCertificateDownloadJson: {
+          type: :object,
+          properties: {
+            certificate: {
+              type: :object,
+              properties: {
+                image_url: {type: :string},
+              }
+            }
+          }
+        },
+        PersonCertcourseCreateJson: {
+          type: :object,
+          properties: {
+            certcourse_id: {type: :integer},
+            last_completed_page_id: {type: :integer},
+          }
+        },
+
+        "CertificateObject": {
+          type: :object,
+          "properties": {
+            "certificate": {
+              "$ref": "#/definitions/CertificateJson",
+            },
+          },
+        },
+        CertcourseArray: {
+          type: :object,
+          properties: {
+            certcourses: {
+              type: :array,
+              items: {"$ref": "#/definitions/CertcourseJson"},
+            }
+          }
+        },
+        CertcourseJson: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            certificate_id: {type: :integer},
+            order: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            duration: {type: :integer},
+            color_hex: {type: :string},
+            page_count: {type: :integer},
+            is_completed: {type: :boolean},
+            last_completed_page_id: {type: :integer},
+            copyright_text: {type: :string},
+            is_started: {type: :boolean},
+          },
+        },
       },
+
+
       # definitions: {
       #   certificate_information: {
       #     type: :object,

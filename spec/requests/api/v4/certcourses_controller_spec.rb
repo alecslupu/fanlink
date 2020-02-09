@@ -2,6 +2,39 @@ require "swagger_helper"
 
 RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v4/swagger.json" do
 
+  path "/certificates/{certificate_id}/certcourses" do
+    get "" do
+      security [Bearer: []]
+      let(:Authorization) { "" }
+      parameter name: :certificate_id, in: :path, type: :string
+      tags "Courseware"
+
+      let(:certificate_certcourse) { create(:certificate_certcourse) }
+      let(:certificate_id) { certificate_certcourse.certificate_id }
+      let(:person) { create(:person) }
+
+      produces "application/vnd.api.v4+json"
+
+      response "200", "HTTP/1.1 200 Ok" do
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
+        schema "$ref": "#/definitions/CertcourseArray"
+
+        run_test!
+      end
+      response "401", "" do
+        run_test!
+      end
+      response "404", "" do
+        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
+        run_test!
+      end
+      response 500, "Internal server error" do
+        document_response_without_test!
+      end
+      #    tags ["education", 'kotlin']
+    end
+  end
+
   path "/certcourses/{id}" do
     get "" do
       security [Bearer: []]
@@ -33,11 +66,8 @@ RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v
           }
         }
 
-        # schema "$ref": "#/definitions/faulty"
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          raise data.inspect
-        end
+        schema "$ref": "#/definitions/CertcoursePageArray"
+        run_test!
       end
       response "401", "" do
         run_test!
@@ -54,53 +84,3 @@ RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v
     end
   end
 end
-=begin
-        "CertcourseObject": {
-          type: :object,
-          "properties": {
-            "certcourse_pages": {
-                type: :array,
-items: { "$ref": "#/definitions/FollowingJson" }
-
-            }
-          }
-        },
-
-
-{"certcourse_pages"=>[
-  {
-    "id"=>1,
-    "course_id"=>4,
-    "order"=>1,
-    "content_type"=>"image",
-    "timer"=>1,
-    "media_content_type"=>"image/jpeg",
-    "media_url"=>"/home/alecslupu/Sites/fanlink/backend/test_uploads/image_pages/1/images/large.jpg.jpg?1580753781",
-    "media_url_large"=>"/home/alecslupu/Sites/fanlink/backend/test_uploads/image_pages/1/images/large.jpg.jpg?1580753781",
-    "background_color_hex"=>"#744ed7",
-    "is_passed"=>false
-  },
-  {
-    "id"=>2,
-"course_id"=>4,
-"order"=>2,
-"content_type"=>"video",
-"timer"=>6,
-"media_content_type"=>"video/mp4",
-"media_url"=>"/home/alecslupu/Sites/fanlink/backend/test_uploads/video_pages/1/videos/short_video.mp4.mp4?1580753783",
-"media_url_large"=>"", "background_color_hex"=>"#e2781c",
-"is_passed"=>false
-}, {
-"id"=>3,
-"course_id"=>4,
-"order"=>3,
-"content_type"=>"download_file",
-"timer"=>1,
-"media_content_type"=>"application/pdf",
-"media_url"=>"/home/alecslupu/Sites/fanlink/backend/test_uploads/download_file_pages/1/documents/blank_test.pdf.pdf?1580753783",
-"media_url_large"=>"",
-"background_color_hex"=>"#3f2666",
-"is_passed"=>false,
-"caption"=>"[\"tempora\", \"ipsum\", \"assumenda\"]"}]}
-
-=end
