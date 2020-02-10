@@ -263,7 +263,7 @@ deploy:production:
     name: production
     url: https://portal.fan.link
   only:
-    - master
+    - tags
   script:
     - mkdir ~/.ssh/
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
