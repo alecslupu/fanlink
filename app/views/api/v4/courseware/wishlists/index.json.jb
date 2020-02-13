@@ -1,0 +1,10 @@
+json = { wishlist: [] }
+
+@wishlist.each do |item|
+  json[:wishlist].push({
+    id: item.id,
+    certificate: render(partial: "api/v4/certificates/#{@req_source}", locals: {certificate: item.certificate, user: current_user, pc: item.certificate.person_certificates}, handlers: "jb")
+  })
+end
+
+json
