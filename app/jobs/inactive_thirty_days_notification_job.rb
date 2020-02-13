@@ -1,14 +1,17 @@
-class Inactive48hNotificationJob
-  BATCH_SIZE = 50.freeze
+class InactiveThirtyDaysNotificationJob
+  BATCH_SIZE = 500.freeze
 
   def perform
     notification = AutomatedNotification.where(criteria: :inactive_48h, enabled: true).last
+
+    return unless notification
+
     ActsAsTenant.with_tenant(notification.product) do
-      NotificationDeviceId.joins(:person).where(device_type: :ios).where("people.last_activity_at > ? AND people.last_activity_at < ?",Time.zone.now - 51.hour, Time.zone.now - 48.hour).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |device_ids|
+      NotificationDeviceId.joins(:person).where(device_type: :ios).where("people.last_activity_at > ? AND people.last_activity_at < ?", Time.zone.now - 30.day, Time.zone.now - 31.day).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |device_ids|
         Delayed::Job.enqueue(AutomatedNotificationIosPushJob.new(device_ids.pluck(:id), notification.title, notification.body, notification.ttl_hours))
       end
 
-      NotificationDeviceId.joins(:person).where(device_type: :android).where("people.last_activity_at > ? AND people.last_activity_at < ?",Time.zone.now - 51.hour, Time.zone.now - 48.hour).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |device_ids|
+      NotificationDeviceId.joins(:person).where(device_type: :android).where("people.last_activity_at > ? AND people.last_activity_at < ?", Time.zone.now - 30.day, Time.zone.now - 31.day).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |device_ids|
         Delayed::Job.enqueue(AutomatedNotificationAndroidPushJob.new(device_ids.pluck(:id), notification.title, notification.body, notification.ttl_hours))
       end
     end
