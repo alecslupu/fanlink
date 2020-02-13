@@ -1,5 +1,6 @@
 module Push
   class BasePush
+    BATCH_SIZE = 500.freeze
     protected
 
     def push_client
@@ -26,20 +27,6 @@ module Push
       resp
     end
 
-    def unsubscribe_to_topic(tokens, phone_os)
-      tokens = tokens.is_a?(Array) ? tokens : [tokens]
-      case phone_os
-      when nil
-        %w(marketing_en_ios-US marketing_en_android-US).each do |topic|
-          response = push_client.batch_topic_unsubscription(topic, tokens)
-        end
-      when "android"
-        response = push_client.batch_topic_unsubscription("marketing_en_android-US", tokens)
-      when "ios"
-        response = push_client.batch_topic_unsubscription("marketing_en_ios-US", tokens)
-      end
-    end
-
     def delete_not_registered_device_ids(device_ids)
       NotificationDeviceId.where(device_identifier: device_ids).destroy_all
     end
@@ -52,7 +39,6 @@ module Push
     def clean_notification_device_ids(resp, phone_os)
       delete_not_registered_device_ids(resp)
       mark_not_registered_device_ids(resp)
-      unsubscribe_to_topic(resp, phone_os)
     end
 
     def ios_token_notification_push(title, body, click_action, ttl, data = {})
@@ -67,10 +53,11 @@ module Push
       return if tokens.empty?
 
       notification_body = build_ios_notification(title, body, click_action, ttl, data)
-      if tokens.size <= 500
+
+      if tokens.size <= BATCH_SIZE
         push_with_retry(notification_body, tokens, "ios")
       else
-        tokens.each_slice(500) do |firebase_tokens|
+        tokens.each_slice(BATCH_SIZE) do |firebase_tokens|
           push_with_retry(notification_body, firebase_tokens, "ios")
         end
       end
@@ -106,10 +93,10 @@ module Push
       return if tokens.empty?
 
       notification_body = build_android_notification(ttl, data)
-      if tokens.size <= 500
+      if tokens.size <= BATCH_SIZE
         push_with_retry(notification_body, tokens, "android")
       else
-        tokens.each_slice(500) do |firebase_tokens|
+        tokens.each_slice(BATCH_SIZE) do |firebase_tokens|
           push_with_retry(notification_body, firebase_tokens, "android")
         end
       end
@@ -128,6 +115,16 @@ module Push
       # options[:android] = build_android_options
 
       return options
+    end
+
+    def notification_topic_push(topic, options)
+      begin
+        resp = push_client.send_to_topic(topic, options)
+      rescue Errno::EPIPE
+        disconnect
+        retry if (retries += 1) < 2
+      end
+      resp
     end
   end
 end
