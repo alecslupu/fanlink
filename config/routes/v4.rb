@@ -72,6 +72,7 @@ Rails.application.routes.draw do
           end
         end
       end
+      resources :wishlists, only: [:index, :create, :destroy]
     end
     resources :notifications, only: [:create]
 
