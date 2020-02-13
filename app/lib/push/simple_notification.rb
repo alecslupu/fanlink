@@ -5,7 +5,7 @@ module Push
 
       android_token_notification_push(
         2419200,
-        context: "manual_notification",
+        context: "marketing",
         title: "#{current_user.username}",
         message_short: notification.body,
         message_long: notification.body,
@@ -17,7 +17,7 @@ module Push
         notification.body,
         nil,
         2419200,
-        context: "manual_notification"
+        context: "marketing"
       )
     end
   end
