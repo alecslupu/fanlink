@@ -27,20 +27,6 @@ module Push
       resp
     end
 
-    def unsubscribe_to_topic(tokens, phone_os)
-      tokens = tokens.is_a?(Array) ? tokens : [tokens]
-      case phone_os
-      when nil
-        %w(marketing_en_ios-US marketing_en_android-US).each do |topic|
-          response = push_client.batch_topic_unsubscription(topic, tokens)
-        end
-      when "android"
-        response = push_client.batch_topic_unsubscription("marketing_en_android-US", tokens)
-      when "ios"
-        response = push_client.batch_topic_unsubscription("marketing_en_ios-US", tokens)
-      end
-    end
-
     def delete_not_registered_device_ids(device_ids)
       NotificationDeviceId.where(device_identifier: device_ids).destroy_all
     end
@@ -53,7 +39,6 @@ module Push
     def clean_notification_device_ids(resp, phone_os)
       delete_not_registered_device_ids(resp)
       mark_not_registered_device_ids(resp)
-      unsubscribe_to_topic(resp, phone_os)
     end
 
     def ios_token_notification_push(title, body, click_action, ttl, data = {})
