@@ -413,7 +413,9 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         create(:post, person: person)
         login_as(person)
 
-        get :list, params: {person_filter: "customusername"}
+        person = Post.last.person
+        get :list, params: {person_filter: person.username_canonical}
+
         posts = Post.where(person_id: person.id)
 
         expect(response).to be_successful
