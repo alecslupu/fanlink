@@ -266,6 +266,49 @@
         }
       }
     },
+    "/certificates/{certificate_id}/certcourses": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertcourseArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/certcourses/{id}": {
       "get": {
         "summary": "",
@@ -683,6 +726,146 @@
         }
       }
     },
+    "/courseware/wishlists": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CertificateWishlist"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/wishlists/{id}": {
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/followings": {
       "post": {
         "summary": "",
@@ -1050,6 +1233,9 @@
         "produces": [
           "application/vnd.api.v4+json"
         ],
+        "consumes": [
+          "multipart/form-data"
+        ],
         "responses": {
           "200": {
             "description": "HTTP/1.1 200 Ok"
@@ -1086,6 +1272,9 @@
         ],
         "produces": [
           "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
         ],
         "responses": {
           "200": {
@@ -1180,6 +1369,9 @@
         "produces": [
           "application/vnd.api.v4+json"
         ],
+        "consumes": [
+          "multipart/form-data"
+        ],
         "responses": {
           "200": {
             "description": "HTTP/1.1 200 Ok"
@@ -1223,7 +1415,7 @@
         }
       }
     },
-    "config/{app}.json": {
+    "/config/{requested_app}.json": {
       "get": {
         "summary": "",
         "security": [
@@ -1235,7 +1427,7 @@
         ],
         "parameters": [
           {
-            "name": "app",
+            "name": "requested_app",
             "in": "path",
             "type": "string",
             "required": true
@@ -1247,9 +1439,6 @@
         "responses": {
           "200": {
             "description": "HTTP/1.1 200 Ok"
-          },
-          "401": {
-            "description": ""
           },
           "404": {
             "description": ""
@@ -1305,43 +1494,6 @@
             "Bearer": [
 
             ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": "HTTP/1.1 200 Ok"
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/certificates/{certificate_id}/certcourses": {
-      "get": {
-        "summary": "",
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "certificate_id",
-            "in": "path",
-            "type": "string",
-            "required": true
           }
         ],
         "produces": [
@@ -2258,6 +2410,9 @@
             }
           },
           "401": {
+            "description": ""
+          },
+          "422": {
             "description": ""
           },
           "404": {
@@ -5147,6 +5302,78 @@
         }
       }
     },
+    "Certificate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "color_hex": {
+          "type": "string"
+        },
+        "chat_room_id": {
+          "type": "integer"
+        },
+        "sku_android": {
+          "type": "string"
+        },
+        "sku_ios": {
+          "type": "string"
+        },
+        "is_free": {
+          "type": "boolean"
+        },
+        "is_issuable": {
+          "type": "boolean"
+        },
+        "is_completed": {
+          "type": "boolean"
+        },
+        "is_purchased": {
+          "type": "boolean"
+        },
+        "certificate_image_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "issued_certificate_image_url": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
+    "CertificateWishlist": {
+      "type": "object",
+      "properties": {
+        "wishlist": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "certificate": {
+                "type": "object",
+                "$ref": "#/definitions/Certificate"
+              }
+            }
+          }
+        }
+      }
+    },
     "ClientCertcoursesJson": {
       "type": "object",
       "properties": {
@@ -5223,6 +5450,61 @@
       "properties": {
         "certificate": {
           "$ref": "#/definitions/CertificateJson"
+        }
+      }
+    },
+    "CertcourseArray": {
+      "type": "object",
+      "properties": {
+        "certcourses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CertcourseJson"
+          }
+        }
+      }
+    },
+    "CertcourseJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "certificate_id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "color_hex": {
+          "type": "string"
+        },
+        "page_count": {
+          "type": "integer"
+        },
+        "is_completed": {
+          "type": "boolean"
+        },
+        "last_completed_page_id": {
+          "type": "integer"
+        },
+        "copyright_text": {
+          "type": "string"
+        },
+        "is_started": {
+          "type": "boolean"
         }
       }
     }
