@@ -170,20 +170,20 @@ class Person < ApplicationRecord
   scope :without_friendships, -> { where.not(id: with_friendships.select(:id)) }
 
   scope :has_interests, -> { joins(:person_interests).group(:id) }
-  scope :has_no_interests, -> { where.not(id: has_interests.select(:id)) }
+  scope :has_no_interests, -> { joins("LEFT JOIN person_interests ON person_interests.person_id = people.id").where("person_interests.id is NULL") }
   scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").group(:id) }
-  scope :has_no_followings, -> { where.not(id: has_followings.select(:id)) }
+  scope :has_no_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").where("followings.id is NULL") }
   scope :has_posts, -> { joins(:posts).group(:id) }
   scope :has_no_posts, -> {joins("LEFT JOIN posts ON posts.person_id = people.id").where("posts.id is NULL") }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
   scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
   scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
-  scope :has_enrolled_certificate, -> { joins(:certificates).where("certificates.is_free = ?", true) }
-  scope :has_no_enrolled_certificate, -> { where.not(id: has_enrolled_certificate.select(:id))}
-  scope :has_paid_certificate, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0") }
-  scope :has_no_paid_certificate, -> { where.not(id: has_paid_certificate.select(:id)) }
-  scope :has_certificate_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
-  scope :has_no_sent_message, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
+  scope :has_enrolled_certificates, -> { joins(:certificates).where("certificates.is_free = ?", true) }
+  scope :has_no_enrolled_certificates, -> { where.not(id: has_enrolled_certificates.select(:id)) }
+  scope :has_paid_certificates, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0") }
+  scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
+  scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
+  scope :has_no_sent_messages, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }

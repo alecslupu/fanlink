@@ -18,8 +18,8 @@ RailsAdmin.config do |config|
       if Person.current_user.admin? || Person.current_user.super_admin?
       scopes [
         nil, :has_interests, :has_no_interests, :has_followings, :has_no_followings, :with_friendships, :without_friendships, :has_posts, :has_no_posts,
-        :has_facebook_id, :has_created_acc_past_24h, :has_created_acc_past_7days, :has_enrolled_certificate, :has_no_enrolled_certificate,
-        :has_paid_certificate, :has_no_paid_certificate, :has_certificate_generated
+        :has_facebook_id, :has_created_acc_past_24h, :has_created_acc_past_7days, :has_enrolled_certificates, :has_no_enrolled_certificates,
+        :has_paid_certificate, :has_no_paid_certificates, :has_certificates_generated, :has_no_sent_messages
       ]
       end
       field :username do

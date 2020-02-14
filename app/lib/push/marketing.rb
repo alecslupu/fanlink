@@ -5,24 +5,24 @@ module Push
     def push(notification)
       @notification = notification
       case @notification.person_filter
-        when "has_certificate_enrolled"
-          person_ids = Person.has_enrolled_certificate.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_certificates_enrolled"
+          person_ids = Person.has_enrolled_certificates.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
-        when "has_no_certificate_enrolled"
-          person_ids = Person.has_no_enrolled_certificate.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_no_certificates_enrolled"
+          person_ids = Person.has_no_enrolled_certificates.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
-        when "has_certificate_generated"
-          person_ids = Person.has_certificate_generated.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_certificates_generated"
+          person_ids = Person.has_certificates_generated.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
-        when "has_paid_certificate"
-          person_ids = Person.has_paid_certificate.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_paid_certificates"
+          person_ids = Person.has_paid_certificates.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
-        when "has_no_paid_certificate"
-          person_ids = Person.has_no_paid_certificate.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_no_paid_certificates"
+          person_ids = Person.has_no_paid_certificates.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
         when "has_friends"
