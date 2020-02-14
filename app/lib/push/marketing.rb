@@ -73,6 +73,10 @@ module Push
           person_ids = Person.where.not(id: notification.person_id).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
+        when "has_no_sent_messages"
+          person_ids = Person.has_no_sent_messages.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+            send_filtered_notification(person_ids)
+          end
       end
     end
 
