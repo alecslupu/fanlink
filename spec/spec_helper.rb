@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "pry"
 require "simplecov"
 # require "coverage_helper"
@@ -17,7 +19,7 @@ SimpleCov.start "rails" do
   enable_coverage :branch
 end
 require File.expand_path("../../config/environment", __FILE__)
-require 'paper_trail/frameworks/rspec'
+require "paper_trail/frameworks/rspec"
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
