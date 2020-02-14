@@ -13,7 +13,6 @@
 
 class MarketingNotification < ApplicationRecord
   belongs_to :person, touch: true
-  belongs_to :product
 
   acts_as_tenant(:product)
 
