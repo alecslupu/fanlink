@@ -174,7 +174,7 @@ class Person < ApplicationRecord
   scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").group(:id) }
   scope :has_no_followings, -> { where.not(id: has_followings.select(:id)) }
   scope :has_posts, -> { joins(:posts).group(:id) }
-  scope :has_no_posts, -> { where.not(id: has_posts.select(:id)) }
+  scope :has_no_posts, -> {joins("LEFT JOIN posts ON posts.person_id = people.id").where("posts.id is NULL") }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
   scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
   scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
@@ -183,6 +183,7 @@ class Person < ApplicationRecord
   scope :has_paid_certificate, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0") }
   scope :has_no_paid_certificate, -> { where.not(id: has_paid_certificate.select(:id)) }
   scope :has_certificate_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
+  scope :has_no_sent_message, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }

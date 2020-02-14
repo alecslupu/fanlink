@@ -34,7 +34,8 @@ class MarketingNotification < ApplicationRecord
     has_no_created_posts: 13,
     has_facebook_id: 14,
     account_created_past_24h: 15,
-    accoount_created_past_7_days: 16
+    accoount_created_past_7_days: 16,
+    has_no_sent_message: 17
   }
 
   validates :body, presence: true
