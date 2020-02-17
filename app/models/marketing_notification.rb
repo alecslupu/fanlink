@@ -12,7 +12,7 @@
 #
 
 class MarketingNotification < ApplicationRecord
-  belongs_to :person, touch: true
+  belongs_to :person
 
   acts_as_tenant(:product)
 
