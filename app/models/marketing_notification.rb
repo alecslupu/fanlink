@@ -12,9 +12,9 @@
 #
 
 class MarketingNotification < ApplicationRecord
-  belongs_to :person
-
   acts_as_tenant(:product)
+
+  belongs_to :person
 
   enum person_filter: {
     send_to_all: 0,
