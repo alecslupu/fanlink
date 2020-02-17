@@ -1,4 +1,4 @@
-class ActiveSevenyDaysNotificationJob
+class ActiveSevenDaysNotificationJob
   BATCH_SIZE = 500.freeze
 
   def perform

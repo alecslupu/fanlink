@@ -7,6 +7,7 @@ RailsAdmin.config do |config|
              :person,
              :title,
              :body,
+             :deep_link,
              :person_filter,
              :ttl_hours
     end
@@ -16,6 +17,7 @@ RailsAdmin.config do |config|
              :person,
              :title,
              :body,
+             :deep_link,
              :person_filter,
              :ttl_hours
     end
@@ -23,6 +25,7 @@ RailsAdmin.config do |config|
     edit do
       fields :title,
              :body,
+             :deep_link,
              :person_filter,
              :ttl_hours
 
