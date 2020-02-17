@@ -240,20 +240,20 @@ RSpec.describe Person, type: :model do
     describe "#has_created_acc_past_7days" do
       it { expect(Person).to respond_to(:has_created_acc_past_7days)}
     end
-    describe "has_no_enrolled_certificate" do
-      it { expect(Person).to respond_to(:has_no_enrolled_certificate)}
+    describe "has_no_enrolled_certificates" do
+      it { expect(Person).to respond_to(:has_no_enrolled_certificates)}
     end
-    describe "#has_enrolled_certificate" do
-      it { expect(Person).to respond_to(:has_enrolled_certificate)}
+    describe "#has_enrolled_certificates" do
+      it { expect(Person).to respond_to(:has_enrolled_certificates)}
     end
-    describe "#has_certificate_generated" do
-      it { expect(Person).to respond_to(:has_certificate_generated)}
+    describe "#has_certificates_generated" do
+      it { expect(Person).to respond_to(:has_certificates_generated)}
     end
-    describe "#has_paid_certificate" do
-      it { expect(Person).to respond_to(:has_paid_certificate)}
+    describe "#has_paid_certificates" do
+      it { expect(Person).to respond_to(:has_paid_certificates)}
     end
-    describe "#has_no_paid_certificate" do
-      it { expect(Person).to respond_to(:has_no_paid_certificate)}
+    describe "#has_no_paid_certificates" do
+      it { expect(Person).to respond_to(:has_no_paid_certificates)}
     end
   end
 
