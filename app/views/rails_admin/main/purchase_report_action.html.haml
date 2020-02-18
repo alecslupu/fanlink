@@ -44,6 +44,7 @@
         %th{rel: "tooltip"} Id
         %th{rel: "tooltip"} Inviter
         %th{rel: "tooltip"} Invited people
+        %th{rel: "tooltip"} Amount paid
     %tbody
       - @objects.each do |object|
         %tr{class: "#{@abstract_model.param_key}_row #{@model_config.list.with(object: object).row_css_class}"}
@@ -56,18 +57,19 @@
             = can_see ? link_to(wording, url_for(action: show_action.action_name, model_name: am.to_param, id: object.id), class: 'pjax') : ERB::Util.html_escape(wording)
 
           %td{title: strip_tags(object.to_s)}= object.refferal_count
+          %td{title: strip_tags(object.to_s)}= object.amount
 
-  - if @model_config.list.limited_pagination
-    .row
-      .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap/without_count', total_pages: Float::INFINITY, remote: true)
+  -#- if @model_config.list.limited_pagination
+  -#  .row
+  -#    .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap/without_count', total_pages: Float::INFINITY, remote: true)
+  -#
+  -#- elsif @objects.respond_to?(:total_count)
+  - total_count = @objects.total_count.to_i
+  .row
+    .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap', remote: true)
+  .row
+    .col-md-6= link_to(t("admin.misc.show_all"), purchase_report_action_path(params.merge(all: true)), class: "show-all btn btn-default clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
+  .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
 
-  - elsif @objects.respond_to?(:total_count)
-    - total_count = @objects.total_count.to_i
-    .row
-      .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap', remote: true)
-    .row
-      .col-md-6= link_to(t("admin.misc.show_all"), index_path(params.merge(all: true)), class: "show-all btn btn-default clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
-    .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
-
-  - else
-    .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
+  -#- else
+  -#  .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
