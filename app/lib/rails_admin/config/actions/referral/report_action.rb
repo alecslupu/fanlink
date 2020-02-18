@@ -25,9 +25,9 @@ module RailsAdmin
             proc do
               @objects = Person.
                 joins(:referrals).
-                select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as refferal_count").
+                select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count").
                 group("people.id").
-                order("refferal_count DESC")
+                order("referral_count DESC")
 
               if params[:f].present?
                 params[:f].each_pair do |field_name, filters_dump|

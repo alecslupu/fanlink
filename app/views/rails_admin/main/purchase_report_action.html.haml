@@ -15,8 +15,9 @@
 
 :javascript
   jQuery(function($) {
-     $.filters.append(#{raw date_filter_payload});
-     $.filters.append(#{raw amount_filter_payload});
+    jQuery('#filters_box').html('')
+    $.filters.append(#{raw date_filter_payload});
+    $.filters.append(#{raw amount_filter_payload});
   });
 
 
@@ -45,7 +46,7 @@
       %tr
         %th{rel: "tooltip"} Id
         %th{rel: "tooltip"} Inviter
-        %th{rel: "tooltip"} Invited people
+        %th{rel: "tooltip"} Signed up Referrals who bought
         %th{rel: "tooltip"} Amount paid
     %tbody
       - @objects.each do |object|
@@ -58,7 +59,9 @@
             - can_see = !am.embedded? && (show_action = action(:show, am, object))
             = can_see ? link_to(wording, url_for(action: show_action.action_name, model_name: am.to_param, id: object.id), class: 'pjax') : ERB::Util.html_escape(wording)
 
-          %td{title: strip_tags(object.to_s)}= object.refferal_count
+          %td{title: strip_tags(object.to_s)}
+            - filter = {all: true, f: { inviter: {"10915"=>{o: :is, v: "#{object.referral_code.unique_code}"}}} }
+            = link_to(object.referral_count, index_path(params.merge(filter)), class: 'pjax')
           %td{title: strip_tags(object.to_s)}= object.amount
 
   -#- if @model_config.list.limited_pagination
