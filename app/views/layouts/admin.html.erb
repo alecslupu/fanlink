@@ -21,7 +21,9 @@ By default, it renders:
       <%= content_for(:title) %> - <%= Rails.application.class.parent_name.titlecase %>
     </title>
       <%= stylesheet_link_tag    'administrate/application', media: 'all' %>
-    <%= csrf_meta_tags %>
+      <%= stylesheet_link_tag    'admin/application', media: 'all' %>
+      <%= javascript_include_tag 'application' %>
+      <%= csrf_meta_tags %>
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -54,6 +56,5 @@ By default, it renders:
         <% end %>
       <% end %>
     </div>
-    <%#= render "javascript" %>
   </body>
 </html>

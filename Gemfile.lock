@@ -1646,6 +1646,8 @@ DEPENDENCIES
   httplog
   jb
   jbuilder (~> 2.5)
+  jquery-rails
+  jquery-ui-rails
   json_schemer (~> 0.2.5)
   jwt
   kaminari
