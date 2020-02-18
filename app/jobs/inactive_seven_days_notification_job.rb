@@ -2,7 +2,7 @@ class InactiveSevenDaysNotificationJob
   BATCH_SIZE = 500.freeze
 
   def perform
-    notification = AutomatedNotification.where(criteria: :inactive_48h, enabled: true).last
+    notification = AutomatedNotification.where(criteria: :inactive_7days, enabled: true).last
 
     return unless notification
 

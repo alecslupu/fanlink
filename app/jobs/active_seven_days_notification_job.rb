@@ -1,13 +1,13 @@
-class InactiveThirtyDaysNotificationJob
+class ActiveSevenDaysNotificationJob
   BATCH_SIZE = 500.freeze
 
   def perform
-    notification = AutomatedNotification.where(criteria: :inactive_30days, enabled: true).last
+    notification = AutomatedNotification.where(criteria: :active_7days, enabled: true).last
 
     return unless notification
 
     ActsAsTenant.with_tenant(notification.product) do
-      Person.where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 30.day, Time.zone.now - 31.day).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+      Person.where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 6.day, Time.zone.now - 7.day).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
         Delayed::Job.enqueue(AutomatedNotificationPushJob.new(notification.id, person_ids.pluck(:id)))
       end
     end
@@ -19,6 +19,3 @@ class InactiveThirtyDaysNotificationJob
     end
   end
 end
-
-
-
