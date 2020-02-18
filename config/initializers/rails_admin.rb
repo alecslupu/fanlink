@@ -83,6 +83,7 @@ RailsAdmin.config do |config|
     reanalyze_post_report_action do
       only ["PostReport"]
     end
+
     ignore_post_report_action do
       only ["PostReport"]
     end
@@ -94,9 +95,19 @@ RailsAdmin.config do |config|
     unhide_action do
       only ["Message"]
     end
+
+    referral_purchase_report_action do
+      only ["Referral::ReferredPerson"]
+    end
+
+    referral_report_action do
+      only ["Referral::ReferredPerson"]
+    end
+
     generate_game_action do
       only ["Trivia::Game"]
     end
+
     select_product_dashboard
     select_product_action
     nested_set do

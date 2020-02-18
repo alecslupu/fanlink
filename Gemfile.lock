@@ -1324,7 +1324,6 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rack-timeout (0.5.2)
     rails (5.1.7)
       actioncable (= 5.1.7)
       actionmailer (= 5.1.7)
@@ -1673,7 +1672,6 @@ DEPENDENCIES
   pundit
   pundit-matchers (~> 1.6.0)
   rack-cors
-  rack-timeout
   rails (~> 5.1.6)
   rails-controller-testing
   rails-erd
