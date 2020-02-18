@@ -45,6 +45,12 @@ module RailsAdmin
                       @objects = @objects.send(:where, conditions)
 
                     end
+                    if field_name == "person_certificates.amount_paid"
+                      value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
+                      conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :integer, value, (filter_dump[:o] || 'default')).to_statement
+
+                      @objects = @objects.send(:where, conditions)
+                    end
                   end
                 end
               end

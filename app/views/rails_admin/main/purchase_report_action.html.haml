@@ -10,11 +10,13 @@
 
   sets = get_column_sets(properties)
   properties = sets[params[:set].to_i] || []
-  filter_payload = JSON.generate({ index: 1, datetimepicker_format: "MMMM DD, YYYY HH:mm", label:"From",name:"person_certificates.created_at", type:"date", value: (params[:f]['person_certificates.created_at'].first.last[:v] rescue ""),operator: (params[:f]['person_certificates.created_at'].first.last[:o] rescue nil) })
+  date_filter_payload = JSON.generate({ index: 1, datetimepicker_format: "MMMM DD, YYYY HH:mm", label:"From",name:"person_certificates.created_at", type:"date", value: (params[:f]['person_certificates.created_at'].first.last[:v] rescue ""),operator: (params[:f]['person_certificates.created_at'].first.last[:o] rescue nil) })
+  amount_filter_payload = JSON.generate({ index: 2,  label:"Amount Paid",name:"person_certificates.amount_paid", type:"integer", value: (params[:f]['person_certificates.amount_paid'].first.last[:v] rescue ""),operator: (params[:f]['person_certificates.amount_paid'].first.last[:o] rescue nil) })
 
 :javascript
   jQuery(function($) {
-     $.filters.append(#{raw filter_payload});
+     $.filters.append(#{raw date_filter_payload});
+     $.filters.append(#{raw amount_filter_payload});
   });
 
 
