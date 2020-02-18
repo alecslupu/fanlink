@@ -26,7 +26,7 @@ module RailsAdmin
             proc do
 	      @objects = Person.
                 joins(referred_people: :certificates).
-                select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as refferal_count").
+                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as refferal_count, SUM(person_certificates.amount_paid) as amount").
                 where(certificates: {is_free: false}).
                 group("people.id").
                 order("refferal_count DESC")
@@ -49,9 +49,9 @@ module RailsAdmin
                 end
               end
 
-              if params[:page] && params[:per]
-                @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
-              end
+              # if params[:page] && params[:per]
+              @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
+              # end
 	    end
           end
 
