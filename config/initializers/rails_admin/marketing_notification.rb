@@ -28,13 +28,6 @@ RailsAdmin.config do |config|
              :deep_link,
              :person_filter,
              :ttl_hours
-
-
-      field :person_id, :hidden do
-        default_value do
-          bindings[:view]._current_user.id.to_i
-        end
-      end
     end
   end
 end

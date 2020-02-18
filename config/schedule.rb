@@ -9,17 +9,17 @@ every 3.hour do
 end
 
 every :day, at: ["12:00 AM"] do
-  rake "send_activity_notification:two_days_active"
+  rake "send_activity_notification:seven_days_active"
 end
 
 every :day, at: ["12:00 AM"] do
-  rake "send_activity_notification:two_days_inactive"
+  rake "send_activity_notification:seven_days_inactive"
 end
 
 every :day, at: ["12:00 AM"] do
-  rake "send_activity_notification:two_days_active"
+  rake "send_activity_notification:thirty_days_active"
 end
 
 every :day, at: ["12:00 AM"] do
-  rake "send_activity_notification:two_days_inactive"
+  rake "send_activity_notification:thirty_days_inactive"
 end
