@@ -51,6 +51,17 @@ module RailsAdmin
 
                       @objects = @objects.send(:where, conditions)
                     end
+                    if field_name == "inviter"
+                      value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
+                      conditions1 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("people.username", :string, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions2 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("referral_user_codes.unique_code", :string, value, (filter_dump[:o] || 'default')).to_statement
+
+                      # Not a pretty one
+                      if conditions1.present? && conditions2.present?
+                        @objects = @objects.joins(:referral_code)
+                        @objects = @objects.where("(#{conditions1.first} or #{conditions2.first})", conditions1.last, conditions2.last)
+                      end
+                    end
                   end
                 end
               end
