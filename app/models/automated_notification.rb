@@ -40,6 +40,10 @@ class AutomatedNotification < ApplicationRecord
   private
 
     def set_person_id
-      self.person_id = Person.current_user.id
+      if Person.current_user.product_id == ActsAsTenant.current_tenant.id
+        self.person_id = Person.current_user.id
+      else
+        self.person_id = ActsAsTenant.current_tenant.people.where(product_account: true).first.id
+      end
     end
 end
