@@ -57,17 +57,17 @@
 
           %td{title: strip_tags(object.to_s)}= object.refferal_count
 
-  - if @model_config.list.limited_pagination
-    .row
-      .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap/without_count', total_pages: Float::INFINITY, remote: true)
+  -#- if @model_config.list.limited_pagination
+  -#  .row
+  -#    .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap/without_count', total_pages: Float::INFINITY, remote: true)
 
-  - elsif @objects.respond_to?(:total_count)
-    - total_count = @objects.total_count.to_i
-    .row
-      .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap', remote: true)
-    .row
-      .col-md-6= link_to(t("admin.misc.show_all"), index_path(params.merge(all: true)), class: "show-all btn btn-default clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
-    .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
+  -#- elsif @objects.respond_to?(:total_count)
+  - total_count = @objects.total_count.to_i
+  .row
+    .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap', remote: true)
+  .row
+    .col-md-6= link_to(t("admin.misc.show_all"), report_action_path(params.merge(all: true)), class: "show-all btn btn-default clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
+  .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
 
-  - else
-    .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
+  -#- else
+  -#  .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
