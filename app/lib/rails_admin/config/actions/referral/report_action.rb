@@ -25,9 +25,9 @@ module RailsAdmin
             proc do
               @objects = Person.
                 joins(:referrals).
-                select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as refferal_count").
+                select("people.*, COUNT(#{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count").
                 group("people.id").
-                order("refferal_count DESC")
+                order("referral_count DESC")
 
               if params[:f].present?
                 params[:f].each_pair do |field_name, filters_dump|
@@ -42,6 +42,17 @@ module RailsAdmin
 
                       @objects = @objects.send(:where, conditions)
 
+                    end
+                    if field_name == "inviter"
+                      value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
+                      conditions1 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("people.username", :string, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions2 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("referral_user_codes.unique_code", :string, value, (filter_dump[:o] || 'default')).to_statement
+
+                      # Not a pretty one
+                      if conditions1.present? && conditions2.present?
+                        @objects = @objects.joins(:referral_code)
+                        @objects = @objects.where("(#{conditions1.first} or #{conditions2.first})", conditions1.last, conditions2.last)
+                      end
                     end
                   end
                 end

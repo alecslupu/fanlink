@@ -26,10 +26,10 @@ module RailsAdmin
             proc do
 	      @objects = Person.
                 joins(referred_people: :certificates).
-                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as refferal_count, SUM(person_certificates.amount_paid) as amount").
+                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid) as amount").
                 where(certificates: {is_free: false}).
                 group("people.id").
-                order("refferal_count DESC")
+                order("referral_count DESC")
 
               if params[:f].present?
                 params[:f].each_pair do |field_name, filters_dump|
@@ -44,6 +44,23 @@ module RailsAdmin
 
                       @objects = @objects.send(:where, conditions)
 
+                    end
+                    if field_name == "person_certificates.amount_paid"
+                      value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
+                      conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :integer, value, (filter_dump[:o] || 'default')).to_statement
+
+                      @objects = @objects.send(:where, conditions)
+                    end
+                    if field_name == "inviter"
+                      value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
+                      conditions1 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("people.username", :string, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions2 = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new("referral_user_codes.unique_code", :string, value, (filter_dump[:o] || 'default')).to_statement
+
+                      # Not a pretty one
+                      if conditions1.present? && conditions2.present?
+                        @objects = @objects.joins(:referral_code)
+                        @objects = @objects.where("(#{conditions1.first} or #{conditions2.first})", conditions1.last, conditions2.last)
+                      end
                     end
                   end
                 end
