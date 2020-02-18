@@ -43,10 +43,15 @@ class MarketingNotification < ApplicationRecord
   validates :person_filter, presence: true
 
   after_create :notify
+  before_validation :set_person_id
 
   private
 
     def notify
       Delayed::Job.enqueue(MarketingNotificationPushJob.new(id))
+    end
+
+    def set_person_id
+      self.person_id = Person.current_user.id
     end
 end

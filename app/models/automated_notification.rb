@@ -35,4 +35,11 @@ class AutomatedNotification < ApplicationRecord
   validates :person_id, presence: true
   validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 672 }
 
+  before_validation :set_person_id
+
+  private
+
+    def set_person_id
+      self.person_id = Person.current_user.id
+    end
 end

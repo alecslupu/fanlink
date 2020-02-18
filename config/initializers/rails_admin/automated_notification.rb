@@ -51,13 +51,6 @@ RailsAdmin.config do |config|
              :criteria,
              :enabled,
              :ttl_hours
-
-
-      field :person_id, :hidden do
-        default_value do
-          bindings[:view]._current_user.id.to_i
-        end
-      end
     end
   end
 end
