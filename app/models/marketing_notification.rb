@@ -12,18 +12,17 @@
 #
 
 class MarketingNotification < ApplicationRecord
-  belongs_to :person, touch: true
-  belongs_to :product
-
   acts_as_tenant(:product)
+
+  belongs_to :person
 
   enum person_filter: {
     send_to_all: 0,
-    has_certificate_enrolled: 1,
-    has_no_certificate_enrolled: 2,
-    has_certificate_generated: 3,
-    has_paid_certificate: 4,
-    has_no_paid_certificate: 5,
+    has_certificates_enrolled: 1,
+    has_no_certificates_enrolled: 2,
+    has_certificates_generated: 3,
+    has_paid_certificates: 4,
+    has_no_paid_certificates: 5,
     has_friends: 6,
     has_no_friends: 7,
     has_followings: 8,
@@ -34,21 +33,29 @@ class MarketingNotification < ApplicationRecord
     has_no_created_posts: 13,
     has_facebook_id: 14,
     account_created_past_24h: 15,
-    accoount_created_past_7_days: 16
+    accoount_created_past_7_days: 16,
+    has_no_sent_messages: 17
   }
 
   validates :body, presence: true
   validates :title, presence: true
   validates :ttl_hours, presence: true, numericality: { greater_than_or_equal_to: 0,  less_than_or_equal_to: 672 }
   validates :person_filter, presence: true
-  validates :product_id, presence: true
-  validates :person_id, presence: true
 
   after_create :notify
+  before_validation :set_person_id
 
   private
 
     def notify
       Delayed::Job.enqueue(MarketingNotificationPushJob.new(id))
+    end
+
+    def set_person_id
+      if Person.current_user.product_id == ActsAsTenant.current_tenant.id
+        self.person_id = Person.current_user.id
+      else
+        self.person_id = ActsAsTenant.current_tenant.people.where(product_account: true).first.id
+      end
     end
 end

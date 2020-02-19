@@ -1,22 +1,21 @@
 module Push
-  class SimpleNotification < BasePush
-    def push(notification, current_user, person_ids)
+  class ScheduledNotification < BasePush
+    def push(notification_id, person_ids)
+      notification = AutomatedNotification.find(notification_id)
       @target_people_ids = person_ids
 
       android_token_notification_push(
-        2419200,
+        notification.ttl_hours * 3600,
         context: "marketing",
-        title: "#{current_user.username}",
+        title: notification.title,
         message_short: notification.body,
-        message_long: notification.body,
-        message_placeholder: current_user.username
       )
 
       ios_token_notification_push(
-        "#{current_user.username}",
+        notification.title,
         notification.body,
         nil,
-        2419200,
+        notification.ttl_hours * 3600,
         context: "marketing"
       )
     end

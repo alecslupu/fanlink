@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200131081930) do
+ActiveRecord::Schema.define(version: 20200219112049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(version: 20200131081930) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
+    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -1121,6 +1122,8 @@ ActiveRecord::Schema.define(version: 20200131081930) do
     t.integer "root", default: 0, null: false
     t.integer "user", default: 0, null: false
     t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
