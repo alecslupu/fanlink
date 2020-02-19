@@ -1,11 +1,12 @@
 module Push
-  class AutomatedNotification < BasePush
+  class ScheduledNotification < BasePush
     def push(notification_id, person_ids)
+      binding.pry
       notification = AutomatedNotification.find(notification_id)
       @target_people_ids = person_ids
 
       android_token_notification_push(
-        ttl_hours * 3600,
+        notification.ttl_hours * 3600,
         context: "marketing",
         title: notification.title,
         message_short: notification.body,
@@ -15,7 +16,7 @@ module Push
         notification.title,
         notification.body,
         nil,
-        ttl_hours * 3600,
+        notification.ttl_hours * 3600,
         context: "marketing"
       )
     end
