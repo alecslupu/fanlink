@@ -602,7 +602,42 @@ RSpec.configure do |config|
             }
           }
         },
-        LevelJson: {
+        Certificate: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            order: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            color_hex: {type: :string},
+            chat_room_id: {type: :integer},
+            sku_android: {type: :string},
+            sku_ios: {type: :string},
+            is_free: {type: :boolean},
+            is_issuable: {type: :boolean},
+            is_completed: {type: :boolean},
+            is_purchased: {type: :boolean},
+            certificate_image_url: {type: :string, 'x-nullable': true},
+            issued_certificate_image_url: {type: :string, 'x-nullable': true},
+          }
+        },
+        CertificateWishlist: {
+          type: :object,
+          properties: {
+            wishlist: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  id: { type: :integer },
+                  certificate: { type: :object, "$ref": "#/definitions/Certificate" },
+                }
+              }
+            }
+          }
+        },
+        "LevelJson": {
           type: :object,
           properties: {
             id: { type: :integer },
@@ -639,41 +674,6 @@ RSpec.configure do |config|
             }
           }
         },
-        Certificate: {
-          type: :object,
-          properties: {
-            id: {type: :integer},
-            order: {type: :integer},
-            long_name: {type: :string},
-            short_name: {type: :string},
-            description: {type: :string},
-            color_hex: {type: :string},
-            chat_room_id: {type: :integer},
-            sku_android: {type: :string},
-            sku_ios: {type: :string},
-            is_free: {type: :boolean},
-            is_issuable: {type: :boolean},
-            is_completed: {type: :boolean},
-            is_purchased: {type: :boolean},
-            certificate_image_url: {type: :string, 'x-nullable': true},
-            issued_certificate_image_url: {type: :string, 'x-nullable': true},
-          }
-        },
-        CertificateWishlist: {
-          type: :object,
-          properties: {
-            wishlist: {
-              type: :array,
-              items: {
-                type: :object,
-                properties: {
-                  id: { type: :integer },
-                  certificate: { type: :object, "$ref": "#/definitions/Certificate" },
-                }
-              }
-            }
-          }
-        }
       },
     },
   }

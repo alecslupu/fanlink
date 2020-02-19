@@ -7,8 +7,8 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server "52.53.208.155", user: "ubuntu", roles: %w{ app db web worker }
-server "54.183.234.164", user: "ubuntu", roles: %w{ app web }
+server "172.30.0.199", user: "ubuntu", roles: %w{ app db web worker }
+server "172.30.0.34", user: "ubuntu", roles: %w{ app web }
 
 set :rails_env, "production"
 set :branch, "master"

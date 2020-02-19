@@ -522,7 +522,7 @@ class Person < ApplicationRecord
       .where("person_interests.person_id != (?)", person_id)
       .where("people.product_account = false")
       .group("people.id")
-      .order("count(person_interests.*) DESC")
+      .order(Arel.sql("count(person_interests.*) DESC"))
   end
 
   private
