@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200219112049) do
+ActiveRecord::Schema.define(version: 2020_02_19_174349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -480,7 +480,7 @@ ActiveRecord::Schema.define(version: 20200219112049) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ttl_hours", default: 672, null: false
-    t.integer "person_filter"
+    t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
@@ -610,8 +610,8 @@ ActiveRecord::Schema.define(version: 20200219112049) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.bigint "role_id"
-    t.datetime "last_activity_at"
     t.boolean "authorized", default: true, null: false
+    t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -780,6 +780,8 @@ ActiveRecord::Schema.define(version: 20200219112049) do
     t.integer "admin"
     t.integer "root", default: 0
     t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
