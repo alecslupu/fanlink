@@ -386,7 +386,6 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         person = Post.last.person
         get :list, params: {person_filter: person.username_canonical}
         posts = Post.where(person_id: person.id)
-
         expect(response).to be_successful
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"].to_i }.sort).to eq(posts.map { |p| p.id }.sort)

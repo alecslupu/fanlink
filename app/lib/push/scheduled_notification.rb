@@ -1,7 +1,6 @@
 module Push
   class ScheduledNotification < BasePush
     def push(notification_id, person_ids)
-      binding.pry
       notification = AutomatedNotification.find(notification_id)
       @target_people_ids = person_ids
 

@@ -2,6 +2,6 @@ class AutomatedNotificationPolicy < ApplicationPolicy
 
   protected
     def module_name
-      "root"
+      "automated_notification"
     end
 end
