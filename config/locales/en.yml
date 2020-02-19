@@ -255,6 +255,8 @@ en:
       invalid_dates: "Invalid date(s)"
   admin:
     actions:
+      purchase_report_action:
+        menu: "Purchases"
       select_product_dashboard:
         title: Select Product
         menu: Select Product
@@ -262,3 +264,6 @@ en:
 
       generate_game_action:
         menu: "Generate Random game"
+
+      report_action:
+        menu: "Reffered People"

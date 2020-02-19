@@ -14,7 +14,7 @@ module JSONErrors
     rescue_from ActiveRecord::RecordNotFound,       with: :render_404
     rescue_from ActionController::ParameterMissing, with: :render_400
     rescue_from ActionController::RoutingError,     with: :render_404
-    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
+#    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
     rescue_from AccessDeniedException, with: :render_401
   end
 
