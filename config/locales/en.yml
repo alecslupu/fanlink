@@ -257,6 +257,9 @@ en:
     actions:
       purchase_report_action:
         menu: "Purchases"
+        breadcrumb: "Referred People with Purchases"
+        title: "Referred People with Purchases"
+
       select_product_dashboard:
         title: Select Product
         menu: Select Product
@@ -266,4 +269,6 @@ en:
         menu: "Generate Random game"
 
       report_action:
-        menu: "Reffered People"
+        title:  "Referred People"
+        breadcrumb: "Referred People"
+        menu: "Referred People"
