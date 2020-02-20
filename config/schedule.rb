@@ -2,26 +2,26 @@ set :output, { error: "/home/ubuntu/sites/flapi/current/log/error.log", standard
 
 set :environment, "staging"
 
-every 3.hour do
+every 2.hour do
   rake "send_activity_notification:two_days_active"
 end
 
-every 3.hour do
+every 2.hour do
   rake "send_activity_notification:two_days_inactive"
 end
 
-every :day, at: ["12:00 AM"] do
+every :day, at: ["12:00 PM"] do
   rake "send_activity_notification:seven_days_active"
 end
 
-every :day, at: ["12:00 AM"] do
+every :day, at: ["12:00 PM"] do
   rake "send_activity_notification:seven_days_inactive"
 end
 
-every :day, at: ["12:00 AM"] do
+every :day, at: ["12:00 PM"] do
   rake "send_activity_notification:thirty_days_active"
 end
 
-every :day, at: ["12:00 AM"] do
+every :day, at: ["12:00 PM"] do
   rake "send_activity_notification:thirty_days_inactive"
 end
