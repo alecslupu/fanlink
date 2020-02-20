@@ -1,3 +1,5 @@
+set :output, { error: "/home/ubuntu/sites/flapi/current/log/error.log", standard: "/home/ubuntu/sites/flapi/current/log/scheduled.log" }
+
 set :environment, "staging"
 
 every 3.hour do
