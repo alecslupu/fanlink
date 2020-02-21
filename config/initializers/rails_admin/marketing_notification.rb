@@ -9,6 +9,8 @@ RailsAdmin.config do |config|
              :body,
              :deep_link,
              :person_filter,
+             :date,
+             :timezone,
              :ttl_hours
     end
 
@@ -19,6 +21,8 @@ RailsAdmin.config do |config|
              :body,
              :deep_link,
              :person_filter,
+             :date,
+             :timezone,
              :ttl_hours
     end
 
@@ -27,6 +31,8 @@ RailsAdmin.config do |config|
              :body,
              :deep_link,
              :person_filter,
+             :date,
+             :timezone,
              :ttl_hours
     end
   end
