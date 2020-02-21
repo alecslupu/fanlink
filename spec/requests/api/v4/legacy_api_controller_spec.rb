@@ -1,317 +1,49 @@
 require "swagger_helper"
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
-  path "/posts" do
-    #get "" do
-    #  tags ["post", 'android-old']
-    #
-    #  produces "application/vnd.api.v4+json"
-    #  context "categories" do
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #  tags ["post", 'kotlin']
-    #
-    #  produces "application/vnd.api.v4+json"
-    #  consumes "multipart/form-data"
-    #  response "200", "" do
-    #    run_test!
-    #  end
-    #  response "401", "" do
-    #    run_test!
-    #  end
-    #  response "404", "" do
-    #    run_test!
-    #  end
-    #  context "promoted" do
-    #
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #
-    #end
-    #post "" do
-    #  tags ["post", 'android-old']
-    #
-    #  produces "application/vnd.api.v4+json"
-    #  response "200", "" do
-    #    run_test!
-    #  end
-    #  response "401", "" do
-    #    run_test!
-    #  end
-    #  response "404", "" do
-    #    run_test!
-    #  end
-    #end
-  end
+  #send_email_courseware_client_person_certificate POST     /courseware/client/people/:person_id/certificates/:id/send_email(.:format)                  api/v4/courseware/client/certificates#send_email {:format=>:json}
+  #download_courseware_client_person_certificate GET      /courseware/client/people/:person_id/certificates/:id/download(.:format)                    api/v4/courseware/client/certificates#download {:format=>:json}
+  #courseware_client_person_certificate_certcourses GET      /courseware/client/people/:person_id/certificates/:certificate_id/certcourses(.:format)     api/v4/courseware/client/certcourses#index {:format=>:json}
+  #courseware_client_person_certificate_certcourse GET      /courseware/client/people/:person_id/certificates/:certificate_id/certcourses/:id(.:format) api/v4/courseware/client/certcourses#show {:format=>:json}
+  #courseware_client_person_certificates GET      /courseware/client/people/:person_id/certificates(.:format)                                 api/v4/courseware/client/certificates#index {:format=>:json}
+  #courseware_client_person_certificate GET      /courseware/client/people/:person_id/certificates/:id(.:format)                             api/v4/courseware/client/certificates#show {:format=>:json}
+  #courseware_client_people GET      /courseware/client/people(.:format)                                                         api/v4/courseware/client/people#index {:format=>:json}
 
-  path "/posts/{id}" do
-    #  patch "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #  get "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #  end
-    #  delete "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
+  path "/courseware/client/people/{person_id}/certificates/{id}/send_email" do
+    post "" do
 
-  path "/posts/{post_id}/comments/{id}" do
-    #  delete "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+    end
   end
+  path "/courseware/client/people/{person_id}/certificates/{id}/download" do
+    get "" do
 
-  path "/posts/{id}/comments" do
-    #  get "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #  post "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+    end
   end
+  path "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses" do
+    get "" do
 
-  path "/posts/{id}/reactions" do
-    #  delete "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #  post "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+    end
   end
+  path "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses/{id}" do
+    get "" do
 
-  path "/posts/{id}/polls/{poll_id}/poll_options/{poll_option_id}/cast_vote" do
-    #  post "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+    end
   end
+  path "/courseware/client/people/{person_id}/certificates" do
+    get "" do
 
-  path "/post_reports" do
-    #  post "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+    end
   end
+  path "/courseware/client/people/{person_id}/certificates/{id}" do
+    get "" do
 
-  path "/posts/tags" do
-    #  get "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      schema "$ref": "#/definitions/faulty"
-    #      run_test!
-    #    end
-    #  end
+    end
   end
+  path "/courseware/client/people" do
+    get "" do
 
-  path "/posts/recommended" do
-    #  get "" do
-    #    tags ["post", 'kotlin']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    consumes "multipart/form-data"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
+    end
   end
-
-  path "/post_comment_reports" do
-    #  post "" do
-    #    tags ["post", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-    #  get "" do
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
-
-  path "/message_reports" do
-    #  get "" do
-    #    tags ["steps", 'android-old']
-    #
-    #    produces "application/vnd.api.v4+json"
-    #    response "200", "" do
-    #      run_test!
-    #    end
-    #    response "401", "" do
-    #      run_test!
-    #    end
-    #    response "404", "" do
-    #      run_test!
-    #    end
-    #  end
-  end
-
   path "/quests" do
     #  get "" do
     #    tags ["quests", 'android-old']
@@ -344,8 +76,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
     #    end
     #  end
   end
-
-
   path "/blocks" do
   #  post "" do
   #    tags ["relation", 'android-old']
@@ -457,8 +187,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   end
-
-
   path "/people/person/{username}" do
   #  get "" do
   #    tags ["user", 'kotlin']
@@ -596,23 +324,6 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   end
-  path "/certcourses/{id}" do
-  #  get "" do
-  #    tags ["education", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  end
   path "/person_certcourses" do
   #  post "" do
   #    tags ["education", 'kotlin']
@@ -630,22 +341,4 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
   #    end
   #  end
   end
-  path "/person_certcourses/send_email" do
-  #  post "" do
-  #    tags ["education", 'kotlin']
-  #
-  #    produces "application/vnd.api.v4+json"
-  #    consumes "multipart/form-data"
-  #    response "200", "" do
-  #      run_test!
-  #    end
-  #    response "401", "" do
-  #      run_test!
-  #    end
-  #    response "404", "" do
-  #      run_test!
-  #    end
-  #  end
-  end
-
 end

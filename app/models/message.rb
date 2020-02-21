@@ -108,6 +108,13 @@ class Message < ApplicationRecord
   def private_message_push
     Delayed::Job.enqueue(PrivateMessagePushJob.new(id))
   end
+
+  def public_room_message_push
+    if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: person_id).exists?
+      Delayed::Job.enqueue(PublicMessagePushJob.new(id))
+    end
+  end
+
   # include Message::RealTime
 
   # replicated_model
@@ -126,16 +133,19 @@ class Message < ApplicationRecord
 
   has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy
+
   has_paper_trail
 
   scope :for_date_range, -> (room, from, to, limit = nil) {
           where(room: room).where("created_at >= ?", from.beginning_of_day).
             where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit)
         }
-  scope :for_product, -> (product) { joins(:room).where("rooms.product_id = ?", product.id) }
-  scope :pinned, -> (param) { joins(:person).where("people.pin_messages_from = ?", (param.downcase == "yes") ? true : false) }
-  scope :publics, -> { joins(:room).where("rooms.public = ?", true) }
-  scope :reported_action_needed, -> { joins(:message_reports).where("message_reports.status = ?", MessageReport.statuses[:pending]) }
+  scope :for_product, ->(product) { joins(:room).where( rooms: { product_id: product.id }) }
+  scope :pinned, ->(param) { joins(:person).where( people: { pin_messages_from: (param.downcase == "yes") } ) }
+  scope :publics, -> { joins(:room).where( rooms: { public: true } ) }
+  scope :reported_action_needed, -> { joins(:message_reports).where( message_reports: { status: MessageReport.statuses[:pending] } ) }
+  scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
+
   scope :not_reported_by_user, -> (person_id) {
     where("NOT EXISTS (
       SELECT 1 FROM message_reports
@@ -143,7 +153,7 @@ class Message < ApplicationRecord
       AND message_reports.person_id = ?
     )", person_id)
   }
-  scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
+
   scope :visible, -> { where(hidden: false) }
   scope :room_date_range, -> (from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
   scope :chronological, ->(sign, created_at, id) { where("messages.created_at #{sign} ? AND messages.id #{sign} ?", created_at, id) }
@@ -151,7 +161,6 @@ class Message < ApplicationRecord
 
   scope :reported, -> { joins(:message_reports) }
   scope :not_reported, -> { left_joins(:message_reports).where(message_reports: {id: nil} ) }
-
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],

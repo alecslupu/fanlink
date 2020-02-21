@@ -123,14 +123,14 @@ RSpec.configure do |config|
         #  name: "PostReactions",
         #  description: "User reactions to a post",
         #},
-        #{
-        #  name: "PostReports",
-        #  description: "Posts reported by a user",
-        #},
-        #{
-        #  name: "Posts",
-        #  description: "User/product posts",
-        #},
+        {
+          name: "PostReports",
+          description: "Posts reported by a user",
+        },
+        {
+          name: "Posts",
+          description: "User/product posts",
+        },
         #{
         #  name: "ProductBeacons",
         #  description: "Beacons assigned to a product",
@@ -673,7 +673,7 @@ RSpec.configure do |config|
               },
             }
           }
-        }
+        },
       },
     },
   }

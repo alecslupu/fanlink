@@ -10,11 +10,15 @@
 
   sets = get_column_sets(properties)
   properties = sets[params[:set].to_i] || []
-  filter_payload = JSON.generate({ index: 1, datetimepicker_format: "MMMM DD, YYYY HH:mm", label:"From",name:"referral_referred_people.created_at", type:"date", value: (params[:f]['referral_referred_people.created_at'].first.last[:v] rescue ""),operator: (params[:f]['referral_referred_people.created_at'].first.last[:o] rescue nil) })
+  date_filter_payload = JSON.generate({ index: 1, datetimepicker_format: "MMMM DD, YYYY HH:mm", label:"From",name:"referral_referred_people.created_at", type:"date", value: (params[:f]['referral_referred_people.created_at'].first.last[:v] rescue ""),operator: (params[:f]['referral_referred_people.created_at'].first.last[:o] rescue nil) })
+  username_filter_payload = JSON.generate({ index: 3,  label:"Name or referral code",name:"inviter", type:"string", value: (params[:f]['inviter'].first.last[:v] rescue ""),operator: (params[:f]['inviter'].first.last[:o] rescue nil) })
 
 :javascript
   jQuery(function($) {
-     $.filters.append(#{raw filter_payload});
+     jQuery('#filters_box').html('')
+     $.filters.append(#{raw date_filter_payload});
+     $.filters.append(#{raw username_filter_payload});
+
   });
 
 
@@ -27,7 +31,7 @@
 #list
   = form_tag(report_action_path(params.except(*%w[page f query])), method: :get, class: "pjax-form form-inline") do
     .well
-      %span#filters_box{style: "position: relative"}
+      %span#filters_box
       %hr.filters_box{style: "display:#{ordered_filters.empty? ? 'none' : 'block'}"}
       .input-group
         %span.input-group-btn
@@ -43,7 +47,7 @@
       %tr
         %th{rel: "tooltip"} Id
         %th{rel: "tooltip"} Inviter
-        %th{rel: "tooltip"} Invited people
+        %th{rel: "tooltip"} Signed up Referrals
     %tbody
       - @objects.each do |object|
         %tr{class: "#{@abstract_model.param_key}_row #{@model_config.list.with(object: object).row_css_class}"}
@@ -55,7 +59,9 @@
             - can_see = !am.embedded? && (show_action = action(:show, am, object))
             = can_see ? link_to(wording, url_for(action: show_action.action_name, model_name: am.to_param, id: object.id), class: 'pjax') : ERB::Util.html_escape(wording)
 
-          %td{title: strip_tags(object.to_s)}= object.refferal_count
+          %td{title: strip_tags(object.to_s)}
+            - filter = {all: true, f: { inviter: {"10915"=>{o: :is, v: "#{object.referral_code.unique_code}"}}} }
+            = link_to(object.referral_count, index_path(params.merge(filter)), class: 'pjax')
 
   -#- if @model_config.list.limited_pagination
   -#  .row
