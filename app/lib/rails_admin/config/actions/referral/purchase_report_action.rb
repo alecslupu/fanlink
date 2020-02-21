@@ -24,7 +24,7 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-	      @objects = Person.
+              @objects = Person.
                 joins(referred_people: :certificates).
                 select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid)/100 as amount").
                 where(certificates: {is_free: false}).
@@ -48,6 +48,9 @@ module RailsAdmin
                     if field_name == "person_certificates.amount_paid"
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :integer, value, (filter_dump[:o] || 'default')).to_statement
+                      if conditions.is_a?(Array)
+                        conditions = [conditions[0], conditions.drop(1).map { |v| 100 * v.to_i }]
+                      end
 
                       @objects = @objects.send(:where, conditions)
                     end
@@ -69,7 +72,7 @@ module RailsAdmin
               # if params[:page] && params[:per]
               @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
               # end
-	    end
+            end
           end
 
         end

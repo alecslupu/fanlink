@@ -480,7 +480,7 @@ ActiveRecord::Schema.define(version: 20200221103517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "ttl_hours", default: 672, null: false
-    t.integer "person_filter"
+    t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
     t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.integer "timezone", null: false
@@ -612,8 +612,8 @@ ActiveRecord::Schema.define(version: 20200221103517) do
     t.text "terminated_reason"
     t.boolean "deleted", default: false
     t.bigint "role_id"
-    t.datetime "last_activity_at"
     t.boolean "authorized", default: true, null: false
+    t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
