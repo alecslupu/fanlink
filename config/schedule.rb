@@ -1,6 +1,6 @@
 set :output, { error: "/home/ubuntu/sites/flapi/current/log/error.log", standard: "/home/ubuntu/sites/flapi/current/log/scheduled.log" }
 
-every 2.hour do
+every 5.minute do
   rake "send_activity_notification:two_days_inactive"
 end
 
