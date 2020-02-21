@@ -21,7 +21,7 @@ namespace :send_activity_notification do
     Delayed::Job.enqueue(ActiveThirtyDaysNotificationJob.new())
   end
 
-  desc "Send notification to the users that have been inactive for 2 days"
+  desc "Send notification to the users that have been inactive for 48 hours"
   task two_days_inactive: :environment do
     puts "Sending notification..."
 

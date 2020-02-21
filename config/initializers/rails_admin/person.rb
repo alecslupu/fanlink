@@ -20,13 +20,18 @@ RailsAdmin.config do |config|
     end
 
     list do
-      if !Person.current_user.client? && !Person.current_user.client_portal? && !Person.current_user.normal?
-        scopes [
-          nil, :has_interests, :has_no_interests, :has_followings, :has_no_followings, :with_friendships, :without_friendships, :has_posts, :has_no_posts,
-          :has_facebook_id, :has_created_acc_past_24h, :has_created_acc_past_7days, :has_enrolled_certificates, :has_no_enrolled_certificates,
-          :has_paid_certificates, :has_no_paid_certificates, :has_certificates_generated, :has_no_sent_messages
-        ]
-      end
+      scopes proc {
+        if !Person.current_user.client? && !Person.current_user.client_portal? && !Person.current_user.normal?
+          [
+            nil, :has_interests, :has_no_interests, :has_followings, :has_no_followings, :with_friendships,
+            :without_friendships, :has_posts, :has_no_posts, :has_facebook_id, :has_created_acc_past_24h,
+            :has_created_acc_past_7days, :has_enrolled_certificates, :has_no_enrolled_certificates,
+            :has_paid_certificates, :has_no_paid_certificates, :has_certificates_generated, :has_no_sent_messages,
+          ]
+        else
+          []
+        end
+      }
       field :username do
         column_width 150
       end

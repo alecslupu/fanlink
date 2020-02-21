@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200219112049) do
+ActiveRecord::Schema.define(version: 20200221103517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -482,6 +482,8 @@ ActiveRecord::Schema.define(version: 20200219112049) do
     t.integer "ttl_hours", default: 672, null: false
     t.integer "person_filter"
     t.string "deep_link", default: "", null: false
+    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.integer "timezone", null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
 
@@ -780,6 +782,8 @@ ActiveRecord::Schema.define(version: 20200219112049) do
     t.integer "admin"
     t.integer "root", default: 0
     t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
