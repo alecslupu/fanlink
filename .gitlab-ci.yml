@@ -176,7 +176,7 @@ test:rspec51:
     - export RAILS6=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast
     - mv coverage coverage6
 
 
