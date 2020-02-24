@@ -5408,7 +5408,8 @@
           "type": "boolean"
         },
         "last_completed_page_id": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "copyright_text": {
           "type": "string"
@@ -5498,7 +5499,8 @@
           "type": "boolean"
         },
         "last_completed_page_id": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "copyright_text": {
           "type": "string"

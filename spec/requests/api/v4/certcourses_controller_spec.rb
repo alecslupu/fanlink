@@ -25,6 +25,7 @@ RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v
         run_test!
       end
       response "404", "" do
+        let(:certificate_id) { Time.zone.now.to_i }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
       end
@@ -47,6 +48,7 @@ RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
+
       response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person_certcourse.person.id)}" }
 
