@@ -77,6 +77,18 @@ module Push
           person_ids = Person.has_no_sent_messages.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
+        when "active_48h"
+           person_ids = Person.active_48h.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+            send_filtered_notification(person_ids)
+          end
+        when "active_7days"
+           person_ids = Person.active_7days.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+            send_filtered_notification(person_ids)
+          end
+        when "active_30days"
+           person_ids = Person.active_30days.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+            send_filtered_notification(person_ids)
+          end
       end
     end
 
