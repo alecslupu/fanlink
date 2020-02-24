@@ -36,7 +36,10 @@ class MarketingNotification < ApplicationRecord
     has_facebook_id: 14,
     account_created_past_24h: 15,
     accoount_created_past_7_days: 16,
-    has_no_sent_messages: 17
+    has_no_sent_messages: 17,
+    active_48h: 18,
+    active_7days: 19,
+    active_30days: 20
   }
 
   enum timezone: {
