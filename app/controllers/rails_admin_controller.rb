@@ -8,7 +8,7 @@ class RailsAdminController < ApplicationController
 
   def not_authenticated
     # Make sure that we reference the route from the main app.
-    redirect_to(admin_login_screen_path(product_internal_name: 'admin')) && (return)
+    redirect_to(main_app.admin_login_screen_path(product_internal_name: 'admin')) && (return)
   end
 
   def require_login
