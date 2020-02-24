@@ -1,9 +1,9 @@
 module Trivia
-  class PublishToEngine < Struct.new(:game_id)
+  class PublishToEngine < Struct.new(:game_id, :url)
 
     def perform
-      HTTParty.post(
-        'https://stg-fl-trivia.herokuapp.com/api/publish_game',
+      url = Rails.application.secrets.trivia_engine_url
+      HTTParty.post(url,
         body: { game_id: game_id }.to_json,
         headers: {
           'Accept-Encoding': "application/javascript",
@@ -17,3 +17,4 @@ module Trivia
     end
   end
 end
+
