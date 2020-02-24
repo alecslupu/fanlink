@@ -184,6 +184,9 @@ class Person < ApplicationRecord
   scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
   scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
   scope :has_no_sent_messages, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
+  scope :active_48h, -> { where("last_activity_at > ?", Time.zone.now - 48.hour) }
+  scope :active_7days, -> { where("last_activity_at > ?", Time.zone.now - 7.day) }
+  scope :active_30days, -> { where("last_activity_at > ?", Time.zone.now - 30.day) }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
