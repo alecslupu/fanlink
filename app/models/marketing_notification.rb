@@ -20,8 +20,8 @@ class MarketingNotification < ApplicationRecord
 
   enum person_filter: {
     send_to_all: 0,
-    has_certificates_enrolled: 1,
-    has_no_certificates_enrolled: 2,
+    has_free_certificates_enrolled: 1,
+    has_no_free_certificates_enrolled: 2,
     has_certificates_generated: 3,
     has_paid_certificates: 4,
     has_no_paid_certificates: 5,

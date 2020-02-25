@@ -5,12 +5,12 @@ module Push
     def push(notification)
       @notification = notification
       case @notification.person_filter
-        when "has_certificates_enrolled"
-          person_ids = Person.has_enrolled_certificates.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_free_certificates_enrolled"
+          person_ids = Person.has_free_certificates_enrolled.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
-        when "has_no_certificates_enrolled"
-          person_ids = Person.has_no_enrolled_certificates.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
+        when "has_no_free_certificates_enrolled"
+          person_ids = Person.has_no_free_certificates_enrolled.select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
             send_filtered_notification(person_ids)
           end
         when "has_certificates_generated"
