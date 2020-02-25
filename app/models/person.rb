@@ -172,7 +172,7 @@ class Person < ApplicationRecord
   scope :has_interests, -> { joins(:person_interests).group(:id) }
   scope :has_no_interests, -> { joins("LEFT JOIN person_interests ON person_interests.person_id = people.id").where("person_interests.id is NULL") }
   scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").group(:id) }
-  scope :has_no_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").where("followings.id is NULL") }
+  scope :has_no_followings, -> { joins("LEFT JOIN followings ON followings.follower_id = people.id").where("followings.id is NULL") }
   scope :has_posts, -> { joins(:posts).group(:id) }
   scope :has_no_posts, -> {joins("LEFT JOIN posts ON posts.person_id = people.id").where("posts.id is NULL") }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
