@@ -482,7 +482,7 @@ ActiveRecord::Schema.define(version: 20200221103517) do
     t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
     t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.integer "timezone", null: false
+    t.integer "timezone", default: 0, null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
 
