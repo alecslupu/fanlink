@@ -47,9 +47,9 @@ module RailsAdmin
                     end
                     if field_name == "person_certificates.amount_paid"
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
-                      conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :integer, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :float, value, (filter_dump[:o] || 'default')).to_statement
                       if conditions.is_a?(Array)
-                        conditions = [conditions[0], conditions.drop(1).map { |v| 100 * v.to_i }]
+                        conditions = [conditions[0], *conditions.drop(1).map { |v| 100 * v.to_f }]
                       end
 
                       @objects = @objects.send(:where, conditions)
