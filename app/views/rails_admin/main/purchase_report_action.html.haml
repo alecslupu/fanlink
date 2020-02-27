@@ -64,7 +64,7 @@
           %td{title: strip_tags(object.to_s)}
             - filter = {all: true, scope: :with_transactions, f: { inviter: {"10915"=>{o: :is, v: "#{object.referral_code.unique_code}"}}} }
             = link_to(object.referral_count, index_path(params.merge(filter)), class: 'pjax')
-          %td{title: strip_tags(object.to_s)}= object.amount
+          %td{title: strip_tags(object.to_s)}= object.amount.to_f / 100
 
   -#- if @model_config.list.limited_pagination
   -#  .row
