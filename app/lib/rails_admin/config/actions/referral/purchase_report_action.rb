@@ -49,10 +49,11 @@ module RailsAdmin
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :float, value, (filter_dump[:o] || 'default')).to_statement
                       if conditions.is_a?(Array)
-                        conditions = [conditions[0], *conditions.drop(1).map { |v| 100 * v.to_f }]
+                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})"), *conditions.drop(1).map { |v| (100 * v.to_f).to_i }]
                       end
 
-                      @objects = @objects.send(:where, conditions)
+                      Rails.logger.debug conditions.inspect
+                      @objects = @objects.send(:having, conditions)
                     end
                     if field_name == "inviter"
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
