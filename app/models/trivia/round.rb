@@ -31,20 +31,24 @@ module Trivia
 
     scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
 
+    def compute_leaderboard
+      self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})") if closed?
+    end
+
     def compute_gameplay_parameters
-      date_to_set = self.start_date
-      self.questions.each_with_index do |question, index|
+      date_to_set = start_date
+      questions.each_with_index do |question, index|
         question.start_date = date_to_set
         question.set_order(1 + index)
         question.compute_gameplay_parameters
         date_to_set = question.end_date_with_cooldown
       end
-      self.end_date = self.questions.reload.last.end_date
-      self.save
+      self.end_date = questions.reload.last.end_date
+      save
     end
 
     def end_date_with_cooldown
-      self.end_date
+      end_date
     end
 
     # administrate fallback

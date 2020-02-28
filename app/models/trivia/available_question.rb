@@ -23,7 +23,7 @@ module Trivia
 
     belongs_to :topic, class_name: "Trivia::Topic"
     has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
-    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question
+    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question, dependent: :destroy
 
     enum status: %i[draft published locked closed]
     accepts_nested_attributes_for :available_answers, allow_destroy: true
