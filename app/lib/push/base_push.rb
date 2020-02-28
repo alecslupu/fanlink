@@ -126,5 +126,14 @@ module Push
       end
       resp
     end
+
+    def subscribe_device(device_identifier, device_type)
+      response = push_client.topic_subscription(get_topic(device_type), device_identifier)
+    end
+
+    # will be later changed to accept language to unsubscribe to the correct marketing topic
+    def unsubscribe_device(device_identifier, device_type)
+      response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+    end
   end
 end

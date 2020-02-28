@@ -22,10 +22,7 @@ class AutomatedNotification < ApplicationRecord
   enum criteria: {
     inactive_48h: 0,
     inactive_7days: 1,
-    inactive_30days: 2,
-    active_48h: 3,
-    active_7days: 4,
-    active_30days: 5
+    inactive_30days: 2
   }
 
   validates :body, presence: true
@@ -49,7 +46,7 @@ class AutomatedNotification < ApplicationRecord
     end
 
     def validate_enabled_criterion
-      if enabled && AutomatedNotification.where(criteria: criteria, enabled: true)
+      if enabled && AutomatedNotification.where(criteria: criteria, enabled: true).exists?
          errors.add(:base, 'There is already an enabled automated notification with the selected criteria. There can be only one enabled notification per criterion.')
       end
     end
