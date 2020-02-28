@@ -25,7 +25,7 @@ class Api::V4::Trivia::SubscriptionsController < ApiController
   def create
     @subscriber = datasource.first_or_initialize(subscribed: params[:subscribed] || false)
     if @subscriber.save!
-      @subscriber.subscribe_to_game_topic(current_user.id, params[:game_id]) if params[:subscribed] == true
+      @subscriber.subscribe_to_game_topic(current_user.id, params[:game_id]) if params[:subscribed]
       return_the @subscriber, handler: tpl_handler, using: :show
     else
       render_422 @subscriber.errors.full_messages.to_sentence
