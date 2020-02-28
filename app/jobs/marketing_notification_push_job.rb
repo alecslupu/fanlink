@@ -1,6 +1,4 @@
 class MarketingNotificationPushJob < Struct.new(:notification_id)
-  include Push
-
   BATCH_SIZE = 50.freeze
 
   def perform

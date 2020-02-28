@@ -1,6 +1,25 @@
 module Push
   class BasePush
     BATCH_SIZE = 500.freeze
+
+    def subscribe_user_to_topic(person_id, resource_id)
+      ["ios", "android"].each do |device_type|
+        device_identifiers = get_device_identifiers(person_id, device_type)
+        response = push_client.batch_topic_subscription("trivia_game_#{resource_id}_#{device_type}", device_identifiers) if device_identifiers.present?
+      end
+    end
+
+    def unsubscribe_user_from_topic(person_id, resource_id)
+      ["ios", "android"].each do |device_type|
+        device_identifiers = get_device_identifiers(person_id, device_type)
+        response = push_client.batch_topic_unsubscription("trivia_game_#{resource_id}_#{device_type}", device_identifiers) if device_identifiers.present?
+      end
+    end
+
+    def unsubscribe_users_from_topic(person_ids, resource_id)
+      response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+    end
+
     protected
 
     def push_client
@@ -127,13 +146,10 @@ module Push
       resp
     end
 
-    def subscribe_device(device_identifier, device_type)
-      response = push_client.topic_subscription(get_topic(device_type), device_identifier)
-    end
+    private
 
-    # will be later changed to accept language to unsubscribe to the correct marketing topic
-    def unsubscribe_device(device_identifier, device_type)
-      response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+    def get_device_identifiers(person_id, device_type)
+      NotificationDeviceId.where(person_id: person_id, device_type: device_type).pluck(:device_identifier)
     end
   end
 end
