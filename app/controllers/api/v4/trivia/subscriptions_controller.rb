@@ -39,10 +39,10 @@ class Api::V4::Trivia::SubscriptionsController < ApiController
     game.subscribers.where(person_id: current_user.id)
   end
 
-  def game_topic_subscription(params[:subscribed])
-    if params[:subscribed]
+  def game_topic_subscription(subscribed)
+    if subscribed
       @subscriber.subscribe_to_game_topic(current_user.id, @subscriber.game_id)
-    elsif params[:subscribed] == false
+    elsif subscribed == false
       @subscriber.unsubscribe_from_game_topic(current_user.id, @subscriber.game_id)
     end
   end
