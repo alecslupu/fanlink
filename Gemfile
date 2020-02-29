@@ -138,7 +138,7 @@ group :development do
 end
 
 group :test do
-  gem "cucumber-rails", "~>1.8.0", require: false
+  # gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
   gem "simplecov", "~>0.17", require: false
   gem 'simplecov-console', require: false
