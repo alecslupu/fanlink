@@ -36,10 +36,10 @@ module RailsAdmin
                   filters_dump.each do |_, filter_dump|
                     if field_name == "person_certificates.created_at"
                       value = if filter_dump[:v].is_a?(Array)
-                        filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new("%B %d, %Y %H:%M").parse_string(v) }
-                      else
-                        RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
-                      end
+                                filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new("%B %d, %Y %H:%M").parse_string(v) }
+                              else
+                                RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
+                              end
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :datetime, value, (filter_dump[:o] || 'default')).to_statement
 
                       @objects = @objects.send(:where, conditions)
@@ -49,7 +49,7 @@ module RailsAdmin
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :float, value, (filter_dump[:o] || 'default')).to_statement
                       if conditions.is_a?(Array)
-                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})"), *conditions.drop(1).map { |v| (100 * v.to_f).to_i }]
+                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})"), *conditions.drop(1).collect(&:to_i)]
                       end
 
                       Rails.logger.debug conditions.inspect
