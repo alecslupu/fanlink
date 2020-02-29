@@ -91,5 +91,8 @@ module Fanlink
      #Use a real queuing backend for Active Job (and separate queues per environment)
      config.active_job.queue_adapter     = :delayed_job
      #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
+     #
+
+    config.i18n.fallbacks = [I18n.default_locale]
   end
 end
