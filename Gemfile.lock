@@ -1309,7 +1309,7 @@ GEM
       pry (~> 0.10)
     psych (3.1.0)
     public_suffix (4.0.3)
-    puma (3.12.2)
+    puma (3.12.3)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
@@ -1669,7 +1669,7 @@ DEPENDENCIES
   pry (~> 0.12.2)
   pry-byebug (~> 3.7.0)
   psych
-  puma (~> 3.7)
+  puma (~> 3.12)
   pundit
   pundit-matchers (~> 1.6.0)
   rack-cors
