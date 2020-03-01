@@ -200,7 +200,7 @@ gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
 gem "oj" # json opt recommended with rollbar
-gem "paperclip", "~> 5.0.0"
+gem "paperclip", "~> 6.0.0"
 gem "paperclip-meta"
 gem "paperclip-dimension-validator"
 gem "pg_search"
