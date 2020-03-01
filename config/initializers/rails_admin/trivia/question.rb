@@ -15,6 +15,7 @@ RailsAdmin.config do |config|
         enum do
           Trivia::Question.descendants.map(&:name)
         end
+        read_only { bindings[:object].persisted? }
       end
 
       field :available_answers do
@@ -26,6 +27,10 @@ RailsAdmin.config do |config|
       field :available_answers do
         read_only { true }
       end
+      field :type, :enum do
+        read_only { bindings[:object].persisted? }
+      end
+
     end
   end
 end
