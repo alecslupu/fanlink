@@ -31,7 +31,7 @@ module AttachmentSupport
             attachment.instance.product.internal_name
           end
         end
-        EOE
+      EOE
     end
 
     def has_audio_called(name)

@@ -53,6 +53,9 @@ RailsAdmin.config do |config|
         pretty_value do
           bindings[:object].reported?
         end
+        export_value do
+          bindings[:object].reported?
+        end
       end
       field :created_at do
         column_width 60
@@ -95,6 +98,33 @@ RailsAdmin.config do |config|
 
     export do
       configure :body, :string
+      fields :id, :body_text_old, :global, :starts_at, :ends_at, :repost_interval,
+             :status, :created_at, :updated_at,:body, :priority, :recommended,
+             :notify_followers,  :post_comments_count, :pinned
+
+      # field :picture do
+      #   # export_value do
+      #   #   bindings[:object].picture_url
+      #   # end
+      # end
+      # field :video do
+      #   # export_value do
+      #   #   bindings[:object].video_url
+      #   # end
+      # end
+      # field :audio do
+      #   # export_value do
+      #   #   bindings[:object].audio_url
+      #   # end
+      # end
+
+      field :reported do
+        export_value do
+          bindings[:object].reported?
+        end
+      end
+      fields :person, :post_comments, :post_reports, :poll, :poll_options
+
     end
   end
 end
