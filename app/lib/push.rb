@@ -244,11 +244,6 @@ private
     push_with_retry(notification_body, tokens, "ios")
   end
 
-  def ios_token_notification_push(tokens, title, body, click_action, ttl, data = {})
-    notification_body = build_ios_notification(title, body, click_action, ttl, data)
-    push_with_retry(notification_body, tokens, "ios")
-  end
-
   # TODO Remove
   def build_android_notification(ttl, data = {})
     options = {}

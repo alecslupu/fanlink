@@ -9,7 +9,8 @@ module Push
         title: "#{current_user.username}",
         message_short: notification.body,
         message_long: notification.body,
-        message_placeholder: current_user.username
+        message_placeholder: current_user.username,
+        type: "user"
       )
 
       ios_token_notification_push(

@@ -23,5 +23,13 @@ module Trivia
     def game_id
       trivia_game_id
     end
+
+    def subscribe_to_game_topic(user_id, game_id)
+      Delayed::Job.enqueue(::Trivia::SubscribeUserToGameTopic.new(user_id, game_id))
+    end
+
+    def unsubscribe_from_game_topic(user_id, game_id)
+      Delayed::Job.enqueue(::Trivia::UnsubscribeUserFromGameTopic.new(user_id, game_id))
+    end
   end
 end

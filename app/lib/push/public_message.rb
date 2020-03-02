@@ -16,7 +16,8 @@ module Push
         message_long: "A new user wrote in the #{room.name} Chat Room",
         image_url: message.picture_url,
         room_id: room.id.to_s,
-        deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+        deep_link: "#{message.product.internal_name}://rooms/#{room.id}",
+        type: "user"
       )
 
       ios_token_notification_push(

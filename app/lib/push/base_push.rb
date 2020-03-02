@@ -1,6 +1,25 @@
 module Push
   class BasePush
     BATCH_SIZE = 500.freeze
+
+    def subscribe_user_to_topic(person_id, resource_id)
+      ["ios", "android"].each do |device_type|
+        device_identifiers = get_device_identifiers(person_id, device_type)
+        response = push_client.batch_topic_subscription("trivia_game_#{resource_id}_#{device_type}", device_identifiers) if device_identifiers.present?
+      end
+    end
+
+    def unsubscribe_user_from_topic(person_id, resource_id)
+      ["ios", "android"].each do |device_type|
+        device_identifiers = get_device_identifiers(person_id, device_type)
+        response = push_client.batch_topic_unsubscription("trivia_game_#{resource_id}_#{device_type}", device_identifiers) if device_identifiers.present?
+      end
+    end
+
+    # def unsubscribe_users_from_topic(person_ids, resource_id)
+    #   response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+    # end
+
     protected
 
     def push_client
@@ -104,15 +123,11 @@ module Push
 
     def build_android_notification(ttl, data = {})
       options = {}
-      data[:type] = "user"
       options[:data] = data
       options[:priority] = "high"
       options[:content_available] = true
       options[:mutable_content] = true
       options[:time_to_live] = ttl
-
-      # this may be used for v1 implementation
-      # options[:android] = build_android_options
 
       return options
     end
@@ -127,13 +142,20 @@ module Push
       resp
     end
 
-    def subscribe_device(device_identifier, device_type)
-      response = push_client.topic_subscription(get_topic(device_type), device_identifier)
+    def android_topic_notification_push(data, ttl, topic)
+      notification_body = build_android_notification(ttl, data)
+      response = push_client.send_to_topic(topic, notification_body)
     end
 
-    # will be later changed to accept language to unsubscribe to the correct marketing topic
-    def unsubscribe_device(device_identifier, device_type)
-      response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+    def ios_topic_notification_push(title, body, click_action, ttl, topic, data = {})
+      notification_body = build_ios_notification(title, body, click_action, ttl, data)
+      response = push_client.send_to_topic(topic, notification_body)
+    end
+
+    private
+
+    def get_device_identifiers(person_id, device_type)
+      NotificationDeviceId.where(person_id: person_id, device_type: device_type).pluck(:device_identifier)
     end
   end
 end
