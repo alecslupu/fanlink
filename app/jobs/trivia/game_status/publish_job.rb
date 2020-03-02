@@ -16,8 +16,8 @@ module Trivia
           Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
           Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
           Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
-          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "15 minutes"), run_at: Time.at(Time.current))
-          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "1 minute"), run_at: Time.at(Time.current + 2.minute))
+          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "15 minutes"), run_at: Time.at(round.start_date) - 15.minute)
+          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "1 minute"), run_at: Time.at(round.start_date) - 1.minute)
           round_order += 1
         end
       end
