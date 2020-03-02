@@ -2,9 +2,8 @@ module Push
   class Trivia < BasePush
 
     def round_announcement_push(round_id, game_id, round_order, time)
-      game = Trivia::Game.find(game_id)
-      round = Trivia::Round.find(round_id)
-
+      game = ::Trivia::Game.find(game_id)
+      round = ::Trivia::Round.find(round_id)
       android_data = {
         game_id: game_id,
         round_id: round_id,
