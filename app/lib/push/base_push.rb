@@ -147,6 +147,11 @@ module Push
       response = push_client.send_to_topic(topic, notification_body)
     end
 
+    def ios_topic_notification_push(title, body, click_action, ttl, topic, data = {})
+      notification_body = build_ios_notification(title, body, click_action, ttl, data)
+      response = push_client.send_to_topic(topic, notification_body)
+    end
+
     private
 
     def get_device_identifiers(person_id, device_type)
