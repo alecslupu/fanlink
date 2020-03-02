@@ -2,9 +2,8 @@ module Push
   class Trivia < BasePush
 
     def round_announcement_push(round_id, game_id, round_order)
-      @target_person = mentioned_person
-      game = Game.find(game_id)
-      round = Round.find(round_id)
+      game = Trivia::Game.find(game_id)
+      round = Trivia::Round.find(round_id)
 
       android_data = {
         game_id: game_id,
@@ -16,7 +15,8 @@ module Push
         round_order: round_order
       }
 
-      android_topic_notification_push(android_data, "60", "trivia_game_#{game_id}_android")
+      time_to_live = 60
+      android_topic_notification_push(android_data, time_to_live, "trivia_game_#{game_id}_android")
 
       # ios_token_notification_push(
       #   "Mention",
@@ -29,4 +29,3 @@ module Push
     end
   end
 end
-

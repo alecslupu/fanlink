@@ -144,7 +144,7 @@ module Push
 
     def android_topic_notification_push(data, ttl, topic)
       notification_body = build_android_notification(ttl, data)
-      response = push_client.send_to_topic(topic, data: notification_body)
+      response = push_client.send_to_topic(topic, notification_body)
     end
 
     private
