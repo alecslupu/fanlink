@@ -13,18 +13,6 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         expect(Trivia::Subscriber.count).to eq(0)
       end
     end
-
-    it "unsubscribes user from game topic" do
-      person = create(:person)
-      ActsAsTenant.with_tenant(person.product) do
-        subscriber = create(:trivia_subscriber, person: person)
-        login_as(person)
-
-        expect{
-          delete :destroy, params: {game_id: subscriber.trivia_game_id}
-        }.to change {Delayed::Job.count}.by(1)
-      end
-    end
   end
 
   describe "GET show" do
