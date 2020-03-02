@@ -16,7 +16,8 @@ module Push
         message_long: message.body,
         image_url: message.picture_url,
         room_id: room.id.to_s,
-        deep_link: "#{message.product.internal_name}://rooms/#{room.id}"
+        deep_link: "#{message.product.internal_name}://rooms/#{room.id}",
+        type: "user"
       )
 
 

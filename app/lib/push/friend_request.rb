@@ -13,7 +13,8 @@ module Push
         message_placeholder: requested_by_person.username,
         image_url: profile_picture_url,
         relationship_id: relationship.id,
-        deep_link: "#{requested_by_person.product.internal_name}://users/#{requested_by_person.id}/profile"
+        deep_link: "#{requested_by_person.product.internal_name}://users/#{requested_by_person.id}/profile",
+        type: "user"
       )
 
       ios_token_notification_push(
@@ -40,7 +41,8 @@ module Push
         title: "Friend request accepted by #{requested_to_person.username}",
         message_short: "Friend request accepted by #{requested_to_person.username}",
         message_placeholder: requested_to_person.username,
-        deep_link: "#{requested_to_person.product.internal_name}://users/#{requested_to_person.id}/profile"
+        deep_link: "#{requested_to_person.product.internal_name}://users/#{requested_to_person.id}/profile",
+        type: "user"
       )
 
       ios_token_notification_push(

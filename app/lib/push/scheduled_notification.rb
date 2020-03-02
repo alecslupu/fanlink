@@ -9,6 +9,7 @@ module Push
         context: "marketing",
         title: notification.title,
         message_short: notification.body,
+        type: "user"
       )
 
       ios_token_notification_push(

@@ -16,9 +16,9 @@ module Push
       end
     end
 
-    def unsubscribe_users_from_topic(person_ids, resource_id)
-      response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
-    end
+    # def unsubscribe_users_from_topic(person_ids, resource_id)
+    #   response = push_client.batch_topic_unsubscription(get_topic(device_type), [device_identifier])
+    # end
 
     protected
 
@@ -123,15 +123,11 @@ module Push
 
     def build_android_notification(ttl, data = {})
       options = {}
-      data[:type] = "user"
       options[:data] = data
       options[:priority] = "high"
       options[:content_available] = true
       options[:mutable_content] = true
       options[:time_to_live] = ttl
-
-      # this may be used for v1 implementation
-      # options[:android] = build_android_options
 
       return options
     end
@@ -144,6 +140,11 @@ module Push
         retry if (retries += 1) < 2
       end
       resp
+    end
+
+    def android_topic_notification_push(data, ttl, topic)
+      notification_body = build_android_notification(ttl, data)
+      response = push_client.send_to_topic(topic, notification_body)
     end
 
     private
