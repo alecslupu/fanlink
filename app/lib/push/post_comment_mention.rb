@@ -10,7 +10,8 @@ module Push
         title: "Mention",
         message_short: "#{post_comment.person.username} mentioned you",
         message_placeholder: post_comment.person.username,
-        deep_link: "#{post_comment.person.product.internal_name}://posts/#{post_comment.post.id}/comments"
+        deep_link: "#{post_comment.person.product.internal_name}://posts/#{post_comment.post.id}/comments",
+        type: "user"
       )
 
       ios_token_notification_push(

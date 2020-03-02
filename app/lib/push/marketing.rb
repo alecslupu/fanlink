@@ -109,7 +109,8 @@ module Push
           context: "marketing",
           title: @notification.title,
           message_short: @notification.body,
-          deep_link: @notification.deep_link
+          deep_link: @notification.deep_link,
+          type: "user"
         )
       end
   end

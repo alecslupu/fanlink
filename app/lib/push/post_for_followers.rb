@@ -10,7 +10,8 @@ module Push
         title: "New post",
         message_short: "New post from #{person.username}",
         message_placeholder: person.username,
-        deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments"
+        deep_link: "#{person.product.internal_name}://posts/#{post_id}/comments",
+        type: "user"
       )
 
       ios_token_notification_push(
