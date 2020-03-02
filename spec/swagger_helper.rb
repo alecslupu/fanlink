@@ -63,10 +63,10 @@ RSpec.configure do |config|
         # {
         #  name: "Base",
         # },
-        # {
-        #  name: "Blocks",
-        #  description: "Block a person",
-        # },
+        {
+         name: "Blocks",
+         description: "Block a person",
+        },
         {
           name: "Categories",
           description: "Categories",
@@ -259,6 +259,16 @@ RSpec.configure do |config|
               },
             },
           },
+        },
+        BlocksObject: {
+          type: :object,
+          properties: {
+            block: {
+              id: { type: :integer },
+              blocker_id: { type: :integer },
+              blocked_id: { type: :integer },
+            }
+          }
         },
         "PersonObject": {
           type: :object,
@@ -1226,8 +1236,199 @@ RSpec.configure do |config|
             is_started: {type: :boolean},
           },
         },
-      },
+        QuestObject: {
+          type: :object,
+          properties: {
+            quest: {"$ref": "#/definitions/QuestJson"},
+          }
+        },
+        "QuestsArray": {
+          "type": "object",
+          "properties": {
+            "quests": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "quest": {
+                    # "$ref": "#/definitions/QuestJson"
+                  }
+                }
+              }
+            }
+          }
+        },
 
+        QuestJson: {
+          "type": :object,
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "event_id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "internal_name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "picture_url": {
+              "type": "string", 'x-nullable': true
+            },
+            "picture_width": {
+              "type": "integer", 'x-nullable': true
+            },
+            "picture_height": {
+              "type": "integer", 'x-nullable': true
+            },
+            "status": {
+              "type": "string"
+            },
+            "starts_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "ends_at": {
+              "type": "string",
+              "format": "date-time", 'x-nullable': true
+            },
+            "create_time": {
+              "type": "string",
+              "format": "date-time", 'x-nullable': true
+            },
+            "steps": {
+              "type": "array",
+              'x-nullable': true,
+              "items": {
+                "$ref": "#/definitions/StepJson"
+              }
+            }
+          },
+          "description": "Quest Response"
+        },
+
+        "StepJson": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "quest_id": {
+              "type": "integer"
+            },
+            "unlocks": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "display": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "quest_activities": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/QuestActivityJson"
+              }
+            },
+            "delay_unlock": {
+              "type": "integer"
+            },
+            "unlocks_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "description": "Step Response"
+        },
+
+        "QuestActivityJson": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "quest_id": {
+              "type": "integer"
+            },
+            "step_id": {
+              "type": "integer"
+            },
+            "description": {
+              "type": "string"
+            },
+            "hint": {
+              "type": "string"
+            },
+            "picture_url": {
+              "type": "string"
+            },
+            "picture_width": {
+              "type": "integer"
+            },
+            "picture_height": {
+              "type": "integer"
+            },
+            "completed": {
+              "type": "boolean"
+            },
+            "requirements": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ActivityTypeJson"
+              }
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "step": {
+              "$ref": "#/definitions/StepJson"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "description": "Quest Activity Response"
+        },
+        "ActivityTypeJson": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "atype": {
+              "type": "string"
+            },
+            "activity_id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Activity Type Reponse"
+        },
+      },
 
       # definitions: {
       #   certificate_information: {
