@@ -5,6 +5,7 @@ module Trivia
       def perform
         game = Trivia::Game.find(game_id)
         game.compute_gameplay_parameters
+        game.reload
         Delayed::Job.enqueue(::Trivia::PublishToEngine.new(game.id))
         Delayed::Job.enqueue(::Trivia::GameStatus::LockedJob.new(game.id), run_at: Time.at(game.start_date) - 10.minutes)
         Delayed::Job.enqueue(::Trivia::GameStatus::RunningJob.new(game.id), run_at: Time.at(game.start_date))
@@ -12,6 +13,9 @@ module Trivia
         round_order = 1
 
         game.rounds.each do |round|
+          Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
+          Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
+          Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
           Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "15 minutes"), run_at: Time.at(Time.current))
           Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "1 minute"), run_at: Time.at(Time.current + 2.minute))
           round_order += 1

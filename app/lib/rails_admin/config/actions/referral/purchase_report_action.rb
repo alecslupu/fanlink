@@ -26,7 +26,7 @@ module RailsAdmin
             proc do
               @objects = Person.
                 joins(referred_people: :certificates).
-                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid)/100 as amount").
+                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid) as amount").
                 where(certificates: {is_free: false}).
                 group("people.id").
                 order("referral_count DESC")
@@ -36,10 +36,10 @@ module RailsAdmin
                   filters_dump.each do |_, filter_dump|
                     if field_name == "person_certificates.created_at"
                       value = if filter_dump[:v].is_a?(Array)
-                        filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new("%B %d, %Y %H:%M").parse_string(v) }
-                      else
-                        RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
-                      end
+                                filter_dump[:v].map { |v| RailsAdmin::Support::Datetime.new("%B %d, %Y %H:%M").parse_string(v) }
+                              else
+                                RailsAdmin::Support::Datetime.new(strftime_format).parse_string(filter_dump[:v])
+                              end
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :datetime, value, (filter_dump[:o] || 'default')).to_statement
 
                       @objects = @objects.send(:where, conditions)
@@ -47,12 +47,13 @@ module RailsAdmin
                     end
                     if field_name == "person_certificates.amount_paid"
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
-                      conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :integer, value, (filter_dump[:o] || 'default')).to_statement
+                      conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :float, value, (filter_dump[:o] || 'default')).to_statement
                       if conditions.is_a?(Array)
-                        conditions = [conditions[0], conditions.drop(1).map { |v| 100 * v.to_i }]
+                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})"), *conditions.drop(1).collect(&:to_i)]
                       end
 
-                      @objects = @objects.send(:where, conditions)
+                      Rails.logger.debug conditions.inspect
+                      @objects = @objects.send(:having, conditions)
                     end
                     if field_name == "inviter"
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]

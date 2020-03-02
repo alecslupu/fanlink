@@ -16,8 +16,14 @@ RailsAdmin.config do |config|
             ["Fill in the blanks", "Trivia::HangmanAvailableQuestion"],
           ]
         end
+        read_only { bindings[:object].persisted? }
       end
       field :available_answers
+    end
+    nested do
+      field :type, :enum do
+        read_only { bindings[:object].persisted? }
+      end
     end
   end
 end

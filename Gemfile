@@ -105,6 +105,7 @@ group :development do
   gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
+  gem "rubycritic"
   gem "guard-rubycritic"
 
   gem "capistrano", require: false
@@ -115,9 +116,9 @@ group :development do
 end
 
 group :test do
-  gem "cucumber-rails", "~>1.8.0", require: false
+  # gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
-  gem "simplecov", "~>0.17", require: false
+  gem "simplecov", "~>0.18", require: false
   gem 'simplecov-console', require: false
   gem "timecop"
   gem "webmock", "~>3.6.2"
@@ -175,7 +176,7 @@ gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
 gem "oj" # json opt recommended with rollbar
-gem "paperclip", "~> 5.0.0"
+gem "paperclip", "~> 6.1.0"
 gem "paperclip-meta"
 gem "paperclip-dimension-validator"
 gem "pg_search"

@@ -480,7 +480,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
             3,
             room: private_room,
             body: "this is my body",
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+            audio: fixture_file_upload('audio/small_audio.mp4', 'video/mp4')
           )
 
           get :index,

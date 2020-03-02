@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200221103517) do
+ActiveRecord::Schema.define(version: 2020_02_28_173650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1278,8 +1278,8 @@ ActiveRecord::Schema.define(version: 20200221103517) do
 
   create_table "trivia_available_questions", force: :cascade do |t|
     t.string "title"
-    t.integer "cooldown_period"
-    t.integer "time_limit"
+    t.integer "cooldown_period", default: 6
+    t.integer "time_limit", default: 30
     t.integer "status"
     t.string "type"
     t.integer "topic_id"
@@ -1372,10 +1372,10 @@ ActiveRecord::Schema.define(version: 20200221103517) do
 
   create_table "trivia_questions", force: :cascade do |t|
     t.bigint "trivia_round_id"
-    t.integer "time_limit"
+    t.integer "time_limit", default: 30
     t.string "type"
     t.integer "question_order", default: 1, null: false
-    t.integer "cooldown_period", default: 5
+    t.integer "cooldown_period", default: 6
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "start_date"
