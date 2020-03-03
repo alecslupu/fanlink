@@ -26,7 +26,7 @@ module RailsAdmin
             proc do
               @objects = Person.
                 joins(referred_people: :certificates).
-                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid) as amount").
+                select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid)/100 as amount").
                 where(certificates: {is_free: false}).
                 group("people.id").
                 order("referral_count DESC")
@@ -49,7 +49,7 @@ module RailsAdmin
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :float, value, (filter_dump[:o] || 'default')).to_statement
                       if conditions.is_a?(Array)
-                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})"), *conditions.drop(1).collect(&:to_i)]
+                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})/100"), *conditions.drop(1).collect(&:to_i)]
                       end
 
                       Rails.logger.debug conditions.inspect
