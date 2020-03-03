@@ -187,6 +187,9 @@ class Person < ApplicationRecord
   scope :active_48h, -> { where("last_activity_at > ?", Time.zone.now - 48.hour) }
   scope :active_7days, -> { where("last_activity_at > ?", Time.zone.now - 7.day) }
   scope :active_30days, -> { where("last_activity_at > ?", Time.zone.now - 30.day) }
+  scope :inactive_48h, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 50.hour, Time.zone.now - 48.hour) }
+  scope :inactive_7days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 8.day, Time.zone.now - 7.day) }
+  scope :inactive_30days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 31.day, Time.zone.now - 30.day) }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
