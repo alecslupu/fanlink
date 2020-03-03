@@ -113,7 +113,6 @@ class MarketingNotification < ApplicationRecord
         run_at = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
       end
       delete_existing_delayed_job
-      binding.pry
       Delayed::Job.enqueue(MarketingNotificationPushJob.new(id), run_at: run_at)
     end
 
