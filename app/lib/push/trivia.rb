@@ -5,13 +5,12 @@ module Push
       game = ::Trivia::Game.find(game_id)
       round = ::Trivia::Round.find(round_id)
       android_data = {
-        game_id: game_id,
-        round_id: round_id,
         type: "service",
         action: "trivia_round_start",
         short_name: game.short_name,
         start_date: round.start_date,
-        round_order: round_order
+        round_order: round_order,
+        deep_link: "#{game.product.internal_name}://trivia/game/#{game.id}/round/#{round.id}"
       }
 
       time_to_live = 60
