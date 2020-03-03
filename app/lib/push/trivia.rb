@@ -23,10 +23,9 @@ module Push
         0,
         "trivia_game_#{game_id}_ios",
         context: "trivia_round_start",
-        game_id: game_id,
-        round_id: round_id,
         start_date: round.start_date,
-        round_order: round_order
+        round_order: round_order,
+        deep_link: "#{game.product.internal_name}://trivia/game/#{game.id}/round/#{round.id}"
       )
     end
   end
