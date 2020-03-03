@@ -49,7 +49,7 @@ module RailsAdmin
                       value = filter_dump[:v].is_a?(Array) ? filter_dump[:v].map { |v| v } : filter_dump[:v]
                       conditions = RailsAdmin::Adapters::ActiveRecord::StatementBuilder.new(field_name, :float, value, (filter_dump[:o] || 'default')).to_statement
                       if conditions.is_a?(Array)
-                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})"), *conditions.drop(1).collect(&:to_i)]
+                        conditions = [conditions[0].gsub(field_name, "SUM(#{field_name})/100"), *conditions.drop(1).collect(&:to_i)]
                       end
 
                       Rails.logger.debug conditions.inspect
