@@ -15,4 +15,8 @@ class PrivateMessagePushJob < Struct.new(:message_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

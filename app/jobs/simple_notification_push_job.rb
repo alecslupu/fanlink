@@ -25,4 +25,8 @@ class SimpleNotificationPushJob < Struct.new(:notification_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

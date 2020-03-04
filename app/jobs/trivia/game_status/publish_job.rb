@@ -18,6 +18,9 @@ module Trivia
         end
 
       end
+      def queue_name
+        :trivia
+      end
     end
   end
 end

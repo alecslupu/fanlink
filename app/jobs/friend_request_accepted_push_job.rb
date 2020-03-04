@@ -14,4 +14,8 @@ class FriendRequestAcceptedPushJob < Struct.new(:relationship_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end
