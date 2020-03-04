@@ -21,6 +21,9 @@ module Trivia
           round_order += 1
         end
       end
+      def queue_name
+        :trivia
+      end
     end
   end
 end

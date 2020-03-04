@@ -6,4 +6,8 @@ class PostTranscoderJob < Struct.new(:post_id)
     post.save
     post.start_listener()
   end
+
+  def queue_name
+    :default
+  end
 end
