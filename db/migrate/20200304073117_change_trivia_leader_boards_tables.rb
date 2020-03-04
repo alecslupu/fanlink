@@ -36,7 +36,7 @@ RETURNS void AS $$
           INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
           INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
         WHERE q.id  = $1 AND a.is_correct = 't'
-      ) AS leaderboard;
+      ) AS leaderboard
     ON CONFLICT (trivia_question_id ,person_id)
     DO UPDATE SET points = excluded.points;
     PERFORM pg_notify('leaderboard',  CONCAT('{"type": "question", "id": ', $1 ,'}'));
@@ -77,7 +77,7 @@ RETURNS void AS $$
         INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
       WHERE q.trivia_round_id  = $1 AND a.is_correct = 't'
       GROUP BY q.trivia_round_id,r.product_id,r.complexity, r.leaderboard_size, a.person_id
-    ) AS leaderboard;
+    ) AS leaderboard
     ON CONFLICT (trivia_round_id ,person_id)
     DO UPDATE SET points = excluded.points;
     PERFORM pg_notify('leaderboard',  CONCAT('{"type": "round", "id": ', $1 ,'}'));
@@ -116,7 +116,7 @@ RETURNS void AS $$
           INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
         WHERE r.trivia_game_id  = $1 AND a.is_correct = 't'
         GROUP BY r.trivia_game_id, r.product_id,r.complexity, r.leaderboard_size, a.person_id
-      ) AS leaderboard;
+      ) AS leaderboard
     ON CONFLICT (trivia_game_id ,person_id)
     DO UPDATE SET points = excluded.points;
     PERFORM pg_notify('leaderboard',  CONCAT('{"type": "game", "id": ', $1 ,'}'));
