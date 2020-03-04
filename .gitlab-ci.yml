@@ -145,8 +145,8 @@ test:rspec51:
       - coverage51/
   script:
     - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
-    - mv log/test.log coverage51
     - mv coverage coverage51
+    - mv log/test.log coverage51
 
 .test:rspec52:
   extends: .base_db
@@ -163,8 +163,8 @@ test:rspec51:
     - bundle update rails
     - bundle install
     - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
-    - mv log/test.log coverage52
     - mv coverage coverage52
+    - mv log/test.log coverage52
 
 .test:rspec6:
   extends: .base_db
@@ -179,8 +179,8 @@ test:rspec51:
     - bundle update rails
     - bundle install
     - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
-    - mv log/test.log coverage6
     - mv coverage coverage6
+    - mv log/test.log coverage6
 
 
 pages:
