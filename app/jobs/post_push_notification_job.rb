@@ -13,4 +13,8 @@ class PostPushNotificationJob < Struct.new(:post_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

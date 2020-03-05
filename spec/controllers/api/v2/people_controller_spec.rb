@@ -556,14 +556,12 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        new_username = "thisbetterbeunique"
         new_email = "fooism@example.com"
         new_name = "Joe Foo"
-        patch :update, params: {id: person.id, person: {email: new_email, name: new_name, username: new_username,
+        patch :update, params: {id: person.id, person: {email: new_email, name: new_name,
                                                         gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: "fr",},}
         expect(response).to be_successful
         per = person.reload
-        expect(per.username).to eq(new_username)
         expect(per.email).to eq(new_email)
         expect(per.name).to eq(new_name)
         expect(per.gender).to eq("female")

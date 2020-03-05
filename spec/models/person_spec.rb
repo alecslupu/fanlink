@@ -170,9 +170,8 @@ RSpec.describe Person, type: :model do
       it { should have_many(:clients_assigned).through(:assigned_clients) }
       it { should have_many(:clients_designated).through(:designated_clients) }
 
-      it { should have_many(:courseware_wishlists) }
-
       it { should have_many(:room_subscribers) }
+      it { should have_many(:courseware_wishlists) }
     end
 
     describe "#has_one" do
@@ -241,7 +240,7 @@ RSpec.describe Person, type: :model do
     describe "#has_created_acc_past_7days" do
       it { expect(Person).to respond_to(:has_created_acc_past_7days)}
     end
-    describe "has_free_certificates_enrolled" do
+    describe "has_no_free_certificates_enrolled" do
       it { expect(Person).to respond_to(:has_no_free_certificates_enrolled)}
     end
     describe "#has_free_certificates_enrolled" do

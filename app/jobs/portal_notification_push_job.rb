@@ -13,4 +13,8 @@ class PortalNotificationPushJob < Struct.new(:portal_notification_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

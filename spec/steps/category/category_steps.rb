@@ -14,7 +14,7 @@ step "A/a category is deleted" do
 end
 
 step "A/a category is soft deleted" do
-  admin = FactoryBot.create(:person, role: :admin)
+  admin = FactoryBot.create(:admin_user)
   login_as(admin)
   delete "/categories/#{@category.id}"
 end

@@ -24,11 +24,11 @@ class Message < ApplicationRecord
   include AttachmentSupport
   # include Message::FilterrificImpl
 
-  scope :person_name_query, ->(query)  { joins(:person).where("people.name ilike ?", "%#{query}%") }
-  scope :person_username_query, ->(query)  { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
-  scope :room_query,   ->(query)  { joins(:room).where("rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :id_query,     ->(query)  { where(id: query.to_i) }
-  scope :body_query,   ->(query)  { where("messages.body ilike ?", "%#{query}%") }
+  scope :person_name_query, -> (query)  { joins(:person).where("people.name ilike ?", "%#{query}%") }
+  scope :person_username_query, -> (query)  { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
+  scope :room_query,   -> (query)  { joins(:room).where("rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+  scope :id_query,     -> (query)  { where(id: query.to_i) }
+  scope :body_query,   -> (query)  { where("messages.body ilike ?", "%#{query}%") }
   scope :sorted_by, lambda { |sort_option|
     direction = (sort_option =~ /desc$/) ? "desc" : "asc"
     case sort_option.to_s
@@ -75,12 +75,12 @@ class Message < ApplicationRecord
   # include Message::FilterrificImpl
   # include Message::PortalFilters
 
-  scope :id_filter, ->(query) { where(id: query.to_i) }
-  scope :person_filter, ->(query) { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
-  scope :room_id_filter, ->(query) { joins(:room).where("rooms.id = ?", query.to_i) }
-  scope :body_filter, ->(query) { where("body ilike ?", "%#{query}%") }
-  scope :created_after_filter, ->(query) { where("messages.created_at > ?", query) }
-  scope :created_before_filter, ->(query) { where("messages.created_at < ?", query) }
+  scope :id_filter, -> (query) { where(id: query.to_i) }
+  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
+  scope :room_id_filter, -> (query) { joins(:room).where("rooms.id = ?", query.to_i) }
+  scope :body_filter, -> (query) { where("body ilike ?", "%#{query}%") }
+  scope :created_after_filter, -> (query) { where("messages.created_at > ?", query) }
+  scope :created_before_filter, -> (query) { where("messages.created_at < ?", query) }
 
   scope :reported_filter, lambda { |reported|
     if reported == "Yes"
@@ -114,6 +114,7 @@ class Message < ApplicationRecord
       Delayed::Job.enqueue(PublicMessagePushJob.new(id))
     end
   end
+
   # include Message::RealTime
 
   # replicated_model
@@ -132,10 +133,10 @@ class Message < ApplicationRecord
 
   has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy
-  has_many :room_subscribers, dependent: :nullify
+
   has_paper_trail
 
-  scope :for_date_range, ->(room, from, to, limit = nil) {
+  scope :for_date_range, -> (room, from, to, limit = nil) {
           where(room: room).where("created_at >= ?", from.beginning_of_day).
             where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit)
         }
@@ -154,7 +155,7 @@ class Message < ApplicationRecord
   }
 
   scope :visible, -> { where(hidden: false) }
-  scope :room_date_range, ->(from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
+  scope :room_date_range, -> (from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
   scope :chronological, ->(sign, created_at, id) { where("messages.created_at #{sign} ? AND messages.id #{sign} ?", created_at, id) }
 
 

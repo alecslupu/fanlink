@@ -1,5 +1,6 @@
 require "spec_helper"
 
+
 RSpec.describe Api::V1::MessagesController, type: :controller do
   before(:each) do
     stub_wisper_publisher("MentionPushNotification",
@@ -15,6 +16,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         expect_any_instance_of(Message).to receive(:post)
         expect_any_instance_of(Room).not_to receive(:increment_message_counters) # msg counters are only for closers!..er, private rooms
         login_as(person)
+
         body = "Do you like my body?"
         room = create(:room, public: true, status: :active)
         post :create, params: {room_id: room.id, message: {body: body}}
@@ -478,7 +480,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
             3,
             room: private_room,
             body: "this is my body",
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+            audio: fixture_file_upload('audio/small_audio.mp4', 'video/mp4')
           )
 
           get :index,
@@ -502,7 +504,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     #   let(:product) { create(:product, name: "Test Product 321", internal_name: "test_product_321") }
     #
     #   let!(:membership2) { create(:room_membership, room: room2) }
-    #   let!(:admin) { create(:person, product: product, role: :admin) }
+    #   let!(:admin) { create(:admin_user, product: product) }
     it "should give you all messages from all rooms with no page specified" do
       admin_person = create(:admin_user)
       ActsAsTenant.with_tenant(admin_person.product) do

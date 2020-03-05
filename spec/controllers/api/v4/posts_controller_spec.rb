@@ -267,36 +267,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         end
       end
     end
-
-    it 'returns all poll data' do
-      person = create(:admin_user)
-      ActsAsTenant.with_tenant(person.product) do
-        person2 = create(:person)
-        login_as(person)
-        person.follow(person2)
-        person2.follow(person)
-        poll = create(:poll)
-        post = poll.post
-        post.update(person_id: person2.id, status: :published)
-
-        get :show, params: { id: post.id }
-
-        expect(response).to be_successful
-        expect(json["post"]["poll"]["id"]).not_to eq(nil)
-        expect(json["post"]["poll"]["type"]).not_to eq(nil)
-        expect(json["post"]["poll"]["type_id"]).not_to eq(nil)
-        expect(json["post"]["poll"]["description"]).not_to eq(nil)
-        expect(json["post"]["poll"]["start_date"]).not_to eq(nil)
-        expect(json["post"]["poll"]["duration"]).not_to eq(nil)
-        expect(json["post"]["poll"]["end_date"]).not_to eq(nil)
-        expect(json["post"]["poll"]["create_time"]).not_to eq(nil)
-        expect(json["post"]["poll"]["closed"]).not_to eq(nil)
-
-      end
-    end
-
-
-
   end
 
   # TODO: auto-generated
@@ -427,8 +397,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       end
     end
 
-
-    it 'returns all the posts with the attachments' do
+    it 'returns all poll data' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         person2 = create(:person)
@@ -439,22 +408,18 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post = poll.post
         post.update(person_id: person2.id, status: :published)
 
-        patch :update, params: { id: post.id, post: { recommended: true}  }
+        get :show, params: { id: post.id }
 
         expect(response).to be_successful
-
-        poll = json["post"]["poll"]
-
-        expect(poll["id"]).not_to eq(nil)
-        expect(poll["type"]).not_to eq(nil)
-        expect(poll["type_id"]).not_to eq(nil)
-        expect(poll["description"]).not_to eq(nil)
-        expect(poll["start_date"]).not_to eq(nil)
-        expect(poll["duration"]).not_to eq(nil)
-        expect(poll["end_date"]).not_to eq(nil)
-        expect(poll["create_time"]).not_to eq(nil)
-        expect(poll["closed"]).not_to eq(nil)
-
+        expect(json["post"]["poll"]["id"]).not_to eq(nil)
+        expect(json["post"]["poll"]["type"]).not_to eq(nil)
+        expect(json["post"]["poll"]["type_id"]).not_to eq(nil)
+        expect(json["post"]["poll"]["description"]).not_to eq(nil)
+        expect(json["post"]["poll"]["start_date"]).not_to eq(nil)
+        expect(json["post"]["poll"]["duration"]).not_to eq(nil)
+        expect(json["post"]["poll"]["end_date"]).not_to eq(nil)
+        expect(json["post"]["poll"]["create_time"]).not_to eq(nil)
+        expect(json["post"]["poll"]["closed"]).not_to eq(nil)
       end
     end
   end

@@ -10,6 +10,10 @@ module Trivia
           Delayed::Job.enqueue(::Trivia::QuestionStatus::CloseJob.new(question.id), run_at: Time.at(question.end_date) + 1.second)
         end
       end
+
+      def queue_name
+        :trivia
+      end
     end
   end
 end

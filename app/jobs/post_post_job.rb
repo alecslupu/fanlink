@@ -23,4 +23,8 @@ class PostPostJob < Struct.new(:post_id, :version)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

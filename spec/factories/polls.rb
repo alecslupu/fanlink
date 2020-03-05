@@ -17,8 +17,8 @@
 
 FactoryBot.define do
   factory :poll do
-    start_date { DateTime.now + 1.second}
-    end_date { DateTime.now + 1.day }
+    start_date { DateTime.now + 1.day }
+    end_date { DateTime.now + 2.day }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
     product { current_product }
     poll_type { "post" }
