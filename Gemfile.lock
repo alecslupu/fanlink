@@ -1630,7 +1630,7 @@ DEPENDENCIES
   excon (>= 0.71)
   factory_bot_rails (~> 5.0.2)
   faker (~> 2.1.2)
-  fcm
+  fcm (~> 0.0.6)
   filterrific
   firebase!
   flag_shih_tzu
