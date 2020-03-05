@@ -58,7 +58,51 @@ validates the startd_date > now when draft and published FLAPI-936
       self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
     end
 
-    enum status: %i[draft published locked running closed]
+    include AASM
+
+    enum status: {
+      draft: 0,
+      published: 1,
+      locked: 2,
+      running: 3,
+      closed: 4,
+    }
+
+    aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
+      state :draft, initial: true
+      state :published
+      state :locked
+      state :running
+      state :closed
+
+      event :publish do
+        # before do
+        #   instance_eval do
+        #     validates_presence_of :sex, :name, :surname
+        #   end
+        # end
+        transitions from: :draft, to: :published
+      end
+
+      event :unpublish do
+        transitions from: :published, to: :draft
+      end
+
+      event :locked do
+        transitions from: :published, to: :locked
+      end
+      event :running do
+        transitions from: :locked, to: :running
+      end
+
+      event :closed do
+        transitions from: :running, to: :closed
+      end
+    end
+
+    def status_enum
+      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
+    end
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
     scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
