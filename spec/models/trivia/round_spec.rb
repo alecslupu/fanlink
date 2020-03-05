@@ -4,6 +4,24 @@ RSpec.describe Trivia::Round, type: :model do
   context "Valid factory" do
     it { expect(build(:trivia_round)).to be_valid }
   end
+
+  context "status" do
+    subject { Trivia::Round.new }
+    it { expect(subject).to respond_to(:draft?) }
+    it { expect(subject).to respond_to(:published?) }
+    it { expect(subject).to respond_to(:locked?) }
+    it { expect(subject).to respond_to(:closed?) }
+  end
+
+  context "State Machine" do
+    subject { Trivia::Round.new }
+
+    it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
+    it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
+    it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
+    it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
+  end
+
   context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#has_many" do
