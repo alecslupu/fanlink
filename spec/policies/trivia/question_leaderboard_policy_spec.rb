@@ -100,11 +100,7 @@ RSpec.describe Trivia::QuestionLeaderboardPolicy, type: :policy do
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do
@@ -131,11 +127,7 @@ RSpec.describe Trivia::QuestionLeaderboardPolicy, type: :policy do
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do

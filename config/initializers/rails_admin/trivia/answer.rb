@@ -3,5 +3,10 @@ RailsAdmin.config do |config|
   config.model "Trivia::Answer" do
     parent "Trivia::Game"
     navigation_label "Answer"
+
+    edit do
+      exclude_fields :product
+    end
+
   end
 end
