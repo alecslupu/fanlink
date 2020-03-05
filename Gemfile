@@ -179,7 +179,7 @@ gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
 gem "email_validator"
-gem "fcm", "~> 0.0.6" # Firebase Cloud Messaging
+gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "flag_shih_tzu"
