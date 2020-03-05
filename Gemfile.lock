@@ -952,6 +952,7 @@ GEM
       capistrano-bundler
       puma (~> 3.4)
     choice (0.2.0)
+    chronic (0.10.2)
     climate_control (0.2.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -1202,7 +1203,7 @@ GEM
     memoist (0.16.1)
     memory_profiler (0.9.14)
     method_source (0.9.2)
-    mime-types (3.3)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.1009)
     mimemagic (0.3.3)
@@ -1542,6 +1543,8 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     wisper (2.0.0)
     wisper-activejob (1.0.0)
       activejob (>= 4.0.0)
@@ -1585,7 +1588,7 @@ DEPENDENCIES
   excon (>= 0.71)
   factory_bot_rails (~> 5.0.2)
   faker (~> 2.1.2)
-  fcm
+  fcm (~> 0.0.6)
   filterrific
   firebase!
   flag_shih_tzu
@@ -1668,6 +1671,7 @@ DEPENDENCIES
   uuidtools
   web-console (>= 3.3.0)
   webmock (~> 3.6.2)
+  whenever
   wisper (= 2.0.0)
   wisper-activejob
   wisper-activerecord

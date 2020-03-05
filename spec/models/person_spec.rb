@@ -172,6 +172,7 @@ RSpec.describe Person, type: :model do
 
       it { should have_many(:courseware_wishlists) }
 
+      it { should have_many(:room_subscribers) }
     end
 
     describe "#has_one" do
@@ -199,6 +200,61 @@ RSpec.describe Person, type: :model do
     end
     describe "#email_filter" do
       it { expect(Person).to respond_to(:email_filter)}
+    end
+    describe "#requested_friendships" do
+      it { expect(Person).to respond_to(:requested_friendships)}
+    end
+    describe "received_friendships" do
+      it { expect(Person).to respond_to(:received_friendships)}
+    end
+    describe "#with_friendships" do
+      it { expect(Person).to respond_to(:with_friendships)}
+    end
+    describe "#without_friendships" do
+      it { expect(Person).to respond_to(:without_friendships)}
+    end
+    describe "has_interests" do
+      it { expect(Person).to respond_to(:has_interests)}
+    end
+
+    describe "has_no_interests" do
+      it { expect(Person).to respond_to(:has_no_interests)}
+    end
+    describe "#has_followings" do
+      it { expect(Person).to respond_to(:has_followings)}
+    end
+    describe "#has_no_followings" do
+      it { expect(Person).to respond_to(:has_no_followings)}
+    end
+    describe "#has_posts" do
+      it { expect(Person).to respond_to(:has_posts)}
+    end
+    describe "#has_no_posts" do
+      it { expect(Person).to respond_to(:has_no_posts)}
+    end
+    describe "has_facebook_id" do
+      it { expect(Person).to respond_to(:has_facebook_id)}
+    end
+    describe "#has_created_acc_past_24h" do
+      it { expect(Person).to respond_to(:has_created_acc_past_24h)}
+    end
+    describe "#has_created_acc_past_7days" do
+      it { expect(Person).to respond_to(:has_created_acc_past_7days)}
+    end
+    describe "has_free_certificates_enrolled" do
+      it { expect(Person).to respond_to(:has_no_free_certificates_enrolled)}
+    end
+    describe "#has_free_certificates_enrolled" do
+      it { expect(Person).to respond_to(:has_free_certificates_enrolled)}
+    end
+    describe "#has_certificates_generated" do
+      it { expect(Person).to respond_to(:has_certificates_generated)}
+    end
+    describe "#has_paid_certificates" do
+      it { expect(Person).to respond_to(:has_paid_certificates)}
+    end
+    describe "#has_no_paid_certificates" do
+      it { expect(Person).to respond_to(:has_no_paid_certificates)}
     end
   end
 
