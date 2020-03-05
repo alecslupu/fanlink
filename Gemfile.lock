@@ -795,9 +795,8 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     fast_gettext (1.7.0)
-    fcm (0.0.2)
-      httparty
-      json
+    fcm (0.0.6)
+      httparty (~> 0.10, >= 0.10.0)
     ffi (1.12.2)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
