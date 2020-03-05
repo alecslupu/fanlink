@@ -108,12 +108,11 @@ class MarketingNotification < ApplicationRecord
       timezone = self.timezone
       case timezone[4]
       when "-"
-        run_at = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
-      when "+"
         run_at = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
+      when "+"
+        run_at = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
       end
       delete_existing_delayed_job
-
       Delayed::Job.enqueue(MarketingNotificationPushJob.new(id), run_at: run_at)
     end
 
