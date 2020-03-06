@@ -82,15 +82,13 @@ module Push
       end
     end
 
-    def build_ios_notification(title, body, click_action, ttl, data = {})
+    def build_ios_notification(title, body, ttl, data = {})
       options = {}
       options[:notification] = {}
 
       options[:notification][:title] = title
       options[:notification][:body] = body
-      options[:notification][:click_action] = click_action
       options[:notification][:sound] = "default"
-      options[:notification][:mutable_content] = "true"
 
       options[:data] = data
       options[:data][:priority] = "high"
