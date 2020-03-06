@@ -19,12 +19,9 @@ module Push
       ios_topic_notification_push(
         "Caned Trivia",
         "Next round will begin in #{time}",
-        nil,
         0,
         "trivia_game_#{game_id}_ios",
         context: "trivia_round_start",
-        start_date: round.start_date,
-        round_order: round_order,
         deep_link: "#{game.product.internal_name}://trivia/game/#{game.id}/round/#{round.id}"
       )
     end
