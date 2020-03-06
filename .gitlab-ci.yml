@@ -224,7 +224,7 @@ deploy:staging:
     paths:
       - log/capistrano.log
   variables:
-    RAILS_ENV: development
+    RAILS_ENV: staging
   tags:
     - deploy
   environment:
@@ -256,7 +256,7 @@ deploy:production:
     paths:
       - log/capistrano.log
   variables:
-    RAILS_ENV: development
+    RAILS_ENV: production
   tags:
     - deploy
   environment:
@@ -276,6 +276,6 @@ deploy:production:
     - ssh-add -l
     - export USER="$GITLAB_USER_LOGIN via gitlab"
     - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
-    - bundle exec cap staging deploy
+    - bundle exec cap production deploy
 
 
