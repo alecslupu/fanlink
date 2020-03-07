@@ -30,11 +30,18 @@ if ENV["RAILS6"]
 #   gem "therubyracer", platforms: :ruby
 #   # Use CoffeeScript for .coffee assets and views
 #   gem "coffee-rails", "~> 4.2"
+# else
+#   # See https://github.com/rails/execjs#readme for more supported runtimes
+#   gem "therubyracer", platforms: :ruby
+#   # Use ActiveModel has_secure_password
+#   # gem "bcrypt", "~> 3.1.7"
 end
+
 # Use Redis adapter to run Action Cable in production
 gem "redis"
-# Use ActiveModel has_secure_password
-# gem "bcrypt", "~> 3.1.7"
+
+# Use CoffeeScript for .coffee assets and views
+gem "coffee-rails"
 
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
@@ -144,7 +151,7 @@ gem "acts_as_api"
 
 gem "awesome_nested_set"
 
-gem "rails_admin", "1.3.0"
+gem "rails_admin", "~> 2.0.0"
 gem "rails_admin_nested_set"
 
 gem "api-pagination"
@@ -164,7 +171,7 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari"
+gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
