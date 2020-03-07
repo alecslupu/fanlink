@@ -66,6 +66,12 @@ module Trivia
       end
     end
 
+    def copy_to_new
+      new_entry = dup
+      new_entry.update!(status: :draft)
+      new_entry
+    end
+
     def status_enum
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end

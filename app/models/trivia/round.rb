@@ -69,6 +69,13 @@ module Trivia
       end
     end
 
+    def copy_to_new
+      new_entry = dup
+      new_entry.update!(status: :draft, start_date: nil, end_date: nil )
+      new_entry.questions = questions.collect(&:copy_to_new)
+      new_entry
+    end
+
     def status_enum
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end

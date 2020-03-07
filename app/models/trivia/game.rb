@@ -110,6 +110,16 @@ validates the startd_date > now when draft and published FLAPI-936
 
     after_save :handle_status_changes
 
+    def copy_to_new
+      new_record = self.dup
+      new_record.update!(status: :draft, start_date: nil, end_date: nil)
+
+      new_record.prizes = prizes.collect(&:copy_to_new)
+      new_record.rounds = rounds.collect(&:copy_to_new)
+      new_record.save
+      new_record
+    end
+
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
         rounds.each.map(&:compute_gameplay_parameters)
