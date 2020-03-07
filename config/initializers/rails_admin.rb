@@ -108,6 +108,10 @@ RailsAdmin.config do |config|
       only ["Trivia::Game"]
     end
 
+    copy_new_game_action do
+      only ["Trivia::Game"]
+    end
+
     select_product_dashboard
     select_product_action
     nested_set do

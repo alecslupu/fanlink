@@ -73,6 +73,8 @@ module Trivia
       new_entry = dup
       new_entry.update!(status: :draft, start_date: nil, end_date: nil )
       new_entry.questions = questions.collect(&:copy_to_new)
+      self.class.reset_counters(id, :questions, touch: true)
+      self.class.reset_counters(new_entry.id, :questions, touch: true)
       new_entry
     end
 
