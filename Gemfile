@@ -189,7 +189,7 @@ gem "google_places"
 gem "has_scope"
 # greg is saying that is not suporting V Rails 5.2.
 #gem "jko_api" # api versioning
-gem "kaminari"
+gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
