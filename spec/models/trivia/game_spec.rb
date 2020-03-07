@@ -130,4 +130,29 @@ RSpec.describe Trivia::Game, type: :model do
       end
     end
   end
+
+  describe "copy_to_new" do
+    it "has the method" do
+      expect(Trivia::Game.new.respond_to?(:copy_to_new)).to eq(true)
+    end
+    context "new Game" do
+      before do
+        time = DateTime.now.to_i
+        old_game = create(:full_short_trivia_game, start_date: time, with_leaderboard: false, status: :closed)
+        expect(Trivia::Game.count).to eq(1)
+        @old_game = Trivia::Game.includes(:prizes, :rounds).last
+        @game_object = @old_game.copy_to_new
+
+
+        expect(Trivia::Game.count).to eq(2)
+      end
+
+      it { expect(@game_object).to be_a(Trivia::Game) }
+      it { expect(@game_object.status).to eq("draft") }
+      it { expect(@game_object.start_date).to be_nil }
+      it { expect(@game_object.end_date).to be_nil }
+      it { expect(@game_object.prizes.size).to eq(@old_game.prizes.length) }
+      it { expect(@game_object.rounds.size).to eq(@old_game.rounds.length) }
+    end
+  end
 end
