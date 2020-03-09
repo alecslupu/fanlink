@@ -116,22 +116,6 @@ RSpec.describe Trivia::Round, type: :model do
     end
   end
 
-  context "publish round" do
-    describe "start date smaller than current date" do
-      before(:all) do
-        @round = create(:past_trivia_round, status: :draft)
-      end
-
-      it "does not update status" do
-        expect(@round.publish!).to eq(false)
-      end
-
-      it "throws an error with a message" do
-         expect(@round.errors.messages[:start_date]).to include("Start date must be higher than current date")
-      end
-    end
-  end
-
   context "validations" do
     describe "#start_date" do
       before(:each) do
@@ -162,6 +146,21 @@ RSpec.describe Trivia::Round, type: :model do
 
       it "saves when status is draft" do
         expect{ @round.save }.to change{ Trivia::Round.count }.by(1)
+      end
+    end
+
+    describe "#start date smaller than current date" do
+      before(:all) do
+        @round = create(:past_trivia_round, status: :draft)
+      end
+
+      it "does not update status" do
+        expect(@round.publish!).to eq(false)
+      end
+
+      it "throws an error with a message" do
+        @round.publish!
+        expect(@round.errors.messages[:start_date]).to include("Start date must be higher than current date")
       end
     end
   end
