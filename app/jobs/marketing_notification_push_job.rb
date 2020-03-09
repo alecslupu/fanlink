@@ -9,6 +9,10 @@ class MarketingNotificationPushJob < Struct.new(:notification_id)
     end
   end
 
+  def queue_name
+    :default
+  end
+
   def error(job, exception)
     if exception.is_a?(ActiveRecord::RecordNotFound)
       job.destroy

@@ -16,7 +16,7 @@ namespace :delayed_job do
     end
   end
 
-# desc 'Stop the delayed_job process'
+  # desc 'Stop the delayed_job process'
   # task :stop do
   #   on roles(delayed_job_roles) do
   #     within release_path do
@@ -28,8 +28,8 @@ namespace :delayed_job do
   # end
   #
 
-  desc 'Stop the delayed_job process'
-  task :stop do
+  desc 'Start the delayed_job process'
+  task :start do
     on roles(delayed_job_roles) do
       execute :sudo, :supervisorctl, :start, :all
     end
@@ -45,9 +45,9 @@ namespace :delayed_job do
   #     end
   #   end
   # end
-  #
-  desc 'Stop the delayed_job process'
-  task :stop do
+  
+  desc 'Restart the delayed_job process'
+  task :restart do
     on roles(delayed_job_roles) do
       execute :sudo, :supervisorctl, :restart, :all
     end
