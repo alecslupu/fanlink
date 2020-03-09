@@ -14,7 +14,7 @@ RSpec.describe Trivia::Round, type: :model do
   end
 
   context "State Machine" do
-    subject { Trivia::Round.new }
+    subject { Trivia::Round.new(start_date: (Time.zone.now + 1.day).to_i) }
 
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
@@ -93,7 +93,7 @@ RSpec.describe Trivia::Round, type: :model do
         expect(question.question_order).to eq(value)
       end
       it "sets the end date correctly on round" do
-        time = DateTime.now
+        time = DateTime.now + 1.day
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
 
