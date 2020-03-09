@@ -217,6 +217,7 @@ class Post < ApplicationRecord
   def reported?
     (post_reports.size > 0) ? "Yes" : "No"
   end
+  alias :reported :reported?
 
   def visible?
     (status == "published" && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil

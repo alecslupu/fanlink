@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200228173650) do
+ActiveRecord::Schema.define(version: 20200304073117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1296,6 +1296,7 @@ ActiveRecord::Schema.define(version: 20200228173650) do
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_game_leaderboards_on_person_id"
     t.index ["product_id"], name: "idx_trivia_game_leaderboards_product"
+    t.index ["trivia_game_id", "person_id"], name: "idx_uniq_tgl_tgid_pid", unique: true
     t.index ["trivia_game_id"], name: "index_trivia_game_leaderboards_on_trivia_game_id"
   end
 
@@ -1362,6 +1363,7 @@ ActiveRecord::Schema.define(version: 20200228173650) do
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_question_leaderboards_on_person_id"
     t.index ["product_id"], name: "idx_trivia_question_leaderboards_product"
+    t.index ["trivia_question_id", "person_id"], name: "idx_uniq_tql_tqid_pid", unique: true
     t.index ["trivia_question_id"], name: "index_trivia_question_leaderboards_on_trivia_question_id"
   end
 
@@ -1392,6 +1394,7 @@ ActiveRecord::Schema.define(version: 20200228173650) do
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_round_leaderboards_on_person_id"
     t.index ["product_id"], name: "idx_trivia_round_leaderboards_product"
+    t.index ["trivia_round_id", "person_id"], name: "idx_uniq_trl_trid_pid", unique: true
     t.index ["trivia_round_id"], name: "index_trivia_round_leaderboards_on_trivia_round_id"
   end
 

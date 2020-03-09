@@ -160,6 +160,10 @@ RSpec.configure do |config|
         #  description: "Recommended posts",
         #},
         {
+            name: "Referral",
+            description: "Referral system "
+        },
+        {
           name: "Relationships",
           description: "User's relationships",
         },
@@ -248,9 +252,9 @@ RSpec.configure do |config|
               }
             },
             badges_awarded: {
-              type: :object,
-              properties: {
-                badge: { "$ref": "#/definitions/BadgeJson" }
+              type: :array,
+              items: {
+                "$ref": "#/definitions/BadgeJson"
               }
             }
           }
@@ -570,12 +574,19 @@ RSpec.configure do |config|
             id: {type: :string},
             "name": {type: :string},
             "internal_name": {type: :string},
-            "description": {type: :string,  'x-nullable': true},
+            "description": {type: :string, 'x-nullable': true},
             "picture_url": {type: :string},
             action_requirement: {type: :integer},
             point_value: {type: :integer},
           },
           "description": "Badge Response"
+        },
+        ReferralCode: {
+            type: :object,
+            properties: {
+                person_id: {type: :integer},
+                unique_code: {type: :string},
+            }
         },
         BadgesArray: {
           type: :object,
@@ -588,6 +599,78 @@ RSpec.configure do |config|
                   badge: { "$ref": "#/definitions/BadgeJson" }
                 }
               }
+            }
+          }
+        },
+        Certificate: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            order: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            color_hex: {type: :string},
+            chat_room_id: {type: :integer},
+            sku_android: {type: :string},
+            sku_ios: {type: :string},
+            is_free: {type: :boolean},
+            is_issuable: {type: :boolean},
+            is_completed: {type: :boolean},
+            is_purchased: {type: :boolean},
+            certificate_image_url: {type: :string, 'x-nullable': true},
+            issued_certificate_image_url: {type: :string, 'x-nullable': true},
+          }
+        },
+        CertificateWishlist: {
+          type: :object,
+          properties: {
+            wishlist: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  id: { type: :integer },
+                  certificate: { type: :object, "$ref": "#/definitions/Certificate" },
+                }
+              }
+            }
+          }
+        },
+        "LevelJson": {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            name: {type: :string},
+            internal_name: {type: :string},
+            description: {type: :string},
+            points: {type: :integer},
+            picture_url: {type: :string},
+          },
+          "description": "Level Response"
+        },
+        personMini: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            username: {type: :string},
+            picture_url: {type: :string},
+            designation: {type: :string},
+            facebook_picture_url: {type: :string},
+            badge_points: {type: :integer},
+            level: {
+              "$ref": "#/definitions/LevelJson", 'x-nullable': true
+            }
+          }
+        },
+        MiniPeopleArray: {
+          type: :object,
+          properties: {
+            people: {
+              type: :array,
+              items: {
+                "$ref" => "#/definitions/personMini",
+              },
             }
           }
         }

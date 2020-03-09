@@ -11,4 +11,8 @@ class SendAssigneeCertificateEmailJob < Struct.new(:person_id, :assignee_id, :pe
       Delayed::Job.where(id: job.id).destroy_all
     end
   end
+
+  def queue_name
+    :default
+  end
 end

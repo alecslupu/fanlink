@@ -13,7 +13,14 @@ RailsAdmin.config do |config|
       #
       field :type, :enum do
         enum do
-          Trivia::Question.descendants.map(&:name)
+          # Trivia::Question.descendants.map(&:name)
+          [
+            ["Single Choice", "Trivia::SingleChoiceQuestion"],
+            ["Multiple Choice", "Trivia::MultipleChoiceQuestion"],
+            ["Picture Choice", "Trivia::PictureQuestion"],
+            ["True or False", "Trivia::BooleanChoiceQuestion"],
+            ["Fill in the blanks", "Trivia::HangmanQuestion"],
+          ]
         end
       end
 

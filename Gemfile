@@ -46,7 +46,6 @@ else
   # Use ActiveModel has_secure_password
   # gem "bcrypt", "~> 3.1.7"
 end
-
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
@@ -139,7 +138,7 @@ group :development do
 end
 
 group :test do
-  gem "cucumber-rails", "~>1.8.0", require: false
+  # gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
   gem "simplecov", "~>0.17", require: false
   gem 'simplecov-console', require: false
@@ -208,7 +207,7 @@ gem "pg_search"
 gem "postgresql-check"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
-gem "rack-timeout"
+# gem "rack-timeout"
 gem "rest-firebase"
 gem "sorcery"
 gem "timber", "~> 2.0"

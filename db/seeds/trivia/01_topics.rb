@@ -23,7 +23,7 @@ topics = [
 ]
 
 
-products = Product.where(internal_name: %w(cantrivia cantrivia))
+products = Product.where(internal_name: %w(caned cantrivia))
 
 products.each do |product|
   ActsAsTenant.with_tenant(product) do

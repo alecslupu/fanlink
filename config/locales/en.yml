@@ -255,6 +255,11 @@ en:
       invalid_dates: "Invalid date(s)"
   admin:
     actions:
+      purchase_report_action:
+        menu: "Purchases"
+        breadcrumb: "Referred People with Purchases"
+        title: "Referred People with Purchases"
+
       select_product_dashboard:
         title: Select Product
         menu: Select Product
@@ -262,3 +267,8 @@ en:
 
       generate_game_action:
         menu: "Generate Random game"
+
+      report_action:
+        title:  "Referred People"
+        breadcrumb: "Referred People"
+        menu: "Referred People"
