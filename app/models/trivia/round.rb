@@ -26,7 +26,9 @@ module Trivia
     has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id, dependent: :destroy
     has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
-    validate :check_start_date_when_publishing, on: :update, if: -> {published?}
+
+    validate :check_start_date_when_publishing, on: :update, if: -> { published? }
+    validates :start_date, presence: true, if: -> { locked? || published? || running? }
 
     include AASM
 
@@ -101,18 +103,20 @@ module Trivia
       trivia_game_id
     end
 
-    def start_date_in_future?
-      if start_date < Time.zone.now.to_i
-        errors.add(:start_date, "Start date must be higher than current date")
-        return false
+    private
 
-      else
-        return true
+      def start_date_in_future?
+        if start_date < Time.zone.now.to_i
+          errors.add(:start_date, "Start date must be higher than current date")
+          return false
+
+        else
+          return true
+        end
       end
-    end
 
-    def check_start_date_when_publishing
-       errors.add(:start_date, "must be higher than current date.") if start_date < Time.zone.now.to_i
-    end
+      def check_start_date_when_publishing
+         errors.add(:start_date, "must be higher than current date.") if start_date < Time.zone.now.to_i
+      end
   end
 end

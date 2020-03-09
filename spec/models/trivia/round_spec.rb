@@ -121,12 +121,47 @@ RSpec.describe Trivia::Round, type: :model do
       before(:all) do
         @round = create(:past_trivia_round, status: :draft)
       end
+
       it "does not update status" do
         expect(@round.publish!).to eq(false)
       end
 
       it "throws an error with a message" do
          expect(@round.errors.messages[:start_date]).to include("Start date must be higher than current date")
+      end
+    end
+  end
+
+  context "validations" do
+    describe "#start_date" do
+      before(:each) do
+        game = create(:trivia_game)
+        product = create(:product)
+        @round = Trivia::Round.new(
+          start_date: nil,
+          status: :draft,
+          trivia_game_id: game.id,
+          product_id: product.id
+        )
+      end
+      it "does not save a round without start date when status is locked" do
+        @round.status = "locked"
+        expect{ @round.save }.not_to change{ Trivia::Round.count }
+      end
+
+      it "does not save a round without start date when status is published" do
+        @round.status = "published"
+        expect{ @round.save }.not_to change{ Trivia::Round.count }
+        # expect{ @round.save }.not_to change{ Trivia::Round.count }
+      end
+
+      it "does not save a round without start date when status is running" do
+        @round.status = "running"
+        expect{ @round.save }.not_to change{ Trivia::Round.count }
+      end
+
+      it "saves when status is draft" do
+        expect{ @round.save }.to change{ Trivia::Round.count }.by(1)
       end
     end
   end
