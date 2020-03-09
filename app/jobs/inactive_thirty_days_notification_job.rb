@@ -13,6 +13,10 @@ class InactiveThirtyDaysNotificationJob
     end
   end
 
+  def queue_name
+    :default
+  end
+
   def error(job, exception)
     if exception.is_a?(ActiveRecord::RecordNotFound)
       job.destroy
