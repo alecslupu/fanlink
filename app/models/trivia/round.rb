@@ -45,7 +45,7 @@ module Trivia
       state :running
       state :closed
 
-      event :publish, guards: [:ceva] do
+      event :publish, guards: [:start_date_in_future?] do
         # before do
         #   instance_eval do
         #     validates_presence_of :sex, :name, :surname
@@ -101,7 +101,7 @@ module Trivia
       trivia_game_id
     end
 
-    def ceva
+    def start_date_in_future?
       if start_date < Time.zone.now.to_i
         errors.add(:start_date, "Start date must be higher than current date")
         return false
