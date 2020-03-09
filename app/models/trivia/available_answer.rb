@@ -17,7 +17,8 @@ module Trivia
   class AvailableAnswer < ApplicationRecord
     has_paper_trail
     belongs_to :question, class_name: "Trivia::AvailableQuestion", foreign_key: :trivia_question_id, optional: true
-
+    validates :name, presence: true
+    validates :hint, presence: true
     include AASM
     enum status: {
       draft: 0,
