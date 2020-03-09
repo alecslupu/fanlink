@@ -109,7 +109,6 @@ module Trivia
         if start_date < Time.zone.now.to_i
           errors.add(:start_date, "Start date must be higher than current date")
           return false
-
         else
           return true
         end

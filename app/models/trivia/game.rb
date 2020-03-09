@@ -42,6 +42,7 @@ module Trivia
 
     validates :long_name, presence: true
     validates :short_name, presence: true
+    validate :check_start_date_when_publishing, on: :update, if: -> { published? }
 
 =begin
 validates the startd_date > now when draft and published FLAPI-936
@@ -75,12 +76,15 @@ validates the startd_date > now when draft and published FLAPI-936
       state :running
       state :closed
 
-      event :publish do
+      event :publish, guards: [:start_date_in_future?] do
         # before do
         #   instance_eval do
         #     validates_presence_of :sex, :name, :surname
         #   end
         # end
+        after do
+          handle_status_changes
+        end
         transitions from: :draft, to: :published
       end
 
@@ -119,12 +123,27 @@ validates the startd_date > now when draft and published FLAPI-936
       end
     end
 
-    def handle_status_changes
-      if saved_change_to_attribute?(:status) && published?
-        Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
-      end
-    end
 
+    private
+
+      def handle_status_changes
+        if saved_change_to_attribute?(:status) && published?
+          Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
+        end
+      end
+
+      def check_start_date_when_publishing
+         errors.add(:start_date, "must be higher than current date.") if start_date < Time.zone.now.to_i
+      end
+
+      def start_date_in_future?
+        if start_date < Time.zone.now.to_i
+          errors.add(:start_date, "Start date must be higher than current date")
+          return false
+        else
+          return true
+        end
+      end
   end
 end
 

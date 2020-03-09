@@ -40,7 +40,7 @@ RSpec.describe Trivia::Game, type: :model do
   end
 
   context "State Machine" do
-    subject { Trivia::Game.new }
+    subject { Trivia::Game.new(start_date: (Time.zone.now + 1.day).to_i) }
 
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
@@ -127,6 +127,25 @@ RSpec.describe Trivia::Game, type: :model do
 
         round = game.rounds.reload.last
         expect(game.end_date).to be_within(1.seconds).of round.end_date
+      end
+    end
+  end
+
+  context "validations" do
+    describe "#start_date" do
+      describe "when is smaller than current date"
+
+      before(:all) do
+        @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i)
+      end
+
+      it "does not update status" do
+        expect(@game.publish!).to eq(false)
+      end
+
+      it "throws an error with a message" do
+        @game.publish!
+        expect(@game.errors.messages[:start_date]).to include("Start date must be higher than current date")
       end
     end
   end
