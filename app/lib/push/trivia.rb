@@ -4,6 +4,7 @@ module Push
     def round_announcement_push(round_id, game_id, round_order, time)
       game = ::Trivia::Game.find(game_id)
       round = ::Trivia::Round.find(round_id)
+
       android_data = {
         type: "service",
         action: "trivia_round_start",
@@ -18,7 +19,7 @@ module Push
 
       ios_topic_notification_push(
         "Caned Trivia",
-        "Next round will begin in #{time}",
+        "Round #{round_order} of #{game.short_name} will begin in #{time}",
         0,
         "trivia_game_#{game_id}_ios",
         context: "trivia_round_start",

@@ -82,12 +82,14 @@ module Push
       end
     end
 
-    def build_ios_notification(title, body, ttl, data = {})
+    def build_ios_notification(title, body, click_action, ttl, data = {})
       options = {}
       options[:notification] = {}
 
       options[:notification][:title] = title
       options[:notification][:body] = body
+      options[:notification][:click_action] = click_action
+      options[:notification][:mutable_content] = "true"
       options[:notification][:sound] = "default"
 
       options[:data] = data
@@ -145,9 +147,24 @@ module Push
       response = push_client.send_to_topic(topic, notification_body)
     end
 
-    def ios_topic_notification_push(title, body, click_action, ttl, topic, data = {})
-      notification_body = build_ios_notification(title, body, click_action, ttl, data)
+    def ios_topic_notification_push(title, body, ttl, topic, data = {})
+      notification_body = build_ios_topic_notification(title, body, ttl, data)
       response = push_client.send_to_topic(topic, notification_body)
+    end
+
+    def build_ios_topic_notification(title, body, ttl, data)
+      options = {}
+      options[:notification] = {}
+
+      options[:notification][:title] = title
+      options[:notification][:body] = body
+      options[:notification][:sound] = "default"
+
+      options[:data] = data
+      options[:data][:priority] = "high"
+      options[:data][:time_to_live] = ttl
+
+      return options
     end
 
     private
