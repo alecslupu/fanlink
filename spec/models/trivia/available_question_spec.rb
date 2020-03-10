@@ -37,19 +37,37 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
   end
 
   context "Validations" do
-    describe "answers are not published before publishing available question" do
-      before(:each) do
-        available_answer = create(:trivia_available_answer, status: :draft)
-        @available_question = create(:trivia_single_choice_available_question, status: :draft)
-        @available_question.available_answers << available_answer
-        @available_question.publish!
-      end
-      it "does not update status" do
-        expect(@available_question.status).to eq("draft")
-      end
+    describe "#avalaible_answers_status_check" do
+      describe "publishing a question before publishing available questions" do
+        before(:each) do
+          available_answer = create(:trivia_available_answer, status: :draft)
+          @available_question = create(:trivia_single_choice_available_question, status: :draft)
+          @available_question.available_answers << available_answer
+          @available_question.publish!
+        end
+        it "does not update status" do
+          expect(@available_question.status).to eq("draft")
+        end
 
-      it "throws an error with a message" do
-        expect(@available_question.errors.messages[:available_answers]).to include("used in the questions must have 'published' status before publishing")
+        it "throws an error with a message" do
+          expect(@available_question.errors.messages[:available_answers]).to include("used in the questions must have 'published' status before publishing")
+        end
+      end
+    end
+    describe "#number_of_correct_answers" do
+      describe "adding more than one correct answer on picture choice questions" do
+        before(:each) do
+          @available_question = build(:trivia_picture_available_question)
+          @available_question.available_answers << create_list(:trivia_picture_available_answer, 2, is_correct: true)
+        end
+        it "does not save the question" do
+          expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:base]).to include("Picture choice questions can have only one correct answer")
+        end
       end
     end
   end
