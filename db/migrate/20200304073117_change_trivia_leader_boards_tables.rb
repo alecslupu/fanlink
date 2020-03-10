@@ -28,13 +28,14 @@ RETURNS void AS $$
       FROM (
         SELECT
           q.id as trivia_question_id,
-          r.complexity * (r.leaderboard_size - ROW_NUMBER () OVER (ORDER BY a.time)) as points,
+          r.complexity * (ROW_NUMBER () OVER (ORDER BY COUNT(a.id) ASC, AVG(a.time) DESC)) as points,
           a.person_id,
           q.product_id
         FROM trivia_questions q
           INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
           INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
         WHERE q.id  = $1 AND a.is_correct = 't'
+        GROUP BY q.id, r.complexity, a.person_id, q.product_id
       ) AS leaderboard
       GROUP BY person_id
       ORDER by points desc
@@ -54,10 +55,7 @@ RETURNS void AS $$
     INSERT INTO trivia_round_leaderboards (trivia_round_id, points, position, person_id, average_time, created_at, updated_at, product_id )
     SELECT
       trivia_round_id,
-      CASE
-        WHEN points >= 0 THEN points
-        ELSE 0
-      END,
+      points,
       position,
       person_id,
       average_time,
@@ -67,8 +65,8 @@ RETURNS void AS $$
     FROM (
       SELECT
         q.trivia_round_id,
-        r.complexity * ( r.leaderboard_size - ROW_NUMBER () OVER (ORDER BY AVG(a.time))) as points,
-        ROW_NUMBER () OVER (ORDER BY SUM(l.points) DESC,AVG(a.time)) as position,
+        SUM(l.points) as points,
+        ROW_NUMBER () OVER (ORDER BY SUM(l.points) DESC, AVG(a.time) DESC) as position,
         a.person_id,
         AVG(a.time) as average_time,
         r.product_id
@@ -107,7 +105,7 @@ RETURNS void AS $$
         SELECT
           r.trivia_game_id,
           SUM(l.points) as points,
-          ROW_NUMBER () OVER (ORDER BY SUM(points) desc, AVG(a.time)) as position,
+          ROW_NUMBER () OVER (ORDER BY SUM(l.points) DESC, AVG(a.time) DESC) as position,
           a.person_id,
           AVG(a.time) as average_time,
           NOW() AS created_at, NOW() as updated_at,
