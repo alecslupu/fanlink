@@ -120,9 +120,9 @@ module Trivia
       end
 
       def avalaible_questions_status_check
-        questions.each do |answer|
-          if !answer.published?
-            errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
+        questions.map(&:available_question).each do |available_question|
+          if !available_question.published?
+            errors.add(:base, "All available questions used must have 'published' status before publishing")
             break
           end
         end

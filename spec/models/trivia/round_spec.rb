@@ -128,30 +128,30 @@ RSpec.describe Trivia::Round, type: :model do
           product_id: product.id
         )
       end
-      it "does not save a round without start date when status is locked" do
+      it "does not save the round when status is locked" do
         @round.status = "locked"
         expect{ @round.save }.not_to change{ Trivia::Round.count }
       end
 
-      it "does not save a round without start date when status is published" do
+      it "does not save the round when status is published" do
         @round.status = "published"
         expect{ @round.save }.not_to change{ Trivia::Round.count }
         # expect{ @round.save }.not_to change{ Trivia::Round.count }
       end
 
-      it "does not save a round without start date when status is running" do
+      it "does not save the round when status is running" do
         @round.status = "running"
         expect{ @round.save }.not_to change{ Trivia::Round.count }
       end
 
-      it "saves when status is draft" do
+      it "saves the round when status is draft" do
         expect{ @round.save }.to change{ Trivia::Round.count }.by(1)
       end
     end
 
-    describe "#start date smaller than current date" do
+    describe "#start_date smaller than current date" do
       before(:each) do
-        @round = create(:past_trivia_round, status: :draft)
+        @round = create(:past_trivia_round, status: :draft, start_date: (DateTime.current - 1.day).to_i)
         @round.publish!
       end
 
@@ -161,6 +161,26 @@ RSpec.describe Trivia::Round, type: :model do
 
       it "throws an error with a message" do
         expect(@round.errors.messages[:start_date]).to include("must be higher than current date")
+      end
+    end
+
+    describe "#avalaible_questions_status_check" do
+      describe "having unpublished active question when publishing the round" do
+        before(:each) do
+          @round = create(:past_trivia_round, status: :draft, start_date: (DateTime.current + 1.day).to_i)
+          question = create(:trivia_single_choice_question)
+          question.available_question.update(status: :draft)
+          @round.questions << question
+          @round.publish!
+        end
+
+        it "does not update status" do
+          expect(@round.status).to eq("draft")
+        end
+
+        it "throws an error with a message" do
+          expect(@round.errors.messages[:base]).to include("All available questions used must have 'published' status before publishing")
+        end
       end
     end
   end
