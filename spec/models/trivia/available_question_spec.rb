@@ -36,5 +36,21 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
 
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "Validations" do
+    describe "answers are not published before publishing available question" do
+      before(:each) do
+        available_answer = create(:trivia_available_answer, status: :draft)
+        @available_question = create(:trivia_single_choice_available_question, status: :draft)
+        @available_question.available_answers << available_answer
+        @available_question.publish!
+      end
+      it "does not update status" do
+        expect(@available_question.status).to eq("draft")
+      end
+
+      it "throws an error with a message" do
+        expect(@available_question.errors.messages[:available_answers]).to include("used in the questions must have 'published' status before publishing")
+      end
+    end
+  end
 end
