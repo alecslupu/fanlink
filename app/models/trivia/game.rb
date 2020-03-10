@@ -55,7 +55,10 @@ validates the startd_date > now when draft and published FLAPI-936
 =end
 
     def compute_leaderboard
-      self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
+      return unless closed?
+      self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})")
+      self.class.connection.execute("PERFORM pg_notify('leaderboard',  CONCAT('{\"type\": \"game\", \"id\": ', #{id},'}'));")
+
     end
 
     enum status: %i[draft published locked running closed]

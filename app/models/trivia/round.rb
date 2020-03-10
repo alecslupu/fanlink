@@ -32,7 +32,10 @@ module Trivia
     scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
 
     def compute_leaderboard
-      self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})") if closed?
+      return unless closed?
+      self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})")
+      self.class.connection.execute("select compute_trivia_game_leaderboard(#{game_id})")
+      self.class.connection.execute("PERFORM pg_notify('leaderboard',  CONCAT('{\"type\": \"round\", \"id\": ', #{id},'}'));")
     end
 
     def compute_gameplay_parameters

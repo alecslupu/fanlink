@@ -46,6 +46,9 @@ module Trivia
     def compute_leaderboard
       # raise "retry" if Time.zone.now < end_date
       self.class.connection.execute("select compute_trivia_question_leaderboard(#{id})")
+      self.class.connection.execute("select compute_trivia_round_leaderboard(#{round_id})")
+      self.class.connection.execute("select compute_trivia_game_leaderboard(#{round.game_id})")
+      self.class.connection.execute("PERFORM pg_notify('leaderboard',  CONCAT('{\"type\": \"question\", \"id\": ', #{id},'}'));")
     end
 
     # administrate falback
