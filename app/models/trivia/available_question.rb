@@ -80,5 +80,18 @@ module Trivia
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
               ),  message: "%{value} is not a valid type" }
+
+    validate :avalaible_answers_status_check, on: :update, if: -> {published?}
+
+    private
+
+      def avalaible_answers_status_check
+        available_answers.each do |answer|
+          if !answer.published?
+            errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
+            break
+          end
+        end
+      end
   end
 end
