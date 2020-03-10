@@ -81,7 +81,8 @@ module Trivia
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
               ),  message: "%{value} is not a valid type" }
 
-    validate :avalaible_answers_status_check, on: :update, if: -> {published?}
+    validate :avalaible_answers_status_check, on: :update, if: -> { published? }
+    validate :number_of_correct_answers, if: -> { type == "Trivia::PictureAvailableQuestion" }
 
     private
 
@@ -92,6 +93,11 @@ module Trivia
             break
           end
         end
+      end
+
+      def number_of_correct_answers
+        is_correct_answers = available_answers.map { |answer| answer.is_correct }
+        errors.add(:base, "Picture choice question can have only one correct answer") if is_correct_answers.count(true) > 1
       end
   end
 end
