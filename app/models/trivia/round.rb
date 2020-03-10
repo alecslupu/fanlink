@@ -29,6 +29,7 @@ module Trivia
 
     validate :check_start_date_when_publishing, on: :update, if: -> { published? }
     validates :start_date, presence: true, if: -> { locked? || published? || running? }
+    validate :avalaible_questions_status_check, on: :update, if: -> { published? }
 
     include AASM
 
@@ -116,6 +117,15 @@ module Trivia
 
       def check_start_date_when_publishing
          errors.add(:start_date, "must be higher than current date.") if start_date < Time.zone.now.to_i
+      end
+
+      def avalaible_questions_status_check
+        questions.each do |answer|
+          if !answer.published?
+            errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
+            break
+          end
+        end
       end
   end
 end
