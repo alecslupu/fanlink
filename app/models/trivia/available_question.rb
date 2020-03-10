@@ -96,7 +96,7 @@ module Trivia
       end
 
       def number_of_correct_answers
-        is_correct_answers = available_answers.map { |answer| answer.is_correct }
+        is_correct_answers = available_answers.map(&:is_correct)
         errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
       end
   end
