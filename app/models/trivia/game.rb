@@ -43,6 +43,7 @@ module Trivia
     validates :long_name, presence: true
     validates :short_name, presence: true
     validate :check_start_date_when_publishing, on: :update, if: -> { published? }
+    validate :check_rounds_start_time
 
 =begin
 validates the startd_date > now when draft and published FLAPI-936
@@ -138,10 +139,16 @@ validates the startd_date > now when draft and published FLAPI-936
 
       def start_date_in_future?
         if start_date < Time.zone.now.to_i
-          errors.add(:start_date, "Start date must be higher than current date")
+          errors.add(:start_date, "must be higher than current date")
           return false
         else
           return true
+        end
+      end
+
+      def check_rounds_start_time
+        if rounds.where('start_date < ? ', (Time.zone.now).to_i).present?
+          errors.add(:start_date, "of the rounds must be higher than current date" )
         end
       end
   end

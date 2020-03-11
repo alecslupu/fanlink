@@ -167,7 +167,7 @@ RSpec.describe Trivia::Round, type: :model do
     describe "#avalaible_questions_status_check" do
       describe "having unpublished active question when publishing the round" do
         before(:each) do
-          @round = create(:past_trivia_round, status: :draft, start_date: (DateTime.current + 1.day).to_i)
+          @round = create(:trivia_round, status: :draft, start_date: (DateTime.current + 1.day).to_i)
           question = create(:trivia_single_choice_question)
           question.available_question.update(status: :draft)
           @round.questions << question

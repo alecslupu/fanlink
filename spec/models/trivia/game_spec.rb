@@ -135,18 +135,21 @@ RSpec.describe Trivia::Game, type: :model do
     describe "#start_date" do
       describe "when is smaller than current date"
 
-      before(:all) do
-        @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i)
-      end
+        before(:each) do
+          @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i, status: :draft)
+          @game.publish!
+        end
 
-      it "does not update status" do
-        expect(@game.publish!).to eq(false)
-      end
+        it "does not update status" do
+          expect(@game.status).to eq("draft")
+        end
 
-      it "throws an error with a message" do
-        @game.publish!
-        expect(@game.errors.messages[:start_date]).to include("Start date must be higher than current date")
-      end
+        it "throws an error with a message" do
+          @game.publish!
+          expect(@game.errors.messages[:start_date]).to include("must be higher than current date")
+        end
     end
+
+
   end
 end
