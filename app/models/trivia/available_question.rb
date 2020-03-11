@@ -76,6 +76,8 @@ module Trivia
     validates :complexity, numericality: { greater_than: 0 },
                            presence: true
 
+    validates :title, presence: true
+
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion

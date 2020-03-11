@@ -8,7 +8,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
     it { expect(build(:trivia_boolean_choice_available_question)).to be_valid }
     it { expect(build(:trivia_hangman_available_question)).to be_valid }
   end
-  context "Associations" do
+context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#belongs_to" do
         should belong_to(:topic)
@@ -102,6 +102,21 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
           @available_question.save
           expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
         end
+      end
+    end
+
+    describe "#title" do
+      before(:each) do
+        @available_question = build(:trivia_available_question, title: nil)
+      end
+
+      it "does not save the record" do
+        expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+      end
+
+      it "throws an error with a message" do
+        @available_question.save
+        expect(@available_question.errors.messages[:title]).to include("can't be blank")
       end
     end
   end
