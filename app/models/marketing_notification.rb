@@ -57,7 +57,7 @@ class MarketingNotification < ApplicationRecord
     "UTC -03:00": 11,
     "UTC -02:00": 12,
     "UTC -01:00": 13,
-    "UTC ": 14,
+    "UTC": 14,
     "UTC +01:00": 15,
     "UTC +02:00": 16,
     "UTC +03:00": 17,
@@ -106,12 +106,16 @@ class MarketingNotification < ApplicationRecord
     def enqueue_delayed_job
       date = self.date.asctime.in_time_zone("UTC")
       timezone = self.timezone
+
       case timezone[4]
       when "-"
         run_at = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
       when "+"
         run_at = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
+      else
+        run_at = date
       end
+
       delete_existing_delayed_job
       Delayed::Job.enqueue(MarketingNotificationPushJob.new(id), run_at: run_at)
     end
