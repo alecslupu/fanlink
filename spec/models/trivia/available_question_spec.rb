@@ -54,6 +54,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         end
       end
     end
+
     describe "#number_of_correct_answers" do
       describe "adding more than one correct answer on picture choice questions" do
         before(:each) do
@@ -67,6 +68,39 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         it "throws an error with a message" do
           @available_question.save
           expect(@available_question.errors.messages[:base]).to include("Picture choice questions can have only one correct answer")
+        end
+      end
+    end
+
+    describe "hangman_answer" do
+      describe "adding more than one answer on fill in the blanks questions" do
+        before(:each) do
+          @available_question = build(:trivia_hangman_available_question)
+          @available_question.available_answers << [create(:correct_trivia_available_answer), create(:wrong_trivia_available_answer)]
+        end
+
+        it "does not save the question" do
+          expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
+        end
+      end
+
+      describe "adding an incorrect answer on fill in the blanks questions" do
+        before(:each) do
+          @available_question = build(:trivia_hangman_available_question)
+          @available_question.available_answers << [create(:correct_trivia_available_answer), create(:correct_trivia_available_answer)]
+        end
+        it "does not save the question" do
+          expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
         end
       end
     end
