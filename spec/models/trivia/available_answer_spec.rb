@@ -28,5 +28,13 @@ RSpec.describe Trivia::AvailableAnswer, type: :model do
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
 
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "#validations" do
+    describe "#name" do
+      it { should validate_presence_of(:name) }
+    end
+
+    describe "#hint" do
+      it { should validate_presence_of(:hint) }
+    end
+  end
 end

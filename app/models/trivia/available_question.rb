@@ -76,9 +76,31 @@ module Trivia
     validates :complexity, numericality: { greater_than: 0 },
                            presence: true
 
+    validates :title, presence: true
+
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
               ),  message: "%{value} is not a valid type" }
+
+    validate :avalaible_answers_status_check, on: :update, if: -> { published? }
+    validate :number_of_correct_answers, if: -> { type == "Trivia::PictureAvailableQuestion" }
+
+    private
+
+    def avalaible_answers_status_check
+      available_answers.each do |answer|
+        if !answer.published?
+          errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
+          break
+        end
+      end
+    end
+
+    def number_of_correct_answers
+      is_correct_answers = available_answers.map(&:is_correct)
+      errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
+    end
+
   end
 end
