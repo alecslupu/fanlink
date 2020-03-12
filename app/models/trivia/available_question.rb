@@ -84,7 +84,6 @@ module Trivia
               ),  message: "%{value} is not a valid type" }
 
     validate :avalaible_answers_status_check, on: :update, if: -> { published? }
-    validate :number_of_correct_answers, if: -> { type == "Trivia::PictureAvailableQuestion" }
 
     after_update :update_questions_type
 
@@ -99,15 +98,10 @@ module Trivia
         end
       end
 
-      def number_of_correct_answers
-        is_correct_answers = available_answers.map(&:is_correct)
-        errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
+      def update_questions_type
+        if type_changed?
+          active_questions.update_all(type: type)
+        end
       end
-
-      # def update_questions_type
-      #   if type_changed?
-      #     active_questions.update_all(type: type)
-      #   end
-      # end
   end
 end
