@@ -42,6 +42,7 @@ module Trivia
 
     validates :available_question, presence: {message: "Please make sure selected question type is the compatible with available question type"}
 
+    before_create :add_question_type
 
     def compute_leaderboard
       # raise "retry" if Time.zone.now < end_date
@@ -66,6 +67,12 @@ module Trivia
       self.question_order = index
       self.save
     end
+
+    private
+
+      def add_question_type
+        self.type = availble_question.type
+      end
   end
 end
 
