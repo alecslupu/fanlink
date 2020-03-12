@@ -78,7 +78,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
       describe "adding more than one answer on fill in the blanks questions" do
         before(:each) do
           @available_question = build(:trivia_hangman_available_question)
-          @available_question.available_answers << [create(:correct_trivia_available_answer), create(:wrong_trivia_available_answer)]
+          @available_question.available_answers << create(:wrong_trivia_available_answer)
         end
 
         it "does not save the question" do
@@ -94,7 +94,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
       describe "adding an incorrect answer on fill in the blanks questions" do
         before(:each) do
           @available_question = build(:trivia_hangman_available_question)
-          @available_question.available_answers << [create(:correct_trivia_available_answer), create(:correct_trivia_available_answer)]
+          @available_question.available_answers.first.update(is_correct: false)
         end
         it "does not save the question" do
           expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }

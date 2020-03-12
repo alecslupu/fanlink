@@ -90,28 +90,18 @@ module Trivia
 
     private
 
-    def avalaible_answers_status_check
-      available_answers.each do |answer|
-        if !answer.published?
-          errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
-          break
+      def avalaible_answers_status_check
+        available_answers.each do |answer|
+          if !answer.published?
+            errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
+            break
+          end
         end
       end
-    end
 
-    def number_of_correct_answers
-      is_correct_answers = available_answers.map(&:is_correct)
-      errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
-    end
-
-      def hangman_answer
-        available_answers_correctness = available_answers.pluck(:is_correct)
-        if available_answers_correctness.count != 1 || available_answers_correctness.first != true
-          errors.add(
-            :avalaible_answers,
-            "count must be equal to one for fill in the blank questions and that answer must be correct."
-          )
-        end
+      def number_of_correct_answers
+        is_correct_answers = available_answers.map(&:is_correct)
+        errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
       end
 
       def update_questions_type
