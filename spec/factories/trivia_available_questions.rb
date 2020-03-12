@@ -43,7 +43,5 @@ FactoryBot.define do
     end
     factory :trivia_boolean_choice_available_question, class: "Trivia::BooleanChoiceAvailableQuestion" do
     end
-    factory :trivia_hangman_available_question, class: "Trivia::HangmanAvailableQuestion" do
-    end
   end
 end

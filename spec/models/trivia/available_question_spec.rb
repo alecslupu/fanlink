@@ -1,5 +1,6 @@
 require "rails_helper"
 
+
 RSpec.describe Trivia::AvailableQuestion, type: :model do
   context "Valid factory" do
     it { expect(build(:trivia_multiple_choice_available_question)).to be_valid }
@@ -7,8 +8,9 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
     it { expect(build(:trivia_picture_available_question)).to be_valid }
     it { expect(build(:trivia_boolean_choice_available_question)).to be_valid }
     it { expect(build(:trivia_hangman_available_question)).to be_valid }
+
   end
-context "Associations" do
+  context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#belongs_to" do
         should belong_to(:topic)
