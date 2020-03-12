@@ -87,6 +87,8 @@ module Trivia
     validate :number_of_correct_answers, if: -> { type == "Trivia::PictureAvailableQuestion" }
     validate :hangman_answer, if: -> { type == "Trivia::HangmanAvailableQuestion" }
 
+    after_update :update_questions_type
+
     private
 
       def avalaible_answers_status_check
@@ -110,6 +112,12 @@ module Trivia
             :avalaible_answers,
             "count must be equal to one for fill in the blank questions and that answer must be correct."
           )
+        end
+      end
+
+      def update_questions_type
+        if type_changed?
+          active_questions.update_all(type: type)
         end
       end
   end
