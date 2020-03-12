@@ -64,4 +64,21 @@ RSpec.describe Trivia::Question, type: :model do
       end
     end
   end
+
+  context "#add_question_type" do
+    describe "when a question is created" do
+      before(:each) do
+        available_question = create(:trivia_single_choice_available_question)
+        @question = Trivia::Question.new(
+          attributes_for(:trivia_question).except(:available_question)
+        )
+        @question.available_question = available_question
+        @question.save
+      end
+
+      it "gets the type from the assigned available question" do
+        expect(@question.type).to eq("Trivia::SingleChoiceQuestion")
+      end
+    end
+  end
 end

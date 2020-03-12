@@ -104,10 +104,10 @@ module Trivia
         errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
       end
 
-      def update_questions_type
-        if type_changed?
-          active_questions.update_all(type: type)
-        end
-      end
+      # def update_questions_type
+      #   if type_changed?
+      #     active_questions.update_all(type: type)
+      #   end
+      # end
   end
 end
