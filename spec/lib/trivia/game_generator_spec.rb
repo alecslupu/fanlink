@@ -38,3 +38,4 @@ describe Trivia::GameGenerator do
     end
   end
 end
+

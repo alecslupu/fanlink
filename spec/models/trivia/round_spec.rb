@@ -93,12 +93,12 @@ RSpec.describe Trivia::Round, type: :model do
         expect(question.question_order).to eq(value)
       end
       it "sets the end date correctly on round" do
-        time = DateTime.now + 1.day
-        round = create(:future_trivia_round, start_date: time)
+        round = create(:future_trivia_round)
         round.compute_gameplay_parameters
-
-        question = round.reload.questions.last
-        expect(round.end_date).to be_within(1.seconds).of question.end_date
+        round.save
+        round = round.reload
+        # 46 = 10*1 seconds duration + 10*6 timeouts
+        expect(round.end_date_with_cooldown - round.start_date).to eq(64)
       end
     end
     describe ".end_date_with_cooldown" do
