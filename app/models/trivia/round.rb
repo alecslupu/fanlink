@@ -106,6 +106,8 @@ module Trivia
 
     private
 
+      # this is a guard used for AASM
+      # it must return true or false
       def start_date_in_future?
         if start_date < Time.zone.now.to_i
           errors.add(:start_date, "must be higher than current date")
