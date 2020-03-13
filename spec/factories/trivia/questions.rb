@@ -20,12 +20,11 @@ FactoryBot.define do
   factory :trivia_question, class: "Trivia::Question" do
     product { current_product }
 
-    start_date { "2019-04-01 22:39:26" }
-    end_date { "2019-04-01 22:39:26" }
     round { create(:trivia_round) }
     time_limit { 1 }
     cooldown_period { 6 }
     available_question { create(:trivia_available_question, with_answers: with_answers) }
+    sequence(:question_order) { |n| n }
 
     transient do
       with_leaderboard { false }

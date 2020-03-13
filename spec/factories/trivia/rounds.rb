@@ -48,7 +48,7 @@ FactoryBot.define do
 
     factory :future_trivia_round do
       start_date { 10.minutes.from_now }
-      end_date { 20.minutes.from_now }
+      # end_date { 20.minutes.from_now }
       status { :published }
     end
 

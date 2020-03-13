@@ -24,6 +24,7 @@ FactoryBot.define do
     time_limit { 10 }
     topic { create(:trivia_topic) }
     complexity { 1 }
+    status { :published }
 
     transient do
       with_answers { false }

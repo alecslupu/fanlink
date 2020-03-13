@@ -23,8 +23,6 @@
 
 FactoryBot.define do
   factory :trivia_game, class: "Trivia::Game" do
-    start_date { Faker::Time.backward(days: 5) }
-    end_date { Faker::Time.forward(days: 5) }
     long_name { Faker::Lorem.words(number: 10) }
     short_name { Faker::Lorem.words(number: 3) }
     description { Faker::Lorem.paragraph  }
