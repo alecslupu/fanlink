@@ -31,6 +31,7 @@
         @round.save!
         @round.compute_gameplay_parameters
       end
+      game.compute_gameplay_parameters
     end
 
     def promote!

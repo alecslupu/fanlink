@@ -48,15 +48,13 @@ RSpec.describe Trivia::Game, type: :model do
     it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
   end
 
-
   context "scheduled round" do
     describe ".compute_gameplay_parameters" do
       it "has the method" do
         expect(Trivia::Game.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
       end
       it "sets the start_date of a question" do
-        time = DateTime.now.to_i
-        game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
+        game = create(:full_trivia_game, with_leaderboard: false)
         stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
@@ -67,9 +65,9 @@ RSpec.describe Trivia::Game, type: :model do
             }
           )
           .to_return(status: 200, body: "", headers: {})
-
-        game.compute_gameplay_parameters
         round = game.reload.rounds.first
+        game.compute_gameplay_parameters
+        expect(round.start_date- game.start_date).to eq(0)
         expect(round.start_date).to be_within(1.seconds).of game.start_date
       end
 
@@ -158,7 +156,7 @@ RSpec.describe Trivia::Game, type: :model do
 
   context "validations" do
     describe "#start_date" do
-      describe "when is smaller than current date"
+      describe "when is smaller than current date" do
 
         before(:each) do
           @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i, status: :draft)
@@ -173,6 +171,7 @@ RSpec.describe Trivia::Game, type: :model do
           @game.publish!
           expect(@game.errors.messages[:start_date]).to include("must be higher than current date")
         end
+      end
     end
   end
 end
