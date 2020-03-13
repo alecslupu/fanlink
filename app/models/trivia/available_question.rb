@@ -99,8 +99,9 @@ module Trivia
       end
 
       def update_questions_type
-        if type_changed?
-          active_questions.update_all(type: type)
+        if saved_change_to_type?
+          question_type = type.sub("Available", "")
+          active_questions.update_all(type: question_type)
         end
       end
   end
