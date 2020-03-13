@@ -71,8 +71,8 @@ module Trivia
     private
 
       def add_question_type
-        available_question_type = available_question.type
-        self.type = available_question_type.sub("Available", "")
+        question_type = available_question.type.sub("Available", "")
+        self.type = question_type
       end
   end
 end
