@@ -122,4 +122,22 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
       end
     end
   end
+
+  context "hooks" do
+    describe "#update_questions_type" do
+      describe "after updating an available question's type" do
+        before(:each) do
+          question = create(:trivia_single_choice_question)
+          @available_question = question.available_question
+          @available_question.update(type: "Trivia::MultipleChoiceAvailableQuestion")
+          # you can't use record.reload because it searches based on the old record's type
+          @updated_question = Trivia::Question.find(question.id)
+        end
+
+        it "updates all the types for the questions that it is assigned to" do
+          expect(@updated_question.type).to eq("Trivia::MultipleChoiceQuestion")
+        end
+      end
+    end
+  end
 end
