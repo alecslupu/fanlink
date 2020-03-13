@@ -90,7 +90,7 @@ class MarketingNotification < ApplicationRecord
   validates :person_filter, presence: true
   validates :date, presence: true
   validates :timezone, presence: true
-  validates :date, numericality: { greater_than: get_utc_datetime, message: _("Action requirement must be greater than zero.") }
+  validate :date_not_in_the_past
 
   before_validation :set_person_id
   after_save :enqueue_delayed_job
@@ -117,6 +117,10 @@ class MarketingNotification < ApplicationRecord
       delayed_job = Delayed::Job.where("handler LIKE '%notification_id: #{self.id}\n%'").first
 
       delayed_job.destroy if delayed_job
+    end
+
+    def date_not_in_the_past
+      errors.add(:date, "can't be in the past") if get_utc_datetime(date, timezone) < Time.zone.now
     end
 
     def get_utc_datetime(date, timezone)
