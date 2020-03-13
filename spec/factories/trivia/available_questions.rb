@@ -24,6 +24,7 @@ FactoryBot.define do
     time_limit { 10 }
     topic { create(:trivia_topic) }
     complexity { 1 }
+    status { :published }
 
     transient do
       with_answers { false }
@@ -42,8 +43,6 @@ FactoryBot.define do
     factory :trivia_picture_available_question, class: "Trivia::PictureAvailableQuestion" do
     end
     factory :trivia_boolean_choice_available_question, class: "Trivia::BooleanChoiceAvailableQuestion" do
-    end
-    factory :trivia_hangman_available_question, class: "Trivia::HangmanAvailableQuestion" do
     end
   end
 end

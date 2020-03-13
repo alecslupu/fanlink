@@ -1,5 +1,6 @@
 require "rails_helper"
 
+
 RSpec.describe Trivia::AvailableQuestion, type: :model do
   context "Valid factory" do
     it { expect(build(:trivia_multiple_choice_available_question)).to be_valid }
@@ -7,6 +8,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
     it { expect(build(:trivia_picture_available_question)).to be_valid }
     it { expect(build(:trivia_boolean_choice_available_question)).to be_valid }
     it { expect(build(:trivia_hangman_available_question)).to be_valid }
+
   end
   context "Associations" do
     describe "should verify associations haven't changed for" do
@@ -36,5 +38,106 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
 
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "Validations" do
+    describe "#avalaible_answers_status_check" do
+      describe "publishing a question before publishing available questions" do
+        before(:each) do
+          available_answer = create(:trivia_available_answer, status: :draft)
+          @available_question = create(:trivia_single_choice_available_question, status: :draft)
+          @available_question.available_answers << available_answer
+          @available_question.publish!
+        end
+        it "does not update status" do
+          expect(@available_question.status).to eq("draft")
+        end
+
+        it "throws an error with a message" do
+          expect(@available_question.errors.messages[:available_answers]).to include("used in the questions must have 'published' status before publishing")
+        end
+      end
+    end
+
+    describe "#number_of_correct_answers" do
+      describe "adding more than one correct answer on picture choice questions" do
+        before(:each) do
+          @available_question = build(:trivia_picture_available_question)
+          @available_question.available_answers << create_list(:trivia_picture_available_answer, 2, is_correct: true)
+        end
+        it "does not save the question" do
+          expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:base]).to include("Picture choice questions can have only one correct answer")
+        end
+      end
+    end
+
+    describe "hangman_answer" do
+      describe "adding more than one answer on fill in the blanks questions" do
+        before(:each) do
+          @available_question = build(:trivia_hangman_available_question)
+          @available_question.available_answers << create(:wrong_trivia_available_answer)
+        end
+
+        it "does not save the question" do
+          expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
+        end
+      end
+
+      describe "adding an incorrect answer on fill in the blanks questions" do
+        before(:each) do
+          @available_question = build(:trivia_hangman_available_question)
+          @available_question.available_answers.first.update(is_correct: false)
+        end
+        it "does not save the question" do
+          expect { @available_question.save }.not_to change{ Trivia::HangmanAvailableQuestion.count }
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
+        end
+      end
+    end
+
+    describe "#title" do
+      before(:each) do
+        @available_question = build(:trivia_available_question, title: nil)
+      end
+
+      it "does not save the record" do
+        expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+      end
+
+      it "throws an error with a message" do
+        @available_question.save
+        expect(@available_question.errors.messages[:title]).to include("can't be blank")
+      end
+    end
+  end
+
+  context "hooks" do
+    describe "#update_questions_type" do
+      describe "after updating an available question's type" do
+        before(:each) do
+          question = create(:trivia_single_choice_question)
+          @available_question = question.available_question
+          @available_question.update(type: "Trivia::MultipleChoiceAvailableQuestion")
+          # you can't use record.reload because it searches based on the old record's type
+          @updated_question = Trivia::Question.find(question.id)
+        end
+
+        it "updates all the types for the questions that it is assigned to" do
+          expect(@updated_question.type).to eq("Trivia::MultipleChoiceQuestion")
+        end
+      end
+    end
+  end
 end

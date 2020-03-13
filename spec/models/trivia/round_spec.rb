@@ -14,7 +14,7 @@ RSpec.describe Trivia::Round, type: :model do
   end
 
   context "State Machine" do
-    subject { Trivia::Round.new }
+    subject { Trivia::Round.new(start_date: (Time.zone.now + 1.day).to_i) }
 
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
@@ -93,12 +93,12 @@ RSpec.describe Trivia::Round, type: :model do
         expect(question.question_order).to eq(value)
       end
       it "sets the end date correctly on round" do
-        time = DateTime.now
-        round = create(:future_trivia_round, start_date: time)
+        round = create(:future_trivia_round)
         round.compute_gameplay_parameters
-
-        question = round.reload.questions.last
-        expect(round.end_date).to be_within(1.seconds).of question.end_date
+        round.save
+        round = round.reload
+        # 46 = 10*1 seconds duration + 10*6 timeouts
+        expect(round.end_date_with_cooldown - round.start_date).to eq(64)
       end
     end
     describe ".end_date_with_cooldown" do
@@ -132,6 +132,75 @@ RSpec.describe Trivia::Round, type: :model do
         it { expect(@round_object.status).to eq("draft") }
         it { expect(@round_object.start_date).to eq(nil) }
         it { expect(@round_object.end_date).to eq(nil) }
+      end
+    end
+  end
+
+  context "validations" do
+    describe "#start_date" do
+      before(:each) do
+        game = create(:trivia_game)
+        product = create(:product)
+        @round = Trivia::Round.new(
+          start_date: nil,
+          status: :draft,
+          trivia_game_id: game.id,
+          product_id: product.id
+        )
+      end
+      it "does not save the round when status is locked" do
+        @round.status = "locked"
+        expect{ @round.save }.not_to change{ Trivia::Round.count }
+      end
+
+      it "does not save the round when status is published" do
+        @round.status = "published"
+        expect{ @round.save }.not_to change{ Trivia::Round.count }
+        # expect{ @round.save }.not_to change{ Trivia::Round.count }
+      end
+
+      it "does not save the round when status is running" do
+        @round.status = "running"
+        expect{ @round.save }.not_to change{ Trivia::Round.count }
+      end
+
+      it "saves the round when status is draft" do
+        expect{ @round.save }.to change{ Trivia::Round.count }.by(1)
+      end
+    end
+
+    describe "#start_date smaller than current date" do
+      before(:each) do
+        @round = create(:past_trivia_round, status: :draft, start_date: (DateTime.current - 1.day).to_i)
+        @round.publish!
+      end
+
+      it "does not update status" do
+        expect(@round.status).to eq("draft")
+      end
+
+      it "throws an error with a message" do
+        expect(@round.errors.messages[:start_date]).to include("must be higher than current date")
+      end
+    end
+
+    describe "#avalaible_questions_status_check" do
+      describe "having unpublished active question when publishing the round" do
+        before(:each) do
+          @round = create(:trivia_round, status: :draft, start_date: (DateTime.current + 1.day).to_i)
+          question = create(:trivia_single_choice_question)
+          question.available_question.update(status: :draft)
+          @round.questions << question
+          @round.publish!
+        end
+
+        it "does not update status" do
+          expect(@round.status).to eq("draft")
+        end
+
+        it "throws an error with a message" do
+          expect(@round.errors.messages[:base]).to include("All available questions used must have 'published' status before publishing")
+        end
       end
     end
   end

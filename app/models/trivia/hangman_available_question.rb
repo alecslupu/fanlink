@@ -27,6 +27,8 @@ module Trivia
       closed: 3,
     }
 
+    validate :hangman_answer
+
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
       state :draft, initial: true
       state :published
@@ -34,11 +36,10 @@ module Trivia
       state :closed
 
       event :publish do
-        # before do
-        #   instance_eval do
-        #     validates_presence_of :sex, :name, :surname
-        #   end
-        # end
+        before do
+          instance_eval do
+          end
+        end
         transitions from: :draft, to: :published
       end
 
@@ -53,6 +54,14 @@ module Trivia
       event :closed do
         transitions from: :locked, to: :closed
       end
+    end
+    protected
+
+    def hangman_answer
+      available_answers_correctness = available_answers.collect(&:is_correct)
+      errors.add( :avalaible_answers,
+                  "count must be equal to one for fill in the blank questions and that answer must be correct."
+      ) unless available_answers_correctness.length == 1 && available_answers_correctness.first == true
     end
   end
 end
