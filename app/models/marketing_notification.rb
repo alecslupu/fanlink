@@ -90,11 +90,13 @@ class MarketingNotification < ApplicationRecord
   validates :person_filter, presence: true
   validates :date, presence: true
   validates :timezone, presence: true
+  validate :date_not_in_the_past
 
   before_validation :set_person_id
   after_save :enqueue_delayed_job
 
   private
+
     def set_person_id
       if Person.current_user.product_id == ActsAsTenant.current_tenant.id
         self.person_id = Person.current_user.id
@@ -105,16 +107,7 @@ class MarketingNotification < ApplicationRecord
 
     def enqueue_delayed_job
       date = self.date.asctime.in_time_zone("UTC")
-      timezone = self.timezone
-
-      case timezone[4]
-      when "-"
-        run_at = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
-      when "+"
-        run_at = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
-      else
-        run_at = date
-      end
+      run_at = get_utc_datetime(date, self.timezone)
 
       delete_existing_delayed_job
       Delayed::Job.enqueue(MarketingNotificationPushJob.new(id), run_at: run_at)
@@ -124,5 +117,22 @@ class MarketingNotification < ApplicationRecord
       delayed_job = Delayed::Job.where("handler LIKE '%notification_id: #{self.id}\n%'").first
 
       delayed_job.destroy if delayed_job
+    end
+
+    def date_not_in_the_past
+      errors.add(:date, "can't be in the past") if get_utc_datetime(date, timezone) < Time.zone.now
+    end
+
+    def get_utc_datetime(date, timezone)
+      case timezone[4]
+      when "-"
+        datetime = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
+      when "+"
+        datetime = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
+      else
+        datetime = date
+      end
+
+      return datetime
     end
 end
