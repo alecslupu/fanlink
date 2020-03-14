@@ -20,9 +20,10 @@ RSpec.describe "Api::V4::PollOptionsController", type: :request, swagger_doc: "v
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PollOptionObject"
+
         run_test!
       end
       response "401", "" do

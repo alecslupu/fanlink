@@ -229,7 +229,7 @@ test:rspec6:
   script:
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast
     - mv coverage coverage6
 
 pages:

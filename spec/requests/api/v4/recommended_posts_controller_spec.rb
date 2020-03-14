@@ -16,9 +16,9 @@ RSpec.describe "Api::V4::RecommendedPostsController", type: :request, swagger_do
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/RecommendedPostsArray"
         run_test!
       end
       response "401", "" do
