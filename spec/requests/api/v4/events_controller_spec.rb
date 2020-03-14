@@ -1,6 +1,5 @@
 require "swagger_helper"
 
-
 RSpec.describe "Api::V4::EventsController", type: :request, swagger_doc: "v4/swagger.json" do
   path "/events" do
     get "" do
@@ -39,7 +38,6 @@ RSpec.describe "Api::V4::EventsController", type: :request, swagger_doc: "v4/swa
       let(:Authorization) { "" }
       parameter name: :id, in: :path, type: :string
       let(:id) { Time.zone.now.to_i }
-
       let(:event_checkin) {create(:event_checkin)}
 
       produces "application/vnd.api.v4+json"
@@ -53,9 +51,7 @@ RSpec.describe "Api::V4::EventsController", type: :request, swagger_doc: "v4/swa
       end
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: event_checkin.person_id)}" }
-
         let(:id) { Time.zone.now.to_i }
-
         run_test!
       end
       response 500, "Internal server error" do
@@ -68,7 +64,6 @@ RSpec.describe "Api::V4::EventsController", type: :request, swagger_doc: "v4/swa
       let(:Authorization) { "" }
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-
       parameter name: :id, in: :path, type: :string
       let(:id) { Time.zone.now.to_i }
 
@@ -79,7 +74,6 @@ RSpec.describe "Api::V4::EventsController", type: :request, swagger_doc: "v4/swa
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:id) { event.id }
         schema "$ref": "#/definitions/EventCheckinJson"
-
         run_test!
       end
       response "401", "" do
@@ -87,7 +81,6 @@ RSpec.describe "Api::V4::EventsController", type: :request, swagger_doc: "v4/swa
       end
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-
         run_test!
       end
       response "422", "" do

@@ -68,10 +68,10 @@ RSpec.configure do |config|
         # {
         #  name: "Base",
         # },
-        # {
-        #  name: "Blocks",
-        #  description: "Block a person",
-        # },
+        {
+         name: "Blocks",
+         description: "Block a person",
+        },
         {
           name: 'Categories',
           description: 'Categories'
@@ -254,6 +254,16 @@ RSpec.configure do |config|
                   person: {"$ref": '#/definitions/PersonJson'}
                 }
               }
+            }
+          }
+        },
+        BlocksObject: {
+          type: :object,
+          properties: {
+            block: {
+              id: { type: :integer },
+              blocker_id: { type: :integer },
+              blocked_id: { type: :integer },
             }
           }
         },
@@ -1083,7 +1093,7 @@ RSpec.configure do |config|
             color_hex: {type: :string},
             page_count: {type: :integer},
             is_completed: {type: :boolean},
-            last_completed_page_id: {type: :integer},
+            last_completed_page_id: {type: :integer, 'x-nullable': true},
             copyright_text: {type: :string},
             is_started: {type: :boolean},
             last_completed_page_order: {type: :integer}
@@ -1181,10 +1191,641 @@ RSpec.configure do |config|
             last_completed_page_id: {type: :integer, 'x-nullable': true},
             copyright_text: {type: :string},
             is_started: {type: :boolean},
+          },
+        },
+        QuestObject: {
+          type: :object,
+          properties: {
+            quest: {"$ref": "#/definitions/QuestJson"},
           }
-        }
-      }
-    }
+        },
+        QuestsArray: {
+          "type": "object",
+          "properties": {
+            "quests": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "quest": {
+                    "$ref": "#/definitions/QuestJson"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        QuestJson: {
+          "type": :object,
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "event_id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "internal_name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "picture_url": {
+              "type": "string", 'x-nullable': true
+            },
+            "picture_width": {
+              "type": "integer", 'x-nullable': true
+            },
+            "picture_height": {
+              "type": "integer", 'x-nullable': true
+            },
+            "status": {
+              "type": "string"
+            },
+            "starts_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "ends_at": {
+              "type": "string",
+              "format": "date-time", 'x-nullable': true
+            },
+            "create_time": {
+              "type": "string",
+              "format": "date-time", 'x-nullable': true
+            },
+            "steps": {
+              "type": "array",
+              'x-nullable': true,
+              "items": {
+                "$ref": "#/definitions/StepJson"
+              }
+            }
+          },
+          "description": "Quest Response"
+        },
+        "StepJson": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "quest_id": {
+              "type": "integer"
+            },
+            "unlocks": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "display": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "quest_activities": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/QuestActivityJson"
+              }
+            },
+            "delay_unlock": {
+              "type": "integer"
+            },
+            "unlocks_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "description": "Step Response"
+        },
+
+        "QuestActivityJson": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "quest_id": {
+              "type": "integer"
+            },
+            "step_id": {
+              "type": "integer"
+            },
+            "description": {
+              "type": "string"
+            },
+            "hint": {
+              "type": "string"
+            },
+            "picture_url": {
+              "type": "string"
+            },
+            "picture_width": {
+              "type": "integer"
+            },
+            "picture_height": {
+              "type": "integer"
+            },
+            "completed": {
+              "type": "boolean"
+            },
+            "requirements": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ActivityTypeJson"
+              }
+            },
+            "deleted": {
+              "type": "boolean"
+            },
+            "step": {
+              "$ref": "#/definitions/StepJson"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "description": "Quest Activity Response"
+        },
+        "ActivityTypeJson": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "atype": {
+              "type": "string"
+            },
+            "activity_id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Activity Type Reponse"
+        },
+      },
+
+      # definitions: {
+      #   certificate_information: {
+      #     type: :object,
+      #     properties: {
+      #       certificate: {
+      #         type: :object,
+      #         properties: {
+      #           name: {type: :string},
+      #           issued_date: {type: :string, format: "date", 'x-nullable': true},
+      #           certificate_image_url: {type: :string},
+      #         },
+      #       },
+      #     },
+      #   },
+      #   CategoryArray: {
+      #     type: :object,
+      #     properties: {
+      #       categories: {
+      #         type: :array,
+      #         items: {
+      #           type: :object,
+      #           properties: {
+      #             category: { "$ref": "#/definitions/CategoryJson" }
+      #           }
+      #         }
+      #       }
+      #     }
+      #   },
+      #   CategoryJson: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :string},
+      #       name: {type: :string},
+      #       product_id: {type: :string},
+      #       color: {type: :string},
+      #       role: {type: :string},
+      #       posts: {
+      #         type: :array,
+      #         items: {
+      #           "$ref": "#/definitions/PostJson"
+      #         }
+      #       }
+      #     },
+      #     "description": "Category Reponse"
+      #   },
+      #   PostArray: {
+      #     type: :object,
+      #     properties: {
+      #       posts: {
+      #         type: :array,
+      #         items: {
+      #           "$ref": "#/definitions/PostJson"
+      #         }
+      #       }
+      #     }
+      #   },
+      #   "PostJson": {
+      #     type: :object,
+      #     properties: {
+      #       id: { type: :integer },
+      #       create_time: { type: :string, format: "date-time" },
+      #       body: {type: :string },
+      #       picture_url: { type: :string},
+      #       audio_url: { type: :string},
+      #       audio_size: { type: :integer },
+      #       audio_content_type: { type: :string},
+      #       person: { "$ref": "#/components/schemas/public_person" },
+      #       post_reaction_counts: { type: :integer },
+      #       post_reaction: { "$ref": "#/components/schemas/PostReactionJson" },
+      #       global: { type: :boolean },
+      #       starts_at: { type: :string, format: "date-time" },
+      #       "ends_at": { type: :string, format: "date-time" },
+      #       "repost_interval": {type: :integer },
+      #       "status":{ type: :string},
+      #       "priority": { type: :integer },
+      #       "recommended": {
+      #           type: :boolean
+      #       },
+      #       "notify_followers": {
+      #           type: :boolean
+      #       },
+      #           "comment_count": { type: :integer },
+      #           category: { "$ref": "#/definitions/CategoryJson" },
+      #           "tags": {
+      #               "type": "array",
+      #               "items": {
+      #                   "$ref": "#/components/schemas/TagJson"
+      #               }
+      #           }
+      #       },
+      #       "description": "Post Response"
+      #   },
+      #
+      #   BadgeActionsPending: {
+      #     type: :object,
+      #     properties: {
+      #       pending_badge: {
+      #         type: :object,
+      #         properties: {
+      #           badge_action_count: { type: :integer },
+      #           badge: { "$ref": "#/definitions/BadgeJson" }
+      #         }
+      #       },
+      #       badges_awarded: {
+      #         type: :array,
+      #         items: { "$ref": "#/definitions/BadgeJson" }
+      #       }
+      #     }
+      #   },
+      #   public_person: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :string},
+      #       username: {type: :string},
+      #       name: {type: :string, 'x-nullable': true},
+      #       email: {type: :string},
+      #       gender: {type: :string},
+      #       city: {type: :string, 'x-nullable': true},
+      #       country_code: {type: :string, 'x-nullable': true},
+      #       birthdate: {type: :string, format: "date", 'x-nullable': true},
+      #       biography: {type: :string, 'x-nullable': true},
+      #       picture_url: {type: :string, 'x-nullable': true},
+      #       product_account: {type: :boolean},
+      #       recommended: {type: :boolean},
+      #       chat_banned: {type: :boolean},
+      #       tester: {type: :boolean},
+      #       terminated: {type: :boolean},
+      #       terminated_reason: {type: :string, 'x-nullable': true},
+      #       designation: {type: :string, 'x-nullable': true},
+      #       role: {type: :string},
+      #       do_not_message_me: {type: :boolean},
+      #       pin_messages_from: {type: :boolean},
+      #       auto_follow: {type: :boolean},
+      #       num_followers: {type: :integer},
+      #       num_following: {type: :integer},
+      #       facebookid: {type: :string, 'x-nullable': true},
+      #       facebook_picture_url: {type: :string, 'x-nullable': true},
+      #       badge_points: {type: :integer},
+      #       level: {type: :integer, 'x-nullable': true},
+      #       created_at: {type: :string, format: "date-time"},
+      #       updated_at: {type: :string, format: "date-time"},
+      #       following_id: {type: :integer, 'x-nullable': true},
+      #       relationships: {
+      #         type: :array,
+      #         items: {
+      #           "$ref" => "#/definitions/relationships",
+      #         },
+      #       },
+      #     },
+      #   },
+      #   relationships: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :string},
+      #       status: {type: :string},
+      #       requested_by: {:type => :object, "$ref" => "#/definitions/public_person"},
+      #       requested_to: {:type => :object, "$ref" => "#/definitions/public_person"},
+      #       created_at: {type: :string, format: "date-time"},
+      #       updated_at: {type: :string, format: "date-time"},
+      #     },
+      #   },
+      #   people: {
+      #     type: :array,
+      #     items: {
+      #       "$ref" => "#/definitions/public_person",
+      #     },
+      #   },
+      #   session_jwt: {
+      #     type: :object,
+      #     properties: {
+      #       person: {
+      #         type: :object,
+      #         properties: {
+      #           id: {type: :string},
+      #           username: {type: :string},
+      #           name: {type: :string, 'x-nullable': true},
+      #           gender: {type: :string},
+      #           city: {type: :string, 'x-nullable': true},
+      #           country_code: {type: :string, 'x-nullable': true},
+      #           birthdate: {type: :string, format: "date", 'x-nullable': true},
+      #           biography: {type: :string, 'x-nullable': true},
+      #           picture_url: {type: :string, 'x-nullable': true},
+      #           product_account: {type: :boolean},
+      #           recommended: {type: :boolean},
+      #           chat_banned: {type: :boolean},
+      #           tester: {type: :boolean},
+      #           terminated: {type: :boolean},
+      #           terminated_reason: {type: :string, 'x-nullable': true},
+      #           designation: {type: :string, 'x-nullable': true},
+      #           role: {type: :string},
+      #           do_not_message_me: {type: :boolean},
+      #           pin_messages_from: {type: :boolean},
+      #           auto_follow: {type: :boolean},
+      #           num_followers: {type: :integer},
+      #           num_following: {type: :integer},
+      #           facebookid: {type: :string, 'x-nullable': true},
+      #           facebook_picture_url: {type: :string, 'x-nullable': true},
+      #           badge_points: {type: :integer},
+      #           level: {type: :integer, 'x-nullable': true},
+      #           created_at: {type: :string, format: "date-time"},
+      #           updated_at: {type: :string, format: "date-time"},
+      #           following_id: {type: :integer, 'x-nullable': true},
+      #           email: {type: :string},
+      #           product: {
+      #             type: :object,
+      #             properties: {
+      #               id: {type: :integer},
+      #               internal_name: {type: :string},
+      #               name: {type: :string},
+      #             },
+      #           },
+      #           level_progress: {type: :integer, 'x-nullable': true},
+      #           rewards: {type: :string, 'x-nullable': true},
+      #           blocked_people: {type: :integer, 'x-nullable': true},
+      #           permissions: {
+      #             type: :object,
+      #           },
+      #           pin_messages_to: {type: :integer, 'x-nullable': true},
+      #           token: {type: :string},
+      #         },
+      #       },
+      #     },
+      #   },
+      #   person_mini: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :string},
+      #       username: {type: :string},
+      #       picture_url: {type: :string},
+      #       designation: {type: :string},
+      #       facebook_picture_url: {type: :string},
+      #       badge_points: {type: :integer},
+      #     },
+      #   },
+      #   trivia_user_subscribed: {
+      #     type: :object,
+      #     properties: {
+      #       game_id: {type: :integer},
+      #       person_id: {type: :integer},
+      #       subscribed: {type: :boolean},
+      #       user_enroled: {type: :boolean},
+      #       user_notification: {type: :boolean},
+      #     },
+      #   },
+      #   trivia_game_prize: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :integer},
+      #       game_id: {type: :integer},
+      #       position: {type: :integer},
+      #       photo_url: {type: :string},
+      #       description: {type: :string},
+      #     },
+      #   },
+      #   trivia_round: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :integer},
+      #       game_id: {type: :integer},
+      #       start_date: {type: :integer},
+      #       end_date: {type: :integer},
+      #       question_size: {type: :integer},
+      #       complexity: {type: :integer},
+      #       status: {type: :string},
+      #     },
+      #   },
+      #   trivia_round_list: {
+      #     type: :object,
+      #     properties: {
+      #       rounds: {
+      #         type: :array,
+      #         items: {
+      #           "$ref" => "#/definitions/trivia_round",
+      #         },
+      #       },
+      #     },
+      #   },
+      #
+      #   trivia_game_prize_list: {
+      #     type: :object,
+      #     properties: {
+      #       prizes: {
+      #         type: :array,
+      #         items: {
+      #           "$ref" => "#/definitions/trivia_game_prize",
+      #         },
+      #       },
+      #     },
+      #   },
+      #
+      #   trivia_games_leaderboard_list: {
+      #     type: :object,
+      #     properties: {
+      #       leaderboard: {
+      #         type: :array,
+      #         items: {
+      #           "$ref" => "#/definitions/trivia_games_leaderboard",
+      #         },
+      #       },
+      #     },
+      #     required: ["games"],
+      #   },
+      #   trivia_games_leaderboard: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :integer},
+      #       game_id: {type: :integer},
+      #       points: {type: :integer},
+      #       position: {type: :integer},
+      #       average_time: {type: :integer},
+      #       person: {:type => :object, "$ref" => "#/definitions/person_mini"},
+      #     },
+      #   },
+      #   trivia_rounds_leaderboard_list: {
+      #     type: :object,
+      #     properties: {
+      #       leaderboard: {
+      #         type: :array,
+      #         items: {
+      #           "$ref" => "#/definitions/trivia_rounds_leaderboard",
+      #         },
+      #       },
+      #     },
+      #     required: ["games"],
+      #   },
+      #   trivia_rounds_leaderboard: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :integer},
+      #       round_id: {type: :integer},
+      #       points: {type: :integer},
+      #       position: {type: :integer},
+      #       average_time: {type: :integer},
+      #       person: {:type => :object, "$ref" => "#/definitions/person_mini"},
+      #     },
+      #   },
+      #   trivia_games_list: {
+      #     type: :object,
+      #     properties: {
+      #       games: {
+      #         type: :array,
+      #         items: {
+      #           "$ref" => "#/definitions/trivia_game",
+      #         },
+      #       },
+      #     },
+      #     required: ["games"],
+      #   },
+      #   trivia_game: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :integer},
+      #       start_date: {type: :integer},
+      #       end_date: {type: :integer},
+      #       long_name: {type: :string},
+      #       short_name: {type: :string},
+      #       description: {type: :string},
+      #       round_count: {type: :integer},
+      #       question_count: {type: :integer},
+      #       leaderboard_size: {type: :integer},
+      #       prize_count: {type: :integer},
+      #       room_id: {type: :integer},
+      #       status: {type: :string},
+      #       picture: {type: :string},
+      #       user_enroled: {type: :boolean},
+      #       user_notification: {type: :boolean},
+      #     },
+      #     required: ["trivia_game_id"],
+      #   },
+      #   SuccessMessage: {
+      #     type: :object,
+      #     properties: {
+      #        message: { type: :string }
+      #     }
+      #   },
+      #   ErrorMessage: {
+      #     type: :object,
+      #     properties: {
+      #        message: { type: :string }
+      #     }
+      #   },
+      #   FollowersArray: {
+      #     type: :object,
+      #     properties: {
+      #       followers: {
+      #         type: :array,
+      #         items: {
+      #           type: :object,
+      #           properties: {
+      #             badge: { "$ref": "#/definitions/FollowingObject" }
+      #           }
+      #         }
+      #       }
+      #     }
+      #   },
+      #   FollowingObject: {
+      #     type: :object,
+      #     properties: {
+      #       following: { "$ref": "#/definitions/FollowingJson" }
+      #     }
+      #   },
+      #   FollowingJson: {
+      #     type: :object,
+      #     "properties": {
+      #       id: { type: :string },
+      #       follower: { "$ref": "#/definitions/public_person" },
+      #       followed: { "$ref": "#/definitions/public_person" }
+      #     },
+      #     "description": "Following Response"
+      #   },
+      #
+      #   BadgeJson: {
+      #     type: :object,
+      #     properties: {
+      #       id: {type: :string},
+      #       "name": {type: :string},
+      #       "internal_name": {type: :string},
+      #       "description": {type: :string,  'x-nullable': true},
+      #       "picture_url": {type: :string},
+      #       action_requirement: {type: :integer},
+      #       point_value: {type: :integer},
+      #     },
+      #     "description": "Badge Response"
+      #   },
+      #   BadgesArray: {
+      #     type: :object,
+      #     properties: {
+      #       badges: {
+      #         type: :array,
+      #         items: {
+      #           type: :object,
+      #           properties: {
+      #             badge: { "$ref": "#/definitions/BadgeJson" }
+      #           }
+      #         }
+      #       }
+      #     }
+      #   }
+      # },
+    },
   }
 
   v1file = Rails.root.join('doc', 'open_api', 'V1.json')
