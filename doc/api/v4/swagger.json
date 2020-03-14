@@ -866,6 +866,235 @@
         }
       }
     },
+    "/events": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/EventsArray"
+            }
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/events/{id}/checkins": {
+      "delete": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/EventCheckinJson"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "interst_id",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/EventCheckinArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/followings": {
       "post": {
         "summary": "",
@@ -1275,129 +1504,6 @@
         ],
         "consumes": [
           "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": "HTTP/1.1 200 Ok"
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/events": {
-      "get": {
-        "summary": "",
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": "HTTP/1.1 200 Ok"
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/events/{id}/checkins": {
-      "delete": {
-        "summary": "",
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "responses": {
-          "200": {
-            "description": "HTTP/1.1 200 Ok"
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "",
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "responses": {
-          "200": {
-            "description": "HTTP/1.1 200 Ok"
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "get": {
-        "summary": "",
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
         ],
         "responses": {
           "200": {
@@ -5453,6 +5559,17 @@
         }
       }
     },
+    "EventsArray": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventJson"
+          }
+        }
+      }
+    },
     "CertcourseArray": {
       "type": "object",
       "properties": {
@@ -5463,6 +5580,61 @@
           }
         }
       }
+    },
+    "EventCheckinArray": {
+      "type": "object",
+      "properties": {
+        "event_checkins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventCheckinJson"
+          }
+        }
+      }
+    },
+    "EventCheckinJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "checkin_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "person": {
+          "$ref": "#/definitions/personMini"
+        }
+      }
+    },
+    "EventJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "starts_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ends_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ticket_url": {
+          "type": "string"
+        },
+        "place_identifier": {
+          "type": "string"
+        }
+      },
+      "description": "Event Response"
     },
     "CertcourseJson": {
       "type": "object",
@@ -5498,7 +5670,8 @@
           "type": "boolean"
         },
         "last_completed_page_id": {
-          "type": "integer"
+          "type": "integer",
+          "x-nullable": true
         },
         "copyright_text": {
           "type": "string"

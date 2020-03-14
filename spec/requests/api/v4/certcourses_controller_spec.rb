@@ -1,5 +1,6 @@
 require "swagger_helper"
 
+
 RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v4/swagger.json" do
 
   path "/certificates/{certificate_id}/certcourses" do
@@ -26,6 +27,7 @@ RSpec.describe "Api::V4::CertcoursesController", type: :request, swagger_doc: "v
       end
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
+        let(:certificate_id) { Time.now.to_i}
         run_test!
       end
       response 500, "Internal server error" do

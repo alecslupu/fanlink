@@ -1116,14 +1116,54 @@ RSpec.configure do |config|
             }
           }
         },
+        EventsArray: {
+          type: :object,
+          properties: {
+            events: {
+              type: :array,
+              items: {"$ref": '#/definitions/EventJson'}
+            }
+          }
+
+        },
         CertcourseArray: {
           type: :object,
           properties: {
             certcourses: {
               type: :array,
-              items: {"$ref": '#/definitions/CertcourseJson'}
-            }
+              items: {"$ref": '#/definitions/CertcourseJson'},
+            },
+          },
+        },
+        EventCheckinArray: {
+          type: :object,
+          properties: {
+            event_checkins: {
+              type: :array,
+              items: {"$ref": '#/definitions/EventCheckinJson'},
+            },
+          },
+        },
+        EventCheckinJson: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            checkin_at: {type: :string, format: "date-time"},
+            person: { "$ref": '#/definitions/personMini' }
           }
+        },
+        EventJson: {
+          type: :object,
+          "properties": {
+            id: {type: :string},
+            name: {type: :string},
+            description: {type: :string},
+            starts_at: {type: :string, format: "date-time"},
+            ends_at: {type: :string,  format: "date-time"},
+            ticket_url: {type: :string},
+            place_identifier: {type: :string},
+          },
+          description: "Event Response",
         },
         CertcourseJson: {
           type: :object,
@@ -1138,9 +1178,9 @@ RSpec.configure do |config|
             color_hex: {type: :string},
             page_count: {type: :integer},
             is_completed: {type: :boolean},
-            last_completed_page_id: {type: :integer},
+            last_completed_page_id: {type: :integer, 'x-nullable': true},
             copyright_text: {type: :string},
-            is_started: {type: :boolean}
+            is_started: {type: :boolean},
           }
         }
       }
