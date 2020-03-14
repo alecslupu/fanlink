@@ -61,21 +61,18 @@ group :production, :staging do
   gem 'elastic-apm', '~> 3.1.0'
 end
 
-group :staging, :development, :test do
-  gem "derailed_benchmarks", "~>1.3.6"
-  gem "stackprof"
-  gem "bullet", "~>6.0.2"
-
-  if ENV['RAILS52']
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-  elsif ENV["RAILS6"]
+group :staging, :development do
+  if ENV["RAILS6"]
   else
     # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
     gem "web-console", ">= 3.3.0"
     gem "listen", ">= 3.0.5", "< 3.2"
   end
+end
+group :staging, :development, :test do
+  gem "derailed_benchmarks", "~>1.3.6"
+  gem "stackprof"
+  gem "bullet", "~>6.0.2"
 end
 
 group :development, :test do
@@ -156,8 +153,7 @@ gem "acts_as_api"
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
-
-gem "awesome_nested_set"
+gem 'awesome_nested_set'
 
 gem "rails_admin", "~> 2.0.0"
 gem "rails_admin_nested_set"
@@ -221,9 +217,9 @@ gem "prawn"
 gem "erubis"
 
 group :development, :test do
-    # gem "rspec-rails-swagger"
-    # gem "apigen", path: "lib/gems/apigen"
-    gem "rswag-specs"
+  # gem "rspec-rails-swagger"
+  # gem "apigen", path: "lib/gems/apigen"
+  gem "rswag-specs"
 end
 
 group :test do
@@ -237,8 +233,11 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
+<<<<<<< HEAD
 
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
 gem "aasm"
+=======
+>>>>>>> ale-webconsole-staging
