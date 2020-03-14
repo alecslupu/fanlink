@@ -68,21 +68,18 @@ group :production, :staging do
   end
 end
 
-group :staging, :development, :test do
-  gem "derailed_benchmarks", "~>1.3.6"
-  gem "stackprof"
-  gem "bullet", "~>6.0.2"
-
-  if ENV['RAILS52']
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-  elsif ENV["RAILS6"]
+group :staging, :development do
+  if ENV["RAILS6"]
   else
     # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
     gem "web-console", ">= 3.3.0"
     gem "listen", ">= 3.0.5", "< 3.2"
   end
+end
+group :staging, :development, :test do
+  gem "derailed_benchmarks", "~>1.3.6"
+  gem "stackprof"
+  gem "bullet", "~>6.0.2"
 end
 
 group :development, :test do
@@ -98,7 +95,6 @@ group :development, :test do
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
   gem "httplog"
-
   gem 'rubocop', '~> 0.76.0', require: false
   # gem "rubocop-rails_config"
   gem 'rubocop-rails'
@@ -163,7 +159,6 @@ gem "acts_as_api"
 # # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
-
 
 gem 'awesome_nested_set'
 
@@ -230,9 +225,9 @@ gem "prawn"
 gem "erubis"
 
 group :development, :test do
-    # gem "rspec-rails-swagger"
-    # gem "apigen", path: "lib/gems/apigen"
-    gem "rswag-specs"
+  # gem "rspec-rails-swagger"
+  # gem "apigen", path: "lib/gems/apigen"
+  gem "rswag-specs"
 end
 
 group :test do
@@ -246,4 +241,3 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
-
