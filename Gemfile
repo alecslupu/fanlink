@@ -72,6 +72,17 @@ group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
   gem "bullet", "~>6.0.2"
+
+  if ENV['RAILS52']
+    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+    gem "web-console", ">= 3.3.0"
+    gem "listen", ">= 3.0.5", "< 3.2"
+  elsif ENV["RAILS6"]
+  else
+    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+    gem "web-console", ">= 3.3.0"
+    gem "listen", ">= 3.0.5", "< 3.2"
+  end
 end
 
 group :development, :test do
@@ -103,19 +114,9 @@ group :development do
   gem "gettext", ">=3.0.2", require: false
 
   if ENV['RAILS52']
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
     # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
     gem 'spring'
     gem 'spring-watcher-listen', '~> 2.0.0'
-  elsif ENV["RAILS6"]
-      # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-      #gem "rails", "~> 6"
-  else
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
   end
   gem "lol_dba"
   gem "seed_dump"
