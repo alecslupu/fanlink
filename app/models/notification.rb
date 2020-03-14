@@ -16,6 +16,8 @@ class Notification < ApplicationRecord
 
   acts_as_tenant(:product)
 
+  has_paper_trail
+
   belongs_to :person
   validates :body, presence: true
 end

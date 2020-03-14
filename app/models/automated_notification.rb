@@ -19,6 +19,8 @@ class AutomatedNotification < ApplicationRecord
 
   acts_as_tenant(:product)
 
+  has_paper_trail
+
   enum criteria: {
     inactive_48h: 0,
     inactive_7days: 1,
