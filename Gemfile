@@ -233,11 +233,8 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
-<<<<<<< HEAD
 
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
 gem "aasm"
-=======
->>>>>>> ale-webconsole-staging
