@@ -1,6 +1,7 @@
 # require "json"
 
 Rails.application.configure do
+  config.web_console.development_only = false
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -61,7 +62,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.web_console.whitelisted_ips = "172.30.0.0/12"
-  
+
   config.after_initialize do
     Bullet.enable = true
     # Bullet.bullet_logger = true
