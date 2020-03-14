@@ -18,9 +18,9 @@ RSpec.describe "Api::V4::PostReactionsController", type: :request, swagger_doc: 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PostReactionsObject"
         run_test!
       end
       response 400, "Bad request" do
@@ -56,7 +56,7 @@ RSpec.describe "Api::V4::PostReactionsController", type: :request, swagger_doc: 
       let(:id) { create(:post_reaction, person: person, post: post).id }
 
       produces "application/vnd.api.v4+json"
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
       end

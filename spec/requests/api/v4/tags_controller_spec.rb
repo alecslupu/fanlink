@@ -5,7 +5,7 @@ RSpec.describe "Api::V4::TagsController", type: :request, swagger_doc: "v4/swagg
   path "/posts/tags" do
     get "" do
       security [Bearer: []]
-      tags ["post", 'android-old']
+      tags "Tags"
 
       produces "application/vnd.api.v4+json"
 
@@ -16,11 +16,9 @@ RSpec.describe "Api::V4::TagsController", type: :request, swagger_doc: "v4/swagg
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:tag_name) { "some_tag" }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response "401", "" do
@@ -28,8 +26,6 @@ RSpec.describe "Api::V4::TagsController", type: :request, swagger_doc: "v4/swagg
       end
       response "422", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do

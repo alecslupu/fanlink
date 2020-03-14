@@ -16,7 +16,7 @@ GIT
       activesupport (>= 4.2.0)
 
 GIT
-  remote: https://markfraser@bitbucket.org/markfraser/mandrill-api-ruby.git
+  remote: https://gitlab.fan.link/dependencies/mandrill-api-ruby
   revision: ef242421a06bb3a299900f97929dbf85e4cd6063
   specs:
     mandrill-api (1.0.54)
@@ -1321,7 +1321,7 @@ GEM
     websocket-extensions (0.1.4)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    wisper (2.0.0)
+    wisper (2.0.1)
     wisper-activejob (1.0.0)
       activejob (>= 4.0.0)
       wisper
@@ -1452,7 +1452,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webmock (~> 3.6.2)
   whenever
-  wisper (= 2.0.0)
+  wisper (> 2.0.0)
   wisper-activejob
   wisper-activerecord
   wisper-rspec

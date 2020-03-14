@@ -410,7 +410,6 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       person = create(:admin_user, username: "customusername")
       ActsAsTenant.with_tenant(person.product) do
         create_list(:post, 10, created_at: 10.days.ago)
-        create(:post, person: person)
         login_as(person)
 
         person = Post.last.person
@@ -419,6 +418,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         posts = Post.where(person_id: person.id)
 
         expect(response).to be_successful
+
         expect(json["posts"].count).to eq(posts.count)
         expect(json["posts"].map { |jp| jp["id"].to_i }.sort).to eq(posts.map { |p| p.id }.sort)
       end
