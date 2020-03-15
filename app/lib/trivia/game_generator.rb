@@ -16,7 +16,7 @@
 	  start_date: start_date,
           complexity: 1
         )
-        questions = Trivia::AvailableQuestion.order("random()").first(100)
+        questions = Trivia::AvailableQuestion.published.order("random()").first(100)
 
         50.times do |index|
           available_question = questions.pop
