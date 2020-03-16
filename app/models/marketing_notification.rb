@@ -16,6 +16,8 @@
 class MarketingNotification < ApplicationRecord
   acts_as_tenant(:product)
 
+  has_paper_trail
+
   belongs_to :person
 
   enum person_filter: {
