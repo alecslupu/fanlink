@@ -20,6 +20,7 @@ module Trivia
 
     validates :name, presence: true
     validates :hint, presence: true
+    # validate :assigned_available_question_status, on: :update
 
     include AASM
 
@@ -45,7 +46,7 @@ module Trivia
         transitions from: :draft, to: :published
       end
 
-      event :unpublish do
+      event :unpublish, guards: [:available_question_status?] do
         transitions from: :published, to: :draft
       end
 
@@ -64,5 +65,22 @@ module Trivia
 
     acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
+
+    private
+
+      # an answer which is assigned to a published available question
+      # cannot be unpublished
+      def available_question_status?
+        if question.published?
+          errors.add(:status, "unable to unpublish answer if assigned available question is still published")
+          false
+        else
+          true
+        end
+      end
+
+      # def assigned_available_question_status
+
+      # end
   end
 end
