@@ -29,6 +29,7 @@ FactoryBot.define do
     product { current_product }
     room { create(:room) }
     leaderboard_size { 5 }
+    status { "draft" }
 
     transient do
       with_leaderboard { false }

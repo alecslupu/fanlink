@@ -15,7 +15,6 @@ RSpec.describe Trivia::Game, type: :model do
       end
     end
   end
-  pending "add some examples to (or delete) #{__FILE__}"
 
   context "full game" do
     it "has a full valid game on-going" do
@@ -35,13 +34,14 @@ RSpec.describe Trivia::Game, type: :model do
     it { expect(subject).to respond_to(:published?) }
     it { expect(subject).to respond_to(:locked?) }
     it { expect(subject).to respond_to(:running?) }
-
     it { expect(subject).to respond_to(:closed?) }
   end
 
-  context "State Machine" do
-    subject { Trivia::Game.new(start_date: (Time.zone.now + 1.day).to_i) }
 
+  context "State Machine" do
+    # subject { Trivia::Game.new(start_date: (Time.zone.now + 1.day).to_i) }
+    subject{ Trivia::Game.find(create(:full_short_trivia_game).id) }
+    
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
     it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
