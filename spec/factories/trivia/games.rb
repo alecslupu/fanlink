@@ -30,6 +30,7 @@ FactoryBot.define do
     room { create(:room) }
     leaderboard_size { 5 }
     status { "draft" }
+    start_date { Time.zone.now + 1.day }
 
     transient do
       with_leaderboard { false }
