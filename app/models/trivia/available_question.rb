@@ -58,7 +58,7 @@ module Trivia
     end
 
     def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
+      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status.to_sym)
     end
 
     belongs_to :topic, class_name: "Trivia::Topic"

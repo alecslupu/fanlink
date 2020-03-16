@@ -42,8 +42,9 @@ module Trivia
 
     validates :long_name, presence: true
     validates :short_name, presence: true
-    validate :check_start_date_when_publishing, on: :update, if: -> { published? }
+    # validate :check_start_date_when_publishing, on: :update, if: -> { published? }
     validate :check_rounds_start_time
+    validates_numericality_of :start_date, only_integer: true, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
 
 
     def compute_leaderboard
@@ -67,7 +68,7 @@ module Trivia
       state :running
       state :closed
 
-      event :publish, guards: [:start_date_in_future?] do
+      event :publish do
         after do
           handle_status_changes
         end
@@ -114,23 +115,6 @@ module Trivia
       def handle_status_changes
         if saved_change_to_attribute?(:status) && published?
           Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
-        end
-      end
-
-      def check_start_date_when_publishing
-         errors.add(:start_date, "must be higher than current date.") if is_valid_start_date?
-      end
-
-      def is_valid_start_date?
-        start_date.nil? || start_date.to_i < Time.zone.now.to_i
-      end
-
-      def start_date_in_future?
-        if is_valid_start_date?
-          errors.add(:start_date, "must be higher than current date")
-          return false
-        else
-          return true
         end
       end
 
