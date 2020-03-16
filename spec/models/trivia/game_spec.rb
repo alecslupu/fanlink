@@ -40,8 +40,8 @@ RSpec.describe Trivia::Game, type: :model do
 
   context "State Machine" do
     # subject { Trivia::Game.new(start_date: (Time.zone.now + 1.day).to_i) }
-    subject{ Trivia::Game.find(create(:full_short_trivia_game).id) }
-    
+    subject{ Trivia::Game.find(create(:full_short_trivia_game, start_date: (Time.zone.now + 1.day).to_i).id) }
+
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
     it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
