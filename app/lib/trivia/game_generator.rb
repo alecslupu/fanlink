@@ -7,13 +7,13 @@
 
     def generate
       generate_game!
-      start_date = 5.minutes.from_now
+      start_date = game.start_date
       5.times do |index|
         start_date = game.rounds.reload.last.end_date + 5.minutes unless index.zero?
         @round = game.rounds.build(
           status: :draft,
           leaderboard_size: game.leaderboard_size,
-	  start_date: start_date,
+          start_date: start_date,
           complexity: 1
         )
         questions = Trivia::AvailableQuestion.published.order(Arel.sql "random()").first(100)
@@ -31,7 +31,6 @@
         @round.save!
         @round.compute_gameplay_parameters
       end
-      game.compute_gameplay_parameters
     end
 
     def promote!
@@ -47,7 +46,8 @@
         leaderboard_size: 10,
         long_name: "Generated Game #{DateTime.now.to_i}",
         short_name: "Generated Game",
-        description: "Generated description for the game "
+        description: "Generated description for the game ",
+        start_date: 5.minutes.from_now
       )
     end
   end

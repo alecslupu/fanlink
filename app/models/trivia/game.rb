@@ -45,16 +45,6 @@ module Trivia
     validate :check_start_date_when_publishing, on: :update, if: -> { published? }
     validate :check_rounds_start_time
 
-=begin
-validates the startd_date > now when draft and published FLAPI-936
-
-    validate :start_time_constraints
-    def start_time_constraints
-      if published?
-        errors.add(:start_date) if start_date < DateTime.now.to_i
-      end
-    end
-=end
 
     def compute_leaderboard
       self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
@@ -72,17 +62,12 @@ validates the startd_date > now when draft and published FLAPI-936
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
       state :draft, initial: true
-      state :published
+      state :published, before_enter: Proc.new { compute_gameplay_parameters }
       state :locked
       state :running
       state :closed
 
       event :publish, guards: [:start_date_in_future?] do
-        # before do
-        #   instance_eval do
-        #     validates_presence_of :sex, :name, :surname
-        #   end
-        # end
         after do
           handle_status_changes
         end
@@ -138,7 +123,6 @@ validates the startd_date > now when draft and published FLAPI-936
 
 
     private
-
       def handle_status_changes
         if saved_change_to_attribute?(:status) && published?
           Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
@@ -146,11 +130,15 @@ validates the startd_date > now when draft and published FLAPI-936
       end
 
       def check_start_date_when_publishing
-         errors.add(:start_date, "must be higher than current date.") if start_date < Time.zone.now.to_i
+         errors.add(:start_date, "must be higher than current date.") if is_valid_start_date?
+      end
+
+      def is_valid_start_date?
+        start_date.nil? || start_date.to_i < Time.zone.now.to_i
       end
 
       def start_date_in_future?
-        if start_date < Time.zone.now.to_i
+        if is_valid_start_date?
           errors.add(:start_date, "must be higher than current date")
           return false
         else
