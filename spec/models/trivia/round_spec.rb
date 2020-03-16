@@ -60,7 +60,7 @@ RSpec.describe Trivia::Round, type: :model do
         expect(Trivia::Round.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
       end
       it "sets the start_date of a question" do
-        time = DateTime.now
+        time = Time.zone.now.to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
         question = round.reload.questions.first
@@ -69,7 +69,7 @@ RSpec.describe Trivia::Round, type: :model do
       end
 
       it "sets the second question at the right interval" do
-        time = DateTime.now
+        time = Time.zone.now.to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
         question = round.reload.questions.first(2).last
@@ -78,7 +78,7 @@ RSpec.describe Trivia::Round, type: :model do
       end
 
       it "sets any question at the right interval" do
-        time = DateTime.now
+        time = Time.zone.now.to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
 
