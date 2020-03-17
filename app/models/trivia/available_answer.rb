@@ -60,7 +60,7 @@ module Trivia
     end
 
     def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
+      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status.to_sym)
     end
 
     acts_as_tenant(:product)

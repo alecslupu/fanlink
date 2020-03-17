@@ -27,9 +27,9 @@ module Trivia
     has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
 
-    validate :check_start_date_when_publishing, on: :update, if: -> { published? }
     validates :start_date, presence: true, if: -> { locked? || published? || running? }
     validate :avalaible_questions_status_check, on: :update, if: -> { published? }
+    validates_numericality_of :start_date, only_integer: true, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
 
     include AASM
 
@@ -48,12 +48,7 @@ module Trivia
       state :running
       state :closed
 
-      event :publish, guards: [:start_date_in_future?] do
-        # before do
-        #   instance_eval do
-        #     validates_presence_of :sex, :name, :surname
-        #   end
-        # end
+      event :publish do
         transitions from: :draft, to: :published
       end
 
@@ -105,22 +100,6 @@ module Trivia
     end
 
     private
-
-      # this is a guard used for AASM
-      # it must return true or false
-      def start_date_in_future?
-        if start_date < Time.zone.now.to_i
-          errors.add(:start_date, "must be higher than current date")
-          return false
-        else
-          return true
-        end
-      end
-
-      def check_start_date_when_publishing
-         errors.add(:start_date, "must be higher than current date.") if start_date < Time.zone.now.to_i
-      end
-
       def avalaible_questions_status_check
         questions.map(&:available_question).each do |available_question|
           if !available_question.published?

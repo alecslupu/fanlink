@@ -31,6 +31,16 @@
 
 en:
   activerecord:
+    errors:
+      models:
+        trivia/game:
+          attributes:
+            start_date:
+              greater_than_or_equal_to: "must be higher than current date"
+        trivia/round:
+          attributes:
+            start_date:
+              greater_than_or_equal_to: "must be higher than current date"
     models:
       certcourse: Course
   controllers:
