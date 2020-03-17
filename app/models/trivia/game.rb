@@ -99,6 +99,7 @@ module Trivia
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
     after_save :handle_status_changes
+    before_save :compute_gameplay_parameters
 
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
