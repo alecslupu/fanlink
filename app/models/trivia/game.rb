@@ -42,13 +42,14 @@ module Trivia
 
     validates :long_name, presence: true
     validates :short_name, presence: true
+
     validate :check_rounds_start_time
     validates_numericality_of :start_date, only_integer: true, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
 
     def compute_leaderboard
       self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
     end
-    
+
     include AASM
 
     enum status: {

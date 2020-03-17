@@ -58,7 +58,6 @@ module Trivia
     end
 
     def status_enum
-      Rails.logger.debug(" HERE - AQ #{id}")
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status.to_sym)
     end
 
