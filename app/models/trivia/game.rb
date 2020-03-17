@@ -99,23 +99,40 @@ module Trivia
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
     after_save :handle_status_changes
-    before_save :compute_gameplay_parameters
+    before_validation :compute_gameplay_parameters
 
     def compute_gameplay_parameters
-      ActiveRecord::Base.transaction do
-        rounds.each.map(&:compute_gameplay_parameters)
-        self.start_date = rounds.first.start_date
-        self.end_date = rounds.reload.last.end_date_with_cooldown
-        self.save
+      if published?
+        ActiveRecord::Base.transaction do
+          rounds.each.map(&:compute_gameplay_parameters)
+          self.start_date = rounds.first.start_date
+          self.end_date = rounds.reload.last.end_date_with_cooldown
+          self.save
+        end
       end
     end
 
-
     private
+
       def handle_status_changes
-        if saved_change_to_attribute?(:status) && published?
-          Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
+        if status_changed_to_publish?
+          game = Trivia::Game.find(self.id)
+
+          Delayed::Job.enqueue(::Trivia::PublishToEngine.new(game.id))
+          Delayed::Job.enqueue(::Trivia::GameStatus::LockedJob.new(game.id), run_at: Time.at(game.start_date) - 10.minutes)
+          Delayed::Job.enqueue(::Trivia::GameStatus::RunningJob.new(game.id), run_at: Time.at(game.start_date))
+          Delayed::Job.enqueue(::Trivia::GameStatus::CloseJob.new(game.id), run_at: Time.at(game.end_date))
+
+          game.rounds.each do |round|
+            Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
+            Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
+            Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
+          end
         end
+      end
+
+      def status_changed_to_publish?
+        (saved_change_to_attribute?(:status) && published?) ? true : false
       end
 
       def check_start_date_when_publishing
