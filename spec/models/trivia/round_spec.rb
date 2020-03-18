@@ -78,7 +78,7 @@ RSpec.describe Trivia::Round, type: :model do
       end
 
       it "sets any question at the right interval" do
-        time = Time.zone.now.to_i
+        time = (Time.zone.now + 1.day).to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
 
