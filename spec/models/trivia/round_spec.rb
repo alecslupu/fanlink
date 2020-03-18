@@ -60,7 +60,7 @@ RSpec.describe Trivia::Round, type: :model do
         expect(Trivia::Round.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
       end
       it "sets the start_date of a question" do
-        time = Time.zone.now.to_i
+        time = (Time.zone.now + 1.day).to_i
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
         question = round.reload.questions.first
