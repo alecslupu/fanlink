@@ -29,7 +29,8 @@ module Trivia
 
     validates :start_date, presence: true, if: -> { locked? || published? || running? }
     validate :avalaible_questions_status_check, on: :update, if: -> { published? }
-    validates_numericality_of :start_date, only_integer: true, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
+    validates_numericality_of :start_date, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
+    validate :start_date_type, if: -> { published? }
 
     include AASM
 
@@ -107,6 +108,10 @@ module Trivia
             break
           end
         end
+      end
+
+      def start_date_type
+        errors.add(:start_date, "must be an integer") unless start_date.integer?
       end
   end
 end
