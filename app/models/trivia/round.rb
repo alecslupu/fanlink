@@ -111,7 +111,7 @@ module Trivia
       end
 
       def start_date_type
-        errors.add(:start_date, "must be an integer") unless start_date.integer?
+        errors.add(:start_date, "must be an integer")  if start_date.present? && !start_date.integer?
       end
   end
 end
