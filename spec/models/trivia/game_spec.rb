@@ -135,6 +135,7 @@ RSpec.describe Trivia::Game, type: :model do
 
         before(:each) do
           @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i, status: :draft)
+          @game.rounds.first.update(start_date: (Time.zone.now - 1.day).to_i)
           @game.publish!
         end
 
@@ -143,7 +144,6 @@ RSpec.describe Trivia::Game, type: :model do
         end
 
         it "throws an error with a message" do
-          @game.publish!
           expect(@game.errors.messages[:start_date]).to include("must be higher than current date")
         end
       end

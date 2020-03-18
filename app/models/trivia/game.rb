@@ -99,36 +99,30 @@ module Trivia
     scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
 
-    after_save :handle_status_changes
-    before_validation :compute_gameplay_parameters
+    after_save :handle_status_changes, if: -> { status_changed_to_publish? }
+    before_validation :compute_gameplay_parameters, if: -> { published? }
 
     def compute_gameplay_parameters
-      if published?
-        ActiveRecord::Base.transaction do
-          rounds.each.map(&:compute_gameplay_parameters)
-          self.start_date = rounds.first.start_date
-          self.end_date = rounds.reload.last.end_date_with_cooldown
-          self.save
-        end
-      end
+      rounds.each.map(&:compute_gameplay_parameters)
+      self.start_date = rounds.first.start_date
+      self.end_date = rounds.reload.last.end_date_with_cooldown
+      self.save
     end
 
     private
 
       def handle_status_changes
-        if status_changed_to_publish?
-          game = Trivia::Game.find(self.id)
+        game = Trivia::Game.find(self.id)
 
-          Delayed::Job.enqueue(::Trivia::PublishToEngine.new(game.id))
-          Delayed::Job.enqueue(::Trivia::GameStatus::LockedJob.new(game.id), run_at: Time.at(game.start_date) - 10.minutes)
-          Delayed::Job.enqueue(::Trivia::GameStatus::RunningJob.new(game.id), run_at: Time.at(game.start_date))
-          Delayed::Job.enqueue(::Trivia::GameStatus::CloseJob.new(game.id), run_at: Time.at(game.end_date))
+        Delayed::Job.enqueue(::Trivia::PublishToEngine.new(game.id))
+        Delayed::Job.enqueue(::Trivia::GameStatus::LockedJob.new(game.id), run_at: Time.at(game.start_date) - 10.minutes)
+        Delayed::Job.enqueue(::Trivia::GameStatus::RunningJob.new(game.id), run_at: Time.at(game.start_date))
+        Delayed::Job.enqueue(::Trivia::GameStatus::CloseJob.new(game.id), run_at: Time.at(game.end_date))
 
-          game.rounds.each do |round|
-            Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
-            Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
-            Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
-          end
+        game.rounds.each do |round|
+          Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
+          Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
+          Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
         end
       end
 
