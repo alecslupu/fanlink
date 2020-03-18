@@ -39,7 +39,7 @@ RSpec.describe Trivia::Question, type: :model do
         expect(Trivia::Question.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
       end
       it "sets the end date" do
-        time = DateTime.now.to_i
+        time = (DateTime.now + 1.day).to_i
         question = create(:trivia_single_choice_question, start_date: time, time_limit: 10)
         question.compute_gameplay_parameters
         expect(question.end_date).to eq(time + 10.seconds)
@@ -51,7 +51,7 @@ RSpec.describe Trivia::Question, type: :model do
         expect(Trivia::Question.new.respond_to?(:end_date_with_cooldown)).to eq(true)
       end
       it "sets the end date" do
-        time = DateTime.now.to_i
+        time = (DateTime.now + 1.day).to_i
         question = create(:trivia_single_choice_question, start_date: time, time_limit: 10, cooldown_period: 15)
         question.compute_gameplay_parameters
         expect(question.end_date_with_cooldown).to eq(time + 25.seconds)
