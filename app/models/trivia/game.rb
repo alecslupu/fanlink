@@ -107,7 +107,6 @@ module Trivia
         rounds.each.map(&:compute_gameplay_parameters)
         self.start_date = rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
-        self.save
       end
     end
 

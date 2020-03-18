@@ -135,7 +135,6 @@ RSpec.describe Trivia::Game, type: :model do
 
         before(:each) do
           @game = create(:full_trivia_game, start_date:(Time.zone.now - 1.day).to_i, status: :draft)
-          @game.rounds.first.update(start_date: (Time.zone.now - 1.day).to_i)
           @game.publish!
         end
 
