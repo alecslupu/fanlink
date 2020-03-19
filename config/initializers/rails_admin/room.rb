@@ -30,6 +30,17 @@ RailsAdmin.config do |config|
           bindings[:object].private?
         end
       end
+      field :public, :hidden do
+        visible true
+        formatted_value do
+          bindings[:object].new_record? ? true : bindings[:object].public?
+        end
+      end
+      field :created_by_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
     end
     show do
       fields :id,
