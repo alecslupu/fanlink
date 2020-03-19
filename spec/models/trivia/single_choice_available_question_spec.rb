@@ -33,7 +33,7 @@ RSpec.describe Trivia::SingleChoiceAvailableQuestion, type: :model do
           @available_question.available_answers << create_list(:correct_trivia_available_answer, 2)
         end
         it "does not save the question" do
-          expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+          expect(@available_question.save).to be_falsey
         end
 
         it "throws an error with a message" do
@@ -48,7 +48,7 @@ RSpec.describe Trivia::SingleChoiceAvailableQuestion, type: :model do
           @available_question.available_answers << create_list(:wrong_trivia_available_answer, 2)
         end
         it "does not save the question" do
-          expect { @available_question.save }.not_to change{ Trivia::AvailableQuestion.count }
+          expect(@available_question.save).to be_falsey
         end
 
         it "throws an error with a message" do
