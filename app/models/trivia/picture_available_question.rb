@@ -59,6 +59,8 @@ module Trivia
     validate :number_of_correct_answers
 
     private
+    # available_answers.where(is_correct: true).count
+    # cannot be used as it does not return anything
       def number_of_correct_answers
         is_correct_answers = available_answers.map(&:is_correct)
         errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) > 1
