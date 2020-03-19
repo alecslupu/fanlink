@@ -60,8 +60,7 @@ module Trivia
     private
 
       def number_of_correct_answers
-        is_correct_answers = available_answers.map(&:is_correct)
-        errors.add(:base, "Single choice questions must have one correct answer") unless is_correct_answers.count(true) == 1
+        errors.add(:base, "Single choice questions must have one correct answer") unless available_answers.where(is_correct: true) == 1
       end
 
 
