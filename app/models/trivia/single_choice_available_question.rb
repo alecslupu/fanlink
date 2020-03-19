@@ -54,6 +54,17 @@ module Trivia
         transitions from: :locked, to: :closed
       end
     end
+
+    validate :number_of_correct_answers
+
+    private
+
+      def number_of_correct_answers
+        is_correct_answers = available_answers.map(&:is_correct)
+        errors.add(:base, "Single choice questions must have one correct answer") if is_correct_answers.count(true) != 1
+      end
+
+
 =begin
     validate :answer_checks
 
