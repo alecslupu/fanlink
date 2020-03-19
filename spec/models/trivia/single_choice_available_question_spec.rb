@@ -29,7 +29,7 @@ RSpec.describe Trivia::SingleChoiceAvailableQuestion, type: :model do
     describe "#number_of_correct_answers" do
       describe "adding more than one correct answer" do
         before(:each) do
-          @available_question = build(:trivia_single_choice_available_question)
+          @available_question = create(:trivia_single_choice_available_question, with_answers: false)
           @available_question.available_answers << create_list(:correct_trivia_available_answer, 2)
         end
         it "does not save the question" do
@@ -44,7 +44,7 @@ RSpec.describe Trivia::SingleChoiceAvailableQuestion, type: :model do
 
       describe "adding no correct answer" do
         before(:each) do
-          @available_question = build(:trivia_single_choice_question)
+          @available_question = create(:trivia_single_choice_available_question, with_answers: false)
           @available_question.available_answers << create_list(:wrong_trivia_available_answer, 2)
         end
         it "does not save the question" do
