@@ -35,4 +35,8 @@ class PostReport < ApplicationRecord
   def self.valid_status?(s)
     statuses.include?(s.to_s)
   end
+
+  def post_body
+    post.body
+  end
 end

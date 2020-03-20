@@ -124,7 +124,7 @@ csv_text = %Q(Game,Game Name,Game Description,Round Number,Round Description,Que
 
 
 def obfuscate(answer, chars = nil)
-  hidden = "_" * answer.size
+  hidden = "_ " * answer.size
   unless chars.nil?
     chars = chars.split(";")
     chars.each do |value|
@@ -136,7 +136,7 @@ def obfuscate(answer, chars = nil)
 end
 
 
-products = Product.where(internal_name: %w(cantrivia cantrivia))
+products = Product.where(internal_name: %w(caned cantrivia))
 
 products.each do |product|
   ActsAsTenant.with_tenant(product) do

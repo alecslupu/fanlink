@@ -54,6 +54,10 @@ validates the startd_date > now when draft and published FLAPI-936
     end
 =end
 
+    def compute_leaderboard
+      self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
+    end
+
     enum status: %i[draft published locked running closed]
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
@@ -65,7 +69,7 @@ validates the startd_date > now when draft and published FLAPI-936
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
         rounds.each.map(&:compute_gameplay_parameters)
-        self.start_date =  rounds.first.start_date
+        self.start_date = rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
         self.save
       end

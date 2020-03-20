@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200120182704) do
+ActiveRecord::Schema.define(version: 20200228173650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,21 @@ ActiveRecord::Schema.define(version: 20200120182704) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "ind_authentications_provider_uid"
+  end
+
+  create_table "automated_notifications", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.bigint "person_id", null: false
+    t.integer "criteria", null: false
+    t.boolean "enabled", default: false, null: false
+    t.integer "product_id", null: false
+    t.datetime "last_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ttl_hours", default: 672, null: false
+    t.index ["criteria"], name: "index_automated_notifications_on_criteria"
+    t.index ["person_id"], name: "index_automated_notifications_on_person_id"
   end
 
   create_table "badge_actions", force: :cascade do |t|
@@ -464,9 +479,11 @@ ActiveRecord::Schema.define(version: 20200120182704) do
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "ttl_hours", default: 670, null: false
-    t.integer "deep_link_action", default: 0, null: false
-    t.string "deep_link_value"
+    t.integer "ttl_hours", default: 672, null: false
+    t.integer "person_filter", null: false
+    t.string "deep_link", default: "", null: false
+    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.integer "timezone", default: 0, null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
 
@@ -596,6 +613,7 @@ ActiveRecord::Schema.define(version: 20200120182704) do
     t.boolean "deleted", default: false
     t.bigint "role_id"
     t.boolean "authorized", default: true, null: false
+    t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
@@ -764,6 +782,8 @@ ActiveRecord::Schema.define(version: 20200120182704) do
     t.integer "admin"
     t.integer "root", default: 0
     t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -1111,6 +1131,8 @@ ActiveRecord::Schema.define(version: 20200120182704) do
     t.integer "root", default: 0, null: false
     t.integer "user", default: 0, null: false
     t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -1256,8 +1278,8 @@ ActiveRecord::Schema.define(version: 20200120182704) do
 
   create_table "trivia_available_questions", force: :cascade do |t|
     t.string "title"
-    t.integer "cooldown_period"
-    t.integer "time_limit"
+    t.integer "cooldown_period", default: 6
+    t.integer "time_limit", default: 30
     t.integer "status"
     t.string "type"
     t.integer "topic_id"
@@ -1350,10 +1372,10 @@ ActiveRecord::Schema.define(version: 20200120182704) do
 
   create_table "trivia_questions", force: :cascade do |t|
     t.bigint "trivia_round_id"
-    t.integer "time_limit"
+    t.integer "time_limit", default: 30
     t.string "type"
     t.integer "question_order", default: 1, null: false
-    t.integer "cooldown_period", default: 5
+    t.integer "cooldown_period", default: 6
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "start_date"
@@ -1449,6 +1471,7 @@ ActiveRecord::Schema.define(version: 20200120182704) do
   add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
   add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
+  add_foreign_key "automated_notifications", "people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
   add_foreign_key "badge_actions", "people", name: "fk_badge_actions_people", on_delete: :cascade
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
