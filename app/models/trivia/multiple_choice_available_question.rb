@@ -55,6 +55,14 @@ module Trivia
       end
     end
 
+    validate :number_of_correct_answers, on: :update
+
+    private
+
+      def number_of_correct_answers
+        errors.add(:base, "Multiple choice questions must have at least 2 correct answers") if available_answers.where(is_correct: true) < 2
+      end
+
 =begin
     validate :answer_checks
 
