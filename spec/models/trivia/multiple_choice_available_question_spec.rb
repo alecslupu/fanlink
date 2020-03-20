@@ -38,7 +38,7 @@ RSpec.describe Trivia::MultipleChoiceAvailableQuestion, type: :model do
 
         it "throws an error with a message" do
           @available_question.save
-          expect(@available_question.errors.messages[:base]).to include("Multiple choice questions must have at least 2 correct answers")
+          expect(@available_question.errors.messages[:available_answers]).to include("Multiple choice questions must have at least 2 correct answers")
         end
       end
     end
