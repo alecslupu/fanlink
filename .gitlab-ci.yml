@@ -147,25 +147,79 @@ test:rspec51:
     - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage51
 
-.test:rspec52:
-  extends: .base_db
-  stage: rspec
-  allow_failure: true
+test:rspec52:
+  image: ruby:2.5.1
+  cache:
+    key: gems_and_packages
+    paths:
+      - apt-cache/
+      - vendor/ruby
+      - vendor/bundle
+  tags:
+    - anything
+  services:
+    - postgres:latest
   variables:
     RAILS_ENV: test
+    FANLINK_PG_USER: $POSTGRES_USER
+    FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
+    FANLINK_PG_HOST: $POSTGRES_HOST
+    FANLINK_PG_DATABASE: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $POSTGRES_DB
+  before_script:
+    - export RAILS52=true
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - bundle exec rake db:reset
+    - bundle exec rake db:setup
+    - bundle exec rake db:test:prepare
+  stage: rspec
+  allow_failure: true
   artifacts:
     name: coverage_report52
     paths:
       - coverage52/
   script:
-    - export RAILS52=true
     - bundle update rails
     - bundle install
     - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
 
-.test:rspec6:
-  extends: .base_db
+
+test:rspec6:
+  image: ruby:2.5.1
+  cache:
+    key: gems_and_packages
+    paths:
+      - apt-cache/
+      - vendor/ruby
+      - vendor/bundle
+  tags:
+    - anything
+  services:
+    - postgres:latest
+  variables:
+    RAILS_ENV: test
+    FANLINK_PG_USER: $POSTGRES_USER
+    FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
+    FANLINK_PG_HOST: $POSTGRES_HOST
+    FANLINK_PG_DATABASE: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $POSTGRES_DB
+  before_script:
+    - export RAILS6=true
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - bundle exec rake db:reset
+    - bundle exec rake db:setup
+    - bundle exec rake db:test:prepare
   stage: rspec
   allow_failure: true
   artifacts:
@@ -173,12 +227,10 @@ test:rspec51:
     paths:
       - coverage6/
   script:
-    - export RAILS6=true
     - bundle update rails
     - bundle install
     - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage6
-
 
 pages:
   extends: .base_minimal

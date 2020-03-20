@@ -502,7 +502,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     #   let(:product) { create(:product, name: "Test Product 321", internal_name: "test_product_321") }
     #
     #   let!(:membership2) { create(:room_membership, room: room2) }
-    #   let!(:admin) { create(:person, product: product, role: :admin) }
+    #   let!(:admin) { create(:admin_user, product: product) }
     it "should give you all messages from all rooms with no page specified" do
       admin_person = create(:admin_user)
       ActsAsTenant.with_tenant(admin_person.product) do
