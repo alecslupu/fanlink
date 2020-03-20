@@ -68,19 +68,19 @@ group :development, :test do
   gem "dotenv-rails", "~>2.7.5"
   gem "faker", "~>2.1.2"
   gem "rspec-mocks", "~> 3.9.0"
-  gem "rspec-rails", '~> 3.9.0'
+  gem "rspec-rails", "~> 3.9.0"
   gem "rails-controller-testing"
   gem "factory_bot_rails", "~>5.0.2"
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem 'rubocop', '~> 0.76.0', require: false
+  gem "rubocop", "~> 0.76.0", require: false
   # gem "rubocop-rails_config"
-  gem 'rubocop-rails'
+  gem "rubocop-rails"
   gem "rubocop-rspec"
-  gem 'rubocop-performance'
+  gem "rubocop-performance"
 
-  gem 'rails-erd'
+  gem "rails-erd"
 end
 
 group :development do
@@ -109,10 +109,10 @@ group :development do
   gem "guard-rubycritic"
 
   gem "capistrano", require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
-  gem 'slackistrano', require: false
-  gem 'capistrano3-puma' , require: false
+  gem "capistrano-bundler", require: false
+  gem "capistrano-rails", require: false
+  gem "slackistrano", require: false
+  gem "capistrano3-puma" , require: false
 end
 
 group :test do
@@ -142,7 +142,7 @@ gem "acts_as_api"
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
 
-gem 'awesome_nested_set'
+gem "awesome_nested_set"
 
 gem "rails_admin", "1.3.0"
 gem "rails_admin_nested_set"
@@ -211,7 +211,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'pundit-matchers', '~> 1.6.0'
+  gem "pundit-matchers", "~> 1.6.0"
 end
 
 # Gemfile
@@ -222,6 +222,7 @@ gem "psych"
 #for page caching
 gem "actionpack-page_caching"
 
+gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
