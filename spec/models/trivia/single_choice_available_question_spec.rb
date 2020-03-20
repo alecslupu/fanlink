@@ -38,7 +38,7 @@ RSpec.describe Trivia::SingleChoiceAvailableQuestion, type: :model do
 
         it "throws an error with a message" do
           @available_question.save
-          expect(@available_question.errors.messages[:base]).to include("Single choice questions must have one correct answer")
+          expect(@available_question.errors.messages[:available_answers]).to include("Single choice questions must have one correct answer")
         end
       end
 
@@ -53,7 +53,7 @@ RSpec.describe Trivia::SingleChoiceAvailableQuestion, type: :model do
 
         it "throws an error with a message" do
           @available_question.save
-          expect(@available_question.errors.messages[:base]).to include("Single choice questions must have one correct answer")
+          expect(@available_question.errors.messages[:available_answers]).to include("Single choice questions must have one correct answer")
         end
       end
     end
