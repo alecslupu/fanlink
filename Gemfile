@@ -247,3 +247,6 @@ gem "psych"
 #for page caching
 gem "actionpack-page_caching"
 
+# for cron jobs
+# https://github.com/javan/whenever
+gem 'whenever', require: false

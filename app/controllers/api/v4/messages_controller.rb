@@ -67,10 +67,12 @@ class Api::V4::MessagesController < Api::V3::MessagesController
           Rails.logger.tagged("Message Controller") { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
           room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
           @message.post(@api_version)
-          broadcast(:message_created, @message.id, room.product_id)
+          broadcast(:room_message_created, @message.id, room.product_id)
           if room.private?
             room.increment_message_counters(current_user.id)
             @message.private_message_push
+          else
+            @message.public_room_message_push
           end
           return_the @message, handler: tpl_handler, using: :show
         else

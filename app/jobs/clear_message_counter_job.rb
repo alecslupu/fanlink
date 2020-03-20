@@ -14,4 +14,8 @@ class ClearMessageCounterJob < Struct.new(:room_id, :membership_id, :version)
       end
     end
   end
+
+  def queue_name
+    :default
+  end
 end
