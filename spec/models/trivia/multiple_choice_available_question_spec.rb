@@ -24,4 +24,23 @@ RSpec.describe Trivia::MultipleChoiceAvailableQuestion, type: :model do
     it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
+
+  context "Validations" do
+    describe "#number_of_correct_answers" do
+      describe "adding less than two correct answers" do
+        before(:each) do
+          # creating the avaialble question with only one correct available question
+          @available_question = create(:trivia_multiple_choice_available_question, with_answers: true, with_two_correct_answers: false)
+        end
+        it "does not save the question" do
+          expect(@available_question.save).to be_falsey
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:base]).to include("Multiple choice questions must have at least 2 correct answers")
+        end
+      end
+    end
+  end
 end
