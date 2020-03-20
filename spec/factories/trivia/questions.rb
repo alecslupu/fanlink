@@ -28,7 +28,7 @@ FactoryBot.define do
 
     transient do
       with_leaderboard { false }
-      with_answers { false }
+      with_answers { true }
     end
 
     after :create do |question, options|

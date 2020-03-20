@@ -112,6 +112,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         before(:each) do
           question = create(:trivia_single_choice_question)
           @available_question = question.available_question
+          # must assign a correct answer to passthe valdiations
           @available_question.update(type: "Trivia::MultipleChoiceAvailableQuestion")
           # you can't use record.reload because it searches based on the old record's type
           @updated_question = Trivia::Question.find(question.id)
