@@ -18,8 +18,8 @@ FactoryBot.define do
     product { current_product }
 
     question { create(:trivia_available_question) }
-    name { Faker::Lorem.question }
-    hint { Faker::Lorem.paragraph }
+    name { Faker::Lorem.characters(number: 10) }
+    hint { Faker::Lorem.characters(number: 10) }
     is_correct { false }
     status { :published }
 

@@ -42,9 +42,7 @@ RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
           expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
         end
       end
-    end
 
-    describe "#hangman_answer" do
       describe "adding one answer which is incorrect" do
         before(:each) do
           # creating the avaialble question with only one correct available question
@@ -58,6 +56,22 @@ RSpec.describe Trivia::HangmanAvailableQuestion, type: :model do
         it "throws an error with a message" do
           @available_question.save
           expect(@available_question.errors.messages[:avalaible_answers]).to include("count must be equal to one for fill in the blank questions and that answer must be correct.")
+        end
+      end
+
+      describe "adding one answer with hint size different than name" do
+        before(:each) do
+          # creating the avaialble question with only one correct available question
+          @available_question = create(:trivia_hangman_available_question)
+          @available_question.available_answers.update(name: "something", hint: "something else")
+        end
+        it "does not save the question" do
+          expect(@available_question.save).to be_falsey
+        end
+
+        it "throws an error with a message" do
+          @available_question.save
+          expect(@available_question.errors.messages[:avalaible_answers]).to include("available answer's name must be the same length as the hint.")
         end
       end
     end

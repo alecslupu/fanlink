@@ -62,6 +62,12 @@ module Trivia
       errors.add( :avalaible_answers,
                   "count must be equal to one for fill in the blank questions and that answer must be correct."
       ) unless available_answers_correctness.length == 1 && available_answers_correctness.first == true
+
+      available_answer = available_answers.first
+      errors.add(
+        :avalaible_answers,
+        "available answer's name must be the same length as the hint."
+      ) if available_answer.name.length != available_answer.hint.length
     end
   end
 end
