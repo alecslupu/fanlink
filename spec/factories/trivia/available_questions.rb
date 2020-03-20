@@ -29,6 +29,7 @@ FactoryBot.define do
 
     transient do
       with_answers { true }
+      with_two_correct_answers { false }
     end
 
     after :create do |question, options|
