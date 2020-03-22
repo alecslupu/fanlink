@@ -78,10 +78,6 @@ module Trivia
       new_entry
     end
 
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
-    end
-
     scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
 
     def compute_leaderboard

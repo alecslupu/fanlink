@@ -43,17 +43,6 @@ module Trivia
     validates :long_name, presence: true
     validates :short_name, presence: true
 
-=begin
-validates the startd_date > now when draft and published FLAPI-936
-
-    validate :start_time_constraints
-    def start_time_constraints
-      if published?
-        errors.add(:start_date) if start_date < DateTime.now.to_i
-      end
-    end
-=end
-
     def compute_leaderboard
       self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
     end
@@ -98,10 +87,6 @@ validates the startd_date > now when draft and published FLAPI-936
       event :closed do
         transitions from: :running, to: :closed
       end
-    end
-
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
