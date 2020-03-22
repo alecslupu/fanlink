@@ -5,12 +5,30 @@ RailsAdmin.config do |config|
 
     label_plural "Available Answer"
 
+    configure :status, :enum do
+      queryable false
+      # this does not work with RA 1.3.0
+      # enum_method :rails_admin_status_field
+      enum do
+        if bindings[:object].new_record?
+          {draft: bindings[:object].class.statuses[:draft]}
+        else
+          ha = {}
+          bindings[:object].aasm.states(permitted: true).map(&:name).
+            push(bindings[:object].status).
+            map { |c| ha[c] = bindings[:object].class.statuses[c] }
+          ha
+        end
+      end
+      default_value :draft
+    end
+
     edit do
-      exclude_fields :product
+      fields :question, :name, :hint, :is_correct, :status
     end
 
     nested do
-      exclude_fields :question
+      fields :name, :hint, :is_correct, :status
     end
   end
 end

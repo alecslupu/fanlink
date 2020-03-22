@@ -90,10 +90,6 @@ module Trivia
       end
     end
 
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
-    end
-
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
     scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
     scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
