@@ -11,8 +11,7 @@ end
 
 ruby "2.5.1"
 
-# gem "rack-cache"
-# Use Puma as the app server
+# gem "rack-cache"# Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -42,9 +41,9 @@ else
 #   # Use ActiveModel has_secure_password
 #   # gem "bcrypt", "~> 3.1.7"
 end
-
 # Use Redis adapter to run Action Cable in production
 gem "redis"
+
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails"
@@ -67,15 +66,6 @@ group :production, :staging do
   gem 'elastic-apm', '~> 3.1.0'
 end
 
-
-group :staging, :development do
-  if ENV["RAILS6"]
-  else
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-  end
-end
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
@@ -108,6 +98,10 @@ group :development do
   gem "better_errors", "~>2.5.1"
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
+
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem "web-console", ">= 3.3.0"
+  gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
