@@ -102,6 +102,18 @@ module Trivia
     after_save :handle_status_changes, if: -> { status_changed_to_publish? }
     before_validation :compute_gameplay_parameters, if: -> { published? }
 
+    def copy_to_new
+      new_entry = self.dup
+      new_entry.update!(status: :draft, start_date: nil, end_date: nil)
+
+      new_entry.prizes = prizes.collect(&:copy_to_new)
+      new_entry.rounds = rounds.collect(&:copy_to_new)
+      new_entry.save
+      self.class.reset_counters(id, :rounds, touch: true)
+      self.class.reset_counters(new_entry.id, :rounds, touch: true)
+      new_entry
+    end
+
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
         rounds.each.map(&:compute_gameplay_parameters)

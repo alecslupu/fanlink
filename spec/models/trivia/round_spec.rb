@@ -114,6 +114,26 @@ RSpec.describe Trivia::Round, type: :model do
         expect(round.end_date_with_cooldown - result).to eq(0)
       end
     end
+
+    describe "copy_to_new" do
+      it "has the method" do
+        expect(Trivia::Round.new.respond_to?(:copy_to_new)).to eq(true)
+      end
+      context "creates new record" do
+        before do
+          create(:trivia_round)
+          expect(Trivia::Round.count).to eq(1)
+          @old_round = Trivia::Round.last
+          @round_object = @old_round.copy_to_new
+          expect(Trivia::Round.count).to eq(2)
+        end
+
+        it { expect(@round_object).to be_a(Trivia::Round) }
+        it { expect(@round_object.status).to eq("draft") }
+        it { expect(@round_object.start_date).to eq(nil) }
+        it { expect(@round_object.end_date).to eq(nil) }
+      end
+    end
   end
 
   context "validations" do

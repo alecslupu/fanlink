@@ -34,6 +34,7 @@ require "capistrano/rails/migrations"
 require 'slackistrano/capistrano'
 require 'capistrano/puma'
 require_relative 'lib/capistrano/custom_messaging'
+require "whenever/capistrano"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }

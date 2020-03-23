@@ -23,4 +23,8 @@ class DeleteRoomJob < Struct.new(:room_id, :version)
       }
     end
   end
+
+  def queue_name
+    :default
+  end
 end
