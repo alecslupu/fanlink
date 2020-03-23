@@ -55,12 +55,6 @@ group :production, :staging do
 end
 
 group :staging, :development do
-  if ENV["RAILS6"]
-  else
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-  end
 end
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
