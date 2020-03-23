@@ -11,7 +11,6 @@ stages:
   tags:
     - anything
 
-
 .base:
   image: ruby:2.5.1
   cache:
@@ -136,17 +135,6 @@ test:erd:
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-test:rspec51:
-  extends: .base_db
-  stage: rspec
-  artifacts:
-    name: coverage_report51
-    paths:
-      - coverage51/
-  script:
-    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
-    - mv coverage coverage51
-
 test:rspec52:
   image: ruby:2.5.1
   cache:
@@ -246,7 +234,6 @@ pages:
     name: my_app_artifacts
     paths:
       - public/brakeman
-      - public/coverage51
       - public/coverage52
       - public/coverage6
       - public/dawnscanner
@@ -261,7 +248,6 @@ pages:
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
     - mv rubocop public/ || true
-    - mv coverage51 public/ || true
     - mv coverage52 public/ || true
     - mv coverage6 public/ || true
     - cp $PAGES_INDEX_FILE public/index.html
