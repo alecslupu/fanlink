@@ -88,4 +88,6 @@ set :delayed_job_args, "-n 2"
 #     deploy:log_revision
 
 # after 'deploy:check', 'delayed_job:restart'
+
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 after "deploy:finished", "delayed_job:restart"

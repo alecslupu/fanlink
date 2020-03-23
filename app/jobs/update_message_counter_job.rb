@@ -14,4 +14,8 @@ class UpdateMessageCounterJob < Struct.new(:room_id, :poster_id, :version)
       client.update("", payload)
     end
   end
+
+  def queue_name
+    :default
+  end
 end
