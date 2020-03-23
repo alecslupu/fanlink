@@ -15,6 +15,10 @@ module Trivia
 
       Rails.logger.debug("Got here")
     end
+
+    def queue_name
+      :trivia
+    end
   end
 end
 

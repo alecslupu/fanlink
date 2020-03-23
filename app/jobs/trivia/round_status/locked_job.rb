@@ -6,6 +6,11 @@ module Trivia
         round = Trivia::Round.find(round_id)
         round.locked!
       end
+
+      def queue_name
+        :trivia
+      end
+
     end
   end
 end
