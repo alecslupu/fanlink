@@ -166,7 +166,7 @@ test:rspec52:
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
   stage: rspec
-  allow_failure: true
+  allow_failure: false
   artifacts:
     name: coverage_report52
     paths:
