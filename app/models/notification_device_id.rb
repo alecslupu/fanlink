@@ -8,6 +8,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  device_type       :integer          default("unknown"), not null
+#  not_registered    :boolean          default(FALSE), not null
 #
 
 class NotificationDeviceId < ApplicationRecord
@@ -20,4 +21,5 @@ class NotificationDeviceId < ApplicationRecord
   validates :device_identifier,
             uniqueness: { message: _("That device id is already registered.") },
             presence: { message: _("Device identifier is required.") }
+
 end

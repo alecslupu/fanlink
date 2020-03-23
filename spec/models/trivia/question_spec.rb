@@ -63,6 +63,8 @@ RSpec.describe Trivia::Question, type: :model do
         expect(Trivia::Question.new.respond_to?(:set_order)).to eq(true)
       end
     end
+
+
   end
 
   context "hooks" do

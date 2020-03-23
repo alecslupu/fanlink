@@ -265,6 +265,8 @@ en:
       invalid_dates: "Invalid date(s)"
   admin:
     actions:
+      copy_new_game_action:
+        menu: "Copy new"
       purchase_report_action:
         menu: "Purchases"
         breadcrumb: "Referred People with Purchases"
