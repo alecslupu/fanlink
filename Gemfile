@@ -151,7 +151,6 @@ gem "acts_as_api"
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
-
 gem "awesome_nested_set"
 
 gem "rails_admin", "~> 2.0.0"
