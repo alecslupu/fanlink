@@ -117,7 +117,7 @@ RSpec.describe Trivia::Round, type: :model do
   end
 
   context "validations" do
-    describe "#start_date" do
+    describe "#start_date must be present" do
       before(:each) do
         game = create(:trivia_game)
         product = create(:product)
