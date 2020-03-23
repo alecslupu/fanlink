@@ -15,6 +15,7 @@ ruby "2.5.1"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "~> 5.2"
 # Use Puma as the app server
+# gem "rack-cache"# Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -48,6 +49,7 @@ end
 # Use Redis adapter to run Action Cable in production
 gem "redis"
 
+
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails"
 
@@ -68,8 +70,6 @@ gem "httparty", "0.16.4"
 group :production, :staging do
   gem 'elastic-apm', '~> 3.1.0'
 end
-
-
 group :staging, :development do
   if ENV["RAILS6"]
   else
@@ -77,6 +77,9 @@ group :staging, :development do
     gem "web-console", ">= 3.3.0"
     gem "listen", ">= 3.0.5", "< 3.2"
   end
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem "web-console", ">= 3.3.0"
+  gem "listen", ">= 3.0.5", "< 3.2"
 end
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
@@ -162,7 +165,6 @@ gem "acts_as_api"
 # # I haven't received a reply/action but if the PR has not been acted upon due to "failing checks", then the only
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
-
 
 gem "awesome_nested_set"
 
