@@ -8,6 +8,10 @@ module Trivia
 
         game.reload.compute_leaderboard
       end
+
+      def queue_name
+        :trivia
+      end
     end
   end
 end

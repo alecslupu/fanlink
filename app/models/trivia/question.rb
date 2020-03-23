@@ -66,6 +66,12 @@ module Trivia
       self.question_order = index
       self.save
     end
+
+    def copy_to_new
+      new_entry = dup
+      new_entry.update!(start_date: nil, end_date: nil)
+      new_entry
+    end
   end
 end
 

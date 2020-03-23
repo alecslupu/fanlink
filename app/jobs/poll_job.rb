@@ -7,4 +7,8 @@ class PollJob < Struct.new(:poll_id)
       poll.status = disabled
     end
   end
+
+  def queue_name
+    :default
+  end
 end
