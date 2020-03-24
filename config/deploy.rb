@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.11.1"
+lock "~> 3.12.1"
 
 set :application, "flapi"
 set :repo_url, "git@gitlab.fan.link:fanlink/fanlink.git"
