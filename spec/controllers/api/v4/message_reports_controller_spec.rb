@@ -19,6 +19,7 @@ RSpec.describe Api::V4::MessageReportsController, type: :controller do
       end
     end
 
+
     it "hides a the message if status is changed to message_hidden" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -27,6 +28,7 @@ RSpec.describe Api::V4::MessageReportsController, type: :controller do
         login_as(person)
         patch :update, params: {id: report.id, message_report: {status: "message_hidden"}}
 
+        expect(response.body).to eq("")
         expect(response).to be_successful
         expect(report.reload.status).to eq("message_hidden")
         expect(message.reload.hidden).to eq(true)

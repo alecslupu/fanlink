@@ -22,5 +22,10 @@ RailsAdmin.config do |config|
              :content,
              :slug
     end
+
+    export do
+      configure :title, :string
+      configure :content, :string
+    end
   end
 end

@@ -19,15 +19,53 @@ module Trivia
   class AvailableQuestion < ApplicationRecord
 
     acts_as_tenant(:product)
-    scope :for_product, -> (product) { where(product_id: product.id) }
+    scope :for_product, ->(product) { where(product_id: product.id) }
+
+    include AASM
+    enum status: {
+      draft: 0,
+      published: 1,
+      locked: 2,
+      closed: 3,
+    }
+
+    aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
+      state :draft, initial: true
+      state :published
+      state :locked
+      state :closed
+
+      event :publish do
+        # before do
+        #   instance_eval do
+        #     validates_presence_of :sex, :name, :surname
+        #   end
+        # end
+        transitions from: :draft, to: :published
+      end
+
+      event :unpublish do
+        transitions from: :published, to: :draft
+      end
+
+      event :locked do
+        transitions from: :published, to: :locked
+      end
+
+      event :closed do
+        transitions from: :locked, to: :closed
+      end
+    end
+
+    def status_enum
+      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
+    end
 
     belongs_to :topic, class_name: "Trivia::Topic"
     has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
-    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question
+    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question, dependent: :destroy
 
-    enum status: %i[draft published locked closed]
     accepts_nested_attributes_for :available_answers, allow_destroy: true
-
 
     validates :time_limit, numericality: { greater_than: 0 },
                            presence: true

@@ -170,6 +170,8 @@ RSpec.describe Person, type: :model do
       it { should have_many(:clients_assigned).through(:assigned_clients) }
       it { should have_many(:clients_designated).through(:designated_clients) }
 
+      it { should have_many(:room_subscribers) }
+      it { should have_many(:courseware_wishlists) }
     end
 
     describe "#has_one" do
@@ -197,6 +199,61 @@ RSpec.describe Person, type: :model do
     end
     describe "#email_filter" do
       it { expect(Person).to respond_to(:email_filter)}
+    end
+    describe "#requested_friendships" do
+      it { expect(Person).to respond_to(:requested_friendships)}
+    end
+    describe "received_friendships" do
+      it { expect(Person).to respond_to(:received_friendships)}
+    end
+    describe "#with_friendships" do
+      it { expect(Person).to respond_to(:with_friendships)}
+    end
+    describe "#without_friendships" do
+      it { expect(Person).to respond_to(:without_friendships)}
+    end
+    describe "has_interests" do
+      it { expect(Person).to respond_to(:has_interests)}
+    end
+
+    describe "has_no_interests" do
+      it { expect(Person).to respond_to(:has_no_interests)}
+    end
+    describe "#has_followings" do
+      it { expect(Person).to respond_to(:has_followings)}
+    end
+    describe "#has_no_followings" do
+      it { expect(Person).to respond_to(:has_no_followings)}
+    end
+    describe "#has_posts" do
+      it { expect(Person).to respond_to(:has_posts)}
+    end
+    describe "#has_no_posts" do
+      it { expect(Person).to respond_to(:has_no_posts)}
+    end
+    describe "has_facebook_id" do
+      it { expect(Person).to respond_to(:has_facebook_id)}
+    end
+    describe "#has_created_acc_past_24h" do
+      it { expect(Person).to respond_to(:has_created_acc_past_24h)}
+    end
+    describe "#has_created_acc_past_7days" do
+      it { expect(Person).to respond_to(:has_created_acc_past_7days)}
+    end
+    describe "has_free_certificates_enrolled" do
+      it { expect(Person).to respond_to(:has_no_free_certificates_enrolled)}
+    end
+    describe "#has_free_certificates_enrolled" do
+      it { expect(Person).to respond_to(:has_free_certificates_enrolled)}
+    end
+    describe "#has_certificates_generated" do
+      it { expect(Person).to respond_to(:has_certificates_generated)}
+    end
+    describe "#has_paid_certificates" do
+      it { expect(Person).to respond_to(:has_paid_certificates)}
+    end
+    describe "#has_no_paid_certificates" do
+      it { expect(Person).to respond_to(:has_no_paid_certificates)}
     end
   end
 
@@ -475,7 +532,7 @@ RSpec.describe Person, type: :model do
         expect(p).to eq(Person.last)
       end
       it "should return nil if api error" do
-        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: [:id, :email, :picture]).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: %w(id email picture.width(320).height(320))).and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.create_from_facebook("12345", "fdafafadadfa")).to be_nil
       end
     end
@@ -680,19 +737,20 @@ RSpec.describe Person, type: :model do
 
     it "returns values from portal access" do
       to_test = create(:portal_access, reward_read: true)
-      expect(to_test.person.full_permission_list).to eq([:reward_read])
+      expect(to_test.person.full_permission_list).to include(:reward_read)
     end
 
     it "returns values from role access" do
       to_test = create(:person, role: create(:role, post_update: true))
-      expect(to_test.full_permission_list).to eq([:post_update])
+      expect(to_test.full_permission_list).to include(:post_update)
     end
 
     it "returns values from both access" do
       to_test = create(:person, role: create(:role, post_update: true))
       to_test = create(:portal_access, person: to_test, reward_read: true).person
 
-      expect(to_test.full_permission_list).to eq([:post_update, :reward_read])
+      expect(to_test.full_permission_list).to include(:reward_read)
+      expect(to_test.full_permission_list).to include(:post_update)
     end
 
   end

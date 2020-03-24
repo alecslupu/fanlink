@@ -16,11 +16,13 @@ SimpleCov.start "rails" do
   minimum_coverage 0
 end
 require File.expand_path("../../config/environment", __FILE__)
+require 'paper_trail/frameworks/rspec'
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
 require "json_schemer"
+require 'aasm/rspec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -120,28 +122,28 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.before(:suite) do
+    Rails.logger.debug("RSPEC: before suite")
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
-  config.before(:each) do
-    ActsAsTenant.current_tenant = nil
-  end
   config.after(:each) do
-    logout
+    Rails.logger.debug("RSPEC: after example")
     DatabaseCleaner.clean
-    # ActsAsTenant.current_tenant = nil
+    logout
+    ActsAsTenant.current_tenant = nil
   end
 
   config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-      # ActsAsTenant.current_tenant = nil
-    end
-  end
+    Rails.logger.debug("Running before clean")
 
-  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
-  # config.include Sorcery::TestHelpers::Rails::Controller # , type: :request
-  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
+    DatabaseCleaner.cleaning do
+      Rails.logger.debug("RSPEC: #{example.description}")
+      example.run
+      Rails.logger.debug("RSPEC END: #{example.description}")
+    end
+    logout
+    ActsAsTenant.current_tenant = nil
+  end
 
   config.include Sorcery::TestHelpers::Rails::Controller, type: :controller
   config.include Sorcery::TestHelpers::Rails::Integration, type: :feature

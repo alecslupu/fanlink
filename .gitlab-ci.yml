@@ -1,22 +1,15 @@
 stages:
   - build
   - test
-  - report
   - rspec
+  - report
   - deploy
-
-variables:
-  BUNDLER_VERSION: 2.0.2
-  POSTGRES_DB: fanlink_test
-  POSTGRES_USER: test_user
-  POSTGRES_PASSWORD: test_user_password
-  FIREBASE_URL: https://fanlink-development.firebaseio.com
-  FIREBASE_KEY: '{ "type": "service_account", "project_id": "fanlink-development", "private_key_id": "486a848e92b68d88094e505ddc1678e6b5521b21", "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDA+EtMKxpj0lQJ\nZX4K8+wHCi1GQLJr7pssg8ppudPRI0/zANCaRzGVBzY9/cfXdUYRKQqXGbuamPWX\nhLTDeibY9nUWrPcbiJlLOyqZd6+Tv7NmkCrHVIJeLPJZamy59rUFCsmlcP2cASc7\n9RH8sgK3MC8yKeDDfB5pxKFcIRh/JkZKm1N7a2YvGJtanQtU3u1imdSl0ADNEy8A\nBcSok9JUMzWxm1HZYipm3TykbIzcbOzDzXpyQuqalqOgCZ66siwrymnlTLBu3Z/I\nLK+Uneykbu/W5/zZJAeEHdRR1UvoEeVkSchjYDftJPVLqm7zl1pchZwgnbu1e0CA\n9KhtcctFAgMBAAECggEAEOrToxpWRnEOiAJbUfd/dkCIppOOcNLqzLTDHpC5hqi7\nXhjwsM3UBXYr5bRlfDieS2vXL1cEsPF++mkadda0KCo3KqVARqwrkEJgIjMxc9kH\nD9NMxMveYAY9uuQPIyCDTy1ab0QgH7ikKWf7SzWJ8mhpgtLUDx9HBUvFP6/xF1hr\nJnyJUFZk5vdZRIoTZBBnod+UCCsz80w6m7KxKKxWLBsMP5qyQBDcxgbOEKLdcRD1\nWhAM4DtgaxRkxc7HTS/NmlHG/Ruf6heaiuzAG3cXT5ob/kd/T79pCVpOu3sg3Wah\n+LsI8Ih9KHEKdYIJA9WAuICAoxkgj6z/Wo/nwybJ0QKBgQDo+zjLfVjm2/gYbvoj\nBZbp/b2wjCvDxTK7cm9tzulEP2oQgrcixEJ6cydx0Z5u670Lze6+daDvQqAe40MP\nbwFHHlliJ3uGSHLwGxNnKtaF/Tpdkc4dMPmOCICGqeMbHT5Bxqjvs/uD1c8uBpU3\nQ5SbgSiUm9bv6/otXJV/jlcsSQKBgQDUCRD0+8pk4veCR4ThIT279RSNzLn0Vi1Q\n0w9Wz8wRhpiEqUS+nCXGxRm01l9vU23OEUbX9LC+4doNrFT65sP/IotfKqnueqZz\n8l8I6RF8f+NAVdUeZ2pPvm8d2zE+vLmDKY7cOW7U405uVSsG52TP6/7O564xleH7\n7OjTOy2PHQKBgQCgrjqyZSW+OnE18LwFEWLOyFhd/Z5la4icrMTa97v7fLza3DwP\n90leCDNpFUfuehksnf+NTbULrmieRODIMSexc+XzgwV3TFow7IuKOIoxaL8rL1b2\n3QMQCR8TQPHHjniUhr2WbAwIFZrIxHN+5NYGFaL2MzCe0aH+TP8yNOo8OQKBgCi/\n0U1zsnLvF6gm/IeTrtyXfiq+RKKLiUv2NAV4C/z2RAuCyF5lffEUYhtZ859ehkTL\nFzVbpjgZCaIFE5Pgk5xN1EEm3t+hHKo90zvQJvcpUNBFbp7YOxs2Ov6e6HjpJjHp\n47W5J+6r/J/BqHI8OCipbx/ucJDBAFw9LIWj4t6VAoGAEBmoyW2Df9vnCb4to4GG\nOdF+fzDRprsxrpoO36zbEE7VYTSLZnBEJV9L2sBkhZPSFga5MHyDyMRFrS0xBWbD\nQLmGqfO98d2PEo5HJj3vA/aqpoGi6CHuBAfpcDCLEgExnol2e56tnY82zcWCUn3g\ngNYCub2IRcdEfn5uz59v6xE=\n-----END PRIVATE KEY-----\n", "client_email": "firebase-adminsdk-fwoso@fanlink-development.iam.gserviceaccount.com", "client_id": "117057875564461759826", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://accounts.google.com/o/oauth2/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fwoso%40fanlink-development.iam.gserviceaccount.com" }'
-  FIREBASE_CM_KEY: AAAA2ufBnjk:APA91bGbZIL0LbhXc1mYVXpgMtvHyDuERw4j3DmD1WtSsnnAdbELAt0Yf3e_G7xuXptjWUc2WHVHqKeThPCC0CSqlsVnRGhAn9nCsCT5TBfceVno1mHx4828Muy1NNeKZq_0JJCbB3Z-
 
 .base_minimal:
   image: alpine:latest
   cache: {}
+  tags:
+    - anything
 
 .base:
   image: ruby:2.5.1
@@ -29,17 +22,24 @@ variables:
   before_script:
     - gem install bundler -v $BUNDLER_VERSION
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+  tags:
+    - anything
 
 .base_db:
   extends: .base
+  tags:
+    - anything
   services:
     - postgres:latest
   variables:
     RAILS_ENV: test
     FANLINK_PG_USER: $POSTGRES_USER
     FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
-    FANLINK_PG_HOST: postgres
+    FANLINK_PG_HOST: $POSTGRES_HOST
     FANLINK_PG_DATABASE: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $POSTGRES_DB
   before_script:
     - gem install bundler -v $BUNDLER_VERSION
     - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
@@ -104,8 +104,6 @@ test:brakeman:
     when: always
     paths:
       - brakeman/
-  only:
-    - master
   script:
     - bundle exec brakeman --format html -o brakeman/index.html
 
@@ -118,8 +116,6 @@ test:dawnscanner:
     when: always
     paths:
       - dawnscanner
-  only:
-    - master
   script:
     - gem install dawnscanner
     - mkdir dawnscanner
@@ -133,44 +129,85 @@ test:erd:
     name: erd
     paths:
       - erd.pdf
-  only:
-    - master
   script:
     - apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -y -qq graphviz
     - gem install 'rails-erd'
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-test:rspec51:
-  extends: .base_db
-  stage: rspec
-  artifacts:
-    name: coverage_report51
+test:rspec52:
+  image: ruby:2.5.1
+  cache:
+    key: gems_and_packages
     paths:
-      - coverage51/
-  script:
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
-    - mv coverage coverage51
-
-.test:rspec52:
-  extends: .base_db
-  stage: rspec
-  allow_failure: true
+      - apt-cache/
+      - vendor/ruby
+      - vendor/bundle
+  tags:
+    - anything
+  services:
+    - postgres:latest
   variables:
     RAILS_ENV: test
+    FANLINK_PG_USER: $POSTGRES_USER
+    FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
+    FANLINK_PG_HOST: $POSTGRES_HOST
+    FANLINK_PG_DATABASE: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $POSTGRES_DB
+  before_script:
+    - export RAILS52=true
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - bundle exec rake db:reset
+    - bundle exec rake db:setup
+    - bundle exec rake db:test:prepare
+  stage: rspec
+  allow_failure: false
   artifacts:
     name: coverage_report52
     paths:
       - coverage52/
   script:
-    - export RAILS52=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage52
 
-.test:rspec6:
-  extends: .base_db
+
+test:rspec6:
+  image: ruby:2.5.1
+  cache:
+    key: gems_and_packages
+    paths:
+      - apt-cache/
+      - vendor/ruby
+      - vendor/bundle
+  tags:
+    - anything
+  services:
+    - postgres:latest
+  variables:
+    RAILS_ENV: test
+    FANLINK_PG_USER: $POSTGRES_USER
+    FANLINK_PG_PASSWORD: $POSTGRES_PASSWORD
+    FANLINK_PG_HOST: $POSTGRES_HOST
+    FANLINK_PG_DATABASE: $POSTGRES_DB
+    POSTGRES_USER: $POSTGRES_USER
+    POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    POSTGRES_DB: $POSTGRES_DB
+  before_script:
+    - export RAILS6=true
+    - gem install bundler -v $BUNDLER_VERSION
+    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - bundle exec rake db:reset
+    - bundle exec rake db:setup
+    - bundle exec rake db:test:prepare
   stage: rspec
   allow_failure: true
   artifacts:
@@ -178,12 +215,10 @@ test:rspec51:
     paths:
       - coverage6/
   script:
-    - export RAILS6=true
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
     - mv coverage coverage6
-
 
 pages:
   extends: .base_minimal
@@ -199,7 +234,8 @@ pages:
     name: my_app_artifacts
     paths:
       - public/brakeman
-      # -public/coverage
+      - public/coverage52
+      - public/coverage6
       - public/dawnscanner
       - public/rubocop
       - public/erd.pdf
@@ -211,26 +247,73 @@ pages:
     - mv dawnscanner public/ || true
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
-    # - mv coverage public/ || true
+    - mv rubocop public/ || true
+    - mv coverage52 public/ || true
+    - mv coverage6 public/ || true
+    - cp $PAGES_INDEX_FILE public/index.html
+
 
 deploy:staging:
   extends: .base
   stage: deploy
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
+  variables:
+    RAILS_ENV: staging
+  tags:
+    - deploy
+  environment:
+    name: staging
+    url: https://staging.fan.link
   only:
     - staging
   script:
-    - echo "Deploying to Staging..."
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap staging deploy
 
 deploy:production:
   extends: .base
   stage: deploy
   when: manual
+  artifacts:
+    name: "$CI_JOB_NAME-capistrano-log"
+    when: on_failure
+    paths:
+      - log/capistrano.log
+  variables:
+    RAILS_ENV: production
+  tags:
+    - deploy
   environment:
     name: production
-    url: https://fan.link
+    url: https://portal.fan.link
   only:
-    - master
+    - tags
   script:
-    - echo "Deploying to Production..."
+    - mkdir ~/.ssh/
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+    - echo "Host *" >> ~/.ssh/config
+    - echo "StrictHostKeyChecking no" >> ~/.ssh/config
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - eval $(ssh-agent -s)
+    - ssh-add
+    - ssh-add -l
+    - export USER="$GITLAB_USER_LOGIN via gitlab"
+    - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
+    - bundle exec cap production deploy
 
 

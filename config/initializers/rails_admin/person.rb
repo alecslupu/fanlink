@@ -9,12 +9,30 @@ RailsAdmin.config do |config|
       :username
     end
 
+    configure :trigger_admin do
+      visible false
+    end
+
     configure :level_earned do
+
     end
     configure :password do
     end
 
     list do
+      scopes proc {
+        if !Person.current_user.client? && !Person.current_user.client_portal? && !Person.current_user.normal?
+          [
+            nil, :has_interests, :has_no_interests, :has_followings, :has_no_followings, :with_friendships,
+            :without_friendships, :has_posts, :has_no_posts, :has_facebook_id, :has_created_acc_past_24h,
+            :has_created_acc_past_7days, :has_free_certificates_enrolled, :has_no_free_certificates_enrolled,
+            :has_paid_certificates, :has_no_paid_certificates, :has_certificates_generated, :has_no_sent_messages, :active_48h,
+            :active_7days, :active_30days, :inactive_48h, :inactive_7days, :inactive_30days
+          ]
+        else
+          []
+        end
+      }
       field :username do
         column_width 150
       end
@@ -139,7 +157,6 @@ RailsAdmin.config do |config|
     end
 
     edit do
-
       fields :username, :email, :name, :picture
       field :role do
         def render
@@ -209,7 +226,8 @@ RailsAdmin.config do |config|
           designated_people_ids = bindings[:object].designated_people.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: designated_people_ids)
+            scope = scope.limit(50)
           }
         end
       end
@@ -219,14 +237,15 @@ RailsAdmin.config do |config|
           false
         end
         visible do
-          bindings[:object].client?
+        bindings[:object].client?
         end
         associated_collection_scope do
           normal_role = Role.normals.first
           assigned_people_ids = bindings[:object].assigned_people.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: assigned_people_ids)
+            scope = scope.limit(50)
           }
         end
       end
@@ -244,7 +263,8 @@ RailsAdmin.config do |config|
           clients_designated_ids = bindings[:object].clients_designated.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_designated_ids)
+            scope = scope.limit(50)
           }
         end
       end
@@ -261,14 +281,26 @@ RailsAdmin.config do |config|
           clients_assigned_ids = bindings[:object].clients_assigned.pluck(:id)
 
           Proc.new { |scope|
-            scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
+            scope = scope.where(role_id: normal_role.try(:id).to_i ).where.not(id: clients_assigned_ids)
+            scope = scope.limit(50)
           }
+        end
+      end
+
+      field :trigger_admin, :hidden do
+        visible true
+        formatted_value do
+          "true"
+        end
+        default_value do
+          "true"
         end
       end
     end
 
     export do
       fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
+      configure :designation, :string
     end
   end
 end

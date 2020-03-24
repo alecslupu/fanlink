@@ -4,8 +4,11 @@ RailsAdmin.config do |config|
     parent "Trivia::Game"
     label_plural "Prizes"
 
+    edit do
+      exclude_fields :game, :product
+    end
     nested do
-      exclude_fields :game
+      exclude_fields :game, :product
     end
   end
 end

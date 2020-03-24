@@ -29,5 +29,9 @@ RailsAdmin.config do |config|
              :order,
              :children
     end
+
+    export do
+      configure :name, :string
+    end
   end
 end

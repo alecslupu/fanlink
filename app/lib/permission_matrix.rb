@@ -4,7 +4,7 @@ module PermissionMatrix
   included do
 
     include FlagShihTzu
-    %w[post event merchandise user badge reward quest beacon reporting interest root portal_notification].each do |field|
+    %w[ event merchandise user badge reward quest beacon reporting interest root portal_notification marketing_notification automated_notification].each do |field|
       has_flags 1 => "#{field}_read".to_sym,
                 2 => "#{field}_update".to_sym,
                 3 => "#{field}_delete".to_sym,
@@ -12,6 +12,15 @@ module PermissionMatrix
                 5 => "#{field}_history".to_sym,
                 column: field
     end
+
+    has_flags 1 => :post_read,
+              2 => :post_update,
+              3 => :post_delete,
+              4 => :post_export,
+              5 => :post_history,
+              6 => :post_hide,
+              7 => :post_ignore,
+              column: 'post'
 
     has_flags 1 => :admin_read,
               2 => :admin_update,

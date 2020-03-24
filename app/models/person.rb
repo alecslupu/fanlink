@@ -43,6 +43,8 @@
 #
 
 class Person < ApplicationRecord
+  attr_accessor :trigger_admin
+
   include AttachmentSupport
   include TranslationThings
   authenticates_with_sorcery!
@@ -101,7 +103,6 @@ class Person < ApplicationRecord
 
   has_many :badges, through: :badge_awards
 
-
   has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
   has_many :trivia_package_leaderboards, class_name: "Trivia::RoundLeaderboard"
   has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
@@ -126,6 +127,9 @@ class Person < ApplicationRecord
   has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
   has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
 
+  has_many :room_subscribers, dependent: :destroy
+  has_many :subscribed_rooms, through: :room_subscribers, source: :room
+
   has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
   has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
   has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
@@ -139,10 +143,11 @@ class Person < ApplicationRecord
 
   has_one :client_info, foreign_key: "client_id", dependent: :destroy
 
-
   has_many :notifications, dependent: :destroy
 
   belongs_to :role, optional: true
+
+  has_one :marketing_notification, dependent: :destroy
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
@@ -158,6 +163,33 @@ class Person < ApplicationRecord
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
   scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
+
+  scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
+  scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
+  scope :with_friendships, -> { received_friendships.or(requested_friendships) }
+  scope :without_friendships, -> { where.not(id: with_friendships.select(:id)) }
+
+  scope :has_interests, -> { joins(:person_interests).group(:id) }
+  scope :has_no_interests, -> { joins("LEFT JOIN person_interests ON person_interests.person_id = people.id").where("person_interests.id is NULL") }
+  scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").having("COUNT(followings.id) > 1").group(:id) }
+  scope :has_no_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").having("COUNT(followings.id) = 1").group(:id) }
+  scope :has_posts, -> { joins(:posts).group(:id) }
+  scope :has_no_posts, -> {joins("LEFT JOIN posts ON posts.person_id = people.id").where("posts.id is NULL") }
+  scope :has_facebook_id, -> { where.not(facebookid: nil) }
+  scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
+  scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
+  scope :has_free_certificates_enrolled, -> { joins(:certificates).where("certificates.is_free = ?", true).group(:id) }
+  scope :has_no_free_certificates_enrolled, -> { where.not(id: has_enrolled_certificates.select(:id)) }
+  scope :has_paid_certificates, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0").group(:id) }
+  scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
+  scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
+  scope :has_no_sent_messages, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
+  scope :active_48h, -> { where("last_activity_at > ?", Time.zone.now - 48.hour) }
+  scope :active_7days, -> { where("last_activity_at > ?", Time.zone.now - 7.day) }
+  scope :active_30days, -> { where("last_activity_at > ?", Time.zone.now - 30.day) }
+  scope :inactive_48h, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 50.hour, Time.zone.now - 48.hour) }
+  scope :inactive_7days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 8.day, Time.zone.now - 7.day) }
+  scope :inactive_30days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 31.day, Time.zone.now - 30.day) }
 
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
@@ -182,6 +214,8 @@ class Person < ApplicationRecord
 
   # Check if username has any special characters and if length is between 5 and 25
   validate :valid_username
+  validate :read_only_username
+
   enum gender: %i[ unspecified male female ]
 
   validate :valid_country_code
@@ -246,7 +280,7 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id, :email, :picture])
+      results = graph.get_object("me", fields: %w(id email picture.width(320).height(320)))
     rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
@@ -374,6 +408,14 @@ class Person < ApplicationRecord
     notification_device_ids.map(&:device_identifier)
   end
 
+  def ios_device_tokens
+    notification_device_ids.where(device_type: :ios).pluck(:device_identifier)
+  end
+
+  def android_device_tokens
+    notification_device_ids.where(device_type: :android).pluck(:device_identifier)
+  end
+
   #
   # Return a scoped query for people whose names match a string.
   #
@@ -480,6 +522,15 @@ class Person < ApplicationRecord
     super_admin? || client_portal?
   end
 
+  def self.with_matched_interests(interest_ids, person_id)
+    self.select("people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids")
+      .joins(:person_interests).where("person_interests.interest_id in (?)", interest_ids)
+      .where("person_interests.person_id != (?)", person_id)
+      .where("people.product_account = false")
+      .group("people.id")
+      .order(Arel.sql("count(person_interests.*) DESC"))
+  end
+
   private
 
   def check_facebookid
@@ -527,6 +578,12 @@ class Person < ApplicationRecord
     if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
       errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
+
+  def read_only_username
+    return if new_record?
+    return if self.trigger_admin.present?
+    errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
   end
 
   def client_role_changing

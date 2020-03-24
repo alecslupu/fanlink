@@ -3,5 +3,12 @@ RailsAdmin.config do |config|
   config.model "Trivia::Topic" do
     parent "Trivia::Game"
     label_plural "Topics"
+
+    edit do
+      exclude_fields :product
+    end
+    nested do
+      exclude_fields :product
+    end
   end
 end

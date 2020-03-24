@@ -2,7 +2,7 @@ RailsAdmin.config do |config|
   config.included_models.push("Poll")
 
   config.model "Poll" do
-    navigation_label "Polls"
+    parent "Post"
 
     show do
       fields :id,

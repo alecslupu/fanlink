@@ -2,7 +2,7 @@
 lock "~> 3.11.1"
 
 set :application, "flapi"
-set :repo_url, "git@bitbucket.org:mtoserver/fanlink.git"
+set :repo_url, "git@gitlab.fan.link:fanlink/fanlink.git"
 
 set :deploy_via, :remote_cache
 set :deploy_to, "/home/ubuntu/sites/#{fetch(:application)}"
@@ -88,4 +88,6 @@ set :delayed_job_args, "-n 2"
 #     deploy:log_revision
 
 # after 'deploy:check', 'delayed_job:restart'
+
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 after "deploy:finished", "delayed_job:restart"

@@ -5,6 +5,10 @@ RailsAdmin.config do |config|
 
     label_plural "Available Answer"
 
+    edit do
+      exclude_fields :product
+    end
+
     nested do
       exclude_fields :question
     end

@@ -1,6 +1,8 @@
 RailsAdmin.config do |config|
   config.included_models.push("MessageReport")
   config.model "MessageReport" do
+    parent "Message"
+
     configure :poster do
     end
     configure :reporter do

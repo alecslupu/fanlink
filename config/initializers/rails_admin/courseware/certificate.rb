@@ -4,7 +4,14 @@ RailsAdmin.config do |config|
   config.model "Certificate" do
     navigation_label "Courseware"
 
-    configure :is_paid do
+    configure :is_paid, :boolean do
+      pretty_value do
+        bindings[:object].is_paid?
+      end
+
+      export_value do
+        bindings[:object].is_paid?.inspect
+      end
     end
 
     show do
@@ -46,16 +53,34 @@ RailsAdmin.config do |config|
              :certificate_issuable
     end
     list do
-      fields :id,
-             :short_name,
-             :certificate_order
+      fields :id
+      field :short_name do
+        column_width 100
+      end
+      field :certificate_order do
+        column_width 140
+      end
+      field :room do
+        pretty_value do
+          bindings[:object].room_id
+        end
+        column_width 100
+      end
+      field :is_paid, :boolean do
+       column_width 100
+      end
+      field :status do
+        column_width 100
+      end
+      field :certcourses
+    end
+    export do
       field :is_paid, :boolean do
         pretty_value do
           bindings[:object].is_paid?
         end
+
       end
-      fields :status,
-             :certcourses
     end
   end
 end

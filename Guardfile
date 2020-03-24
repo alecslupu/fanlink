@@ -24,7 +24,7 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec rspec --exclude-pattern \"spec/requests/**/*_spec.rb\"" do
+guard :rspec, cmd: "bundle exec rspec" do
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
@@ -84,20 +84,20 @@ end
 #     watch(%r{^spec/.+\.rb$})
 #     watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 # end
-
-guard 'annotate' do
-  watch( 'db/schema.rb' )
-
-  # Uncomment the following line if you also want to run annotate anytime
-  # a model file changes
-  watch( 'app/models/**/*.rb' )
-
-  # Uncomment the following line if you are running routes annotation
-  # with the ":routes => true" option
-  #watch( 'config/routes.rb' )
-end
-
-guard "rubycritic" do
-  watch(%r{^app/(.+)\.rb$})
-  watch(%r{^lib/(.+)\.rb$})
-end
+#
+#guard 'annotate' do
+#  watch( 'db/schema.rb' )
+#
+#  # Uncomment the following line if you also want to run annotate anytime
+#  # a model file changes
+#  watch( 'app/models/**/*.rb' )
+#
+#  # Uncomment the following line if you are running routes annotation
+#  # with the ":routes => true" option
+#  #watch( 'config/routes.rb' )
+#end
+#
+#guard "rubycritic" do
+#  watch(%r{^app/(.+)\.rb$})
+#  watch(%r{^lib/(.+)\.rb$})
+#end

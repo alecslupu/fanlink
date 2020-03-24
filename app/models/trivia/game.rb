@@ -54,7 +54,55 @@ validates the startd_date > now when draft and published FLAPI-936
     end
 =end
 
-    enum status: %i[draft published locked running closed]
+    def compute_leaderboard
+      self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
+    end
+
+    include AASM
+
+    enum status: {
+      draft: 0,
+      published: 1,
+      locked: 2,
+      running: 3,
+      closed: 4,
+    }
+
+    aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
+      state :draft, initial: true
+      state :published
+      state :locked
+      state :running
+      state :closed
+
+      event :publish do
+        # before do
+        #   instance_eval do
+        #     validates_presence_of :sex, :name, :surname
+        #   end
+        # end
+        transitions from: :draft, to: :published
+      end
+
+      event :unpublish do
+        transitions from: :published, to: :draft
+      end
+
+      event :locked do
+        transitions from: :published, to: :locked
+      end
+      event :running do
+        transitions from: :locked, to: :running
+      end
+
+      event :closed do
+        transitions from: :running, to: :closed
+      end
+    end
+
+    def status_enum
+      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
+    end
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
     scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
@@ -62,10 +110,22 @@ validates the startd_date > now when draft and published FLAPI-936
 
     after_save :handle_status_changes
 
+    def copy_to_new
+      new_entry = self.dup
+      new_entry.update!(status: :draft, start_date: nil, end_date: nil)
+
+      new_entry.prizes = prizes.collect(&:copy_to_new)
+      new_entry.rounds = rounds.collect(&:copy_to_new)
+      new_entry.save
+      self.class.reset_counters(id, :rounds, touch: true)
+      self.class.reset_counters(new_entry.id, :rounds, touch: true)
+      new_entry
+    end
+
     def compute_gameplay_parameters
       ActiveRecord::Base.transaction do
         rounds.each.map(&:compute_gameplay_parameters)
-        self.start_date =  rounds.first.start_date
+        self.start_date = rounds.first.start_date
         self.end_date = rounds.reload.last.end_date_with_cooldown
         self.save
       end

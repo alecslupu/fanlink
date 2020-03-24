@@ -36,5 +36,10 @@ RailsAdmin.config do |config|
              :issued_from,
              :issued_to
     end
+
+    export do
+      configure :name, :string
+      configure :description, :string
+    end
   end
 end

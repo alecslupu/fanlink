@@ -751,7 +751,7 @@ csv_text = %Q(Games,Game Name,Game Description,Round Number,Round description,Qu
 ,,,,,,3,True/False,Science of Cannabis,Lowering your reflector in a grow tent makes sure that your plants don't have to reach for the light.,2,True,False,,,1,1
 )
 
-products = Product.where(internal_name: %w(cantrivia cantrivia))
+products = Product.where(internal_name: %w(caned cantrivia))
 
 products.each do |product|
   ActsAsTenant.with_tenant(product) do

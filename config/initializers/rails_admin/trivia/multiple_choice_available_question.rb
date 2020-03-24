@@ -4,7 +4,7 @@ RailsAdmin.config do |config|
     parent "Trivia::AvailableQuestion"
     label_plural "Multiple choice"
     edit do
-      exclude_fields :type
+      fields :title, :cooldown_period, :time_limit, :topic, :complexity, :status, :available_answers
     end
   end
 end

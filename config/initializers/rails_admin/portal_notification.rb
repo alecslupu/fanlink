@@ -19,5 +19,9 @@ RailsAdmin.config do |config|
       field :body, :translated
       fields :send_me_at, :sent_status
     end
+
+    export do
+      configure :body, :string
+    end
   end
 end

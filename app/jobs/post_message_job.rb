@@ -50,4 +50,8 @@ class PostMessageJob < Struct.new(:message_id, :version)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end
