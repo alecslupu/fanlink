@@ -172,5 +172,25 @@ RSpec.describe Trivia::Game, type: :model do
         end
       end
     end
+
+    describe "#check_rounds_start_time" do
+      describe "when trying to publish a game with at least one round with the start date in the past"
+      before(:each) do
+         @game = create(:full_trivia_game, start_date:(Time.zone.now + 1.day).to_i)
+         # if in the future the factory won't create rounds in the past
+         # @game.rounds.each do |round|
+         #   round.update(start_date: (Time.zone.now + 1.day).to_i)
+         # end
+         @game.publish!
+      end
+
+      it "does not publish the game" do
+        expect(@game.status).to eq("draft")
+      end
+
+      it "throws an error with a message" do
+        expect(@game.errors.messages[:start_date]).to include("of the rounds must be higher than current date")
+      end
+    end
   end
 end

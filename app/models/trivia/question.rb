@@ -73,12 +73,13 @@ module Trivia
       new_entry.update!(start_date: nil, end_date: nil)
       new_entry
     end
+
     private
 
-    def add_question_type
-      question_type = available_question.type.sub("Available", "")
-      self.type = question_type
-    end
+      def add_question_type
+        question_type = available_question.type.sub("Available", "")
+        self.type = question_type
+      end
   end
 end
 

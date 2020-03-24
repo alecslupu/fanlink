@@ -42,8 +42,7 @@ module Trivia
 
     validates :long_name, presence: true
     validates :short_name, presence: true
-
-    validate :check_rounds_start_time
+    validate :check_rounds_start_time, if: -> { published? }
     validates_numericality_of :start_date, only_integer: true, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
 
     def compute_leaderboard
