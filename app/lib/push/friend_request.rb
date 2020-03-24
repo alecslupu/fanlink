@@ -3,7 +3,7 @@ module Push
     def received_push(relationship)
       @target_person = relationship.requested_to
       requested_by_person = relationship.requested_by
-      profile_picture_url = requested_by_person.picture_url.present? ? requested_by_person.picture_url : requested_by_person.facebook_picture_url
+      profile_picture_url = requested_by_person.picture_url.presence || requested_by_person.facebook_picture_url
 
       android_token_notification_push(
         2419200,
