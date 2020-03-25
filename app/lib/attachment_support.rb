@@ -31,13 +31,13 @@ module AttachmentSupport
             attachment.instance.product.internal_name
           end
         end
-        EOE
+      EOE
     end
 
     def has_audio_called(name)
       has_attached_file name, default_url: nil
       validates_attachment name,
-        content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/aac", "audio/x-aac"] },
+        content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/mpeg", "audio/x-mpeg", "audio/aac", "audio/x-aac", "video/mp4"] },
         size: { in: 0..10.megabytes }
 
       class_eval <<-EOE

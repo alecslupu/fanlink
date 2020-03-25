@@ -1,9 +1,7 @@
 json = {}
 
 json[:rooms] = @rooms.map do |room|
-  r = Rails.cache.fetch ["v4", "room", @req_source, room.id, room.updated_at.to_i] do
-    render partial: @req_source, locals: { room: room }, handlers: "jb"
-  end
+  r = render partial: @req_source, locals: { room: room }, handlers: "jb"
   r[:owned] = room.created_by_id == current_user.id
   r
 end

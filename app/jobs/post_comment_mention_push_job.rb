@@ -13,4 +13,8 @@ class PostCommentMentionPushJob < Struct.new(:post_comment_mention_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

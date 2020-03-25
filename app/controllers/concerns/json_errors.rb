@@ -14,7 +14,8 @@ module JSONErrors
     rescue_from ActiveRecord::RecordNotFound,       with: :render_404
     rescue_from ActionController::ParameterMissing, with: :render_400
     rescue_from ActionController::RoutingError,     with: :render_404
-    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
+#    rescue_from Rack::Timeout::RequestTimeoutException, with: :render_500
+    rescue_from AccessDeniedException, with: :render_401
   end
 
   def render_400(errors = "required parameters invalid")
@@ -22,6 +23,8 @@ module JSONErrors
   end
 
   def render_401(errors = "unauthorized access")
+    errors = errors.message if errors.is_a?(AccessDeniedException)
+
     render_errors(errors, 401)
   end
 

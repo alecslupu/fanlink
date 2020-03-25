@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Api::V4::QuestActivitiesController, type: :controller do
   describe "GET show" do
     it 'returns the quest_activity with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         quest_activity = create(:quest_activity, picture: fixture_file_upload('images/better.png', 'image/png'))
@@ -17,7 +17,7 @@ RSpec.describe Api::V4::QuestActivitiesController, type: :controller do
 
   describe "PUT update" do
     it "updates a quest_activity's attachment" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         quest_activity = create(:quest_activity)

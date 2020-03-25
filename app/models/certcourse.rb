@@ -56,9 +56,12 @@ class Certcourse < ApplicationRecord
   protected
 
   def children_not_empty
-    unless certcourse_pages.inject(true) { |default, cp| default && cp.child.present? && cp.child.valid? }
-      errors.add(:base, _("Cannot publish, at least one page has no content"))
+    validation_buffer  = []
+    certcourse_pages.each do |cp|
+      validation_buffer.push(cp.id) unless cp.child.present? && cp.child.valid?
     end
+
+    errors.add(:base, _("Cannot publish, at least one page has no content. Please check #{validation_buffer.join(', ')}")) unless validation_buffer.empty?
   end
 
   def delete_dependent_pages

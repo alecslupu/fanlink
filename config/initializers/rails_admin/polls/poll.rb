@@ -2,7 +2,7 @@ RailsAdmin.config do |config|
   config.included_models.push("Poll")
 
   config.model "Poll" do
-    navigation_label "Polls"
+    parent "Post"
 
     show do
       fields :id,
@@ -21,7 +21,7 @@ RailsAdmin.config do |config|
       field :poll_type_id, :integer do
         label "Post id"
       end
-      fields  :start_date,
+      fields :start_date,
              :end_date,
               # :duration,
              :poll_status
@@ -29,12 +29,10 @@ RailsAdmin.config do |config|
       field :poll_options
     end
 
-
     list do
-      scopes [ nil,  :inactive, :active,  :disabled ]
+      scopes [ nil, :inactive, :active, :disabled ]
 
       fields :id, :poll_type, :poll_type_id, :start_date, :end_date, :duration, :poll_status
     end
-
   end
 end

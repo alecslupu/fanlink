@@ -45,12 +45,11 @@ class ApplicationPolicy
   end
 
   def show_in_app?
-    # false
     false
   end
 
   def dashboard?
-    user && user.some_admin?
+    true
   end
 
   # def select_product_dashboard?
@@ -69,25 +68,18 @@ class ApplicationPolicy
   end
 
   protected
+
   def has_permission?(permission)
-    begin
-      super_admin? || access.send([module_name, permission].join("_").to_sym)
-    rescue
-      false
-    end
+    user.full_permission_list.include?([module_name, permission].join("_").delete_suffix("?").to_sym)
   end
 
   def super_admin?
-    user && user.super_admin? && user.product.internal_name == "admin"
+    user.super_admin?
   end
 
   def module_name
     Rails.logger.debug("Defaulting to #{self.class.name}")
     "admin"
-  end
-
-  def access
-    @portal ||= PortalAccess.where(person_id: user.id).first_or_initialize
   end
 
   class Scope

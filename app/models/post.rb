@@ -2,7 +2,7 @@
 #
 # Table name: posts
 #
-#  id                   :bigint(8)        not null, primary key
+#  id                   :bigint           not null, primary key
 #  person_id            :integer          not null
 #  body_text_old        :text
 #  global               :boolean          default(FALSE), not null
@@ -46,6 +46,7 @@ class Post < ApplicationRecord
   scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
   scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
+  scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
   include TranslationThings
 
@@ -57,7 +58,7 @@ class Post < ApplicationRecord
 
   def post(version = 0)
     Delayed::Job.enqueue(PostPostJob.new(self.id, version))
-    if notify_followers && (person.followers.count > 0)
+    if person.followers.count > 0
       Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
     end
   end
@@ -117,9 +118,11 @@ class Post < ApplicationRecord
           published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
                           Time.zone.now, Time.zone.now)
         }
-  scope :not_promoted, -> {
-          left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()")
-        }
+  scope :not_promoted, -> { left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()") }
+
+
+  scope :reported, -> { joins(:post_reports) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: {id: nil} ) }
 
   def cache_key
     [super, person.cache_key].join("/")
@@ -190,14 +193,18 @@ class Post < ApplicationRecord
   end
 
   def reaction_breakdown
-    Rails.cache.fetch([cache_key, __method__]) {
-      (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
-    }
+    (post_reactions.count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
   end
 
-  def cached_reaction_count
-    Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
-  end
+  # def reaction_breakdown
+  #   Rails.cache.fetch([cache_key, __method__]) {
+  #     (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
+  #   }
+  # end
+
+  # def cached_reaction_count
+  #   Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
+  # end
 
   def cached_tags
     Rails.cache.fetch([self, "tags"]) { tags }
@@ -210,6 +217,7 @@ class Post < ApplicationRecord
   def reported?
     (post_reports.size > 0) ? "Yes" : "No"
   end
+  alias :reported :reported?
 
   def visible?
     (status == "published" && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil

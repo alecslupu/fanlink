@@ -5,7 +5,14 @@
 service_name: 'flink'
 
 # Use if APM Server requires a token
-# secret_token: ''
+#secret_token: 'f80747de-6853-4400-a611-bd764e5ececb'
 
 # Set custom APM Server URL (default: http://localhost:8200)
-server_url: 'http://172.30.0.101:8200'
+server_url: 'http://monitoring.fan.link:8200'
+
+log_path: 'log/elastic_apm.log'
+
+metrics_interval: '1s'
+transaction_sample_rate: 0.5
+api_buffer_size: 512
+metrics_interval: '2s'

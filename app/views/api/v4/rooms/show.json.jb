@@ -1,7 +1,5 @@
 json = {
-  room: Rails.cache.fetch(["v4", "room", @req_source, @room.id, @room.updated_at.to_i]) {
-    render(partial: @req_source, locals: { room: @room }, handlers: "jb")
-  }
+  room: render(partial: @req_source, locals: { room: @room }, handlers: "jb")
 }
 
 json[:room][:owned] = @room.created_by_id == current_user.id

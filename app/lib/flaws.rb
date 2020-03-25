@@ -23,38 +23,6 @@ module Flaws
   SIZER = VIDEO_PRESETS.first
 
   #
-  # Return the server we use for serving up HLS files. This will include
-  # the trailing slash.
-  #
-  # @return [String]
-  #   The server with leading scheme and a trailing slash.
-  #
-  def self.hls_server
-    Rails.configuration.fanlink[:aws][:hls_server]
-  end
-
-  #
-  # Return the server we use for serving up RTMP streams. This will
-  # include the trailing slash.
-  #
-  # @return [String]
-  #   The server with leading scheme and a trailing slash.
-  #
-  def self.rtmp_server
-    Rails.configuration.fanlink[:aws][:rtmp_server]
-  end
-
-  #
-  # Return the S3 server.
-  #
-  # @return [String]
-  #   The S3 server with leading schema without the trailing slash.
-  #
-  def self.s3_server
-    "https://s3.amazonaws.com/#{Rails.configuration.fanlink[:aws][:s3_bucket]}"
-  end
-
-  #
   # Confirm an SNS subscription.
   #
   # @param [String] topic_arn
@@ -68,7 +36,27 @@ module Flaws
   #
   def self.sns_confirm(topic_arn, token)
     raise ArgumentError.new("Missing token for subscription confirmation") if (token.blank?)
-    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret).confirm_subscription(topic_arn: topic_arn, token: token)
+    sns_client.confirm_subscription(topic_arn: topic_arn, token: token)
+  end
+
+  def self.sns_client
+    Aws::SNS::Client.new(access_key_id: key, secret_access_key: secret, region: region)
+  end
+
+  def self.sqs_client
+    Aws::SQS::Client.new(access_key_id: key, secret_access_key: secret, region: region)
+  end
+
+  def self.s3_client
+    Aws::S3::Client.new(access_key_id: key, secret_access_key: secret, region: region)
+  end
+
+  def self.transcoder_client
+    Aws::ElasticTranscoder::Client.new(
+      access_key_id: key,
+      secret_access_key: secret,
+      region: region
+    )
   end
 
   def self.transcoding_queue?
@@ -78,12 +66,8 @@ module Flaws
   def self.start_transcoding(filename, data)
     filename = filename.gsub(/^\//, "")
     to_output = outputter_for(filename)
-    transcoder = Aws::ElasticTranscoder::Client.new(
-      access_key_id: key,
-      secret_access_key: secret,
-    )
 
-    transcoder.create_job(
+    transcoder_client.create_job(
       pipeline_id: pipeline_id,
       input: { key: filename },
       outputs: [SIZER].map(&to_output),
@@ -101,15 +85,12 @@ module Flaws
     to_output_name = output_name_for(filename)
 
     if (width < SIZER[:w] && height < SIZER[:h])
-      Aws::S3::Client.new.delete_object(bucket: Rails.configuration.fanlink[:aws][:s3_bucket], key: to_output_name[SIZER])
+      s3_client.delete_object(bucket: bucket,  key: to_output_name[SIZER])
     else
       data = data.merge("presets" => SIZER[:id])
     end
-    transcoder = Aws::ElasticTranscoder::Client.new(
-      access_key_id: key,
-      secret_access_key: secret,
-    )
-    transcoder.create_job(
+
+    transcoder_client.create_job(
       pipeline_id: pipeline_id,
       input: { key: filename },
       outputs: presets.map(&to_output),
@@ -147,7 +128,7 @@ module Flaws
   def self.extract_from_transcoding_queue(&block)
     unpack = lambda { |m| { rh: m.receipt_handle, body: JSON.parse(JSON.parse(m.body)["Message"]) } }
     the_one = lambda { |m| block[m[:body]] }
-    sqs = Aws::SQS::Client.new(access_key_id: key, secret_access_key: secret)
+    sqs = sqs_client
     if (msg = sqs.receive_message(queue_url: queue_url, max_number_of_messages: 10).messages.map(&unpack).find(&the_one))
       sqs.delete_message(queue_url: queue_url, receipt_handle: msg[:rh])
       msg = msg[:body]
@@ -182,44 +163,83 @@ module Flaws
 
   private
 
-    def self.output_name_for(filename)
-      basename = File.basename(filename, File.extname(filename))
-      dirname = File.dirname(filename).gsub("original", "transcoded")
-      -> (p) { "#{dirname}/#{basename}-#{p[:name]}" }
-    end
+  def self.output_name_for(filename)
+    basename = File.basename(filename, File.extname(filename))
+    dirname = File.dirname(filename).gsub("original", "transcoded")
+    -> (p) { "#{dirname}/#{basename}-#{p[:name]}" }
+  end
 
-    def self.thumbnail_name_for(filename)
-      basename = File.basename(filename, File.extname(filename))
-      -> (p) { "thumbnails/#{basename}" }
-    end
+  def self.thumbnail_name_for(filename)
+    basename = File.basename(filename, File.extname(filename))
+    -> (p) { "thumbnails/#{basename}" }
+  end
 
-    def self.outputter_for(filename)
-      output_name = output_name_for(filename)
-      thumbnail_name = thumbnail_name_for(filename)
-      -> (p) {
-        { key: output_name[p], preset_id: p[:id] }.merge(
-          p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}).merge(
-            p[:playlist] ? { segment_duration: "10" } : {})
-      }
-    end
+  def self.outputter_for(filename)
+    output_name = output_name_for(filename)
+    thumbnail_name = thumbnail_name_for(filename)
+    -> (p) {
+      { key: output_name[p], preset_id: p[:id] }.merge(
+        p[:thumbnails] ? { thumbnail_pattern: "#{thumbnail_name[p]}-{count}" } : {}).merge(
+          p[:playlist] ? { segment_duration: "10" } : {})
+    }
+  end
 
-    def self.video_directory_for(filename)
-      File.dirname(filename).gsub("original", "transcoded")
-    end
+  def self.video_directory_for(filename)
+    File.dirname(filename).gsub("original", "transcoded")
+  end
 
-    def self.key
-      Rails.configuration.fanlink[:aws][:transcoder_key]
-    end
+  def self.region
+    Rails.configuration.fanlink[:aws][:region]
+  end
 
-    def self.secret
-      Rails.configuration.fanlink[:aws][:transcoder_secret]
-    end
+  def self.key
+    Rails.configuration.fanlink[:aws][:transcoder_key]
+  end
 
-    def self.pipeline_id
-      Rails.configuration.fanlink[:aws][:transcoder_pipeline_id]
-    end
+  def self.secret
+    Rails.configuration.fanlink[:aws][:transcoder_secret]
+  end
 
-    def self.queue_url
-      Rails.configuration.fanlink[:aws][:transcoder_queue_url]
-    end
+  def self.pipeline_id
+    Rails.configuration.fanlink[:aws][:transcoder_pipeline_id]
+  end
+
+  def self.queue_url
+    Rails.configuration.fanlink[:aws][:transcoder_queue_url]
+  end
+  #
+  # Return the server we use for serving up HLS files. This will include
+  # the trailing slash.
+  #
+  # @return [String]
+  #   The server with leading scheme and a trailing slash.
+  #
+  def self.hls_server
+    Rails.configuration.fanlink[:aws][:hls_server]
+  end
+
+  #
+  # Return the server we use for serving up RTMP streams. This will
+  # include the trailing slash.
+  #
+  # @return [String]
+  #   The server with leading scheme and a trailing slash.
+  #
+  def self.rtmp_server
+    Rails.configuration.fanlink[:aws][:rtmp_server]
+  end
+
+  #
+  # Return the S3 server.
+  #
+  # @return [String]
+  #   The S3 server with leading schema without the trailing slash.
+  #
+  def self.s3_server
+    "https://s3.amazonaws.com/#{bucket}"
+  end
+
+  def self.bucket
+    Rails.configuration.fanlink[:aws][:s3_bucket]
+  end
 end

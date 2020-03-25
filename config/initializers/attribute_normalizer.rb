@@ -1,5 +1,4 @@
 AttributeNormalizer.configure do |config|
-
   config.normalizers[:currency] = lambda do |value, options|
     value.is_a?(String) ? value.gsub(/[^0-9\.]+/, "") : value
   end
@@ -22,5 +21,4 @@ AttributeNormalizer.configure do |config|
   # The default normalizers if no :with option or block is given is to apply the :strip and :blank normalizers (in that order).
   # You can change this if you would like as follows:
   # config.default_normalizers = :strip, :blank
-
 end

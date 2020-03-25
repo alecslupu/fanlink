@@ -18,10 +18,18 @@ class Interest < ApplicationRecord
   acts_as_tenant(:product)
 
   belongs_to :product
-  has_many :children, class_name: "Interest", foreign_key: "parent_id", dependent: :destroy
+  belongs_to :parent, class_name: "Interest", primary_key: :id, optional: true
+  has_many :children, class_name: "Interest", foreign_key: :parent_id, dependent: :destroy
   has_many :person_interests, dependent: :destroy
 
-  validates :title, presence: { message: "Title is required" }
+  accepts_nested_attributes_for :children, allow_destroy: true
+
+  validate :title_not_empty
 
   scope :interests, -> (product) { where(product_id: product.id, parent_id: nil).order(order: :desc) }
+
+  protected
+  def title_not_empty
+    errors.add(:title, _("can't be empty.")) unless  self.title.present?
+  end
 end

@@ -1,7 +1,0 @@
-<% if badge_awards.size > 0 %>
-  <ul class="badge-list">
-    <% badge_awards.each do |award| %>
-      <li><%= link_to "#{award.badge.name}" , admin_badge_path(award.badge) %> - Awarded: <%= award.created_at %></li>
-    <% end %>
-  </ul>
-<% end %>

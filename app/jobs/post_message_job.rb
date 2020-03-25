@@ -29,7 +29,8 @@ class PostMessageJob < Struct.new(:message_id, :version)
         if version.present?
           Rails.logger.tagged("Post Message Job") { Rails.logger.debug "Message #{message.id} created. Pushing message to version: #{version} path: #{versioned_room_path(message.room, version)}/last_message" } unless Rails.env.production?
           version.downto(1) { |v|
-            client.set("#{versioned_room_path(message.room, v)}/last_message", msg)
+            response = client.set("#{versioned_room_path(message.room, v)}/last_message", msg)
+            Rails.logger.tagged("Post Message Job #{v}") { Rails.logger.debug response.inspect } unless Rails.env.production?
           }
         end
         client.set("#{room_path(message.room)}/last_message_id", message.id) # Remove with V5
@@ -48,5 +49,9 @@ class PostMessageJob < Struct.new(:message_id, :version)
     if exception.is_a?(ActiveRecord::RecordNotFound)
       job.destroy
     end
+  end
+
+  def queue_name
+    :default
   end
 end

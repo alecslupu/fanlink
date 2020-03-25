@@ -13,4 +13,8 @@ class DeleteMessageJob < Struct.new(:message_id, :version)
       end
     end
   end
+
+  def queue_name
+    :default
+  end
 end

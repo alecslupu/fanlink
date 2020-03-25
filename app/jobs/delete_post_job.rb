@@ -19,4 +19,8 @@ class DeletePostJob < Struct.new(:post_id, :version)
       end
     end
   end
+
+  def queue_name
+    :default
+  end
 end

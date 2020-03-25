@@ -20,7 +20,7 @@ RSpec.describe Api::V1::LevelsController, type: :controller do
     end
 
     it 'returns all levels with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(

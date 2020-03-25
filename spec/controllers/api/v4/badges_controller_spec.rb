@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V4::BadgesController, type: :controller do
   describe 'GET index' do
     it 'returns all badges with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(:badge, 3)
@@ -19,7 +19,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
 
   describe 'POST create' do
     it "creates a badge with attachment when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -37,11 +37,35 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
         expect(json['badge']['picture_url']).to include('better.png')
       end
     end
+
+    it 'creates a badge' do
+      user = create(:admin_user)
+      ActsAsTenant.with_tenant(user.product) do
+        login_as(user)
+        name = 'A name'
+        internal_name = 'internal'
+        description = 'description'
+        action_type = create(:action_type)
+        post :create, params: {
+          badge: {
+            name: name,
+            internal_name: internal_name,
+            description: description,
+            action_type_id: action_type.id
+          }
+        }
+        expect(response).to be_successful
+        badge = Badge.last
+        expect(badge.name).to eq(name)
+        expect(badge.internal_name).to eq(internal_name)
+        expect(badge.action_type_id).to eq(action_type.id)
+      end
+    end
   end
 
   describe 'PUT update' do
     it "updates a badge's attachment" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         badge = create(:badge)
@@ -62,7 +86,7 @@ RSpec.describe Api::V4::BadgesController, type: :controller do
 
   describe 'GET show' do
     it 'returns the badge with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         badge = create(:badge)

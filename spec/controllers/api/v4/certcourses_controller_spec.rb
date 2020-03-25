@@ -19,8 +19,13 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.last.id, quiz_page: qp)
 
-        get :show, params: {id: qp.certcourse_page_id}
+        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
+
+        get :show, params: {id: qp.certcourse_page.certcourse_id }
         expect(response).to have_http_status(200)
+
+        expect(qp).to exist_in_database
+
         json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
           expect(selected_answer["is_selected"]).to be_falsey
           expect(selected_answer["is_selected"]).not_to be_nil
@@ -28,6 +33,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         end
       end
     end
+
     it "displays the right answer if selected" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -35,8 +41,11 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         qp = create(:quiz_page, that_is_mandatory: true)
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
-        get :show, params: {id: qp.certcourse_page_id}
+        allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
+        get :show, params: {id: qp.certcourse_page.certcourse_id }
+
         expect(response).to have_http_status(200)
+        expect(qp).to exist_in_database
 
         json["certcourse_pages"][0]["quiz"]["answers"].each do |selected_answer|
           expect(selected_answer["is_selected"]).not_to be_nil
