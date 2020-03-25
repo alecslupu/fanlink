@@ -21,8 +21,8 @@ RailsAdmin.config do |config|
 
       field :certcourse_pages do
         def render
-          bindings[:view].render partial: 'rails_admin/main/form_nested_many_orderable', locals: {
-            field: self, form: bindings[:form], field_order: :certcourse_page_order_field
+          bindings[:view].render partial: "rails_admin/main/form_nested_many_orderable", locals: {
+            field: self, form: bindings[:form], field_order: :certcourse_page_order_field,
           }
         end
       end

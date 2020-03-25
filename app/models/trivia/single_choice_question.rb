@@ -20,8 +20,5 @@ module Trivia
   class SingleChoiceQuestion < Question
     belongs_to :available_question, class_name: "Trivia::SingleChoiceAvailableQuestion", foreign_key: :available_question_id
 
-    rails_admin do
-
-    end
   end
 end

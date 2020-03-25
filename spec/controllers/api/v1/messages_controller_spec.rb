@@ -6,6 +6,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
                          :execute, :message_created)
   end
   describe "#create" do
+    before :each do
+      allow_any_instance_of(Message).to receive(:post).and_return(true)
+    end
     it "should create a new message in a public room" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
@@ -271,6 +274,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
   end
 
   describe "#index" do
+    before :each do
+      allow_any_instance_of(Room).to receive(:clear_message_counter).and_return(true)
+    end
     let(:from) { "2018-01-01" }
     let(:to) { "2018-01-03" }
     it "should get a list of messages for a date range without limit" do
@@ -429,7 +435,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       end
 
       it 'returns all the messages with the attached image' do
-        person = create(:person, role: :admin)
+        person = create(:admin_user)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
           from = Date.today - 1.day
@@ -460,7 +466,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       end
 
       it 'returns all the messages with the attached audio' do
-        person = create(:person, role: :admin)
+        person = create(:admin_user)
         ActsAsTenant.with_tenant(person.product) do
           login_as(person)
           from = Date.today - 1.day
@@ -472,7 +478,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
             3,
             room: private_room,
             body: "this is my body",
-            audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
+            audio: fixture_file_upload('audio/small_audio.mp4', 'video/mp4')
           )
 
           get :index,
@@ -496,23 +502,24 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     #   let(:product) { create(:product, name: "Test Product 321", internal_name: "test_product_321") }
     #
     #   let!(:membership2) { create(:room_membership, room: room2) }
-    #   let!(:admin) { create(:person, product: product, role: :admin) }
+    #   let!(:admin) { create(:admin_user, product: product) }
     it "should give you all messages from all rooms with no page specified" do
       admin_person = create(:admin_user)
       ActsAsTenant.with_tenant(admin_person.product) do
         room1 = create(:room, public: true)
         room2 = create(:room, public: false)
         membership1 = create(:room_membership, room: room2, person: create(:person, username: "membership1"))
-        msg1 = create(:message, created_at: Time.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, username: "message1person"))
-        msg2 = create(:message, created_at: Time.now - 9.minutes, room: room1, body: "msg2")
-        msg12 = create(:message, created_at: Time.now - 8.minutes, room: room1, body: "msg12")
-        msg13 = create(:message, created_at: Time.now - 7.minutes, room: room1, body: "msg13")
-        msg14 = create(:message, created_at: Time.now - 6.minutes, room: room1, body: "msg14")
-        msg3 = create(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3")
+        msg1 = build(:message, created_at: Time.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, username: "message1person"))
+        msg2 = build(:message, created_at: Time.now - 9.minutes, room: room1, body: "msg2")
+        msg12 = build(:message, created_at: Time.now - 8.minutes, room: room1, body: "msg12")
+        msg13 = build(:message, created_at: Time.now - 7.minutes, room: room1, body: "msg13")
+        msg14 = build(:message, created_at: Time.now - 6.minutes, room: room1, body: "msg14")
+        msg3 = build(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3")
 
         login_as(admin_person)
-
         toget = [msg1, msg2, msg12, msg13, msg14, msg3]
+
+        allow(subject).to receive(:apply_filters).and_return toget
         get :list
         expect(response).to be_successful
         expect(json["messages"].count).to eq(toget.size)
@@ -728,14 +735,14 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     end
 
     it 'returns all the messages with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         from = Date.today - 1.day
         to = Date.today
         private_room = create(:room, public: false, status: :active)
         private_room.members << person << private_room.created_by
-        create_list(
+        toget = build_list(
           :message,
           3,
           created_at: to,
@@ -743,6 +750,9 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           body: "this is my body",
           picture: fixture_file_upload('images/better.png', 'image/png')
         )
+
+        allow(subject).to receive(:apply_filters).and_return toget
+
         get :list
 
         expect(response).to be_successful
@@ -825,7 +835,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     end
 
     it 'returns the message with the attached picture' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         private_room = create(:room, public: false, status: :active)
@@ -844,7 +854,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     end
 
     it 'returns the message with the attached audio' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         private_room = create(:room, public: false, status: :active)

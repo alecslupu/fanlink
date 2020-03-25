@@ -15,4 +15,8 @@ class MessageMentionPushJob < Struct.new(:message_mention_id)
       job.destroy
     end
   end
+
+  def queue_name
+    :default
+  end
 end

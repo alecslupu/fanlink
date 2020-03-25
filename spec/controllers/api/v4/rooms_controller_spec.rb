@@ -39,7 +39,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-    it "should return public rooms without timestamps" do
+    it "should return public rooms with timestamps and order" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -49,23 +49,43 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
 
         expect(response).to be_successful
         json["rooms"].each do |room|
-          expect(room).to_not include('last_message_timestamp')
+          expect(room).to include('order')
+          expect(room).to include('last_message_timestamp')
         end
       end
     end
 
-    it "should return private rooms with timestamps" do
+    it "should return private rooms with timestamps and order" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        create_list(:room, 3, public: false, status: :active)
-
+        create_list(:room, 2, public: false, status: :active, created_by_id: person.id)
+        Room.last(2).each do |room|
+          room.members << person
+        end
         get :index, params: { private: true }
 
         expect(response).to be_successful
         json["rooms"].each do |room|
+          expect(room).to include('order')
           expect(room).to include('last_message_timestamp')
         end
+      end
+    end
+
+    it "should returns private rooms with their members having the updated info" do
+      person = create(:person, pin_messages_from: false)
+      ActsAsTenant.with_tenant(person.product) do
+        login_as(person)
+        room = create(:room, public: false, status: :active, created_by_id: person.id)
+        room.members << person
+        person.update(pin_messages_from: true)
+        expect(person.pin_messages_from).to eq(true)
+
+        get :index, params: { private: true }
+
+        expect(response).to be_successful
+        expect(json["rooms"].first["members"].first["pin_messages_from"]).to eq(true)
       end
     end
   end
@@ -83,7 +103,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
     end
 
-    it 'should return an public room without the timestamp' do
+    it 'should return an public room with the timestamp and order' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -91,11 +111,12 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         get :show, params: { id: room.id}
 
         expect(response).to be_successful
-        expect(json['room']).to_not include('last_message_timestamp')
+        expect(json['room']).to include('order')
+        expect(json['room']).to include('last_message_timestamp')
       end
     end
 
-    it 'should return a private room with the timestamp' do
+    it 'should return a private room with the timestamp and order' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -103,6 +124,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         get :show, params: { id: room.id}
 
         expect(response).to be_successful
+        expect(json['room']).to include('order')
         expect(json['room']).to include('last_message_timestamp')
       end
     end
@@ -111,7 +133,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
   describe "POST create" do
 
     it 'should attach picture to public rooms when provided' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -191,9 +213,10 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
     end
 
    it 'should not set public room timestamp' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+        current_timestamp = DateTime.now.to_i
 
         post :create,
              params: {
@@ -204,16 +227,18 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
              }
 
         expect(response).to be_successful
-        expect(json['room']['last_message_timestamp']).to eq(nil)
+        expect(json['room']['last_message_timestamp']).to be >= current_timestamp
         expect(Room.last.picture).not_to eq(nil)
       end
-    end
+   end
 
-   it 'should set public room timestamp' do
-      person = create(:person, role: :admin)
+
+   it 'should set private room timestamp' do
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         current_timestamp = DateTime.now.to_i
+        allow_any_instance_of(Room).to receive(:new_room).and_return(true)
 
         post :create,
              params: {
@@ -230,7 +255,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
 
   describe 'PUT update' do
     it "should let an admin update a public room's picture" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         public_room = create(:room, public: true, status: :active)

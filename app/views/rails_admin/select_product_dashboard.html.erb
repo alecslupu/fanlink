@@ -9,7 +9,7 @@
       <% @products.each do |product| %>
         <tr class="<%= cycle("odd", "even") %> link action_type_links">
           <td>
-            <span class="show"><a class="pjax" href="<%= select_product_action_path(product_id:  product.id ) %>"><%= product %></a></span>
+            <a class="pjax" href="<%= select_product_action_path(product_id:  product.id ) %>"><%= product %></a>
           </td>
         </tr>
       <% end %>

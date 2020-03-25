@@ -4,7 +4,7 @@ RSpec.describe Api::V4::Trivia::PictureAvailableAnswersController, type: :contro
   # TODO: auto-generated
   describe "GET show" do
     it "returns the picture answers with the attached image" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         picture_answer = create(

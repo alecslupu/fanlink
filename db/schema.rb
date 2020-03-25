@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191009160601) do
+ActiveRecord::Schema.define(version: 20200304073117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
 
   create_table "action_types", force: :cascade do |t|
@@ -88,6 +87,21 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.index ["provider", "uid"], name: "ind_authentications_provider_uid"
   end
 
+  create_table "automated_notifications", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.bigint "person_id", null: false
+    t.integer "criteria", null: false
+    t.boolean "enabled", default: false, null: false
+    t.integer "product_id", null: false
+    t.datetime "last_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ttl_hours", default: 672, null: false
+    t.index ["criteria"], name: "index_automated_notifications_on_criteria"
+    t.index ["person_id"], name: "index_automated_notifications_on_person_id"
+  end
+
   create_table "badge_actions", force: :cascade do |t|
     t.integer "action_type_id", null: false
     t.integer "person_id", null: false
@@ -120,10 +134,10 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
+    t.jsonb "name", default: {}, null: false
+    t.jsonb "description", default: {}, null: false
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
@@ -227,12 +241,32 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.index ["room_id"], name: "idx_certificates_room"
   end
 
+  create_table "client_infos", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_client_infos_on_client_id"
+    t.index ["code"], name: "index_client_infos_on_code"
+  end
+
+  create_table "client_to_people", force: :cascade do |t|
+    t.integer "status", null: false
+    t.integer "client_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type", null: false
+    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
+    t.index ["client_id"], name: "index_client_to_people_on_client_id"
+  end
+
   create_table "config_items", force: :cascade do |t|
     t.bigint "product_id"
     t.string "item_key"
     t.string "item_value"
     t.string "type"
-    t.boolean "enabled", default: false
+    t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parent_id"
@@ -288,6 +322,15 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["semester_id"], name: "index_courses_on_semester_id"
+  end
+
+  create_table "courseware_wishlist_wishlists", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "certificate_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["certificate_id"], name: "index_courseware_wishlist_wishlists_on_certificate_id"
+    t.index ["person_id"], name: "index_courseware_wishlist_wishlists_on_person_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -428,6 +471,21 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.index ["product_id", "points"], name: "unq_levels_product_points"
   end
 
+  create_table "marketing_notifications", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "body", null: false
+    t.bigint "person_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "ttl_hours", default: 672, null: false
+    t.integer "person_filter", null: false
+    t.string "deep_link", default: "", null: false
+    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.integer "timezone", default: 0, null: false
+    t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
+  end
+
   create_table "merchandise", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -441,9 +499,9 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
+    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
-    t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
@@ -489,7 +547,6 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.datetime "audio_updated_at"
     t.index ["body"], name: "index_messages_on_body"
     t.index ["created_at"], name: "index_messages_on_created_at"
-    t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
   end
@@ -500,8 +557,19 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "device_type", default: 0, null: false
+    t.boolean "not_registered", default: false, null: false
     t.index ["device_identifier"], name: "unq_notification_device_ids_device", unique: true
     t.index ["person_id"], name: "idx_notification_device_ids_person"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "for_followers", default: false, null: false
+    t.integer "product_id", null: false
+    t.index ["person_id"], name: "index_notifications_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -523,14 +591,14 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.boolean "do_not_message_me", default: false, null: false
     t.boolean "pin_messages_from", default: false, null: false
     t.boolean "auto_follow", default: false, null: false
-    t.integer "role", default: 0, null: false
+    t.integer "old_role", default: 0, null: false
     t.text "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
+    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -540,6 +608,9 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.boolean "terminated", default: false
     t.text "terminated_reason"
     t.boolean "deleted", default: false
+    t.bigint "role_id"
+    t.boolean "authorized", default: true, null: false
+    t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
@@ -547,6 +618,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.index ["product_id", "facebookid"], name: "unq_people_product_facebook", unique: true
     t.index ["product_id", "username"], name: "index_people_on_product_id_and_username"
     t.index ["product_id", "username_canonical"], name: "unq_people_product_username_canonical", unique: true
+    t.index ["role_id"], name: "index_people_on_role_id"
   end
 
   create_table "permission_policies", force: :cascade do |t|
@@ -681,7 +753,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2019-09-10 13:54:50"
+    t.datetime "end_date", default: "2020-01-31 09:32:07"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -704,6 +776,10 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "courseware", default: 0, null: false
     t.integer "trivia", default: 0, null: false
     t.integer "admin"
+    t.integer "root", default: 0
+    t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
@@ -857,7 +933,6 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.string "color_accent", default: "FFF537"
     t.string "color_accent_text", default: "FFF537"
     t.string "color_title_text", default: "FFF537"
-    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
@@ -967,6 +1042,24 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.index ["product_id"], name: "idx_quiz_pages_product"
   end
 
+  create_table "referral_referred_people", force: :cascade do |t|
+    t.bigint "inviter_id"
+    t.bigint "invited_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_id"], name: "index_referral_referred_people_on_invited_id"
+    t.index ["inviter_id"], name: "index_referral_referred_people_on_inviter_id"
+  end
+
+  create_table "referral_user_codes", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "unique_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_referral_user_codes_on_person_id"
+    t.index ["unique_code"], name: "index_referral_user_codes_on_unique_code", unique: true
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "requested_by_id", null: false
     t.integer "requested_to_id", null: false
@@ -1015,9 +1108,26 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "internal_name", null: false
-    t.integer "role_enum", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "post", default: 0, null: false
+    t.integer "chat", default: 0, null: false
+    t.integer "event", default: 0, null: false
+    t.integer "merchandise", default: 0, null: false
+    t.integer "badge", default: 0, null: false
+    t.integer "reward", default: 0, null: false
+    t.integer "quest", default: 0, null: false
+    t.integer "beacon", default: 0, null: false
+    t.integer "reporting", default: 0, null: false
+    t.integer "interest", default: 0, null: false
+    t.integer "courseware", default: 0, null: false
+    t.integer "trivia", default: 0, null: false
+    t.integer "admin", default: 0, null: false
+    t.integer "root", default: 0, null: false
+    t.integer "user", default: 0, null: false
+    t.integer "portal_notification", default: 0, null: false
+    t.integer "automated_notification", default: 0, null: false
+    t.integer "marketing_notification", default: 0, null: false
   end
 
   create_table "room_memberships", force: :cascade do |t|
@@ -1028,6 +1138,19 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "message_count", default: 0, null: false
     t.index ["person_id"], name: "idx_room_memberships_person"
     t.index ["room_id", "person_id"], name: "unq_room_memberships_room_person", unique: true
+  end
+
+  create_table "room_subscribers", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "person_id", null: false
+    t.bigint "last_message_id"
+    t.datetime "last_notification_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_message_id"], name: "index_room_subscribers_on_last_message_id"
+    t.index ["person_id"], name: "index_room_subscribers_on_person_id"
+    t.index ["room_id", "person_id"], name: "unq_room_person", unique: true
+    t.index ["room_id"], name: "index_room_subscribers_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -1045,7 +1168,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
     t.integer "order", default: 0, null: false
-    t.bigint "last_message_timestamp"
+    t.bigint "last_message_timestamp", default: 0
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
     t.index ["product_id", "status"], name: "unq_rooms_product_status"
   end
@@ -1063,8 +1186,8 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.jsonb "content", default: {}, null: false
-    t.jsonb "title", default: {}, null: false
+    t.jsonb "content", default: "{}", null: false
+    t.jsonb "title", default: "{}", null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
@@ -1150,8 +1273,8 @@ ActiveRecord::Schema.define(version: 20191009160601) do
 
   create_table "trivia_available_questions", force: :cascade do |t|
     t.string "title"
-    t.integer "cooldown_period"
-    t.integer "time_limit"
+    t.integer "cooldown_period", default: 6
+    t.integer "time_limit", default: 30
     t.integer "status"
     t.string "type"
     t.integer "topic_id"
@@ -1173,6 +1296,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_game_leaderboards_on_person_id"
     t.index ["product_id"], name: "idx_trivia_game_leaderboards_product"
+    t.index ["trivia_game_id", "person_id"], name: "idx_uniq_tgl_tgid_pid", unique: true
     t.index ["trivia_game_id"], name: "index_trivia_game_leaderboards_on_trivia_game_id"
   end
 
@@ -1239,15 +1363,16 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_question_leaderboards_on_person_id"
     t.index ["product_id"], name: "idx_trivia_question_leaderboards_product"
+    t.index ["trivia_question_id", "person_id"], name: "idx_uniq_tql_tqid_pid", unique: true
     t.index ["trivia_question_id"], name: "index_trivia_question_leaderboards_on_trivia_question_id"
   end
 
   create_table "trivia_questions", force: :cascade do |t|
     t.bigint "trivia_round_id"
-    t.integer "time_limit"
+    t.integer "time_limit", default: 30
     t.string "type"
     t.integer "question_order", default: 1, null: false
-    t.integer "cooldown_period", default: 5
+    t.integer "cooldown_period", default: 6
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "start_date"
@@ -1269,6 +1394,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_trivia_round_leaderboards_on_person_id"
     t.index ["product_id"], name: "idx_trivia_round_leaderboards_product"
+    t.index ["trivia_round_id", "person_id"], name: "idx_uniq_trl_trid_pid", unique: true
     t.index ["trivia_round_id"], name: "index_trivia_round_leaderboards_on_trivia_round_id"
   end
 
@@ -1343,6 +1469,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
   add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
   add_foreign_key "authentications", "people", name: "fk_authentications_people"
+  add_foreign_key "automated_notifications", "people"
   add_foreign_key "badge_actions", "action_types", name: "fk_badge_actions_action_types", on_delete: :restrict
   add_foreign_key "badge_actions", "people", name: "fk_badge_actions_people", on_delete: :cascade
   add_foreign_key "badge_awards", "badges", name: "fk_badge_awards_badges", on_delete: :restrict
@@ -1361,6 +1488,8 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   add_foreign_key "certificates", "products", name: "fk_certificates_products", on_delete: :cascade
   add_foreign_key "certificates", "rooms", name: "fk_certificates_room"
   add_foreign_key "config_items", "products"
+  add_foreign_key "courseware_wishlist_wishlists", "certificates"
+  add_foreign_key "courseware_wishlist_wishlists", "people"
   add_foreign_key "download_file_pages", "certcourse_pages"
   add_foreign_key "download_file_pages", "products"
   add_foreign_key "event_checkins", "events", name: "fk_event_checkins_event"
@@ -1371,6 +1500,7 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   add_foreign_key "image_pages", "products", name: "fk_image_products", on_delete: :cascade
   add_foreign_key "interests", "products", name: "fk_interests_products"
   add_foreign_key "levels", "products", name: "fk_levels_products"
+  add_foreign_key "marketing_notifications", "people"
   add_foreign_key "merchandise", "products", name: "fk_merchandise_products"
   add_foreign_key "message_mentions", "messages", name: "fk_message_mentions_messages", on_delete: :cascade
   add_foreign_key "message_mentions", "people", name: "fk_message_mentions_people", on_delete: :cascade
@@ -1380,7 +1510,9 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   add_foreign_key "messages", "people", name: "fk_portal_access_people", on_delete: :cascade
   add_foreign_key "messages", "rooms", name: "fk_messages_rooms", on_delete: :cascade
   add_foreign_key "notification_device_ids", "people", name: "fk_notification_device_ids_people", on_delete: :cascade
+  add_foreign_key "notifications", "people"
   add_foreign_key "people", "products", name: "fk_people_products", on_delete: :cascade
+  add_foreign_key "people", "roles"
   add_foreign_key "person_certcourses", "certcourses", name: "fk_person_certcourses_certcourse"
   add_foreign_key "person_certcourses", "people", name: "fk_person_certcourses_person"
   add_foreign_key "person_certificates", "certificates", name: "fk_person_certificates_certificate"
@@ -1417,11 +1549,17 @@ ActiveRecord::Schema.define(version: 20191009160601) do
   add_foreign_key "quests", "rewards", name: "fk_quests_rewards"
   add_foreign_key "quiz_pages", "certcourse_pages", name: "fk_quiz_pages_certcourse_page"
   add_foreign_key "quiz_pages", "products", name: "fk_quiz_products", on_delete: :cascade
+  add_foreign_key "referral_referred_people", "people", column: "invited_id"
+  add_foreign_key "referral_referred_people", "people", column: "inviter_id"
+  add_foreign_key "referral_user_codes", "people"
   add_foreign_key "relationships", "people", column: "requested_by_id", name: "fk_relationships_requested_by", on_delete: :cascade
   add_foreign_key "relationships", "people", column: "requested_to_id", name: "fk_relationships_requested_to", on_delete: :cascade
   add_foreign_key "rewards", "products", name: "fk_rewards_product", on_delete: :cascade
   add_foreign_key "room_memberships", "people", name: "fk_room_memberships_people", on_delete: :cascade
   add_foreign_key "room_memberships", "rooms", name: "fk_room_memberships_rooms", on_delete: :cascade
+  add_foreign_key "room_subscribers", "messages", column: "last_message_id"
+  add_foreign_key "room_subscribers", "people"
+  add_foreign_key "room_subscribers", "rooms"
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"

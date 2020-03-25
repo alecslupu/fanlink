@@ -20,11 +20,11 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
+    log_dest = ENV["HEROKU"].present? ? STDOUT : "log/#{Rails.env}.log"
 
-
-    logger           = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+    logger = ActiveSupport::Logger.new(log_dest)
     logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
 
 
     # Initialize configuration defaults for originally generated Rails version.
@@ -52,8 +52,8 @@ module Fanlink
 
 
     config.paperclip_defaults = {
-      path: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension',
-      url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
+      path: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension",
+      url: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension"
     } if Rails.env.test?
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
@@ -74,5 +74,25 @@ module Fanlink
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType
     config.i18n.default_locale = :en
     config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
+
+    config.fanlink = {
+      aws: {
+        hls_server: Rails.application.secrets.hls_server,
+        rtmp_server: Rails.application.secrets.rtmp_server,
+        transcoder_key: Rails.application.secrets.aws_transcoder_key,
+        transcoder_secret: Rails.application.secrets.aws_transcoder_secret,
+        s3_bucket:  Rails.application.secrets.aws_bucket,
+        transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
+        region: Rails.application.secrets.aws_region,
+        transcoder_queue_url: Rails.application.secrets.transcoder_queue_url,
+      }
+    }
+
+     #Use a real queuing backend for Active Job (and separate queues per environment)
+     config.active_job.queue_adapter     = :delayed_job
+     #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
+     #
+
+    config.i18n.fallbacks = [I18n.default_locale]
   end
 end

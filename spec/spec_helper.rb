@@ -1,24 +1,28 @@
 require "pry"
+require "simplecov"
 # require "coverage_helper"
-# SimpleCov.start "rails" do
-#   add_filter "app/channels" # nothing here
-#   add_filter "app/controllers/admin" # administrate stuff
-#   add_filter "app/dashboards"
-#   add_filter "app/fields"
-#   add_filter "lib/gems/apigen"
-#   add_filter "app/lib/rails_admin"
-#   add_filter "lib/generators/fanlink"
-#   # add_group "jobs", "app/jobs" # nothing here
-#   add_group "Listeners", "app/listeners" # nothing here
-#   add_group "Policies", "app/policies" # nothing here
-# end
+SimpleCov.start "rails" do
+  add_filter "app/channels" # nothing here
+  add_filter "app/controllers/admin" # administrate stuff
+  add_filter "app/dashboards"
+  add_filter "app/fields"
+  add_filter "lib/gems/apigen"
+  add_filter "app/lib/rails_admin"
+  add_filter "lib/generators/fanlink"
+  # add_group "jobs", "app/jobs" # nothing here
+  add_group "Listeners", "app/listeners" # nothing here
+  add_group "Policies", "app/policies" # nothing here
+
+  minimum_coverage 0
+end
 require File.expand_path("../../config/environment", __FILE__)
+require 'paper_trail/frameworks/rspec'
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
 require "json_schemer"
-require 'rspec/retry'
+require 'aasm/rspec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -38,22 +42,6 @@ WebMock.disable_net_connect!(allow_localhost: true)
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-
-  # show retry status in spec process
-  config.verbose_retry = true
-  # show exception that triggers a retry if verbose_retry is set to true
-  config.display_try_failure_messages = true
-
-  # run retry only on features
-  config.around :each do |ex|
-    ex.run_with_retry retry: 3
-  end
-
-  config.retry_callback = proc do |ex|
-    DatabaseCleaner.clean_with(:truncation)
-    ActsAsTenant.current_tenant = nil
-    create(:product)
-  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -119,7 +107,7 @@ RSpec.configure do |config|
   #   # end of the spec run, to help surface which specs are running
   #   # particularly slow.
   #   config.profile_examples = 10
-  config.seed = 1234
+  # config.seed = 1234
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -134,29 +122,28 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.before(:suite) do
+    Rails.logger.debug("RSPEC: before suite")
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
-  config.before(:each) do
-    ActsAsTenant.current_tenant = nil
-  end
   config.after(:each) do
-    logout
+    Rails.logger.debug("RSPEC: after example")
     DatabaseCleaner.clean
-    # ActsAsTenant.current_tenant = nil
+    logout
+    ActsAsTenant.current_tenant = nil
   end
 
   config.around(:each) do |example|
+    Rails.logger.debug("Running before clean")
+
     DatabaseCleaner.cleaning do
+      Rails.logger.debug("RSPEC: #{example.description}")
       example.run
-      # ActsAsTenant.current_tenant = nil
+      Rails.logger.debug("RSPEC END: #{example.description}")
     end
+    logout
+    ActsAsTenant.current_tenant = nil
   end
-
-
-  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
-  # config.include Sorcery::TestHelpers::Rails::Controller # , type: :request
-  # config.include Sorcery::TestHelpers::Rails::Integration # , type: :request
 
   config.include Sorcery::TestHelpers::Rails::Controller, type: :controller
   config.include Sorcery::TestHelpers::Rails::Integration, type: :feature

@@ -1,5 +1,5 @@
 json = {
-  id: post.id.to_s,
+  id: post.id,
   person: render(partial: "api/v4/people/#{@req_source}", locals: { person: post.person }),
   body: post.body(@lang),
   picture_url: post.picture_optimal_url,
@@ -9,8 +9,6 @@ json = {
   video_url: post.video_url,
   video_transcoded: post.video_transcoded,
   video_thumbnail: post.video_thumbnail,
-  # post_reaction_counts: post.reaction_breakdown.to_json,
-  # post_reaction_counts: post.reaction_breakdown,
   global: post.global,
   starts_at: ((post.starts_at.nil?) ? nil : post.starts_at.to_s),
   ends_at: ((post.ends_at.nil?) ? nil : post.ends_at.to_s),

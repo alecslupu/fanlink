@@ -19,11 +19,11 @@ class MessageReportPolicy < ChatModulePolicy
     !["message_hidden"].include?(record.status) && has_permission?(:hide?)
   end
 
-  def ignore_action?
+  def ignore_message_action?
     !["no_action_needed"].include?(record.status)&& has_permission?(:ignore?)
   end
 
-  def reanalyze_action?
+  def reanalyze_message_action?
     !["pending"].include?(record.status) && has_permission?(:hide?)
   end
 

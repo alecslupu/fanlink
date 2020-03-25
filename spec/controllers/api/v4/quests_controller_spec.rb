@@ -4,7 +4,7 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
 
   describe "GET index" do
     it 'returns all quests with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(:quest, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
@@ -21,7 +21,7 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
 
   describe "GET show" do
     it 'returns the quest with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         quest = create(:quest, picture: fixture_file_upload('images/better.png', 'image/png'))
@@ -35,7 +35,7 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
 
   describe "POST create" do
     it "creates a quest with attachment when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -59,7 +59,7 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
 
   describe "PUT update" do
     it "updates a quest's attachment" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         quest = create(:quest)

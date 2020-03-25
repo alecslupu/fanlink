@@ -18,12 +18,16 @@ class PostComment < ApplicationRecord
   # include PostComment::PortalFilters
   # include PostComment::RealTime
 
-  def post_me
-    post_comment_mentions.each do |mention|
-      Rails.logger.debug("mention: #{mention.inspect}")
-      Delayed::Job.enqueue(PostCommentMentionPushJob.new(mention.id))
-    end
-  end
+  scope :reported, -> { joins(:post_comment_reports) }
+  scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: {id: nil} ) }
+
+
+  # def post_me
+    # post_comment_mentions.each do |mention|
+    #   Rails.logger.debug("mention: #{mention.inspect}")
+    #   Delayed::Job.enqueue(PostCommentMentionPushJob.new(mention.id))
+    # end
+  # end
   # include PostComment::RealTime
 
   belongs_to :person, touch: true
@@ -32,9 +36,11 @@ class PostComment < ApplicationRecord
   validates :body, presence: { message: "Comment body is required." }
 
   has_many :post_comment_mentions, dependent: :destroy
+  has_many :post_comment_reports, dependent: :destroy
 
   scope :visible, -> { where(hidden: false) }
   scope :for_product, -> (product) { joins(:post => :person).where(people: {product_id: product.id}) }
+  scope :not_reported, -> { left_joins(:post_comment_reports).where("post_comment_reports.id IS NULL OR post_comment_reports.status IN (?)", PostCommentReport.statuses[:no_action_needed]) }
 
   def mentions
     post_comment_mentions
@@ -44,6 +50,10 @@ class PostComment < ApplicationRecord
     mention_params.each do |mp|
       post_comment_mentions.build(person_id: mp["person_id"].to_i, location: mp["location"].to_i, length: mp["length"].to_i)
     end
+  end
+
+  def name
+    body
   end
 
   def product

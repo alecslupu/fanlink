@@ -8,8 +8,6 @@ json = {
   pinned: message.pinned,
   create_time: message.created_at.to_s
 }
-json[:person] = Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, message.person) do
-  render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: "jb")
-end
+json[:person] = render(partial: "api/v4/people/#{@req_source}", locals: { person: message.person, relationships: Relationship.for_people(current_user, message.person) }, handlers: "jb")
 
 json

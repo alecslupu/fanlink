@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V4::MerchandiseController, type: :controller do
   describe "GET index" do
     it 'returns all merchandises with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(:merchandise, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
@@ -20,7 +20,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
 
   describe "GET show" do
     it 'returns the merchandise with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         merchandise = create(:merchandise, picture: fixture_file_upload('images/better.png', 'image/png'))
@@ -34,7 +34,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
 
   describe "POST create" do
     it "creates a merchandise with attachment when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 
@@ -57,7 +57,7 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
 
   describe "PUT update" do
     it "updates a merchandise's attachment" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         merchandise = create(:merchandise)

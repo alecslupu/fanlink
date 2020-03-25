@@ -12,7 +12,1226 @@
       "in": "header"
     }
   },
+  "tags": [
+    {
+      "name": "BadgeActions",
+      "description": "Badge Actions"
+    },
+    {
+      "name": "Badges",
+      "description": "Badges"
+    },
+    {
+      "name": "Categories",
+      "description": "Categories"
+    },
+    {
+      "name": "Followings",
+      "description": "Followers and following"
+    },
+    {
+      "name": "Interests",
+      "description": "Interests"
+    },
+    {
+      "name": "Levels",
+      "description": "Levels"
+    },
+    {
+      "name": "MessageReports",
+      "description": "Message Reports"
+    },
+    {
+      "name": "Messages",
+      "description": "Messages"
+    },
+    {
+      "name": "NotificationDeviceIds",
+      "description": "Notification Device IDs"
+    },
+    {
+      "name": "PasswordResets",
+      "description": "Password Reset"
+    },
+    {
+      "name": "People",
+      "description": "Users"
+    },
+    {
+      "name": "Referral",
+      "description": "Referral system "
+    },
+    {
+      "name": "Relationships",
+      "description": "User's relationships"
+    },
+    {
+      "name": "Rooms",
+      "description": "Chat rooms"
+    },
+    {
+      "name": "Session",
+      "description": "User session management."
+    }
+  ],
   "paths": {
+    "/badge_actions": {
+      "post": {
+        "summary": "POST create a badge action",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "BadgeActions"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "badge_action[action_type]",
+            "type": "string",
+            "in": "formData"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/BadgeActionsPending"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "Not found. A reward is not associated with the badge action"
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "429": {
+            "description": "Not enough time since last submission of this action type or duplicate action type, person, identifier combination"
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/badges": {
+      "get": {
+        "summary": "List of the badges",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Badges"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          },
+          {
+            "name": "person_id",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/BadgesArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized. "
+          },
+          "404": {
+            "description": "Not Found. If the error says a route is missing, it usually means you forgot the ACCEPT header."
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/courseware/wishlists": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CertificateWishlist"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": ""
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/wishlists/{id}": {
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/followings": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "followed_id",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FollowingObject"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Followings"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          },
+          {
+            "name": "followed_id",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "follower_id",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FollowersArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests/match": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "parameters": [
+          {
+            "name": "interest_ids",
+            "type": "string",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests/{id}/add": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "interest[title]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "interest[parent_id]",
+            "in": "formData",
+            "type": "integer"
+          },
+          {
+            "name": "interest[order]",
+            "in": "formData",
+            "type": "integer"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests/{id}/remove": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/interests": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/levels": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Levels"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/notification_device_ids": {
+      "post": {
+        "summary": "",
+        "tags": [
+          "NotificationDeviceIds"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "tags": [
+          "NotificationDeviceIds"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/password_forgot": {
+      "post": {
+        "summary": "",
+        "tags": [
+          "PasswordResets"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "product",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "email_or_username",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SuccessMessage"
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorMessage"
+            }
+          }
+        }
+      }
+    },
+    "/people": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "People"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "product_account_filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email_filer",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "username_filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/session_jwt"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "tags": [
+          "People"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[email]",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person[username]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[password]",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person[picture]",
+            "in": "formData",
+            "type": "file"
+          },
+          {
+            "name": "facebook_auth_token",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "referrer",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/session_jwt"
+            }
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/{id}": {
+      "patch": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "People"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[email]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "person[biography]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "person[name]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "person[picture]",
+            "in": "formData",
+            "type": "file"
+          },
+          {
+            "name": "person[gender]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "person[birthdate]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "person[city]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "person[country_code]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "People"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/public_person"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/{id}/change_password": {
+      "patch": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "People"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[current_password]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "person[new_password]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/{user_id}/interests": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Interests"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/person_certificates/{unique_id}": {
       "get": {
         "summary": "Show the subscription information",
@@ -22,15 +1241,13 @@
         "produces": [
           "application/vnd.api.v4+json"
         ],
+        "consumes": [
+          "application/vnd.api.v4+json"
+        ],
         "parameters": [
           {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
+            "name": "product",
+            "in": "query",
             "type": "string"
           },
           {
@@ -49,6 +1266,868 @@
           },
           "404": {
             "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referral": {
+      "get": {
+        "summary": "List the referral code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/MiniPeopleArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referral/purchased": {
+      "get": {
+        "summary": "List the referral code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/MiniPeopleArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/referral/me": {
+      "get": {
+        "summary": "List the referral code",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Referal"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ReferralCode"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/relationships": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Relationships"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "relationship[requested_to_id]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Relationships"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "with_id",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_id",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/relationships/{id}": {
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Relationships"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Relationships"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "relationship[status]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Rooms"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "room[name]",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "room[picture]",
+            "in": "formData",
+            "type": "file",
+            "required": false
+          },
+          {
+            "name": "room[member_ids][]",
+            "in": "formData",
+            "type": "array",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Rooms"
+        ],
+        "parameters": [
+          {
+            "name": "private",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}": {
+      "patch": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Rooms"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "room[name]",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "room[picture]",
+            "in": "formData",
+            "type": "file",
+            "required": false
+          },
+          {
+            "name": "room[member_ids]",
+            "in": "formData",
+            "type": "array",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Rooms"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}/messages": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum"
+          },
+          {
+            "name": "pinned",
+            "in": "formData",
+            "type": "string",
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "description": " Lorem ipsum",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "message[body]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/messages/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Messages"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Messages"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/message_reports": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "MessageReports"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "message_report[message_id]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "message_report[reason]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "422": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/faulty"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -91,686 +2170,79 @@
           },
           "422": {
             "description": "Invalid login"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
-    "/trivia/games/{game_id}/leaderboard/me": {
-      "get": {
-        "summary": "displays my possition leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_leaderboard"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/leaderboard": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_leaderboard_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/completed": {
-      "get": {
-        "summary": "displays completed games",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games": {
-      "get": {
-        "summary": "displays future and on going games",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays future and on going games",
-            "schema": {
-              "$ref": "#/definitions/trivia_games_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/prizes": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_game_prize_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds/{round_id}/leaderboard/me": {
-      "get": {
-        "summary": "displays my possition leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "round_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_rounds_leaderboard"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds/{round_id}/leaderboard": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "round_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_rounds_leaderboard_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds": {
-      "get": {
-        "summary": "displays complete leaderboard",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-Per-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "X-Page",
-            "in": "header",
-            "type": "integer"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_round_list"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/rounds/{round_id}/change_status": {
+    "/session": {
       "post": {
-        "summary": "Changes the status of a round",
+        "summary": "Used to log someone in",
         "tags": [
-          "Trivia"
+          "Session"
         ],
         "produces": [
           "application/vnd.api.v4+json"
         ],
+        "consumes": [
+          "multipart/form-data"
+        ],
         "parameters": [
           {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "round_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "token",
+            "name": "product",
             "in": "formData",
             "type": "string"
           },
           {
-            "name": "status",
+            "name": "facebook_auth_token",
             "in": "formData",
             "type": "string",
-            "enum": [
-              "locked",
-              "published",
-              "running"
-            ]
+            "required": false
           },
           {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
+            "name": "password",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "email_or_username",
+            "in": "formData",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Set the status"
-          },
-          "401": {
-            "description": "unauthorized"
-          }
-        }
-      }
-    },
-    "/trivia/games/{game_id}/subscription": {
-      "get": {
-        "summary": "Show the subscription information",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
+            "description": "Returns an user object if successful",
             "schema": {
-              "$ref": "#/definitions/trivia_user_subscribed"
+              "$ref": "#/definitions/session_jwt"
             }
           },
-          "401": {
-            "description": "unauthorized"
+          "422": {
+            "description": "Invalid login"
           },
-          "404": {
-            "description": "not found"
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
       "delete": {
-        "summary": "remove a subscription",
+        "summary": "Log someone out",
         "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
+          "Session"
         ],
         "produces": [
           "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "displays completed games"
-          },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
-          }
-        }
-      },
-      "put": {
-        "summary": "updates the subscription information",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "subscribed",
-            "in": "formData",
-            "type": "boolean"
-          }
         ],
         "responses": {
           "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_user_subscribed"
-            }
+            "description": ""
           },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
-          }
-        }
-      },
-      "post": {
-        "summary": "creates the subscription information",
-        "tags": [
-          "Trivia"
-        ],
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "parameters": [
-          {
-            "name": "X-App",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "X-Current-Product",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "game_id",
-            "in": "path",
-            "type": "integer",
-            "required": true
-          },
-          {
-            "name": "subscribed",
-            "in": "formData",
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "displays completed games",
-            "schema": {
-              "$ref": "#/definitions/trivia_user_subscribed"
-            }
-          },
-          "401": {
-            "description": "unauthorized"
-          },
-          "404": {
-            "description": "not found"
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -779,16 +2251,239 @@
   "definitions": {
     "certificate_information": {
       "type": "object",
-      "certificate": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "issue_": {
-            "type": "datetime"
+      "properties": {
+        "certificate": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "issued_date": {
+              "type": "string",
+              "format": "date",
+              "x-nullable": true
+            },
+            "certificate_image_url": {
+              "type": "string"
+            }
           }
         }
+      }
+    },
+    "CategoryArray": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "$ref": "#/definitions/CategoryJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CategoryJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostJson"
+          }
+        }
+      },
+      "description": "Category Reponse"
+    },
+    "PostJson": {
+    },
+    "BadgeActionsPending": {
+      "type": "object",
+      "properties": {
+        "pending_badge": {
+          "type": "object",
+          "properties": {
+            "badge_action_count": {
+              "type": "integer"
+            },
+            "badge": {
+              "$ref": "#/definitions/BadgeJson"
+            }
+          }
+        },
+        "badges_awarded": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BadgeJson"
+          }
+        }
+      }
+    },
+    "public_person": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "email": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "country_code": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "birthdate": {
+          "type": "string",
+          "format": "date",
+          "x-nullable": true
+        },
+        "biography": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "product_account": {
+          "type": "boolean"
+        },
+        "recommended": {
+          "type": "boolean"
+        },
+        "chat_banned": {
+          "type": "boolean"
+        },
+        "tester": {
+          "type": "boolean"
+        },
+        "terminated": {
+          "type": "boolean"
+        },
+        "terminated_reason": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "designation": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "role": {
+          "type": "string"
+        },
+        "do_not_message_me": {
+          "type": "boolean"
+        },
+        "pin_messages_from": {
+          "type": "boolean"
+        },
+        "auto_follow": {
+          "type": "boolean"
+        },
+        "num_followers": {
+          "type": "integer"
+        },
+        "num_following": {
+          "type": "integer"
+        },
+        "facebookid": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "facebook_picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "badge_points": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "following_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/relationships"
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "requested_by": {
+          "type": "object",
+          "$ref": "#/definitions/public_person"
+        },
+        "requested_to": {
+          "type": "object",
+          "$ref": "#/definitions/public_person"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/public_person"
       }
     },
     "session_jwt": {
@@ -798,31 +2493,38 @@
           "type": "object",
           "properties": {
             "id": {
-              "type": "integer"
+              "type": "string"
             },
             "username": {
               "type": "string"
             },
             "name": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "gender": {
               "type": "string"
             },
             "city": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "country_code": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "birthdate": {
-              "type": "datetime"
+              "type": "string",
+              "format": "date",
+              "x-nullable": true
             },
             "biography": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "picture_url": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "product_account": {
               "type": "boolean"
@@ -840,10 +2542,12 @@
               "type": "boolean"
             },
             "terminated_reason": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "designation": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "role": {
               "type": "string"
@@ -864,25 +2568,31 @@
               "type": "integer"
             },
             "facebookid": {
-              "type": "integer"
+              "type": "string",
+              "x-nullable": true
             },
             "facebook_picture_url": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "badge_points": {
               "type": "integer"
             },
             "level": {
-              "type": "integer"
+              "type": "integer",
+              "x-nullable": true
             },
             "created_at": {
-              "type": "datetime"
+              "type": "string",
+              "format": "date-time"
             },
             "updated_at": {
-              "type": "datetime"
+              "type": "string",
+              "format": "date-time"
             },
             "following_id": {
-              "type": "integer"
+              "type": "integer",
+              "x-nullable": true
             },
             "email": {
               "type": "string"
@@ -902,19 +2612,23 @@
               }
             },
             "level_progress": {
-              "type": "integer"
+              "type": "integer",
+              "x-nullable": true
             },
             "rewards": {
-              "type": "string"
+              "type": "string",
+              "x-nullable": true
             },
             "blocked_people": {
-              "type": "integer"
+              "type": "integer",
+              "x-nullable": true
             },
             "permissions": {
-              "type": "integer"
+              "type": "object"
             },
             "pin_messages_to": {
-              "type": "integer"
+              "type": "integer",
+              "x-nullable": true
             },
             "token": {
               "type": "string"
@@ -1176,6 +2890,261 @@
       "required": [
         "trivia_game_id"
       ]
+    },
+    "faulty": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "faulty": {
+          "type": "string"
+        }
+      }
+    },
+    "SuccessMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "FollowersArray": {
+      "type": "object",
+      "properties": {
+        "followers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "badge": {
+                "$ref": "#/definitions/FollowingObject"
+              }
+            }
+          }
+        }
+      }
+    },
+    "FollowingObject": {
+      "type": "object",
+      "properties": {
+        "following": {
+          "$ref": "#/definitions/FollowingJson"
+        }
+      }
+    },
+    "FollowingJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "follower": {
+          "$ref": "#/definitions/public_person"
+        },
+        "followed": {
+          "$ref": "#/definitions/public_person"
+        }
+      },
+      "description": "Following Response"
+    },
+    "BadgeJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "internal_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "picture_url": {
+          "type": "string"
+        },
+        "action_requirement": {
+          "type": "integer"
+        },
+        "point_value": {
+          "type": "integer"
+        }
+      },
+      "description": "Badge Response"
+    },
+    "ReferralCode": {
+      "type": "object",
+      "properties": {
+        "person_id": {
+          "type": "integer"
+        },
+        "unique_code": {
+          "type": "string"
+        }
+      }
+    },
+    "BadgesArray": {
+      "type": "object",
+      "properties": {
+        "badges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "badge": {
+                "$ref": "#/definitions/BadgeJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Certificate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "color_hex": {
+          "type": "string"
+        },
+        "chat_room_id": {
+          "type": "integer"
+        },
+        "sku_android": {
+          "type": "string"
+        },
+        "sku_ios": {
+          "type": "string"
+        },
+        "is_free": {
+          "type": "boolean"
+        },
+        "is_issuable": {
+          "type": "boolean"
+        },
+        "is_completed": {
+          "type": "boolean"
+        },
+        "is_purchased": {
+          "type": "boolean"
+        },
+        "certificate_image_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "issued_certificate_image_url": {
+          "type": "string",
+          "x-nullable": true
+        }
+      }
+    },
+    "CertificateWishlist": {
+      "type": "object",
+      "properties": {
+        "wishlist": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "certificate": {
+                "type": "object",
+                "$ref": "#/definitions/Certificate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "LevelJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "internal_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "points": {
+          "type": "integer"
+        },
+        "picture_url": {
+          "type": "string"
+        }
+      },
+      "description": "Level Response"
+    },
+    "personMini": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "picture_url": {
+          "type": "string"
+        },
+        "designation": {
+          "type": "string"
+        },
+        "facebook_picture_url": {
+          "type": "string"
+        },
+        "badge_points": {
+          "type": "integer"
+        },
+        "level": {
+          "$ref": "#/definitions/LevelJson",
+          "x-nullable": true
+        }
+      }
+    },
+    "MiniPeopleArray": {
+      "type": "object",
+      "properties": {
+        "people": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/personMini"
+          }
+        }
+      }
     }
   }
 }

@@ -24,9 +24,7 @@ json[:blocked_people] = if person.blocked_people.present?
   end
 end
 
-json[:permissions] = if person.admin? && person.portal_access.present?
-  person.portal_access.summarize
-end
+json[:permissions] = person.summarize_permissions
 
 json[:pin_messages_to] = if person.pinned_to.present?
   person.pin_messages.map do |pin|

@@ -1,10 +1,7 @@
 module SessionHelpers
   def login_as(person)
     raise "You need to provide a Person object" unless person.is_a?(Person)
-    ApplicationController.send :define_method, :current_user do
-      person
-    end
-    @current_user = person
+    @controller.auto_login(person) if defined?(@controller)
   end
 
   def create_logged_in_user
@@ -14,10 +11,14 @@ module SessionHelpers
   end
 
   def logout
-    @current_user = nil
-    ApplicationController.send :define_method, :current_user do
-      nil
+    if defined?(@controller)
+      @controller.send(:reset_session)
+      @controller.logout
     end
+
+    # ApplicationController.send :define_method, :current_user do
+    #   nil
+    # end
   end
 end
 

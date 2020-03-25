@@ -1,5 +1,0 @@
-#!/bin/bash
-
-./deploy.rb deploy $1 $2
-
-# heroku restart -a fanlink-staging

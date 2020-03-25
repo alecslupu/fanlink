@@ -4,6 +4,8 @@ require "spec_helper"
 
 RSpec.describe MessageReportPolicy, type: :policy do
   let(:master_class) { MessageReport.new }
+  subject { described_class.new(build(:person), master_class) }
+
   permission_list = {
     index: false,
     show: false,
@@ -19,13 +21,13 @@ RSpec.describe MessageReportPolicy, type: :policy do
   }
 
   describe "defined policies" do
-    subject { described_class.new(nil, master_class) }
+    subject { described_class.new(build(:person), master_class) }
     permission_list.each do |policy, value|
       it { is_expected.to respond_to("#{policy}?".to_sym) }
     end
   end
-  context "logged out user" do
-    subject { described_class.new(nil, master_class) }
+  context "logged in user with no permission" do
+    subject { described_class.new(build(:person), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -34,26 +36,13 @@ RSpec.describe MessageReportPolicy, type: :policy do
     end
     describe "protected methods" do
       it { expect(subject.send(:module_name)).to eq("chat") }
-      it { expect(subject.send(:super_admin?)).to be_nil }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-    end
-  end
-  context "logged in user with no permission" do
-    subject { described_class.new(create(:person), master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        it { is_expected.to forbid_action(policy) }
-      end
-    end
-    describe "protected methods" do
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
   context "logged in admin with no permission" do
-    subject { described_class.new(create(:admin_user), master_class) }
+    subject { described_class.new(build(:admin_user), master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -228,8 +217,8 @@ RSpec.describe MessageReportPolicy, type: :policy do
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :no_action_needed)) }
 
       it { is_expected.to permit_action(:hide_message_action) }
-      it { is_expected.to permit_action(:reanalyze_action) }
-      it { is_expected.to forbid_action(:ignore_action) }
+      it { is_expected.to permit_action(:reanalyze_message_action) }
+      it { is_expected.to forbid_action(:ignore_message_action) }
     end
   end
 
@@ -238,18 +227,18 @@ RSpec.describe MessageReportPolicy, type: :policy do
       let(:portal_access) { create(:portal_access, chat_ignore: true) }
       subject { described_class.new(Person.find(portal_access.person_id), MessageReport.new(status: :pending)) }
 
-      it { is_expected.to permit_action(:ignore_action) }
+      it { is_expected.to permit_action(:ignore_message_action) }
       it { is_expected.to forbid_action(:hide_message_action) }
-      it { is_expected.to forbid_action(:reanalyze_action) }
+      it { is_expected.to forbid_action(:reanalyze_message_action) }
     end
   end
 
   context "Scope" do
     it "should only return the messages from public rooms" do
-      person = create(:person)
+      person = build(:person)
       current_product = person.product
       another_product = create(:product)
-      message_report2 = ActsAsTenant.with_tenant(another_product) { create(:message_report, person: create(:person)) }
+      message_report2 = ActsAsTenant.with_tenant(another_product) { create(:message_report, person: build(:person)) }
 
       ActsAsTenant.with_tenant(current_product) do
         message_report = create(:message_report, person: person)
@@ -261,3 +250,5 @@ RSpec.describe MessageReportPolicy, type: :policy do
     end
   end
 end
+
+
