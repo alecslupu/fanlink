@@ -14,7 +14,7 @@ RSpec.describe "Api::V4::BadgeActionsController", type: :request, swagger_doc: "
       let(:badge_action) { create(:badge_action) }
       let("badge_action[action_type]") { }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: badge_action.person_id)}" }
         let(:badge) { create(:badge, action_type: badge_action.action_type)}
         let("badge_action[action_type]") {  badge.action_type.internal_name }

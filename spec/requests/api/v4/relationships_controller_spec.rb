@@ -17,11 +17,11 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
       let(:Authorization) { "" }
       let("relationship[requested_to_id]") { 1 }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let("relationship[requested_to_id]") { create(:person).id }
 
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/RelationshipsObject"
         run_test!
       end
       response "422", "" do
@@ -29,7 +29,6 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
         let("relationship[requested_to_id]") { relation.blocker.id }
 
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response "401", "" do
@@ -38,7 +37,6 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let("relationship[requested_to_id]") { Time.zone.now.to_i }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -59,9 +57,9 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
 
       let(:relation) { create(:relationship) }
       context "all" do
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_by.id)}" }
-          schema "$ref": "#/definitions/faulty"
+          schema "$ref": "#/definitions/RelationshipsArray"
           run_test!
         end
         response "401", "" do
@@ -78,9 +76,10 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
         end
       end
       context "with_id" do
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_by.id)}" }
           let(:with_id) { relation.requested_to.id }
+          schema "$ref": "#/definitions/RelationshipsArray"
           run_test!
         end
         response "401", "" do
@@ -110,10 +109,9 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_by.id)}" }
         let(:id) { relation.id }
-
         run_test!
       end
       response "401", "" do
@@ -144,7 +142,7 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
       consumes "multipart/form-data"
       context "denied" do
 
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_to.id)}" }
           let(:relation) { create(:relationship, status: 'requested') }
           let("relationship[status]") { "denied" }
@@ -169,10 +167,10 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
       end
       context "friended" do
 
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_to.id)}" }
           let(:relation) { create(:relationship, status: 'requested') }
-          schema "$ref": "#/definitions/faulty"
+          schema "$ref": "#/definitions/RelationshipsObject"
           let("relationship[status]") { "friended" }
           run_test!
         end
@@ -196,7 +194,7 @@ RSpec.describe "Api::V4::RelationshipsController", type: :request, swagger_doc: 
       end
       context "withdrawn" do
 
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: relation.requested_by.id)}" }
           let(:relation) { create(:relationship, status: 'requested') }
           let("relationship[status]") { "withdrawn" }
