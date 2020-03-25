@@ -230,9 +230,9 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
 
     describe ".attributes_for" do
       it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:update)).to eq({trigger_admin_notification: true}) }
-      it { expect(subject.attributes_for(:create)).to eq({trigger_admin_notification: true}) }
-      it { expect(subject.attributes_for(:new)).to eq({send_me_at: (Time.zone.now + 1.hour).beginning_of_hour}) }
+      it { expect(subject.attributes_for(:update)).to eq({ trigger_admin_notification: true }) }
+      it { expect(subject.attributes_for(:create)).to eq({ trigger_admin_notification: true }) }
+      it { expect(subject.attributes_for(:new)).to eq({ send_me_at: (Time.zone.now + 1.hour).beginning_of_hour }) }
     end
   end
 end

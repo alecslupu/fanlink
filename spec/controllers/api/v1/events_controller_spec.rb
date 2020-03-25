@@ -43,7 +43,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
         pe = create(:past_event)
         fe = create(:future_event)
         expected = events + [fe]
-        get :index, params: {from_date: Time.zone.now.strftime("%Y-%m-%d")}
+        get :index, params: { from_date: Time.zone.now.strftime("%Y-%m-%d") }
         expect(response).to have_http_status(200)
         expect(json["events"].count).to eq(expected.size)
         json["events"].each do |event|
@@ -59,7 +59,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
         pe = create(:past_event)
         fe = create(:future_event)
         expected = events + [fe]
-        get :index, params: {from_date: Time.zone.now.strftime("%Y-%m-%d"), to_date: 10.days.from_now.strftime("%Y-%m-%d")}
+        get :index, params: { from_date: Time.zone.now.strftime("%Y-%m-%d"), to_date: 10.days.from_now.strftime("%Y-%m-%d") }
         expect(response).to have_http_status(200)
         expect(json["events"].count).to eq(events.size)
         json["events"].each do |event|
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
     it "should not get the events if not logged in" do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
-        get :index, params: {from_date: Time.zone.now.strftime("%Y-%m-%d"), to_date: 10.days.from_now.strftime("%Y-%m-%d")}
+        get :index, params: { from_date: Time.zone.now.strftime("%Y-%m-%d"), to_date: 10.days.from_now.strftime("%Y-%m-%d") }
         expect(response).to have_http_status(401)
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         event = create(:event)
-        get :show, params: {id: event.id}
+        get :show, params: { id: event.id }
         expect(response).to have_http_status(200)
         expect(event_json(json["event"])).to be_truthy
       end
@@ -91,7 +91,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         event = create(:event)
-        get :show, params: {id: event.id}
+        get :show, params: { id: event.id }
         expect(response).to have_http_status(401)
       end
     end
@@ -100,7 +100,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       event = create(:event, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        get :show, params: {id: event.id}
+        get :show, params: { id: event.id }
         expect(response).to have_http_status(404)
       end
     end

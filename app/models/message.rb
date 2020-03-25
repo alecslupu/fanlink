@@ -159,13 +159,13 @@ class Message < ApplicationRecord
 
 
   scope :reported, -> { joins(:message_reports) }
-  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],
-          include: {message_mentions: {except: %i[ message_id ]},
-                    person: {only: %i[ id username name designation product_account chat_banned badge_points
-                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ]}})
+          include: { message_mentions: { except: %i[ message_id ] },
+                    person: { only: %i[ id username name designation product_account chat_banned badge_points
+                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
   end
 
   def create_time
@@ -216,7 +216,7 @@ class Message < ApplicationRecord
             person = Person.where(username: m[1].sub("@", "")).first
             if person.present?
               # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
-              mmeta << {id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size}
+              mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
               mod_body = mod_body.sub(m[1], "a" * m[1].size)
             end
           }

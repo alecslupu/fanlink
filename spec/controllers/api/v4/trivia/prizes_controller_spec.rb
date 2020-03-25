@@ -15,7 +15,7 @@ RSpec.describe Api::V4::Trivia::PrizesController, type: :controller do
           photo: fixture_file_upload('images/better.png', 'image/png')
         )
 
-        get :index, params: { game_id: trivia_game.id}
+        get :index, params: { game_id: trivia_game.id }
 
         expect(response).to be_successful
 

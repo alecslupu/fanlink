@@ -27,7 +27,7 @@ module RailsAdmin
               @objects = Person.
                 joins(referred_people: :certificates).
                 select("people.*, COUNT(DISTINCT #{Arel.sql(::Referral::ReferredPerson.table_name)}.id) as referral_count, SUM(person_certificates.amount_paid)/100 as amount").
-                where(certificates: {is_free: false}).
+                where(certificates: { is_free: false }).
                 group("people.id").
                 order("referral_count DESC")
 

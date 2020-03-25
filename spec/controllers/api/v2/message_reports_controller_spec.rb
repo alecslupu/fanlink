@@ -9,7 +9,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         message = create(:message, room: create(:public_active_room))
-        post :create, params: {room_id: message.room_id, message_report: {message_id: message.id, reason: reason}}
+        post :create, params: { room_id: message.room_id, message_report: { message_id: message.id, reason: reason } }
         expect(response).to be_successful
         report = MessageReport.last
         expect(report.message).to eq(message)
@@ -22,7 +22,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         message = create(:message, room: create(:private_active_room))
-        post :create, params: {room_id: message.room_id, message_report: {message_id: message.id, reason: reason}}
+        post :create, params: { room_id: message.room_id, message_report: { message_id: message.id, reason: reason } }
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("You cannot report a private message.")
       end
@@ -31,7 +31,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         message = create(:message, room: create(:private_active_room))
-        post :create, params: {room_id: message.room_id, message_report: {message_id: message.id, reason: reason}}
+        post :create, params: { room_id: message.room_id, message_report: { message_id: message.id, reason: reason } }
         expect(response).to be_unauthorized
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         message = create(:message, room: room)
-        post :create, params: {room_id: message.room_id, message_report: {message_id: message.id, reason: reason}}
+        post :create, params: { room_id: message.room_id, message_report: { message_id: message.id, reason: reason } }
         expect(response).to be_not_found
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         reports_solved = create(:message_report, message: message, status: :no_action_needed)
         reports = reports_pending + [reports_solved]
         login_as(person)
-        get :index, params: {room_id: message.room_id}
+        get :index, params: { room_id: message.room_id }
         expect(response).to have_http_status(200)
         expect(json["message_reports"].size).to eq(reports.size)
       end
@@ -68,7 +68,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         message = create(:message, room: create(:public_active_room))
         reports = create_list(:message_report, 5, message: message)
 
-        get :index, params: {room_id: message.room_id, status_filter: "pending"}
+        get :index, params: { room_id: message.room_id, status_filter: "pending" }
         expect(response).to be_successful
         expect(json["message_reports"].count).to eq(reports.size)
         expect(message_reports_json(json["message_reports"].first)).to be true
@@ -81,7 +81,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         message = create(:message, room: create(:public_active_room))
         reports = create_list(:message_report, 5, message: message).reverse
 
-        get :index, params: {room_id: message.room_id, status_filter: "pending", page: 1, per_page: 2}
+        get :index, params: { room_id: message.room_id, status_filter: "pending", page: 1, per_page: 2 }
         expect(response).to be_successful
         expect(json["message_reports"].count).to eq(2)
         expect(message_reports_json(json["message_reports"].first)).to be true
@@ -95,7 +95,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         message = create(:message, room: create(:public_active_room))
         create(:message_report, message: message)
-        get :index, params: {room_id: message.room_id, status_filter: "pending"}
+        get :index, params: { room_id: message.room_id, status_filter: "pending" }
         expect(response).to be_unauthorized
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         message = create(:message, room: create(:public_active_room))
         create(:message_report, message: message)
-        get :index, params: {room_id: message.room_id, status_filter: "pending"}
+        get :index, params: { room_id: message.room_id, status_filter: "pending" }
         expect(response).to be_unauthorized
       end
     end
@@ -114,7 +114,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       create_list(:message_report, 5, message: message)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        get :index, params: {status_filter: "pending"}
+        get :index, params: { status_filter: "pending" }
         expect(response).to be_successful
         expect(json["message_reports"]).to be_empty
       end
@@ -128,7 +128,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         message = create(:message, room: create(:public_active_room))
         report = create(:message_report, message: message)
         login_as(person)
-        patch :update, params: {id: report.id, message_report: {status: "no_action_needed"}}
+        patch :update, params: { id: report.id, message_report: { status: "no_action_needed" } }
 
         expect(response).to be_successful
         expect(report.reload.status).to eq("no_action_needed")
@@ -140,7 +140,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
         message = create(:message, room: create(:public_active_room))
         report = create(:message_report, message: message)
         login_as(person)
-        patch :update, params: {id: report.id, message_report: {status: "invalid_status_from_spec"}}
+        patch :update, params: { id: report.id, message_report: { status: "invalid_status_from_spec" } }
 
         expect(response).to be_unprocessable
       end
@@ -150,7 +150,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         message = create(:message, room: create(:public_active_room))
         report = create(:message_report, message: message)
-        patch :update, params: {id: report.id, message_report: {status: "no_action_needed"}}
+        patch :update, params: { id: report.id, message_report: { status: "no_action_needed" } }
 
         expect(response).to be_unauthorized
       end
@@ -160,7 +160,7 @@ RSpec.describe Api::V2::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         message = create(:message, room: create(:public_active_room))
         report = create(:message_report, message: message)
-        patch :update, params: {id: report.id, message_report: {status: "no_action_needed"}}
+        patch :update, params: { id: report.id, message_report: { status: "no_action_needed" } }
 
         expect(response).to be_unauthorized
       end

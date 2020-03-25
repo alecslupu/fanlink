@@ -19,7 +19,7 @@ class PostComment < ApplicationRecord
   # include PostComment::RealTime
 
   scope :reported, -> { joins(:post_comment_reports) }
-  scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: { id: nil } ) }
 
 
   # def post_me
@@ -39,7 +39,7 @@ class PostComment < ApplicationRecord
   has_many :post_comment_reports, dependent: :destroy
 
   scope :visible, -> { where(hidden: false) }
-  scope :for_product, -> (product) { joins(:post => :person).where(people: {product_id: product.id}) }
+  scope :for_product, -> (product) { joins(:post => :person).where(people: { product_id: product.id }) }
   scope :not_reported, -> { left_joins(:post_comment_reports).where("post_comment_reports.id IS NULL OR post_comment_reports.status IN (?)", PostCommentReport.statuses[:no_action_needed]) }
 
   def mentions

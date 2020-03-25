@@ -1,5 +1,5 @@
 json = {}
-json[:post] = render(partial: @req_source, locals: {post: @post}, handlers: "jb")
+json[:post] = render(partial: @req_source, locals: { post: @post }, handlers: "jb")
 
 json[:post][:pinned] = @post.pinned
 

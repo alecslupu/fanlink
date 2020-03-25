@@ -13,7 +13,7 @@ RSpec.describe Api::V4::Trivia::RoundsController, type: :controller do
         game = create(:trivia_game, with_leaderboard: false)
         round = create(:trivia_round, with_leaderboard: false, status: :published, game: game)
 
-        post :change_status, params: { game_id: game.id, round_id: round.id, product: person.product.internal_name}
+        post :change_status, params: { game_id: game.id, round_id: round.id, product: person.product.internal_name }
         expect(response.status).to eq(401)
       end
     end

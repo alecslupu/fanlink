@@ -53,7 +53,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post21 = create(:published_post, person: people.last, created_at: created_in_range)
         post22 = create(:published_post, person: people.last, created_at: created_in_range + 30.minutes)
         login_as(person)
-        get :index, params: {from_date: from, to_date: to}
+        get :index, params: { from_date: from, to_date: to }
         expect(response).to be_successful
         expect(json["posts"].map { |p| p["id"].to_i }).to eq([postloggedin.id, post22.id, post21.id, post12.id, post11.id])
       end
@@ -439,7 +439,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         post = poll.post
         post.update(person_id: person2.id, status: :published)
 
-        patch :update, params: { id: post.id, post: { recommended: true}  }
+        patch :update, params: { id: post.id, post: { recommended: true }  }
 
         expect(response).to be_successful
 

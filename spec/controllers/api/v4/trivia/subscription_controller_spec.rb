@@ -9,7 +9,7 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         login_as(person)
 
         expect(Trivia::Subscriber.count).to eq(1)
-        delete :destroy, params: {game_id: subscriber.trivia_game_id}
+        delete :destroy, params: { game_id: subscriber.trivia_game_id }
         expect(Trivia::Subscriber.count).to eq(0)
       end
     end
@@ -23,7 +23,7 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         login_as(person)
 
         expect(Trivia::Subscriber.count).to eq(1)
-        get :show, params: {game_id: subscriber.trivia_game_id}
+        get :show, params: { game_id: subscriber.trivia_game_id }
         expect(response.status).to eq(200)
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         login_as(person)
 
         expect(Trivia::Subscriber.count).to eq(0)
-        post :create, params: {game_id: game.id, subscribed: false}
+        post :create, params: { game_id: game.id, subscribed: false }
 
         # expect(response.status).to eq(200)
         expect(Trivia::Subscriber.count).to eq(1)
@@ -53,7 +53,7 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
         login_as(person)
 
         expect(Trivia::Subscriber.last.subscribed).to be_falsey
-        post :update, params: {game_id: subscriber.trivia_game_id, subscribed: true}
+        post :update, params: { game_id: subscriber.trivia_game_id, subscribed: true }
         expect(Trivia::Subscriber.last.subscribed).to be_truthy
         expect(response.status).to eq(204)
       end

@@ -36,14 +36,14 @@ class ConfigItem < ApplicationRecord
     item_value
   end
 
-  validates :type, inclusion: {in: %w[
+  validates :type, inclusion: { in: %w[
             StringConfigItem
             ArrayConfigItem
             BooleanConfigItem
             RootConfigItem
             IntegerConfigItem
             ColorConfigItem
-  ], message: "%{value} is not a valid type"}
+  ], message: "%{value} is not a valid type" }
 
   scope :enabled, -> { where(enabled: true) }
   scope :disabled, -> { where(enabled: false) }

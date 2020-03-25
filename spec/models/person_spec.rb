@@ -436,7 +436,7 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
-        create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
+        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level_earned)
       end
@@ -523,7 +523,7 @@ RSpec.describe Person, type: :model do
     describe ".create_from_facebook" do
       it "should create and return a new user from valid FB auth token" do
         username = "somedude#{Time.now.to_i}"
-        koala_result = {"id" => Time.now.to_i.to_s, "name" => "John Smith"}
+        koala_result = { "id" => Time.now.to_i.to_s, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         p = nil
         expect {
@@ -541,7 +541,7 @@ RSpec.describe Person, type: :model do
         fbid = "123456"
         tok = "1234567"
         person = create(:person, facebookid: fbid)
-        koala_result = {"id" => fbid, "name" => "John Smith"}
+        koala_result = { "id" => fbid, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect(Person.for_facebook_auth_token(tok)).to eq(person)
       end

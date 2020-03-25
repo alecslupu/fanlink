@@ -9,7 +9,7 @@ RSpec.describe Api::V4::MessageReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         message = create(:message, room: create(:public_active_room))
-        post :create, params: {room_id: message.room_id, message_report: {message_id: message.id, reason: reason}}
+        post :create, params: { room_id: message.room_id, message_report: { message_id: message.id, reason: reason } }
         expect(response).to be_successful
         report = MessageReport.last
 
@@ -26,7 +26,7 @@ RSpec.describe Api::V4::MessageReportsController, type: :controller do
         message = create(:message, room: create(:public_active_room))
         report = create(:message_report, message: message, status: :pending)
         login_as(person)
-        patch :update, params: {id: report.id, message_report: {status: "message_hidden"}}
+        patch :update, params: { id: report.id, message_report: { status: "message_hidden" } }
 
         expect(response.body).to eq("")
         expect(response).to be_successful

@@ -122,7 +122,7 @@ class Post < ApplicationRecord
 
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
 
   def cache_key
     [super, person.cache_key].join("/")

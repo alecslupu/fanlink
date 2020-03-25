@@ -55,7 +55,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
 
        before do |example|
          submit_request(example.metadata)
-         koala_result = {"id" => "2905623", "name" => "John Smith", "email" => "no@email.tld"}
+         koala_result = { "id" => "2905623", "name" => "John Smith", "email" => "no@email.tld" }
          allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
        end
 

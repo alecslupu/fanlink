@@ -12,7 +12,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         login_as(person)
         p = create(:post)
         expect {
-          post :create, params: {post_id: p.id, post_reaction: {reaction: @reaction}}
+          post :create, params: { post_id: p.id, post_reaction: { reaction: @reaction } }
         }.to change { p.reactions.count }.by(1)
         expect(response).to be_successful
         # reaction = PostReaction.last
@@ -24,7 +24,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         p = create(:post)
         expect {
-          post :create, params: {post_id: p.id, post_reaction: {reaction: @reaction}}
+          post :create, params: { post_id: p.id, post_reaction: { reaction: @reaction } }
         }.to change { PostReport.count }.by(0)
         expect(response).to be_unauthorized
       end
@@ -36,7 +36,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         expect {
-          post :create, params: {post_id: p.id, post_reaction: {reaction: @reaction}}
+          post :create, params: { post_id: p.id, post_reaction: { reaction: @reaction } }
         }.to change { PostReaction.count }.by(0)
         expect(response).to be_not_found
       end
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         p = create(:post)
         nonemoji = "11FFFF"
         expect {
-          post :create, params: {post_id: p.id, post_reaction: {reaction: nonemoji}}
+          post :create, params: { post_id: p.id, post_reaction: { reaction: nonemoji } }
         }.to change { PostReaction.count }.by(0)
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("Reaction is not a valid value.")
@@ -63,7 +63,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         reaction = create(:post_reaction, person: person)
         login_as(person)
         expect {
-          delete :destroy, params: {post_id: reaction.post_id, id: reaction.id}
+          delete :destroy, params: { post_id: reaction.post_id, id: reaction.id }
         }.to change { PostReaction.count }.by(-1)
         expect(response).to be_successful
         expect(reaction).not_to exist_in_database
@@ -74,7 +74,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         reaction = create(:post_reaction)
         expect {
-          delete :destroy, params: {post_id: reaction.post_id, id: reaction.id}
+          delete :destroy, params: { post_id: reaction.post_id, id: reaction.id }
         }.to change { PostReaction.count }.by(0)
         expect(response).to be_unauthorized
         expect(reaction).to exist_in_database
@@ -86,7 +86,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
         reaction = create(:post_reaction)
         login_as(person)
         expect {
-          delete :destroy, params: {post_id: reaction.post_id, id: reaction.id}
+          delete :destroy, params: { post_id: reaction.post_id, id: reaction.id }
         }.to change { PostReaction.count }.by(0)
         expect(response).to be_not_found
         expect(reaction).to exist_in_database
@@ -100,7 +100,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         reaction = create(:post_reaction, person: person, reaction: "1F601")
         login_as(person)
-        patch :update, params: {id: reaction.id, post_id: reaction.post_id, post_reaction: {reaction: @reaction}}
+        patch :update, params: { id: reaction.id, post_id: reaction.post_id, post_reaction: { reaction: @reaction } }
         expect(response).to be_successful
         expect(reaction.reload.reaction).to eq(@reaction)
         # expect(json["post_reaction"]).to eq(post_reaction_json(reaction))
@@ -111,7 +111,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         reaction = create(:post_reaction, person: person, reaction: @reaction)
-        patch :update, params: {id: reaction.id, post_id: reaction.post_id, post_reaction: {reaction: "1F601"}}
+        patch :update, params: { id: reaction.id, post_id: reaction.post_id, post_reaction: { reaction: "1F601" } }
         expect(response).to be_unauthorized
         expect(reaction.reload.reaction).to eq(@reaction)
       end
@@ -121,7 +121,7 @@ RSpec.describe Api::V1::PostReactionsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         reaction = create(:post_reaction, reaction: @reaction)
-        patch :update, params: {id: reaction.id, post_id: reaction.post_id, post_reaction: {reaction: "1F601"}}
+        patch :update, params: { id: reaction.id, post_id: reaction.post_id, post_reaction: { reaction: "1F601" } }
         expect(response).to be_not_found
         expect(reaction.reload.reaction).to eq(@reaction)
       end

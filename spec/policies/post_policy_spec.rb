@@ -218,7 +218,7 @@ RSpec.describe PostPolicy, type: :policy do
       it { expect(subject.attributes_for(:read)).to eq({}) }
       it { expect(subject.attributes_for(:update)).to eq({}) }
       it { expect(subject.attributes_for(:delete)).to eq({}) }
-      it { expect(subject.attributes_for(:create)).to eq({person_id: subject.user.id}) }
+      it { expect(subject.attributes_for(:create)).to eq({ person_id: subject.user.id }) }
     end
   end
 

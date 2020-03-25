@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  scope(constraints: Routing::Constraints::V3, module: "api/v3", defaults: {format: :json}) do
+  scope(constraints: Routing::Constraints::V3, module: "api/v3", defaults: { format: :json }) do
     resources :action_types do
       collection do
         get "select" => "action_types#index"

@@ -216,7 +216,7 @@ RSpec.describe RoomPolicy, type: :policy do
 
     describe ".attributes_for" do
       it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:create)).to eq({public: true, created_by_id: subject.user.id}) }
+      it { expect(subject.attributes_for(:create)).to eq({ public: true, created_by_id: subject.user.id }) }
     end
   end
 end
