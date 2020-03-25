@@ -43,6 +43,14 @@ RSpec.describe Relationship, type: :model do
       expect(rel2).not_to be_valid
       expect(rel2.errors[:base].first).to include("already have an existing")
     end
+
+    it "does not let you create a relationship with two people from different products" do
+      person = create(:person, product: create(:product))
+      person2 = create(:person, product: create(:product))
+      rel = Relationship.create(requested_by: person, requested_to: person2)
+      expect(rel).not_to be_valid
+      expect(rel.errors[:base].first).to include("You cannot friend a person from a different product")
+    end
   end
 
   describe ".for_people" do

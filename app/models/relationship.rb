@@ -32,10 +32,13 @@ class Relationship < ApplicationRecord
   validate :check_outstanding
   validate :check_non_self
   validate :valid_status_transition
+  validate :people_from_same_product
 
   scope :pending_to_person, -> (person) { where(status: :requested).where(requested_to: person) }
   scope :for_people, -> (source_person, target_person) { where(requested_to: [source_person, target_person]).where(requested_by: [source_person, target_person]) }
   scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
+  scope :for_product, -> (product) { joins("JOIN people ON people.id = relationships.requested_by_id").where("people.product_id = ?", product.id) }
+
 
   def person_involved?(person)
     requested_to == person || requested_by == person
@@ -61,5 +64,13 @@ private
         errors.add(:status, :valid_status_transition, message: _("You cannot change from friended to requested."))
       end
     end
+  end
+
+  def people_from_same_product
+    errors.add(
+      :base,
+      :different_product,
+      message: _("You cannot friend a person from a different product")
+    ) if requested_to&.product_id != requested_by&.product_id
   end
 end
