@@ -5,6 +5,7 @@ json = {
   designation: person.designation(@lang),
   facebook_picture_url: person.facebook_picture_url,
   badge_points: person.level_progresses.present? ? person.level_progresses.first.total : 0,
+
 }
 
 lev = person.level_earned

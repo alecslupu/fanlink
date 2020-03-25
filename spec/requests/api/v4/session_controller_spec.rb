@@ -10,30 +10,28 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
       parameter name: :email_or_username, in: :formData, type: :string
       parameter name: :password, in: :formData, type: :string
       parameter name: :product, in: :formData, type: :string
-      # parameter name: "X-App", in: :header, type: :string
-      # parameter name: "X-Current-Product", in: :header, type: :string
 
-      response "200", "" do
-       let!(:user) { create(:person) }
-       let(:email_or_username) { user.email }
-       let(:password) { "badpassword"}
-       let(:product) { user.product.internal_name }
-       schema "$ref": "#/definitions/session_jwt"
-       run_test!
+      response "200", "HTTP/1.1 200 Ok" do
+        let!(:user) { create(:person) }
+        let(:email_or_username) { user.email }
+        let(:password) { "badpassword" }
+        let(:product) { user.product.internal_name }
+        schema "$ref": "#/definitions/SessionObject"
+        run_test!
       end
 
       response 422, "Invalid login" do
-       let!(:user) { create(:person) }
-       let(:email_or_username) { "a" + user.email }
-       let(:password) { "bad_password" }
-       let(:product) { user.product.internal_name }
-       run_test!
+        let!(:user) { create(:person) }
+        let(:email_or_username) { "a" + user.email }
+        let(:password) { "bad_password" }
+        let(:product) { user.product.internal_name }
+        run_test!
       end
 
       response 500, "Internal server error" do
-        let(:product) {""}
-        let(:email_or_username) {""}
-        let(:password) {""}
+        let(:product) { "" }
+        let(:email_or_username) { "" }
+        let(:password) { "" }
         document_response_without_test!
       end
     end
