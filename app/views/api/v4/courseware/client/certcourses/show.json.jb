@@ -1,0 +1,6 @@
+json = {}
+json[:quizzes] = @quizzes.map do |quiz|
+  quiz
+end
+
+json

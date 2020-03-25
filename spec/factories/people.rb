@@ -21,14 +21,14 @@
 #  do_not_message_me               :boolean          default(FALSE), not null
 #  pin_messages_from               :boolean          default(FALSE), not null
 #  auto_follow                     :boolean          default(FALSE), not null
-#  role                            :integer          default("normal"), not null
+#  old_role                        :integer          default("normal"), not null
 #  reset_password_token            :text
 #  reset_password_token_expires_at :datetime
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -38,6 +38,8 @@
 #  terminated                      :boolean          default(FALSE)
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
+#  role_id                         :bigint(8)
+#  authorized                      :boolean          default(TRUE), not null
 #
 
 require "faker"
@@ -55,13 +57,22 @@ FactoryBot.define do
     # biography { Faker::Lorem.paragraph(sentence_count: 2)}
     # picture { File.open("#{Rails.root}/spec/fixtures/images/large.jpg") }
 
+    role { Role.where(internal_name: 'normal').first || create(:role_normal) }
 
     factory :recommended_person do
       recommended { true }
     end
 
     factory :admin_user do
-      role { :admin }
+      role { Role.where(internal_name: 'admin').first || create(:role_admin) }
+    end
+
+    factory :client_user do
+      role { Role.where(internal_name: 'client').first || create(:role_client) }
+    end
+
+    factory :super_admin do
+      role { Role.where(internal_name: 'super_admin').first || create(:role_super_admin) }
     end
   end
 end

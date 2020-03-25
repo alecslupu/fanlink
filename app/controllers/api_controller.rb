@@ -18,7 +18,7 @@ protected
   end
 
   def some_admin?
-    current_user.try(:some_admin?)
+    !%w[normal client client_portal].include?(current_user.assigned_role.internal_name)
   end
 
   def web_request?

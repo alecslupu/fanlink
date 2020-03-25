@@ -40,7 +40,7 @@ RSpec.describe Api::V1::BadgesController, type: :controller do
       end
     end
     it 'returns all badges with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         badge1 = create(:badge, action_requirement: 1)

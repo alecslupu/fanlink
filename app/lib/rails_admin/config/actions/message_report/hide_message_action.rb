@@ -22,9 +22,9 @@ module RailsAdmin
               @object.status = "message_hidden"
               message = @object.message
               message.hidden = true
-              if message.save! && delete_message(message, @api_version)
+              if message.save && delete_message(message, @api_version)
                 changes = @object.changes
-                if @object.save
+                if @object.save!
                   @auditing_adapter && @auditing_adapter.update_object(@object, @abstract_model, _current_user, changes)
 
                   flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.update.done'))

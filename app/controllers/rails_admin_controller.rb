@@ -3,12 +3,12 @@ class RailsAdminController < ApplicationController
   include ::Pundit
 
   set_current_tenant_through_filter
-  before_action :require_login, :set_tenant, :set_api_version, :reload_rails_admin
+  before_action :require_login, :set_tenant, :set_api_version
 
 
   def not_authenticated
     # Make sure that we reference the route from the main app.
-    redirect_to("/admin/admin/login") && (return)
+    redirect_to(main_app.admin_login_screen_path(product_internal_name: 'admin')) && (return)
   end
 
   def require_login
@@ -46,17 +46,5 @@ class RailsAdminController < ApplicationController
 
   def not_found
     raise ActionController::RoutingError.new("Not Found")
-  end
-
-  def reload_rails_admin
-    # models = RailsAdmin::Config.models_pool
-    # models.each do |m|
-    #   RailsAdmin::Config.reset_model(m)
-    # end
-    # RailsAdmin::Config::Actions.reset
-    #
-    # # Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| load f }
-    # # Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| load f }
-    # load("#{Rails.root}/config/initializers/rails_admin.rb")
   end
 end

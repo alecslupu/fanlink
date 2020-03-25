@@ -1,4 +1,0 @@
-a_elem = $("td#hide_link<%= @message.id %>").find("a")
-a_elem.attr("href", "/admin/messages/<%= @message.id %>/hide")
-a_elem.text("Hide")
-a_elem.closest("tr").removeClass("hidden")

@@ -18,7 +18,7 @@ module TranslationThings
       "ro" => "Romanian"
   }.freeze
 
-  DEFAULT_LANG = "un"
+  DEFAULT_LANG = "en"
   DEFAULT_READ_LANG = "en"
 
   def self.word(code)
@@ -58,7 +58,7 @@ module TranslationThings
       names.each do |name|
         translation_things_module.module_eval(%Q{
           def #{name}(language = DEFAULT_READ_LANG)
-            read_attribute(:#{name}).to_h.values_at(language.to_s, DEFAULT_READ_LANG, DEFAULT_LANG).compact.first
+            read_attribute(:#{name}).to_h.values_at(language.to_s, DEFAULT_READ_LANG, DEFAULT_LANG, "un").compact.first
           end
 
           def #{name}_to_h

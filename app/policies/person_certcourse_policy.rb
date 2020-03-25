@@ -1,10 +1,10 @@
 class PersonCertcoursePolicy < CoursewareModulePolicy
   def forget_action?
-    super_admin? || access.send([module_name, "forget?"].join("_").to_sym)
+    super_admin? || has_permission?(:forget?)
   end
 
   def reset_progress_action?
-    super_admin? || access.send([module_name, "reset?"].join("_").to_sym)
+    super_admin? || has_permission?(:reset?)
   end
 
   class Scope < Scope

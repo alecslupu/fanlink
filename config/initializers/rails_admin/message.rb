@@ -1,13 +1,16 @@
 RailsAdmin.config do |config|
   config.included_models.push("Message")
   config.model "Message" do
-    configure :created do
+    configure :created_at do
+      strftime_format "%m/%d/%Y %H:%M:%S"
     end
-    configure :updated do
+    configure :updated_at do
+      strftime_format "%m/%d/%Y %H:%M:%S"
     end
     list do
-      scopes [ nil, :reported, :not_reported ]
-      fields :created,
+      scopes [nil, :reported, :not_reported]
+
+      fields :created_at,
              :person,
               :room,
               :id,
@@ -19,7 +22,7 @@ RailsAdmin.config do |config|
       end
     end
     show do
-      fields :person, :room, :id, :body, :hidden, :created, :updated
+      fields :person, :room, :id, :body, :hidden, :created_at, :updated_at
     end
   end
 end

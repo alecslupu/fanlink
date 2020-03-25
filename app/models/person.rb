@@ -21,14 +21,14 @@
 #  do_not_message_me               :boolean          default(FALSE), not null
 #  pin_messages_from               :boolean          default(FALSE), not null
 #  auto_follow                     :boolean          default(FALSE), not null
-#  role                            :integer          default("normal"), not null
+#  old_role                        :integer          default("normal"), not null
 #  reset_password_token            :text
 #  reset_password_token_expires_at :datetime
 #  reset_password_email_sent_at    :datetime
 #  product_account                 :boolean          default(FALSE), not null
 #  chat_banned                     :boolean          default(FALSE), not null
-#  designation                     :jsonb            not null
 #  recommended                     :boolean          default(FALSE), not null
+#  designation                     :jsonb            not null
 #  gender                          :integer          default("unspecified"), not null
 #  birthdate                       :date
 #  city                            :text
@@ -38,18 +38,14 @@
 #  terminated                      :boolean          default(FALSE)
 #  terminated_reason               :text
 #  deleted                         :boolean          default(FALSE)
+#  role_id                         :bigint(8)
+#  authorized                      :boolean          default(TRUE), not null
 #
 
 class Person < ApplicationRecord
-  include AttachmentSupport
-  # include Person::Blocks
-  # include Person::Facebook
-  # include Person::Filters
-  # include Person::Followings
-  # include Person::Levels
-  # include Person::Mailing
-  # include Person::Profile
+  attr_accessor :trigger_admin
 
+  include AttachmentSupport
   include TranslationThings
   authenticates_with_sorcery!
 
@@ -59,7 +55,7 @@ class Person < ApplicationRecord
 
   has_paper_trail
 
-  enum role: %i[ normal staff admin super_admin ]
+  enum old_role: %i[ normal staff admin super_admin root client client_portal]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -107,7 +103,6 @@ class Person < ApplicationRecord
 
   has_many :badges, through: :badge_awards
 
-
   has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
   has_many :trivia_package_leaderboards, class_name: "Trivia::RoundLeaderboard"
   has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
@@ -115,7 +110,6 @@ class Person < ApplicationRecord
   has_many :trivia_subscribers, class_name: "Trivia::Subscriber"
 
   has_many :relationships, ->(person) { unscope(:where).where("requested_by_id = :id OR requested_to_id = :id", id: person.id) }
-
 
   has_many :blocks_by,  class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
   has_many :blocks_on, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
@@ -130,31 +124,89 @@ class Person < ApplicationRecord
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
+  has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
+
+  has_many :room_subscribers, dependent: :destroy
+  has_many :subscribed_rooms, through: :room_subscribers, source: :room
+
+  has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
+  has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
+  has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
+  has_many :designated_clients, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
+
+  has_many :assigned_people, through: :assigned_assignees, source: :person
+  has_many :designated_people, through: :designated_assignees, source: :person
+  has_many :clients_assigned, through: :assigned_clients, source: :client
+  has_many :clients_designated, through: :designated_clients, source: :client
+
+
+  has_one :client_info, foreign_key: "client_id", dependent: :destroy
+
+  has_many :notifications, dependent: :destroy
+
+  belongs_to :role, optional: true
+
+  has_one :marketing_notification, dependent: :destroy
 
   before_validation :normalize_email
   before_validation :canonicalize_username, if: :username_changed?
+  before_validation :assign_role
+
+  after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
+  before_save :check_facebookid, if: -> { self.facebookid == "" }
 
   after_commit :flush_cache
 
-  # scope :username_filter, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
+  scope :username_filter_courseware, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
   scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
   scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
   scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
 
+  scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
+  scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
+  scope :with_friendships, -> { received_friendships.or(requested_friendships) }
+  scope :without_friendships, -> { where.not(id: with_friendships.select(:id)) }
+
+  scope :has_interests, -> { joins(:person_interests).group(:id) }
+  scope :has_no_interests, -> { joins("LEFT JOIN person_interests ON person_interests.person_id = people.id").where("person_interests.id is NULL") }
+  scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").having("COUNT(followings.id) > 1").group(:id) }
+  scope :has_no_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").having("COUNT(followings.id) = 1").group(:id) }
+  scope :has_posts, -> { joins(:posts).group(:id) }
+  scope :has_no_posts, -> {joins("LEFT JOIN posts ON posts.person_id = people.id").where("posts.id is NULL") }
+  scope :has_facebook_id, -> { where.not(facebookid: nil) }
+  scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
+  scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
+  scope :has_free_certificates_enrolled, -> { joins(:certificates).where("certificates.is_free = ?", true).group(:id) }
+  scope :has_no_free_certificates_enrolled, -> { where.not(id: has_enrolled_certificates.select(:id)) }
+  scope :has_paid_certificates, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0").group(:id) }
+  scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
+  scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
+  scope :has_no_sent_messages, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
+  scope :active_48h, -> { where("last_activity_at > ?", Time.zone.now - 48.hour) }
+  scope :active_7days, -> { where("last_activity_at > ?", Time.zone.now - 7.day) }
+  scope :active_30days, -> { where("last_activity_at > ?", Time.zone.now - 30.day) }
+  scope :inactive_48h, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 50.hour, Time.zone.now - 48.hour) }
+  scope :inactive_7days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 8.day, Time.zone.now - 7.day) }
+  scope :inactive_30days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 31.day, Time.zone.now - 30.day) }
+
   validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
   validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
-  validates :username, uniqueness: { scope: :product_id, message: _("has already been taken.") }
+  validates :username, uniqueness: { scope: :product_id, message: _("The username has already been taken.") }
 
   validates :email, presence: { message: _("Email is required.") }, if: Proc.new { |person| person.facebookid.blank? }
   validates :email, email: { message: _("Email is invalid."), allow_nil: true }
 
   validates :username, presence: { message: _("Username is required.") }
 
-  validates :username, emoji: true, on: :create
   validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
   validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
+  validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+
+  validates :username, emoji: true, on: :create
   # validates :name, emoji: true, on: :create
   # validates :birthdate, presence: { message: "is required." }
 
@@ -162,10 +214,13 @@ class Person < ApplicationRecord
 
   # Check if username has any special characters and if length is between 5 and 25
   validate :valid_username
+  validate :read_only_username
+
   enum gender: %i[ unspecified male female ]
 
   validate :valid_country_code
   validates :country_code, length: { is: 2 }, allow_blank: true
+  validate :client_role_changing, on: :update
 
   def country_code=(c)
     write_attribute :country_code, (c.nil?) ? nil : c.upcase
@@ -183,7 +238,6 @@ class Person < ApplicationRecord
   def self.canonicalize(username)
     StringUtil.search_ify(username)
   end
-
 
   def self.cached_find(id)
     Rails.cache.fetch([name, id]) { find(id) }
@@ -214,6 +268,10 @@ class Person < ApplicationRecord
     Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
   end
 
+  def send_assignee_certificate_email(person_certificate, assignee_id, email)
+    Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate.id, email))
+  end
+
   def send_course_attachment_email(certcourse_page)
     Delayed::Job.enqueue(SendDownloadFileEmailJob.new(self.id, certcourse_page.id))
   end
@@ -222,7 +280,7 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id, :email, :picture])
+      results = graph.get_object("me", fields: %w(id email picture.width(320).height(320)))
     rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
@@ -350,6 +408,14 @@ class Person < ApplicationRecord
     notification_device_ids.map(&:device_identifier)
   end
 
+  def ios_device_tokens
+    notification_device_ids.where(device_type: :ios).pluck(:device_identifier)
+  end
+
+  def android_device_tokens
+    notification_device_ids.where(device_type: :android).pluck(:device_identifier)
+  end
+
   #
   # Return a scoped query for people whose names match a string.
   #
@@ -384,14 +450,11 @@ class Person < ApplicationRecord
   def permissions
     1
   end
+  #
+  # def roles_for_select
+  #   (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
+  # end
 
-  def roles_for_select
-    (product.can_have_supers?) ? Person.roles : Person.roles.except(:super_admin)
-  end
-
-  def some_admin?
-    !normal?
-  end
 
   def to_s
     name || username
@@ -405,32 +468,100 @@ class Person < ApplicationRecord
     Rails.cache.delete([self.class.name, id])
   end
 
+
+  def summarize_permissions
+    permission_list = assigned_role.summarize.dup
+    individual_access.summarize.each do |key, value|
+      permission_list[key] = value if value == true
+    end
+    permission_list
+  end
+
+  def full_permission_list
+    summarize_permissions.select { |_, v| v }.keys
+  end
+
+  def individual_access
+    portal_access || build_portal_access
+  end
+
+  def assigned_role
+    role || build_role(internal_name: "normal", name: "Normal")
+  end
+  before_validation :assign_role
+
+  def assign_role
+    self.role = Role.where(internal_name: "normal").first if role_id.nil?
+  end
+
+  def normal?
+    %w[normal].include?(assigned_role.internal_name)
+  end
+
+  def root?
+    %w[root].include?(assigned_role.internal_name)
+  end
+
+  def admin?
+    %w[admin].include?(assigned_role.internal_name)
+  end
+
+  def super_admin?
+    %w[super_admin].include?(assigned_role.internal_name) || root?
+  end
+
+  def client?
+    %w[client].include?(assigned_role.internal_name)
+  end
+
+  def client_portal?
+    %w[client_portal].include?(assigned_role.internal_name)
+  end
+
+  def some_admin?
+    super_admin? || client_portal?
+  end
+
+  def self.with_matched_interests(interest_ids, person_id)
+    self.select("people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids")
+      .joins(:person_interests).where("person_interests.interest_id in (?)", interest_ids)
+      .where("person_interests.person_id != (?)", person_id)
+      .where("people.product_account = false")
+      .group("people.id")
+      .order(Arel.sql("count(person_interests.*) DESC"))
+  end
+
   private
-    def canonicalize(name)
-      self.class.canonicalize(name)
-    end
 
-    def canonicalize_username
-      if Person.find_by(username_canonical: canonicalize(self.username), product_id: product.id)
-        errors.add(:username, :username_in_use, message: _("has already been taken."))
-        false
-      else
-        self.username_canonical = canonicalize(self.username)
-        true
-      end
-    end
+  def check_facebookid
+    self.facebookid = nil if self.facebookid == ""
+  end
 
-    def check_role
-      if super_admin? && !product.can_have_supers
-        errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
-      end
-    end
+  def canonicalize(name)
+    self.class.canonicalize(name)
+  end
 
-    def validate_age
-      if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-        errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
-      end
+  def canonicalize_username
+    if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
+      errors.add(:username, :username_in_use, message: _("The username has already been taken."))
+      false
+    else
+      self.username_canonical = canonicalize(self.username)
+      true
     end
+  end
+
+  def check_role
+    if super_admin? && !product.can_have_supers?
+      errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
+    end
+  end
+
+  def validate_age
+    if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
+      errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
+    end
+  end
 
   def valid_country_code
     if country_code.present? && ISO3166::Country.find_country_by_alpha2(country_code).nil?
@@ -438,14 +569,35 @@ class Person < ApplicationRecord
     end
   end
 
-    def normalize_email
-      self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
-      true
-    end
+  def normalize_email
+    self.email = self.email.strip.downcase if self.email_changed? && self.email.present?
+    true
+  end
 
-    def valid_username
-      if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
-        errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
-      end
+  def valid_username
+    if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
+      errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
     end
+  end
+
+  def read_only_username
+    return if new_record?
+    return if self.trigger_admin.present?
+    errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
+  end
+
+  def client_role_changing
+    if self.role_id_changed?
+      previous_role = Role.where(id: self.role_id_was).first
+      errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == "client"
+    end
+  end
+
+  def generate_unique_client_code
+    code = SecureRandom.uuid.first(7)
+    while ClientInfo.where(code: code).first.present?
+      code = SecureRandom.uuid.first(7)
+    end
+    ClientInfo.create(client_id: self.id, code: code)
+  end
 end

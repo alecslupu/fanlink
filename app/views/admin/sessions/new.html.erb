@@ -1,2 +1,22 @@
-<%= render 'form' %>
-
+<%= form_tag admin_login_path, method: :post, class: "form" do %>
+    <div class="field-unit">
+        <div class="field-unit__label">
+            <%= label_tag :email_or_username %>
+        </div>
+        <div class="field-unit__field">
+            <%= text_field_tag :email_or_username %>
+        </div>
+    </div>
+    <div class="field-unit">
+        <div class="field-unit__label">
+            <%= label_tag :password %>
+        </div>
+        <div class="field-unit__field">
+            <%= password_field_tag :password %>
+        </div>
+    </div>
+    <%= hidden_field_tag :product_internal_name, @product.internal_name %>
+    <div class="form-actions">
+        <%= submit_tag "Login" %>
+    </div>
+<% end %>

@@ -1,12 +1,16 @@
 RailsAdmin.config do |config|
   config.included_models.push("Badge")
   config.model "Badge" do
-
     list do
       fields :id,
-             :action_type,
-             :name,
-             :internal_name,
+             :action_type
+
+      field :name do
+        searchable false
+        queryable false
+      end
+
+      fields :internal_name,
              :picture
     end
     edit do
@@ -31,6 +35,11 @@ RailsAdmin.config do |config|
              :picture,
              :issued_from,
              :issued_to
+    end
+
+    export do
+      configure :name, :string
+      configure :description, :string
     end
   end
 end

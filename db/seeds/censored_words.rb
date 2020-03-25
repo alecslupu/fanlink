@@ -25,7 +25,24 @@ masterbating masterbation masturbate masturbating masturbation maxi menses menst
 moolie moron motherfucka motherfucker motherfucking mtherfucker mthrfucker mthrfucking muff muffdiver murder muthafuckaz
 muthafucker mutherfucker mutherfucking muthrfucking nad nads naked napalm nappy nazi nazism negro nigga niggah niggas
  niggaz nigger nigger niggers niggle niglet nimrod ninny nipple nooky nympho opiate opium orgasm orgasmic orgies orgy
-ovary ovum ovums p.u.s.s.y. paddy paki pantie panties panty pastie pasty pcp pecker pedo pedophile pedophilia pedophiliac pee peepee penetrate penetration penial penile penis perversion peyote phalli phallic phuck pillowbiter pimp pinko piss pissed pissoff piss-off pms polack pollock poon poontang porn porno pornography potty prick prig prostitute prude pube pubic pubis punkass punky puss pussies pussy pussypounder puto queaf queef queef queer queero queers quicky quim racy rape raped raper rapist raunch rectal rectum rectus reetard reich retard retarded revue rimjob ritard rtard r-tard rum rump rumprammer ruski s.h.i.t. s.o.b. s0b sadism sadist scag scantily schizo schlong screw screwed scrog scrot scrote scrotum scrud scum seaman seamen seduce semen sex sexual sh1t s-h-1-t shamedame shit s-h-i-t shite shiteater shitface shithead shithole shithouse shits shitt shitted shitter shitty shiz sissy skag skank slave sleaze sleazy slut slutdumper slutkiss sluts smegma smut smutty snatch sniper snuff s-o-b sodom souse soused sperm spic spick spik spiks spooge spunk steamy stfu stiffy strip stroke stupid sucked sucking sumofabiatch t1t tampon tard tawdry teabagging teat terd teste testee testes testicle testis thrust thug tinkle tit titfuck titi tits tittiefucker titties titty tittyfuck tittyfucker toots tramp transsexual tubgirl turd tush twat twats undies unwed urinal urine uterus uzi vag vagina valium viagra virgin vixen vomit voyeur vulgar vulva wad wang wank wanker wazoo wedgie weenie weewee weiner weirdo wench wetback wh0re wh0reface whitey whiz whoralicious whore whorealicious whored whoreface whorehopper whorehouse whores whoring wigger womb woody wop x-rated xxx yeasty yobbo Zoophile Addys Uppers Dexies Zing Tussin Crank Tweak Yayo Dexies Drex Robo XTC Dope Skag Scag Tar Whippets Discorama Ket Acid Cid Blotter Shroom Shrooms Boomers Mushies Oxy Oxycotton Ox Kickers R-Ball Rids Rit Spice Zohai Vikes Vicos Lorris Norco 357s Xannies Z-Bars Zanbars Xanbars Benzos Percocet Amphetamine Acelerador Diablos A-Train Antifreeze Crisco Downers MPH Ritalin Concerta Daytrana Roxy Roxicodone Oxaydo Oxycontin Kunt)
+ovary ovum ovums p.u.s.s.y. paddy paki pantie panties panty pastie pasty pcp pecker pedo pedophile pedophilia pedophiliac
+pee peepee penetrate penetration penial penile penis perversion peyote phalli phallic phuck pillowbiter pimp pinko piss
+pissed pissoff piss-off pms polack pollock poon poontang porn porno pornography potty prick prig prostitute prude pube
+pubic pubis punkass punky puss pussies pussy pussypounder puto queaf queef queef queer queero queers quicky quim racy
+rape raped raper rapist raunch rectal rectum rectus reetard reich retard retarded revue rimjob ritard rtard r-tard rum
+rump rumprammer ruski s.h.i.t. s.o.b. s0b sadism sadist scag scantily schizo schlong screw screwed scrog scrot scrote
+scrotum scrud scum seaman seamen seduce semen sex sexual sh1t s-h-1-t shamedame shit s-h-i-t shite shiteater shitface
+shithead shithole shithouse shits shitt shitted shitter shitty shiz sissy skag skank slave sleaze sleazy slut slutdumper
+ slutkiss sluts smegma smut smutty snatch sniper snuff s-o-b sodom souse soused sperm spic spick spik spiks spooge spunk
+steamy stfu stiffy strip stroke stupid sucked sucking sumofabiatch t1t tampon tard tawdry teabagging teat terd teste
+testee testes testicle testis thrust thug tinkle tit titfuck titi tits tittiefucker titties titty tittyfuck tittyfucker
+toots tramp transsexual tubgirl turd tush twat twats undies unwed urinal urine uterus uzi vag vagina valium viagra
+virgin vixen vomit voyeur vulgar vulva wad wang wank wanker wazoo wedgie weenie weewee weiner weirdo wench wetback wh0re
+wh0reface whitey whiz whoralicious whore whorealicious whored whoreface whorehopper whorehouse whores whoring wigger
+ womb woody wop x-rated xxx yeasty yobbo Zoophile Addys Uppers Dexies Zing Tussin Crank Tweak Yayo Dexies Drex Robo
+ XTC Dope Skag Scag Tar Whippets Discorama Ket Acid Cid Blotter Shroom Shrooms Boomers Mushies Oxy Oxycotton Ox Kickers
+R-Ball Rids Rit Spice Zohai Vikes Vicos Lorris Norco 357s Xannies Z-Bars Zanbars Xanbars Benzos Percocet Amphetamine
+Acelerador Diablos A-Train Antifreeze Crisco Downers MPH Ritalin Concerta Daytrana Roxy Roxicodone Oxaydo Oxycontin Kunt)
 
 censored_words.each do |word|
   CensoredWord.create!(word: word)

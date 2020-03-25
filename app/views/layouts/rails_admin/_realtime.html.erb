@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    function playSound()
+    {
+        (new Audio('/alert.mp3')).play();
+    }
+
+    <% if authorized?(:index, RailsAdmin::AbstractModel.new('MessageReport')) %>
+    setTimeout(checkMessageReports, 100)
+    function checkMessageReports(){
+        $.getJSON("/admin_portal/message_report.json", { scope: 'pending' }, function (result) {
+            if(result.length > 0) {
+                $.notify({},{
+                    type: "danger",
+                    // newest_on_top: false,
+                    delay: 5*60*1000,
+                    url_target: '_self',
+                    onShow: function(){  playSound(); },
+                    // onClosed: function(){ setTimeout(checkMessageReports, 100) },
+                    template: '<div data-notify="container" class="col-xs-9 col-sm-3 alert alert-danger" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<div class="clearfix col-xs-11">'+
+                        '<span data-notify="title">There are <strong>'+ result.length+'</strong> reported messages</span>' +
+                        '<a class="pull-right" href="<%=  rails_admin.url_for(action: :index, controller: 'rails_admin/main', model_name: :message_report) %>">View all</a>' +
+                        '</div>'+
+                        '</div>'
+                });
+            }
+        })
+    }
+    <% end %>
+
+
+    <% if authorized?(:index, RailsAdmin::AbstractModel.new('PostReport')) %>
+    setTimeout(checkPostReports, 100)
+    function checkPostReports(){
+        $.getJSON("/admin_portal/post_report.json", { scope: 'pending' }, function (result) {
+            if(result.length > 0) {
+                $.notify({},{
+                    type: "danger",
+                    // newest_on_top: false,
+                    delay: 5*60*1000,
+                    url_target: '_self',
+                    onShow: function(){  playSound(); },
+                    // onClosed: function(){ setTimeout(checkPostReports, 100) },
+                    template: '<div data-notify="container" class="col-xs-9 col-sm-3 alert alert-danger" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<div class="clearfix col-xs-11">'+
+                            '<span data-notify="title">There are <strong>'+ result.length+'</strong> post reports</span>' +
+                            '<a class="pull-right" href="<%=  rails_admin.url_for(action: :index, controller: 'rails_admin/main', model_name: :post_report) %>">View all</a>' +
+                        '</div>'+
+                        '</div>'
+                });
+            }
+        })
+    }
+    <% end %>
+
+    <% if authorized?(:index, RailsAdmin::AbstractModel.new('PostCommentReport')) %>
+    setTimeout(checkPostCommentReports, 100)
+    function checkPostCommentReports(){
+        $.getJSON("/admin_portal/post_comment_report.json", { scope: 'pending' }, function (result) {
+            if(result.length > 0) {
+               $.notify({},{
+                    type: "danger",
+                    // newest_on_top: false,
+                    delay: 5*60*1000,
+                    url_target: '_self',
+                    onShow: function(){  playSound(); },
+                    // onClosed: function(){ setTimeout(checkPostCommentReports, 100) },
+                    template: '<div data-notify="container" class="col-xs-9 col-sm-3 alert alert-danger" role="alert">' +
+                        '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                        '<div class="clearfix col-xs-11">'+
+                        '<span data-notify="title">There are <strong>'+ result.length+'</strong> reported post comments</span>' +
+                        '<a class="pull-right" href="<%=  rails_admin.url_for(action: :index, controller: 'rails_admin/main', model_name: :post_comment_report) %>">View all</a>' +
+                        '</div>'+
+                        '</div>'
+                });
+            }
+        })
+    }
+    <% end %>
+</script>

@@ -7,7 +7,7 @@ RSpec.describe Api::V2::PostsController, type: :controller do
 
   describe "#create" do
     it "creates a post with attachments when it's valid" do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
 

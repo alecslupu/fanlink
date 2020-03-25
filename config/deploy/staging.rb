@@ -7,13 +7,16 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server "54.183.70.153", user: "ubuntu", roles: %w{ app db web }
+server "54.183.29.51", user: "ubuntu", roles: %w{app db web worker}
 
 set :rails_env, "staging"
-set :branch, "ale-staging"
+set :branch, "staging"
 
-set :bundle_without, %w{development test}.join(' ')
+set :bundle_without, %w{development test}.join(" ")
 set :bundle_jobs, 8
+
+set :delayed_job_args, "-n 1 -e #{fetch(:rails_env)}"
+
 # role-based syntax
 # ==================
 
@@ -31,7 +34,6 @@ set :bundle_jobs, 8
 # role :web, %w("52.53.208.155", "54.183.234.164")
 # role :db, %w("52.53.208.155"), :primary => true
 
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -39,8 +41,6 @@ set :bundle_jobs, 8
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================

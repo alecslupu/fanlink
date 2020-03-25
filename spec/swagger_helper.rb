@@ -1,4 +1,15 @@
-require "rails_helper"
+require "spec_helper"
+
+def document_response_without_test!
+  before do |example|
+    submit_request(example.metadata)
+  end
+
+  it "adds documentation without testing the response" do |example|
+    # Only check that the response is present
+    expect(example.metadata[:response]).to be_present
+  end
+end
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
@@ -14,59 +25,6 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a swagger_doc tag to the
   # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
-    "v1/swagger.json" => {
-      swagger: "2.0",
-      info: {
-        title: "API V1",
-        version: "v1",
-      },
-      paths: {},
-
-      securityDefinitions: {
-        Bearer: {
-          description: "...",
-          type: :apiKey,
-          name: "Authorization",
-          in: :header,
-        },
-      },
-
-    },
-    "v2/swagger.json" => {
-      swagger: "2.0",
-      info: {
-        title: "API V2",
-        version: "v2",
-      },
-      paths: {},
-
-      securityDefinitions: {
-        Bearer: {
-          description: "...",
-          type: :apiKey,
-          name: "Authorization",
-          in: :header,
-        },
-      },
-
-    },
-    "v3/swagger.json" => {
-      swagger: "2.0",
-      info: {
-        title: "API V3",
-        version: "v3",
-      },
-      paths: {},
-
-      securityDefinitions: {
-        Bearer: {
-          description: "...",
-          type: :apiKey,
-          name: "Authorization",
-          in: :header,
-        },
-      },
-    },
     "v4/swagger.json" => {
       swagger: "2.0",
       info: {
@@ -81,16 +39,282 @@ RSpec.configure do |config|
           in: :header,
         },
       },
+      tags: [
+        #{
+        #  name: "ActionTypes",
+        #  description: "Action types allow the apps to send actions that count towards badge/reward unlocks.(Super Admin Only)",
+        #},
+        #{
+        #  name: "ActivityTypes",
+        #  "description": "Activity Types",
+        #},
+        #{
+        #  name: "AssignedRewards",
+        #  "description": "This allows admins to assign rewards to other systems. Currently supports ActionType, Quest, Step, and QuestActivity.",
+        #},
+        {
+          name: "BadgeActions",
+          description: "Badge Actions",
+        },
+        {
+          name: "Badges",
+          description: "Badges",
+        },
+        #{
+        #  name: "Base",
+        #},
+        #{
+        #  name: "Blocks",
+        #  description: "Block a person",
+        #},
+        {
+          name: "Categories",
+          description: "Categories",
+        },
+        #{
+        #  name: "Events",
+        #  description: "Events",
+        #},
+        {
+          name: "Followings",
+          description: "Followers and following",
+        },
+        {
+          name: "Interests",
+          description: "Interests",
+        },
+        {
+          name: "Levels",
+          description: "Levels",
+        },
+        #{
+        #  name: "Merchandise",
+        #  description: "Product Merchandise",
+        #},
+        {
+          name: "MessageReports",
+          description: "Message Reports",
+        },
+        {
+          name: "Messages",
+          description: "Messages",
+        },
+        {
+          name: "NotificationDeviceIds",
+          description: "Notification Device IDs",
+        },
+        {
+          name: "PasswordResets",
+          description: "Password Reset",
+        },
+        {
+          name: "People",
+          description: "Users",
+        },
+        #{
+        #  name: "PostCommentReports",
+        #  description: "Reported comments on posts",
+        #},
+        #{
+        #  name: "PostComments",
+        #  description: "Comments on a post",
+        #},
+        #{
+        #  name: "PostReactions",
+        #  description: "User reactions to a post",
+        #},
+        #{
+        #  name: "PostReports",
+        #  description: "Posts reported by a user",
+        #},
+        #{
+        #  name: "Posts",
+        #  description: "User/product posts",
+        #},
+        #{
+        #  name: "ProductBeacons",
+        #  description: "Beacons assigned to a product",
+        #},
+        #{
+        #  name: "Products",
+        #  description: "Products",
+        #},
+        #{
+        #  name: "QuestActivities",
+        #  description: "Quest Activities",
+        #},
+        #{
+        #  name: "QuestCompletions",
+        #  description: "This is used to register an activity as completed.",
+        #},
+        #{
+        #  name: "Quests",
+        #  description: "Quests",
+        #},
+        #{
+        #  name: "RecommendedPeople",
+        #  description: "Recommended People",
+        #},
+        #{
+        #  name: "RecommendedPosts",
+        #  description: "Recommended posts",
+        #},
+        {
+            name: "Referral",
+            description: "Referral system "
+        },
+        {
+          name: "Relationships",
+          description: "User's relationships",
+        },
+        #{
+        #  name: "Rewards",
+        #  description: "Reward system. Handles linking rewards to various things.",
+        #},
+        #{
+        #  name: "RoomMemberships",
+        #  description: "What rooms a user belongs to.",
+        #},
+        {
+          name: "Rooms",
+          description: "Chat rooms",
+        },
+        {
+          name: "Session",
+          description: "User session management.",
+        },
+        #{
+        #  name: "Steps",
+        #  description: "Steps for a quest",
+        #},
+        #{
+        #  name: "Tags",
+        #  description: "Tags",
+        #},
+      ],
       paths: {},
       definitions: {
         certificate_information: {
           type: :object,
-          certificate: {
-            type: :object,
-            properties: {
-              name: {type: :string},
-              issue_: {type: :datetime},
+          properties: {
+            certificate: {
+              type: :object,
+              properties: {
+                name: {type: :string},
+                issued_date: {type: :string, format: "date", 'x-nullable': true},
+                certificate_image_url: {type: :string},
+              },
             },
+          },
+        },
+        CategoryArray: {
+          type: :object,
+          properties: {
+            categories: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  category: { "$ref": "#/definitions/CategoryJson" }
+                }
+              }
+            }
+          }
+        },
+        CategoryJson: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            name: {type: :string},
+            product_id: {type: :string},
+            color: {type: :string},
+            role: {type: :string},
+            posts: {
+              type: :array,
+              items: {
+                "$ref": "#/definitions/PostJson"
+              }
+            }
+          },
+          "description": "Category Reponse"
+        },
+        PostJson: {
+
+        },
+        BadgeActionsPending: {
+          type: :object,
+          properties: {
+            pending_badge: {
+              type: :object,
+              properties: {
+                badge_action_count: { type: :integer },
+                badge: { "$ref": "#/definitions/BadgeJson" }
+              }
+            },
+            badges_awarded: {
+              type: :array,
+              items: {
+                "$ref": "#/definitions/BadgeJson"
+              }
+            }
+          }
+        },
+        public_person: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            username: {type: :string},
+            name: {type: :string, 'x-nullable': true},
+            email: {type: :string},
+            gender: {type: :string},
+            city: {type: :string, 'x-nullable': true},
+            country_code: {type: :string, 'x-nullable': true},
+            birthdate: {type: :string, format: "date", 'x-nullable': true},
+            biography: {type: :string, 'x-nullable': true},
+            picture_url: {type: :string, 'x-nullable': true},
+            product_account: {type: :boolean},
+            recommended: {type: :boolean},
+            chat_banned: {type: :boolean},
+            tester: {type: :boolean},
+            terminated: {type: :boolean},
+            terminated_reason: {type: :string, 'x-nullable': true},
+            designation: {type: :string, 'x-nullable': true},
+            role: {type: :string},
+            do_not_message_me: {type: :boolean},
+            pin_messages_from: {type: :boolean},
+            auto_follow: {type: :boolean},
+            num_followers: {type: :integer},
+            num_following: {type: :integer},
+            facebookid: {type: :string, 'x-nullable': true},
+            facebook_picture_url: {type: :string, 'x-nullable': true},
+            badge_points: {type: :integer},
+            level: {type: :integer, 'x-nullable': true},
+            created_at: {type: :string, format: "date-time"},
+            updated_at: {type: :string, format: "date-time"},
+            following_id: {type: :integer, 'x-nullable': true},
+            relationships: {
+              type: :array,
+              items: {
+                "$ref" => "#/definitions/relationships",
+              },
+            },
+          },
+        },
+        relationships: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            status: {type: :string},
+            requested_by: {:type => :object, "$ref" => "#/definitions/public_person"},
+            requested_to: {:type => :object, "$ref" => "#/definitions/public_person"},
+            created_at: {type: :string, format: "date-time"},
+            updated_at: {type: :string, format: "date-time"},
+          },
+        },
+        people: {
+          type: :array,
+          items: {
+            "$ref" => "#/definitions/public_person",
           },
         },
         session_jwt: {
@@ -101,33 +325,33 @@ RSpec.configure do |config|
               properties: {
                 id: {type: :string},
                 username: {type: :string},
-                name: {type: :string},
+                name: {type: :string, 'x-nullable': true},
                 gender: {type: :string},
-                city: {type: :string},
-                country_code: {type: :string},
-                birthdate: {type: :datetime},
-                biography: {type: :string},
-                picture_url: {type: :string},
+                city: {type: :string, 'x-nullable': true},
+                country_code: {type: :string, 'x-nullable': true},
+                birthdate: {type: :string, format: "date", 'x-nullable': true},
+                biography: {type: :string, 'x-nullable': true},
+                picture_url: {type: :string, 'x-nullable': true},
                 product_account: {type: :boolean},
                 recommended: {type: :boolean},
                 chat_banned: {type: :boolean},
                 tester: {type: :boolean},
                 terminated: {type: :boolean},
-                terminated_reason: {type: :string},
-                designation: {type: :string},
+                terminated_reason: {type: :string, 'x-nullable': true},
+                designation: {type: :string, 'x-nullable': true},
                 role: {type: :string},
                 do_not_message_me: {type: :boolean},
                 pin_messages_from: {type: :boolean},
                 auto_follow: {type: :boolean},
                 num_followers: {type: :integer},
                 num_following: {type: :integer},
-                facebookid: {type: :integer},
-                facebook_picture_url: {type: :string},
+                facebookid: {type: :string, 'x-nullable': true},
+                facebook_picture_url: {type: :string, 'x-nullable': true},
                 badge_points: {type: :integer},
-                level: {type: :integer},
-                created_at: {type: :datetime},
-                updated_at: {type: :datetime},
-                following_id: {type: :integer},
+                level: {type: :integer, 'x-nullable': true},
+                created_at: {type: :string, format: "date-time"},
+                updated_at: {type: :string, format: "date-time"},
+                following_id: {type: :integer, 'x-nullable': true},
                 email: {type: :string},
                 product: {
                   type: :object,
@@ -137,11 +361,13 @@ RSpec.configure do |config|
                     name: {type: :string},
                   },
                 },
-                level_progress: {type: :integer},
-                rewards: {type: :string},
-                blocked_people: {type: :integer},
-                permissions: {type: :integer},
-                pin_messages_to: {type: :integer},
+                level_progress: {type: :integer, 'x-nullable': true},
+                rewards: {type: :string, 'x-nullable': true},
+                blocked_people: {type: :integer, 'x-nullable': true},
+                permissions: {
+                  type: :object,
+                },
+                pin_messages_to: {type: :integer, 'x-nullable': true},
                 token: {type: :string},
               },
             },
@@ -293,7 +519,166 @@ RSpec.configure do |config|
           },
           required: ["trivia_game_id"],
         },
+        faulty: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            faulty: { type: :string }
+          },
+        },
+        SuccessMessage: {
+          type: :object,
+          properties: {
+             message: { type: :string }
+          }
+        },
+        ErrorMessage: {
+          type: :object,
+          properties: {
+             message: { type: :string }
+          }
+        },
+        FollowersArray: {
+          type: :object,
+          properties: {
+            followers: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  badge: { "$ref": "#/definitions/FollowingObject" }
+                }
+              }
+            }
+          }
+        },
+        FollowingObject: {
+          type: :object,
+          properties: {
+            following: { "$ref": "#/definitions/FollowingJson" }
+          }
+        },
+        FollowingJson: {
+          type: :object,
+          "properties": {
+            id: { type: :string },
+            follower: { "$ref": "#/definitions/public_person" },
+            followed: { "$ref": "#/definitions/public_person" }
+          },
+          "description": "Following Response"
+        },
+
+        BadgeJson: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            "name": {type: :string},
+            "internal_name": {type: :string},
+            "description": {type: :string, 'x-nullable': true},
+            "picture_url": {type: :string},
+            action_requirement: {type: :integer},
+            point_value: {type: :integer},
+          },
+          "description": "Badge Response"
+        },
+        ReferralCode: {
+            type: :object,
+            properties: {
+                person_id: {type: :integer},
+                unique_code: {type: :string},
+            }
+        },
+        BadgesArray: {
+          type: :object,
+          properties: {
+            badges: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  badge: { "$ref": "#/definitions/BadgeJson" }
+                }
+              }
+            }
+          }
+        },
+        Certificate: {
+          type: :object,
+          properties: {
+            id: {type: :integer},
+            order: {type: :integer},
+            long_name: {type: :string},
+            short_name: {type: :string},
+            description: {type: :string},
+            color_hex: {type: :string},
+            chat_room_id: {type: :integer},
+            sku_android: {type: :string},
+            sku_ios: {type: :string},
+            is_free: {type: :boolean},
+            is_issuable: {type: :boolean},
+            is_completed: {type: :boolean},
+            is_purchased: {type: :boolean},
+            certificate_image_url: {type: :string, 'x-nullable': true},
+            issued_certificate_image_url: {type: :string, 'x-nullable': true},
+          }
+        },
+        CertificateWishlist: {
+          type: :object,
+          properties: {
+            wishlist: {
+              type: :array,
+              items: {
+                type: :object,
+                properties: {
+                  id: { type: :integer },
+                  certificate: { type: :object, "$ref": "#/definitions/Certificate" },
+                }
+              }
+            }
+          }
+        },
+        "LevelJson": {
+          type: :object,
+          properties: {
+            id: { type: :integer },
+            name: {type: :string},
+            internal_name: {type: :string},
+            description: {type: :string},
+            points: {type: :integer},
+            picture_url: {type: :string},
+          },
+          "description": "Level Response"
+        },
+        personMini: {
+          type: :object,
+          properties: {
+            id: {type: :string},
+            username: {type: :string},
+            picture_url: {type: :string},
+            designation: {type: :string},
+            facebook_picture_url: {type: :string},
+            badge_points: {type: :integer},
+            level: {
+              "$ref": "#/definitions/LevelJson", 'x-nullable': true
+            }
+          }
+        },
+        MiniPeopleArray: {
+          type: :object,
+          properties: {
+            people: {
+              type: :array,
+              items: {
+                "$ref" => "#/definitions/personMini",
+              },
+            }
+          }
+        }
       },
     },
   }
+
+  config.swagger_docs["v1/swagger.json"] = JSON.parse(File.read(Rails.root.join("doc/open_api/V1.json")))
+  config.swagger_docs["v2/swagger.json"] = JSON.parse(File.read(Rails.root.join("doc/open_api/V2.json")))
+  config.swagger_docs["v3/swagger.json"] = JSON.parse(File.read(Rails.root.join("doc/open_api/V3.json")))
 end

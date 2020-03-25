@@ -56,6 +56,7 @@ RSpec.describe Api::V2::SessionController, type: :controller do
       end
       expect(response).to have_http_status(422)
     end
+
     it "should log in a person via FB auth token" do
       tok = "1234"
       fbperson = create(:person, email: nil, facebookid: "12345")

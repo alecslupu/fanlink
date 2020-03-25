@@ -22,7 +22,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       end
     end
     it 'returns all merchandises with their attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         create_list(:merchandise, 3, picture: fixture_file_upload('images/better.png', 'image/png'))
@@ -66,7 +66,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       end
     end
     it 'returns the merchandise with the attached image' do
-      person = create(:person, role: :admin)
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         merchandise = create(:merchandise, picture: fixture_file_upload('images/better.png', 'image/png'))

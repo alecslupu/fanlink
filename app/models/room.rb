@@ -17,7 +17,7 @@
 #  name                   :jsonb            not null
 #  description            :jsonb            not null
 #  order                  :integer          default(0), not null
-#  last_message_timestamp :bigint(8)
+#  last_message_timestamp :bigint(8)        default(0)
 #
 
 class Room < ApplicationRecord
@@ -63,13 +63,20 @@ class Room < ApplicationRecord
 
   has_image_called :picture
 
-  has_many :messages, dependent: :restrict_with_error
+  if Rails.env.staging?
+    has_many :messages, dependent: :destroy
+  else
+    has_many :messages, dependent: :restrict_with_error
+  end
+
   has_many :pin_messages, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
+  has_many :room_subscribers, dependent: :destroy
 
 
   has_many :members, through: :room_memberships, source: :person
   has_many :pin_from, through: :pin_messages, source: :person
+  has_many :subscribers, through: :room_subscribers, source: :person
 
   has_paper_trail
 

@@ -25,4 +25,38 @@ RSpec.describe Trivia::Prize, type: :model do
       expect(prize.product).to eq(prize.game.product)
     end
   end
+
+  context "status" do
+    subject { Trivia::Prize.new }
+    it { expect(subject).to respond_to(:draft?) }
+    it { expect(subject).to respond_to(:published?) }
+    it { expect(subject).to respond_to(:locked?) }
+    it { expect(subject).to respond_to(:closed?) }
+  end
+
+  context "State Machine" do
+    subject { Trivia::Prize.new }
+
+    it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
+    it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
+    it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
+  end
+
+
+  describe "copy_to_new" do
+    it { expect(Trivia::Prize.new.respond_to?(:copy_to_new)).to eq(true) }
+    context "creates new record" do
+      before do
+        create(:trivia_prize)
+        expect(Trivia::Prize.count).to eq(1)
+        @old_prize = Trivia::Prize.last
+        @prize_object = @old_prize.copy_to_new
+        expect(Trivia::Prize.count).to eq(2)
+      end
+
+      it { expect(@prize_object).to be_a(Trivia::Prize) }
+      it { expect(@prize_object.status).to eq("draft") }
+    end
+  end
 end
+

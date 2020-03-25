@@ -157,18 +157,35 @@ RSpec.describe Person, type: :model do
       it { should have_many(:following).through(:active_followings) }
       it { should have_many(:passive_followings) }
       it { should have_many(:followers).through(:passive_followings) }
-      # it { should have_many(:relationships) }
+
+      it { should have_many(:hired_people) }
+      it { should have_many(:clients) }
+      it { should have_many(:assigned_assignees) }
+      it { should have_many(:designated_assignees) }
+      it { should have_many(:assigned_clients) }
+      it { should have_many(:designated_clients) }
+
+      it { should have_many(:assigned_people).through(:assigned_assignees) }
+      it { should have_many(:designated_people).through(:designated_assignees) }
+      it { should have_many(:clients_assigned).through(:assigned_clients) }
+      it { should have_many(:clients_designated).through(:designated_clients) }
+
+      it { should have_many(:room_subscribers) }
+      it { should have_many(:courseware_wishlists) }
     end
 
     describe "#has_one" do
       it "should verify associations" do
         should have_one(:portal_access)
+        should have_one(:client_info)
+
       end
     end
 
     describe "#belongs_to" do
       it "should verify associations" do
         should belong_to(:product)
+        should belong_to(:role)
       end
     end
   end
@@ -182,6 +199,61 @@ RSpec.describe Person, type: :model do
     end
     describe "#email_filter" do
       it { expect(Person).to respond_to(:email_filter)}
+    end
+    describe "#requested_friendships" do
+      it { expect(Person).to respond_to(:requested_friendships)}
+    end
+    describe "received_friendships" do
+      it { expect(Person).to respond_to(:received_friendships)}
+    end
+    describe "#with_friendships" do
+      it { expect(Person).to respond_to(:with_friendships)}
+    end
+    describe "#without_friendships" do
+      it { expect(Person).to respond_to(:without_friendships)}
+    end
+    describe "has_interests" do
+      it { expect(Person).to respond_to(:has_interests)}
+    end
+
+    describe "has_no_interests" do
+      it { expect(Person).to respond_to(:has_no_interests)}
+    end
+    describe "#has_followings" do
+      it { expect(Person).to respond_to(:has_followings)}
+    end
+    describe "#has_no_followings" do
+      it { expect(Person).to respond_to(:has_no_followings)}
+    end
+    describe "#has_posts" do
+      it { expect(Person).to respond_to(:has_posts)}
+    end
+    describe "#has_no_posts" do
+      it { expect(Person).to respond_to(:has_no_posts)}
+    end
+    describe "has_facebook_id" do
+      it { expect(Person).to respond_to(:has_facebook_id)}
+    end
+    describe "#has_created_acc_past_24h" do
+      it { expect(Person).to respond_to(:has_created_acc_past_24h)}
+    end
+    describe "#has_created_acc_past_7days" do
+      it { expect(Person).to respond_to(:has_created_acc_past_7days)}
+    end
+    describe "has_free_certificates_enrolled" do
+      it { expect(Person).to respond_to(:has_no_free_certificates_enrolled)}
+    end
+    describe "#has_free_certificates_enrolled" do
+      it { expect(Person).to respond_to(:has_free_certificates_enrolled)}
+    end
+    describe "#has_certificates_generated" do
+      it { expect(Person).to respond_to(:has_certificates_generated)}
+    end
+    describe "#has_paid_certificates" do
+      it { expect(Person).to respond_to(:has_paid_certificates)}
+    end
+    describe "#has_no_paid_certificates" do
+      it { expect(Person).to respond_to(:has_no_paid_certificates)}
     end
   end
 
@@ -352,15 +424,9 @@ RSpec.describe Person, type: :model do
     it "should be nil for person with one badge below first level" do
       ActsAsTenant.with_tenant(create(:product)) do
         person = create(:person)
-# <<<<<<< HEAD
         create(:badge, point_value: 10)
         create(:level, points: 20)
         create(:level_progress, person: person, points: { badge_action: 10 }, total: 10)
-# =======
-#         badge = create(:badge, point_value: 10)
-#         level_earned = create(:level, points: 20)
-#         create(:level_progress, person: person, points: {badge_action: 10}, total: 10)
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to be_nil
       end
@@ -380,13 +446,8 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level1 = create(:level, points: 10)
-# <<<<<<< HEAD
         create(:level, points: 21)
         create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
-# =======
-#         level2 = create(:level, points: 21)
-#         create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level1)
       end
@@ -397,32 +458,32 @@ RSpec.describe Person, type: :model do
     it "should allow super in a product that can have such" do
       prod = create(:product, can_have_supers: true)
       ActsAsTenant.with_tenant(prod) do
-        person = create(:person, role: :super_admin)
+        person = create(:super_admin)
         expect(person).to be_valid
       end
     end
     it "should not allow super in a product that cannot have such" do
       prod = create(:product)
       ActsAsTenant.with_tenant(prod) do
-        person = build(:person, role: :super_admin)
+        person = build(:super_admin)
         expect(person).not_to be_valid
         expect(person.errors[:role]).not_to be_empty
       end
     end
   end
 
-  describe ".roles_for_select" do
-    it "should return all roles for a product that can have supers" do
-      ActsAsTenant.with_tenant(create(:product, can_have_supers: true)) do
-        expect(create(:person).roles_for_select).to eq(Person.roles)
-      end
-    end
-    it "should return all roles except suerp for a product that cannot have supers" do
-      ActsAsTenant.with_tenant(create(:product, can_have_supers: false)) do
-        expect(create(:person).roles_for_select).to eq(Person.roles.except(:super_admin))
-      end
-    end
-  end
+  # describe ".roles_for_select" do
+  #   it "should return all roles for a product that can have supers" do
+  #     ActsAsTenant.with_tenant(create(:product, can_have_supers: true)) do
+  #       expect(create(:person).roles_for_select).to eq(Person.roles)
+  #     end
+  #   end
+  #   it "should return all roles except suerp for a product that cannot have supers" do
+  #     ActsAsTenant.with_tenant(create(:product, can_have_supers: false)) do
+  #       expect(create(:person).roles_for_select).to eq(Person.roles.except(:super_admin))
+  #     end
+  #   end
+  # end
 
   describe "#some_admin?" do
     it "should return false for normal" do
@@ -450,13 +511,8 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq("whereispancakehouse")
     end
     it "should ignore accents, case, and punctuation when using for_username" do
-# <<<<<<< HEAD
       examples = [ "Whére.Ïs.Pañçâkè.HOUSE", "where.is.pancake.house",
                    "whereispancakehouse", "where-is_pancake.house", "where@is_pancakehouse" ]
-# =======
-#       examples = ["Whére.Ïs.Pañçâkèß.HOUSE", "where.is.pancakeß.house",
-#                   "whereispancakeßhouse", "where-is_pancakeß.house", "where@is_pancakeß.house",]
-# >>>>>>> feature/FLAPI-1112-create-tests-for-the-existing-policies
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -476,7 +532,7 @@ RSpec.describe Person, type: :model do
         expect(p).to eq(Person.last)
       end
       it "should return nil if api error" do
-        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: [:id, :email, :picture]).and_raise(Koala::Facebook::APIError.new(nil, nil))
+        allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).with("me", fields: %w(id email picture.width(320).height(320))).and_raise(Koala::Facebook::APIError.new(nil, nil))
         expect(Person.create_from_facebook("12345", "fdafafadadfa")).to be_nil
       end
     end
@@ -640,37 +696,128 @@ RSpec.describe Person, type: :model do
 
   describe "#send_onboarding_email" do
     it "enqueues an onboarding email" do
-      expect(Delayed::Job.count).to eq 0
       person = create(:person)
+      expect(Delayed::Job).to receive(:enqueue)
       person.send_onboarding_email
-      expect(Delayed::Job.count).to eq 1
     end
   end
 
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
-      expect(Delayed::Job.count).to eq 0
       person = create(:person)
+      expect(Delayed::Job).to receive(:enqueue)
       person.send_password_reset_email
-      expect(Delayed::Job.count).to eq 1
     end
   end
 
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
-      expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
+      expect(Delayed::Job).to receive(:enqueue)
       pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
-      expect(Delayed::Job.count).to eq 1
     end
   end
 
   describe "#send_course_attachment_email" do
     it "sends a course on email" do
-      expect(Delayed::Job.count).to eq 0
       pc = create(:person_certificate)
+      expect(Delayed::Job).to receive(:enqueue)
       pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
-      expect(Delayed::Job.count).to eq 1
+    end
+  end
+
+
+  describe "full_permission_list" do
+    it "responds to" do
+      expect(Person.new).to respond_to(:full_permission_list)
+    end
+    it "returns no permission" do
+      expect(Person.new.full_permission_list).to eq([])
+    end
+
+    it "returns values from portal access" do
+      to_test = create(:portal_access, reward_read: true)
+      expect(to_test.person.full_permission_list).to include(:reward_read)
+    end
+
+    it "returns values from role access" do
+      to_test = create(:person, role: create(:role, post_update: true))
+      expect(to_test.full_permission_list).to include(:post_update)
+    end
+
+    it "returns values from both access" do
+      to_test = create(:person, role: create(:role, post_update: true))
+      to_test = create(:portal_access, person: to_test, reward_read: true).person
+
+      expect(to_test.full_permission_list).to include(:reward_read)
+      expect(to_test.full_permission_list).to include(:post_update)
+    end
+
+  end
+
+  describe "individual_access" do
+
+    it "has association" do
+      should have_one(:portal_access)
+    end
+    it "responds to" do
+      expect(Person.new).to respond_to(:individual_access)
+    end
+    it "returns a portal access instance if not assigned" do
+      expect(Person.new.individual_access).to be_instance_of(PortalAccess)
+      expect(Person.new.individual_access.persisted?).to eq(false)
+    end
+    it "returns an existing Portal access " do
+      to_test = create(:portal_access).person.reload.individual_access
+      expect(to_test).to eq(PortalAccess.last)
+    end
+  end
+
+  describe "assigned_role" do
+    it "has association" do
+      should belong_to(:role)
+    end
+    it "responds to" do
+      expect(Person.new).to respond_to(:assigned_role)
+    end
+    it "returns a role instance if not assigned" do
+      expect(Person.new.assigned_role).to be_instance_of(Role)
+      expect(Person.new.assigned_role.persisted?).to eq(false)
+    end
+
+    it "returns an existing role " do
+      to_test = create(:admin_user).reload.assigned_role
+      expect(to_test).to eq(Role.last)
+    end
+  end
+
+  describe "#send_assignee_certificate_email" do
+    it "enqueues a certificate email" do
+      pc = create(:person_certificate)
+      expect(Delayed::Job).to receive(:enqueue)
+      pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
+    end
+  end
+
+  describe "#generate_unique_client_code" do
+    let(:client_role) { create(:role_client) }
+    it "generates an uniqe code for a new user with client role" do
+      expect { create(:person, role: client_role) }.to change { ClientInfo.count }.by(1)
+    end
+
+    it "generates the unique code when a user's role is changed to client" do
+      person = create(:person, role: create(:role, internal_name: "a role"))
+      expect(person.client_info.present?).to eq(false)
+
+      expect { person.update(role: client_role) }.to change { ClientInfo.count }.by(1)
+    end
+  end
+
+  describe "#check_facebookid" do
+    it "updates facebook id if blank" do
+      person = create(:person, facebookid: "")
+
+      expect(person.facebookid).to eq(nil)
     end
   end
 end
