@@ -9,5 +9,9 @@ module Trivia
         game_generator.promote!
       end
     end
+
+    def queue_name
+      :trivia
+    end
   end
 end

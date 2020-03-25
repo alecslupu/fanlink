@@ -4,48 +4,43 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+git_source(:fanlink) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://gitlab.fan.link/#{repo_name}"
+end
 
 ruby "2.5.1"
 
-# gem "rack-cache"
-if ENV["RAILS52"]
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+if ENV["RAILS6"]
   gem "rails", "~> 5.2"
-  # Use Puma as the app server
-  gem "puma", "~> 3.11"
-  # Use SCSS for stylesheets
-  gem "sass-rails", "~> 5.0"
-  # Use Uglifier as compressor for JavaScript assets
-  gem "uglifier", ">= 1.3.0"
-  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-  gem "jbuilder", "~> 2.5"
-
-  # Reduces boot times through caching; required in config/boot.rb
-  gem "bootsnap", ">= 1.1.0", require: false
-
-elsif ENV["RAILS6"]
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 6"
 else
   # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 5.1.6"
-  # Use Puma as the app server
-  gem "puma", "~> 3.7"
-  # Use SCSS for stylesheets
-  gem "sass-rails", "~> 5.0"
-  # Use Uglifier as compressor for JavaScript assets
-  gem "uglifier", ">= 1.3.0"
-  # See https://github.com/rails/execjs#readme for more supported runtimes
-  gem "therubyracer", platforms: :ruby
-  # Use CoffeeScript for .coffee assets and views
-  gem "coffee-rails", "~> 4.2"
-  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-  gem "jbuilder", "~> 2.5"
-  # Use Redis adapter to run Action Cable in production
-  gem "redis"
-  # Use ActiveModel has_secure_password
-  # gem "bcrypt", "~> 3.1.7"
+  gem "rails", "~> 5.2"
 end
+
+# gem "rack-cache"
+# Use Puma as the app server
+gem 'puma', '~> 3.11'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.5'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+
+# else
+#   # See https://github.com/rails/execjs#readme for more supported runtimes
+#   gem "therubyracer", platforms: :ruby
+#   # Use CoffeeScript for .coffee assets and views
+#   gem "coffee-rails", "~> 4.2"
+# Use Redis adapter to run Action Cable in production
+gem "redis"
+# Use ActiveModel has_secure_password
+# gem "bcrypt", "~> 3.1.7"
+
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
@@ -61,11 +56,7 @@ gem "httparty", "0.16.4"
 #
 
 group :production, :staging do
-  if ENV["HEROKU"]
-    gem "newrelic_rpm"
-  else
-    gem "elastic-apm", "~> 3.1.0"
-  end
+  gem 'elastic-apm', '~> 3.1.0'
 end
 
 group :staging, :development, :test do
@@ -90,9 +81,9 @@ group :development, :test do
 
   gem "rubocop", "~> 0.76.0", require: false
   # gem "rubocop-rails_config"
-  gem "rubocop-rails"
-  gem "rubocop-rspec"
-  gem "rubocop-performance"
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-performance", require: false
 
   gem "rails-erd"
 end
@@ -102,21 +93,12 @@ group :development do
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
 
-  if ENV["RAILS52"]
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-    # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-    gem "spring"
-    gem "spring-watcher-listen", "~> 2.0.0"
-  elsif ENV["RAILS6"]
-      # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-      #gem "rails", "~> 6"
-  else
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-  end
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem "web-console", ">= 3.3.0"
+  gem "listen", ">= 3.0.5", "< 3.2"
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
   gem "lol_dba"
   gem "seed_dump"
   gem "awesome_print", require: "ap"
@@ -128,8 +110,8 @@ group :development do
   gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
+  # gem "guard-rubycritic"
   gem "rubycritic"
-  gem "guard-rubycritic"
 
   gem "capistrano", require: false
   gem "capistrano-bundler", require: false
@@ -142,7 +124,7 @@ group :test do
   # gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
   gem "simplecov", "~>0.18", require: false
-  gem 'simplecov-console', require: false
+  gem "simplecov-console", require: false
   gem "timecop"
   gem "webmock", "~>3.6.2"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
@@ -187,13 +169,11 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-# greg is saying that is not suporting V Rails 5.2.
-#gem "jko_api" # api versioning
 gem "kaminari"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
-gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandrill"
+gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
 #
 gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
@@ -214,7 +194,7 @@ gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
 gem "uuidtools"
-gem "wisper", "2.0.0"
+gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
@@ -230,9 +210,7 @@ gem "prawn"
 gem "erubis"
 
 group :development, :test do
-    # gem "rspec-rails-swagger"
-    # gem "apigen", path: "lib/gems/apigen"
-    gem "rswag-specs"
+  gem "rswag-specs"
 end
 
 group :test do
@@ -248,3 +226,6 @@ gem "psych"
 gem "actionpack-page_caching"
 
 gem "aasm"
+# for cron jobs
+# https://github.com/javan/whenever
+gem 'whenever', require: false

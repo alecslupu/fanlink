@@ -50,12 +50,6 @@ RSpec.describe PostComment, type: :model do
     end
   end
   # TODO: auto-generated
-  describe "#post_me" do
-    it "responds to " do
-      expect(PostComment.new).to respond_to(:post_me)
-    end
-  end
-  # TODO: auto-generated
   describe "#mentions" do
     pending
   end
