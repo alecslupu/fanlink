@@ -55,7 +55,7 @@ RSpec.describe Trivia::Game, type: :model do
       end
       it "sets the start_date of a question" do
         game = create(:full_trivia_game, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post,  "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -74,7 +74,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets any question at the right interval" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post,  "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -92,7 +92,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets any question at the right interval" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post,  "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -110,7 +110,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets the end date correctly on round" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post,  "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -140,7 +140,6 @@ RSpec.describe Trivia::Game, type: :model do
         expect(Trivia::Game.count).to eq(1)
         @old_game = Trivia::Game.includes(:prizes, :rounds).last
         @game_object = @old_game.copy_to_new
-
 
         expect(Trivia::Game.count).to eq(2)
       end
