@@ -179,7 +179,7 @@ class Person < ApplicationRecord
   scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
   scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
   scope :has_free_certificates_enrolled, -> { joins(:certificates).where("certificates.is_free = ?", true).group(:id) }
-  scope :has_no_free_certificates_enrolled, -> { where.not(id: has_enrolled_certificates.select(:id)) }
+  scope :has_no_free_certificates_enrolled, -> { where.not(id: has_free_certificates_enrolled.select(:id)) }
   scope :has_paid_certificates, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0").group(:id) }
   scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
   scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
