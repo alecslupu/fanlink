@@ -210,4 +210,20 @@ RSpec.describe RelationshipPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
+
+  context "Scope" do
+    it "should only return the relationsips in current product" do
+      person = create(:person)
+
+      relationship2 = ActsAsTenant.with_tenant(create(:product)) { create(:relationship) }
+
+      ActsAsTenant.with_tenant(person.product) do
+        relationship = create(:relationship)
+        scope = Pundit.policy_scope!(person, Relationship)
+        expect(scope.count).to eq(1)
+        expect(scope).to include(relationship)
+        expect(scope).not_to include(relationship2)
+      end
+    end
+  end
 end
