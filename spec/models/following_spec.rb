@@ -16,4 +16,14 @@ RSpec.describe Following, type: :model do
 
     it { expect(following).not_to be_valid }
   end
+
+  describe "people from the same product" do
+    it "does not let you create a follow relationship with two people from different products" do
+      person = create(:person, product: create(:product))
+      person2 = create(:person, product: create(:product))
+      follow = Following.create(followed: person, follower: person2)
+      expect(follow).not_to be_valid
+      expect(follow.errors[:base].first).to include("You cannot follow a person from a different product")
+    end
+  end
 end

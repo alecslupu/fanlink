@@ -70,7 +70,7 @@ private
     errors.add(
       :base,
       :different_product,
-      message: _("You cannot follow/friend a person from a different product")
-    ) if requested_to.product_id != requested_by.product_id
+      message: _("You cannot friend a person from a different product")
+    ) if requested_to&.product_id != requested_by&.product_id
   end
 end

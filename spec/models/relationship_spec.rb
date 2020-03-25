@@ -49,7 +49,7 @@ RSpec.describe Relationship, type: :model do
       person2 = create(:person, product: create(:product))
       rel = Relationship.create(requested_by: person, requested_to: person2)
       expect(rel).not_to be_valid
-      expect(rel.errors[:base].first).to include("You cannot follow/friend a person from a different product")
+      expect(rel.errors[:base].first).to include("You cannot friend a person from a different product")
     end
   end
 
