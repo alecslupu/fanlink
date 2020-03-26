@@ -57,7 +57,7 @@ RSpec.describe Trivia::AvailableAnswer, type: :model do
       end
 
       it "throws an error with message" do
-        expect(@available_answer.errors[:status]).to include("is the only attribute that can be changed when the record is published on being published")
+        expect(@available_answer.errors[:status]).to include("is the only attribute that can be changed when the record is published or being published")
       end
     end
 
@@ -70,16 +70,12 @@ RSpec.describe Trivia::AvailableAnswer, type: :model do
         @available_answer.reload
       end
 
-      it "updates the status" do
-        expect(@available_answer.status).to eq("published")
-      end
-
       it "does not update the attributes" do
         expect(@available_answer.name).to eq(@name)
       end
 
       it "throws an error with message" do
-        expect(@available_answer.errors[:status]).to include("is the only attribute that can be changed when the record is published on being published")
+        expect(@available_answer.errors[:status]).to include("is the only attribute that can be changed when the record is published or being published")
       end
     end
 

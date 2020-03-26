@@ -104,6 +104,73 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         expect(@available_question.errors.messages[:title]).to include("can't be blank")
       end
     end
+
+    context "#changing_attribute" do
+      describe "when publishing an available question while also changing other attributes" do
+        before(:all) do
+          @available_question = create(:trivia_available_question, with_answers: true, status: :draft)
+          @title = @available_question.title
+          @available_question.available_answers.update(status: :published)
+
+          @available_question.update(status: :published, title: "another title")
+          @available_question.reload
+        end
+
+        it "does not update the status" do
+          expect(@available_question.status).to eq("draft")
+        end
+
+        it "does not update other attributes" do
+          expect(@available_question.title).to eq(@title)
+        end
+
+        it "throws an error with message" do
+          expect(@available_question.errors[:status]).to include("is the only attribute that can be changed when the record is published or being published")
+        end
+      end
+
+      describe "when changing attributes for an published question" do
+        before(:all) do
+          @available_question = create(:trivia_available_question, with_answers: true, status: :published)
+          @title = @available_question.title
+          # @available_question.update(status: :published)
+          @available_question.update(title: "another title")
+          @available_question.reload
+        end
+
+        it "does not update the attributes" do
+          expect(@available_question.title).to eq(@title)
+        end
+
+        it "throws an error with message" do
+          expect(@available_question.errors[:status]).to include("is the only attribute that can be changed when the record is published or being published")
+        end
+      end
+
+      describe "when changing only the status for a draft question" do
+        before(:all) do
+          @available_question = create(:trivia_available_question, with_answers: true, status: :draft)
+          @title = @available_question.title
+          @available_question.available_answers.update(status: :published)
+          @available_question.update(status: :published)
+        end
+
+        it "updates the status" do
+          expect(@available_question.reload.status).to eq("published")
+        end
+      end
+
+      describe "when changing only the status for a published answer" do
+        before(:all) do
+          @available_question = create(:trivia_available_question, with_answers: true, status: :published)
+          @available_question.update(status: :draft)
+        end
+
+        it "updates the status" do
+          expect(@available_question.reload.status).to eq("draft")
+        end
+      end
+    end
   end
 
   context "hooks" do
@@ -112,7 +179,8 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         before(:each) do
           question = create(:trivia_single_choice_question)
           @available_question = question.available_question
-          @available_question.update(type: "Trivia::MultipleChoiceAvailableQuestion")
+
+          @available_question.update(type: "Trivia::MultipleChoiceAvailableQuestion", status: :draft)
           # you can't use record.reload because it searches based on the old record's type
           @updated_question = Trivia::Question.find(question.id)
         end

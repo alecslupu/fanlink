@@ -79,12 +79,5 @@ module Trivia
           true
         end
       end
-
-      # it's checking if an answer is being published and other attributes are also being updated
-      # at the same time
-      # or if just the status is being updated (publishing or unpublishing)
-      # in the second condition of the OR operation it's also added that if
-      # the changes size is 0, then it should not raise a validation error because
-      # you can press update without actually changing anything
   end
 end

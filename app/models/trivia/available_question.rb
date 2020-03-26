@@ -85,6 +85,8 @@ module Trivia
 
     validate :avalaible_answers_status_check, on: :update, if: -> { published? }
 
+    validates :status, changing_attributes: true, on: :update, if: -> { published? }
+
     after_update :update_questions_type
 
     private
