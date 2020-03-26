@@ -10,10 +10,11 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
 
       parameter name: :device_id, in: :formData, type: :string
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:person) { FactoryBot.create(:person).reload}
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:device_id) { Faker::Crypto.sha1 }
+
         run_test!
       end
 
@@ -46,10 +47,11 @@ RSpec.describe "Api::V4::NotificationDeviceIdsController", type: :request, swagg
 
       parameter name: :device_id, in: :formData, type: :string
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:device) { create(:notification_device_id)}
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: device.person.id)}" }
         let(:device_id) { device.device_identifier }
+
         run_test!
       end
       response "401", "" do

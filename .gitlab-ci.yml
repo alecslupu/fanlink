@@ -166,7 +166,7 @@ test:rspec52:
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
   stage: rspec
-  allow_failure: true
+  allow_failure: false
   artifacts:
     name: coverage_report52
     paths:
@@ -217,7 +217,7 @@ test:rspec6:
   script:
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
+    - bundle exec rspec spec --fail-fast
     - mv coverage coverage6
 
 pages:

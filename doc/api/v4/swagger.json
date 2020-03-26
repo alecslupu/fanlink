@@ -22,6 +22,10 @@
       "description": "Badges"
     },
     {
+      "name": "Blocks",
+      "description": "Block a person"
+    },
+    {
       "name": "Categories",
       "description": "Categories"
     },
@@ -58,6 +62,22 @@
       "description": "Users"
     },
     {
+      "name": "PostCommentReports",
+      "description": "Reported comments on posts"
+    },
+    {
+      "name": "PostComments",
+      "description": "Comments on a post"
+    },
+    {
+      "name": "PostReports",
+      "description": "Posts reported by a user"
+    },
+    {
+      "name": "Posts",
+      "description": "User/product posts"
+    },
+    {
       "name": "Referral",
       "description": "Referral system "
     },
@@ -72,6 +92,10 @@
     {
       "name": "Session",
       "description": "User session management."
+    },
+    {
+      "name": "Tags",
+      "description": "Tags"
     }
   ],
   "paths": {
@@ -103,7 +127,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
               "$ref": "#/definitions/BadgeActionsPending"
             }
@@ -151,7 +175,7 @@
             "in": "query",
             "type": "integer",
             "required": false,
-            "description": " Lorem ipsum",
+            "description": "",
             "default": 1,
             "minimum": 1
           },
@@ -160,7 +184,7 @@
             "in": "query",
             "type": "integer",
             "required": false,
-            "description": " Lorem ipsum",
+            "description": "",
             "default": 25
           },
           {
@@ -172,13 +196,58 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
               "$ref": "#/definitions/BadgesArray"
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/blocks": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "block[blocked_id]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/BlocksObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -229,7 +298,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
               "$ref": "#/definitions/CategoryArray"
             }
@@ -242,6 +311,466 @@
           },
           "500": {
             "description": "Internal Server Error. Server threw an unrecoverable error. Create a ticket with any form fields you we're trying to send, the URL, API version number and any steps you took so that it can be replicated."
+          }
+        }
+      }
+    },
+    "/certificates/{certificate_id}/certcourses": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertcourseArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/certcourses/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertcoursePageArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/certificates": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertificatesArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/certificates/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertificateObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/ClientCertcoursesArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{certificate_id}/certcourses/{id}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "certificate_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/ClientCertcourseQuizzArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{id}/send_email": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates/{id}/download": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/ClientCertificateDownloadJson"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people/{person_id}/certificates": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertificatesArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/courseware/client/people": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "username_filter",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/MiniPeopleArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -386,6 +915,235 @@
         }
       }
     },
+    "/events": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "from_date",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/EventsArray"
+            }
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/events/{id}/checkins": {
+      "delete": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/EventCheckinJson"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "tags": [
+          "events"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "",
+            "default": 25
+          },
+          {
+            "name": "interst_id",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/EventCheckinArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/followings": {
       "post": {
         "summary": "",
@@ -414,7 +1172,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
               "$ref": "#/definitions/FollowingObject"
             }
@@ -478,7 +1236,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
               "$ref": "#/definitions/FollowersArray"
             }
@@ -524,10 +1282,7 @@
         ],
         "responses": {
           "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
@@ -588,7 +1343,7 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
@@ -631,7 +1386,7 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
@@ -666,12 +1421,178 @@
         ],
         "responses": {
           "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/steps/{step_id}/completions": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "step_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/config/{requested_app}.json": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "requested_app",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/person/{username}": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/recommended": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/people/send_certificate": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
             "description": ""
           },
           "500": {
@@ -720,13 +1641,126 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/LevelsArray"
             }
           },
           "401": {
-            "description": ""
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/message_reports": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "tags": [
+          "MessageReports"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/MessageReportsArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{room_id}/message_reports": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "MessageReports"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "message_report[message_id]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "message_report[reason]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "Not found."
           },
           "500": {
             "description": "Internal server error"
@@ -762,7 +1796,7 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
@@ -802,7 +1836,7 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
@@ -843,22 +1877,13 @@
         ],
         "responses": {
           "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/SuccessMessage"
-            }
+            "description": "HTTP/1.1 200 Ok"
           },
           "422": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ErrorMessage"
-            }
+            "description": ""
           },
           "500": {
-            "description": "Internal server error",
-            "schema": {
-              "$ref": "#/definitions/ErrorMessage"
-            }
+            "description": "Internal server error"
           }
         }
       }
@@ -909,9 +1934,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/session_jwt"
+              "$ref": "#/definitions/PeopleArray"
             }
           },
           "401": {
@@ -978,9 +2003,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/session_jwt"
+              "$ref": "#/definitions/PersonObject"
             }
           },
           "422": {
@@ -1061,25 +2086,19 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/PersonObject"
             }
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "422": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1111,9 +2130,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/public_person"
+              "$ref": "#/definitions/PersonObject"
             }
           },
           "401": {
@@ -1169,16 +2188,13 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
           },
           "422": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1215,12 +2231,110 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/person_certcourses/send_email": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page_id",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/person_certcourses": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Courseware"
+        ],
+        "parameters": [
+          {
+            "name": "person_certcourse[certcourse_id]",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "page_id",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "answer_id",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/PersonCertcourseCreateJson"
             }
           },
           "401": {
+            "description": ""
+          },
+          "422": {
             "description": ""
           },
           "404": {
@@ -1259,12 +2373,1056 @@
         ],
         "responses": {
           "200": {
-            "description": "displays valid certificate",
-            "schema": {
-              "$ref": "#/definitions/certificate_information"
-            }
+            "description": "HTTP/1.1 200 Ok"
           },
           "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/person_certificates": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Certificates"
+        ],
+        "parameters": [
+          {
+            "name": "certificate_id",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[certificate_id]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[purchased_order_id]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[amount_paid]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[currency]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[purchased_sku]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[purchased_platform]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[receipt_id]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          },
+          {
+            "name": "person_certificate[full_name]",
+            "type": "string",
+            "in": "formData",
+            "required": false
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/CertificateObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{id}/polls/{poll_id}/poll_options/{poll_option_id}/cast_vote": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "poll_option_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "poll_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PollOptionObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/post_comment_reports": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "PostCommentReports"
+        ],
+        "parameters": [
+          {
+            "name": "post_comment_report[post_comment_id]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "post_comment_report[reason]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "400": {
+            "description": ""
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "PostCommentReports"
+        ],
+        "parameters": [
+          {
+            "name": "status_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostCommentReportsArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{id}/comments": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "PostComments"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostCommentsArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "PostComments"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "post_comment[body]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostCommentsObject"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{post_id}/comments/{id}": {
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "PostComments"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{post_id}/reactions": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "post_reaction[reaction]",
+            "in": "formData",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostReactionsObject"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{post_id}/reactions/{id}": {
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "post_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/post_reports": {
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "PostReports"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "post_report[post_id]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "post_report[reason]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          },
+          {
+            "name": "promoted",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          {
+            "name": "post_id",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "chronologically",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "enum": [
+              "before",
+              "after"
+            ],
+            "default": "after"
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "categories",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_id",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "id_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_id_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "person_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "body_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "posted_after_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "posted_before_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "status_filter",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostsArray"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "422": {
+            "description": "Unprocessable Entity. Usually occurs when a field is invalid or missing."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "post[body]",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "post[picture]",
+            "in": "formData",
+            "type": "file",
+            "required": true
+          },
+          {
+            "name": "post[audio]",
+            "in": "formData",
+            "type": "file",
+            "required": true
+          },
+          {
+            "name": "post[video]",
+            "in": "formData",
+            "type": "file",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostsObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
+            "description": ""
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "patch": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostsObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/PostsObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/quests": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "quests"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/QuestsArray"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/quests/{id}": {
+      "get": {
+        "summary": "",
+        "tags": [
+          "quests"
+        ],
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/QuestObject"
+            }
+          },
+          "401": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/recommended": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Posts"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/RecommendedPostsArray"
+            }
+          },
+          "401": {
             "description": ""
           },
           "500": {
@@ -1284,7 +3442,7 @@
           }
         ],
         "tags": [
-          "Referal"
+          "Referral"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -1338,7 +3496,7 @@
           }
         ],
         "tags": [
-          "Referal"
+          "Referral"
         ],
         "parameters": [
           {
@@ -1392,7 +3550,7 @@
           }
         ],
         "tags": [
-          "Referal"
+          "Referral"
         ],
         "produces": [
           "application/vnd.api.v4+json"
@@ -1444,25 +3602,19 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/RelationshipsObject"
             }
           },
           "422": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1503,9 +3655,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/RelationshipsArray"
             }
           },
           "401": {
@@ -1549,7 +3701,7 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
@@ -1595,9 +3747,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/RelationshipsObject"
             }
           },
           "401": {
@@ -1656,7 +3808,10 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok",
+            "schema": {
+              "$ref": "#/definitions/RoomsObject"
+            }
           },
           "400": {
             "description": ""
@@ -1700,9 +3855,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/RoomsArray"
             }
           },
           "401": {
@@ -1761,19 +3916,16 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/RoomsObject"
             }
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1808,16 +3960,13 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1893,19 +4042,16 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/MessagesArray"
             }
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -1945,19 +4091,16 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/MessagesObject"
             }
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -2000,19 +4143,16 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/faulty"
+              "$ref": "#/definitions/MessagesObject"
             }
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
+            "description": ""
           },
           "500": {
             "description": "Internal server error"
@@ -2053,78 +4193,13 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "HTTP/1.1 200 Ok"
           },
           "401": {
             "description": ""
           },
           "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/rooms/{room_id}/message_reports": {
-      "post": {
-        "summary": "",
-        "security": [
-          {
-            "Bearer": [
-
-            ]
-          }
-        ],
-        "tags": [
-          "MessageReports"
-        ],
-        "produces": [
-          "application/vnd.api.v4+json"
-        ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "parameters": [
-          {
-            "name": "room_id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "message_report[message_id]",
-            "in": "formData",
-            "type": "string"
-          },
-          {
-            "name": "message_report[reason]",
-            "in": "formData",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
             "description": ""
-          },
-          "422": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
-          },
-          "401": {
-            "description": ""
-          },
-          "404": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/faulty"
-            }
           },
           "500": {
             "description": "Internal server error"
@@ -2163,9 +4238,9 @@
         ],
         "responses": {
           "200": {
-            "description": "",
+            "description": "HTTP/1.1 200 Ok",
             "schema": {
-              "$ref": "#/definitions/session_jwt"
+              "$ref": "#/definitions/SessionObject"
             }
           },
           "422": {
@@ -2218,7 +4293,7 @@
           "200": {
             "description": "Returns an user object if successful",
             "schema": {
-              "$ref": "#/definitions/session_jwt"
+              "$ref": "#/definitions/SessionObject"
             }
           },
           "422": {
@@ -2239,6 +4314,65 @@
         ],
         "responses": {
           "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/posts/tags": {
+      "get": {
+        "summary": "",
+        "security": [
+          {
+            "Bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Tags"
+        ],
+        "produces": [
+          "application/vnd.api.v4+json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 1,
+            "minimum": 1
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          },
+          {
+            "name": "tag_name",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": " Lorem ipsum",
+            "default": 25
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP/1.1 200 Ok"
+          },
+          "401": {
+            "description": ""
+          },
+          "422": {
             "description": ""
           },
           "500": {
@@ -2249,714 +4383,6 @@
     }
   },
   "definitions": {
-    "certificate_information": {
-      "type": "object",
-      "properties": {
-        "certificate": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "issued_date": {
-              "type": "string",
-              "format": "date",
-              "x-nullable": true
-            },
-            "certificate_image_url": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "CategoryArray": {
-      "type": "object",
-      "properties": {
-        "categories": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "category": {
-                "$ref": "#/definitions/CategoryJson"
-              }
-            }
-          }
-        }
-      }
-    },
-    "CategoryJson": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "product_id": {
-          "type": "string"
-        },
-        "color": {
-          "type": "string"
-        },
-        "role": {
-          "type": "string"
-        },
-        "posts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PostJson"
-          }
-        }
-      },
-      "description": "Category Reponse"
-    },
-    "PostJson": {
-    },
-    "BadgeActionsPending": {
-      "type": "object",
-      "properties": {
-        "pending_badge": {
-          "type": "object",
-          "properties": {
-            "badge_action_count": {
-              "type": "integer"
-            },
-            "badge": {
-              "$ref": "#/definitions/BadgeJson"
-            }
-          }
-        },
-        "badges_awarded": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BadgeJson"
-          }
-        }
-      }
-    },
-    "public_person": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "email": {
-          "type": "string"
-        },
-        "gender": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "country_code": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "birthdate": {
-          "type": "string",
-          "format": "date",
-          "x-nullable": true
-        },
-        "biography": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "picture_url": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "product_account": {
-          "type": "boolean"
-        },
-        "recommended": {
-          "type": "boolean"
-        },
-        "chat_banned": {
-          "type": "boolean"
-        },
-        "tester": {
-          "type": "boolean"
-        },
-        "terminated": {
-          "type": "boolean"
-        },
-        "terminated_reason": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "designation": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "role": {
-          "type": "string"
-        },
-        "do_not_message_me": {
-          "type": "boolean"
-        },
-        "pin_messages_from": {
-          "type": "boolean"
-        },
-        "auto_follow": {
-          "type": "boolean"
-        },
-        "num_followers": {
-          "type": "integer"
-        },
-        "num_following": {
-          "type": "integer"
-        },
-        "facebookid": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "facebook_picture_url": {
-          "type": "string",
-          "x-nullable": true
-        },
-        "badge_points": {
-          "type": "integer"
-        },
-        "level": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "following_id": {
-          "type": "integer",
-          "x-nullable": true
-        },
-        "relationships": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/relationships"
-          }
-        }
-      }
-    },
-    "relationships": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "status": {
-          "type": "string"
-        },
-        "requested_by": {
-          "type": "object",
-          "$ref": "#/definitions/public_person"
-        },
-        "requested_to": {
-          "type": "object",
-          "$ref": "#/definitions/public_person"
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time"
-        }
-      }
-    },
-    "people": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/public_person"
-      }
-    },
-    "session_jwt": {
-      "type": "object",
-      "properties": {
-        "person": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            },
-            "username": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "gender": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "country_code": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "birthdate": {
-              "type": "string",
-              "format": "date",
-              "x-nullable": true
-            },
-            "biography": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "picture_url": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "product_account": {
-              "type": "boolean"
-            },
-            "recommended": {
-              "type": "boolean"
-            },
-            "chat_banned": {
-              "type": "boolean"
-            },
-            "tester": {
-              "type": "boolean"
-            },
-            "terminated": {
-              "type": "boolean"
-            },
-            "terminated_reason": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "designation": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "role": {
-              "type": "string"
-            },
-            "do_not_message_me": {
-              "type": "boolean"
-            },
-            "pin_messages_from": {
-              "type": "boolean"
-            },
-            "auto_follow": {
-              "type": "boolean"
-            },
-            "num_followers": {
-              "type": "integer"
-            },
-            "num_following": {
-              "type": "integer"
-            },
-            "facebookid": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "facebook_picture_url": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "badge_points": {
-              "type": "integer"
-            },
-            "level": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "created_at": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "updated_at": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "following_id": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "email": {
-              "type": "string"
-            },
-            "product": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "internal_name": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            },
-            "level_progress": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "rewards": {
-              "type": "string",
-              "x-nullable": true
-            },
-            "blocked_people": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "permissions": {
-              "type": "object"
-            },
-            "pin_messages_to": {
-              "type": "integer",
-              "x-nullable": true
-            },
-            "token": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "person_mini": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "picture_url": {
-          "type": "string"
-        },
-        "designation": {
-          "type": "string"
-        },
-        "facebook_picture_url": {
-          "type": "string"
-        },
-        "badge_points": {
-          "type": "integer"
-        }
-      }
-    },
-    "trivia_user_subscribed": {
-      "type": "object",
-      "properties": {
-        "game_id": {
-          "type": "integer"
-        },
-        "person_id": {
-          "type": "integer"
-        },
-        "subscribed": {
-          "type": "boolean"
-        },
-        "user_enroled": {
-          "type": "boolean"
-        },
-        "user_notification": {
-          "type": "boolean"
-        }
-      }
-    },
-    "trivia_game_prize": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "game_id": {
-          "type": "integer"
-        },
-        "position": {
-          "type": "integer"
-        },
-        "photo_url": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        }
-      }
-    },
-    "trivia_round": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "game_id": {
-          "type": "integer"
-        },
-        "start_date": {
-          "type": "integer"
-        },
-        "end_date": {
-          "type": "integer"
-        },
-        "question_size": {
-          "type": "integer"
-        },
-        "complexity": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "string"
-        }
-      }
-    },
-    "trivia_round_list": {
-      "type": "object",
-      "properties": {
-        "rounds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/trivia_round"
-          }
-        }
-      }
-    },
-    "trivia_game_prize_list": {
-      "type": "object",
-      "properties": {
-        "prizes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/trivia_game_prize"
-          }
-        }
-      }
-    },
-    "trivia_games_leaderboard_list": {
-      "type": "object",
-      "properties": {
-        "leaderboard": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/trivia_games_leaderboard"
-          }
-        }
-      },
-      "required": [
-        "games"
-      ]
-    },
-    "trivia_games_leaderboard": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "game_id": {
-          "type": "integer"
-        },
-        "points": {
-          "type": "integer"
-        },
-        "position": {
-          "type": "integer"
-        },
-        "average_time": {
-          "type": "integer"
-        },
-        "person": {
-          "type": "object",
-          "$ref": "#/definitions/person_mini"
-        }
-      }
-    },
-    "trivia_rounds_leaderboard_list": {
-      "type": "object",
-      "properties": {
-        "leaderboard": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/trivia_rounds_leaderboard"
-          }
-        }
-      },
-      "required": [
-        "games"
-      ]
-    },
-    "trivia_rounds_leaderboard": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "round_id": {
-          "type": "integer"
-        },
-        "points": {
-          "type": "integer"
-        },
-        "position": {
-          "type": "integer"
-        },
-        "average_time": {
-          "type": "integer"
-        },
-        "person": {
-          "type": "object",
-          "$ref": "#/definitions/person_mini"
-        }
-      }
-    },
-    "trivia_games_list": {
-      "type": "object",
-      "properties": {
-        "games": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/trivia_game"
-          }
-        }
-      },
-      "required": [
-        "games"
-      ]
-    },
-    "trivia_game": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "start_date": {
-          "type": "integer"
-        },
-        "end_date": {
-          "type": "integer"
-        },
-        "long_name": {
-          "type": "string"
-        },
-        "short_name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "round_count": {
-          "type": "integer"
-        },
-        "question_count": {
-          "type": "integer"
-        },
-        "leaderboard_size": {
-          "type": "integer"
-        },
-        "prize_count": {
-          "type": "integer"
-        },
-        "room_id": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "string"
-        },
-        "picture": {
-          "type": "string"
-        },
-        "user_enroled": {
-          "type": "boolean"
-        },
-        "user_notification": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "trivia_game_id"
-      ]
-    },
-    "faulty": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "faulty": {
-          "type": "string"
-        }
-      }
-    },
-    "SuccessMessage": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "ErrorMessage": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "FollowersArray": {
-      "type": "object",
-      "properties": {
-        "followers": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "badge": {
-                "$ref": "#/definitions/FollowingObject"
-              }
-            }
-          }
-        }
-      }
-    },
-    "FollowingObject": {
-      "type": "object",
-      "properties": {
-        "following": {
-          "$ref": "#/definitions/FollowingJson"
-        }
-      }
-    },
-    "FollowingJson": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "follower": {
-          "$ref": "#/definitions/public_person"
-        },
-        "followed": {
-          "$ref": "#/definitions/public_person"
-        }
-      },
-      "description": "Following Response"
-    },
     "BadgeJson": {
       "type": "object",
       "properties": {
@@ -2985,14 +4411,25 @@
       },
       "description": "Badge Response"
     },
-    "ReferralCode": {
+    "BadgeActionsPending": {
       "type": "object",
       "properties": {
-        "person_id": {
-          "type": "integer"
+        "pending_badge": {
+          "type": "object",
+          "properties": {
+            "badge_action_count": {
+              "type": "integer"
+            },
+            "badge": {
+              "$ref": "#/definitions/BadgeJson"
+            }
+          }
         },
-        "unique_code": {
-          "type": "string"
+        "badges_awarded": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BadgeJson"
+          }
         }
       }
     },
@@ -3008,6 +4445,1026 @@
                 "$ref": "#/definitions/BadgeJson"
               }
             }
+          }
+        }
+      }
+    },
+    "PeopleArray": {
+      "type": "object",
+      "properties": {
+        "people": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "person": {
+                "$ref": "#/definitions/PersonJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "BlocksObject": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "id": {
+            "type": "integer"
+          },
+          "blocker_id": {
+            "type": "integer"
+          },
+          "blocked_id": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "PersonObject": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/PersonJson"
+        }
+      }
+    },
+    "PostCommentReportsArray": {
+      "type": "object",
+      "properties": {
+        "post_comment_reports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "post_comment_report": {
+                "$ref": "#/definitions/PostCommentReportJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostCommentReportJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "post_comment_id": {
+          "type": "integer"
+        },
+        "commenter": {
+          "type": "string"
+        },
+        "reporter": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "description": "Post Comment Report Response"
+    },
+    "PostCommentsArray": {
+      "type": "object",
+      "properties": {
+        "post_comments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "post_comment": {
+                "$ref": "#/definitions/PostCommentJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostCommentJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "body": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/MentionJson"
+          }
+        },
+        "person": {
+          "$ref": "#/definitions/PersonJson"
+        }
+      },
+      "description": "Post Comment Response"
+    },
+    "MentionJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "person_id": {
+          "type": "integer"
+        },
+        "location": {
+          "type": "integer"
+        },
+        "length": {
+          "type": "integer"
+        }
+      },
+      "description": "Notification Type ID Response"
+    },
+    "PostCommentsObject": {
+      "type": "object",
+      "properties": {
+        "post_comment": {
+          "$ref": "#/definitions/PostCommentJson"
+        }
+      }
+    },
+    "PostReactionJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "post_id": {
+          "type": "integer"
+        },
+        "person_id": {
+          "type": "integer"
+        },
+        "reaction": {
+          "type": "string"
+        }
+      },
+      "description": "Post Reaction Response"
+    },
+    "PollOptionVoteJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "numberOfVotes": {
+          "type": "integer"
+        },
+        "voted": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PollOptionObject": {
+      "type": "object",
+      "properties": {
+        "poll": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PollOptionVoteJson"
+          }
+        }
+      }
+    },
+    "PostReactionsObject": {
+      "type": "object",
+      "properties": {
+        "post_reaction": {
+          "$ref": "#/definitions/PostReactionJson"
+        }
+      }
+    },
+    "FollowingObject": {
+      "type": "object",
+      "properties": {
+        "following": {
+          "$ref": "#/definitions/FollowingJson"
+        }
+      }
+    },
+    "FollowingJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "follower": {
+          "$ref": "#/definitions/PersonJson"
+        },
+        "followed": {
+          "$ref": "#/definitions/PersonJson"
+        }
+      },
+      "description": "Following Response"
+    },
+    "FollowersArray": {
+      "type": "object",
+      "properties": {
+        "followers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "follower": {
+                "$ref": "#/definitions/FollowingJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "LevelsArray": {
+      "type": "object",
+      "properties": {
+        "levels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LevelJson"
+          }
+        }
+      }
+    },
+    "LevelJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "internal_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "points": {
+          "type": "integer"
+        },
+        "picture_url": {
+          "type": "string"
+        }
+      },
+      "description": "Level Response"
+    },
+    "MessageReportsArray": {
+      "type": "object",
+      "properties": {
+        "message_reports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MessageReportJson"
+          }
+        }
+      }
+    },
+    "MessageReportJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "message_id": {
+          "type": "integer"
+        },
+        "poster": {
+          "type": "object",
+          "$ref": "#/definitions/PersonJson"
+        },
+        "reporter": {
+          "type": "object",
+          "$ref": "#/definitions/PersonJson"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "description": "Message Report Response"
+    },
+    "RelationshipJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "update_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "requested_by": {
+          "$ref": "#/definitions/PersonJson"
+        },
+        "requested_to": {
+          "$ref": "#/definitions/PersonJson"
+        }
+      },
+      "description": "Relationship Response"
+    },
+    "PersonJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "gender": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "biography": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "country_code": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "birthdate": {
+          "type": "string",
+          "format": "date",
+          "x-nullable": true
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "product_account": {
+          "type": "boolean"
+        },
+        "recommended": {
+          "type": "boolean"
+        },
+        "chat_banned": {
+          "type": "boolean"
+        },
+        "designation": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "following_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelationshipJson"
+          }
+        },
+        "badge_points": {
+          "type": "integer"
+        },
+        "role": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "do_not_message_me": {
+          "type": "boolean"
+        },
+        "pin_messages_from": {
+          "type": "boolean"
+        },
+        "auto_follow": {
+          "type": "boolean"
+        },
+        "num_followers": {
+          "type": "integer"
+        },
+        "num_following": {
+          "type": "integer"
+        },
+        "facebookid": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "facebook_picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "Person Response"
+    },
+    "PostsObject": {
+      "type": "object",
+      "properties": {
+        "post": {
+          "$ref": "#/definitions/PostJson"
+        }
+      }
+    },
+    "PostsArray": {
+      "type": "object",
+      "properties": {
+        "posts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "$ref": "#/definitions/PostJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "MessagesArray": {
+      "properties": {
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "$ref": "#/definitions/MessageJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "MessagesObject": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/MessageJson"
+        }
+      }
+    },
+    "MessageJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "body": {
+          "type": "string"
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "audio_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "audio_size": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "audio_content_type": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "person": {
+          "$ref": "#/definitions/PersonJson"
+        },
+        "mentions": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/MentionJson"
+          }
+        }
+      },
+      "description": "Message Response"
+    },
+    "RelationshipsArray": {
+      "type": "object",
+      "properties": {
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "relationship": {
+                "$ref": "#/definitions/RelationshipJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "RelationshipsObject": {
+      "type": "object",
+      "properties": {
+        "relationship": {
+          "$ref": "#/definitions/RelationshipJson"
+        }
+      }
+    },
+    "RoomsArray": {
+      "type": "object",
+      "properties": {
+        "rooms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "room": {
+                "$ref": "#/definitions/RoomJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "RoomJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "owned": {
+          "type": "boolean"
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "public": {
+          "type": "boolean"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "member": {
+                "$ref": "#/definitions/PersonJson"
+              }
+            }
+          }
+        }
+      },
+      "description": "Room Response"
+    },
+    "SessionObject": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/PersonJson"
+        }
+      }
+    },
+    "RoomsObject": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/RoomJson"
+        }
+      }
+    },
+    "RecommendedPostsArray": {
+      "type": "object",
+      "properties": {
+        "posts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "$ref": "#/definitions/PostJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "PostJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "body": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "audio_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "audio_size": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "audio_content_type": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "person": {
+          "$ref": "#/definitions/PersonJson"
+        },
+        "post_reaction_counts": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "post_reaction": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/PostReactionJson"
+          }
+        },
+        "global": {
+          "type": "boolean"
+        },
+        "starts_at": {
+          "type": "string",
+          "x-nullable": true,
+          "format": "date-time"
+        },
+        "ends_at": {
+          "type": "string",
+          "x-nullable": true,
+          "format": "date-time"
+        },
+        "repost_interval": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "recommended": {
+          "type": "boolean"
+        },
+        "notify_followers": {
+          "type": "boolean"
+        },
+        "comment_count": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "object",
+          "x-nullable": true,
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TagJson"
+          }
+        }
+      },
+      "description": "Post Response"
+    },
+    "TagJson": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "description": "Tag Response"
+    },
+    "CategoryJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "integer"
+        },
+        "color": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostJson"
+          }
+        }
+      },
+      "description": "Category Reponse"
+    },
+    "ReferralCode": {
+      "type": "object",
+      "properties": {
+        "person_id": {
+          "type": "integer"
+        },
+        "unique_code": {
+          "type": "string"
+        }
+      }
+    },
+    "CategoryArray": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "$ref": "#/definitions/CategoryJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "personMini": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "designation": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "facebook_picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "badge_points": {
+          "type": "integer"
+        }
+      }
+    },
+    "MiniPeopleArray": {
+      "type": "object",
+      "properties": {
+        "people": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/personMini"
+          }
+        }
+      }
+    },
+    "CertcoursePageArray": {
+      "type": "object",
+      "properties": {
+        "certcourse_pages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CertcoursePageJson"
+          }
+        }
+      }
+    },
+    "CertcoursePageJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "course_id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "content_type": {
+          "type": "string"
+        },
+        "timer": {
+          "type": "integer"
+        },
+        "media_content_type": {
+          "type": "string"
+        },
+        "media_url": {
+          "type": "string"
+        },
+        "media_url_large": {
+          "type": "string"
+        },
+        "background_color_hex": {
+          "type": "string"
+        },
+        "is_passed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CertificatesArray": {
+      "type": "object",
+      "properties": {
+        "certificates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CertificateJson"
+          }
+        }
+      }
+    },
+    "CertificateJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "color_hex": {
+          "type": "string"
+        },
+        "chat_room_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "sku_android": {
+          "type": "string"
+        },
+        "sku_ios": {
+          "type": "string"
+        },
+        "is_free": {
+          "type": "boolean"
+        },
+        "is_issuable": {
+          "type": "boolean"
+        },
+        "is_completed": {
+          "type": "boolean"
+        },
+        "is_purchased": {
+          "type": "boolean"
+        },
+        "certificate_image_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "issued_certificate_image_url": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "description": "Certificate Response"
+    },
+    "ClientCertcourseQuizzArray": {
+      "type": "object",
+      "properties": {
+        "quizzes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClientCertcourseQuizzJson"
+          }
+        }
+      }
+    },
+    "ClientCertcourseQuizzJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "is_optional": {
+          "type": "boolean"
+        },
+        "is_survey": {
+          "type": "boolean"
+        },
+        "quiz_text": {
+          "type": "string"
+        },
+        "certcourse_pages_count": {
+          "type": "integer"
+        },
+        "page_order": {
+          "type": "integer"
+        },
+        "no_of_failed_attempts": {
+          "type": "integer"
+        },
+        "answer_text": {
+          "type": "string"
+        },
+        "is_correct": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ClientCertcoursesArray": {
+      "type": "object",
+      "properties": {
+        "certcourses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClientCertcoursesJson"
           }
         }
       }
@@ -3084,11 +5541,243 @@
         }
       }
     },
-    "LevelJson": {
+    "ClientCertcoursesJson": {
       "type": "object",
       "properties": {
         "id": {
           "type": "integer"
+        },
+        "certificate_id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "color_hex": {
+          "type": "string"
+        },
+        "page_count": {
+          "type": "integer"
+        },
+        "is_completed": {
+          "type": "boolean"
+        },
+        "last_completed_page_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "copyright_text": {
+          "type": "string"
+        },
+        "is_started": {
+          "type": "boolean"
+        },
+        "last_completed_page_order": {
+          "type": "integer"
+        }
+      }
+    },
+    "ClientCertificateDownloadJson": {
+      "type": "object",
+      "properties": {
+        "certificate": {
+          "type": "object",
+          "properties": {
+            "image_url": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "PersonCertcourseCreateJson": {
+      "type": "object",
+      "properties": {
+        "certcourse_id": {
+          "type": "integer"
+        },
+        "last_completed_page_id": {
+          "type": "integer"
+        }
+      }
+    },
+    "CertificateObject": {
+      "type": "object",
+      "properties": {
+        "certificate": {
+          "$ref": "#/definitions/CertificateJson"
+        }
+      }
+    },
+    "EventsArray": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventJson"
+          }
+        }
+      }
+    },
+    "CertcourseArray": {
+      "type": "object",
+      "properties": {
+        "certcourses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CertcourseJson"
+          }
+        }
+      }
+    },
+    "EventCheckinArray": {
+      "type": "object",
+      "properties": {
+        "event_checkins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventCheckinJson"
+          }
+        }
+      }
+    },
+    "EventCheckinJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "checkin_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "person": {
+          "$ref": "#/definitions/personMini"
+        }
+      }
+    },
+    "EventJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "starts_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ends_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ticket_url": {
+          "type": "string"
+        },
+        "place_identifier": {
+          "type": "string"
+        }
+      },
+      "description": "Event Response"
+    },
+    "CertcourseJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "certificate_id": {
+          "type": "integer"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "long_name": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "color_hex": {
+          "type": "string"
+        },
+        "page_count": {
+          "type": "integer"
+        },
+        "is_completed": {
+          "type": "boolean"
+        },
+        "last_completed_page_id": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "copyright_text": {
+          "type": "string"
+        },
+        "is_started": {
+          "type": "boolean"
+        }
+      }
+    },
+    "QuestObject": {
+      "type": "object",
+      "properties": {
+        "quest": {
+          "$ref": "#/definitions/QuestJson"
+        }
+      }
+    },
+    "QuestsArray": {
+      "type": "object",
+      "properties": {
+        "quests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quest": {
+                "$ref": "#/definitions/QuestJson"
+              }
+            }
+          }
+        }
+      }
+    },
+    "QuestJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string"
         },
         "name": {
           "type": "string"
@@ -3099,52 +5788,156 @@
         "description": {
           "type": "string"
         },
-        "points": {
-          "type": "integer"
-        },
         "picture_url": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "picture_width": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "picture_height": {
+          "type": "integer",
+          "x-nullable": true
+        },
+        "status": {
           "type": "string"
+        },
+        "starts_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ends_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "create_time": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true
+        },
+        "steps": {
+          "type": "array",
+          "x-nullable": true,
+          "items": {
+            "$ref": "#/definitions/StepJson"
+          }
         }
       },
-      "description": "Level Response"
+      "description": "Quest Response"
     },
-    "personMini": {
+    "StepJson": {
       "type": "object",
       "properties": {
         "id": {
+          "type": "integer"
+        },
+        "quest_id": {
+          "type": "integer"
+        },
+        "unlocks": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "display": {
           "type": "string"
         },
-        "username": {
+        "status": {
+          "type": "string"
+        },
+        "quest_activities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QuestActivityJson"
+          }
+        },
+        "delay_unlock": {
+          "type": "integer"
+        },
+        "unlocks_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "Step Response"
+    },
+    "QuestActivityJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "quest_id": {
+          "type": "integer"
+        },
+        "step_id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hint": {
           "type": "string"
         },
         "picture_url": {
           "type": "string"
         },
-        "designation": {
-          "type": "string"
-        },
-        "facebook_picture_url": {
-          "type": "string"
-        },
-        "badge_points": {
+        "picture_width": {
           "type": "integer"
         },
-        "level": {
-          "$ref": "#/definitions/LevelJson",
-          "x-nullable": true
-        }
-      }
-    },
-    "MiniPeopleArray": {
-      "type": "object",
-      "properties": {
-        "people": {
+        "picture_height": {
+          "type": "integer"
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "requirements": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/personMini"
+            "$ref": "#/definitions/ActivityTypeJson"
+          }
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "step": {
+          "$ref": "#/definitions/StepJson"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "Quest Activity Response"
+    },
+    "ActivityTypeJson": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "atype": {
+          "type": "string"
+        },
+        "activity_id": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
           }
         }
-      }
+      },
+      "description": "Activity Type Reponse"
     }
   }
 }
