@@ -57,7 +57,7 @@ RSpec.describe Trivia::AvailableAnswer, type: :model do
       end
 
       it "throws an error with message" do
-        expect(@available_answer.errors[:status]).to include("updating attributes besides status for published answers is forbidden")
+        expect(@available_answer.errors[:status]).to include("is the only attribute that can be changed when the answer is published on being published")
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe Trivia::AvailableAnswer, type: :model do
       end
 
       it "throws an error with message" do
-        expect(@available_answer.errors[:status]).to include("updating attributes besides status for published answers is forbidden")
+        expect(@available_answer.errors[:status]).to include("is the only attribute that can be changed when the answer is published on being published")
       end
     end
 
