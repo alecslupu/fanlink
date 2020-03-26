@@ -11,6 +11,13 @@ end
 
 ruby "2.5.1"
 
+if ENV["RAILS6"]
+  gem "rails", "~> 5.2"
+else
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 5.2"
+end
+
 # gem "rack-cache"
 # Use Puma as the app server
 # gem "rack-cache"# Use Puma as the app server
@@ -25,25 +32,10 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-if ENV["RAILS6"]
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 6"
-else
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 5.2"
-
-  # else
 #   # See https://github.com/rails/execjs#readme for more supported runtimes
 #   gem "therubyracer", platforms: :ruby
 #   # Use CoffeeScript for .coffee assets and views
 #   gem "coffee-rails", "~> 4.2"
-# else
-#   # See https://github.com/rails/execjs#readme for more supported runtimes
-#   gem "therubyracer", platforms: :ruby
-#   # Use ActiveModel has_secure_password
-#   # gem "bcrypt", "~> 3.1.7"
-end
-
 # Use Redis adapter to run Action Cable in production
 gem "redis"
 
@@ -120,8 +112,9 @@ group :development do
   gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
+  # gem "guard-rubycritic"
   gem "rubycritic"
-  gem "guard-rubycritic"
+
   gem "capistrano", require: false
   gem "capistrano-bundler", require: false
   gem "capistrano-rails", require: false

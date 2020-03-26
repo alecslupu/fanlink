@@ -20,6 +20,7 @@ module Trivia
 
     validates :name, presence: true
     validates :hint, presence: true
+    validates :status, changing_attributes: true, on: :update, if: -> { published? }
     # validate :assigned_available_question_status, on: :update
 
     include AASM
@@ -75,8 +76,11 @@ module Trivia
         end
       end
 
-      # def assigned_available_question_status
-
-      # end
+      # it's checking if an answer is being published and other attributes are also being updated
+      # at the same time
+      # or if just the status is being updated (publishing or unpublishing)
+      # in the second condition of the OR operation it's also added that if
+      # the changes size is 0, then it should not raise a validation error because
+      # you can press update without actually changing anything
   end
 end
