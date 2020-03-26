@@ -207,17 +207,17 @@ RSpec.describe Trivia::AvailableQuestionPolicy, type: :policy do
     end
   end
   context "Scope" do
-    it "should only return the person quiz in current product" do
+    it "should only return the available questions in current product" do
       person = build(:person)
 
-      post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_available_question) }
+      available_question2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_available_question) }
 
       ActsAsTenant.with_tenant(person.product) do
-        post = create(:trivia_available_question)
+        available_question = create(:trivia_available_question)
         scope = Pundit.policy_scope!(person, Trivia::AvailableQuestion)
-        expect(scope.count).to eq(1)
-        expect(scope).to include(post)
-        expect(scope).not_to include(post2)
+        expect(scope.count).to eq(Trivia::AvailableQuestion.where(product_id: person.product_id).count )
+        expect(scope).to include(available_question)
+        expect(scope).not_to include(available_question2)
       end
     end
   end
