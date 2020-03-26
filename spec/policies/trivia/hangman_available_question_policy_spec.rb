@@ -216,7 +216,7 @@ RSpec.describe Trivia::HangmanAvailableQuestionPolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
         post = create(:trivia_hangman_available_question)
         scope = Pundit.policy_scope!(person, Trivia::HangmanAvailableQuestion)
-        expect(scope.count).to eq(1)
+        expect(scope.count).to eq(Trivia::HangmanAvailableQuestion.where(product_id: person.product_id).count)
         expect(scope).to include(post)
         expect(scope).not_to include(post2)
       end

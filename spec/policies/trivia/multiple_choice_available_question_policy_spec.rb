@@ -216,7 +216,7 @@ RSpec.describe Trivia::MultipleChoiceAvailableQuestionPolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
         post = create(:trivia_multiple_choice_available_question)
         scope = Pundit.policy_scope!(person, Trivia::MultipleChoiceAvailableQuestion)
-        expect(scope.count).to eq(1)
+        expect(scope.count).to eq(Trivia::MultipleChoiceAvailableQuestion.where(product_id: person.product_id).count)
         expect(scope).to include(post)
         expect(scope).not_to include(post2)
       end
