@@ -31,6 +31,7 @@ module Trivia
     validate :avalaible_questions_status_check, on: :update, if: -> { published? }
     validates_numericality_of :start_date, greater_than_or_equal_to: Proc.new { Time.zone.now.to_i }, if: -> { published? }
     validate :start_date_type, if: -> { published? }
+    validates :status, changing_attributes: true, on: :update, if: -> { published? }
 
     include AASM
 

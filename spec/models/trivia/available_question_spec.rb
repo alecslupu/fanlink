@@ -160,7 +160,7 @@ RSpec.describe Trivia::AvailableQuestion, type: :model do
         end
       end
 
-      describe "when changing only the status for a published answer" do
+      describe "when changing only the status for a published question" do
         before(:all) do
           @available_question = create(:trivia_available_question, with_answers: true, status: :published)
           @available_question.update(status: :draft)
