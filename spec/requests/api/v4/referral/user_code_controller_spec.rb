@@ -5,7 +5,7 @@ RSpec.describe "Api::V4::Referral::UserCodeControllerSpec", type: :request, swag
     get "List the referral code" do
 
       security [Bearer: []]
-      tags "Referal"
+      tags "Referral"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
