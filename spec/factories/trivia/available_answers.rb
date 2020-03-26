@@ -21,7 +21,7 @@ FactoryBot.define do
     name { Faker::Lorem.question }
     hint { Faker::Lorem.paragraph }
     is_correct { false }
-    status { :published }
+    status { :draft }
 
     factory :correct_trivia_available_answer do
       is_correct { true }
