@@ -121,6 +121,7 @@ RSpec.describe Trivia::Round, type: :model do
       end
       context "creates new record" do
         before do
+          binding.pry
           create(:trivia_round)
           expect(Trivia::Round.count).to eq(1)
           @old_round = Trivia::Round.last
@@ -200,6 +201,70 @@ RSpec.describe Trivia::Round, type: :model do
 
         it "throws an error with a message" do
           expect(@round.errors.messages[:base]).to include("All available questions used must have 'published' status before publishing")
+        end
+      end
+    end
+
+    context "#changing_attribute" do
+      describe "when publishing a round while also changing other attributes" do
+        before(:all) do
+          @round = create(:trivia_round, status: :draft, start_date: (DateTime.current + 1.day).to_i)
+          @complexity = @round.complexity
+
+          @round.update(status: :published, complexity: @complexity + 1)
+          @round.reload
+        end
+
+        it "does not update the status" do
+          expect(@round.status).to eq("draft")
+        end
+
+        it "does not update other attributes" do
+          expect(@round.complexity).to eq(@complexity)
+        end
+
+        it "throws an error with message" do
+          expect(@round.errors[:status]).to include("is the only attribute that can be changed when the record is published or being published")
+        end
+      end
+
+      describe "when changing attributes for a published round" do
+        before(:all) do
+          @round = create(:trivia_round, status: :published, start_date: (DateTime.current + 1.day).to_i)
+          @complexity = @round.complexity
+
+          @round.update(complexity: @complexity + 1)
+          @round.reload
+        end
+
+        it "does not update the attributes" do
+          expect(@round.complexity).to eq(@complexity)
+        end
+
+        it "throws an error with message" do
+          expect(@round.errors[:status]).to include("is the only attribute that can be changed when the record is published or being published")
+        end
+      end
+
+      describe "when changing only the status for a draft round" do
+        before(:all) do
+          @round = create(:trivia_round, status: :draft, start_date: (DateTime.current + 1.day).to_i)
+          @round.update(status: :published)
+        end
+
+        it "updates the status" do
+          expect(@round.reload.status).to eq("published")
+        end
+      end
+
+      describe "when changing only the status for a published round" do
+        before(:all) do
+          @round = create(:trivia_round, status: :published, start_date: (DateTime.current + 1.day).to_i)
+          @round.update(status: :draft)
+        end
+
+        it "updates the status" do
+          expect(@round.reload.status).to eq("draft")
         end
       end
     end
