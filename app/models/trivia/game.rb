@@ -48,9 +48,57 @@ module Trivia
 
 
     def compute_leaderboard
-      self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
+      return unless closed?
+      begin
+        self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})")
+      rescue
+        self.class.game_leaderboard
+        self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})")
+      end
     end
 
+    def self.game_leaderboard
+      self.class.connection.execute %Q(
+CREATE OR REPLACE FUNCTION compute_trivia_game_leaderboard(game_id integer)
+RETURNS void AS $$
+  BEGIN
+    INSERT INTO trivia_game_leaderboards (trivia_game_id, points, position, person_id, average_time, created_at, updated_at, product_id )
+      SELECT
+        trivia_game_id,
+        CASE
+          WHEN points >= 0 THEN points
+          ELSE 0
+        END,
+        position,
+        person_id,
+        average_time,
+        created_at,
+        updated_at,
+        product_id
+      FROM (
+        SELECT
+          r.trivia_game_id,
+          SUM(l.points) as points,
+          ROW_NUMBER () OVER (ORDER BY SUM(points) desc, AVG(a.time)) as position,
+          a.person_id,
+          AVG(a.time) as average_time,
+          NOW() AS created_at, NOW() as updated_at,
+          r.product_id
+        FROM trivia_questions q
+          INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
+          INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
+          INNER JOIN trivia_round_leaderboards l ON (l.trivia_round_id = q.trivia_round_id )
+        WHERE r.trivia_game_id  = $1 AND a.is_correct = 't'
+        GROUP BY r.trivia_game_id, r.product_id,  a.person_id
+      ) AS leaderboard
+    ON CONFLICT (trivia_game_id ,person_id)
+    DO UPDATE SET points = excluded.points;
+    PERFORM pg_notify('leaderboard',  CONCAT('{"type": "game", "id": ', $1 ,'}'));
+  END;
+$$
+LANGUAGE plpgsql;
+)
+    end
     include AASM
 
     enum status: {

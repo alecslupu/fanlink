@@ -46,9 +46,52 @@ module Trivia
 
     def compute_leaderboard
       # raise "retry" if Time.zone.now < end_date
-      self.class.connection.execute("select compute_trivia_question_leaderboard(#{id})")
+      begin
+        self.class.connection.execute("select compute_trivia_question_leaderboard(#{id})")
+      rescue ActiveRecord::StatementInvalid
+        self.class.question_leaderboard
+        self.class.connection.execute("select compute_trivia_question_leaderboard(#{id})")
+      end
     end
 
+    def self.question_leaderboard
+      self.class.connection.execute %Q(
+    CREATE OR REPLACE FUNCTION compute_trivia_question_leaderboard(question_id integer)
+      RETURNS void AS $$
+      BEGIN
+        -- Select the questions in round
+        INSERT INTO trivia_question_leaderboards (trivia_question_id, points, person_id, created_at, updated_at, product_id )
+        SELECT
+        MAX(trivia_question_id) trivia_question_id,
+        MAX(CASE
+        WHEN points >= 0 THEN points
+        ELSE 0
+        END) points,
+          person_id,
+        NOW() AS created_at,
+                 NOW() as updated_at,
+                          MAX(product_id) product_id
+        FROM (
+               SELECT
+        q.id as trivia_question_id,
+                r.complexity * (r.leaderboard_size - ROW_NUMBER () OVER (ORDER BY a.time)) as points,
+                                                                                              a.person_id,
+                                                                                              q.product_id
+        FROM trivia_questions q
+        INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
+        INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
+        WHERE q.id  = $1 AND a.is_correct = 't'
+        ) AS leaderboard
+        GROUP BY person_id
+        ORDER by points desc
+        ON CONFLICT (trivia_question_id ,person_id)
+        DO UPDATE SET points = excluded.points;
+        PERFORM pg_notify('leaderboard',  CONCAT('{"type": "question", "id": ', $1 ,'}'));
+        END;
+        $$
+        LANGUAGE plpgsql;
+        )
+    end
     # administrate falback
     def round_id
       trivia_round_id

@@ -85,8 +85,57 @@ module Trivia
     scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }
 
     def compute_leaderboard
-      self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})") if closed?
+      return unless closed?
+      begin
+        self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})")
+      rescue ActiveRecord::StatementInvalid
+        self.class.round_leaderboard
+        self.class.connection.execute("select compute_trivia_round_leaderboard(#{id})")
+      end
     end
+
+    def self.round_leaderboard
+      self.class.connection.execute %Q(
+CREATE OR REPLACE FUNCTION compute_trivia_round_leaderboard(round_id integer)
+RETURNS void AS $$
+  BEGIN
+    INSERT INTO trivia_round_leaderboards (trivia_round_id, points, position, person_id, average_time, created_at, updated_at, product_id )
+    SELECT
+      trivia_round_id,
+      CASE
+        WHEN points >= 0 THEN points
+        ELSE 0
+      END,
+      position,
+      person_id,
+      average_time,
+      NOW() AS created_at,
+      NOW() as updated_at,
+      product_id
+    FROM (
+      SELECT
+        q.trivia_round_id,
+        r.complexity * ( r.leaderboard_size - ROW_NUMBER () OVER (ORDER BY AVG(a.time))) as points,
+        ROW_NUMBER () OVER (ORDER BY SUM(l.points) DESC,AVG(a.time)) as position,
+        a.person_id,
+        AVG(a.time) as average_time,
+        r.product_id
+      FROM trivia_questions q
+        INNER JOIN trivia_answers a ON (q.id = a.trivia_question_id )
+        INNER JOIN trivia_rounds r ON (q.trivia_round_id = r.id )
+        INNER JOIN trivia_question_leaderboards l ON (l.trivia_question_id = a.trivia_question_id)
+      WHERE q.trivia_round_id  = $1 AND a.is_correct = 't'
+      GROUP BY q.trivia_round_id,r.product_id,r.complexity, r.leaderboard_size, a.person_id
+    ) AS leaderboard
+    ON CONFLICT (trivia_round_id ,person_id)
+    DO UPDATE SET points = excluded.points, position = excluded.position, average_time = excluded.average_time;
+    PERFORM pg_notify('leaderboard',  CONCAT('{"type": "round", "id": ', $1 ,'}'));
+  END;
+$$
+LANGUAGE plpgsql;
+)
+    end
+
 
     def compute_gameplay_parameters
       date_to_set = start_date
