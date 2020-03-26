@@ -132,17 +132,17 @@ module Trivia
         Delayed::Job.enqueue(::Trivia::GameStatus::RunningJob.new(game.id), run_at: Time.at(game.start_date))
         Delayed::Job.enqueue(::Trivia::GameStatus::CloseJob.new(game.id), run_at: Time.at(game.end_date))
 
-        game.rounds.each do |round|
+        game.rounds.each_with_index do |round, round_order|
           Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
           Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
           Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
-          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "15 minutes"), run_at: Time.at(round.start_date) - 15.minute)
-          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, round_order, "1 minute"), run_at: Time.at(round.start_date) - 1.minute)
+          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, 1 + round_order, "15 minutes"), run_at: Time.at(round.start_date) - 15.minute)
+          Delayed::Job.enqueue(::Trivia::GameStatus::RoundStartAnnouncementJob.new(round.id, game.id, 1 + round_order, "1 minute"), run_at: Time.at(round.start_date) - 1.minute)
         end
       end
 
       def status_changed_to_publish?
-        (saved_change_to_attribute?(:status) && published?) ? true : false
+        saved_change_to_attribute?(:status) && published?
       end
 
       def check_start_date_when_publishing

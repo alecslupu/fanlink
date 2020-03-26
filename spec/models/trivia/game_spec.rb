@@ -38,15 +38,25 @@ RSpec.describe Trivia::Game, type: :model do
   end
 
 
-  context "State Machine" do
-    # subject { Trivia::Game.new(start_date: (Time.zone.now + 1.day).to_i) }
-    subject{ Trivia::Game.find(create(:full_short_trivia_game, start_date: (Time.zone.now + 1.day).to_i, end_date: (Time.zone.now + 2.day).to_i).id) }
-
-    it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
-    it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
-    it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
-    it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
+context "State Machine" do
+  # subject { Trivia::Game.new(start_date: (Time.zone.now + 1.day).to_i) }
+  subject{ Trivia::Game.find(create(:full_short_trivia_game, start_date: (Time.zone.now + 1.day).to_i, end_date: (Time.zone.now + 2.day).to_i).id) }
+  before do
+    stub_request(:post, "https://trivia-staging.fan.link/api/publish_game").
+      with(
+        body: "{\"game_id\":#{subject.id}}",
+        headers: {
+          'Accept-Encoding'=>'application/javascript',
+          'Content-Type'=>'application/json',
+          'Trivia-Api-Key'=>'testing'
+        }).
+      to_return(status: 200, body: "", headers: {})
   end
+  it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
+  it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
+  it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
+  it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
+end
 
   context "scheduled round" do
     describe ".compute_gameplay_parameters" do
