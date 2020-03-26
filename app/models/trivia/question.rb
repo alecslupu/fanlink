@@ -44,6 +44,7 @@ module Trivia
 
     before_validation :add_question_type, on: :create
 
+
     def compute_leaderboard
       # raise "retry" if Time.zone.now < end_date
       begin
@@ -55,7 +56,7 @@ module Trivia
     end
 
     def self.question_leaderboard
-      self.class.connection.execute %Q(
+      self.connection.execute %Q(
     CREATE OR REPLACE FUNCTION compute_trivia_question_leaderboard(question_id integer)
       RETURNS void AS $$
       BEGIN

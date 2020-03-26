@@ -58,7 +58,7 @@ module Trivia
     end
 
     def self.game_leaderboard
-      self.class.connection.execute %Q(
+      self.connection.execute %Q(
 CREATE OR REPLACE FUNCTION compute_trivia_game_leaderboard(game_id integer)
 RETURNS void AS $$
   BEGIN
