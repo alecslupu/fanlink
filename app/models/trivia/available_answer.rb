@@ -89,7 +89,7 @@ module Trivia
       def changing_attributes
         errors.add(
           :status,
-          "updating attributes besides status for published answers is forbidden"
+          "is the only attribute that can be changed when the answer is published on being published"
         ) if changes.size > 1 || (changes["status"].blank? && changes.size == 1)
       end
   end
