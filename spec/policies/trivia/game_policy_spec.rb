@@ -252,7 +252,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       ActsAsTenant.with_tenant(person.product) do
         post = create(:trivia_game)
         scope = Pundit.policy_scope!(person, Trivia::Game)
-        expect(scope.count).to eq(1)
+        expect(scope.count).to eq(Trivia::Game.where(product_id: person.product_id).count)
         expect(scope).to include(post)
         expect(scope).not_to include(post2)
       end
