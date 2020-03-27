@@ -121,7 +121,6 @@ RSpec.describe Trivia::Round, type: :model do
       end
       context "creates new record" do
         before do
-          binding.pry
           create(:trivia_round)
           expect(Trivia::Round.count).to eq(1)
           @old_round = Trivia::Round.last
