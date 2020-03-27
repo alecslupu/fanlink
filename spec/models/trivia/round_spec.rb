@@ -93,7 +93,7 @@ RSpec.describe Trivia::Round, type: :model do
         expect(question.question_order).to eq(value)
       end
       it "sets the end date correctly on round" do
-        round = create(:future_trivia_round)
+        round = create(:future_trivia_round, status: :draft)
         round.compute_gameplay_parameters
         round.save
         round = round.reload
@@ -122,10 +122,10 @@ RSpec.describe Trivia::Round, type: :model do
       context "creates new record" do
         before do
           create(:trivia_round)
-          expect(Trivia::Round.count).to eq(1)
+          number_of_rounds = Trivia::Round.count
           @old_round = Trivia::Round.last
           @round_object = @old_round.copy_to_new
-          expect(Trivia::Round.count).to eq(2)
+          expect(Trivia::Round.count).to eq(number_of_rounds + 1)
         end
 
         it { expect(@round_object).to be_a(Trivia::Round) }
