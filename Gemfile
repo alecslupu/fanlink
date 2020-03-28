@@ -47,7 +47,7 @@ gem "redis"
 gem "pg", "~> 0.18"
 
 
-gem "json", "~> 2.1.0"
+gem "json", "~> 2.3.0"
 
 gem "jb"
 gem "redis-namespace"
