@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApiController
-  before_action :load_post, only: %i[ update ]
-  before_action :admin_only, only: %i[ list ]
-  skip_before_action :require_login, :set_product, only: %i[ share ]
+  before_action :load_post, only: %i[update]
+  before_action :admin_only, only: %i[list]
+  skip_before_action :require_login, :set_product, only: %i[share]
   # **
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -78,20 +78,20 @@ class Api::V1::PostsController < ApiController
   #     "errors" :
   #       { "Body is required, blah blah blah" }
   # *
-
-  def create
-    @post = Post.create(post_params.merge(person_id: current_user.id))
-    if @post.valid?
-      unless post_params["status"].present?
-        @post.published!
-      end
-      @post.post if @post.published?
-      broadcast(:post_created, current_user, @post, @api_version)
-      return_the @post
-    else
-      render json: { errors: @post.errors.messages }, status: :unprocessable_entity
-    end
-  end
+  #
+  # def create
+  #   @post = Post.create(post_params.merge(person_id: current_user.id))
+  #   if @post.valid?
+  #     unless post_params["status"].present?
+  #       @post.published!
+  #     end
+  #     @post.post if @post.published?
+  #     broadcast(:post_created, current_user, @post, @api_version)
+  #     return_the @post
+  #   else
+  #     render json: { errors: @post.errors.messages }, status: :unprocessable_entity
+  #   end
+  # end
 
   # **
   # @api {delete} /posts/:id Delete (hide) a single post.
@@ -157,29 +157,29 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   # *
-
-  def index
-    if !check_dates(true)
-      render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
-    else
-      l = params[:limit].to_i
-      l = nil if l == 0
-      if params[:person_id].present?
-        pid = params[:person_id].to_i
-        person = Person.find_by(id: pid)
-        if person
-          @posts = Post.visible.for_person(person).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
-        else
-          render_error("Cannot find that person.")
-          return
-        end
-      else
-        @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
-      end
-      @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-      return_the @posts
-    end
-  end
+  #
+  # def index
+  #   if !check_dates(true)
+  #     render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
+  #   else
+  #     l = params[:limit].to_i
+  #     l = nil if l == 0
+  #     if params[:person_id].present?
+  #       pid = params[:person_id].to_i
+  #       person = Person.find_by(id: pid)
+  #       if person
+  #         @posts = Post.visible.for_person(person).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
+  #       else
+  #         render_error("Cannot find that person.")
+  #         return
+  #       end
+  #     else
+  #       @posts = Post.visible.following_and_own(current_user).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
+  #     end
+  #     @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
+  #     return_the @posts
+  #   end
+  # end
 
   # **
   # @api {get} /posts/list Get a list of posts (ADMIN ONLY).
@@ -240,13 +240,13 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401 Unauthorized
   # *
-
-  def list
-    @posts = paginate apply_filters
-    @posts = @posts.for_tag(params[:tag]) if params[:tag]
-    @posts = @posts.for_category(params[:category]) if params[:category]
-    return_the @posts
-  end
+  #
+  # def list
+  #   @posts = paginate apply_filters
+  #   @posts = @posts.for_tag(params[:tag]) if params[:tag]
+  #   @posts = @posts.for_category(params[:category]) if params[:category]
+  #   return_the @posts
+  # end
 
   # **
   # @api {get} /posts/:id Get a single post.
@@ -285,12 +285,12 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   # *
-
-  def show
-    @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
-    @post_reaction = @post.reactions.find_by(person: current_user)
-    return_the @post
-  end
+  #
+  # def show
+  #   @post = Post.for_product(ActsAsTenant.current_tenant).visible.find(params[:id])
+  #   @post_reaction = @post.reactions.find_by(person: current_user)
+  #   return_the @post
+  # end
 
   # **
   # @api {get} /posts/:id/share Get a single, shareable post.
@@ -320,16 +320,16 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found
   # *
-
-  def share
-    product = get_product
-    if product.nil?
-      render_error("Missing or invalid product.")
-    else
-      @post = Post.for_product(product).visible.find(params[:id])
-      return_the @post
-    end
-  end
+  #
+  # def share
+  #   product = get_product
+  #   if product.nil?
+  #     render_error("Missing or invalid product.")
+  #   else
+  #     @post = Post.for_product(product).visible.find(params[:id])
+  #     return_the @post
+  #   end
+  # end
 
   # **
   # @api {patch} /posts/:id Update a post
@@ -381,21 +381,21 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 401, 404
   # *
-
-  def update
-    @post.update_attributes(post_params)
-  end
+  #
+  # def update
+  #   @post.update_attributes(post_params)
+  # end
 
 private
-  def apply_filters
-    posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
-    params.each do |p, v|
-      if p.end_with?("_filter") && Post.respond_to?(p)
-        posts = posts.send(p, v)
-      end
-    end
-    posts
-  end
+  # def apply_filters
+  #   posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
+  #   params.each do |p, v|
+  #     if p.end_with?("_filter") && Post.respond_to?(p)
+  #       posts = posts.send(p, v)
+  #     end
+  #   end
+  #   posts
+  # end
 
   def get_product
     product = nil
@@ -410,7 +410,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+    params.require(:post).permit(%i[body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id] +
                                      ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
   end
 end
