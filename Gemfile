@@ -11,9 +11,15 @@ end
 
 ruby "2.5.1"
 
+if ENV["RAILS6"]
+  gem "rails", "~> 5.2"
+else
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 5.2"
+end
+
+
 # gem "rack-cache"
-# Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 5.2"
 # Use Puma as the app server
 # gem "rack-cache"# Use Puma as the app server
 gem 'puma', '~> 3.11'
@@ -27,25 +33,12 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-if ENV["RAILS6"]
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 6"
-else
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 5.2"
-
-  # else
 #   # See https://github.com/rails/execjs#readme for more supported runtimes
 #   gem "therubyracer", platforms: :ruby
 #   # Use CoffeeScript for .coffee assets and views
 #   gem "coffee-rails", "~> 4.2"
-# else
-#   # See https://github.com/rails/execjs#readme for more supported runtimes
-#   gem "therubyracer", platforms: :ruby
 #   # Use ActiveModel has_secure_password
 #   # gem "bcrypt", "~> 3.1.7"
-end
-
 # Use Redis adapter to run Action Cable in production
 gem "redis"
 
@@ -71,12 +64,7 @@ group :production, :staging do
   gem 'elastic-apm', '~> 3.1.0'
 end
 group :staging, :development do
-  if ENV["RAILS6"]
-  else
-    # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-    gem "web-console", ">= 3.3.0"
-    gem "listen", ">= 3.0.5", "< 3.2"
-  end
+
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "listen", ">= 3.0.5", "< 3.2"
@@ -114,9 +102,6 @@ group :development do
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
 
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -132,7 +117,6 @@ group :development do
   gem "guard-brakeman"
   gem "guard-annotate"
   gem "rubycritic"
-  gem "guard-rubycritic"
   gem "capistrano", require: false
   gem "capistrano-bundler", require: false
   gem "capistrano-rails", require: false
@@ -244,10 +228,6 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
-
-# for cron jobs
-# https://github.com/javan/whenever
-gem 'whenever', require: false
 gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
