@@ -147,12 +147,12 @@ RSpec.describe Trivia::Game, type: :model do
       before do
         time = DateTime.now.to_i
         old_game = create(:full_short_trivia_game, start_date: time, with_leaderboard: false, status: :closed)
-        expect(Trivia::Game.count).to eq(1)
+        game_count = Trivia::Game.count
         @old_game = Trivia::Game.includes(:prizes, :rounds).last
         @game_object = @old_game.copy_to_new
 
 
-        expect(Trivia::Game.count).to eq(2)
+        expect(Trivia::Game.count).to eq(game_count + 1)
       end
 
       it { expect(@game_object).to be_a(Trivia::Game) }
