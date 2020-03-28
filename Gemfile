@@ -35,9 +35,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #   gem "therubyracer", platforms: :ruby
 #   # Use CoffeeScript for .coffee assets and views
 #   gem "coffee-rails", "~> 4.2"
-# else
-#   # See https://github.com/rails/execjs#readme for more supported runtimes
-#   gem "therubyracer", platforms: :ruby
 #   # Use ActiveModel has_secure_password
 #   # gem "bcrypt", "~> 3.1.7"
 # Use Redis adapter to run Action Cable in production
@@ -232,7 +229,6 @@ gem "rswag-ui"
 gem "psych"
 #for page caching
 gem "actionpack-page_caching"
-
 gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever

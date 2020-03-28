@@ -56,11 +56,6 @@ class Api::V4::PostsController < Api::V3::PostsController
     return_the @posts, handler: tpl_handler
   end
 
-  # def promoted
-  #   @posts = Post.promoted
-  #   return_the @posts, handler: tpl_handler
-  # end
-
   def show
     if current_user.try(:some_admin?) && web_request?
       @post = Post.for_product(ActsAsTenant.current_tenant).find(params[:id])
