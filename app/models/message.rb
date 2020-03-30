@@ -102,7 +102,8 @@ class Message < ApplicationRecord
     Delayed::Job.enqueue(PostMessageJob.new(id, version))
 
     message_mentions.each do |mention|
-      Delayed::Job.enqueue(MessageMentionPushJob.new(mention.id))
+      MessageMentionPushJob.perform_later(mention.id)
+      # Delayed::Job.enqueue(MessageMentionPushJob.new(mention.id))
     end
   end
 

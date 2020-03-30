@@ -13,6 +13,3 @@ class InactiveThirtyDaysNotificationJob < InactiveNotificationJob
     Time.zone.now - 30.days
   end
 end
-
-
-

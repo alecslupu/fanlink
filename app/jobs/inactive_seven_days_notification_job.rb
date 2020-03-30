@@ -13,6 +13,3 @@ class InactiveSevenDaysNotificationJob < InactiveNotificationJob
     Time.zone.now - 7.day
   end
 end
-
-
-
