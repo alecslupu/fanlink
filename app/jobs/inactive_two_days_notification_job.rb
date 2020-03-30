@@ -1,26 +1,16 @@
-class InactiveTwoDaysNotificationJob
-  BATCH_SIZE = 500.freeze
+class InactiveTwoDaysNotificationJob < InactiveNotificationJob
+  protected
 
-  def perform
-    notification = AutomatedNotification.where(criteria: :inactive_48h, enabled: true).last
-
-    return unless notification
-
-    ActsAsTenant.with_tenant(notification.product) do
-      Person.where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 50.hour, Time.zone.now - 48.hour).select(:id).find_in_batches(batch_size: BATCH_SIZE) do |person_ids|
-        Delayed::Job.enqueue(AutomatedNotificationPushJob.new(notification.id, person_ids.pluck(:id)))
-      end
-    end
+  def criteria
+    :inactive_48h
   end
 
-  def queue_name
-    :default
+  def start_time
+    Time.zone.now - 50.hours
   end
 
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
+  def end_time
+    Time.zone.now - 48.hours
   end
 end
 
