@@ -94,7 +94,8 @@ class Message < ApplicationRecord
   # include Message::PortalFilters
   # include Message::RealTime
   def delete_real_time(version = 0)
-    Delayed::Job.enqueue(DeleteMessageJob.new(id, version))
+    DeleteMessageJob.perform_later(id, version)
+    # Delayed::Job.enqueue(DeleteMessageJob.new(id, version))
   end
 
   def post(version = 0)

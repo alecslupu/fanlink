@@ -7,7 +7,7 @@ class ClearMessageCounterJob < ApplicationJob
     room_membership = RoomMembership.find(membership_id)
 
     return unless room.private?
-    
+
     client.set("#{user_path(room_membership.person)}/message_counts/#{room.id}", 0)
     if version.present?
       version.downto(1) do |v|
