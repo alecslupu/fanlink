@@ -32,7 +32,8 @@ class Room < ApplicationRecord
   end
 
   def delete_me(version = 0)
-    Delayed::Job.enqueue(DeleteRoomJob.new(self.id, version)) if self.private?
+    DeleteRoomJob.perform_later(id, version) if self.private?
+    # Delayed::Job.enqueue(DeleteRoomJob.new(self.id, version)) if self.private?
   end
 
   def post(version = 0)
