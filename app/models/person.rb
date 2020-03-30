@@ -256,12 +256,12 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
-    Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
+    OnboardingEmailJob.perform_later(id)
   end
 
 
   def send_password_reset_email
-    Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
+    PasswordResetEmailJob.perform_later(self.id)
   end
 
   def send_certificate_email(certificate_id, email)

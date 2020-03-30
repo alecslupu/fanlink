@@ -697,15 +697,21 @@ RSpec.describe Person, type: :model do
   describe "#send_onboarding_email" do
     it "enqueues an onboarding email" do
       person = create(:person)
-      expect(Delayed::Job).to receive(:enqueue)
+      ActiveJob::Base.queue_adapter = :test
+      expect {
+        OnboardingEmailJob.perform_later(person.id)
+      }.to have_enqueued_job
       person.send_onboarding_email
     end
   end
 
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
+      ActiveJob::Base.queue_adapter = :test
       person = create(:person)
-      expect(Delayed::Job).to receive(:enqueue)
+      expect {
+        PasswordResetEmailJob.perform_later(person.id)
+      }.to have_enqueued_job
       person.send_password_reset_email
     end
   end
