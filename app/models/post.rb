@@ -53,7 +53,8 @@ class Post < ApplicationRecord
   #   include Post::RealTime
 
   def delete_real_time(version = 0)
-    Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
+    DeletePostJob.perform_later(self.id, version)
+    # Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
   end
 
   def post(version = 0)
