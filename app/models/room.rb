@@ -46,7 +46,7 @@ class Room < ApplicationRecord
   end
 
   def new_room(version = 0)
-    Delayed::Job.enqueue(AddRoomJob.new(self.id, version)) if self.private?
+    AddRoomJob.perform_later(self.id, version) if self.private?
   end
   # eof old Room::RealTime
 
