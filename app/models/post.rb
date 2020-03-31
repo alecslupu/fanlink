@@ -58,7 +58,7 @@ class Post < ApplicationRecord
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostPostJob.new(self.id, version))
+    PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
       Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
     end
