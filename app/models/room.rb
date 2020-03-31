@@ -37,7 +37,8 @@ class Room < ApplicationRecord
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostMessageJob.new(self.id, version))
+    # TODO this does not make any sense
+    PostMessageJob.perform_later(self.id, version)
   end
 
   def increment_message_counters(poster_id, version = 0)
