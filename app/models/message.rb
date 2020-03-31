@@ -108,7 +108,7 @@ class Message < ApplicationRecord
   end
 
   def private_message_push
-    Delayed::Job.enqueue(PrivateMessagePushJob.new(id))
+    PrivateMessagePushJob.perform_later(id)
   end
 
   def public_room_message_push
