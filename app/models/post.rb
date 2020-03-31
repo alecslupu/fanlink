@@ -60,7 +60,7 @@ class Post < ApplicationRecord
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
-      Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
+      PostPushNotificationJob.perform_now(self.id)
     end
   end
   #   include Post::RealTime
