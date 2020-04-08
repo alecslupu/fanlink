@@ -21,7 +21,6 @@ class Relationship < ApplicationRecord
   end
 
   def friend_request_received_push
-    # Delayed::Job.enqueue(FriendRequestReceivedPushJob.new(self.id))
     FriendRequestReceivedPushJob.perform_later(self.id)
   end
   # eof Relationship::RealTime

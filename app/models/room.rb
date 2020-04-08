@@ -27,13 +27,11 @@ class Room < ApplicationRecord
 
   # old Room::RealTime
   def clear_message_counter(membership)
-    # Delayed::Job.enqueue(ClearMessageCounterJob.new(self.id, membership.id))
     ClearMessageCounterJob.perform_later(self.id, membership.id)
   end
 
   def delete_me(version = 0)
     DeleteRoomJob.perform_later(id, version) if self.private?
-    # Delayed::Job.enqueue(DeleteRoomJob.new(self.id, version)) if self.private?
   end
 
   def post(version = 0)

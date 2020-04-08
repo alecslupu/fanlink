@@ -57,7 +57,7 @@ class PortalNotification < ApplicationRecord
 
   def enqueue_push
     if pending? && future_send_date?
-      Delayed::Job.enqueue(PortalNotificationPushJob.new(self.id), run_at: self.send_me_at + 1.second )
+      PortalNotificationPushJob.set(wait_until:  self.send_me_at + 1.second).perform_later(self.id)
     end
   end
 

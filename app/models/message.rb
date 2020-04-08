@@ -95,7 +95,6 @@ class Message < ApplicationRecord
   # include Message::RealTime
   def delete_real_time(version = 0)
     DeleteMessageJob.perform_later(id, version)
-    # Delayed::Job.enqueue(DeleteMessageJob.new(id, version))
   end
 
   def post(version = 0)
@@ -103,7 +102,6 @@ class Message < ApplicationRecord
 
     message_mentions.each do |mention|
       MessageMentionPushJob.perform_later(mention.id)
-      # Delayed::Job.enqueue(MessageMentionPushJob.new(mention.id))
     end
   end
 
@@ -113,7 +111,7 @@ class Message < ApplicationRecord
 
   def public_room_message_push
     if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: person_id).exists?
-      Delayed::Job.enqueue(PublicMessagePushJob.new(id))
+      PublicMessagePushJob.perform_later(id)
     end
   end
   # include Message::RealTime
