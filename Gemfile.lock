@@ -17,11 +17,11 @@ GIT
 
 GIT
   remote: https://gitlab.fan.link/dependencies/mandrill-api-ruby
-  revision: ef242421a06bb3a299900f97929dbf85e4cd6063
+  revision: 36ba6c92ce54632bc72ad6e0560f700a126b6a3e
   specs:
     mandrill-api (1.0.54)
       excon (>= 0.16.0, < 1.0)
-      json (>= 1.7.7, <= 2.1)
+      json (>= 1.7.7, <= 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -1040,6 +1040,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
+    connection_pool (2.2.2)
     countries (3.0.1)
       i18n_data (~> 0.10.0)
       sixarm_ruby_unaccent (~> 1.1)
@@ -1209,7 +1210,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (2.1.0)
+    json (2.3.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
     json_schemer (0.2.11)
@@ -1533,6 +1534,11 @@ GEM
       activesupport (>= 4)
     sexp_processor (4.14.1)
     shellany (0.0.1)
+    sidekiq (6.0.6)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      rack-protection (>= 2.0.0)
+      redis (>= 4.1.0)
     signet (0.12.0)
       addressable (~> 2.3)
       faraday (~> 0.9)
@@ -1686,7 +1692,7 @@ DEPENDENCIES
   httplog
   jb
   jbuilder (~> 2.5)
-  json (~> 2.1.0)
+  json (~> 2.3.0)
   json_schemer (~> 0.2.5)
   jwt
   kaminari (~> 1.1.0)
@@ -1737,6 +1743,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   seed_dump
   shoulda-matchers!
+  sidekiq
   simplecov (~> 0.18)
   simplecov-console
   slackistrano

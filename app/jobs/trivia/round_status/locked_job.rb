@@ -1,16 +1,12 @@
 module Trivia
   module RoundStatus
-    class LockedJob < Struct.new(:round_id)
+    class LockedJob < ::ApplicationJob
+      queue_as :trivia
 
-      def perform
+      def perform(round_id)
         round = Trivia::Round.find(round_id)
         round.locked!
       end
-
-      def queue_name
-        :trivia
-      end
-
     end
   end
 end

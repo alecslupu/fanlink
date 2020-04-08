@@ -256,24 +256,30 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
-    Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
+    # TODO implement the active job delayed mailer
+    OnboardingEmailJob.perform_later(id)
   end
 
 
   def send_password_reset_email
-    Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
+    # TODO implement the active job delayed mailer
+    PasswordResetEmailJob.perform_later(self.id)
   end
 
   def send_certificate_email(certificate_id, email)
-    Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
+    # TODO implement the active job delayed mailer
+  SendCertificateEmailJob.perform_later(self.id, certificate_id, email)
   end
 
   def send_assignee_certificate_email(person_certificate, assignee_id, email)
-    Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate.id, email))
+    # TODO implement the active job mailer
+    SendAssigneeCertificateEmailJob.perform_later(self.id, assignee_id, person_certificate.id, email)
   end
 
   def send_course_attachment_email(certcourse_page)
-    Delayed::Job.enqueue(SendDownloadFileEmailJob.new(self.id, certcourse_page.id))
+    # TODO implement the active job mailer
+
+  SendDownloadFileEmailJob.perform_later(self.id, certcourse_page.id)
   end
 
   def self.create_from_facebook(token, username)

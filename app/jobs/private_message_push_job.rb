@@ -1,20 +1,11 @@
-class PrivateMessagePushJob < Struct.new(:message_id)
+class PrivateMessagePushJob < ApplicationJob
+  queue_as :default
   include Push
 
-  def perform
+  def perform(message_id)
     message = Message.find(message_id)
     ActsAsTenant.with_tenant(message.room.product) do
       Push::PrivateMessage.new.push(message)
     end
-  end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
-
-  def queue_name
-    :default
   end
 end

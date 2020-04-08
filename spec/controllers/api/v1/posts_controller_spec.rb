@@ -3,7 +3,6 @@ require "spec_helper"
 
 RSpec.describe Api::V1::PostsController, type: :controller do
   #
-  #
   # before(:each) do
   #   logout
   # end
