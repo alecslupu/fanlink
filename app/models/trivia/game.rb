@@ -121,15 +121,15 @@ module Trivia
       def handle_status_changes
         game = Trivia::Game.find(self.id)
 
-        Delayed::Job.enqueue(::Trivia::PublishToEngine.new(game.id))
-        Delayed::Job.enqueue(::Trivia::GameStatus::LockedJob.new(game.id), run_at: Time.at(game.start_date) - 10.minutes)
-        Delayed::Job.enqueue(::Trivia::GameStatus::RunningJob.new(game.id), run_at: Time.at(game.start_date))
-        Delayed::Job.enqueue(::Trivia::GameStatus::CloseJob.new(game.id), run_at: Time.at(game.end_date))
+        ::Trivia::PublishToEngine.perform_later(game.id)
+        ::Trivia::GameStatus::LockedJob.set(wait_until: Time.at(game.start_date) - 10.minutes).perform_later(game.id)
+        ::Trivia::GameStatus::RunningJob.set(wait_until: Time.at(game.start_date)).perform_later(game.id)
+        ::Trivia::GameStatus::CloseJob.set(wait_until: Time.at(game.end_date)).perform_later(game.id)
 
         game.rounds.each do |round|
-          Delayed::Job.enqueue(::Trivia::RoundStatus::LockedJob.new(round.id), run_at: Time.at(round.start_date) - 30.minutes)
-          Delayed::Job.enqueue(::Trivia::RoundStatus::RunningJob.new(round.id), run_at: Time.at(round.start_date))
-          Delayed::Job.enqueue(::Trivia::RoundStatus::CloseJob.new(round.id), run_at: Time.at(round.end_date))
+          ::Trivia::RoundStatus::LockedJob.set(wait_until: Time.at(round.start_date) - 30.minutes).perform_later(round.id)
+          ::Trivia::RoundStatus::RunningJob.set(wait_until: Time.at(round.start_date)).perform_later(round.id)
+          ::Trivia::RoundStatus::CloseJob.set(wait_until: Time.at(round.end_date)).perform_later(round.id)
         end
       end
 

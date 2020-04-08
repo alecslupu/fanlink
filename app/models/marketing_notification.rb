@@ -108,17 +108,12 @@ class MarketingNotification < ApplicationRecord
     end
 
     def enqueue_delayed_job
-      date = self.date.asctime.in_time_zone("UTC")
-      run_at = get_utc_datetime(date, self.timezone)
-
-      delete_existing_delayed_job
-      Delayed::Job.enqueue(MarketingNotificationPushJob.new(id), run_at: run_at)
+      MarketingNotificationPushJob.set(wait_until: run_at).perform_later(id, run_at.to_s)
     end
 
-    def delete_existing_delayed_job
-      delayed_job = Delayed::Job.where("handler LIKE '%notification_id: #{self.id}\n%'").first
-
-      delayed_job.destroy if delayed_job
+    def run_at
+      date = self.date.asctime.in_time_zone("UTC")
+      run_at = get_utc_datetime(date, self.timezone)
     end
 
     def date_not_in_the_past

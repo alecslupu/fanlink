@@ -1,18 +1,12 @@
-class PublicChatPushJob < Struct.new(:message_id)
+class PublicChatPushJob < ApplicationJob
+  queue_as :default
   include Push
 
-  def perform
+  def perform(message_id)
     message = Message.find(message_id)
-    room = message.room
     product = room.product
     ActsAsTenant.with_tenant(product) do
-      private_chat_push(message, room, product)
-    end
-  end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
+      private_chat_push(message, message.room, product)
     end
   end
 end

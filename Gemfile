@@ -49,7 +49,7 @@ gem "coffee-rails"
 gem "pg", "~> 0.18"
 
 
-gem "json", "~> 2.1.0"
+gem "json", "~> 2.3.0"
 
 gem "jb"
 gem "redis-namespace"
@@ -164,6 +164,7 @@ gem "countries"
 gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
+gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -233,3 +234,4 @@ gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
+

@@ -1,8 +1,9 @@
-class SimpleNotificationPushJob < Struct.new(:notification_id)
+class SimpleNotificationPushJob < ApplicationJob
+  queue_as :default
 
   BATCH_SIZE = 500.freeze
 
-  def perform
+  def perform(notification_id)
     notification = Notification.find(notification_id)
     ActsAsTenant.with_tenant(notification.product) do
       current_user = notification.person
@@ -17,15 +18,5 @@ class SimpleNotificationPushJob < Struct.new(:notification_id)
         end
       end
     end
-  end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
-
-  def queue_name
-    :default
   end
 end
