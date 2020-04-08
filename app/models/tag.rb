@@ -12,6 +12,7 @@
 #
 
 class Tag < ApplicationRecord
+  self.table_name = :old_tags
   acts_as_tenant(:product)
   belongs_to :product
 
