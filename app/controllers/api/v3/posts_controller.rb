@@ -162,7 +162,7 @@ class Api::V3::PostsController < Api::V2::PostsController
 
   def index
     if params[:tag].present? || params[:categories].present?
-      @posts = Post.for_tag(params[:tag]).visible.unblocked(current_user.blocked_people).order(created_at: :desc) if params[:tag]
+      @posts = Post.tagged_with(params[:tag].try(:downcase), match_all: true).visible.unblocked(current_user.blocked_people).order(created_at: :desc) if params[:tag]
       @posts = Post.for_category(params[:categories]).visible.unblocked(current_user.blocked_people).order(created_at: :desc) if params[:categories]
     elsif params[:person_id].present?
       pid = params[:person_id].to_i

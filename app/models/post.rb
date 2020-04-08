@@ -75,8 +75,10 @@ class Post < ApplicationRecord
 
   has_paper_trail
 
+  acts_as_taggable
+
   has_many :post_tags
-  has_many :tags, through: :post_tags
+  has_many :old_tags, through: :post_tags, source: :tag
 
   has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
@@ -111,7 +113,7 @@ class Post < ApplicationRecord
           where("posts.created_at >= ? and posts.created_at <= ?",
                 start_date.beginning_of_day, end_date.end_of_day)
         }
-  scope :for_tag, -> (tag) { joins(:tags).where("lower(tags.name) = ?", tag.downcase) }
+  scope :for_tag, -> (tag) { joins(:old_tags).where("lower(old_tags.name) = ?", tag.downcase) }
   scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
@@ -207,7 +209,7 @@ class Post < ApplicationRecord
   # end
 
   def cached_tags
-    Rails.cache.fetch([self, "tags"]) { tags }
+    Rails.cache.fetch([self, "tags"]) { old_tags }
   end
 
   def reactions

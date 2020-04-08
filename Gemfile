@@ -235,3 +235,4 @@ gem "aasm"
 # https://github.com/javan/whenever
 gem 'whenever', require: false
 
+gem 'acts-as-taggable-on'
