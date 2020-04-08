@@ -89,7 +89,7 @@ group :development, :test do
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem "rubocop", "~> 0.76.0", require: false
+  gem "rubocop", require: false
   # gem "rubocop-rails_config"
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
@@ -113,7 +113,7 @@ group :development do
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "launchy"
   gem "guard-rspec"
-  gem "guard-rubocop"
+  # gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
   # gem "guard-rubycritic"
