@@ -1,10 +1,25 @@
 RailsAdmin.config do |config|
   config.included_models.push("Person")
+  config.included_models.push("Person::Translation")
+
+  config.model 'Person::Translation' do
+    visible false
+    configure :locale, :hidden do
+      help ''
+    end
+    include_fields :locale, :designation
+    #
+    # edit do
+    #   field :locale, :body
+    # end
+    export do
+      fields :locale, :designation
+    end
+  end
+
   config.model "Person" do
-
-
     label_plural "Client Users"
-
+    configure :translations, :globalize_tabs
     object_label_method do
       :username
     end
@@ -93,7 +108,7 @@ RailsAdmin.config do |config|
         end
       end
 
-      field :designation, :translated do
+      field :translations do
         hide do
           bindings[:view]._current_user.client_portal?
         end
@@ -208,7 +223,7 @@ RailsAdmin.config do |config|
           bindings[:view]._current_user.client_portal?
         end
       end
-      field :designation, :translated do
+      field :translations do
         hide do
           bindings[:view]._current_user.client_portal?
         end
@@ -299,8 +314,7 @@ RailsAdmin.config do |config|
     end
 
     export do
-      fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender
-      configure :designation, :string
+      fields :id, :name, :username, :birthdate, :city, :country_code, :email, :created_at, :gender, :translations
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_185444) do
+ActiveRecord::Schema.define(version: 2020_04_10_205755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -612,7 +612,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_185444) do
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
     t.boolean "recommended", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
+    t.jsonb "untranslated_designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -739,6 +739,16 @@ ActiveRecord::Schema.define(version: 2020_04_10_185444) do
     t.datetime "updated_at", null: false
     t.boolean "deleted", default: false
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
+  end
+
+  create_table "person_translations", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "designation"
+    t.index ["locale"], name: "index_person_translations_on_locale"
+    t.index ["person_id"], name: "index_person_translations_on_person_id"
   end
 
   create_table "pin_messages", force: :cascade do |t|
