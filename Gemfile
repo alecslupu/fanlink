@@ -153,7 +153,7 @@ gem "acts_as_api"
 
 gem "awesome_nested_set"
 
-gem "rails_admin", "1.3.0"
+gem "rails_admin", "~> 2.0.0"
 gem "rails_admin_nested_set"
 
 gem "api-pagination"
@@ -173,7 +173,7 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari"
+gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
@@ -235,3 +235,7 @@ gem "aasm"
 gem 'whenever', require: false
 
 gem 'acts-as-taggable-on'
+
+gem 'globalize'
+gem 'globalize-versioning'
+gem 'rails_admin_globalize_field'

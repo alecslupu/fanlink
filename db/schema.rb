@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_110444) do
+ActiveRecord::Schema.define(version: 2020_04_10_094101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -873,6 +873,16 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
   end
 
+  create_table "post_translations", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "body"
+    t.index ["locale"], name: "index_post_translations_on_locale"
+    t.index ["post_id"], name: "index_post_translations_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
     t.text "body_text_old"
@@ -887,7 +897,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "body", default: {}, null: false
+    t.jsonb "untranslated_body", default: {}, null: false
     t.integer "priority", default: 0, null: false
     t.boolean "recommended", default: false, null: false
     t.boolean "notify_followers", default: false, null: false
@@ -904,13 +914,13 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
     t.boolean "pinned", default: false
-    t.index ["body"], name: "index_posts_on_body", using: :gin
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
     t.index ["status"], name: "index_posts_on_status"
+    t.index ["untranslated_body"], name: "index_posts_on_untranslated_body", using: :gin
   end
 
   create_table "product_beacons", force: :cascade do |t|
@@ -1481,6 +1491,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.text "whodunnit"
     t.text "object"
     t.datetime "created_at"
+    t.string "locale"
     t.index ["item_type", "item_id"], name: "ind_versions_item_type_item_id"
   end
 

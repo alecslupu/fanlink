@@ -56,6 +56,7 @@ class Post < ApplicationRecord
     Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
   end
 
+
   def post(version = 0)
     Delayed::Job.enqueue(PostPostJob.new(self.id, version))
     if person.followers.count > 0
@@ -67,7 +68,9 @@ class Post < ApplicationRecord
 
   after_save :adjust_priorities
 
-  has_manual_translated :body
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
+  has_manual_translated :untranslated_body
 
   has_image_called :picture
   has_audio_called :audio
