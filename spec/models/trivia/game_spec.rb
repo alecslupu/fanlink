@@ -29,6 +29,26 @@ RSpec.describe Trivia::Game, type: :model do
     end
   end
 
+  context "status" do
+    subject { Trivia::Game.new }
+    it { expect(subject).to respond_to(:draft?) }
+    it { expect(subject).to respond_to(:published?) }
+    it { expect(subject).to respond_to(:locked?) }
+    it { expect(subject).to respond_to(:running?) }
+
+    it { expect(subject).to respond_to(:closed?) }
+  end
+
+  context "State Machine" do
+    subject { Trivia::Game.new }
+
+    it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
+    it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
+    it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
+    it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
+  end
+
+
   context "scheduled round" do
     describe ".compute_gameplay_parameters" do
       it "has the method" do
@@ -37,7 +57,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets the start_date of a question" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post, "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -56,7 +76,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets any question at the right interval" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post, "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -74,7 +94,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets any question at the right interval" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post, "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -92,7 +112,7 @@ RSpec.describe Trivia::Game, type: :model do
       it "sets the end date correctly on round" do
         time = DateTime.now.to_i
         game = create(:full_trivia_game, start_date: time, with_leaderboard: false)
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post, "https://trivia-staging.fan.link/api/publish_game")
           .with(
             body: "{\"game_id\":#{game.id}}",
             headers: {
@@ -108,6 +128,31 @@ RSpec.describe Trivia::Game, type: :model do
         round = game.rounds.reload.last
         expect(game.end_date).to be_within(1.seconds).of round.end_date
       end
+    end
+  end
+
+  describe "copy_to_new" do
+    it "has the method" do
+      expect(Trivia::Game.new.respond_to?(:copy_to_new)).to eq(true)
+    end
+    context "new Game" do
+      before do
+        time = DateTime.now.to_i
+        old_game = create(:full_short_trivia_game, start_date: time, with_leaderboard: false, status: :closed)
+        expect(Trivia::Game.count).to eq(1)
+        @old_game = Trivia::Game.includes(:prizes, :rounds).last
+        @game_object = @old_game.copy_to_new
+
+
+        expect(Trivia::Game.count).to eq(2)
+      end
+
+      it { expect(@game_object).to be_a(Trivia::Game) }
+      it { expect(@game_object.status).to eq("draft") }
+      it { expect(@game_object.start_date).to be_nil }
+      it { expect(@game_object.end_date).to be_nil }
+      it { expect(@game_object.prizes.size).to eq(@old_game.prizes.length) }
+      it { expect(@game_object.rounds.size).to eq(@old_game.rounds.length) }
     end
   end
 end

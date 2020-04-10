@@ -15,7 +15,7 @@ class Api::V4::PostCommentsController < Api::V3::PostCommentsController
     else
       @post_comment = @post.post_comments.create(post_comment_params)
       if @post_comment.valid?
-        @post_comment.post_me()
+        broadcast(:post_comment_created, @post_comment.id, @post.product.id)
         return_the @post_comment, handler: tpl_handler, using: :show
       else
         render_422 @post_comment.errors

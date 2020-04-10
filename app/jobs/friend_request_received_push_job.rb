@@ -5,7 +5,7 @@ class FriendRequestReceivedPushJob < Struct.new(:relationship_id)
     relationship = Relationship.find_by_id(relationship_id)
     unless relationship.nil?
       ActsAsTenant.with_tenant(relationship.requested_by.product) do
-        friend_request_received_push(relationship.requested_by, relationship.requested_to)
+        Push::FriendRequest.new.received_push(relationship)
       end
     end
   end
@@ -16,5 +16,9 @@ class FriendRequestReceivedPushJob < Struct.new(:relationship_id)
     if exception.is_a?(ActiveRecord::RecordNotFound)
       job.destroy
     end
+  end
+
+  def queue_name
+    :default
   end
 end

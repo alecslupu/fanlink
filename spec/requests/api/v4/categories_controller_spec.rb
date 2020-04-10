@@ -14,10 +14,9 @@ RSpec.describe "Api::V4::CategoriesController", type: :request, swagger_doc: "v4
       parameter name: :product, in: :query, type: :string, required: false
 
       produces "application/vnd.api.v4+json"
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         schema "$ref": "#/definitions/CategoryArray"
-
         run_test!
       end
       response "401", "Unauthorized. " do

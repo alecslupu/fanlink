@@ -20,6 +20,9 @@ class PostQueueListenerJob < Struct.new(:job_id, :attempts)
     Rails.logger.error(e.inspect)
   end
 
+  def queue_name
+    :default
+  end
   private
 
     def should_keep_trying?

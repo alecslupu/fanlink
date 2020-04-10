@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "pry"
 require "simplecov"
 # require "coverage_helper"
@@ -14,14 +16,16 @@ SimpleCov.start "rails" do
   add_group "Policies", "app/policies" # nothing here
 
   minimum_coverage 0
+  enable_coverage :branch
 end
 require File.expand_path("../../config/environment", __FILE__)
-require 'paper_trail/frameworks/rspec'
+require "paper_trail/frameworks/rspec"
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
 require "mandrill_mailer/offline"
 require "json_schemer"
+require 'aasm/rspec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
 
