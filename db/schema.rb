@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_094101) do
+ActiveRecord::Schema.define(version: 2020_04_10_185444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -914,6 +914,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_094101) do
     t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
     t.boolean "pinned", default: false
+    t.integer "post_reports_count", default: 0
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
