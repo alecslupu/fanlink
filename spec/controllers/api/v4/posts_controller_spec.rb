@@ -428,7 +428,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       end
     end
 
-
     it 'returns all the posts with the attachments' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do

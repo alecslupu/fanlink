@@ -1,7 +1,7 @@
 json = {
   id: post.id,
   person: render(partial: "api/v4/people/person_mini", locals: { person: post.person }),
-  body: post.body(@lang),
+  body: post.body,
   picture_url: post.picture_optimal_url,
   audio_url: post.audio_url,
   audio_size: post.audio_file_size,
