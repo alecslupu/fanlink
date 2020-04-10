@@ -35,6 +35,8 @@ RailsAdmin.config do |config|
         column_width 30
       end
       field :body do
+        searchable [{post_translations: :body}]
+        queryable true
         column_width 150
       end
       field :picture do
