@@ -210,13 +210,4 @@ RSpec.describe RoomPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
-
-  context "object default attributes" do
-    subject { described_class.new(create(:portal_access, user_history: true).person, master_class) }
-
-    describe ".attributes_for" do
-      it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:create)).to eq({public: true, created_by_id: subject.user.id}) }
-    end
-  end
 end
