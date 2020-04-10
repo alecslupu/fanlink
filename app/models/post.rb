@@ -42,7 +42,7 @@ class Post < ApplicationRecord
   scope :id_filter, -> (query) { where(id: query.to_i) }
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
   scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { joins(:translations).where("post_translations.body ilike ?", "%#{query}%") }
   scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
   scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
@@ -56,6 +56,7 @@ class Post < ApplicationRecord
     DeletePostJob.perform_later(self.id, version)
   end
 
+
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
@@ -67,7 +68,9 @@ class Post < ApplicationRecord
 
   after_save :adjust_priorities
 
-  has_manual_translated :body
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
+  has_manual_translated :untranslated_body
 
   has_image_called :picture
   has_audio_called :audio

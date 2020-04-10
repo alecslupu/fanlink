@@ -29,7 +29,7 @@ module RailsAdmin
 
           def current_locale
             # I18n.locale
-            TranslationThings::DEFAULT_LANG.to_sym
+            TranslationThings::DEFAULT_LANG
           end
 
 
