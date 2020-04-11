@@ -18,7 +18,7 @@ class PostReport < ApplicationRecord
 
   enum status: %i[ pending no_action_needed post_hidden ]
 
-  belongs_to :post
+  belongs_to :post, counter_cache: true
   belongs_to :person
 
   has_paper_trail
