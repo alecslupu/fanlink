@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_135636) do
+ActiveRecord::Schema.define(version: 2020_04_11_140337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -435,10 +435,20 @@ ActiveRecord::Schema.define(version: 2020_04_11_135636) do
     t.index ["product_id"], name: "idx_image_pages_product"
   end
 
+  create_table "interest_translations", force: :cascade do |t|
+    t.bigint "interest_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "title"
+    t.index ["interest_id"], name: "index_interest_translations_on_interest_id"
+    t.index ["locale"], name: "index_interest_translations_on_locale"
+  end
+
   create_table "interests", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "parent_id"
-    t.jsonb "title", default: {}, null: false
+    t.jsonb "untranslated_title", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order", default: 0, null: false
