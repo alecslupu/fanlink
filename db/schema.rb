@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_082218) do
+ActiveRecord::Schema.define(version: 2020_04_11_090814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -121,6 +121,17 @@ ActiveRecord::Schema.define(version: 2020_04_11_082218) do
     t.index ["person_id", "badge_id"], name: "unq_badge_awards_people_badges", unique: true
   end
 
+  create_table "badge_translations", force: :cascade do |t|
+    t.bigint "badge_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["badge_id"], name: "index_badge_translations_on_badge_id"
+    t.index ["locale"], name: "index_badge_translations_on_locale"
+  end
+
   create_table "badges", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -135,15 +146,15 @@ ActiveRecord::Schema.define(version: 2020_04_11_082218) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
     t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
+    t.index ["product_id", "untranslated_name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "index_badges_on_product_id"
   end
 
