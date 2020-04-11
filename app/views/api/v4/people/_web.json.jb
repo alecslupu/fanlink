@@ -16,7 +16,7 @@ json = {
   tester: person.tester,
   terminated: person.terminated,
   terminated_reason: person.terminated_reason,
-  designation: person.designation(@lang),
+  designation: person.designation,
   role: person.role.to_s,
   do_not_message_me: person.do_not_message_me,
   pin_messages_from: person.pin_messages_from,
