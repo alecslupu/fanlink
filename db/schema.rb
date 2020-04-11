@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_121154) do
+ActiveRecord::Schema.define(version: 2020_04_11_135636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -794,11 +794,21 @@ ActiveRecord::Schema.define(version: 2020_04_11_121154) do
     t.index ["room_id"], name: "index_pin_messages_on_room_id"
   end
 
+  create_table "poll_option_translations", force: :cascade do |t|
+    t.bigint "poll_option_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.index ["locale"], name: "index_poll_option_translations_on_locale"
+    t.index ["poll_option_id"], name: "index_poll_option_translations_on_poll_option_id"
+  end
+
   create_table "poll_options", force: :cascade do |t|
     t.integer "poll_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "person_poll_options_count"
     t.index ["poll_id"], name: "idx_poll_options_poll"
   end
