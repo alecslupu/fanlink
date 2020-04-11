@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_113533) do
+ActiveRecord::Schema.define(version: 2020_04_11_114711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -522,12 +522,23 @@ ActiveRecord::Schema.define(version: 2020_04_11_113533) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
+  end
+
+  create_table "merchandise_translations", force: :cascade do |t|
+    t.bigint "merchandise_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["locale"], name: "index_merchandise_translations_on_locale"
+    t.index ["merchandise_id"], name: "index_merchandise_translations_on_merchandise_id"
   end
 
   create_table "message_mentions", force: :cascade do |t|

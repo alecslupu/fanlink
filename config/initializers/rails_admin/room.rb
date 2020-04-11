@@ -20,7 +20,6 @@ RailsAdmin.config do |config|
     configure :translations, :globalize_tabs
 
     configure :name do
-
     end
     list do
       scopes [:publics, nil, :privates]
