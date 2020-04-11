@@ -67,10 +67,8 @@ class Quest < ApplicationRecord
   validate :date_sanity
   validates_associated :translations
 
-  class Translation
-    validates :name, presence: { message: _("Name is required.") }, if: -> { locale.to_sym == I18n.default_locale }
-    validates :description, presence: { message: _("A quest description is required.") }, if: -> { locale.to_sym == I18n.default_locale }
-  end
+  validates :name, presence: { message: _("Name is required.") }
+  validates :description, presence: { message: _("A quest description is required.") }
 
   validates :starts_at, presence: { message: _("Starting date and time is required.") }
 

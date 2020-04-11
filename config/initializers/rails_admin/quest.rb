@@ -8,11 +8,21 @@ RailsAdmin.config do |config|
     configure :locale, :hidden do
       help ''
     end
+
     include_fields :locale, :name, :description
     #
-    # edit do
-    #   field :locale, :body
-    # end
+    edit do
+      field :name do
+        help do
+          I18n.locale ==  bindings[:object].locale ? 'Required' : 'Optional'
+        end
+      end
+      field :description do
+        help do
+          I18n.locale ==  bindings[:object].locale ? 'Required' : 'Optional'
+        end
+      end
+    end
     export do
       fields :locale, :name, :description
     end
@@ -42,12 +52,14 @@ RailsAdmin.config do |config|
     edit do
       fields :translations,
              :internal_name,
+             :starts_at,
              :picture
     end
     show do
       fields :id,
              :translations,
              :internal_name,
+             :starts_at,
              :picture
     end
 

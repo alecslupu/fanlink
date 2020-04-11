@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_141743) do
+ActiveRecord::Schema.define(version: 2020_04_11_165447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -154,7 +154,6 @@ ActiveRecord::Schema.define(version: 2020_04_11_141743) do
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
     t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
-    t.index ["product_id", "untranslated_name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "index_badges_on_product_id"
   end
 
@@ -1243,7 +1242,6 @@ ActiveRecord::Schema.define(version: 2020_04_11_141743) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_rewards_product_internal_name", unique: true
-    t.index ["product_id", "untranslated_name"], name: "unq_rewards_product_name", unique: true
     t.index ["product_id"], name: "idx_rewards_product"
     t.index ["reward_type", "reward_type_id"], name: "unq_rewards_type_reward_type_id", unique: true
     t.index ["series"], name: "index_rewards_on_series", where: "(series IS NOT NULL)"
