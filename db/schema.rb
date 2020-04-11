@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_113058) do
+ActiveRecord::Schema.define(version: 2020_04_11_113533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1246,6 +1246,17 @@ ActiveRecord::Schema.define(version: 2020_04_11_113058) do
     t.index ["room_id"], name: "index_room_subscribers_on_room_id"
   end
 
+  create_table "room_translations", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["locale"], name: "index_room_translations_on_locale"
+    t.index ["room_id"], name: "index_room_translations_on_room_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -1258,8 +1269,8 @@ ActiveRecord::Schema.define(version: 2020_04_11_113058) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "order", default: 0, null: false
     t.bigint "last_message_timestamp", default: 0
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"

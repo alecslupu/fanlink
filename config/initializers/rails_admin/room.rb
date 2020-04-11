@@ -1,27 +1,49 @@
 RailsAdmin.config do |config|
   config.included_models.push("Room")
-  config.model "Room" do
-    configure :name_un do
+  config.included_models.push("Room::Translation")
+
+  config.model 'Room::Translation' do
+    visible false
+    configure :locale, :hidden do
+      help ''
     end
-    # configure :subscribers do
-    #   hide do
-    #     bindings[:object].private?
-    #   end
+    include_fields :locale, :name, :description
+    #
+    # edit do
+    #   field :locale, :body
     # end
+    export do
+      fields :locale, :name, :description
+    end
+  end
+  config.model "Room" do
+    configure :translations, :globalize_tabs
+
+    configure :name do
+
+    end
     list do
       scopes [:publics, nil, :privates]
-      fields :id,
-             :name_un,
-             :picture,
+      field :id
+      field :name do
+        searchable [{room_translations: :name } ]
+        queryable true
+        filterable true
+      end
+      field :description do
+        visible false
+        searchable [{room_translations: :description } ]
+        queryable true
+        filterable true
+      end
+
+      fields  :picture,
              :status
       field :subscribers do
       end
     end
     edit do
-      field :name, :translated
-      field :description, :translated
-      fields :name,
-             :description,
+      fields :translations,
              :picture,
              :status
 
@@ -47,8 +69,7 @@ RailsAdmin.config do |config|
     end
     show do
       fields :id,
-             :name,
-             :description,
+             :translations,
              :picture,
              :status,
              :created_by,
@@ -57,8 +78,6 @@ RailsAdmin.config do |config|
     end
 
     export do
-      configure :name, :string
-      configure :description, :string
     end
   end
 end
