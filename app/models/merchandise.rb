@@ -23,7 +23,6 @@
 
 class Merchandise < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
 
   after_save :adjust_priorities
 
