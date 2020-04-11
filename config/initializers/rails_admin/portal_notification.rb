@@ -1,23 +1,45 @@
 RailsAdmin.config do |config|
   config.included_models.push("PortalNotification")
+  config.included_models.push("PortalNotification::Translation")
+
+  config.model 'PortalNotification::Translation' do
+    visible false
+    configure :locale, :hidden do
+      help ''
+    end
+    include_fields :locale, :body
+    #
+    # edit do
+    #   field :locale, :body
+    # end
+    export do
+      fields :locale, :body
+    end
+  end
   config.model "PortalNotification" do
+    configure :translations, :globalize_tabs
+
     list do
-      fields :body,
-             :send_me_at,
+      field :body do
+        searchable [{portal_notification_translations: :body } ]
+        queryable true
+        filterable true
+      end
+      fields :send_me_at,
              :sent_status,
              :created_at
+
     end
     show do
       fields :id,
-              :body,
+              :translations,
               :send_me_at,
               :sent_status,
               :created_at,
               :updated_at
     end
     edit do
-      field :body, :translated
-      fields :send_me_at, :sent_status
+      fields :translations, :send_me_at, :sent_status
       field :trigger_admin_notification, :hidden do
         visible true
         formatted_value do

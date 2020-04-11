@@ -16,7 +16,6 @@
 #
 
 class Poll < ApplicationRecord
-  include TranslationThings
 
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month
@@ -43,7 +42,8 @@ class Poll < ApplicationRecord
 
   before_validation :add_end_date
 
-  has_manual_translated :description
+  translates :description, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 

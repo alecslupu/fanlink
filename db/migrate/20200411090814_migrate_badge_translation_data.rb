@@ -15,6 +15,7 @@ class MigrateBadgeTranslationData < ActiveRecord::Migration[5.2]
           begin
             I18n.locale = value
             level.name = level.untranslated_name[value]
+            level.description = level.untranslated_description[value]
             level.save
           rescue ActiveRecord::RecordNotFound
           end
@@ -25,38 +26,12 @@ class MigrateBadgeTranslationData < ActiveRecord::Migration[5.2]
           begin
             I18n.locale = "en"
             level.name = level.untranslated_name["un"]
+            level.description = level.untranslated_description["un"]
             level.save
           rescue ActiveRecord::RecordNotFound
           end
         end
 
-      end
-    end
-    if Badge.last.respond_to?(:untranslated_description)
-      Badge.where.not(untranslated_description: nil).find_each do |level|
-
-        langs.each do |value|
-          next if level.untranslated_description[value].nil?
-          next if level.untranslated_description[value].empty?
-          next if level.untranslated_description[value] == '-'
-
-          begin
-          I18n.locale = value
-          level.description = level.untranslated_description[value]
-          level.save
-          rescue ActiveRecord::RecordNotFound
-          end
-        end
-        unless Badge.with_translations('en').where(id: level.id).first.present?
-          next if level.untranslated_description["un"].nil?
-          next if level.untranslated_description["un"].empty?
-          begin
-          I18n.locale = "en"
-          level.description = level.untranslated_description["un"]
-          level.save
-          rescue ActiveRecord::RecordNotFound
-          end
-        end
       end
     end
   end

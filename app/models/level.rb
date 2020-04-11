@@ -19,7 +19,6 @@
 
 class Level < ApplicationRecord
   include AttachmentSupport
-  # include TranslationThings
 
   has_paper_trail
 

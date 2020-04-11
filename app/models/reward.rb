@@ -18,7 +18,6 @@
 #
 
 class Reward < ApplicationRecord
-  # include TranslationThings
   include Reward::Badges
   include Reward::Contests
   include Reward::Coupons
