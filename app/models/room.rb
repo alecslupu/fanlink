@@ -23,7 +23,6 @@
 class Room < ApplicationRecord
   include AttachmentSupport
   # include Room::RealTime
-  include TranslationThings
 
   # old Room::RealTime
   def clear_message_counter(membership)
@@ -56,11 +55,13 @@ class Room < ApplicationRecord
   enum status: %i[ inactive active deleted ]
 
   acts_as_tenant(:product)
+  scope :for_product, -> (product) { where( rooms: { product_id: product.id } ) }
 
   belongs_to :created_by, class_name: "Person", required: false
   belongs_to :product
 
-  has_manual_translated :description, :name
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_image_called :picture
 

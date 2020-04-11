@@ -1,16 +1,9 @@
 class PortalNotificationPolicy < ApplicationPolicy
-  # def attributes_for(action)
-  #   case action
-  #   when :new
-  #     {send_me_at: }
-  #   when :create
-  #     {trigger_admin_notification: true}
-  #   when :update
-  #     {trigger_admin_notification: true}
-  #   else
-  #     {}
-  #   end
-  # end
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      super.includes(:translations).for_product(ActsAsTenant.current_tenant)
+    end
+  end
   protected
   def module_name
     "portal_notification"

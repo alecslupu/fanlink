@@ -11,7 +11,6 @@
 #
 
 class PollOption < ApplicationRecord
-  include TranslationThings
 
   belongs_to :poll
 
@@ -21,10 +20,10 @@ class PollOption < ApplicationRecord
   validates :description, uniqueness: { scope: :poll_id }
   validate :description_cannot_be_empty
 
-  has_manual_translated :description
+  translates :description, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   scope :for_product, -> (product) { joins(:poll).where(polls: { product_id: product.id } ) }
-
 
   def voted?(person)
     people.present? && people.exists?(person.id)
