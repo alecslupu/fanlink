@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_090814) do
+ActiveRecord::Schema.define(version: 2020_04_11_101028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1056,6 +1056,17 @@ ActiveRecord::Schema.define(version: 2020_04_11_090814) do
     t.index ["step_id"], name: "idx_completions_step"
   end
 
+  create_table "quest_translations", force: :cascade do |t|
+    t.bigint "quest_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["locale"], name: "index_quest_translations_on_locale"
+    t.index ["quest_id"], name: "index_quest_translations_on_quest_id"
+  end
+
   create_table "quests", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "event_id"
@@ -1072,20 +1083,20 @@ ActiveRecord::Schema.define(version: 2020_04_11_090814) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "picture_meta"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "reward_id"
     t.index ["created_at"], name: "index_quests_on_created_at"
-    t.index ["description"], name: "index_quests_on_description", using: :gin
     t.index ["ends_at"], name: "index_quests_on_ends_at", where: "(ends_at IS NOT NULL)"
     t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
     t.index ["internal_name"], name: "ind_quests_internal_name"
-    t.index ["name"], name: "index_quests_on_name", using: :gin
     t.index ["product_id", "internal_name"], name: "index_quests_on_product_id_and_internal_name"
     t.index ["product_id"], name: "ind_quests_products"
     t.index ["reward_id"], name: "idx_quests_rewards"
     t.index ["starts_at"], name: "index_quests_on_starts_at"
     t.index ["status"], name: "index_quests_on_status"
+    t.index ["untranslated_description"], name: "index_quests_on_untranslated_description", using: :gin
+    t.index ["untranslated_name"], name: "index_quests_on_untranslated_name", using: :gin
   end
 
   create_table "quiz_pages", force: :cascade do |t|

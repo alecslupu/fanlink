@@ -25,7 +25,6 @@
 
 class Quest < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
   # include Quest::PortalFilters
   scope :id_filter, ->(query) { where(id: query.to_i) }
   scope :product_id_filter, ->(query) { where(product_id: query.to_i) }
@@ -45,9 +44,12 @@ class Quest < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
+  scope :for_product, -> (product) { where( quests: { product_id: product.id } ) }
+
   has_image_called :picture
-  # TODO Add translation support
-  has_manual_translated :description, :name
+
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_many :assigned_rewards, as: :assigned
 
@@ -63,8 +65,13 @@ class Quest < ApplicationRecord
   has_paper_trail
 
   validate :date_sanity
-  validates :name, presence: { message: _("Name is required.") }
-  validates :description, presence: { message: _("A quest description is required.") }
+  validates_associated :translations
+
+  class Translation
+    validates :name, presence: { message: _("Name is required.") }, if: -> { locale.to_sym == I18n.default_locale }
+    validates :description, presence: { message: _("A quest description is required.") }, if: -> { locale.to_sym == I18n.default_locale }
+  end
+  
   validates :starts_at, presence: { message: _("Starting date and time is required.") }
 
   scope :in_date_range, ->(start_date, end_date) {
