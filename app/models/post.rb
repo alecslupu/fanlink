@@ -48,7 +48,6 @@ class Post < ApplicationRecord
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
-  include TranslationThings
 
   #   include Post::RealTime
 
@@ -70,7 +69,6 @@ class Post < ApplicationRecord
 
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
-  has_manual_translated :untranslated_body
 
   has_image_called :picture
   has_audio_called :audio
@@ -111,12 +109,13 @@ class Post < ApplicationRecord
         }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
+  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
   scope :in_date_range, -> (start_date, end_date) {
           where("posts.created_at >= ? and posts.created_at <= ?",
                 start_date.beginning_of_day, end_date.end_of_day)
         }
   scope :for_tag, -> (tag) { joins(:old_tags).where("lower(old_tags.name) = ?", tag.downcase) }
+
   scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {

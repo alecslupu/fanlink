@@ -1,42 +1,35 @@
 RailsAdmin.config do |config|
-  config.included_models.push("Level")
+  config.included_models.push("Reward")
 
-  config.included_models.push("Level::Translation")
+  config.included_models.push("Reward::Translation")
 
-  config.model 'Level::Translation' do
+  config.model 'Reward::Translation' do
     visible false
     configure :locale, :hidden do
       help ''
     end
-    include_fields :locale, :name, :description
+    include_fields :locale, :name
     #
     # edit do
     #   field :locale, :body
     # end
     export do
-      fields :locale, :name, :description
+      fields :locale, :name
     end
   end
 
-  config.model "Level" do
+  config.model "Reward" do
     configure :translations, :globalize_tabs
 
     list do
       fields :id,
              :translations,
              :internal_name,
-             :picture,
              :points
 
       field :name do
         visible false
-        searchable [{level_translations: :name } ]
-        queryable true
-        filterable true
-      end
-      field :description do
-        visible false
-        searchable [{level_translations: :description } ]
+        searchable [{reward_translations: :name } ]
         queryable true
         filterable true
       end
@@ -44,15 +37,13 @@ RailsAdmin.config do |config|
     edit do
       fields :translations,
              :internal_name,
-             :points,
-             :picture
+             :points
     end
     show do
       fields :id,
              :translations,
              :internal_name,
-             :points,
-             :picture
+             :points
     end
 
     export do

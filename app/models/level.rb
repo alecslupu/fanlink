@@ -19,7 +19,7 @@
 
 class Level < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
+  # include TranslationThings
 
   has_paper_trail
 
@@ -27,7 +27,12 @@ class Level < ApplicationRecord
   belongs_to :product
 
   has_image_called :picture
-  has_manual_translated :description, :name
+  # has_manual_translated :description, :name
+
+  scope :for_product, -> (product) { where( levels: { product_id: product.id } ) }
+
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   validates :internal_name,
             presence: { message: _("Internal name is required.") },
