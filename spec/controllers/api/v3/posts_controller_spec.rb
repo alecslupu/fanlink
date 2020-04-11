@@ -629,6 +629,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
     end
 
     it "should return original language body if no device language provided and no english exists" do
+      previous_locale = I18n.locale
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -640,9 +641,11 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         expect(response).to be_successful
         expect(json["post"]["body"]).to eq(flinkpost.body)
       end
+      I18n.locale = previous_locale
     end
 
     it "should return correct language body if device language provided" do
+      previous_locale = I18n.locale
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -658,6 +661,7 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         expect(response).to be_successful
         expect(json["post"]["body"]).to eq(translation)
       end
+      I18n.locale = previous_locale
     end
     it "should get a visible post with reaction counts" do
       person = create(:person)
