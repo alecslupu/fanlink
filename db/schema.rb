@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_140337) do
+ActiveRecord::Schema.define(version: 2020_04_11_141743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -871,9 +871,19 @@ ActiveRecord::Schema.define(version: 2020_04_11_140337) do
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
+  create_table "portal_notification_translations", force: :cascade do |t|
+    t.bigint "portal_notification_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "body"
+    t.index ["locale"], name: "index_portal_notification_translations_on_locale"
+    t.index ["portal_notification_id"], name: "index_289252a6de7aa1ebfbc91a7d7cff6dc2f089ee9b"
+  end
+
   create_table "portal_notifications", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.jsonb "body", default: {}, null: false
+    t.jsonb "untranslated_body", default: {}, null: false
     t.datetime "send_me_at", null: false
     t.integer "sent_status", default: 0, null: false
     t.datetime "created_at", null: false

@@ -25,9 +25,10 @@ class PortalNotification < ApplicationRecord
 
   enum sent_status: %i[ pending sent cancelled errored ]
 
-  has_manual_translated :body
-
   has_paper_trail
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
+
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -37,7 +38,7 @@ class PortalNotification < ApplicationRecord
 
   validate :sensible_send_time
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, -> (product) { where(portal_notifications: { product_id: product.id } ) }
 
   def ignore_translation_lang?(field, lang)
     IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)
