@@ -16,6 +16,6 @@ class AddQuestTranslationsTable < ActiveRecord::Migration[5.2]
   def down
     rename_column :quests, :untranslated_description, :description
     rename_column :quests, :untranslated_name, :name
-    Badge.drop_translation_table! migrate_data: false
+    Quest.drop_translation_table! migrate_data: false
   end
 end

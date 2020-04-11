@@ -71,7 +71,7 @@ class Quest < ApplicationRecord
     validates :name, presence: { message: _("Name is required.") }, if: -> { locale.to_sym == I18n.default_locale }
     validates :description, presence: { message: _("A quest description is required.") }, if: -> { locale.to_sym == I18n.default_locale }
   end
-  
+
   validates :starts_at, presence: { message: _("Starting date and time is required.") }
 
   scope :in_date_range, ->(start_date, end_date) {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_101028) do
+ActiveRecord::Schema.define(version: 2020_04_11_113058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1023,15 +1023,28 @@ ActiveRecord::Schema.define(version: 2020_04_11_101028) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "picture_meta"
-    t.jsonb "hint", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_hint", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "step_id", null: false
     t.integer "reward_id"
-    t.jsonb "title", default: {}, null: false
+    t.jsonb "untranslated_title", default: {}, null: false
     t.index ["reward_id"], name: "idx_quest_activities_rewards"
     t.index ["step_id"], name: "index_quest_activities_on_step_id"
+  end
+
+  create_table "quest_activity_translations", force: :cascade do |t|
+    t.bigint "quest_activity_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.text "hint"
+    t.string "title"
+    t.index ["locale"], name: "index_quest_activity_translations_on_locale"
+    t.index ["quest_activity_id"], name: "index_quest_activity_translations_on_quest_activity_id"
   end
 
   create_table "quest_completed", force: :cascade do |t|
