@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_114711) do
+ActiveRecord::Schema.define(version: 2020_04_11_121154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -803,6 +803,16 @@ ActiveRecord::Schema.define(version: 2020_04_11_114711) do
     t.index ["poll_id"], name: "idx_poll_options_poll"
   end
 
+  create_table "poll_translations", force: :cascade do |t|
+    t.bigint "poll_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.index ["locale"], name: "index_poll_translations_on_locale"
+    t.index ["poll_id"], name: "index_poll_translations_on_poll_id"
+  end
+
   create_table "polls", force: :cascade do |t|
     t.integer "poll_type"
     t.integer "poll_type_id"
@@ -812,7 +822,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_114711) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "end_date", default: "2019-02-07 01:46:08"
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
     t.index ["product_id"], name: "idx_polls_product"
