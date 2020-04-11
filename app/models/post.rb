@@ -48,7 +48,6 @@ class Post < ApplicationRecord
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
-  include TranslationThings
 
   #   include Post::RealTime
 
@@ -70,7 +69,6 @@ class Post < ApplicationRecord
 
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
-  has_manual_translated :untranslated_body
 
   has_image_called :picture
   has_audio_called :audio
