@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_205755) do
+ActiveRecord::Schema.define(version: 2020_04_11_072424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -455,6 +455,17 @@ ActiveRecord::Schema.define(version: 2020_04_10_205755) do
     t.index ["person_id"], name: "index_level_progresses_on_person_id"
   end
 
+  create_table "level_translations", force: :cascade do |t|
+    t.bigint "level_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["level_id"], name: "index_level_translations_on_level_id"
+    t.index ["locale"], name: "index_level_translations_on_locale"
+  end
+
   create_table "levels", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -466,8 +477,8 @@ ActiveRecord::Schema.define(version: 2020_04_10_205755) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "description", default: {}, null: false
-    t.jsonb "name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
     t.index ["product_id", "internal_name"], name: "unq_levels_product_internal_name"
     t.index ["product_id", "points"], name: "unq_levels_product_points"
   end
