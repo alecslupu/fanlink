@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_072424) do
+ActiveRecord::Schema.define(version: 2020_04_11_082218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1133,9 +1133,19 @@ ActiveRecord::Schema.define(version: 2020_04_11_072424) do
     t.index ["reward_id"], name: "index_reward_progresses_on_reward_id"
   end
 
+  create_table "reward_translations", force: :cascade do |t|
+    t.bigint "reward_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["locale"], name: "index_reward_translations_on_locale"
+    t.index ["reward_id"], name: "index_reward_translations_on_reward_id"
+  end
+
   create_table "rewards", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.jsonb "name", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
     t.text "internal_name", null: false
     t.integer "reward_type", default: 0, null: false
     t.integer "reward_type_id", null: false
@@ -1147,7 +1157,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_072424) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_rewards_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_rewards_product_name", unique: true
+    t.index ["product_id", "untranslated_name"], name: "unq_rewards_product_name", unique: true
     t.index ["product_id"], name: "idx_rewards_product"
     t.index ["reward_type", "reward_type_id"], name: "unq_rewards_type_reward_type_id", unique: true
     t.index ["series"], name: "index_rewards_on_series", where: "(series IS NOT NULL)"

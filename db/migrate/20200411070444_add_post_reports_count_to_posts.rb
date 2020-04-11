@@ -1,6 +1,8 @@
 class AddPostReportsCountToPosts < ActiveRecord::Migration[5.2]
   def up
-    add_column :posts, :post_reports_count, :integer, default: 0
+    unless column_exists?(:posts, :post_reports_count)
+      add_column :posts, :post_reports_count, :integer, default: 0
+    end
     Post.reset_column_information
 
     Post.find_each do |post|
@@ -8,6 +10,8 @@ class AddPostReportsCountToPosts < ActiveRecord::Migration[5.2]
     end
   end
   def down
-    remove_column :posts, :post_reports_count
+    if column_exists?( :posts, :post_reports_count)
+      remove_column :posts, :post_reports_count
+    end
   end
 end

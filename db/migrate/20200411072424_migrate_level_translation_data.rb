@@ -2,6 +2,8 @@ class MigrateLevelTranslationData < ActiveRecord::Migration[5.2]
   def up
     langs = ["en", "es", "ro"]
 
+    Level.reset_column_information
+
     if Level.last.respond_to?(:untranslated_name)
       Level.where.not(untranslated_name: nil).find_each do |level|
 
