@@ -17,6 +17,7 @@ SimpleCov.start "rails" do
 
   minimum_coverage 0
   enable_coverage :branch
+  coverage_dir ENV.fetch( "COVERAGE_DIR" , 'coverage')
 end
 require File.expand_path("../../config/environment", __FILE__)
 require "paper_trail/frameworks/rspec"
