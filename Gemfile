@@ -14,7 +14,7 @@ ruby "2.5.1"
 if ENV["RAILS6"]
   gem "rails", "~> 6"
   # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 5.0'
+  gem 'sass-rails', '~> 6.0'
 else
   gem "rails", "~> 5.2"
   # Use SCSS for stylesheets
