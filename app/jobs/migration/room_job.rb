@@ -6,9 +6,9 @@ class Migration::RoomJob < ApplicationJob
     room = Room.find(room_id)
 
     langs.each do |value|
-      next if room.untranslated_name[value].nil?
-      next if room.untranslated_name[value].empty?
-      next if room.untranslated_name[value] == '-'
+      return if room.untranslated_name[value].nil?
+      return if room.untranslated_name[value].empty?
+      return if room.untranslated_name[value] == '-'
 
       I18n.locale = value
       room.name = room.untranslated_name[value]
@@ -16,8 +16,8 @@ class Migration::RoomJob < ApplicationJob
       room.save!
     end
     unless Room.with_translations('en').where(id: room.id).first.present?
-      next if room.untranslated_name["un"].nil?
-      next if room.untranslated_name["un"].empty?
+      return if room.untranslated_name["un"].nil?
+      return if room.untranslated_name["un"].empty?
       I18n.locale = "en"
       room.name = room.untranslated_name["un"]
       room.description = room.untranslated_description["un"]

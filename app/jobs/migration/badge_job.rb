@@ -6,9 +6,9 @@ class Migration::BadgeJob < ApplicationJob
 
     badge = Badge.find(badge_id)
     langs.each do |value|
-      next if badge.untranslated_name[value].nil?
-      next if badge.untranslated_name[value].empty?
-      next if badge.untranslated_name[value] == '-'
+      return if badge.untranslated_name[value].nil?
+      return if badge.untranslated_name[value].empty?
+      return if badge.untranslated_name[value] == '-'
 
       begin
         I18n.locale = value
@@ -19,8 +19,8 @@ class Migration::BadgeJob < ApplicationJob
       end
     end
     unless Badge.with_translations('en').where(id: badge.id).first.present?
-      next if badge.untranslated_name["un"].nil?
-      next if badge.untranslated_name["un"].empty?
+      return if badge.untranslated_name["un"].nil?
+      return if badge.untranslated_name["un"].empty?
       begin
         I18n.locale = "en"
         badge.name = badge.untranslated_name["un"]

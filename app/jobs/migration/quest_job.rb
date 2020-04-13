@@ -5,9 +5,9 @@ class Migration::QuestJob < ApplicationJob
     langs = ["en", "es", "ro"]
     quest = Quest.find(quest_id)
     langs.each do |value|
-      next if quest.untranslated_name[value].nil?
-      next if quest.untranslated_name[value].empty?
-      next if quest.untranslated_name[value] == '-'
+      return if quest.untranslated_name[value].nil?
+      return if quest.untranslated_name[value].empty?
+      return if quest.untranslated_name[value] == '-'
 
       I18n.locale = value
       quest.name = quest.untranslated_name[value]
@@ -15,8 +15,8 @@ class Migration::QuestJob < ApplicationJob
       quest.save!
     end
     unless Quest.with_translations('en').where(id: quest.id).first.present?
-      next if quest.untranslated_name["un"].nil?
-      next if quest.untranslated_name["un"].empty?
+      return if quest.untranslated_name["un"].nil?
+      return if quest.untranslated_name["un"].empty?
       I18n.locale = "en"
       quest.name = quest.untranslated_name["un"]
       quest.description = quest.untranslated_description["un"]

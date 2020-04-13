@@ -5,9 +5,9 @@ class Migration::LevelJob < ApplicationJob
     langs = ["en", "es", "ro"]
     level = Level.find(level_id)
     langs.each do |value|
-      next if level.untranslated_name[value].nil?
-      next if level.untranslated_name[value].empty?
-      next if level.untranslated_name[value] == '-'
+      return if level.untranslated_name[value].nil?
+      return if level.untranslated_name[value].empty?
+      return if level.untranslated_name[value] == '-'
 
       I18n.locale = value
       level.name = level.untranslated_name[value]
@@ -15,8 +15,8 @@ class Migration::LevelJob < ApplicationJob
       level.save
     end
     unless Level.with_translations('en').where(id: level.id).first.present?
-      next if level.untranslated_name["un"].nil?
-      next if level.untranslated_name["un"].empty?
+      return if level.untranslated_name["un"].nil?
+      return if level.untranslated_name["un"].empty?
       I18n.locale = "en"
       level.name = level.untranslated_name["un"]
       level.description = level.untranslated_description["un"]
