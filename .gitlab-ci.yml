@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - rspec
+  - format
   - report
   - deploy
 
@@ -408,16 +409,14 @@ test:rspec60:policies:
     paths:
       - coverage/rails/60/policies
 
-pages:
-  extends: .base_minimal
-  stage: report
-  allow_failure: true
+test:rspec52:merge:
+  extends: .test:rspec52
+  stage: format
+  artifacts:
+    name: my_app_artifacts
+    paths:
+      - coverage/rails/52
   dependencies:
-    - test:brakeman
-    - test:dawnscanner
-    - test:erd
-    - test:rubycritic
-    - test:rubocop
     - test:rspec52:channels
     - test:rspec52:controllers
     - test:rspec52:helpers
@@ -429,6 +428,18 @@ pages:
     - test:rspec52:models
     - test:rspec52:requests
     - test:rspec52:policies
+  script:
+    - chmod +x ./bin/merge-simplecov
+    - COVERAGE_DIR=coverage/rails/52/ ./bin/merge-simplecov
+
+test:rspec60:merge:
+  extends: .test:rspec60
+  stage: format
+  artifacts:
+    name: my_app_artifacts
+    paths:
+      - coverage/rails/60
+  dependencies:
     - test:rspec60:channels
     - test:rspec60:controllers
     - test:rspec60:helpers
@@ -440,14 +451,28 @@ pages:
     - test:rspec60:models
     - test:rspec60:requests
     - test:rspec60:policies
+  script:
+    - chmod +x ./bin/merge-simplecov
+    - COVERAGE_DIR=coverage/rails/60/ ./bin/merge-simplecov
 
-
+pages:
+  extends: .base_minimal
+  stage: report
+  allow_failure: true
+  dependencies:
+    - test:brakeman
+    - test:dawnscanner
+    - test:erd
+    - test:rubycritic
+    - test:rubocop
+    - test:rspec52:merge
+    - test:rspec60:merge
   artifacts:
     name: my_app_artifacts
     paths:
       - public/brakeman
       - coverage/rails/52/
-      - public/coverage6
+      - coverage/rails/60/
       - public/dawnscanner
       - public/rubocop
       - public/erd.pdf
@@ -461,9 +486,9 @@ pages:
     - mv tmp/rubycritic public/ || true
     - mv rubocop public/ || true
     - mv coverage/rails/52 public/coverage52 || true
+    - mv coverage/rails/60 public/coverage60 || true
     - mv coverage6 public/ || true
     - cp $PAGES_INDEX_FILE public/index.html
-
 
 deploy:staging:
   extends: .base
