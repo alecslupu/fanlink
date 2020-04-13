@@ -2,6 +2,8 @@ class MigratePostTranslationData < ActiveRecord::Migration[5.2]
   def up
     langs = ["en", "es", "ro"]
     if Post.last.respond_to?(:untranslated_body)
+      Post::Translation.destroy_all
+
       PaperTrail.enabled = false
       Post.includes(:person).where.not(untranslated_body: nil).find_each do |post|
         next unless post.person.present?

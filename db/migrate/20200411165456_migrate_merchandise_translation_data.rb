@@ -5,6 +5,8 @@ class MigrateMerchandiseTranslationData < ActiveRecord::Migration[5.2]
     Merchandise.reset_column_information
 
     if Merchandise.last.respond_to?(:untranslated_name)
+      Merchandise::Translation.destroy_all
+      PaperTrail.enabled = false
       Merchandise.where.not(untranslated_name: nil).find_each do |level|
         langs.each do |value|
           next if level.untranslated_name[value].nil?
@@ -25,6 +27,7 @@ class MigrateMerchandiseTranslationData < ActiveRecord::Migration[5.2]
           level.save!
         end
       end
+      PaperTrail.enabled = true
     end
   end
   def down

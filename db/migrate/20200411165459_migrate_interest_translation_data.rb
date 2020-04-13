@@ -5,6 +5,8 @@ class MigrateInterestTranslationData < ActiveRecord::Migration[5.2]
     Interest.reset_column_information
 
     if Interest.last.respond_to?(:untranslated_title)
+      Interest::Translation.destroy_all
+      PaperTrail.enabled = false
       Interest.where.not(untranslated_title: nil).find_each do |level|
         langs.each do |value|
           next if level.untranslated_title[value].nil?
@@ -23,6 +25,7 @@ class MigrateInterestTranslationData < ActiveRecord::Migration[5.2]
           # level.save!
         end
       end
+      PaperTrail.enabled = true
     end
   end
   def down

@@ -5,6 +5,8 @@ class MigrateQuestActivityTranslationData < ActiveRecord::Migration[5.2]
     QuestActivity.reset_column_information
 
     if QuestActivity.last.respond_to?(:untranslated_name)
+      QuestActivity::Translation.destroy_all
+      PaperTrail.enabled = false
       QuestActivity.where.not(untranslated_name: nil).find_each do |level|
         langs.each do |value|
           next if level.untranslated_name[value].nil?
@@ -30,6 +32,7 @@ class MigrateQuestActivityTranslationData < ActiveRecord::Migration[5.2]
           level.save!
         end
       end
+      PaperTrail.enabled = true
     end
   end
   def down

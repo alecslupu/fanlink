@@ -5,6 +5,9 @@ class MigrateLevelTranslationData < ActiveRecord::Migration[5.2]
     Level.reset_column_information
 
     if Level.last.respond_to?(:untranslated_name)
+      Level::Translation.destroy_all
+      PaperTrail.enabled = false
+
       Level.where.not(untranslated_name: nil).find_each do |level|
 
         langs.each do |value|
@@ -26,6 +29,7 @@ class MigrateLevelTranslationData < ActiveRecord::Migration[5.2]
           level.save
         end
       end
+      PaperTrail.enabled = true
     end
   end
   def down

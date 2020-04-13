@@ -5,6 +5,8 @@ class MigratePortalNotificationTranslationData < ActiveRecord::Migration[5.2]
     PortalNotification.reset_column_information
 
     if PortalNotification.last.respond_to?(:untranslated_body)
+      PortalNotification::Translation.destroy_all
+      PaperTrail.enabled = false
       PortalNotification.where.not(untranslated_body: nil).find_each do |level|
         langs.each do |value|
           next if level.untranslated_body[value].nil?
@@ -23,6 +25,7 @@ class MigratePortalNotificationTranslationData < ActiveRecord::Migration[5.2]
           # level.save!
         end
       end
+      PaperTrail.enabled = true
     end
   end
   def down
