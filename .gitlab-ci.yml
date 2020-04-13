@@ -135,7 +135,7 @@ test:erd:
     - bundle exec rails g erd:install
     - bundle exec rake erd
 
-test:rspec52:
+.test:rspec52:
   image: ruby:2.5.1
   cache:
     key: gems_and_packages
@@ -165,20 +165,13 @@ test:rspec52:
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
-  stage: rspec
-  allow_failure: false
-  artifacts:
-    name: coverage_report52
-    paths:
-      - coverage52/
-  script:
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --fail-fast --exclude-pattern "spec/requests/**/*_spec.rb"
-    - mv coverage coverage52
+    - mkdir -p coverage/rails/52/
+  stage: rspec
+  allow_failure: false
 
-
-test:rspec6:
+.test:rspec6:
   image: ruby:2.5.1
   cache:
     key: gems_and_packages
@@ -208,17 +201,211 @@ test:rspec6:
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
-  stage: rspec
-  allow_failure: true
-  artifacts:
-    name: coverage_report6
-    paths:
-      - coverage6/
-  script:
     - bundle update rails
     - bundle install
-    - bundle exec rspec spec --fail-fast
-    - mv coverage coverage6
+  stage: rspec
+  allow_failure: true
+
+test:rspec52:channels:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/channels bundle exec rspec spec/channels --fail-fast
+  artifacts:
+    name: rails52_channels_cov
+    paths:
+      - coverage/rails/52/channels
+
+test:rspec52:controllers:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/controllers  bundle exec rspec spec/controllers --fail-fast
+  artifacts:
+    name: rails52_controllers_cov
+    paths:
+      - coverage/rails/52/controllers
+
+test:rspec52:helpers:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/helpers  bundle exec rspec spec/helpers --fail-fast
+  artifacts:
+    name: rails52_helpers_cov
+    paths:
+      - coverage/rails/52/helpers
+
+test:rspec52:jobs:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/jobs  bundle exec rspec spec/jobs --fail-fast
+  artifacts:
+    name: rails52_jobs_cov
+    paths:
+      - coverage/rails/52/jobs
+
+test:rspec52:lib:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/lib  bundle exec rspec spec/lib --fail-fast
+  artifacts:
+    name: rails52_lib_cov
+    paths:
+      - coverage/rails/52/lib
+
+test:rspec52:listeners:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/listeners  bundle exec rspec spec/listeners --fail-fast
+  artifacts:
+    name: rails52_listeners_cov
+    paths:
+      - coverage/rails/52/listeners
+
+
+test:rspec52:mailers:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/mailers  bundle exec rspec spec/mailers --fail-fast
+  artifacts:
+    name: rails52_mailers_cov
+    paths:
+      - coverage/rails/52/mailers
+
+test:rspec52:middleware:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/middleware  bundle exec rspec spec/middleware --fail-fast
+  artifacts:
+    name: rails52_middleware_cov
+    paths:
+      - coverage/rails/52/middleware
+
+test:rspec52:models:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/models  bundle exec rspec spec/models --fail-fast
+  artifacts:
+    name: rails52_models_cov
+    paths:
+      - coverage/rails/52/models
+
+test:rspec52:requests:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/requests  bundle exec rspec spec/requests --fail-fast
+  artifacts:
+    name: rails52_requests_cov
+    paths:
+      - coverage/rails/52/requests
+
+test:rspec52:policies:
+  extends: .test:rspec52
+  script:
+    - COVERAGE_DIR=coverage/rails/52/policies  bundle exec rspec spec/policies --fail-fast
+  artifacts:
+    name: rails52_policies_cov
+    paths:
+      - coverage/rails/52/policies
+
+
+test:rspec60:channels:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/channels bundle exec rspec spec/channels --fail-fast
+  artifacts:
+    name: rails60_channels_cov
+    paths:
+      - coverage/rails/60/channels
+
+test:rspec60:controllers:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/controllers  bundle exec rspec spec/controllers --fail-fast
+  artifacts:
+    name: rails60_controllers_cov
+    paths:
+      - coverage/rails/60/controllers
+
+test:rspec60:helpers:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/helpers  bundle exec rspec spec/helpers --fail-fast
+  artifacts:
+    name: rails60_helpers_cov
+    paths:
+      - coverage/rails/60/helpers
+
+test:rspec60:jobs:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/jobs  bundle exec rspec spec/jobs --fail-fast
+  artifacts:
+    name: rails60_jobs_cov
+    paths:
+      - coverage/rails/60/jobs
+
+test:rspec60:lib:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/lib  bundle exec rspec spec/lib --fail-fast
+  artifacts:
+    name: rails60_lib_cov
+    paths:
+      - coverage/rails/60/lib
+
+test:rspec60:listeners:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/listeners  bundle exec rspec spec/listeners --fail-fast
+  artifacts:
+    name: rails60_listeners_cov
+    paths:
+      - coverage/rails/60/listeners
+
+
+test:rspec60:mailers:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/mailers  bundle exec rspec spec/mailers --fail-fast
+  artifacts:
+    name: rails60_mailers_cov
+    paths:
+      - coverage/rails/60/mailers
+
+test:rspec60:middleware:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/middleware  bundle exec rspec spec/middleware --fail-fast
+  artifacts:
+    name: rails60_middleware_cov
+    paths:
+      - coverage/rails/60/middleware
+
+test:rspec60:models:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/models  bundle exec rspec spec/models --fail-fast
+  artifacts:
+    name: rails60_models_cov
+    paths:
+      - coverage/rails/60/models
+
+test:rspec60:requests:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/requests  bundle exec rspec spec/requests --fail-fast
+  artifacts:
+    name: rails60_requests_cov
+    paths:
+      - coverage/rails/60/requests
+
+test:rspec60:policies:
+  extends: .test:rspec60
+  script:
+    - COVERAGE_DIR=coverage/rails/60/policies  bundle exec rspec spec/policies --fail-fast
+  artifacts:
+    name: rails60_policies_cov
+    paths:
+      - coverage/rails/60/policies
 
 pages:
   extends: .base_minimal
@@ -230,11 +417,35 @@ pages:
     - test:erd
     - test:rubycritic
     - test:rubocop
+    - test:rspec52:channels
+    - test:rspec52:controllers
+    - test:rspec52:helpers
+    - test:rspec52:jobs
+    - test:rspec52:lib
+    - test:rspec52:listeners
+    - test:rspec52:mailers
+    - test:rspec52:middleware
+    - test:rspec52:models
+    - test:rspec52:requests
+    - test:rspec52:policies
+    - test:rspec60:channels
+    - test:rspec60:controllers
+    - test:rspec60:helpers
+    - test:rspec60:jobs
+    - test:rspec60:lib
+    - test:rspec60:listeners
+    - test:rspec60:mailers
+    - test:rspec60:middleware
+    - test:rspec60:models
+    - test:rspec60:requests
+    - test:rspec60:policies
+
+
   artifacts:
     name: my_app_artifacts
     paths:
       - public/brakeman
-      - public/coverage52
+      - coverage/rails/52/
       - public/coverage6
       - public/dawnscanner
       - public/rubocop
@@ -248,7 +459,7 @@ pages:
     - mv erd.pdf public/ || true
     - mv tmp/rubycritic public/ || true
     - mv rubocop public/ || true
-    - mv coverage52 public/ || true
+    - mv coverage/rails/52 public/coverage52 || true
     - mv coverage6 public/ || true
     - cp $PAGES_INDEX_FILE public/index.html
 
