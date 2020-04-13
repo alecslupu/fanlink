@@ -406,7 +406,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       end
     end
     it "should get the list of all posts filtered on full person username match" do
-      person = create(:admin_user, username: "customusername")
+      person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
