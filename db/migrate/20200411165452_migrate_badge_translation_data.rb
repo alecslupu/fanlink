@@ -5,6 +5,9 @@ class MigrateBadgeTranslationData < ActiveRecord::Migration[5.2]
     Badge.reset_column_information
 
     if Badge.last.respond_to?(:untranslated_name)
+      Badge::Translation.destroy_all
+      PaperTrail.enabled = false
+
       Badge.where.not(untranslated_name: nil).find_each do |level|
 
         langs.each do |value|
@@ -33,6 +36,7 @@ class MigrateBadgeTranslationData < ActiveRecord::Migration[5.2]
         end
 
       end
+      PaperTrail.enabled = true
     end
   end
   def down

@@ -5,6 +5,8 @@ class MigratePollsTranslationData < ActiveRecord::Migration[5.2]
     Poll.reset_column_information
 
     if Poll.last.respond_to?(:untranslated_description)
+      Poll::Translation.destroy_all
+      PaperTrail.enabled = false
       Poll.where.not(untranslated_description: nil).find_each do |level|
         langs.each do |value|
           next if level.untranslated_description[value].nil?
@@ -23,6 +25,7 @@ class MigratePollsTranslationData < ActiveRecord::Migration[5.2]
           # level.save!
         end
       end
+      PaperTrail.enabled = true
     end
   end
   def down

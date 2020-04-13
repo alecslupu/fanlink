@@ -4,8 +4,9 @@ class MigrateRewardTranslationData < ActiveRecord::Migration[5.2]
     Reward.reset_column_information
 
     if Reward.last.respond_to?(:untranslated_name)
+      Reward::Translation.destroy_all
+      PaperTrail.enabled = false
       Reward.where.not(untranslated_name: nil).find_each do |reward|
-
         langs.each do |value|
           next if reward.untranslated_name[value].nil?
           next if reward.untranslated_name[value].empty?
@@ -23,6 +24,8 @@ class MigrateRewardTranslationData < ActiveRecord::Migration[5.2]
           reward.save
         end
       end
+      PaperTrail.enabled = true
+
     end
   end
   def down
