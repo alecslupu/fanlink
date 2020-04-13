@@ -10,6 +10,8 @@ require "mandrill_mailer/offline"
 require "json_schemer"
 require 'aasm/rspec'
 require "simplecov_env"
+SimpleCov.start "rails"
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 WebMock.disable_net_connect!(allow_localhost: true)
 

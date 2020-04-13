@@ -430,7 +430,7 @@ test:rspec52:merge:
     - test:rspec52:policies
   script:
     - chmod +x ./bin/merge-simplecov
-    - COVERAGE_DIR=coverage/rails/52/ ./bin/merge-simplecov
+    - COVERAGE_DIR=coverage/rails/52/ bundle exec ./bin/merge-simplecov
 
 test:rspec60:merge:
   extends: .test:rspec60
@@ -453,7 +453,7 @@ test:rspec60:merge:
     - test:rspec60:policies
   script:
     - chmod +x ./bin/merge-simplecov
-    - COVERAGE_DIR=coverage/rails/60/ ./bin/merge-simplecov
+    - COVERAGE_DIR=coverage/rails/60/ bundle exec ./bin/merge-simplecov
 
 pages:
   extends: .base_minimal
