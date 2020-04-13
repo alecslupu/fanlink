@@ -66,7 +66,7 @@ test:rubocop:
     paths:
       - rubocop/
   script:
-    - bundle exec rubocop --format html --out rubocop/index.html
+    - bundle exec rubocop --format html --out rubocop/index.html app Gemfile test_uploads bin config db Rakefile Capfile config.ru Guardfile lib Procfile spec
 
 
 build:assets_precompile:
@@ -157,16 +157,16 @@ test:erd:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DB: $POSTGRES_DB
   before_script:
-    - export RAILS52=true
     - gem install bundler -v $BUNDLER_VERSION
     - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - export RAILS52=true
+    - bundle update rails
+    - bundle install
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
-    - bundle update rails
-    - bundle install
     - mkdir -p coverage/rails/52/
   stage: rspec
   allow_failure: false
@@ -193,16 +193,16 @@ test:erd:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DB: $POSTGRES_DB
   before_script:
-    - export RAILS6=true
     - gem install bundler -v $BUNDLER_VERSION
     - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
+    - export RAILS6=true
+    - bundle update rails
+    - bundle install
     - bundle exec rake db:reset
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
-    - bundle update rails
-    - bundle install
   stage: rspec
   allow_failure: true
 
