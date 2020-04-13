@@ -66,8 +66,7 @@ test:rubocop:
     paths:
       - rubocop/
   script:
-    - bundle exec rubocop --format html --out rubocop/index.html app Gemfile test_uploads bin config db Rakefile Capfile config.ru Guardfile lib Procfile spec
-
+    - bundle exec rubocop --format html --out rubocop/index.html app config spec lib
 
 build:assets_precompile:
   extends: .base_db
