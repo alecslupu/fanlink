@@ -33,7 +33,8 @@ class String
     # `\p{Mn}` is also known as `\p{Nonspacing_Mark}` but only the short
     # and cryptic form is documented.
     #
-    ActiveSupport::Multibyte::Unicode.normalize(self, :kd).chars.grep(/\p{^Mn}/).join("")
+    # ActiveSupport::Multibyte::Unicode.normalize(self, :kd).chars.grep(/\p{^Mn}/).join("")
+    unicode_normalize(:nfkd).chars.grep(/\p{^Mn}/).join("")
   end
 
   #
