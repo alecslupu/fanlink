@@ -3,3 +3,34 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+
+Lint/RaiseException:
+  Description: Checks for `raise` or `fail` statements which are raising `Exception` class.
+  StyleGuide: '#raise-exception'
+  Enabled: true
+  VersionAdded: '0.81'
+
+Lint/StructNewOverride:
+  Description: 'Disallow overriding the `Struct` built-in methods via `Struct.new`.'
+  Enabled: true
+  VersionAdded: '0.81'
+
+Style/HashEachMethods:
+  Description: 'Use Hash#each_key and Hash#each_value.'
+  StyleGuide: '#hash-each'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
+
+Style/HashTransformKeys:
+  Description: 'Prefer `transform_keys` over `each_with_object` and `map`.'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
+
+Style/HashTransformValues:
+  Description: 'Prefer `transform_values` over `each_with_object` and `map`.'
+  Enabled: true
+  VersionAdded: '0.80'
+  Safe: false
+
