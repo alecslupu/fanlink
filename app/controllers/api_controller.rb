@@ -101,6 +101,7 @@ protected
       @lang = lang_header if TranslationThings::LANGS[lang_header].present?
     end
     @lang = TranslationThings::DEFAULT_READ_LANG if @lang.nil?
+    I18n.locale = @lang
   end
 
   def set_product

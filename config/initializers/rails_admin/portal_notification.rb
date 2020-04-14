@@ -39,17 +39,15 @@ RailsAdmin.config do |config|
               :updated_at
     end
     edit do
-      fields :translations, :send_me_at, :sent_status
+      field :send_me_at do
+        visible true
+        default_value { (Time.zone.now + 1.hour).beginning_of_hour }
+      end
+      fields :sent_status, :translations
       field :trigger_admin_notification, :hidden do
         visible true
         formatted_value do
           bindings[:object].new_record? ? true : bindings[:object].trigger_admin_notification
-        end
-      end
-      field :send_me_at, :hidden do
-        visible true
-        default_value do
-          (Time.zone.now + 1.hour).beginning_of_hour
         end
       end
     end
