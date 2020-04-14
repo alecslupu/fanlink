@@ -1,5 +1,5 @@
 json.post do
-  json.body @post.body(@lang)
+  json.body @post.body
   json.picture_url @post.picture_url
   json.person do
     json.username @post.person.username
