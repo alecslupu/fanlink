@@ -601,7 +601,6 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     #     expect(response).to be_unauthorized
     #   end
     # end
-
   end
 
   describe "#share" do
