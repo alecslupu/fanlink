@@ -27,6 +27,7 @@ RailsAdmin.config do |config|
              :translations,
              :poll_type,
              :poll_type_id,
+             :duration,
              :start_date,
              :end_date,
              :poll_status,
