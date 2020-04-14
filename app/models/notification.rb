@@ -12,8 +12,10 @@
 #
 
 class Notification < ApplicationRecord
-  include Notification::RealTime
 
+  def notify
+    Delayed::Job.enqueue(SimpleNotificationPushJob.new(self.id))
+  end
   acts_as_tenant(:product)
 
   has_paper_trail

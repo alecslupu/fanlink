@@ -1,0 +1,2 @@
+class WebsiteStaticContent < StaticContent
+end

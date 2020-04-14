@@ -37,6 +37,6 @@ class StaticContent < ApplicationRecord
   end
 
   def uniq?
-    StaticContent.where(product: product).where(title: self[:title]).exists?
+    self.class.where(product: product).where(title: self[:title]).exists?
   end
 end
