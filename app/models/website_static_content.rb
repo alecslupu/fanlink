@@ -1,2 +1,0 @@
-class WebsiteStaticContent < StaticContent
-end

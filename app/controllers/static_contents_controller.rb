@@ -7,6 +7,6 @@ class StaticContentsController < ApplicationController
   private
 
   def set_static_content
-    @static_content = WebsiteStaticContent.where(slug: params[:slug], product_id: params[:product_id]).first!
+    @static_content = StaticContent.where(slug: params[:slug], product_id: params[:product_id]).first!
   end
 end

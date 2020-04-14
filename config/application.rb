@@ -6,7 +6,7 @@ require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
 require "action_controller/railtie"
-# require "action_mailer/railtie"
+require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
@@ -94,6 +94,7 @@ module Fanlink
      #
 
     config.i18n.fallbacks = [I18n.default_locale]
+
     config.session_store :redis_store,
                          servers: ["#{Rails.application.secrets.redis_url}/0/session"],
                          key: "_fanlink_session",
