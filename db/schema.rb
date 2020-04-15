@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_190130) do
+ActiveRecord::Schema.define(version: 2020_04_15_223139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -1358,16 +1358,6 @@ ActiveRecord::Schema.define(version: 2020_04_14_190130) do
     t.index ["product_id"], name: "index_semesters_on_product_id"
   end
 
-  create_table "static_contents", force: :cascade do |t|
-    t.jsonb "content", default: {}, null: false
-    t.jsonb "title", default: {}, null: false
-    t.string "slug", null: false
-    t.integer "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_static_contents_on_slug", unique: true
-  end
-
   create_table "static_system_email_translations", force: :cascade do |t|
     t.bigint "static_system_email_id", null: false
     t.string "locale", null: false
@@ -1391,6 +1381,27 @@ ActiveRecord::Schema.define(version: 2020_04_14_190130) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_static_system_emails_on_product_id"
     t.index ["slug", "product_id"], name: "index_static_system_emails_on_slug_and_product_id", unique: true
+  end
+
+  create_table "static_web_content_translations", force: :cascade do |t|
+    t.bigint "static_web_content_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "content"
+    t.index ["locale"], name: "index_static_web_content_translations_on_locale"
+    t.index ["static_web_content_id"], name: "index_static_web_content_translations_on_static_web_content_id"
+  end
+
+  create_table "static_web_contents", force: :cascade do |t|
+    t.jsonb "content", default: {}, null: false
+    t.jsonb "title", default: {}, null: false
+    t.string "slug", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_static_web_contents_on_slug", unique: true
   end
 
   create_table "step_completed", force: :cascade do |t|

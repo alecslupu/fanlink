@@ -5,6 +5,8 @@ module Static
 
     acts_as_tenant(:product)
 
+    scope :for_product, -> (product) { where( product_id: product.id ) }
+
     translates :html_template, :text_template, :subject, touch: true, versioning: :paper_trail
     accepts_nested_attributes_for :translations, allow_destroy: true
 
