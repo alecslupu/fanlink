@@ -222,17 +222,4 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
-
-  context "object default attributes" do
-    before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access,chat_history: true))
-    end
-
-    describe ".attributes_for" do
-      it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:update)).to eq({trigger_admin_notification: true}) }
-      it { expect(subject.attributes_for(:create)).to eq({trigger_admin_notification: true}) }
-      it { expect(subject.attributes_for(:new)).to eq({send_me_at: (Time.zone.now + 1.hour).beginning_of_hour}) }
-    end
-  end
 end

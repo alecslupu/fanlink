@@ -411,7 +411,9 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         create(:post, person: create(:person, username: "customusername") )
 
-        person = Post.last.person
+        person = create(:person, username: "customusername")
+        create(:post, person: person, created_at: 10.days.ago )
+
         get :list, params: {person_filter: person.username_canonical}
         expect(response).to be_successful
         expect(json["posts"].count).to eq(1)
