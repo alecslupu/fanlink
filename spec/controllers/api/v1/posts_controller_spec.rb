@@ -409,10 +409,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
-        create(:post, person: create(:person, username: "customusername") )
 
-        person = create(:person, username: "customusername")
-        create(:post, person: person, created_at: 10.days.ago )
+        create(:post, person: create(:person, username: "customusername"), created_at: 10.days.ago )
 
         get :list, params: {person_filter: person.username_canonical}
         expect(response).to be_successful
