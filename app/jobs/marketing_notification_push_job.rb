@@ -1,5 +1,6 @@
 class MarketingNotificationPushJob < ApplicationJob
   queue_as :default
+  include Push
 
   def perform(notification_id, run_at)
     notification = MarketingNotification.find(notification_id)
