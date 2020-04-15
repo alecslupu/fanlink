@@ -1,7 +1,6 @@
 class PasswordResetEmailJob < Struct.new(:person_id)
   def perform
-    person = Person.find(person_id)
-    PersonMailer.reset_password(person).deliver
+    PersonMailer.with(id: person_id).reset_password.deliver_now
   end
 
   def error(job, exception)

@@ -697,32 +697,52 @@ RSpec.describe Person, type: :model do
   describe "#send_onboarding_email" do
     it "enqueues an onboarding email" do
       person = create(:person)
-      expect(Delayed::Job).to receive(:enqueue)
-      person.send_onboarding_email
+
+      create(:static_system_email, name: "onboarding")
+      expect {
+        person.send_onboarding_email
+      }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
     end
   end
-
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
       person = create(:person)
-      expect(Delayed::Job).to receive(:enqueue)
-      person.send_password_reset_email
+      create(:static_system_email, name: "password-reset")
+
+      expect {
+        person.send_password_reset_email
+      }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
     end
   end
+
 
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
       pc = create(:person_certificate)
-      expect(Delayed::Job).to receive(:enqueue)
-      pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
+      create(:static_system_email, name: "download-certificate")
+
+      expect {
+        pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
+      }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
     end
   end
 
   describe "#send_course_attachment_email" do
     it "sends a course on email" do
       pc = create(:person_certificate)
-      expect(Delayed::Job).to receive(:enqueue)
-      pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
+      create(:static_system_email, name: "document-download")
+
+      expect {
+        pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
+      }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
     end
   end
 
@@ -791,11 +811,16 @@ RSpec.describe Person, type: :model do
     end
   end
 
+
   describe "#send_assignee_certificate_email" do
     it "enqueues a certificate email" do
       pc = create(:person_certificate)
-      expect(Delayed::Job).to receive(:enqueue)
-      pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
+      create(:static_system_email, name: 'assignee-certificate')
+      expect {
+        pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
+      }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
     end
   end
 

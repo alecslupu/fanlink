@@ -205,7 +205,8 @@ gem "wisper-activerecord"
 # To get video's length
 gem "streamio-ffmpeg"
 
-gem "rmagick"
+gem "mini_magick"
+# gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"

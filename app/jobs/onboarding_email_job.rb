@@ -1,7 +1,7 @@
 class OnboardingEmailJob < Struct.new(:person_id)
   def perform
-    person = Person.find(person_id)
-    PersonMailer.onboarding(person).deliver
+    # TODO: Need to migrate to deliver_later
+    PersonMailer.with(id: person_id).onboarding.deliver_now
   end
 
   def error(job, exception)
