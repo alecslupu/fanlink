@@ -1,8 +1,7 @@
 class OnboardingEmailJob < ApplicationJob
   queue_as :mailers
-
-  def perform(person_id)
-    person = Person.find(person_id)
-    PersonMailer.onboarding(person).deliver_now
+  def perform
+    # TODO: Need to migrate to deliver_later
+    PersonMailer.with(id: person_id).onboarding.deliver_now
   end
 end

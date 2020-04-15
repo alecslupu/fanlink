@@ -1,8 +1,6 @@
 class PasswordResetEmailJob < ApplicationJob
   queue_as :mailers
-
-  def perform(person_id)
-    person = Person.find(person_id)
-    PersonMailer.reset_password(person).deliver_now
+  def perform
+    PersonMailer.with(id: person_id).reset_password.deliver_now
   end
 end

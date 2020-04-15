@@ -1,6 +1,5 @@
 RailsAdmin.config do |config|
   config.included_models.push("StaticContent")
-
   config.model "StaticContent" do
     list do
       fields :id,
