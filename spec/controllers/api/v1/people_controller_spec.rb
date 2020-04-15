@@ -67,7 +67,6 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         create(:static_system_email, name: "onboarding")
 
         expect_any_instance_of(Person).to receive(:do_auto_follows)
-        expect_any_instance_of(Person).to receive(:send_onboarding_email)
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
         expect {
@@ -75,7 +74,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
           {product: product.internal_name,
            person: {username: username, email: email, password: "secret", gender: "male",
                     birthdate: "2000-01-02", city: "Shambala", country_code: "us",},}
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        }.to have_enqueued_job #change { ActionMailer::Base.deliveries.count }.by(1)
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -101,11 +100,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         email = "johnsmith432143343@example.com"
         koala_result = {"id" => "12345", "name" => "John Smith", "email" => email}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
-        expect_any_instance_of(Person).to receive(:send_onboarding_email)
-
         expect {
           post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        }.to have_enqueued_job # change { ActionMailer::Base.deliveries.count }.by(1)
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
