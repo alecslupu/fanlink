@@ -103,5 +103,15 @@ module Fanlink
                          key: "_fanlink_session",
                          expire_after: 14.days.to_i
 
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :user_name => Rails.application.secrets.smtp_user_name,
+      :password => Rails.application.secrets.smtp_password,
+      :address => Rails.application.secrets.smtp_host,
+      :domain => Rails.application.secrets.smtp_domain,
+      :port => Rails.application.secrets.smtp_port,
+      :authentication => Rails.application.secrets.smtp_authentication
+    }
   end
 end
