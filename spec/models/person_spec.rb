@@ -697,34 +697,41 @@ RSpec.describe Person, type: :model do
   describe "#send_onboarding_email" do
     it "enqueues an onboarding email" do
       person = create(:person)
-      ActiveJob::Base.queue_adapter = :test
+      create(:static_system_email, name: "onboarding")
       expect {
-        OnboardingEmailJob.perform_later(person.id)
-      }.to have_enqueued_job
-      person.send_onboarding_email
+        person.send_onboarding_email
+      }.to have_enqueued_job #.on_queue('mails')
+      # change {
+      #   ActionMailer::Base.deliveries.count
+      # }.by(1)
+    end
+  end
+  describe "#send_password_reset_email" do
+    it "enqueues an password reset email" do
+      person = create(:person)
+      create(:static_system_email, name: "password-reset")
+      expect {
+        person.send_password_reset_email
+      }.to have_enqueued_job #.on_queue('mails')
+      # change {
+      #   ActionMailer::Base.deliveries.count
+      # }.by(1)
     end
   end
 
-  describe "#send_password_reset_email" do
-    it "enqueues an password reset email" do
-      ActiveJob::Base.queue_adapter = :test
-      person = create(:person)
-      expect {
-        PasswordResetEmailJob.perform_later(person.id)
-      }.to have_enqueued_job
-      person.send_password_reset_email
-    end
-  end
 
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
       ActiveJob::Base.queue_adapter = :test
       pc = create(:person_certificate)
+      create(:static_system_email, name: "download-certificate")
 
       expect {
-        SendCertificateEmailJob.perform_later(pc.person_id, pc.certificate_id, pc.person.email)
-      }.to have_enqueued_job
-      pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
+        pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
+      }.to have_enqueued_job #.on_queue('mails')
+      # change {
+      #   ActionMailer::Base.deliveries.count
+      # }.by(1)
     end
   end
 
@@ -732,11 +739,13 @@ RSpec.describe Person, type: :model do
     it "sends a course on email" do
       ActiveJob::Base.queue_adapter = :test
       pc = create(:person_certificate)
-      df = create(:download_file_page).certcourse_page
+      create(:static_system_email, name: "document-download")
       expect {
-        SendDownloadFileEmailJob.perform_later(pc.person.id, df.id)
-      }.to have_enqueued_job
-      pc.person.send_course_attachment_email(df)
+        pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
+      }.to  have_enqueued_job #.on_queue('mails')
+      # change {
+      #   ActionMailer::Base.deliveries.count
+      # }.by(1)
     end
   end
 
@@ -808,10 +817,13 @@ RSpec.describe Person, type: :model do
     it "enqueues a certificate email" do
       ActiveJob::Base.queue_adapter = :test
       pc = create(:person_certificate)
+      create(:static_system_email, name: 'assignee-certificate')
       expect {
-        SendAssigneeCertificateEmailJob.perform_later(pc.person.id, pc.person_id, pc.id, pc.person.email)
-      }.to have_enqueued_job
-      pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
+        pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
+      }.to have_enqueued_job #.on_queue('mails')
+      # change {
+      #   ActionMailer::Base.deliveries.count
+      # }.by(1)
     end
   end
 

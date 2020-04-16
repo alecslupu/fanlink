@@ -1,6 +1,4 @@
 class Api::V4::PersonCertificatesController < ApiController
-  require "rmagick"
-  include Magick
 
   load_up_the Certificate, from: :certificate_id
   skip_before_action :require_login, :check_banned, only: [ :show ]

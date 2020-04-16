@@ -64,14 +64,17 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     it "should sign up new user with email, username, and password, profile fields and send onboarding email", :run_delayed_jobs do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect_any_instance_of(Person).to receive(:do_auto_follows)
-        expect_any_instance_of(Person).to receive(:send_onboarding_email)
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
-        post :create, params:
+        expect {
+          post :create, params:
           {product: product.internal_name,
            person: {username: username, email: email, password: "secret", gender: "male",
                     birthdate: "2000-01-02", city: "Shambala", country_code: "us",},}
+        }.to have_enqueued_job #change { ActionMailer::Base.deliveries.count }.by(1)
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -92,14 +95,14 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       username = "newuser#{Time.now.to_i}"
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         email = "johnsmith432143343@example.com"
         koala_result = {"id" => "12345", "name" => "John Smith", "email" => email}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
-        expect_any_instance_of(Person).to receive(:send_onboarding_email)
-
         expect {
           post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-        }.to change { Person.count }.by(1)
+        }.to have_enqueued_job # change { ActionMailer::Base.deliveries.count }.by(1)
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -113,6 +116,8 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     it "should sign up new user with FB auth token without email and not send onboarding email" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         tok = "1234"
         username = "newuser#{Time.now.to_i}"
         product = create(:product)
@@ -122,7 +127,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
 
         expect {
           post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-        }.to change { Person.count }.by(1)
+        }.to change {ActionMailer::Base.deliveries.count }.by(0)
         expect(response).to be_successful
         p = Person.last
         expect(p.username).to eq(username)
@@ -258,11 +263,13 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         expect(json["errors"]).to include("A user has already signed up with that Facebook account.")
       end
     end
+
     it "should not sign up new user with FB auth token if account with email already exists" do
       tok = "1234"
       email = "taken#{Time.now.to_i}@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "onboarding")
         koala_result = {"id" => "12345", "name" => "John Smith", "email" => email}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect {
@@ -276,6 +283,8 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
     it "should create a person with a picture attached if added" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect_any_instance_of(Person).to receive(:do_auto_follows)
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
