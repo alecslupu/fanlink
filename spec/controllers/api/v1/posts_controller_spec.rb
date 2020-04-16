@@ -410,7 +410,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
 
-        create(:post, person: create(:person, username: "customusername"), created_at: 10.days.ago )
+        person = create(:person, username: "customusername")
+        post = create(:post, person: person, created_at: 10.days.ago )
 
         get :list, params: {person_filter: person.username_canonical}
         expect(response).to be_successful
