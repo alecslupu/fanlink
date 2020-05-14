@@ -1,8 +1,5 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe DeletePostJob, group: :jobs do
-  # TODO: auto-generated
-  describe "#perform" do
-    pending
-  end
+RSpec.describe DeletePostJob, type: :job do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

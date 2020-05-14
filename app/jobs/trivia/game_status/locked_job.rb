@@ -1,8 +1,9 @@
 module Trivia
   module GameStatus
-    class LockedJob < Struct.new(:game_id)
+    class LockedJob < ::ApplicationJob
+      queue_as :trivia
 
-      def perform
+      def perform(game_id)
         game = Trivia::Game.find(game_id)
         game.locked!
       end

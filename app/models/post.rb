@@ -52,14 +52,14 @@ class Post < ApplicationRecord
   #   include Post::RealTime
 
   def delete_real_time(version = 0)
-    Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
+    DeletePostJob.perform_later(self.id, version)
   end
 
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostPostJob.new(self.id, version))
+    PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
-      Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
+      PostPushNotificationJob.perform_now(self.id)
     end
   end
   #   include Post::RealTime
@@ -171,7 +171,7 @@ class Post < ApplicationRecord
     post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
     return unless post.present?
 
-    if (msg["userMetadata"]["sizer"])
+    if msg["userMetadata"]["sizer"]
       # There should be exactly one entry in `outputs`.
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
       job = Flaws.finish_transcoding(post.video.path,
@@ -230,7 +230,7 @@ class Post < ApplicationRecord
   def start_listener
     return if (!Flaws.transcoding_queue?)
     Rails.logger.error("Listening to #{self.video_job_id}")
-    Delayed::Job.enqueue(PostQueueListenerJob.new(self.video_job_id), run_at: 30.seconds.from_now)
+    PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(self.video_job_id)
   end
 
   def published?
@@ -242,7 +242,7 @@ class Post < ApplicationRecord
   def start_transcoding
     # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
     return if (self.video_job_id || Rails.env.test?)
-    Delayed::Job.enqueue(PostTranscoderJob.new(self.id), run_at: 1.minutes.from_now)
+    PostTranscoderJob.set(wait_until: 1.minutes.from_now).perform_later(self.id)
     true
   end
 

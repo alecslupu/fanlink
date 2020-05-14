@@ -1,8 +1,5 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe UpdateMessageCounterJob, group: :jobs do
-  # TODO: auto-generated
-  describe "#perform" do
-    pending
-  end
+RSpec.describe UpdateMessageCounterJob, type: :job do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
