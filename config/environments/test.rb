@@ -45,5 +45,6 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
   end
-
+  
+  config.session_store :cookie_store, key: '_your_app_session'
 end

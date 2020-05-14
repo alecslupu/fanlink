@@ -1,13 +1,5 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe PrivateMessagePushJob, group: :jobs do
-  # TODO: auto-generated
-  describe "#perform" do
-    pending
-  end
-
-  # TODO: auto-generated
-  describe "#error" do
-    pending
-  end
+RSpec.describe PrivateMessagePushJob, type: :job do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
