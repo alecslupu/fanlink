@@ -94,24 +94,24 @@ class Message < ApplicationRecord
   # include Message::PortalFilters
   # include Message::RealTime
   def delete_real_time(version = 0)
-    Delayed::Job.enqueue(DeleteMessageJob.new(id, version))
+    DeleteMessageJob.perform_later(id, version)
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostMessageJob.new(id, version))
+    PostMessageJob.perform_later(self.id, version)
 
     message_mentions.each do |mention|
-      Delayed::Job.enqueue(MessageMentionPushJob.new(mention.id))
+      MessageMentionPushJob.perform_later(mention.id)
     end
   end
 
   def private_message_push
-    Delayed::Job.enqueue(PrivateMessagePushJob.new(id))
+    PrivateMessagePushJob.perform_later(id)
   end
 
   def public_room_message_push
     if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: person_id).exists?
-      Delayed::Job.enqueue(PublicMessagePushJob.new(id))
+      PublicMessagePushJob.perform_later(id)
     end
   end
   # include Message::RealTime

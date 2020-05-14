@@ -14,7 +14,7 @@ module RailsAdmin
           end
           register_instance_option :controller do
             proc do
-              Delayed::Job.enqueue(::Trivia::CreateRandomGameJob.new(ActsAsTenant.current_tenant.id))
+              ::Trivia::CreateRandomGameJob.perform_later(ActsAsTenant.current_tenant.id)
 
               flash[:notice] = t("game enqueued")
               redirect_to action: :index
