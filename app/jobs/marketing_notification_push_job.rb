@@ -1,21 +1,14 @@
-class MarketingNotificationPushJob < Struct.new(:notification_id)
-  BATCH_SIZE = 50.freeze
+class MarketingNotificationPushJob < ApplicationJob
+  queue_as :default
+  include Push
 
-  def perform
+  def perform(notification_id, run_at)
     notification = MarketingNotification.find(notification_id)
+
+    return unless notification.run_at.to_s == run_at
 
     ActsAsTenant.with_tenant(notification.product) do
       Push::Marketing.new.push(notification)
-    end
-  end
-
-  def queue_name
-    :default
-  end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
     end
   end
 end
