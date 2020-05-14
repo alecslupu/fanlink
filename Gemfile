@@ -164,6 +164,7 @@ gem "countries"
 gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
+gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"

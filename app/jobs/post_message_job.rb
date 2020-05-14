@@ -1,9 +1,9 @@
-class PostMessageJob < Struct.new(:message_id, :version)
+class PostMessageJob < ApplicationJob
+  queue_as :default
   include RealTimeHelpers
 
-  def perform
+  def perform(message_id, version = 0)
     message = Message.find(message_id)
-    Rails.logger.tagged("Post Message Job") { Rails.logger.debug "Running PostMessageJob" } unless Rails.env.production?
     ActsAsTenant.with_tenant(message.room.product) do
       if message.room.public?
         msg = {
@@ -27,31 +27,19 @@ class PostMessageJob < Struct.new(:message_id, :version)
           }
         }
         if version.present?
-          Rails.logger.tagged("Post Message Job") { Rails.logger.debug "Message #{message.id} created. Pushing message to version: #{version} path: #{versioned_room_path(message.room, version)}/last_message" } unless Rails.env.production?
-          version.downto(1) { |v|
-            response = client.set("#{versioned_room_path(message.room, v)}/last_message", msg)
-            Rails.logger.tagged("Post Message Job #{v}") { Rails.logger.debug response.inspect } unless Rails.env.production?
-          }
+          version.downto(1) do |v|
+            client.set("#{versioned_room_path(message.room, v)}/last_message", msg)
+          end
         end
         client.set("#{room_path(message.room)}/last_message_id", message.id) # Remove with V5
       else
         client.set("#{room_path(message.room)}/last_message_id", message.id)
         if version.present?
-          version.downto(1) { |v|
+          version.downto(1) do |v|
             client.set("#{versioned_room_path(message.room, v)}/last_message_id", message.id)
-          }
+          end
         end
       end
     end
-  end
-
-  def error(job, exception)
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
-
-  def queue_name
-    :default
   end
 end

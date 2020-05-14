@@ -49,7 +49,8 @@ Rails.application.configure do
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
 
-  config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
+  config.redis_url = "#{Rails.application.secrets.redis_url}/0"
+
   config.eager_load = true
   config.force_ssl = true
 
