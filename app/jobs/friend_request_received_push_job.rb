@@ -1,24 +1,11 @@
-class FriendRequestReceivedPushJob < Struct.new(:relationship_id)
+class FriendRequestReceivedPushJob < ApplicationJob
+  queue_as :default
   include Push
 
-  def perform
-    relationship = Relationship.find_by_id(relationship_id)
-    unless relationship.nil?
-      ActsAsTenant.with_tenant(relationship.requested_by.product) do
-        Push::FriendRequest.new.received_push(relationship)
-      end
+  def perform(relationship_id)
+    relationship = Relationship.find(relationship_id)
+    ActsAsTenant.with_tenant(relationship.requested_by.product) do
+      Push::FriendRequest.new.received_push(relationship)
     end
-  end
-
-  # ,,, not sure why this doesn't catch.
-  def error(job, exception)
-    Rails.logger.tagged("[Friend Request Received]") { Rails.logger.error exception.inspect }
-    if exception.is_a?(ActiveRecord::RecordNotFound)
-      job.destroy
-    end
-  end
-
-  def queue_name
-    :default
   end
 end

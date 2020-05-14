@@ -14,7 +14,7 @@
 class Notification < ApplicationRecord
 
   def notify
-    Delayed::Job.enqueue(SimpleNotificationPushJob.new(self.id))
+    SimpleNotificationPushJob.perform_later(self.id)
   end
   acts_as_tenant(:product)
 

@@ -1,5 +1,6 @@
 require "spec_helper"
 
+
 RSpec.describe Api::V1::PeopleController, type: :controller do
   describe "#change_password" do
     it "should change the current users password" do
@@ -66,14 +67,15 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         create(:static_system_email, name: "onboarding")
 
         expect_any_instance_of(Person).to receive(:do_auto_follows)
+        expect_any_instance_of(Person).to receive(:send_onboarding_email)
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
-        expect {
-          post :create, params:
-          {product: product.internal_name,
-           person: {username: username, email: email, password: "secret", gender: "male",
-                    birthdate: "2000-01-02", city: "Shambala", country_code: "us",},}
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+        post :create, params:
+        {product: product.internal_name,
+         person: {username: username, email: email, password: "secret", gender: "male",
+                  birthdate: "2000-01-02", city: "Shambala", country_code: "us",},}
+
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -99,9 +101,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         email = "johnsmith432143343@example.com"
         koala_result = {"id" => "12345", "name" => "John Smith", "email" => email}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
-        expect {
-          post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect_any_instance_of(Person).to receive(:send_onboarding_email)
+
+        post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
+
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -122,9 +125,10 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         product = create(:product)
         koala_result = {"id" => "12345", "name" => "John Smith"}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
-        expect {
-          post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-        }.to change {ActionMailer::Base.deliveries.count }.by(0)
+        expect_any_instance_of(Person).not_to receive(:send_onboarding_email)
+
+        post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
+
         expect(response).to be_successful
         p = Person.last
         expect(p.username).to eq(username)

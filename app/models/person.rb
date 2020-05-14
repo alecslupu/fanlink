@@ -256,29 +256,32 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
+
     # Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
-    PersonMailer.with(id: self.id).onboarding.deliver_now
+    PersonMailer.with(id: self.id).onboarding.deliver_later
   end
 
   def send_password_reset_email
     # Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
-    PersonMailer.with(id: self.id).reset_password.deliver_now
+    PersonMailer.with(id: self.id).reset_password.deliver_later
   end
 
   def send_certificate_email(certificate_id, email)
-    # Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
     certificate = PersonCertificate.where(person_id: self.id, certificate_id: certificate_id).last
-    PersonMailer.with(id: self.id, person_certificate: certificate.id, email: email).send_certificate.deliver_now
+    PersonMailer.with(id: self.id, person_certificate: certificate.id, email: email).send_certificate.deliver_later
   end
 
   def send_assignee_certificate_email(person_certificate, assignee_id, email)
-    # Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate.id, email))
-    PersonMailer.with(person: self.id, assignee: assignee_id,person_certificate: person_certificate.id, email: email).send_assignee_certificate.deliver_now
+    PersonMailer.with({
+      person: self.id,
+      assignee: assignee_id,
+      person_certificate: person_certificate.id,
+      email: email
+    }).send_assignee_certificate.deliver_later
   end
 
   def send_course_attachment_email(certcourse_page)
-    # Delayed::Job.enqueue(SendDownloadFileEmailJob.new(self.id, certcourse_page.id))
-    PersonMailer.with(id: self.id, certcourse_page_id: certcourse_page.id).send_downloaded_file.deliver_now
+    PersonMailer.with(id: self.id, certcourse_page_id: certcourse_page.id).send_downloaded_file.deliver_later
   end
 
   def self.create_from_facebook(token, username)

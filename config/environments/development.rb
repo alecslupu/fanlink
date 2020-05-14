@@ -17,8 +17,6 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
-
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join("tmp/caching-dev.txt").exist?

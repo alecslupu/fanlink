@@ -75,7 +75,7 @@ RSpec.describe PortalNotification, type: :model do
   end
   describe "#update_push" do
     it "responds to" do
-      expect(PortalNotification.new).to respond_to(:update_push)
+      expect(PortalNotification.new).to respond_to(:enqueue_push)
     end
   end
 

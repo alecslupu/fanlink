@@ -49,4 +49,5 @@ Rails.application.configure do
   config.session_store :cookie_store, key: '_your_app_session'
   config.active_storage.service = :test
   config.action_mailer.delivery_method = :test
+  config.active_job.queue_adapter = :test
 end
