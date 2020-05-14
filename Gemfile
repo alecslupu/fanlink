@@ -13,16 +13,18 @@ ruby "2.5.1"
 
 if ENV["RAILS6"]
   gem "rails", "~> 6"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 6.0'
 else
   gem "rails", "~> 5.2"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 5.0'
 end
 
 # gem "rack-cache"
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 
@@ -162,6 +164,7 @@ gem "countries"
 gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
+gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -232,3 +235,4 @@ gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
+

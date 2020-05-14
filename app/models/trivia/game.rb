@@ -133,7 +133,7 @@ validates the startd_date > now when draft and published FLAPI-936
 
     def handle_status_changes
       if saved_change_to_attribute?(:status) && published?
-        Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
+        ::Trivia::GameStatus::PublishJob.perform_later(self.id)
       end
     end
 

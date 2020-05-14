@@ -1,13 +1,5 @@
-require "spec_helper"
+require 'rails_helper'
 
-describe PostPostJob, group: :jobs do
-  # TODO: auto-generated
-  describe "#perform" do
-    pending
-  end
-
-  # TODO: auto-generated
-  describe "#error" do
-    pending
-  end
+RSpec.describe PostPostJob, type: :job do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

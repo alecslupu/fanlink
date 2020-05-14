@@ -192,7 +192,7 @@ private
       Rails.logger.debug("Sending topic push with: topic: #{topic} and msg: #{msg}")
       resp = push_client.send_to_topic(topic, notification: { body: msg })
       Rails.logger.debug("Got FCM response to topic push: #{resp.inspect}")
-      clean_notification_device_ids(resp[:not_registered_ids], phone_os) unless resp.nil?
+      clean_notification_device_ids(resp[:not_registered_ids], nil) unless resp.nil?
     rescue Errno::EPIPE
       # FLAPI-839
       disconnect
