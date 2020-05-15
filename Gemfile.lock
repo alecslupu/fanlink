@@ -942,8 +942,6 @@ GEM
     bindex (0.8.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bootsnap (1.4.6)
-      msgpack (~> 1.0)
     brakeman (4.7.2)
     builder (3.2.4)
     bullet (6.0.2)
@@ -1606,7 +1604,6 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   better_errors (~> 2.5.1)
   binding_of_caller
-  bootsnap (>= 1.1.0)
   bullet (~> 6.0.2)
   byebug (~> 11.0.1)
   capistrano
