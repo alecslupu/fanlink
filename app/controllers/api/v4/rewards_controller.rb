@@ -19,7 +19,7 @@ class Api::V4::RewardsController < Api::V3::RewardsController
 
   def update
     if params.has_key?(:reward)
-      if @reward.update_attributes(reward_params)
+      if @reward.update(reward_params)
         return_the @reward, handler: tpl_handler, using: :show
       else
         render_422 @reward.errors

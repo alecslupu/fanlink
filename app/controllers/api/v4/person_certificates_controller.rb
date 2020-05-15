@@ -7,7 +7,7 @@ class Api::V4::PersonCertificatesController < ApiController
     @person_certificate = PersonCertificate.find_by(certificate_id: params[:certificate_id], person_id: @current_user.id)
     if @person_certificate
       if @person_certificate.full_name.blank?
-        @person_certificate.update_attributes(person_certificate_params)
+        @person_certificate.update(person_certificate_params)
         @person_certificate.issued_date = DateTime.now unless @person_certificate.issued_date.present?
         @person_certificate.write_files
         @certificate = @person_certificate.reload.certificate

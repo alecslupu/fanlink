@@ -383,7 +383,7 @@ class Api::V1::PostsController < ApiController
   # *
   #
   # def update
-  #   @post.update_attributes(post_params)
+  #   @post.update(post_params)
   # end
 
 private

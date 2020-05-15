@@ -46,7 +46,7 @@ class Api::V4::RoomsController < Api::V3::RoomsController
     @room = Room.find(params[:id])
     if params.has_key?(:room)
       if some_admin?
-        if @room.update_attributes(room_params)
+        if @room.update(room_params)
           return_the @room, handler: tpl_handler, using: :show
         else
           render_422(@room.errors)

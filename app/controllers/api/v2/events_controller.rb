@@ -129,7 +129,7 @@ class Api::V2::EventsController < Api::V1::EventsController
   # *
 
   def update
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       broadcast(:event_updated, current_user, @event)
       return_the @event
     else

@@ -132,7 +132,7 @@ class Api::V3::CategoriesController < Api::V2::CategoriesController
 
   def update
     if params.has_key?(:category)
-      if @category.update_attributes(category_params)
+      if @category.update(category_params)
         broadcast(:category_updated, current_user, @category)
         return_the @category
       else

@@ -20,7 +20,7 @@ class Api::V4::InterestsController < Api::V3::InterestsController
   def update
     if params.has_key?(:interest)
       if some_admin?
-        if @interest.update_attributes(interest_params)
+        if @interest.update(interest_params)
           return_the @interest, handler: tpl_handler, using: :show
         else
           render_422 @interest.errors

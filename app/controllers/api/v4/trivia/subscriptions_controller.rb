@@ -6,7 +6,7 @@ class Api::V4::Trivia::SubscriptionsController < ApiController
 
   def update
     @subscriber = datasource.first!
-    if @subscriber.update_attributes(subscribed: params[:subscribed] || false)
+    if @subscriber.update(subscribed: params[:subscribed] || false)
       game_topic_subscription(params[:subscribed])
       return_the @subscriber, handler: tpl_handler
     else

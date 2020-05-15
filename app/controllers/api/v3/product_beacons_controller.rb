@@ -255,7 +255,7 @@ class Api::V3::ProductBeaconsController < Api::V2::ProductBeaconsController
 
   def update
     if params.has_key?(:product_beacon)
-      if @product_beacon.update_attributes(beacon_update_params)
+      if @product_beacon.update(beacon_update_params)
         return_the @product_beacon
       else
         render_422 @product_beacon.errors

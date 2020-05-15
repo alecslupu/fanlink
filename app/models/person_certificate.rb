@@ -133,6 +133,6 @@ class PersonCertificate < ApplicationRecord
       pdf.image jpeg_file.path, fit: [pdf.bounds.right, pdf.bounds.top]
     end
 
-    self.update_attributes(issued_date: issued_date , issued_certificate_image: jpeg_file, issued_certificate_pdf: pdf_file)
+    self.update(issued_date: issued_date , issued_certificate_image: jpeg_file, issued_certificate_pdf: pdf_file)
   end
 end

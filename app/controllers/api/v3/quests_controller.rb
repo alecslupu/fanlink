@@ -205,7 +205,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
 
   def update
     if params.has_key?(:quest)
-      if @quest.update_attributes(quest_params)
+      if @quest.update(quest_params)
         return_the @quest
       else
         render_422 @quest.errors
