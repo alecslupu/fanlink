@@ -2,6 +2,9 @@ require "spec_helper"
 
 
 RSpec.describe Api::V1::PasswordResetsController, type: :controller do
+  before :all do
+    ActiveJob::Base.queue_adapter = :test
+  end
   describe "#create" do
     it "should accept valid password reset parameters with email and send the email", :run_delayed_jobs do
       email = "forgetful@example.com"

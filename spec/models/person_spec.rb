@@ -707,7 +707,6 @@ RSpec.describe Person, type: :model do
   end
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
-
       person = create(:person)
       create(:static_system_email, name: "password-reset")
 
@@ -722,7 +721,6 @@ RSpec.describe Person, type: :model do
 
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
-
       pc = create(:person_certificate)
       create(:static_system_email, name: "download-certificate")
 
@@ -732,15 +730,11 @@ RSpec.describe Person, type: :model do
         'PersonMailer', 'send_certificate', 'deliver_now', {
         id: pc.person_id, person_certificate: pc.id, email: pc.person.email
       })
-      # change {
-      #   ActionMailer::Base.deliveries.count
-      # }.by(1)
     end
   end
 
   describe "#send_course_attachment_email" do
     it "sends a course on email" do
-
       pc = create(:person_certificate)
       create(:static_system_email, name: "document-download")
       certcourse_page = create(:download_file_page).certcourse_page
@@ -819,7 +813,6 @@ RSpec.describe Person, type: :model do
 
   describe "#send_assignee_certificate_email" do
     it "enqueues a certificate email" do
-
       pc = create(:person_certificate)
       create(:static_system_email, name: 'assignee-certificate')
       expect {

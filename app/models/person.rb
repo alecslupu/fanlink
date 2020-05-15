@@ -256,7 +256,6 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
-
     # Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
     PersonMailer.with(id: self.id).onboarding.deliver_later
   end

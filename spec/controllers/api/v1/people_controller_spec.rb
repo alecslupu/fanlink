@@ -103,8 +103,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect_any_instance_of(Person).to receive(:send_onboarding_email)
 
-        post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-
+        expect {
+          post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
+        }.to change { Person.count }.by(1)
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -127,8 +128,9 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect_any_instance_of(Person).not_to receive(:send_onboarding_email)
 
-        post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
-
+        expect {
+          post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
+        }.to change { Person.count }.by(1)
         expect(response).to be_successful
         p = Person.last
         expect(p.username).to eq(username)

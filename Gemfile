@@ -21,6 +21,8 @@ else
   gem 'sass-rails', '~> 5.0'
 end
 
+gem 'sprockets', '~> 3.7.2'
+
 # gem "rack-cache"
 # Use Puma as the app server
 gem 'puma', '~> 3.12'

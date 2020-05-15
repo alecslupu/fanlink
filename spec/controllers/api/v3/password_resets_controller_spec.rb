@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Api::V3::PasswordResetsController, type: :controller do
+  before :all do
+    ActiveJob::Base.queue_adapter = :test
+  end
   describe "#create" do
     it "should accept valid password reset parameters with email and send the email", :run_delayed_jobs do
       email = "forgetful@example.com"
@@ -28,7 +31,6 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
         }.not_to  have_enqueued_job.on_queue('mailers').with(
           'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
         )
-
         expect(response).to be_successful
         expect(person.reload.reset_password_token).to be_nil
       end
