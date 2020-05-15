@@ -21,6 +21,8 @@ else
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 5.0'
 end
+# SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
+gem 'sprockets', '3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
@@ -36,7 +38,7 @@ gem 'jbuilder', '~> 2.5'
 gem "coffee-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+# gem 'bootsnap', '>= 1.1.0', require: false
 
 #   # See https://github.com/rails/execjs#readme for more supported runtimes
 #   gem "therubyracer", platforms: :ruby
