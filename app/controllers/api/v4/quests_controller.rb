@@ -36,7 +36,7 @@ class Api::V4::QuestsController < Api::V3::QuestsController
 
   # def update
   #   if params.has_key?(:quest)
-  #     if @quest.update_attributes(quest_params)
+  #     if @quest.update(quest_params)
   #       return_the @quest, handler: 'jb', using: :show
   #     else
   #       render_422 @quest.errors

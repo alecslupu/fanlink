@@ -25,7 +25,7 @@ class Api::V4::ProductBeaconsController < Api::V3::ProductBeaconsController
 
   def update
     if params.has_key?(:product_beacon)
-      if @product_beacon.update_attributes(beacon_update_params)
+      if @product_beacon.update(beacon_update_params)
         return_the @product_beacon, handler: tpl_handler, using: :show
       else
         render_422 @product_beacon.errors

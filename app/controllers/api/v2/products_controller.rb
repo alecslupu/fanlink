@@ -33,7 +33,7 @@ class Api::V2::ProductsController < ApiController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update_attributes(product_params)
+    if @product.update(product_params)
       return_the @product
     else
       render json: { errors: @product.errors.messages }, status: :unprocessable_entity

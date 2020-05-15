@@ -151,7 +151,7 @@ class Api::V3::MerchandiseController < Api::V2::MerchandiseController
 
   def update
     if params.has_key?(:merchandise)
-      if @merchandise.update_attributes(merchandise_params)
+      if @merchandise.update(merchandise_params)
         broadcast(:merchandise_updated, current_user, @merchandise)
         return_the @merchandise
       else

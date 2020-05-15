@@ -392,7 +392,7 @@ class Api::V3::PostsController < Api::V2::PostsController
 
   def update
     if params.has_key?(:post)
-      if @post.update_attributes(post_params)
+      if @post.update(post_params)
         return_the @post
       else
         render_422 @post.errors
