@@ -707,7 +707,6 @@ RSpec.describe Person, type: :model do
   end
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
-
       person = create(:person)
       create(:static_system_email, name: "password-reset")
       expect {

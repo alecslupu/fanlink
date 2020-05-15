@@ -96,8 +96,10 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         koala_result = {"id" => "12345", "name" => "John Smith", "email" => email}
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect_any_instance_of(Person).to receive(:send_onboarding_email)
+        expect {
+          post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
+        }.to change { Person.count }.by(1)
 
-        post :create, params: {product: product.internal_name, facebook_auth_token: tok, person: {username: username}}
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
