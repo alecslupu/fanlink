@@ -455,10 +455,10 @@ test:rspec60:merge:
     - chmod +x ./bin/merge-simplecov
     - COVERAGE_DIR=coverage/rails/60/ bundle exec ./bin/merge-simplecov
 
-  pages:report:
+
+report:pages:
   extends: .base_minimal
   stage: report
-  allow_failure: true
   dependencies:
     - test:brakeman
     - test:dawnscanner
@@ -482,21 +482,18 @@ test:rspec60:merge:
     - mv tmp/rubycritic master/
     - mv rubocop master/
     - mv coverage master/
-    - cp $PAGES_INDEX_FILE master/index.html
 
 pages:
   extends: .base_minimal
   stage: deploy
   dependencies:
-    - pages:report
-  artifacts:
-    name: my_app_artifacts
-    paths:
-      - master/
+    - report:pages
   only:
     - ale-fix-coverage
     - master
-
+  script:
+    - cp $PAGES_INDEX_FILE master/index.html
+    
 deploy:staging:
   extends: .base
   stage: deploy
