@@ -213,7 +213,7 @@ class Api::V2::QuestCompletionsController < ApiController
   #
   # *
   def update
-    @completion.update_attributes(completion_params)
+    @completion.update(completion_params)
     return_the @completion
   end
 

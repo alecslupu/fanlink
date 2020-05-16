@@ -28,7 +28,7 @@ class Api::V4::AssignedRewardsController < Api::V3::AssignedRewardsController
   def update
     @assigned = AssignedReward.find(params[:id])
     if params.has_key?(:assign)
-      if @assigned.update_attributes(assigned_reward_update_params)
+      if @assigned.update(assigned_reward_update_params)
         broadcast(:assigned_reward_updated, current_user, @assigned)
         return_the @assigned, handler: tpl_handler, using: :show
       else

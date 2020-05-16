@@ -186,7 +186,7 @@ class Api::V3::QuestActivitiesController < Api::V2::QuestActivitiesController
 
   def update
     if params.has_key?(:quest_activity)
-      if @quest_activity.update_attributes(activity_params)
+      if @quest_activity.update(activity_params)
         return_the @quest_activity
       else
         render_422 @message.errors

@@ -1,0 +1,77 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "07d61071098aa9be28db4592e65766f2cfad80f8ce2e55b3c081b36a504561fa",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/posts/share.html.erb",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Post.for_product(Product.find_by(:internal_name => params[:product])).visible.find(params[:post_id]).body",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PostsController",
+          "method": "share",
+          "line": 7,
+          "file": "app/controllers/posts_controller.rb",
+          "rendered": {
+            "name": "posts/share",
+            "file": "app/views/posts/share.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "posts/share"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "note": "This seems to be a false positive"
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "89030d6707b5c1879855363a6a7ad5d958f904db7801b1f0fef44b9b67382352",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/api/v3/categories_controller.rb",
+      "line": 174,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:category).permit(:name, :color, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Api::V3::CategoriesController",
+        "method": "category_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "note": "False positive about role key"
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "a65c05b4feae529176c6e61fc506025979a4bead3cd02717e7f5b94e088ec0cd",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/api/v2/categories_controller.rb",
+      "line": 165,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:category).permit(:name, :color, :role)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Api::V2::CategoriesController",
+        "method": "category_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "note": "False positive about role key"
+    }
+  ],
+  "updated": "2020-05-16 07:27:42 +0300",
+  "brakeman_version": "4.7.2"
+}

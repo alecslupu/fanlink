@@ -3,12 +3,7 @@ class Api::V4::PostsController < Api::V3::PostsController
     ordering = 'DESC'
     if chronological?
       post = Post.find(params[:post_id])
-      if params[:chronologically] == "after"
-        sign = '>'
-        ordering = 'ASC'
-      else
-        sign = '<'
-      end
+      ordering = 'ASC' if params[:chronologically] == "after"
     end
     if params[:promoted].present? && params[:promoted] == "true"
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
@@ -103,7 +98,7 @@ class Api::V4::PostsController < Api::V3::PostsController
 
   def update
     if params.has_key?(:post)
-      if @post.update_attributes(post_params)
+      if @post.update(post_params)
         render :show
       else
         render_422 @post.errors
@@ -124,6 +119,11 @@ class Api::V4::PostsController < Api::V3::PostsController
   end
 
   protected
+
+  def sign
+    chronological? && params[:chronologically] == "after" ? ">" : "<"
+  end
+
   def apply_filters
     posts = Post.for_product(ActsAsTenant.current_tenant)
 

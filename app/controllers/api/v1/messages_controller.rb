@@ -264,7 +264,7 @@ class Api::V1::MessagesController < ApiController
   # *
 
   def update
-    @message.update_attributes(message_update_params)
+    @message.update(message_update_params)
     if @message.hidden
       @message.delete_real_time
     end

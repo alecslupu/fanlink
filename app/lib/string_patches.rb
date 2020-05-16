@@ -34,7 +34,7 @@ class String
     # and cryptic form is documented.
     #
     # ActiveSupport::Multibyte::Unicode.normalize(self, :kd).chars.grep(/\p{^Mn}/).join("")
-    unicode_normalize(:nfkd).chars.grep(/\p{^Mn}/).join("")
+    self.unicode_normalize(:nfkd).chars.grep(/\p{^Mn}/).join("")
   end
 
   #
