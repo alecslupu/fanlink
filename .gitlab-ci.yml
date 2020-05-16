@@ -486,6 +486,10 @@ report:pages:
 pages:
   extends: .base_minimal
   stage: deploy
+  artifacts:
+    name: my_app_artifacts
+    paths:
+      - master/
   dependencies:
     - report:pages
   only:
@@ -493,7 +497,7 @@ pages:
     - master
   script:
     - cp $PAGES_INDEX_FILE master/index.html
-    
+
 deploy:staging:
   extends: .base
   stage: deploy
