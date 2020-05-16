@@ -455,9 +455,9 @@ test:rspec60:merge:
     - chmod +x ./bin/merge-simplecov
     - COVERAGE_DIR=coverage/rails/60/ bundle exec ./bin/merge-simplecov
 
-pages:
+  pages:report:
   extends: .base_minimal
-  stage: deploy
+  stage: report
   allow_failure: true
   dependencies:
     - test:brakeman
@@ -483,6 +483,19 @@ pages:
     - mv rubocop master/
     - mv coverage master/
     - cp $PAGES_INDEX_FILE master/index.html
+
+pages:
+  extends: .base_minimal
+  stage: deploy
+  dependencies:
+    - pages:report
+  artifacts:
+    name: my_app_artifacts
+    paths:
+      - master/
+  only:
+    - ale-fix-coverage
+    - master
 
 deploy:staging:
   extends: .base
