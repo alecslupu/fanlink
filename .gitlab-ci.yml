@@ -456,7 +456,7 @@ test:rspec60:merge:
     - COVERAGE_DIR=coverage/rails/60/ bundle exec ./bin/merge-simplecov
 
 
-report:pages:
+pages:
   extends: .base_minimal
   stage: report
   dependencies:
@@ -470,7 +470,7 @@ report:pages:
   artifacts:
     name: my_app_artifacts
     paths:
-      - master/
+      - public/
   only:
     - ale-fix-coverage
     - master
@@ -482,21 +482,23 @@ report:pages:
     - mv tmp/rubycritic master/
     - mv rubocop master/
     - mv coverage master/
-
-pages:
-  extends: .base_minimal
-  stage: deploy
-  artifacts:
-    name: my_app_artifacts
-    paths:
-      - master/
-  dependencies:
-    - report:pages
-  only:
-    - ale-fix-coverage
-    - master
-  script:
     - cp $PAGES_INDEX_FILE master/index.html
+    - rm -r public
+    - mv master public
+
+#:
+#  extends: .base_minimal
+#  stage: deploy
+#  artifacts:
+#    name: my_app_artifacts
+#    paths:
+#      - master/
+#  dependencies:
+#    - report:pages
+#  only:
+#    - ale-fix-coverage
+#    - master
+#  script:
 
 deploy:staging:
   extends: .base
