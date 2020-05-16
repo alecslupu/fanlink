@@ -46,7 +46,11 @@ class Post < ApplicationRecord
   scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
   scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
-  scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
+  scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_post(created_at, id) : before_post(created_at, id) }
+  scope :after_post, ->(created_at, id) { where("posts.created_at > ? AND posts.id > ?", created_at, id) }
+  scope :before_post, ->(created_at, id) { where("posts.created_at < ? AND posts.id < ?", created_at, id) }
+
+
   # include Post::PortalFilters
   include TranslationThings
 
