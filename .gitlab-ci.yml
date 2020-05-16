@@ -457,7 +457,7 @@ test:rspec60:merge:
 
 pages:
   extends: .base_minimal
-  stage: report
+  stage: deploy
   allow_failure: true
   dependencies:
     - test:brakeman
@@ -470,25 +470,19 @@ pages:
   artifacts:
     name: my_app_artifacts
     paths:
-      - public/brakeman
-      - coverage/rails/52/
-      - coverage/rails/60/
-      - public/dawnscanner
-      - public/rubocop
-      - public/erd.pdf
-      - public/rubycritic
+      - master/
   only:
+    - ale-fix-coverage
     - master
   script:
-    - mv brakeman public/
-    - mv dawnscanner public/
-    - mv erd.pdf public/
-    - mv tmp/rubycritic public/
-    - mv rubocop public/
-    - mv coverage/rails/52 public/coverage52
-    - mv coverage/rails/60 public/coverage60
-    - mv coverage6 public/
-    - cp $PAGES_INDEX_FILE public/index.html
+    - mkdir master
+    - mv brakeman master/
+    - mv dawnscanner master/
+    - mv erd.pdf master/
+    - mv tmp/rubycritic master/
+    - mv rubocop master/
+    - mv coverage master/
+    - cp $PAGES_INDEX_FILE master/index.html
 
 deploy:staging:
   extends: .base
