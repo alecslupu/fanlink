@@ -480,14 +480,14 @@ pages:
   only:
     - master
   script:
-    - mv brakeman public/ || true
-    - mv dawnscanner public/ || true
-    - mv erd.pdf public/ || true
-    - mv tmp/rubycritic public/ || true
-    - mv rubocop public/ || true
-    - mv coverage/rails/52 public/coverage52 || true
-    - mv coverage/rails/60 public/coverage60 || true
-    - mv coverage6 public/ || true
+    - mv brakeman public/
+    - mv dawnscanner public/
+    - mv erd.pdf public/
+    - mv tmp/rubycritic public/
+    - mv rubocop public/
+    - mv coverage/rails/52 public/coverage52
+    - mv coverage/rails/60 public/coverage60
+    - mv coverage6 public/
     - cp $PAGES_INDEX_FILE public/index.html
 
 deploy:staging:
