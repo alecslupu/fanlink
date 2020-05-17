@@ -58,7 +58,6 @@ stages:
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
 
-
 build:initial:
   extends: .base
   stage: build
@@ -270,7 +269,6 @@ test:rspec52:listeners:
     paths:
       - coverage/rails/52/listeners
 
-
 test:rspec52:mailers:
   extends: .test:rspec52
   script:
@@ -315,7 +313,6 @@ test:rspec52:policies:
     name: rails52_policies_cov
     paths:
       - coverage/rails/52/policies
-
 
 test:rspec60:channels:
   extends: .test:rspec60
@@ -370,7 +367,6 @@ test:rspec60:listeners:
     name: rails60_listeners_cov
     paths:
       - coverage/rails/60/listeners
-
 
 test:rspec60:mailers:
   extends: .test:rspec60
@@ -463,7 +459,6 @@ test:rspec60:merge:
     - chmod +x ./bin/merge-simplecov
     - COVERAGE_DIR=coverage/rails/60/ bundle exec ./bin/merge-simplecov
 
-
 pages:
   extends: .base_minimal
   stage: report
@@ -480,7 +475,6 @@ pages:
     paths:
       - public/
   only:
-    - ale-fix-coverage
     - master
   script:
     - mkdir master
@@ -493,20 +487,6 @@ pages:
     - cp $PAGES_INDEX_FILE master/index.html
     - rm -r public
     - mv master public
-
-#:
-#  extends: .base_minimal
-#  stage: deploy
-#  artifacts:
-#    name: my_app_artifacts
-#    paths:
-#      - master/
-#  dependencies:
-#    - report:pages
-#  only:
-#    - ale-fix-coverage
-#    - master
-#  script:
 
 deploy:staging:
   extends: .base
@@ -570,5 +550,3 @@ deploy:production:
     - export USER="$GITLAB_USER_LOGIN via gitlab"
     - git config --global user.name "$GITLAB_USER_LOGIN via gitlab"
     - bundle exec cap production deploy
-
-
