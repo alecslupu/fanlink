@@ -1,5 +1,3 @@
 {
-  beacon: Rails.cache.fetch(["v4", "beacon", @req_source, @product_beacon.id, @product_beacon.updated_at]) {
-    render(partial: @req_source, locals: { beacon: @product_beacon }, handlers: "jb")
-  }
+  beacon: render(partial: @req_source, locals: { beacon: @product_beacon }, handlers: "jb")
 }

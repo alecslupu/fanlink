@@ -2,12 +2,7 @@ json = {
   id: following.id
 }
 
-json[:follower] = Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, following.follower) do
-  render partial: "api/v4/people/#{@req_source}", locals: { person: following.follower }, handler: "jb"
-end
-
-json[:followed] = Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, following.followed) do
-  render partial: "api/v4/people/#{@req_source}", locals: { person: following.followed }, handler: "jb"
-end
+json[:follower] = render partial: "api/v4/people/#{@req_source}", locals: { person: following.follower }, handler: "jb"
+json[:followed] = render partial: "api/v4/people/#{@req_source}", locals: { person: following.followed }, handler: "jb"
 
 json

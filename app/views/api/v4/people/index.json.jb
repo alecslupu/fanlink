@@ -1,9 +1,7 @@
 json = {}
 
 json[:people] = @people.map do |person|
-  Rails.cache.fetch ["v4", "person", @req_source, person.id, person.updated_at.to_i] do
-    render partial: @req_source, locals: { person: person }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { person: person }, handlers: "jb"
 end
 
 json

@@ -4,20 +4,10 @@ if @progress.present?
     json[:pending_badge] = {
       badge_action_count: @series_total
     }
-    Rails.logger.error @progress.inspect
-    Rails.logger.error @progress.reward.inspect
-    Rails.logger.error @progress.reward.badge.inspect
-
-
-
-    json[:pending_badge][:badge] = Rails.cache.fetch ["v4", "badge", @req_source, @progress.reward.badge.id, @progress.reward.badge.updated_at.to_i, @lang] do
-      render partial: "api/v4/badges/#{@req_source}", locals: { badge: @progress.reward.badge }, renders: "jb"
-    end
+    json[:pending_badge][:badge] = render partial: "api/v4/badges/#{@req_source}", locals: { badge: @progress.reward.badge }, renders: "jb"
   elsif @series_total >= @progress.reward.completion_requirement
     json[:badges_awarded] = Array.wrap(@progress.reward.badge).map do |badge|
-      Rails.cache.fetch ["v4", "badge", @req_source, badge.id, badge.updated_at.to_i, @lang] do
-        render partial: "api/v4/badges/#{@req_source}", locals: { badge: badge }, renders: "jb"
-      end
+      render partial: "api/v4/badges/#{@req_source}", locals: { badge: badge }, renders: "jb"
     end
   end
 else
