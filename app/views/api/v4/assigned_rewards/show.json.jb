@@ -1,5 +1,3 @@
 {
-  assigned: Rails.cache.fetch(["v4", "assigned", @req_source, @assigned.id, @assigned.updated_at.to_i]) {
-    render(partial: @req_source, locals: { assigned: @assigned }, handlers: "jb")
-  }
+  assigned: render(partial: @req_source, locals: { assigned: @assigned }, handlers: "jb")
 }

@@ -1,9 +1,7 @@
 json = {}
 
 json[:completions] = @completions.map do |completion|
-  Rails.cache.fetch ["v4", "quest_completion", @req_source, completion.id, completion.updated_at.to_i] do
-    render partial: @req_source, locals: { completion: completion }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { completion: completion }, handlers: "jb"
 end
 
 json

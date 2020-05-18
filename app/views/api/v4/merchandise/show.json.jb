@@ -1,5 +1,3 @@
 {
-  merchandise: Rails.cache.fetch(["v4", "merchandise", @req_source, @merchandise.id, @merchandise.updated_at.to_i, @lang]) {
-    render(partial: @req_source, locals: { merchandise: @merchandise, lang: @lang }, handlers: "jb")
-  }
+  merchandise: render(partial: @req_source, locals: { merchandise: @merchandise, lang: @lang }, handlers: "jb")
 }
