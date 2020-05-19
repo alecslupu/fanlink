@@ -50,7 +50,7 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
      parameter name: :email_or_username, in: :formData, type: :string, required: false
 
      response "200", "Returns an user object if successful" do
-       schema "$ref": "#/definitions/session_jwt"
+       schema "$ref": "#/definitions/SessionObject"
 
        before do |example|
          submit_request(example.metadata)
