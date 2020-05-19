@@ -1,7 +1,3 @@
-json = {}
-
-json[:certificates] = @certificates.map do |certificate|
-  render partial: @req_source, locals: { certificate: certificate, user: @current_user, pc: certificate.person_certificates }, handlers: "jb"
-end
-
-json
+{
+  certificates: render(partial: "app", collection: @certificates, as: :certificate, locals: { user: current_user }, handlers: :jb)
+}

@@ -1,7 +1,3 @@
-json = {}
-
-json[:interests] = @interests.map do |interest|
-  render partial: @req_source, locals: { interest: interest }, handlers: "jb"
-end
-
-json
+{
+  interests: render(partial: "app", collection: @interests, as: :interest, handlers: :jb)
+}

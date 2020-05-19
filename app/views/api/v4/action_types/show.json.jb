@@ -1,5 +1,3 @@
-json = {}
-
-json[:action] = render(partial: @req_source, locals: { action: @action_type }, handlers: "jb")
-
-json
+{
+  action: render(partial: "app", locals: { action: @action_type }, handlers: :jb)
+}

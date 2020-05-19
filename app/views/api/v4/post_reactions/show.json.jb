@@ -1,9 +1,3 @@
-
 {
-    post_reaction: {
-      id: @post_reaction.id,
-      post_id: @post_reaction.post_id,
-      person_id: @post_reaction.person_id,
-      reaction: @post_reaction.reaction
-    }
+    post_reaction: render(partial: "app", locals: { post_reaction: @post_reaction }, handlers: :jb)
 }

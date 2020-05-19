@@ -1,5 +1,5 @@
 {
   certificate: {
-  image_url: @url
+    image_url: @url
   }
 }

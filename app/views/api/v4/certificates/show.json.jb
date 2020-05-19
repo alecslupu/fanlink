@@ -1,3 +1,3 @@
-json = {}
-json[:certificate] = render(partial: @req_source, locals: { certificate: @certificate, user: @current_user, pc: @certificate.person_certificates }, handlers: "jb")
-json
+{
+  certificate: render(partial: "app", locals: { certificate: @certificate, user: current_user }, handlers: :jb)
+}
