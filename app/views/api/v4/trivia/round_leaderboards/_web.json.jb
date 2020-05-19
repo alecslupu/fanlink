@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {
   id: leaderboard.id,
   round_id: leaderboard.trivia_round_id,

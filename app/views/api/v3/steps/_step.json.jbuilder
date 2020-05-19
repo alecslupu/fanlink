@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.cache! ["v3", step.updated_at, step] do
   json.id step.id
   json.quest_id step.quest_id

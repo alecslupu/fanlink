@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MessageReportPolicy < ChatModulePolicy
 
   # a message report should not be edited by an admin

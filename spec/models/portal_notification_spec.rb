@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe PortalNotification, type: :model do
   before(:each) do
     ActsAsTenant.current_tenant = create(:product)

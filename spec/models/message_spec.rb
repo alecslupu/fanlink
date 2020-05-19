@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Message, type: :model do
   # before(:all) do
   #   @product = create(:product)

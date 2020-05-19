@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::ActionTypesController < ApiController
   before_action :super_admin_only, only: %i[ create update destroy ]
   def index

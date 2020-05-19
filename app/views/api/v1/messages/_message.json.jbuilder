@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id message.id.to_s
 json.room_id message.room_id
 json.create_time message.created_at.to_s

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 for_user = (params.has_key?(:person_id) ? params[:person_id] : current_user.id)
 badge_action_count = 0
 json.badges do

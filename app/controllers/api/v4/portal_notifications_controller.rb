@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PortalNotificationsController < Api::V3::PortalNotificationsController
   def index
     @portal_notifications = paginate(PortalNotification.all)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::Trivia::PictureAvailableAnswersController < ApiController
   skip_before_action :require_login, only: %i[ show ]
   skip_before_action :set_product, only: %i[ show ]

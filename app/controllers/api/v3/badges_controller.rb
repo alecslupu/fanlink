@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::BadgesController < Api::V2::BadgesController
   before_action :admin_only, only: %i[ create update destroy ]
   load_up_the Badge, only: %i[ update show destroy ]

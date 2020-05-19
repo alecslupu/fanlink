@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Post, type: :model do
   before(:each) do
     @product = Product.first || create(:product)

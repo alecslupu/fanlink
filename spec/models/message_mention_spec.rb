@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe MessageMention, type: :model do
   context "Validation" do
     describe "should create a valid message mention" do

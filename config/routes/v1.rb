@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
   scope(constraints: Routing::Constraints::V1, module: "api/v1", defaults: { format: :json }) do
     resources :badge_actions, only: %i[create]

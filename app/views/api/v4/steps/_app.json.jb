@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json =
   {
     id: step.id.to_s,

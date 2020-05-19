@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::ActivityTypesController < Api::V3::ActivityTypesController
   def index
     if some_admin? && web_request?

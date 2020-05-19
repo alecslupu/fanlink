@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Trivia::GamePolicy, type: :policy do
   let(:master_class) { Trivia::Game.new }
   permission_list = {

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Level, type: :model do
   context "Valid" do
     it { expect(build(:level)).to be_valid }
