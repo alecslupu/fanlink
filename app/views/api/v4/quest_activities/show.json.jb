@@ -1,5 +1,3 @@
 {
-  activity: Rails.cache.fetch(["v4", "quest_activity", @req_source,  @quest_activity.id, @quest_activity.updated_at.to_i, @lang]) {
-    render(partial: @req_source, locals: { activity: @quest_activity }, handlers: "jb")
-  }
+  activity: render(partial: @req_source, locals: { activity: @quest_activity }, handlers: "jb")
 }

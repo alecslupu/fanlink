@@ -1,5 +1,3 @@
 {
-  semester: Rails.cache.fetch(["v4", "semester", @req_source, @semester.id, @semester.updated_at.to_i]) {
-    render(partial: @req_source, locals: { semester: @semester }, handlers: "jb")
-  }
+  semester: render(partial: @req_source, locals: { semester: @semester }, handlers: "jb")
 }

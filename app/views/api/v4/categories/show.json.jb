@@ -1,5 +1,3 @@
 {
-  category: Rails.cache.fetch(["v4", "category", @req_source, @category.id, @category.updated_at]) {
-    render(partial: @req_source, locals: { category: @category }, handlers: "jb")
-  }
+  category: render(partial: @req_source, locals: { category: @category }, handlers: "jb")
 }
