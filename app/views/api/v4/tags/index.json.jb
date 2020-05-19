@@ -2,8 +2,6 @@ json = {}
 if @posts
  json = render(partial: "api/v4/posts/rendered_posts", locals: { posts: @posts })
 else
-  json[:tags] = @tags.map do |tag|
-    render partial: @req_source, locals: { tag: tag }, handlers: "jb"
-  end
+  json[:tags] = render(partial: "app", collection: @tags, as: :tag, handlers: :jb)
 end
 json

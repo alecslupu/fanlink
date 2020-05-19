@@ -1,9 +1,0 @@
-json = {
-  id: quiz_page.id,
-  is_optional: quiz_page.is_optional,
-  is_survey: quiz_page.is_survey,
-  type: "single_answer",
-  question_text: quiz_page.quiz_text,
-  wrong_answer_page_id: quiz_page.wrong_answer_page_id
-}
-json

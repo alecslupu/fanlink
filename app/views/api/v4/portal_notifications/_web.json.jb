@@ -1,7 +1,0 @@
-{
-  body: portal_notification.body(@lang),
-  send_me_at: portal_notification.send_me_at,
-  sent_status: portal_notification.sent_status,
-  created_at: portal_notification.created_at,
-  updated_at: portal_notification.updated_at
-}

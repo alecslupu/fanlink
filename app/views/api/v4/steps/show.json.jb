@@ -1,3 +1,3 @@
 {
-  step: render(partial: @req_source, locals: { step: @step }, handlers: "jb")
+  step: render(partial: "app", locals: { step: @step }, handlers: :jb)
 }

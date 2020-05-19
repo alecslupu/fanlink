@@ -1,8 +1,3 @@
-json = {}
-json[:badge] = render partial: @req_source, locals: { badge: @badge }
-if @req_source == "web"
-  json[:badge][:assigned_rewards] = @badge.assigned_rewards
-  json[:badge][:reward] = @badge.reward
-end
-
-json
+{
+  badge: render(partial: "app", locals: { badge: @badge })
+}

@@ -1,7 +1,3 @@
-json = {}
-
-json[:activities] = @quest_activities.map do |activity|
-  render partial: @req_source, locals: { activity: activity }, handlers: "jb"
-end
-
-json
+{
+  activities: render(partial: "app", collection: @quest_activities, as: :activity, handlers: :jb)
+}
