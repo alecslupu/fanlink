@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
-  scope(constraints: Routing::Constraints::V4, module: "api/v4", defaults: {format: :json}) do
+  scope(constraints: Routing::Constraints::V4, module: "api/v4", defaults: { format: :json }) do
 
     resources :people, except: %i[create index show update] do
       collection do

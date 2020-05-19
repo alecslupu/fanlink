@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe IntegerConfigItem, type: :model do
   context "callbacks" do
     describe "#strip_blanks" do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::QuestCompletionsController < ApiController
   before_action :admin_only, only: %i[ list update delete ]
   before_action :load_person, only: %i[ for_person for_activity for_quest index ]
@@ -213,7 +214,7 @@ class Api::V2::QuestCompletionsController < ApiController
   #
   # *
   def update
-    @completion.update_attributes(completion_params)
+    @completion.update(completion_params)
     return_the @completion
   end
 

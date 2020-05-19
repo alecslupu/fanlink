@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe Badge, type: :model do
@@ -13,44 +14,44 @@ RSpec.describe Badge, type: :model do
       expect(badge.action_count_earned_by(person)).to eq(0)
     end
     it "should return 0 for person with actions before issued_from with no issued to" do
-      b = create(:badge, issued_from: Time.now + 1.day)
+      b = create(:badge, issued_from: Time.zone.now + 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(badge.action_count_earned_by(person)).to eq(0)
     end
     it "should return single for person with actions after issued_from with no issued to" do
-      b = create(:badge, issued_from: Time.now - 1.day)
+      b = create(:badge, issued_from: Time.zone.now - 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(b.action_count_earned_by(person)).to eq(1)
     end
     it "should return multiple for person with actions after issued_from with no issued to" do
-      b = create(:badge, issued_from: Time.now - 1.day)
+      b = create(:badge, issued_from: Time.zone.now - 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(b.action_count_earned_by(person)).to eq(2)
     end
     it "should return single for person with actions after issued_from before  issued to" do
-      b = create(:badge, issued_from: Time.now - 1.day)
+      b = create(:badge, issued_from: Time.zone.now - 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(b.action_count_earned_by(person)).to eq(1)
     end
     it "should return multiple for person with actions after issued_from before issued to" do
-      b = create(:badge, issued_from: Time.now - 1.day, issued_to: Time.now + 1.day)
+      b = create(:badge, issued_from: Time.zone.now - 1.day, issued_to: Time.zone.now + 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(b.action_count_earned_by(person)).to eq(2)
     end
     it "should return 0 for person with actions after issued to with no issued from" do
-      b = create(:badge, issued_to: Time.now - 1.day)
+      b = create(:badge, issued_to: Time.zone.now - 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(badge.action_count_earned_by(person)).to eq(0)
     end
     it "should return 0 for person with actions after issued to with no issued from" do
-      b = create(:badge, issued_to: Time.now - 1.day)
+      b = create(:badge, issued_to: Time.zone.now - 1.day)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(badge.action_count_earned_by(person)).to eq(0)
     end
     it "should return 0 for person with actions after issued to with issued from" do
-      b = create(:badge, issued_to: Time.now - 1.day, issued_from: Time.now - 3.days)
+      b = create(:badge, issued_to: Time.zone.now - 1.day, issued_from: Time.zone.now - 3.days)
       create(:badge_action, action_type: b.action_type, person: person)
       expect(badge.action_count_earned_by(person)).to eq(0)
     end
@@ -70,7 +71,7 @@ RSpec.describe Badge, type: :model do
   end
 
   describe "current?" do
-    let(:current_time) { Time.now }
+    let(:current_time) { Time.zone.now }
     it "should not be current if before issued_from with no issued_to" do
       badge = build(:badge, issued_from: current_time + 1.minute)
       expect(badge.current?).to be_falsey
@@ -162,7 +163,7 @@ RSpec.describe Badge, type: :model do
 
   describe "#issued_to" do
     it "should not allow issued_to before issued_from" do
-      badge = build(:badge, issued_to: Time.now - 1.day, issued_from: Time.now)
+      badge = build(:badge, issued_to: Time.zone.now - 1.day, issued_from: Time.zone.now)
       expect(badge).not_to be_valid
       expect(badge.errors[:issued_to]).not_to be_empty
     end

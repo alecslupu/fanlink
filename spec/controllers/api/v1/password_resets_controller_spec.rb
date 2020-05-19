@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 
@@ -15,10 +16,6 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
         }.to have_enqueued_job
         expect(response).to be_successful
         expect(person.reload.reset_password_token).not_to be_nil
-        # expect(email_sent(template: "#{person.product.internal_name}-password-reset",
-        #                   to_values: {email: person.email, name: person.name},
-        #                   merge_vars: {link: "https://#{MandrillMailer.config.default_url_options[:host]}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
-        #                                name: person.name,})).to_not be_nil
       end
     end
     it "should accept password reset parameters with unfound email and not send the email" do
@@ -41,10 +38,6 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
         }.to have_enqueued_job
         expect(response).to be_successful
         expect(person.reload.reset_password_token).not_to be_nil
-        # expect(email_sent(template: "#{person.product.internal_name}-password-reset",
-        #                   to_values: {email: person.email, name: person.name},
-        #                   merge_vars: {link: "https://#{MandrillMailer.config.default_url_options[:host]}/#{person.product.internal_name}/reset_password?token=#{person.reset_password_token}",
-        #                                name: person.name,})).to_not be_nil
       end
     end
     it "should accept password reset parameters with unfound username and not send the email" do
@@ -77,7 +70,7 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         new_password = "super_secret"
         person.set_password_token!
-        post :update, params: {token: person.reset_password_token, password: new_password}
+        post :update, params: { token: person.reset_password_token, password: new_password }
         expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
@@ -87,7 +80,7 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         new_password = "super_secret"
         person.set_password_token!
-        post :update, params: {token: "garbage", password: "super_secret"}
+        post :update, params: { token: "garbage", password: "super_secret" }
         expect(response).to be_unprocessable
         expect(json["errors"][0]).to include("Unknown password resetting token.")
       end
@@ -98,7 +91,7 @@ RSpec.describe Api::V1::PasswordResetsController, type: :controller do
       person = create(:person, password: pw)
       ActsAsTenant.with_tenant(person.product) do
         person.set_password_token!
-        post :update, params: {token: person.reset_password_token, password: "short"}
+        post :update, params: { token: person.reset_password_token, password: "short" }
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("Password must be at least 6 characters in length.")
         expect(person.valid_password?(pw)).to be_truthy

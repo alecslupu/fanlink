@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PostReactionsController < Api::V3::PostReactionsController
   def create
     parms = post_reaction_params
@@ -16,7 +17,7 @@ class Api::V4::PostReactionsController < Api::V3::PostReactionsController
   def update
     if params.has_key?(:post_reaction)
       if @post_reaction.person == current_user
-        if @post_reaction.update_attributes(post_reaction_params)
+        if @post_reaction.update(post_reaction_params)
           return_the @post_reaction, handler: tpl_handler
         else
           render_422 @post_reaction.errors

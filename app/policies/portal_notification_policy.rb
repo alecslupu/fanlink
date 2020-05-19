@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PortalNotificationPolicy < ApplicationPolicy
   # def attributes_for(action)
   #   case action

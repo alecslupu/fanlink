@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }

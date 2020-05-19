@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PortalNotificationsController < ApiController
   before_action :super_admin_only
   load_up_the PortalNotification, only: %i[ show update ]
@@ -22,7 +23,7 @@ class Api::V3::PortalNotificationsController < ApiController
 
   def update
     if params.has_key?(:portal_notification)
-      if @portal_notification.update_attributes(portal_params)
+      if @portal_notification.update(portal_params)
         @portal_notification.update_push
         return_the @portal_notification
       else

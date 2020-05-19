@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   relationship: Rails.cache.fetch(["v4", "relationship", @req_source, @relationship.id, @relationship.updated_at.to_i]) {
     render(partial: @req_source, locals: { relationship: @relationship }, handlers: "jb")

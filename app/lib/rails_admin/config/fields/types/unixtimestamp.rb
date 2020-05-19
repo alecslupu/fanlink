@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAdmin
   module Config
     module Fields
@@ -19,7 +20,7 @@ module RailsAdmin
           def value
             parent_value = super
             if %(Integer).include?(parent_value.class.name)
-              parent_value = ::Time.at(parent_value)
+              parent_value = ::Time.zone.at(parent_value)
             end
 
             if %w(DateTime Date Time).include?(parent_value.class.name)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::BlocksController < Api::V3::BlocksController
   def create
     blocked = Person.find(block_params[:blocked_id])

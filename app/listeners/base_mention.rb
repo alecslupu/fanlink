@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BaseMention
   def self.parse_body_content(content, product_id)
     mentions = []

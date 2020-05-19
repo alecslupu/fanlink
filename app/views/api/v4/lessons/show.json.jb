@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   lesson: Rails.cache.fetch(["v4", "lesson", @req_source, @lesson.id, @lesson.updated_at.to_i, @lang]) {
     render(partial: @req_source, locals: { lesson: @lesson, lang: @lang }, handlers: "jb")

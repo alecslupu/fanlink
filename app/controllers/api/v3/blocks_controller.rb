@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::BlocksController < Api::V2::BlocksController
   # **
   # @api {post} /blocks Block a person.
