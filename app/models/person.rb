@@ -179,7 +179,7 @@ class Person < ApplicationRecord
   scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
   scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
   scope :has_free_certificates_enrolled, -> { joins(:certificates).where("certificates.is_free = ?", true).group(:id) }
-  scope :has_no_free_certificates_enrolled, -> { where.not(id: has_enrolled_certificates.select(:id)) }
+  scope :has_no_free_certificates_enrolled, -> { where.not(id: has_free_certificates_enrolled.select(:id)) }
   scope :has_paid_certificates, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0").group(:id) }
   scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
   scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
@@ -256,24 +256,30 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
-    Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
+    # TODO implement the active job delayed mailer
+    OnboardingEmailJob.perform_later(id)
   end
 
 
   def send_password_reset_email
-    Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
+    # TODO implement the active job delayed mailer
+    PasswordResetEmailJob.perform_later(self.id)
   end
 
   def send_certificate_email(certificate_id, email)
-    Delayed::Job.enqueue(SendCertificateEmailJob.new(self.id, certificate_id, email))
+    # TODO implement the active job delayed mailer
+  SendCertificateEmailJob.perform_later(self.id, certificate_id, email)
   end
 
   def send_assignee_certificate_email(person_certificate, assignee_id, email)
-    Delayed::Job.enqueue(SendAssigneeCertificateEmailJob.new(self.id, assignee_id, person_certificate.id, email))
+    # TODO implement the active job mailer
+    SendAssigneeCertificateEmailJob.perform_later(self.id, assignee_id, person_certificate.id, email)
   end
 
   def send_course_attachment_email(certcourse_page)
-    Delayed::Job.enqueue(SendDownloadFileEmailJob.new(self.id, certcourse_page.id))
+    # TODO implement the active job mailer
+
+  SendDownloadFileEmailJob.perform_later(self.id, certcourse_page.id)
   end
 
   def self.create_from_facebook(token, username)

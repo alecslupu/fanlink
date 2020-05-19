@@ -12,38 +12,43 @@ end
 ruby "2.5.1"
 
 if ENV["RAILS6"]
-  gem "rails", "~> 5.2"
+  gem "rails", "~> 6"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 6.0'
 else
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
   gem "rails", "~> 5.2"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 5.0'
 end
 
 # gem "rack-cache"
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'puma', '~> 3.12'
+
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem "uglifier", ">= 1.3.0"
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
+# Use CoffeeScript for .coffee assets and views
+gem "coffee-rails"
+
+gem 'sprockets', '~> 3.7.2'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-# else
-#   # See https://github.com/rails/execjs#readme for more supported runtimes
-#   gem "therubyracer", platforms: :ruby
-#   # Use CoffeeScript for .coffee assets and views
-#   gem "coffee-rails", "~> 4.2"
+# Use ActiveModel has_secure_password
+gem "bcrypt", "~> 3.1.7"
 # Use Redis adapter to run Action Cable in production
 gem "redis"
-# Use ActiveModel has_secure_password
-# gem "bcrypt", "~> 3.1.7"
 
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
+
+
+gem "json", "~> 2.3.0"
 
 gem "jb"
 gem "redis-namespace"
@@ -79,7 +84,7 @@ group :development, :test do
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem "rubocop", "~> 0.76.0", require: false
+  gem "rubocop", require: false
   # gem "rubocop-rails_config"
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
@@ -107,7 +112,7 @@ group :development do
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "launchy"
   gem "guard-rspec"
-  gem "guard-rubocop"
+  # gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
   # gem "guard-rubycritic"
@@ -149,7 +154,7 @@ gem "acts_as_api"
 
 gem "awesome_nested_set"
 
-gem "rails_admin", "1.3.0"
+gem "rails_admin", "~> 2.0.0"
 gem "rails_admin_nested_set"
 
 gem "api-pagination"
@@ -160,6 +165,7 @@ gem "countries"
 gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
+gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -169,7 +175,8 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari"
+#gem "jko_api" # api versioning
+gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
@@ -229,3 +236,4 @@ gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
+

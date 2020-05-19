@@ -211,17 +211,6 @@ RSpec.describe PostPolicy, type: :policy do
     end
   end
 
-  context "object default attributes" do
-    subject { described_class.new(create(:portal_access, post_update: true).person, master_class) }
-
-    describe ".attributes_for" do
-      it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:update)).to eq({}) }
-      it { expect(subject.attributes_for(:delete)).to eq({}) }
-      it { expect(subject.attributes_for(:create)).to eq({ person_id: subject.user.id }) }
-    end
-  end
-
   context "Scope" do
     it "should only return the messages from public rooms" do
       person = build(:person)

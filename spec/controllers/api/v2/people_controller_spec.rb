@@ -64,6 +64,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         expect_any_instance_of(Person).to receive(:do_auto_follows)
+        expect_any_instance_of(Person).to receive(:send_onboarding_email)
+
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
         post :create, params:
@@ -80,8 +82,6 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         expect(p.country_code).to eq("US")
         # expect(json["person"]).to eq(person_private_json(p))
         expect(person_private_json(json["person"])).to be true
-        expect(email_sent(template: "#{p.product.internal_name}-onboarding",
-                          to_values: { email: p.email, name: p.name })).to_not be_nil
       end
     end
     it "should sign up new user with FB auth token and send onboarding email", :run_delayed_jobs do
@@ -92,6 +92,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         email = "johnsmith432143343@example.com"
         koala_result = { "id" => "12345", "name" => "John Smith", "email" => email }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
+        expect_any_instance_of(Person).to receive(:send_onboarding_email)
+
         expect {
           post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
         }.to change { Person.count }.by(1)
@@ -101,8 +103,6 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         expect(p.username).to eq(username)
         # expect(json["person"]).to eq(person_private_json(p))
         expect(person_private_json(json["person"])).to be true
-        expect(email_sent(template: "#{p.product.internal_name}-onboarding",
-                          to_values: { email: p.email, name: p.name })).to_not be_nil
       end
     end
     it "should sign up new user with FB auth token without email and not send onboarding email" do
@@ -113,6 +113,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         product = create(:product)
         koala_result = { "id" => "12345", "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
+        expect_any_instance_of(Person).not_to receive(:send_onboarding_email)
+
         expect {
           post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
         }.to change { Person.count }.by(1)
@@ -121,8 +123,6 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         expect(p.username).to eq(username)
         # expect(json["person"]).to eq(person_private_json(p))
         expect(person_private_json(json["person"])).to be true
-        expect(email_sent(template: "#{p.product.internal_name}-onboarding",
-                          to_values: { name: p.name })).to be_nil
       end
     end
 

@@ -37,7 +37,7 @@ module AttachmentSupport
     def has_audio_called(name)
       has_attached_file name, default_url: nil
       validates_attachment name,
-        content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/mpeg", "audio/x-mpeg", "audio/aac", "audio/x-aac", "video/mp4"] },
+        content_type: { content_type: ["audio/mpeg", "audio/mp4", "audio/mpeg", "audio/x-mpeg", "audio/aac", "audio/x-aac", "video/mp4", "audio/x-hx-aac-adts"] },
         size: { in: 0..10.megabytes }
 
       class_eval <<-EOE

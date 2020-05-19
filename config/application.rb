@@ -89,10 +89,15 @@ module Fanlink
     }
 
      #Use a real queuing backend for Active Job (and separate queues per environment)
-     config.active_job.queue_adapter     = :delayed_job
+     config.active_job.queue_adapter     = :sidekiq
      #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
      #
 
     config.i18n.fallbacks = [I18n.default_locale]
+    config.session_store :redis_store,
+                         servers: ["#{Rails.application.secrets.redis_url}/0/session"],
+                         key: "_fanlink_session",
+                         expire_after: 14.days.to_i
+
   end
 end
