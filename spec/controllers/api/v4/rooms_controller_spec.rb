@@ -223,7 +223,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
              params: {
                room: {
                  name: 'name',
-                 public: true,
+                 public: true
                }
              }
 

@@ -28,7 +28,7 @@ describe Trivia::GameGenerator do
             headers: {
               "Accept-Encoding" => "application/javascript",
               "Content-Type" => "application/json",
-              "Trivia-Api-Key" => "testing",
+              "Trivia-Api-Key" => "testing"
             }
           )
           .to_return(status: 200, body: "", headers: {})

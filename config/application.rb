@@ -85,7 +85,7 @@ module Fanlink
         s3_bucket:  Rails.application.secrets.aws_bucket,
         transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
         region: Rails.application.secrets.aws_region,
-        transcoder_queue_url: Rails.application.secrets.transcoder_queue_url,
+        transcoder_queue_url: Rails.application.secrets.transcoder_queue_url
       }
     }
 

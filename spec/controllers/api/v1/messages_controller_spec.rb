@@ -42,10 +42,10 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         post :create, params: { room_id: room.id, message: { body: body,
                                                            mentions: [{ person_id: mentioned1.id,
                                                                        location: 11,
-                                                                       length: 8, },
+                                                                       length: 8 },
                                                                       { person_id: mentioned2.id,
                                                                        location: 14,
-                                                                       length: 4, },], }, }
+                                                                       length: 4 },] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(2)
@@ -67,7 +67,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
           post :create, params: { room_id: room.id, message: { body: body,
                                                              mentions: [{ location: 4, length: 11 },
                                                                         { person_id: mentioned2.id,
-                                                                         location: 5, length: 1, },], }, }
+                                                                         location: 5, length: 1 },] } }
         }.to change { Message.count }.by(0)
         expect(response).to be_unprocessable
         expect(json["errors"]).not_to be_empty
@@ -111,7 +111,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         post :create, params: { room_id: room.id,
                                message: { body: body, mentions: [{ person_id: mentioned1.id,
                                                                  location: 14,
-                                                                 length: 4, }], }, }
+                                                                 length: 4 }] } }
         expect(response).to be_successful
         msg = Message.last
         expect(msg.mentions.count).to eq(1)

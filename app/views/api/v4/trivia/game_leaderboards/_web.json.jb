@@ -4,7 +4,7 @@ json = {
   game_id: leaderboard.trivia_game_id,
   points: leaderboard.points,
   position: leaderboard.position,
-  average_time: leaderboard.average_time,
+  average_time: leaderboard.average_time
 }
 json[:person] = render partial: "api/v4/people/person_mini", locals: { person: leaderboard.person }, handler: "jb"
 json

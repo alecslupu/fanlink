@@ -874,8 +874,8 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         patch :update, params: { id: flinkpost.id, post: {
           body: newbody, global: global, starts_at: starts_at,
           repost_interval: repost_interval, status: status,
-          ends_at: ends_at, priority: priority, recommended: true,
-        }, }
+          ends_at: ends_at, priority: priority, recommended: true
+        } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.body).to eq(newbody)
@@ -895,7 +895,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         orig = flinkpost.body
         patch :update, params: { id: flinkpost.id,
                                 post: { body: "notchanged", global: global, starts_at: starts_at, ends_at: ends_at,
-                                       repost_interval: repost_interval, status: status, priority: priority, }, }
+                                       repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_unauthorized
         expect(flinkpost.body).to eq(orig)
       end
@@ -908,7 +908,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
 
         expect(flinkpost.recommended).to be_falsey
         patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                         recommended: true, repost_interval: repost_interval, status: status, priority: priority, }, }
+                                                         recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_falsey
@@ -921,7 +921,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         flinkpost = create(:published_post, person: person)
         expect(flinkpost.recommended).to be_falsey
         patch :update, params: { id: flinkpost.id, post: { body: newbody, global: global, starts_at: starts_at, ends_at: ends_at,
-                                                         recommended: true, repost_interval: repost_interval, status: status, priority: priority, }, }
+                                                         recommended: true, repost_interval: repost_interval, status: status, priority: priority } }
         expect(response).to be_successful
         flinkpost.reload
         expect(flinkpost.recommended).to be_truthy

@@ -10,8 +10,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
         quiz_page = create(:quiz_page)
 
         post :create, params: { person_certcourse: {
-          certcourse_id: quiz_page.certcourse_page.certcourse.id,
-        }, page_id: quiz_page.certcourse_page.id, answer_id: quiz_page.answers.first.id, }
+          certcourse_id: quiz_page.certcourse_page.certcourse.id
+        }, page_id: quiz_page.certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
         expect(response).to have_http_status(200)
       end
@@ -30,8 +30,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           image_page = create(:image_page, certcourse_page: certcourse_page)
 
           post :create, params: { person_certcourse: {
-            certcourse_id: certcourse.id,
-          }, page_id: certcourse_page.id, }
+            certcourse_id: certcourse.id
+          }, page_id: certcourse_page.id }
 
           expect(response).to have_http_status(200)
           expect(PersonCertificate.last.is_completed).to eq(false)
@@ -53,8 +53,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
                                                          is_completed: false, last_completed_page_id: quiz_page.wrong_answer_page_id)
 
           post :create, params: { person_certcourse: {
-            certcourse_id: certcourse.id,
-          }, page_id: quiz_page.certcourse_page_id, answer_id: quiz_page.answers.last.id, }
+            certcourse_id: certcourse.id
+          }, page_id: quiz_page.certcourse_page_id, answer_id: quiz_page.answers.last.id }
 
           expect(response).to have_http_status(200)
           expect(PersonCertificate.last.is_completed).to eq(false)
@@ -83,8 +83,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:person_certcourse, person: person, certcourse: certcourse)
 
           post :create, params: { person_certcourse: {
-            certcourse_id: certcourse.id,
-          }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id, }
+            certcourse_id: certcourse.id
+          }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
           expect(response).to have_http_status(200)
           expect(PersonCertificate.last.is_completed).to eq(false)
@@ -109,8 +109,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:person_certcourse, person: person, certcourse: certcourse)
 
           post :create, params: { person_certcourse: {
-            certcourse_id: certcourse.id,
-          }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id, }
+            certcourse_id: certcourse.id
+          }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
           expect(response).to have_http_status(200)
           expect(PersonCertificate.last.is_completed).to eq(false)
@@ -135,8 +135,8 @@ RSpec.describe Api::V4::PersonCertcoursesController, type: :controller do
           create(:person_certcourse, person: person, certcourse: certcourse)
 
           post :create, params: { person_certcourse: {
-            certcourse_id: certcourse.id,
-          }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id, }
+            certcourse_id: certcourse.id
+          }, page_id: certcourse_page.id, answer_id: quiz_page.answers.first.id }
 
           expect(response).to have_http_status(200)
           expect(PersonCertificate.last.is_completed).to eq(true)

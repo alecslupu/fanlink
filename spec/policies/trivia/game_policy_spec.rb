@@ -13,7 +13,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
     history: false,
     show_in_app: false,
     select_product: false,
-    generate_game_action: false,
+    generate_game_action: false
   }
 
   describe "defined policies" do
@@ -64,7 +64,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
-      generate_game_action: false,
+      generate_game_action: false
     }
     subject { described_class.new(create(:portal_access, trivia_read: true).person, master_class) }
 
@@ -96,7 +96,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
-      generate_game_action: false,
+      generate_game_action: false
     }
     subject { described_class.new(create(:portal_access, trivia_update: true).person, master_class) }
 
@@ -128,7 +128,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
-      generate_game_action: false,
+      generate_game_action: false
     }
     subject { described_class.new(create(:portal_access, trivia_delete: true).person, master_class) }
 
@@ -160,7 +160,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
-      generate_game_action: false,
+      generate_game_action: false
     }
     subject { described_class.new(create(:portal_access, trivia_export: true).person, master_class) }
 
@@ -192,7 +192,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       history: true,
       show_in_app: false,
       select_product: false,
-      generate_game_action: false,
+      generate_game_action: false
     }
     subject { described_class.new(create(:portal_access, trivia_history: true).person, master_class) }
 
@@ -224,7 +224,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
       history: false,
       show_in_app: false,
       select_product: false,
-      generate_game_action: true,
+      generate_game_action: true
     }
     subject { described_class.new(create(:portal_access, trivia_generate_game_action: true).person, master_class) }
 

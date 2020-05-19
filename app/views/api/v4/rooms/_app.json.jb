@@ -4,7 +4,7 @@ json = {
   name: room.name(@lang),
   description: room.description(@lang),
   picture_url: room.picture_url,
-  public: room.public,
+  public: room.public
 }
 json[:order] = room.order
 json[:last_message_timestamp] = room.last_message_timestamp

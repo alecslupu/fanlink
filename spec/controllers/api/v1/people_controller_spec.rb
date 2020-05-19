@@ -72,7 +72,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         post :create, params:
           { product: product.internal_name,
            person: { username: username, email: email, password: "secret", gender: "male",
-                    birthdate: "2000-01-02", city: "Shambala", country_code: "us", }, }
+                    birthdate: "2000-01-02", city: "Shambala", country_code: "us" } }
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -147,7 +147,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         expect {
           post :create, params: { product: person.product.internal_name, person: { email: "nobodyimportant@example.com",
-                                                                                 username: username, password: "anything", }, }
+                                                                                 username: username, password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("The username has already been taken.")
@@ -160,7 +160,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         expect {
           post :create, params: { product: person.product.internal_name, person: { email: email,
-                                                                                 username: "anything", password: "anything", }, }
+                                                                                 username: "anything", password: "anything" } }
         }.to change { Person.count }.by(0)
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("A user has already signed up with that email address.")
@@ -579,7 +579,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
         new_email = "fooism@example.com"
         new_name = "Joe Foo"
         patch :update, params: { id: person.id, person: { email: new_email, name: new_name, username: new_username,
-                                                        gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: "fr", }, }
+                                                        gender: "female", birthdate: "1999-03-03", city: "FooismTown", country_code: "fr" } }
         expect(response).to be_successful
         per = person.reload
         expect(per.username).to eq(new_username)

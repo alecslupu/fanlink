@@ -5,7 +5,7 @@ json[:email] = person.email
 json[:product] = {
   id: person.product.id,
   internal_name: person.product.internal_name,
-  name: person.product.name,
+  name: person.product.name
 }
 
 json[:level_progress] = if person.level_progresses.present?
@@ -20,7 +20,7 @@ json[:blocked_people] = if person.blocked_people.present?
   person.blocked_people.map do |blocked|
     {
       id: blocked.id,
-      username: blocked.username,
+      username: blocked.username
     }
   end
 end
@@ -32,7 +32,7 @@ json[:pin_messages_to] = if person.pinned_to.present?
     {
       id: pin.id,
       room_id: pin.room.id,
-      room_name: pin.room.name,
+      room_name: pin.room.name
     }
   end
 end
