@@ -1,7 +1,3 @@
-json = {}
-
-json[:message_reports] = @message_reports.map do |message_report|
-  render partial: @req_source, locals: { message_report: message_report }, handlers: "jb"
-end
-
-json
+{
+  messages: render(partial: "app", collection: @message_reports, as: :message_report, handlers: :jb)
+}

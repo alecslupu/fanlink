@@ -1,5 +1,0 @@
-{
-  id: tag.id,
-  name: tag.name,
-  total_posts: tag.posts_count
-}

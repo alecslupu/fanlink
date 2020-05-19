@@ -1,3 +1,3 @@
 {
-  semester: render(partial: @req_source, locals: { semester: @semester }, handlers: "jb")
+  semester: render(partial: "app", locals: { semester: @semester }, handlers: :jb)
 }

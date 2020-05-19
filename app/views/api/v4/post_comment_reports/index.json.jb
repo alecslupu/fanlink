@@ -1,7 +1,3 @@
-json = {}
-
-json[:post_comment_reports] = @post_comment_reports.map do |post_comment_report|
-  render partial: @req_source, locals: { post_comment_report: post_comment_report }, handlers: "jb"
-end
-
-json
+{
+  post_comment_reports: render(partial: "app", collection: @post_comment_reports, as: :post_comment_report, handlers: :jb)
+}

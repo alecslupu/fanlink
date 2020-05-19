@@ -1,7 +1,3 @@
-json = {}
-
-json[:completions] = @completions.map do |completion|
-  render partial: @req_source, locals: { completion: completion }, handlers: "jb"
-end
-
-json
+{
+  progresses: render(partial: "app", collection: @completions, as: :completion, handlers: :jb)
+}

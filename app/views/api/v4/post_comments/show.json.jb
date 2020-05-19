@@ -1,4 +1,3 @@
-json = {}
-json[:post_comment] = render(partial: @req_source, locals: { post_comment: @post_comment }, handlers: "jb")
-
-json
+{
+  post_comment: render(partial: "app", locals: { post_comment: @post_comment }, handlers: "jb")
+}

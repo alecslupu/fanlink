@@ -1,5 +1,5 @@
 json = {}
-json[:post] = render(partial: @req_source, locals: {post: @post}, handlers: "jb")
+json[:post] = render(partial: "app", locals: {post: @post}, handlers: :jb)
 
 json[:post][:pinned] = @post.pinned
 
@@ -17,7 +17,7 @@ if @post.poll.present?
 
   if @post.poll.poll_options.present?
     json[:post][:poll][:poll_options] = @post.poll.poll_options.map do |option|
-      po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
+      po = render(partial: "api/v4/poll_options/app", locals: { option: option }, handlers: "jb")
       po[:numberOfVotes] = option.voters.count
       po[:voted] = option.voted?(current_user)
       po

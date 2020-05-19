@@ -1,7 +1,3 @@
-json = {}
-
-json[:lessons] = @lessons.map do |lesson|
-  render partial: @req_source, locals: { lesson: lesson }, handlers: "jb"
-end
-
-json
+{
+  lessons: render(partial: "app", collection: @lessons, as: :lesson, handlers: :jb)
+}

@@ -1,4 +1,6 @@
-if !activity.deleted
+if activity.deleted?
+  {}
+else
   json =
     {
       id: activity.id,
@@ -17,12 +19,10 @@ if !activity.deleted
   json[:step] = activity.step
   if activity.activity_types.count > 0
     json[:requirements] = activity.activity_types.map do |atype|
-      render partial: "api/v4/activity_types/#{@req_source}", locals: { activity: atype }, handlers: "jb"
+      render partial: "api/v4/activity_types/app", locals: {activity: atype}, handlers: "jb"
     end
   else
     json[:requirements] = nil
   end
   json
-else
-  {}
 end

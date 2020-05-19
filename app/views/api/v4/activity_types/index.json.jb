@@ -1,7 +1,3 @@
-json = {}
-
-json[:types] = @activity_types.map do |activity|
-  render partial: "activity", locals: { activity: activity }, handlers: "jb"
-end
-
-json
+{
+  types: render(partial: "app", collection: @activity_types, as: :activity, handlers: :jb)
+}
