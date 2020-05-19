@@ -12,6 +12,9 @@ end
 if @post.poll.present?
   json[:post][:poll] = render(partial: "api/v4/polls/app", locals: { poll: @post.poll }, handlers: "jb")
   json[:post][:poll][:closed] = @post.poll.closed?
+  json[:post][:poll][:locale] = I18n.locale
+  json[:post][:poll][:clocale] = @lang
+
   if @post.poll.poll_options.present?
     json[:post][:poll][:poll_options] = @post.poll.poll_options.map do |option|
       po = render(partial: "api/v4/poll_options/app", locals: { option: option }, handlers: "jb")
