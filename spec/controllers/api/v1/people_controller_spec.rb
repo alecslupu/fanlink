@@ -584,6 +584,7 @@ RSpec.describe Api::V1::PeopleController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+        new_username = "thisbetterbeunique"
         new_email = "fooism@example.com"
         new_name = "Joe Foo"
         patch :update, params: { id: person.id, person: { email: new_email, name: new_name, username: new_username,
