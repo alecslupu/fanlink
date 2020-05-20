@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.cache! ["v3", post_comment] do
   json.id post_comment.id.to_s
   json.post_id post_comment.post_id

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: messages
@@ -94,24 +95,24 @@ class Message < ApplicationRecord
   # include Message::PortalFilters
   # include Message::RealTime
   def delete_real_time(version = 0)
-    Delayed::Job.enqueue(DeleteMessageJob.new(id, version))
+    DeleteMessageJob.perform_later(id, version)
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostMessageJob.new(id, version))
+    PostMessageJob.perform_later(self.id, version)
 
     message_mentions.each do |mention|
-      Delayed::Job.enqueue(MessageMentionPushJob.new(mention.id))
+      MessageMentionPushJob.perform_later(mention.id)
     end
   end
 
   def private_message_push
-    Delayed::Job.enqueue(PrivateMessagePushJob.new(id))
+    PrivateMessagePushJob.perform_later(id)
   end
 
   def public_room_message_push
     if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: person_id).exists?
-      Delayed::Job.enqueue(PublicMessagePushJob.new(id))
+      PublicMessagePushJob.perform_later(id)
     end
   end
   # include Message::RealTime
@@ -159,13 +160,13 @@ class Message < ApplicationRecord
 
 
   scope :reported, -> { joins(:message_reports) }
-  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
 
   def as_json
     super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],
-          include: {message_mentions: {except: %i[ message_id ]},
-                    person: {only: %i[ id username name designation product_account chat_banned badge_points
-                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ]}})
+          include: { message_mentions: { except: %i[ message_id ] },
+                    person: { only: %i[ id username name designation product_account chat_banned badge_points
+                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
   end
 
   def create_time
@@ -216,7 +217,7 @@ class Message < ApplicationRecord
             person = Person.where(username: m[1].sub("@", "")).first
             if person.present?
               # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
-              mmeta << {id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size}
+              mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
               mod_body = mod_body.sub(m[1], "a" * m[1].size)
             end
           }

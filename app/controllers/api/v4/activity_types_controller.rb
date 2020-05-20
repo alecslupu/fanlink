@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::ActivityTypesController < Api::V3::ActivityTypesController
   def index
     if some_admin? && web_request?
@@ -24,7 +25,7 @@ class Api::V4::ActivityTypesController < Api::V3::ActivityTypesController
 
   def update
     if params.has_key?(:action_type)
-      if @activity_type.update_attributes(type_params)
+      if @activity_type.update(type_params)
         return_the @activity_type, handler: tpl_handler, using: :show
       else
         render_422 @activity_type.errors

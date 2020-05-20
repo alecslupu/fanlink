@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'swagger_helper'
 
 
@@ -19,8 +20,8 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
 
       #android-old
       context "email_filer" do
-        response "200", "" do
-          schema "$ref": "#/definitions/public_person"
+        response "200", "HTTP/1.1 200 Ok" do
+          schema "$ref": "#/definitions/PeopleArray"
           let(:people) { create_list(:person, 20) }
           let(:person) { FactoryBot.create(:person).reload}
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
@@ -39,8 +40,8 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       #android-old
       context "username_filter" do
 
-        response "200", "" do
-          schema "$ref": "#/definitions/session_jwt"
+        response "200", "HTTP/1.1 200 Ok" do
+          schema "$ref": "#/definitions/PeopleArray"
           let(:people) { create_list(:person, 20) }
           let(:person) { FactoryBot.create(:person).reload}
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
@@ -59,8 +60,8 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       #kotlin
       context "product_account_filter" do
 
-        response "200", "" do
-          schema "$ref": "#/definitions/session_jwt"
+        response "200", "HTTP/1.1 200 Ok" do
+          schema "$ref": "#/definitions/PeopleArray"
           let(:people) { create_list(:person, 20) }
           let(:person) { FactoryBot.create(:person).reload}
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
@@ -97,8 +98,8 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       let("person[username]") { "SomeValidUsername" }
       let("person[password]") { Faker::Internet.password }
 
-      response "200", "" do
-        schema "$ref": "#/definitions/session_jwt"
+      response "200", "HTTP/1.1 200 Ok" do
+        schema "$ref": "#/definitions/PersonObject"
         let(:product) { create(:product).internal_name }
         run_test!
       end
@@ -148,9 +149,9 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       let("person[biography]") { Faker::Lorem.paragraph }
       let("person[name]") { Faker::Name.name }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/PersonObject"
         run_test!
       end
       response "401", "" do
@@ -160,13 +161,11 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
 
         let(:id) { other_person.id }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response "422", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let("person[email]") { "" }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -187,10 +186,10 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       let(:id) { other_person.id }
       let(:Authorization) { "" }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
 
-        schema "$ref": "#/definitions/public_person"
+        schema "$ref": "#/definitions/PersonObject"
         run_test!
       end
       response "401", "" do
@@ -224,9 +223,10 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       let(:id) { person.id }
       let("person[current_password]") { current_password }
       let(:Authorization) { "" }
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let("person[new_password]") { "24changedid" }
+
         run_test!
       end
       response "401", "" do
@@ -236,7 +236,6 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       response "422", "" do
         let("person[new_password]") { "short" }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -260,10 +259,9 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
       let(:Authorization) { "" }
       let(:user_id) { 0 }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:user_id) { person.id }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response "401", "" do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trivia_games
@@ -65,7 +66,7 @@ validates the startd_date > now when draft and published FLAPI-936
       published: 1,
       locked: 2,
       running: 3,
-      closed: 4,
+      closed: 4
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
@@ -133,7 +134,7 @@ validates the startd_date > now when draft and published FLAPI-936
 
     def handle_status_changes
       if saved_change_to_attribute?(:status) && published?
-        Delayed::Job.enqueue(::Trivia::GameStatus::PublishJob.new(self.id))
+        ::Trivia::GameStatus::PublishJob.perform_later(self.id)
       end
     end
 

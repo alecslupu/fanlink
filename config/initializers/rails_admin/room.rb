@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("Room")
   config.model "Room" do
@@ -24,6 +25,20 @@ RailsAdmin.config do |config|
              :description,
              :picture,
              :status
+
+      field :public, :hidden do
+        visible true
+        formatted_value do
+          bindings[:object].new_record? ? true : bindings[:object].public?
+        end
+      end
+
+      field :created_by_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
+
       field :subscribers do
         label "Owners"
         hide do

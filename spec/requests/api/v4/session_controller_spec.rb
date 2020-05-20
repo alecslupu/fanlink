@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "swagger_helper"
 
 RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/swagger.json" do
@@ -10,30 +11,28 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
       parameter name: :email_or_username, in: :formData, type: :string
       parameter name: :password, in: :formData, type: :string
       parameter name: :product, in: :formData, type: :string
-      # parameter name: "X-App", in: :header, type: :string
-      # parameter name: "X-Current-Product", in: :header, type: :string
 
-      response "200", "" do
-       let!(:user) { create(:person) }
-       let(:email_or_username) { user.email }
-       let(:password) { "badpassword"}
-       let(:product) { user.product.internal_name }
-       schema "$ref": "#/definitions/session_jwt"
-       run_test!
+      response "200", "HTTP/1.1 200 Ok" do
+        let!(:user) { create(:person) }
+        let(:email_or_username) { user.email }
+        let(:password) { "badpassword" }
+        let(:product) { user.product.internal_name }
+        schema "$ref": "#/definitions/SessionObject"
+        run_test!
       end
 
       response 422, "Invalid login" do
-       let!(:user) { create(:person) }
-       let(:email_or_username) { "a" + user.email }
-       let(:password) { "bad_password" }
-       let(:product) { user.product.internal_name }
-       run_test!
+        let!(:user) { create(:person) }
+        let(:email_or_username) { "a" + user.email }
+        let(:password) { "bad_password" }
+        let(:product) { user.product.internal_name }
+        run_test!
       end
 
       response 500, "Internal server error" do
-        let(:product) {""}
-        let(:email_or_username) {""}
-        let(:password) {""}
+        let(:product) { "" }
+        let(:email_or_username) { "" }
+        let(:password) { "" }
         document_response_without_test!
       end
     end
@@ -51,11 +50,11 @@ RSpec.describe "Api::V4::SessionController", type: :request, swagger_doc: "v4/sw
      parameter name: :email_or_username, in: :formData, type: :string, required: false
 
      response "200", "Returns an user object if successful" do
-       schema "$ref": "#/definitions/session_jwt"
+       schema "$ref": "#/definitions/SessionObject"
 
        before do |example|
          submit_request(example.metadata)
-         koala_result = {"id" => "2905623", "name" => "John Smith", "email" => "no@email.tld"}
+         koala_result = { "id" => "2905623", "name" => "John Smith", "email" => "no@email.tld" }
          allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
        end
 

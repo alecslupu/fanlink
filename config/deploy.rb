@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.1"
 
@@ -48,14 +49,14 @@ set :puma_plugins, [:tmp_restart] # accept array of plugins
 # set :ssh_options, verify_host_key: :secure
 set :ssh_options, {
   keys: %w[~/.ssh/id_rsa],
-  forward_agent: false,
+  forward_agent: false
   # auth_methods: %w[password]
 }
 
 set :slackistrano, {
   klass: Slackistrano::CustomMessaging,
   channel: "#bot-deploys",
-  webhook: "https://hooks.slack.com/services/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",
+  webhook: "https://hooks.slack.com/services/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"
 }
 
 append :linked_dirs, "tmp/pids"

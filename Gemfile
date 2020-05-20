@@ -4,41 +4,51 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+git_source(:fanlink) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://gitlab.fan.link/#{repo_name}"
+end
 
 ruby "2.5.1"
 
+if ENV["RAILS6"]
+  gem "rails", "~> 6"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 6.0'
+else
+  gem "rails", "~> 5.2"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 5.0'
+end
+
 # gem "rack-cache"
-# Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 5.2"
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'puma', '~> 3.12'
+
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem "uglifier", ">= 1.3.0"
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
+# Use CoffeeScript for .coffee assets and views
+gem "coffee-rails"
+
+gem 'sprockets', '~> 3.7.2'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-if ENV["RAILS6"]
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 6"
-# else
-#   # See https://github.com/rails/execjs#readme for more supported runtimes
-#   gem "therubyracer", platforms: :ruby
-#   # Use CoffeeScript for .coffee assets and views
-#   gem "coffee-rails", "~> 4.2"
-end
+# Use ActiveModel has_secure_password
+gem "bcrypt", "~> 3.1.7"
 # Use Redis adapter to run Action Cable in production
 gem "redis"
-# Use ActiveModel has_secure_password
-# gem "bcrypt", "~> 3.1.7"
 
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
+
+
+gem "json", "~> 2.3.0"
 
 gem "jb"
 gem "redis-namespace"
@@ -74,11 +84,11 @@ group :development, :test do
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem "rubocop", "~> 0.76.0", require: false
+  gem "rubocop", require: false
   # gem "rubocop-rails_config"
-  gem "rubocop-rails"
-  gem "rubocop-rspec"
-  gem "rubocop-performance"
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-performance", require: false
 
   gem "rails-erd"
 end
@@ -102,11 +112,11 @@ group :development do
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "launchy"
   gem "guard-rspec"
-  gem "guard-rubocop"
+  # gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
+  # gem "guard-rubycritic"
   gem "rubycritic"
-  gem "guard-rubycritic"
 
   gem "capistrano", require: false
   gem "capistrano-bundler", require: false
@@ -119,7 +129,7 @@ group :test do
   # gem "cucumber-rails", "~>1.8.0", require: false
   gem "database_cleaner", require: false
   gem "simplecov", "~>0.18", require: false
-  gem 'simplecov-console', require: false
+  gem "simplecov-console", require: false
   gem "timecop"
   gem "webmock", "~>3.6.2"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
@@ -144,7 +154,7 @@ gem "acts_as_api"
 
 gem "awesome_nested_set"
 
-gem "rails_admin", "1.3.0"
+gem "rails_admin", "~> 2.0.0"
 gem "rails_admin_nested_set"
 
 gem "api-pagination"
@@ -155,6 +165,7 @@ gem "countries"
 gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
+gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -164,11 +175,12 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari"
+#gem "jko_api" # api versioning
+gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
-gem "mandrill-api", bitbucket: "markfraser/mandrill-api-ruby", require: "mandrill"
+gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
 #
 gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
@@ -189,7 +201,7 @@ gem "sorcery"
 gem "timber", "~> 2.0"
 gem "unicode_utils"
 gem "uuidtools"
-gem "wisper", "2.0.0"
+gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
@@ -205,9 +217,7 @@ gem "prawn"
 gem "erubis"
 
 group :development, :test do
-    # gem "rspec-rails-swagger"
-    # gem "apigen", path: "lib/gems/apigen"
-    gem "rswag-specs"
+  gem "rswag-specs"
 end
 
 group :test do
@@ -226,3 +236,4 @@ gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
+

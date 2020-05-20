@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PinMessagesController < ApiController
   before_action :admin_only
 

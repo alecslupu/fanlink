@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {
     course: render(partial: "course", locals: { course: @course }, handlers: "jb")
   }

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe PortalNotification, type: :model do
   before(:each) do
     ActsAsTenant.current_tenant = create(:product)
@@ -40,7 +41,7 @@ RSpec.describe PortalNotification, type: :model do
       expect(notif.errors[:send_me_at]).not_to be_empty
     end
     it "should not allow a send_me_at before create time" do
-      notif = build(:portal_notification, send_me_at: Time.now - 1.second)
+      notif = build(:portal_notification, send_me_at: Time.zone.now - 1.second)
       expect(notif).not_to be_valid
       expect(notif.errors[:send_me_at]).not_to be_empty
     end
@@ -75,7 +76,7 @@ RSpec.describe PortalNotification, type: :model do
   end
   describe "#update_push" do
     it "responds to" do
-      expect(PortalNotification.new).to respond_to(:update_push)
+      expect(PortalNotification.new).to respond_to(:enqueue_push)
     end
   end
 

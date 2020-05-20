@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PersonMailer < MandrillMailer::TemplateMailer
   default from: nil, view_content_link: true
 

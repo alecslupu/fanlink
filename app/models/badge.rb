@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: badges
@@ -56,8 +57,8 @@ class Badge < ApplicationRecord
   after_update :update_reward
 
   def action_count_earned_by(person)
-    time_frame_start = (issued_from.present?) ? issued_from : Time.now - 10.years
-    time_frame_end = (issued_to.present?) ? issued_to : Time.now + 10.years
+    time_frame_start = (issued_from.present?) ? issued_from : Time.zone.now - 10.years
+    time_frame_end = (issued_to.present?) ? issued_to : Time.zone.now + 10.years
     person.badge_actions.where(action_type: action_type).where("created_at >= ?", time_frame_start).where("created_at <= ?", time_frame_end).count
   end
 

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 json = {}
 post_reactions = current_user.post_reactions.where(post_id: posts).index_by(&:post_id)
 json[:posts] = posts.map do |post|
-  p = render(partial: "api/v4/posts/#{@req_source}", locals: {post: post}, handlers: "jb")
+  p = render(partial: "api/v4/posts/#{@req_source}", locals: { post: post }, handlers: "jb")
 
   if defined?(post_reactions[post.id]) && post_reactions[post.id].present?
     p[:post_reaction] = render partial: "api/v4/post_reactions/#{@req_source}", locals: { post_reaction: post_reactions[post.id] }

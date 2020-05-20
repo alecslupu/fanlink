@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'swagger_helper'
 
 RSpec.describe "Api::V4::Referral::ReferralController", type: :request, swagger_doc: "v4/swagger.json" do
@@ -5,7 +6,7 @@ RSpec.describe "Api::V4::Referral::ReferralController", type: :request, swagger_
     get "List the referral code" do
 
       security [Bearer: []]
-      tags "Referal"
+      tags "Referral"
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
@@ -33,7 +34,7 @@ RSpec.describe "Api::V4::Referral::ReferralController", type: :request, swagger_
     get "List the referral code" do
 
       security [Bearer: []]
-      tags "Referal"
+      tags "Referral"
 
       parameter name: :page, in: :query, type: :integer, required: false, description: " Lorem ipsum", default: 1, minimum: 1
       parameter name: :per_page, in: :query, type: :integer, required: false, description: " Lorem ipsum", default: 25

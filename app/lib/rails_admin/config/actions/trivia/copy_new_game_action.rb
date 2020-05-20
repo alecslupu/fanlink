@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAdmin
   module Config
     module Actions
@@ -23,7 +24,7 @@ module RailsAdmin
 
           register_instance_option :controller do
             proc do
-              Delayed::Job.enqueue(::Trivia::CopyGameJob.new(@object.id))
+              ::Trivia::CopyGameJob.perform_later(@object.id)
 
               flash[:notice] = "Game copied"
               redirect_to action: :index
