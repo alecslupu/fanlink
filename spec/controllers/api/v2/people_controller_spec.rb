@@ -267,7 +267,6 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       person = create(:person, facebookid: fbid)
       ActsAsTenant.with_tenant(person.product) do
         create(:static_system_email, name: "onboarding")
-
         koala_result = { "id" => fbid, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect {
