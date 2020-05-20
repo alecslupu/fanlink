@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   completion: Rails.cache.fetch(["v4", "quest_completion", @req_source, @completion.id, @completion.updated_at.to_i]) {
     render(partial: @req_source, locals: { completion: @completion }, handlers: "jb")

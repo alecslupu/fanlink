@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
@@ -8,7 +9,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post_comment = create(:post_comment, post: create(:post))
-        post :create, params: {post_id: post_comment.post_id, post_comment_report: {post_comment_id: post_comment.id, reason: reason}}
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
         expect(response).to be_successful
 
         report = PostCommentReport.last
@@ -22,7 +23,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         post_comment = create(:post_comment, post: create(:post))
-        post :create, params: {post_id: post_comment.post_id, post_comment_report: {post_comment_id: post_comment.id, reason: reason}}
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
         expect(response).to be_unauthorized
       end
     end
@@ -32,7 +33,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       person = create(:person, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        post :create, params: {post_id: post_comment.post_id, post_comment_report: {post_comment_id: post_comment.id, reason: reason}}
+        post :create, params: { post_id: post_comment.post_id, post_comment_report: { post_comment_id: post_comment.id, reason: reason } }
         expect(response).to be_not_found
       end
     end
@@ -48,7 +49,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         login_as(admin)
         5.times { create(:post_comment_report) }
-        get :index, params: {page: 1, per_page: 100}
+        get :index, params: { page: 1, per_page: 100 }
         expect(response).to be_successful
         expect(json["post_comment_reports"].count).to eq(5)
       end
@@ -60,7 +61,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
         5.times do |n|
           create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
-        get :index, params: {page: 1, per_page: 2}
+        get :index, params: { page: 1, per_page: 2 }
         expect(response).to be_successful
         expect(json["post_comment_reports"].count).to eq(2)
         # expect(json["post_comment_reports"].first).to eq(post_comment_report_json(@index_reports.last))
@@ -76,7 +77,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
         5.times do |n|
           create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
-        get :index, params: {page: 2, per_page: 2}
+        get :index, params: { page: 2, per_page: 2 }
         expect(response).to be_successful
         expect(json["post_comment_reports"].count).to eq(2)
         # expect(json["post_comment_reports"].first).to eq(post_comment_report_json(@index_reports[-3]))
@@ -93,7 +94,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
           create(:post_comment_report, status: PostCommentReport.statuses.keys.sample)
         end
 
-        get :index, params: {status_filter: "pending"}
+        get :index, params: { status_filter: "pending" }
         expect(response).to be_successful
         pending = PostCommentReport.for_product(admin.product).where(status: :pending)
         expect(json["post_comment_reports"].count).to eq(pending.count)
@@ -133,7 +134,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(report.post_comment.product) do
         admin = create(:admin_user)
         login_as(admin)
-        patch :update, params: {id: report.id, post_comment_report: {status: "no_action_needed"}}
+        patch :update, params: { id: report.id, post_comment_report: { status: "no_action_needed" } }
         expect(response).to be_successful
         expect(report.reload.status).to eq("no_action_needed")
       end
@@ -144,7 +145,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       ActsAsTenant.with_tenant(report.post_comment.product) do
         admin = create(:admin_user)
         login_as(admin)
-        patch :update, params: {id: report.id, post_comment_report: {status: "punting"}}
+        patch :update, params: { id: report.id, post_comment_report: { status: "punting" } }
         expect(response).to be_unprocessable
       end
     end
@@ -152,7 +153,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
       report = create(:post_comment_report)
 
       ActsAsTenant.with_tenant(report.post_comment.product) do
-        patch :update, params: {id: report.id, post_comment_report: {status: "pending"}}
+        patch :update, params: { id: report.id, post_comment_report: { status: "pending" } }
         expect(response).to be_unauthorized
       end
     end
@@ -161,7 +162,7 @@ RSpec.describe Api::V2::PostCommentReportsController, type: :controller do
 
       ActsAsTenant.with_tenant(report.post_comment.product) do
         login_as(create(:person))
-        patch :update, params: {id: report.id, post_comment_report: {status: "pending"}}
+        patch :update, params: { id: report.id, post_comment_report: { status: "pending" } }
         expect(response).to be_unauthorized
       end
     end

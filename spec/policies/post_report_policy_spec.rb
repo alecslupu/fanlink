@@ -17,7 +17,7 @@ RSpec.describe PostReportPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
   }
 
   describe "defined policies" do
@@ -67,7 +67,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: false,
         history: false,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_read: true).person, master_class) }
 
@@ -98,7 +98,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: false,
         history: false,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_update: true).person, master_class) }
 
@@ -129,7 +129,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: false,
         history: false,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_delete: true).person, master_class) }
 
@@ -160,7 +160,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: true,
         history: false,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_export: true).person, master_class) }
 
@@ -191,7 +191,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: false,
         history: true,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_history: true).person, master_class) }
 
@@ -222,7 +222,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: false,
         history: false,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_hide: true).person, master_class) }
 
@@ -253,7 +253,7 @@ RSpec.describe PostReportPolicy, type: :policy do
         export: false,
         history: false,
         show_in_app: false,
-        select_product: false,
+        select_product: false
     }
     subject { described_class.new(create(:portal_access, post_ignore: true).person, master_class) }
 

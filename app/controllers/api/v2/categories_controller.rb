@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::CategoriesController < ApiController
   load_up_the Category, only: %i[ update delete ]
   # **
@@ -129,7 +130,7 @@ class Api::V2::CategoriesController < ApiController
   # *
 
   def update
-    if @category.update_attributes(category_params)
+    if @category.update(category_params)
       broadcast(:category_updated, current_user, @category)
       return_the @category
     else

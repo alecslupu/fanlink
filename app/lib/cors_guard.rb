@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CorsGuard
   ALWAYS_ALLOW = %w(
     https://www.fan.link

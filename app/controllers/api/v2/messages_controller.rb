@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::MessagesController < Api::V1::MessagesController
   # **
   # @api {get} /rooms/:room_id/messages Get messages.

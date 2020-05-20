@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id badge.id
 json.name badge.name(@lang)
 json.internal_name badge.internal_name

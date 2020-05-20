@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V1::BadgeActionsController, type: :controller do
@@ -10,7 +11,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         badge1 = create(:badge, action_type: action_type, action_requirement: 3)
         badge2 = create(:badge, action_type: action_type, action_requirement: 4)
         badge_other = create(:badge)
-        post :create, params: {badge_action: {action_type: action_type.internal_name}}
+        post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(200)
         expect(pending_badge_json(json["pending_badge"], badge1)).to be_truthy
       end
@@ -21,8 +22,8 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         login_as(person)
         action_type = create(:action_type)
         badge1 = create(:badge, action_type: action_type, action_requirement: 3)
-        create(:badge, action_type: action_type, action_requirement: 2, issued_from: Time.now + 1.day) # pre-issue badge
-        post :create, params: {badge_action: {action_type: action_type.internal_name}}
+        create(:badge, action_type: action_type, action_requirement: 2, issued_from: Time.zone.now + 1.day) # pre-issue badge
+        post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(200)
         expect(pending_badge_json(json["pending_badge"], badge1)).to be_truthy
       end
@@ -35,7 +36,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         badge1 = create(:badge, action_type: action_type, action_requirement: 1)
         badge2 = create(:badge, action_type: action_type, action_requirement: 4)
         badge_other = create(:badge)
-        post :create, params: {badge_action: {action_type: action_type.internal_name}}
+        post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(200)
         expect(json["badges_awarded"].count).to eq(1)
         expect(badge_json(json["badges_awarded"].first)).to be_truthy
@@ -49,7 +50,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         badge1 = create(:badge, action_type: action_type, action_requirement: 1)
         badge2 = create(:badge, action_type: action_type, action_requirement: 1)
         badge_other = create(:badge)
-        post :create, params: {badge_action: {action_type: action_type.internal_name}}
+        post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(200)
         expect(json["badges_awarded"].count).to eq(2)
         expect(badge_json(json["badges_awarded"].first)).to be_truthy
@@ -63,7 +64,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         action_type = create(:action_type)
         badge1 = create(:badge, action_type: action_type, action_requirement: 1)
         BadgeAward.create(person: person, badge: badge1)
-        post :create, params: {badge_action: {action_type: action_type.internal_name}}
+        post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(200)
         expect(json.keys).to include("pending_badge")
         expect(json["pending_badge"]).to be_nil
@@ -75,7 +76,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         action_type = create(:action_type, seconds_lag: 120)
         person.badge_actions.create(action_type: action_type)
         login_as(person)
-        post :create, params: {badge_action: {action_type: action_type.internal_name}}
+        post :create, params: { badge_action: { action_type: action_type.internal_name } }
         expect(response).to have_http_status(429)
       end
     end
@@ -86,7 +87,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         person.badge_actions.create(action_type: action_type)
         Timecop.travel(Time.zone.now + 121.seconds) do
           login_as(person)
-          post :create, params: {badge_action: {action_type: action_type.internal_name}}
+          post :create, params: { badge_action: { action_type: action_type.internal_name } }
           expect(response).to have_http_status(200)
         end
       end
@@ -98,7 +99,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
         ident = "myident"
         person.badge_actions.create(action_type: action_type, identifier: ident)
         login_as(person)
-        post :create, params: {badge_action: {action_type: action_type.internal_name, identifier: ident}}
+        post :create, params: { badge_action: { action_type: action_type.internal_name, identifier: ident } }
         expect(response).to have_http_status(422)
 
         expect(json["errors"].first).to include(_("Sorry, you cannot get credit for that action again."))
@@ -117,7 +118,7 @@ RSpec.describe Api::V1::BadgeActionsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        post :create, params: {badge_action: {identifier: "fdafdf"}}
+        post :create, params: { badge_action: { identifier: "fdafdf" } }
         expect(response).to have_http_status(422)
         expect(json["errors"]).to include(_("You must supply a badge action type."))
       end

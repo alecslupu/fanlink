@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module JSONErrors
   extend ActiveSupport::Concern
   # set_trace_func proc { |event, file, line, id, proc_binding, classname|

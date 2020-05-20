@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
@@ -13,7 +14,7 @@ RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
   describe "defined policies" do
@@ -63,7 +64,7 @@ RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_read: true).person, master_class) }
 
@@ -94,7 +95,7 @@ RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_update: true).person, master_class) }
 
@@ -125,7 +126,7 @@ RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_delete: true).person, master_class) }
 
@@ -156,7 +157,7 @@ RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_export: true).person, master_class) }
 
@@ -187,7 +188,7 @@ RSpec.describe Trivia::PictureQuestionPolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_history: true).person, master_class) }
 

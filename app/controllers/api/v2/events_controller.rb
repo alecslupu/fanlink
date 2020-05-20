@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::EventsController < Api::V1::EventsController
   load_up_the Event, only: %i[ update delete ]
 
@@ -31,8 +32,8 @@ class Api::V2::EventsController < Api::V1::EventsController
     if !check_dates
       render json: { errors: "Invalid date(s)" }, status: :unprocessable_entity
     else
-      start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.now - 3.years).beginning_of_day
-      end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.now + 3.years).end_of_day
+      start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.zone.now - 3.years).beginning_of_day
+      end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.zone.now + 3.years).end_of_day
       @events = Event.where(deleted: false).in_date_range(start_boundary, end_boundary).order(starts_at: :asc)
     end
   end
@@ -129,7 +130,7 @@ class Api::V2::EventsController < Api::V1::EventsController
   # *
 
   def update
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       broadcast(:event_updated, current_user, @event)
       return_the @event
     else
