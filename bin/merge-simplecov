@@ -1,27 +1,38 @@
 #!/usr/bin/env ruby
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../spec/simplecov_env'
+class SimpleCovMerger
+  def self.report_coverage
+    new.merge_results
+  end
 
-module SimpleCov
-  module ResultMerger
-    class << self
-      def resultset_files
-        Dir.glob(File.join(SimpleCov.coverage_path, '*', '.resultset.json'))
-      end
+  def initialize
+  end
 
-      def resultset_hashes
-        resultset_files.map do |path|
-          JSON.parse(File.read(path))
-        rescue
-          {}
-        end
-      end
+  def merge_results
+    require "simplecov"
+    require "json"
 
-      def resultset
-        resultset_hashes.reduce({}, :merge)
-      end
+    results = resultsets.map do |file|
+      hash_result = JSON.parse(clean(File.read(file)))
+      SimpleCov::Result.from_hash(hash_result)
     end
+
+    result = SimpleCov::ResultMerger.merge_results(*results)
+
+    SimpleCov::ResultMerger.store_result(result)
+    SimpleCov::ResultMerger.merged_result.format!
+  end
+
+  private
+
+  def resultsets
+    Dir.glob(File.join(SimpleCov.coverage_path, '*', '.resultset.json'))
+  end
+
+  def clean(results)
+    results
   end
 end
 
-SimpleCov::ResultMerger.merged_result.format!
+SimpleCovMerger.report_coverage

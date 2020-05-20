@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::Trivia::RoundLeaderboardsController < ApiController
   def index
     @leaderboard = paginate(package)

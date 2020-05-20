@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::MessagesController < Api::V2::MessagesController
   before_action :admin_only, only: %i[ list update ]
 

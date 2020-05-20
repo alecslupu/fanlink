@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {
   id: certcourse_page.id,
   course_id: certcourse_page.certcourse_id,

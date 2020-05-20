@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("VideoPage")
   config.model "VideoPage" do
@@ -13,7 +14,7 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :course_name do
-        searchable [{Certcourse => :short_name}]
+        searchable [{ Certcourse => :short_name }]
         queryable true
       end
       fields :video, :created_at, :updated_at

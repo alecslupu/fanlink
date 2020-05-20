@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Push
   class Marketing < BasePush
     BATCH_SIZE = 500.freeze

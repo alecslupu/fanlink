@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MessageMentionPush < BaseMention
   def self.room_message_created(msg_id, product_id)
     msg = Message.find(msg_id)

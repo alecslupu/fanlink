@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PortalNotificationsController < ApiController
   before_action :super_admin_only
   load_up_the PortalNotification, only: %i[ show update ]

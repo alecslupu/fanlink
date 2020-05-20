@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::ActionTypesController < Api::V3::ActionTypesController
   def index
     @action_types = paginate(ActionType.all)

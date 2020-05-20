@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PersonCertificatesController < ApiController
 
   load_up_the Certificate, from: :certificate_id
@@ -8,7 +9,7 @@ class Api::V4::PersonCertificatesController < ApiController
     if @person_certificate
       if @person_certificate.full_name.blank?
         @person_certificate.update(person_certificate_params)
-        @person_certificate.issued_date = DateTime.now unless @person_certificate.issued_date.present?
+        @person_certificate.issued_date = DateTime.now if @person_certificate.issued_date.blank?
         @person_certificate.write_files
         @certificate = @person_certificate.reload.certificate
         return_the @certificate, handler: tpl_handler

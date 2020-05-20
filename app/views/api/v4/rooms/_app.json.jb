@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 json = {
   id: room.id.to_s,
   name: room.name,
   description: room.description,
   picture_url: room.picture_url,
-  public: room.public,
+  public: room.public
 }
 json[:order] = room.order
 json[:last_message_timestamp] = room.last_message_timestamp

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::ProductBeaconsController < Api::V2::ProductBeaconsController
   before_action :admin_only
   # **

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Message, type: :model do
   # before(:all) do
   #   @product = create(:product)
@@ -30,7 +31,7 @@ RSpec.describe Message, type: :model do
   end
 
   describe ".for_date_range" do
-    frozen_time = Time.local(2018, 1, 10, 12, 0, 0)
+    frozen_time = Time.zone.local(2018, 1, 10, 12, 0, 0)
     Timecop.freeze(frozen_time) do
       let!(:room) { create(:room, created_at: frozen_time - 1.month) }
       let!(:msg1) { create(:message, room: room, created_at: frozen_time) }

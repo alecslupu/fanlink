@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.post do
   json.body @post.body
   json.picture_url @post.picture_url

@@ -1,1 +1,2 @@
+# frozen_string_literal: true
 render(partial: "api/v4/posts/rendered_posts", locals: { posts: @posts })

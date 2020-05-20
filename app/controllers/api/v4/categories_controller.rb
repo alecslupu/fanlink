@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::CategoriesController < Api::V3::CategoriesController
   def index
     @categories = paginate Category.all

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::QuestCompletionsController < Api::V2::QuestCompletionsController
   before_action :admin_only, only: %i[ list update delete ]
   before_action :load_person, only: %i[ for_person for_activity for_quest index ]

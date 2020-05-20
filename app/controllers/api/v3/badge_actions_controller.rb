@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::BadgeActionsController < Api::V2::BadgeActionsController
   before_action :super_admin_only, only: %i[ index show update destroy ]
   before_action :load_action_type

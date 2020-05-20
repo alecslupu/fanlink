@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 json.cache! ["v3", quest.updated_at, @lang, quest] do
   json.id quest.id.to_s
