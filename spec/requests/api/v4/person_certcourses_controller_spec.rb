@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "swagger_helper"
 
 RSpec.describe "Api::V4::PersonCertcoursesController", type: :request, swagger_doc: "v4/swagger.json" do

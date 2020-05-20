@@ -17,7 +17,7 @@ RSpec.describe BadgePolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
   describe "defined policies" do
@@ -67,7 +67,7 @@ RSpec.describe BadgePolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
       before :each do
@@ -101,7 +101,7 @@ RSpec.describe BadgePolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
       before :each do
@@ -135,7 +135,7 @@ RSpec.describe BadgePolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
       before :each do
@@ -169,7 +169,7 @@ RSpec.describe BadgePolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
       before :each do
@@ -203,7 +203,7 @@ RSpec.describe BadgePolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
       before :each do

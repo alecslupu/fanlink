@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = Rails.cache.fetch ["v4", "person_reward", @req_source, @person_reward.id, @person_reward.updated_at.to_i] do
   {
     reward: render(partial: @req_source, locals: { reward: @person_reward }, handlers: "jb")

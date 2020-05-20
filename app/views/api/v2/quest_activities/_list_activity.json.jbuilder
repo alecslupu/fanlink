@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id activity.id.to_s
 json.quest_id activity.quest_id.to_s
 json.description activity.description

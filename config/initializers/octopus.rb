@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # if Octopus.enabled?
 #   count = case (Octopus.config[Rails.env].values[0].values[0] rescue nil)
 #   when Hash

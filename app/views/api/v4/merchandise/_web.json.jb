@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   id: merchandise.id,
   name: merchandise.name,

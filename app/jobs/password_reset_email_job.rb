@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PasswordResetEmailJob < ApplicationJob
   queue_as :mailers
 
