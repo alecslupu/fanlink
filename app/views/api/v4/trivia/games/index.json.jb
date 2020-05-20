@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = { games: [] }
 @games.each do |game|
   result = render partial: @req_source, locals: { game: game }, handler: :jb

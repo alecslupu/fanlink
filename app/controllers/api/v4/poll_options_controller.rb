@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PollOptionsController < Api::V3::PollOptionsController
   def cast_vote
     @vote = PersonPollOption.new(person_id: current_user.id, poll_option_id: params[:poll_option_id])

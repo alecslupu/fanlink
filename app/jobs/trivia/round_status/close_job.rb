@@ -1,8 +1,10 @@
+# frozen_string_literal: true
 module Trivia
   module RoundStatus
-    class CloseJob < Struct.new(:round_id)
+    class CloseJob < ::ApplicationJob
+      queue_as :trivia
 
-      def perform
+      def perform(round_id)
         round = Trivia::Round.find(round_id)
         round.closed!
 

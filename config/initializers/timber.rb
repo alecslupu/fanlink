@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Timber.io Ruby Configuration - Simple Structured Logging
 #
 #  ^  ^  ^   ^      ___I_      ^  ^   ^  ^  ^   ^  ^

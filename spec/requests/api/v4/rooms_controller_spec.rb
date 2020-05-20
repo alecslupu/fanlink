@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "swagger_helper"
 
 RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swagger.json" do
@@ -17,12 +18,12 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
       let(:message) { create(:message, room: create(:private_active_room)) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
         let("room[name]") { "Room name" }
         let("room[member_ids][]") { create(:person).id }
         let("room[member_ids][]") { create(:person).id }
-
+        schema "$ref": "#/definitions/RoomsObject"
         run_test!
       end
       response "400", "" do
@@ -58,10 +59,10 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
       context "all rooms" do
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
 
-          schema "$ref": "#/definitions/faulty"
+          schema "$ref": "#/definitions/RoomsArray"
           run_test!
         end
         response "401", "" do
@@ -74,10 +75,10 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       end
       context "private rooms" do
         let(:private) { true }
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
 
-          schema "$ref": "#/definitions/faulty"
+          schema "$ref": "#/definitions/RoomsArray"
           run_test!
         end
         response "401", "" do
@@ -107,10 +108,9 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       let(:room) { message.room }
       let(:id) { room.id }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/RoomsObject"
         run_test!
       end
       response "401", "" do
@@ -120,7 +120,6 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
 
         let(:id) { Time.zone.now.to_i }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -141,7 +140,7 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: room.created_by_id )}" }
         run_test!
       end
@@ -151,8 +150,6 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       response "404", "" do
         let(:id) { Time.zone.now.to_i }
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -182,8 +179,9 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
       context "Date range" do
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
+          schema "$ref": "#/definitions/MessagesArray"
           run_test!
         end
         response "401", "" do
@@ -200,10 +198,9 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
       end
       context "all" do
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-
-          schema "$ref": "#/definitions/faulty"
+          schema "$ref": "#/definitions/MessagesArray"
           run_test!
         end
         response "401", "" do
@@ -212,8 +209,6 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
         response "404", "" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
           let(:id) { Time.zone.now.to_i }
-
-          schema "$ref": "#/definitions/faulty"
           run_test!
         end
         response 500, "Internal server error" do
@@ -222,10 +217,9 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
       end
       context "pinned" do
-        response "200", "" do
+        response "200", "HTTP/1.1 200 Ok" do
           let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-
-          schema "$ref": "#/definitions/faulty"
+          schema "$ref": "#/definitions/MessagesArray"
           run_test!
         end
         response "401", "" do
@@ -258,10 +252,9 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
 
       produces "application/vnd.api.v4+json"
       consumes "multipart/form-data"
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/MessagesObject"
         before do |example|
           allow_any_instance_of(Message).to receive(:post).and_return(nil)
 
@@ -279,7 +272,6 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
         let(:id) { Time.zone.now.to_i }
-        schema "$ref": "#/definitions/faulty"
         before do |example|
           allow_any_instance_of(Message).to receive(:post).and_return(nil)
 
@@ -315,9 +307,9 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       let(:id) { message.id }
       let(:Authorization) { "" }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-        schema "$ref": "#/definitions/faulty"
+        schema "$ref": "#/definitions/MessagesObject"
         run_test!
       end
       response "401", "" do
@@ -326,9 +318,6 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       response "404", "" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
         let(:id) { Time.zone.now.to_i }
-
-        schema "$ref": "#/definitions/faulty"
-
         before do |example|
           allow_any_instance_of(Message).to receive(:delete_real_time).and_return(nil)
 
@@ -360,9 +349,8 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
       let(:Authorization) { "" }
 
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-
         before do |example|
           allow_any_instance_of(Message).to receive(:delete_real_time).and_return(nil)
           submit_request(example.metadata)
@@ -379,7 +367,6 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
         let(:id) { (100 + message.id).to_i }
 
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: message.person_id )}" }
-        schema "$ref": "#/definitions/faulty"
         run_test!
       end
       response 500, "Internal server error" do
@@ -388,50 +375,4 @@ RSpec.describe "Api::V4::RoomsController", type: :request, swagger_doc: "v4/swag
     end
   end
 
-
-  path "/rooms/{room_id}/message_reports" do
-    post "" do
-      security [Bearer: []]
-      tags "MessageReports" # 'android-old']
-
-      produces "application/vnd.api.v4+json"
-      consumes "multipart/form-data"
-
-      parameter name: :room_id, in: :path, type: :string
-      parameter name: :"message_report[message_id]", in: :formData, type: :string
-      parameter name: :"message_report[reason]", in: :formData, type: :string
-
-      let(:message) { create(:message, room: create(:public_active_room)) }
-      let(:room) { message.room }
-      let(:room_id) { room.id }
-      let(:Authorization) { "" }
-
-      let("message_report[message_id]") { message.id }
-      let("message_report[reason]") { Faker::Lorem.sentence }
-
-      response "200", "" do
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: room.created_by_id)}" }
-        run_test!
-      end
-      response "422", "" do
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: room.created_by_id)}" }
-        let("message_report[reason]") { Faker::Lorem.paragraph_by_chars(number: 750) }
-        schema "$ref": "#/definitions/faulty"
-
-        run_test!
-      end
-      response "401", "" do
-        run_test!
-      end
-      response "404", "" do
-        let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: room.created_by_id)}" }
-        let(:room_id) { 11 }
-        schema "$ref": "#/definitions/faulty"
-        run_test!
-      end
-      response 500, "Internal server error" do
-        document_response_without_test!
-      end
-    end
-  end
 end

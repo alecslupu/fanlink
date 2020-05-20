@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   id: poll.id.to_s,
   type: poll.poll_type,

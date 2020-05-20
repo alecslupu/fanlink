@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 if current_user.some_admin? && @req_source == "web"
   json[:quests] = @quests.map do |quest|

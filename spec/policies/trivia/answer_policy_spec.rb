@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Trivia::AnswerPolicy, type: :policy do
@@ -13,7 +14,7 @@ RSpec.describe Trivia::AnswerPolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
   describe "defined policies" do
@@ -63,7 +64,7 @@ RSpec.describe Trivia::AnswerPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_read: true).person, master_class) }
 
@@ -94,17 +95,13 @@ RSpec.describe Trivia::AnswerPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_update: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do
@@ -125,17 +122,13 @@ RSpec.describe Trivia::AnswerPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_delete: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do
@@ -156,7 +149,7 @@ RSpec.describe Trivia::AnswerPolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_export: true).person, master_class) }
 
@@ -187,7 +180,7 @@ RSpec.describe Trivia::AnswerPolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, trivia_history: true).person, master_class) }
 

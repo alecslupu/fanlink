@@ -1,10 +1,3 @@
+# frozen_string_literal: true
 class RoomPolicy < ChatModulePolicy
-  def attributes_for(action)
-    case action
-    when :create
-      { public: true, created_by_id: user.id }
-    else
-      {}
-    end
-  end
 end

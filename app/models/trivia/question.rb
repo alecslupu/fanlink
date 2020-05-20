@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trivia_questions
@@ -29,18 +30,18 @@ module Trivia
     has_many :available_answers, through: :available_question, source: :available_answers
 
 
-    validates :time_limit, numericality: {greater_than: 0},
+    validates :time_limit, numericality: { greater_than: 0 },
               presence: true
 
-    validates :cooldown_period, numericality: {greater_than: 5},
+    validates :cooldown_period, numericality: { greater_than: 5 },
               presence: true
 
-    validates :type, inclusion: {in: %w(Trivia::SingleChoiceQuestion
+    validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
                 Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
                 Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
-              ),  message: "%{value} is not a valid type"}
+              ),  message: "%{value} is not a valid type" }
 
-    validates :available_question, presence: {message: "Please make sure selected question type is the compatible with available question type"}
+    validates :available_question, presence: { message: "Please make sure selected question type is the compatible with available question type" }
 
 
     def compute_leaderboard
@@ -65,6 +66,12 @@ module Trivia
     def set_order(index)
       self.question_order = index
       self.save
+    end
+
+    def copy_to_new
+      new_entry = dup
+      new_entry.update!(start_date: nil, end_date: nil)
+      new_entry
     end
   end
 end

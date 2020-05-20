@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::QuestsController < ApiController
   before_action :admin_only, except: %i[ index show ]
   load_up_the Quest, only: %i[ update ]
@@ -268,7 +269,7 @@ class Api::V2::QuestsController < ApiController
   # *
 
   def update
-    @quest.update_attributes(quest_params)
+    @quest.update(quest_params)
     return_the @quest
   end
 

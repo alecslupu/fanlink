@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 
 json[:leaderboard] = render partial: @req_source, collection: @leaderboard, as: :leaderboard, handler: :jb

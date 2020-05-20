@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "swagger_helper"
 
 RSpec.describe "Api::V4::InterestsController", type: :request, swagger_doc: "v4/swagger.json" do
@@ -19,10 +20,9 @@ RSpec.describe "Api::V4::InterestsController", type: :request, swagger_doc: "v4/
 
       let(:interest_list) { create_list(:interest, 4) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         let(:interest_ids) { interest_list.collect(&:id).join(",") }
-        schema "$ref": "#/definitions/faulty"
 
         run_test!
       end
@@ -64,7 +64,7 @@ RSpec.describe "Api::V4::InterestsController", type: :request, swagger_doc: "v4/
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
       end
@@ -97,7 +97,7 @@ RSpec.describe "Api::V4::InterestsController", type: :request, swagger_doc: "v4/
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
         run_test!
       end
@@ -126,10 +126,8 @@ RSpec.describe "Api::V4::InterestsController", type: :request, swagger_doc: "v4/
       let(:Authorization) { "" }
       let(:person) { create(:person) }
 
-      response "200", "" do
+      response "200", "HTTP/1.1 200 Ok" do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: person.id)}" }
-        schema "$ref": "#/definitions/faulty"
-
         run_test!
       end
       response "401", "" do

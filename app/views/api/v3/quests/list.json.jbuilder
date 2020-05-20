@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.quests do
   json.array!(@quests) do |quest|
     json.cache! ["v3", quest.updated_at, quest, @lang] do

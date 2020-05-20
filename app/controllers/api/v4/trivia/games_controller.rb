@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::Trivia::GamesController < ApiController
   def index
     @games = paginate(::Trivia::Game.upcomming, per_page: 100)

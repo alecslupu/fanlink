@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 json = {
   id: interest.id.to_s,
   title: interest.title,
-  order: interest.order,
+  order: interest.order
 }
 
 if interest.children.present?

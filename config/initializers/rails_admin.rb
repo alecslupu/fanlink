@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Dir[Rails.root.join("app/lib/rails_admin/extensions/pundit/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("app/lib/rails_admin/config/actions/*.rb")].each { |f| require f }
@@ -105,6 +106,10 @@ RailsAdmin.config do |config|
     end
 
     generate_game_action do
+      only ["Trivia::Game"]
+    end
+
+    copy_new_game_action do
       only ["Trivia::Game"]
     end
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::ProductsController < ApiController
   before_action :super_admin_only, only: %i[ create update]
   skip_before_action :require_login, except: %i[ create update ]
@@ -33,7 +34,7 @@ class Api::V2::ProductsController < ApiController
 
   def update
     @product = Product.find(params[:id])
-    if @product.update_attributes(product_params)
+    if @product.update(product_params)
       return_the @product
     else
       render json: { errors: @product.errors.messages }, status: :unprocessable_entity
