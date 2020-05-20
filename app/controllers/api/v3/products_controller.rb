@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::ProductsController < Api::V2::ProductsController
   def select
     @products = Product.all
@@ -26,7 +27,7 @@ class Api::V3::ProductsController < Api::V2::ProductsController
   def update
     if params.has_key?(:product)
       @product = Product.find(params[:id])
-      if @product.update_attributes(product_params)
+      if @product.update(product_params)
         return_the @product
       else
         render_422 @product.errors

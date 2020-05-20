@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id post_comment.id.to_s
 json.post_id post_comment.post_id
 json.person_id post_comment.person_id

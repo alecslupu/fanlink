@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DeleteRoomJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe QuestCompleted, type: :model do
   context "Validation" do
     it "should create a valid quest completed" do

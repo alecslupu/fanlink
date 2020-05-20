@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Trivia
   module GameStatus
     class RoundStartAnnouncementJob < ::ApplicationJob

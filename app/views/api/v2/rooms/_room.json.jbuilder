@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id room.id
 json.name room.name(@lang)
 json.description room.description(@lang)

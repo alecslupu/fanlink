@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SendAssigneeCertificateEmailJob < ApplicationJob
   queue_as :mailers
 

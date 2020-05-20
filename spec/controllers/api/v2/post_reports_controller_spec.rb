@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V2::PostReportsController, type: :controller do
@@ -8,7 +9,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         login_as(person)
         p = create(:post, person: create(:person))
         reason = "I don't like you"
-        post :create, params: {post_report: {post_id: p.id, reason: reason}}
+        post :create, params: { post_report: { post_id: p.id, reason: reason } }
         expect(response).to be_successful
         report = PostReport.last
         expect(report.post).to eq(p)
@@ -21,7 +22,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         p = create(:post, person: person)
         expect {
-          post :create, params: {post_report: {post_id: p.id}}
+          post :create, params: { post_report: { post_id: p.id } }
         }.to change { PostReport.count }.by(0)
         expect(response).to be_unauthorized
       end
@@ -34,7 +35,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         expect {
-          post :create, params: {post_report: {post_id: p.id}}
+          post :create, params: { post_report: { post_id: p.id } }
         }.to change { PostReport.count }.by(0)
         expect(response).to be_not_found
       end
@@ -60,7 +61,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         create_list(:post_report, 10)
         login_as(admin)
-        get :index, params: {page: 1, per_page: 2}
+        get :index, params: { page: 1, per_page: 2 }
         expect(response).to be_successful
         expect(json["post_reports"].count).to eq(2)
         expect(post_report_json(json["post_reports"].first)).to be true
@@ -72,7 +73,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         create_list(:post_report, 10)
         login_as(admin)
-        get :index, params: {page: 2, per_page: 2}
+        get :index, params: { page: 2, per_page: 2 }
         expect(response).to be_successful
         expect(json["post_reports"].count).to eq(2)
         expect(post_report_json(json["post_reports"].first)).to be true
@@ -87,7 +88,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
         end
 
         login_as(admin)
-        get :index, params: {status_filter: "pending"}
+        get :index, params: { status_filter: "pending" }
         expect(response).to be_successful
         pending = PostReport.for_product(admin.product).where(status: :pending)
         reports_json = json["post_reports"]
@@ -129,7 +130,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         report = create(:post_report)
         login_as(admin)
-        patch :update, params: {id: report.id, post_report: {status: "no_action_needed"}}
+        patch :update, params: { id: report.id, post_report: { status: "no_action_needed" } }
         expect(response).to be_successful
         expect(report.reload.status).to eq("no_action_needed")
       end
@@ -139,7 +140,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(admin.product) do
         report = create(:post_report)
         login_as(admin)
-        patch :update, params: {id: report.id, post_report: {status: "punting"}}
+        patch :update, params: { id: report.id, post_report: { status: "punting" } }
         expect(response).to be_unprocessable
       end
     end
@@ -147,7 +148,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       normal = create(:person)
       ActsAsTenant.with_tenant(normal.product) do
         report = create(:post_report)
-        patch :update, params: {id: report.id, post_report: {status: "pending"}}
+        patch :update, params: { id: report.id, post_report: { status: "pending" } }
         expect(response).to be_unauthorized
       end
     end
@@ -156,7 +157,7 @@ RSpec.describe Api::V2::PostReportsController, type: :controller do
       ActsAsTenant.with_tenant(normal.product) do
         report = create(:post_report)
         login_as(normal)
-        patch :update, params: {id: report.id, post_report: {status: "pending"}}
+        patch :update, params: { id: report.id, post_report: { status: "pending" } }
         expect(response).to be_unauthorized
       end
     end

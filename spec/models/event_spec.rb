@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Event, type: :model do
   context "Valid" do
     it { expect(build(:event)).to be_valid }

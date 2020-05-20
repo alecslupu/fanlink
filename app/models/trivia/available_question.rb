@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trivia_available_questions
@@ -26,7 +27,7 @@ module Trivia
       draft: 0,
       published: 1,
       locked: 2,
-      closed: 3,
+      closed: 3
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Product, type: :model do
   context "Validation" do
     it "should create a valid product" do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PostMessageJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers
@@ -9,7 +10,7 @@ class PostMessageJob < ApplicationJob
         msg = {
           id: message.id,
           room_id: message.room_id,
-          body: message.parse_content((version.present? ? version : 0)),
+          body: message.parse_content(version.presence || 0),
           # picture_id: message.picture_id,
           create_time: message.create_time,
           picture_url: message.picture_url,
