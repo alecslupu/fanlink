@@ -56,6 +56,8 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
     it "should create a person with a picture attached if added" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect_any_instance_of(Person).to receive(:do_auto_follows)
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"

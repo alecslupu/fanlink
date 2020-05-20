@@ -21,6 +21,8 @@ else
   gem 'sass-rails', '~> 5.0'
 end
 
+gem 'sprockets', '~> 3.7.2'
+
 # gem "rack-cache"
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
@@ -34,9 +36,8 @@ gem 'jbuilder', '~> 2.5'
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails"
 
-gem 'sprockets', '~> 3.7.2'
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+# gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use ActiveModel has_secure_password
 gem "bcrypt", "~> 3.1.7"
@@ -208,7 +209,8 @@ gem "wisper-activerecord"
 # To get video's length
 gem "streamio-ffmpeg"
 
-gem "rmagick"
+gem "mini_magick"
+# gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"

@@ -13,8 +13,10 @@
 #
 
 class Notification < ApplicationRecord
-  include Notification::RealTime
 
+  def notify
+    SimpleNotificationPushJob.perform_later(self.id)
+  end
   acts_as_tenant(:product)
 
   has_paper_trail
