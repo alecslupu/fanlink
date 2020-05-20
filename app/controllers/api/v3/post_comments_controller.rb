@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PostCommentsController < Api::V2::PostCommentsController
   before_action :load_post, except: %i[ list ]
 
@@ -60,7 +61,6 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
     else
       @post_comment = @post.post_comments.create(post_comment_params)
       if @post_comment.valid?
-        @post_comment.post_me
         return_the @post_comment
       else
         render_422 @post_comment.errors

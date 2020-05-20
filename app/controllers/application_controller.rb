@@ -1,6 +1,13 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   before_action :require_login
+
+  before_action :set_current_user
+
+  def set_current_user
+    Person.current_user = current_user
+  end
 
   def status
     head :ok
@@ -59,7 +66,10 @@ class ApplicationController < ActionController::Base
     return if authorization_header.nil?
     payload, header = TokenProvider.valid?(token)
     user = Person.find_by(id: payload["user_id"])
-    auto_login(user) unless user.nil? || user.terminated?
+    unless user.nil? || user.terminated?
+      auto_login(user)
+      user.update_column(:last_activity_at, Time.zone.now)
+    end
   rescue JWT::DecodeError
   end
 

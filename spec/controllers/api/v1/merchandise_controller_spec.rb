@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V1::MerchandiseController, type: :controller do
@@ -43,7 +44,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         merchandise = create(:merchandise)
-        get :show, params: {id: merchandise.id}
+        get :show, params: { id: merchandise.id }
         expect(response).to have_http_status(200)
         expect(merchandise_json(json["merchandise"])).to be_truthy
       end
@@ -52,7 +53,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         merchandise = create(:merchandise)
-        get :show, params: {id: merchandise.id}
+        get :show, params: { id: merchandise.id }
         expect(response).to have_http_status(401)
       end
     end
@@ -61,7 +62,7 @@ RSpec.describe Api::V1::MerchandiseController, type: :controller do
       merchandise = create(:merchandise, product: create(:product))
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        get :show, params: {id: merchandise.id}
+        get :show, params: { id: merchandise.id }
         expect(response).to have_http_status(404)
       end
     end

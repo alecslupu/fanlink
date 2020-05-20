@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("Trivia::Question")
   config.model "Trivia::Question" do
@@ -13,7 +14,14 @@ RailsAdmin.config do |config|
       #
       field :type, :enum do
         enum do
-          Trivia::Question.descendants.map(&:name)
+          # Trivia::Question.descendants.map(&:name)
+          [
+            ["Single Choice", "Trivia::SingleChoiceQuestion"],
+            ["Multiple Choice", "Trivia::MultipleChoiceQuestion"],
+            ["Picture Choice", "Trivia::PictureQuestion"],
+            ["True or False", "Trivia::BooleanChoiceQuestion"],
+            ["Fill in the blanks", "Trivia::HangmanQuestion"],
+          ]
         end
         read_only { bindings[:object].persisted? }
       end

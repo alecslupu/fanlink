@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: notifications
@@ -15,6 +16,8 @@ class Notification < ApplicationRecord
   include Notification::RealTime
 
   acts_as_tenant(:product)
+
+  has_paper_trail
 
   belongs_to :person
   validates :body, presence: true

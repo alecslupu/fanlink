@@ -1,6 +1,9 @@
+# frozen_string_literal: true
 module Trivia
-  class CreateRandomGameJob < Struct.new(:product_id)
-    def perform
+  class CreateRandomGameJob < ApplicationJob
+    queue_as :trivia
+
+    def perform(product_id)
       product = Product.where(id: product_id).first
 
       ActsAsTenant.with_tenant(product) do

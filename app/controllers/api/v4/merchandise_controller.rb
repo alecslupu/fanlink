@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::MerchandiseController < Api::V3::MerchandiseController
   def index
     @merchandise = paginate(Merchandise.listable.order(:priority))
@@ -21,7 +22,7 @@ class Api::V4::MerchandiseController < Api::V3::MerchandiseController
 
   def update
     if params.has_key?(:merchandise)
-      if @merchandise.update_attributes(merchandise_params)
+      if @merchandise.update(merchandise_params)
         broadcast(:merchandise_updated, current_user, @merchandise)
         return_the @merchandise, handler: tpl_handler, using: :show
       else

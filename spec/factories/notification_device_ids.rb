@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: notification_device_ids
@@ -8,6 +9,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  device_type       :integer          default("unknown"), not null
+#  not_registered    :boolean          default(FALSE), not null
 #
 
 require "faker"

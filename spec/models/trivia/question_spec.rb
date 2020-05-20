@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe Trivia::Question, type: :model do
@@ -63,5 +64,7 @@ RSpec.describe Trivia::Question, type: :model do
         expect(Trivia::Question.new.respond_to?(:set_order)).to eq(true)
       end
     end
+
+
   end
 end

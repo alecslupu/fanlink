@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::CertificatesController < ApiController
   def create
     @certificate = Certificate.create(certificate_params)
@@ -5,7 +6,7 @@ class Api::V4::CertificatesController < ApiController
   end
 
   def index
-    @certificates = paginate Certificate.live_status.order("certificate_order")
+    @certificates = paginate Certificate.live_status.order(:certificate_order)
     return_the @certificates, handler: tpl_handler
   end
 

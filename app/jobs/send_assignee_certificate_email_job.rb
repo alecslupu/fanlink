@@ -1,14 +1,12 @@
-class SendAssigneeCertificateEmailJob < Struct.new(:person_id, :assignee_id, :person_certificate_id, :email)
-  def perform
+# frozen_string_literal: true
+class SendAssigneeCertificateEmailJob < ApplicationJob
+  queue_as :mailers
+
+  def perform(person_id, assignee_id, person_certificate_id, email)
     person = Person.find(person_id)
     assignee = Person.find(assignee_id)
     certificate = PersonCertificate.where(id: person_certificate_id).last
 
-    PersonMailer.send_assignee_certificate(person, assignee, certificate, email).deliver
-  end
-  def error(job, exception)
-    if exception.is_a?(Mandrill::UnknownTemplateError)
-      Delayed::Job.where(id: job.id).destroy_all
-    end
+    PersonMailer.send_assignee_certificate(person, assignee, certificate, email).deliver_now
   end
 end

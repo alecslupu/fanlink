@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V4::CertcoursesController, type: :controller do
@@ -21,7 +22,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
 
         allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
 
-        get :show, params: {id: qp.certcourse_page.certcourse_id }
+        get :show, params: { id: qp.certcourse_page.certcourse_id }
         expect(response).to have_http_status(200)
 
         expect(qp).to exist_in_database
@@ -42,7 +43,7 @@ RSpec.describe Api::V4::CertcoursesController, type: :controller do
         create(:person_quiz, person: person, answer_id: qp.answers.first.id, quiz_page: qp)
 
         allow(Certcourse).to receive(:find).and_return Certcourse.find(qp.certcourse_page.certcourse_id)
-        get :show, params: {id: qp.certcourse_page.certcourse_id }
+        get :show, params: { id: qp.certcourse_page.certcourse_id }
 
         expect(response).to have_http_status(200)
         expect(qp).to exist_in_database

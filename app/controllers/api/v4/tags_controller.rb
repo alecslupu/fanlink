@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::TagsController < Api::V3::TagsController
   def index
     if params[:tag_name].present?

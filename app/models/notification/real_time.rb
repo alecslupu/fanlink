@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 class Notification
   module RealTime
     def notify
-      Delayed::Job.enqueue(SimpleNotificationPushJob.new(self.id))
+      SimpleNotificationPushJob.perform_later(self.id)
     end
   end
 end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   get "/config/:internal_name" => "config#index"
   get "/config/:internal_name/:id" => "config#show"
@@ -29,6 +32,8 @@ Rails.application.routes.draw do
   get "/:product_id/static_content/:slug" => "static_contents#show"
 
   match "/delayed_job" => DelayedJobWeb, anchor: false, via: [:get, :post]
+
+  mount Sidekiq::Web, at: "/sidekiq"
 
   mount Rswag::Ui::Engine => "/api-docs"
   mount Rswag::Api::Engine => "/api-docs"

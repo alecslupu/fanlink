@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trivia_questions
@@ -23,7 +24,7 @@ module Trivia
 
     has_paper_trail
     belongs_to :round, class_name: "Trivia::Round", counter_cache: :question_count, foreign_key: :trivia_round_id
-    belongs_to :available_question, class_name: "Trivia::AvailableQuestion"
+    belongs_to :available_question, class_name: "Trivia::AvailableQuestion",  dependent: :destroy
     has_many :leaderboards, class_name: "Trivia::QuestionLeaderboard", foreign_key: :trivia_question_id, dependent: :destroy
     has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id, dependent: :destroy
     has_many :available_answers, through: :available_question, source: :available_answers
@@ -42,6 +43,12 @@ module Trivia
 
     validates :available_question, presence: { message: "Please make sure selected question type is the compatible with available question type" }
 
+
+    def compute_leaderboard
+      # raise "retry" if Time.zone.now < end_date
+      self.class.connection.execute("select compute_trivia_question_leaderboard(#{id})")
+    end
+
     # administrate falback
     def round_id
       trivia_round_id
@@ -59,6 +66,12 @@ module Trivia
     def set_order(index)
       self.question_order = index
       self.save
+    end
+
+    def copy_to_new
+      new_entry = dup
+      new_entry.update!(start_date: nil, end_date: nil)
+      new_entry
     end
   end
 end

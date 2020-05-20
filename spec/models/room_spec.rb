@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Room, type: :model do
   before(:each) do
     @name = "abc"
@@ -17,13 +18,12 @@ RSpec.describe Room, type: :model do
     end
 
     describe "should have many" do
-      it "#courses" do
-        should have_many(:room_memberships).dependent(:destroy)
-      end
-
-      it "#members" do
-        should have_many(:members).through(:room_memberships)
-      end
+      it { should have_many(:messages) }
+      it { should have_many(:room_memberships).dependent(:destroy) }
+      it { should have_many(:room_subscribers).dependent(:destroy) }
+      it { should have_many(:pin_messages).dependent(:destroy) }
+      it { should have_many(:members).through(:room_memberships) }
+      it { should have_many(:pin_from).through(:pin_messages) }
     end
   end
 

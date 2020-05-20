@@ -1,17 +1,21 @@
-class UpdateMessageCounterJob < Struct.new(:room_id, :poster_id, :version)
+# frozen_string_literal: true
+class UpdateMessageCounterJob < ApplicationJob
+  queue_as :default
   include RealTimeHelpers
 
-  def perform
+  def perform(room_id, poster_id, version)
     room = Room.find(room_id)
-    if room.private?
-      payload = {}
-      room.room_memberships.each do |mem|
-        payload[message_counter_path(mem)] = mem.message_count unless mem.person_id == poster_id
-        if version.present?
-          payload[versioned_message_counter_path(mem, version)] = mem.message_count unless mem.person_id == poster_id
-        end
+    return unless room.private?
+    payload = {}
+    room.room_memberships.each do |mem|
+      payload[message_counter_path(mem)] = mem.message_count unless mem.person_id == poster_id
+      if version.present?
+        # version.downto(1) do |v|
+        #   payload[versioned_message_counter_path(mem, v)] = mem.message_count unless mem.person_id == poster_id
+        # end
+        payload[versioned_message_counter_path(mem, version)] = mem.message_count unless mem.person_id == poster_id
       end
-      client.update("", payload)
     end
+    client.update("", payload)
   end
 end

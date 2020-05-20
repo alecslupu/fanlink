@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ConfigItemPolicy < ApplicationPolicy
 
   def nested_set?

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
   module Trivia
   class GameGenerator
     attr_reader :game
@@ -16,7 +17,7 @@
 	  start_date: start_date,
           complexity: 1
         )
-        questions = Trivia::AvailableQuestion.order("random()").first(100)
+        questions = Trivia::AvailableQuestion.order(Arel.sql "random()").first(100)
 
         50.times do |index|
           available_question = questions.pop

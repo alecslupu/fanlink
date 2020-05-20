@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::RewardsController < ApiController
   load_up_the Reward, from: :id, only: %i[ show update delete ]
   def index
@@ -20,7 +21,7 @@ class Api::V3::RewardsController < ApiController
 
   def update
     if params.has_key?(:reward)
-      if @reward.update_attributes(reward_params)
+      if @reward.update(reward_params)
         return_the @reward
       else
         render_422 @reward.errors

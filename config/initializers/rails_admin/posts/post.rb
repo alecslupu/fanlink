@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("Post")
 
@@ -20,9 +21,6 @@ RailsAdmin.config do |config|
       end
       field :body do
         column_width 150
-        pretty_value do
-          bindings[:object].body_buffed("en")
-        end
       end
       field :picture do
         column_width 30
@@ -51,6 +49,9 @@ RailsAdmin.config do |config|
       field :reported do
         column_width 30
         pretty_value do
+          bindings[:object].reported?
+        end
+        export_value do
           bindings[:object].reported?
         end
       end
@@ -95,6 +96,33 @@ RailsAdmin.config do |config|
 
     export do
       configure :body, :string
+      fields :id, :body_text_old, :global, :starts_at, :ends_at, :repost_interval,
+             :status, :created_at, :updated_at,:body, :priority, :recommended,
+             :notify_followers,  :post_comments_count, :pinned
+
+      # field :picture do
+      #   # export_value do
+      #   #   bindings[:object].picture_url
+      #   # end
+      # end
+      # field :video do
+      #   # export_value do
+      #   #   bindings[:object].video_url
+      #   # end
+      # end
+      # field :audio do
+      #   # export_value do
+      #   #   bindings[:object].audio_url
+      #   # end
+      # end
+
+      field :reported do
+        export_value do
+          bindings[:object].reported?
+        end
+      end
+      fields :person, :post_comments, :post_reports, :poll, :poll_options
+
     end
   end
 end

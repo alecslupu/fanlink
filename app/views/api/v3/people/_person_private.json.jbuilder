@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.partial! "api/v3/people/person", locals: { person: person }
 json.cache! ["v3", "private", person] do
   json.email person.email

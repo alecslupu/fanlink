@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 json.cache! ["v3", quest.updated_at, @lang, quest] do
   json.id quest.id.to_s
@@ -10,8 +11,8 @@ json.cache! ["v3", quest.updated_at, @lang, quest] do
   json.picture_width quest.picture.width
   json.picture_height quest.picture.height
   json.status quest.status.to_s
-  json.starts_at quest.starts_at.to_s
-  json.ends_at quest.ends_at.to_s
+  json.starts_at quest.starts_at
+  json.ends_at quest.ends_at
   json.create_time quest.created_at.to_s
 end
 

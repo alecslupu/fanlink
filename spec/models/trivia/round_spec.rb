@@ -1,9 +1,28 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe Trivia::Round, type: :model do
   context "Valid factory" do
     it { expect(build(:trivia_round)).to be_valid }
   end
+
+  context "status" do
+    subject { Trivia::Round.new }
+    it { expect(subject).to respond_to(:draft?) }
+    it { expect(subject).to respond_to(:published?) }
+    it { expect(subject).to respond_to(:locked?) }
+    it { expect(subject).to respond_to(:closed?) }
+  end
+
+  context "State Machine" do
+    subject { Trivia::Round.new }
+
+    it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
+    it { expect(subject).to transition_from(:published).to(:locked).on_event(:locked) }
+    it { expect(subject).to transition_from(:locked).to(:running).on_event(:running) }
+    it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
+  end
+
   context "Associations" do
     describe "should verify associations haven't changed for" do
       it "#has_many" do
@@ -94,6 +113,26 @@ RSpec.describe Trivia::Round, type: :model do
         # 46 = 10*1 seconds duration + 10*6 timeouts
         result = time + 64.seconds
         expect(round.end_date_with_cooldown - result).to eq(0)
+      end
+    end
+
+    describe "copy_to_new" do
+      it "has the method" do
+        expect(Trivia::Round.new.respond_to?(:copy_to_new)).to eq(true)
+      end
+      context "creates new record" do
+        before do
+          create(:trivia_round)
+          expect(Trivia::Round.count).to eq(1)
+          @old_round = Trivia::Round.last
+          @round_object = @old_round.copy_to_new
+          expect(Trivia::Round.count).to eq(2)
+        end
+
+        it { expect(@round_object).to be_a(Trivia::Round) }
+        it { expect(@round_object.status).to eq("draft") }
+        it { expect(@round_object.start_date).to eq(nil) }
+        it { expect(@round_object.end_date).to eq(nil) }
       end
     end
   end

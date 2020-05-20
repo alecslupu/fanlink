@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: post_reports
@@ -34,5 +35,9 @@ class PostReport < ApplicationRecord
 
   def self.valid_status?(s)
     statuses.include?(s.to_s)
+  end
+
+  def post_body
+    post.body
   end
 end

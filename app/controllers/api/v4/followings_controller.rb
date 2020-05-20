@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::FollowingsController < Api::V3::FollowingsController
   def index
     followed_id = params[:followed_id].to_i

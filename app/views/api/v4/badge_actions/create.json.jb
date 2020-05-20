@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 if @progress.present?
   if @series_total < @progress.reward.completion_requirement

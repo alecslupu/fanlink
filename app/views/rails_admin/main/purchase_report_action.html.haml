@@ -10,11 +10,16 @@
 
   sets = get_column_sets(properties)
   properties = sets[params[:set].to_i] || []
-  filter_payload = JSON.generate({ index: 1, datetimepicker_format: "MMMM DD, YYYY HH:mm", label:"From",name:"person_certificates.created_at", type:"date", value: (params[:f]['person_certificates.created_at'].first.last[:v] rescue ""),operator: (params[:f]['person_certificates.created_at'].first.last[:o] rescue nil) })
+  date_filter_payload = JSON.generate({ index: 1, datetimepicker_format: "MMMM DD, YYYY HH:mm", label:"From",name:"person_certificates.created_at", type:"date", value: (params[:f]['person_certificates.created_at'].first.last[:v] rescue ""),operator: (params[:f]['person_certificates.created_at'].first.last[:o] rescue nil) })
+  amount_filter_payload = JSON.generate({ index: 2,  label:"Amount Paid",name:"person_certificates.amount_paid", type:"integer", value: (params[:f]['person_certificates.amount_paid'].first.last[:v] rescue ""),operator: (params[:f]['person_certificates.amount_paid'].first.last[:o] rescue nil) })
+  username_filter_payload = JSON.generate({ index: 3,  label:"Name or referral code",name:"inviter", type:"string", value: (params[:f]['inviter'].first.last[:v] rescue ""),operator: (params[:f]['inviter'].first.last[:o] rescue nil) })
 
 :javascript
   jQuery(function($) {
-     $.filters.append(#{raw filter_payload});
+    jQuery('#filters_box').html('')
+    $.filters.append(#{raw date_filter_payload});
+    $.filters.append(#{raw amount_filter_payload});
+    $.filters.append(#{raw username_filter_payload});
   });
 
 
@@ -36,14 +41,14 @@
             = t('admin.misc.refresh')
           %button#remove_filter.btn.btn-info{title: "Reset filters"}
             %i.icon-white.icon-remove
-
-
+  
+  
   %table.table.table-condensed.table-striped
     %thead
       %tr
         %th{rel: "tooltip"} Id
         %th{rel: "tooltip"} Inviter
-        %th{rel: "tooltip"} Invited people
+        %th{rel: "tooltip"} Signed up Referrals who bought
         %th{rel: "tooltip"} Amount paid
     %tbody
       - @objects.each do |object|
@@ -55,21 +60,24 @@
             - wording = object.send(amc.object_label_method)
             - can_see = !am.embedded? && (show_action = action(:show, am, object))
             = can_see ? link_to(wording, url_for(action: show_action.action_name, model_name: am.to_param, id: object.id), class: 'pjax') : ERB::Util.html_escape(wording)
-
-          %td{title: strip_tags(object.to_s)}= object.refferal_count
-          %td{title: strip_tags(object.to_s)}= object.amount
+          
+          %td{title: strip_tags(object.to_s)}
+            - filter = {all: true, scope: :with_transactions, f: { inviter: {"10915"=>{o: :is, v: "#{object.referral_code.unique_code}"}}} }
+            = link_to(object.referral_count, index_path(params.merge(filter)), class: 'pjax')
+          %td{title: strip_tags(object.to_s)}= object.amount.to_f
 
   -#- if @model_config.list.limited_pagination
   -#  .row
   -#    .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap/without_count', total_pages: Float::INFINITY, remote: true)
   -#
   -#- elsif @objects.respond_to?(:total_count)
-  - total_count = @objects.total_count.to_i
-  .row
-    .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap', remote: true)
-  .row
-    .col-md-6= link_to(t("admin.misc.show_all"), purchase_report_action_path(params.merge(all: true)), class: "show-all btn btn-default clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
-  .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
+    - total_count = @objects.total_count.to_i
+    .row
+        .col-md-6= paginate(@objects, theme: 'ra-twitter-bootstrap', remote: true)
+    .row
+        .col-md-6= link_to(t("admin.misc.show_all"), purchase_report_action_path(params.merge(all: true)), class: "show-all btn btn-default clearfix pjax") unless total_count > 100 || total_count <= @objects.to_a.size
+    .clearfix.total-count= "#{total_count} #{@model_config.pluralize(total_count).downcase}"
 
   -#- else
   -#  .clearfix.total-count= "#{@objects.size} #{@model_config.pluralize(@objects.size).downcase}"
+

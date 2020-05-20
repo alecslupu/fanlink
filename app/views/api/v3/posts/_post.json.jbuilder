@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.cache! ["v3", post] do
   json.id post.id
   json.create_time post.created_at.to_s
