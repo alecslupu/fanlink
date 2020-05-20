@@ -1,0 +1,37 @@
+<% content_for :head do %>
+  <meta property="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="title" content="<%= Check out <product.name>%>" />
+  <meta property="og:type" content="article")>
+  <meta property="og:url" content="LINK")>
+  <meta property="og:title" content="<%= Check out <product.name> %>" />
+  <meta property="og:description" content="<%= Get exclusive content, earn badges, and chat with friend! ALLLLLLLEX %>" />
+  <meta property="og:image" content="undefined" />
+  <meta name="twitter:site" content="LINK" />
+  <meta name="twitter:creator" content="<%= @locals[:username] %>" />
+  <meta name="twitter:title" content="<%= Check out <product.name>%>" />
+  <meta name="twitter:description" content="<%= Get exclusive content, earn badges, and chat with friend! ALLLLLLLEX %>" />
+  <meta name="twitter:image" content="<%= undefined %>" />
+  <meta name="twitter:card" content="summary_large_image" />
+<% end %>
+
+<body>
+  <div class="download">
+    <div class="app-stores">
+      <h1>Download PUNE PRODUCT NAME AICI</h1>
+      <p>Get exclusive content, earn badges, chat with friends, and much more!</p>
+      <a href="https://itunes.apple.com/us/app/inna-official-app/id1343991530?mt=8">
+        <img class="apple-store" src="https://fanlinkmusic.com/static/img/apple-app-store.png">
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.musicto.fanlink.inna">
+        <img class="google-store" src="https://fanlinkmusic.com/static/img/google-app-store.png">
+      </a>
+    </div>
+    <img class="app-screenshot" src="https://fanlinkmusic.com/static/img/x-inna.png">
+  </div>
+</body>
+
+
+    <%= image_tag(@locals[:user_image_url] , class: "profile-picture") %>
+    <h2><%= @locals[:username] %></h2>
+    <%= image_tag(@locals[:post_image_url] , class: "post-picture") %>
+    <p> <%= @locals[:body].html_safe %> </p>

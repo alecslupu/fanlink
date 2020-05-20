@@ -25,6 +25,11 @@ Rails.application.routes.draw do
   post "/people/password_reset" => "api/v1/password_resets#update"
   draw :administrate
 
+
+  get ':product/post_share/:post_id', to: 'static_contents#post_share', as: 'cache_post'
+  get '/:product/static/:slug', to: 'static_contents#html_content', as: 'cache_static_content'
+  get '/:product/download', to: 'static_contents#download', as: 'cached_download_page'
+
   if Rails.env.development?
     match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
   end

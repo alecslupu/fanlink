@@ -1,0 +1,22 @@
+<% content_for :head do %>
+  <meta property="title" content="<%= @locals[:title] %>" />
+  <meta property="og:type" content="article")>
+  <meta property="og:title" content="<%= @locals[:title] %>" />
+  <meta property="og:description" content="<%= @locals[:body] %>" />
+  <meta property="og:image" content="<%= @locals[:post_image_url] %>" />
+  <meta name="twitter:creator" content="<%= @locals[:username] %>" />
+  <meta name="twitter:title" content="<%= @locals[:title] %>" />
+  <meta name="twitter:description" content="<%= @locals[:body] %>" />
+  <meta name="twitter:image" content="<%= @locals[:user_image_url] %>" />
+  <meta name="twitter:card" content="summary_large_image" />
+<% end %>
+
+<body>
+  <div class="post">
+    <%= image_tag(@locals[:user_image_url] , class: "profile-picture") %>
+    <h2><%= @locals[:username] %></h2>
+    <%= image_tag(@locals[:post_image_url] , class: "post-picture") %>
+    <p> <%= @locals[:body].html_safe %> </p>
+  </div>
+</body>
+

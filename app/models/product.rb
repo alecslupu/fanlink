@@ -61,11 +61,21 @@ class Product < ApplicationRecord
 
   scope :enabled, -> { where(enabled: true) }
 
+  after_save :expire_cache
+  before_destroy :expire_cache, prepend: true
+
+
   def people_count
     people.count
   end
 
   def to_s
     internal_name
+  end
+
+  private
+
+  def expire_cache
+    ActionController::Base.expire_page(Rails.application.routes.url_helpers.cache_static_content_path(product: product.internal_name, slug: slug))
   end
 end
