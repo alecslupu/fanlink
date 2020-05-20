@@ -17,7 +17,7 @@ RSpec.describe ApplicationPolicy, type: :policy do
     show_in_app: false,
     dashboard: false,
     # select_product_dashboard: false,
-    select_product: false,
+    select_product: false
   }
 
 

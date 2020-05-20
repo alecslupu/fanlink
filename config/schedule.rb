@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 set :output, { error: "/home/ubuntu/sites/flapi/current/log/error.log", standard: "/home/ubuntu/sites/flapi/current/log/scheduled.log" }
 
 every 30.minute do

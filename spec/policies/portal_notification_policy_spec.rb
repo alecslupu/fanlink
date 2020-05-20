@@ -16,7 +16,7 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
   describe "defined policies" do
@@ -64,7 +64,7 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     before :each do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access,portal_notification_read: true))
@@ -97,7 +97,7 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do
@@ -131,7 +131,7 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do
@@ -166,7 +166,7 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do
@@ -200,7 +200,7 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     before :each do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access,portal_notification_history: true))
@@ -220,19 +220,6 @@ RSpec.describe PortalNotificationPolicy, type: :policy do
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
-    end
-  end
-
-  context "object default attributes" do
-    before :each do
-      allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access,chat_history: true))
-    end
-
-    describe ".attributes_for" do
-      it { expect(subject.attributes_for(:read)).to eq({}) }
-      it { expect(subject.attributes_for(:update)).to eq({trigger_admin_notification: true}) }
-      it { expect(subject.attributes_for(:create)).to eq({trigger_admin_notification: true}) }
-      it { expect(subject.attributes_for(:new)).to eq({send_me_at: (Time.zone.now + 1.hour).beginning_of_hour}) }
     end
   end
 end

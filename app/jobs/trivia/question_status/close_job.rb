@@ -1,14 +1,12 @@
+# frozen_string_literal: true
 module Trivia
   module QuestionStatus
-    class CloseJob < Struct.new(:question_id)
+    class CloseJob < ::ApplicationJob
+      queue_as :trivia
 
-      def perform
+      def perform(question_id)
         question = Trivia::Question.find(question_id)
         question.compute_leaderboard
-      end
-
-      def queue_name
-        :trivia
       end
     end
   end

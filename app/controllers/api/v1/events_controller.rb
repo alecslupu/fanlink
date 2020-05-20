@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::EventsController < ApiController
   # **
   # @api {get} /events Get available events.
@@ -29,8 +30,8 @@ class Api::V1::EventsController < ApiController
     if !check_dates
       render json: { errors: "Invalid date(s)" }, status: :unprocessable_entity
     else
-      start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.now - 3.years).beginning_of_day
-      end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.now + 3.years).end_of_day
+      start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.zone.now - 3.years).beginning_of_day
+      end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.zone.now + 3.years).end_of_day
       @events = Event.in_date_range(start_boundary, end_boundary).order(starts_at: :asc)
     end
   end

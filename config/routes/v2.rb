@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
-  scope(constraints: Routing::Constraints::V2, module: "api/v2", defaults: {format: :json}) do
+  scope(constraints: Routing::Constraints::V2, module: "api/v2", defaults: { format: :json }) do
     resources :events, only: %i[create update destroy]
 
     resources :merchandise, only: %i[create update destroy]

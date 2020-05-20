@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
   before_action :super_admin_only, only: %i[ destroy ]

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "swagger_helper"
 
 
@@ -19,7 +20,7 @@ RSpec.describe "Api::V4::Trivia::RoundLeaderboardsController", type: :request, s
   #    let!(:game) { ActsAsTenant.with_tenant(product) { create(:full_short_trivia_game, with_leaderboard: true) } }
   #    let!(:game_id) { game.id }
   #
-  #    response "200", "displays completed games" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      let(:user) { ActsAsTenant.with_tenant(product) { create(:person) } }
   #      let(:Authorization) { "Bearer #{::TokenProvider.issue_token( user_id: user.id ) }" }
   #      let!(:games) {
@@ -65,7 +66,7 @@ RSpec.describe "Api::V4::Trivia::RoundLeaderboardsController", type: :request, s
   #    let!(:game_id) { game.id }
   #
   #
-  #    response "200", "displays completed games" do
+  #    response "200", "HTTP/1.1 200 Ok" do
   #      let(:user) { create(:person) }
   #      let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: user.id)}" }
   #      let!(:games) {

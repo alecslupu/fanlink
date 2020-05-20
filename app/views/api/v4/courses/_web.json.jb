@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {
   id: course.id,
   semester_id: course.semester_id,

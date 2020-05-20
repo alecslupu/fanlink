@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Push
   class SimpleNotification < BasePush
     def push(notification, current_user, person_ids)

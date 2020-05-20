@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.cache! ["v3", atype.updated_at, atype] do
   json.id atype.id
   json.activity_id atype.activity_id

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Person, type: :model do
   before(:each) do
     @username = "WhereisPancakeHouse"
@@ -436,7 +437,7 @@ RSpec.describe Person, type: :model do
         person = create(:person)
         create(:badge, point_value: 20)
         level_earned = create(:level, points: 10)
-        create(:level_progress, person: person, points: {badge_action: 20}, total: 20)
+        create(:level_progress, person: person, points: { badge_action: 20 }, total: 20)
         person.reload
         expect(person.level_earned_from_progresses(person.level_progresses)).to eq(level_earned)
       end
@@ -523,7 +524,7 @@ RSpec.describe Person, type: :model do
     describe ".create_from_facebook" do
       it "should create and return a new user from valid FB auth token" do
         username = "somedude#{Time.now.to_i}"
-        koala_result = {"id" => Time.now.to_i.to_s, "name" => "John Smith"}
+        koala_result = { "id" => Time.now.to_i.to_s, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         p = nil
         expect {
@@ -541,7 +542,7 @@ RSpec.describe Person, type: :model do
         fbid = "123456"
         tok = "1234567"
         person = create(:person, facebookid: fbid)
-        koala_result = {"id" => fbid, "name" => "John Smith"}
+        koala_result = { "id" => fbid, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect(Person.for_facebook_auth_token(tok)).to eq(person)
       end
@@ -697,35 +698,48 @@ RSpec.describe Person, type: :model do
   describe "#send_onboarding_email" do
     it "enqueues an onboarding email" do
       person = create(:person)
-      expect(Delayed::Job).to receive(:enqueue)
+      ActiveJob::Base.queue_adapter = :test
+      expect {
+        OnboardingEmailJob.perform_later(person.id)
+      }.to have_enqueued_job
       person.send_onboarding_email
     end
   end
 
   describe "#send_password_reset_email" do
     it "enqueues an password reset email" do
+      ActiveJob::Base.queue_adapter = :test
       person = create(:person)
-      expect(Delayed::Job).to receive(:enqueue)
+      expect {
+        PasswordResetEmailJob.perform_later(person.id)
+      }.to have_enqueued_job
       person.send_password_reset_email
     end
   end
 
   describe "#send_certificate_email" do
     it "enqueues an onboarding email" do
+      ActiveJob::Base.queue_adapter = :test
       pc = create(:person_certificate)
-      expect(Delayed::Job).to receive(:enqueue)
+
+      expect {
+        SendCertificateEmailJob.perform_later(pc.person_id, pc.certificate_id, pc.person.email)
+      }.to have_enqueued_job
       pc.person.send_certificate_email(pc.certificate_id, pc.person.email)
     end
   end
 
   describe "#send_course_attachment_email" do
     it "sends a course on email" do
+      ActiveJob::Base.queue_adapter = :test
       pc = create(:person_certificate)
-      expect(Delayed::Job).to receive(:enqueue)
-      pc.person.send_course_attachment_email(create(:download_file_page).certcourse_page)
+      df = create(:download_file_page).certcourse_page
+      expect {
+        SendDownloadFileEmailJob.perform_later(pc.person.id, df.id)
+      }.to have_enqueued_job
+      pc.person.send_course_attachment_email(df)
     end
   end
-
 
   describe "full_permission_list" do
     it "responds to" do
@@ -793,8 +807,11 @@ RSpec.describe Person, type: :model do
 
   describe "#send_assignee_certificate_email" do
     it "enqueues a certificate email" do
+      ActiveJob::Base.queue_adapter = :test
       pc = create(:person_certificate)
-      expect(Delayed::Job).to receive(:enqueue)
+      expect {
+        SendAssigneeCertificateEmailJob.perform_later(pc.person.id, pc.person_id, pc.id, pc.person.email)
+      }.to have_enqueued_job
       pc.person.send_assignee_certificate_email(pc, pc.person_id, pc.person.email)
     end
   end

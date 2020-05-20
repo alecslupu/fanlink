@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: quiz_pages
@@ -78,7 +79,7 @@ class QuizPage < ApplicationRecord
         errors.add(:base, :mandatory_checks, message: _("Mandatory quizes require a wrong answer page."))
       else
         wrong_page = CertcoursePage.where(id: wrong_answer_page_id).first
-        errors.add(:wrong_answer_page_id, _("Could not find the specified Wrong page id")) unless wrong_page.present?
+        errors.add(:wrong_answer_page_id, _("Could not find the specified Wrong page id")) if wrong_page.blank?
         if wrong_page.present? && wrong_page.certcourse_page_order >= certcourse_page.certcourse_page_order
           errors.add(:wrong_answer_page_id,  _("Wrong page needs to come before this page."))
         end

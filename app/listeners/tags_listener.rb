@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TagsListener
   def self.post_created(user, post, api_version = 0)
     if post.body.present?

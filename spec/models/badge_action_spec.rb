@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe BadgeAction, type: :model do
   subject { FactoryBot.create(:badge_action, action_type_id: FactoryBot.create(:action_type).id, person_id: FactoryBot.create(:person).id, identifier: "myaction") }
 

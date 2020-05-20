@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   id: badge.id.to_s,
   name: badge.name(@lang),
@@ -7,6 +8,6 @@
   action_type_id: ((badge.reward.present? && badge.reward.assigned_rewards.present? && badge.reward.assigned_rewards.by_type("ActionType").exists?) ? badge.reward.assigned_rewards.by_type("ActionType").first.id : nil),
   action_requirement: ((badge.reward.present?) ? badge.reward.completion_requirement : nil),
   point_value: ((badge.reward.present?) ? badge.reward.points : nil),
-  reward: (badge.reward.present? ? badge.reward : nil),
-  assigned_rewards: (badge.assigned_rewards.present? ? badge.assigned_rewards : nil)
+  reward: (badge.reward.presence),
+  assigned_rewards: (badge.assigned_rewards.presence)
 }
