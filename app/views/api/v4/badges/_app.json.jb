@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 {
   id: badge.id.to_s,
-  name: badge.name(@lang),
+  name: badge.name,
   internal_name: badge.internal_name,
-  description: badge.description(@lang),
+  description: badge.description,
   picture_url: badge.picture_url,
   action_type_id: ((badge.reward.present? && badge.reward.assigned_rewards.present? && badge.reward.assigned_rewards.by_type("ActionType").exists?) ? badge.reward.assigned_rewards.by_type("ActionType").first.id : nil),
   action_requirement: ((badge.reward.present?) ? badge.reward.completion_requirement : nil),

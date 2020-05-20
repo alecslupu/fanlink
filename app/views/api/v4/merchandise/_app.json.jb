@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 {
   id: merchandise.id,
-  name: merchandise.name(@lang),
-  description: merchandise.description(@lang),
+  name: merchandise.name,
+  description: merchandise.description,
   price: merchandise.price,
   purchase_url: merchandise.purchase_url,
   picture_url: merchandise.picture_url,

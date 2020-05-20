@@ -4,9 +4,9 @@ json.cache! ["v3", quest.updated_at, @lang, quest] do
   json.id quest.id.to_s
   json.product_id quest.product_id.to_s
   json.event_id quest.event_id.to_s
-  json.name quest.name(@lang)
+  json.name quest.name
   json.internal_name quest.internal_name
-  json.description quest.description(@lang)
+  json.description quest.description
   json.picture_url quest.picture_optimal_url
   json.picture_width quest.picture.width
   json.picture_height quest.picture.height

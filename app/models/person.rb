@@ -47,12 +47,12 @@ class Person < ApplicationRecord
   attr_accessor :trigger_admin
 
   include AttachmentSupport
-  include TranslationThings
   authenticates_with_sorcery!
 
   attr_accessor :app
 
-  has_manual_translated :designation
+  translates :designation, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_paper_trail
 
