@@ -40,11 +40,12 @@ RailsAdmin.config do |config|
       field :poll_type_id, :integer do
         label "Post id"
       end
-      fields :translations,
-             :start_date,
+      fields :start_date,
              :end_date,
+             :duration,
              :poll_status,
-             :poll_options
+             :poll_options,
+             :translations
     end
 
     list do
