@@ -15,6 +15,9 @@ if ENV["RAILS6"]
   gem "rails", "~> 6"
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 6.0'
+elsif ENV["RAILS_EDGE"]
+  # gem "rails", github: "rails/rails"
+  # gem 'sass-rails', '~> 6.0'
 else
   # Bundle edge Rails instead: gem "rails", github: "rails/rails"
   gem "rails", "~> 5.2"
