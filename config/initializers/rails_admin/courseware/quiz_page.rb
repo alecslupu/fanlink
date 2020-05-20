@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("QuizPage")
   config.model "QuizPage" do
@@ -12,7 +13,7 @@ RailsAdmin.config do |config|
     list do
       field :id
       field :course_name do
-        searchable [{Certcourse => :short_name}]
+        searchable [{ Certcourse => :short_name }]
         queryable true
       end
       fields :quiz_text, :answers, :is_optional, :is_survey

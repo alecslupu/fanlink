@@ -18,12 +18,12 @@ describe "Messages (v2)" do
       @index_room = create(:room, product: @person.product, public: true, status: :active)
       @messages = []
       8.times do |n|
-        @messages << create(:message, room: @index_room, created_at: Time.now - n.minutes)
+        @messages << create(:message, room: @index_room, created_at: Time.zone.now - n.minutes)
       end
       @pinned_person = create(:person, pin_messages_from: true, product: @product)
       @pinned_messages = []
       2.times do |n|
-        msg = create(:message, room: @index_room, created_at: Time.now - (n + 10).minutes, person: @pinned_person)
+        msg = create(:message, room: @index_room, created_at: Time.zone.now - (n + 10).minutes, person: @pinned_person)
         @messages << msg
         @pinned_messages << msg
       end

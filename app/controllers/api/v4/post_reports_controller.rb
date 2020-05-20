@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PostReportsController < Api::V3::PostReportsController
   def index
     @post_reports = paginate apply_filters

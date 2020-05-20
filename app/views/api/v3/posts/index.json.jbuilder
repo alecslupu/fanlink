@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.posts do
   json.array!(@posts) do |post|
     next if post.deleted? && current_user&.app != "portal"

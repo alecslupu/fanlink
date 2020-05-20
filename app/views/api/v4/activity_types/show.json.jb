@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   type:  render(partial: @req_source, locals: { activity: @activity_type }, handlers: "jb")
 }

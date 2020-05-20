@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PortalNotificationsController < Api::V3::PortalNotificationsController
   def index
     @portal_notifications = paginate(PortalNotification.all)
@@ -20,7 +21,7 @@ class Api::V4::PortalNotificationsController < Api::V3::PortalNotificationsContr
 
   def update
     if params.has_key?(:portal_notification)
-      if @portal_notification.update_attributes(portal_params)
+      if @portal_notification.update(portal_params)
         @portal_notification.update_push
         return_the @portal_notification, handler: tpl_handler, using: :show
       else

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module JsonHelpers
   def json
     @json ||= JSON.parse(response.body)

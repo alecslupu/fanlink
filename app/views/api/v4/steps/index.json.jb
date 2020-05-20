@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 
 json[:steps] = @steps.map do |step|

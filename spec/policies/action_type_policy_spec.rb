@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe ActionTypePolicy, type: :policy do
@@ -15,7 +16,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
   describe "defined policies" do
@@ -66,7 +67,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     describe "permissions" do
@@ -99,7 +100,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     describe "permissions" do
@@ -132,7 +133,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
 
@@ -166,7 +167,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
 
@@ -201,7 +202,7 @@ RSpec.describe ActionTypePolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     describe "permissions" do
       before :each do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PollsController < ApiController
   load_up_the Poll, except: %i[ index create ]
   # **
@@ -114,7 +115,7 @@ class Api::V3::PollsController < ApiController
 
   def update
     if params.has_key?(:poll)
-      if @poll.update_attributes(poll_params)
+      if @poll.update(poll_params)
         return_the @poll
       else
         render_422 @poll.errors

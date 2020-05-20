@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 json[:badge] = render partial: @req_source, locals: { badge: @badge }
 if @req_source == "web"

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller do
@@ -39,7 +40,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
         Courseware::Client::Assigned.create(person_id: person2.id, client_id: person.id)
         login_as(person)
 
-        get :index, params: {per_page: 1, page: 1}
+        get :index, params: { per_page: 1, page: 1 }
 
         expect(response).to be_successful
         expect(person.hired_people.count).to eq(2)
@@ -58,7 +59,7 @@ RSpec.describe Api::V4::Courseware::Client::PeopleController, type: :controller 
         Courseware::Client::Assigned.create(person_id: person3.id, client_id: person.id)
         login_as(person)
 
-        get :index, params: {username_filter: 'per'}
+        get :index, params: { username_filter: 'per' }
 
         expect(response).to be_successful
         expect(json['people'].count).to eq(2)

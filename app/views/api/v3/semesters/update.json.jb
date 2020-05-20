@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {
     semester: render(partial: "semester", locals: { semester: @semester }, handlers: "jb")
   }

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::ProductBeaconsController < ApiController
   before_action :admin_only
   # **
@@ -254,7 +255,7 @@ class Api::V2::ProductBeaconsController < ApiController
   # *
 
   def update
-    @product_beacon.update_attributes(beacon_update_params)
+    @product_beacon.update(beacon_update_params)
     return_the @product_beacon
   end
 

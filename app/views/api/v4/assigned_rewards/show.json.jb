@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   assigned: render(partial: @req_source, locals: { assigned: @assigned }, handlers: "jb")
 }

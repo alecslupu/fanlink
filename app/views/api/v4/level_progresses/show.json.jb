@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   level_progress: render(partial: @req_source, locals: { level: @level_progress }, handlers: "jb")
 }
