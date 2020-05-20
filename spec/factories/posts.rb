@@ -39,8 +39,11 @@
 FactoryBot.define do
   factory :post do
     person { create(:person) }
-    body { Faker::Lorem.paragraph }
     global { false }
+
+    after(:create) do |post, evaluator|
+      post.body = Globalize.with_locale(I18n.locale) { Faker::Lorem.paragraph }
+    end
 
     factory :recommended_post do
       recommended { true }

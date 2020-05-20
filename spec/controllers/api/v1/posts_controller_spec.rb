@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "spec_helper"
 
+
 RSpec.describe Api::V1::PostsController, type: :controller do
   #
   # before(:each) do
@@ -225,10 +226,11 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         person.follow(people.last)
         post11 = create(:published_post, person: people.first, status: :published, created_at: created_in_range - 1.hour)
         lan = "es"
+        I18n.locale = lan
 
         request.headers.add "Accept-Language", lan + "-spa" # letters dont matter because we should be just using first two characters
         translation = "En espagnol"
-        post11.body = { lan => translation }
+        post11.set_translations({lan => {body: translation}})
         post11.save
         login_as(person)
         get :index, params: { from_date: from, to_date: to }
@@ -405,6 +407,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         expect(json["posts"].map { |jp| jp["id"] }.sort).to eq(posts.map { |p| p.id.to_s }.sort)
       end
     end
+
     it "should get the list of all posts filtered on full person username match" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -482,18 +485,23 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
-        post = Post.for_product(person.product).sample
-        get :list, params: { body_filter: post.body }
+        post = create(:post, status: Post.statuses.keys.sample, created_at: 10.days.ago)
+        post.save
+
+        get :list, params: {body_filter: post.body}
         expect(response).to be_successful
         expect(json["posts"].count).to eq(1)
         expect(json["posts"].first["id"]).to eq(post.id.to_s)
       end
     end
+
     it "should get the list of all posts filtered on partial body match" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         create_list(:post, 9, created_at: 10.days.ago)
-        create(:post, body: "some body that I made up ", status: Post.statuses.keys.sample, created_at: 10.days.ago)
+        post = create(:post, status: Post.statuses.keys.sample, created_at: 10.days.ago)
+        post.body = "some body that I made up "
+        post.save
         login_as(person)
         get :list, params: { body_filter: "some body" }
         expect(response).to be_successful
@@ -712,7 +720,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         english = "This is English"
-        flinkpost.body = { "en" => english }
+        flinkpost.set_translations( "en" => { body: english } )
         flinkpost.save
         get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
@@ -723,10 +731,13 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+        I18n.locale = "en"
         flinkpost = create(:published_post, person: person)
+        flinkpost.body = "Something here"
+        flinkpost.save
         get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
-        expect(json["post"]["body"]).to eq(flinkpost.body(Post::DEFAULT_LANG))
+        expect(json["post"]["body"]).to eq(flinkpost.body)
       end
     end
     it "should return correct language body if device language provided" do
@@ -735,8 +746,9 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         lan = "es"
+        I18n.locale = lan
         translation = "En espagnol"
-        flinkpost.body = { lan => translation }
+        flinkpost.set_translations( lan => { body: translation  } )
         flinkpost.save
         request.headers.add "Accept-Language", (lan + "-spa")
         get :show, params: { id: flinkpost.id }

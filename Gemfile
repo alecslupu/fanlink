@@ -175,7 +175,6 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-#gem "jko_api" # api versioning
 gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
@@ -237,3 +236,8 @@ gem "aasm"
 # https://github.com/javan/whenever
 gem 'whenever', require: false
 
+gem 'acts-as-taggable-on'
+
+gem 'globalize'
+gem 'globalize-versioning'
+gem 'rails_admin_globalize_field'

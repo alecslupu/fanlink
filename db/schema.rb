@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200304073117) do
+ActiveRecord::Schema.define(version: 2020_04_10_185444) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
 
   create_table "action_types", force: :cascade do |t|
     t.text "name", null: false
@@ -134,10 +135,10 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.datetime "issued_from"
-    t.datetime "issued_to"
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.datetime "issued_from"
+    t.datetime "issued_to"
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
@@ -499,9 +500,9 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
-    t.integer "priority", default: 0, null: false
     t.jsonb "name", default: {}, null: false
     t.jsonb "description", default: {}, null: false
+    t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
@@ -547,8 +548,10 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.datetime "audio_updated_at"
     t.index ["body"], name: "index_messages_on_body"
     t.index ["created_at"], name: "index_messages_on_created_at"
+    t.index ["created_at"], name: "messages_created_at_idx"
     t.index ["person_id"], name: "index_messages_on_person_id"
     t.index ["room_id"], name: "idx_messages_room"
+    t.index ["updated_at"], name: "index_messages_on_updated_at"
   end
 
   create_table "notification_device_ids", force: :cascade do |t|
@@ -570,6 +573,17 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.boolean "for_followers", default: false, null: false
     t.integer "product_id", null: false
     t.index ["person_id"], name: "index_notifications_on_person_id"
+  end
+
+  create_table "old_tags", force: :cascade do |t|
+    t.text "name", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
+    t.integer "posts_count", default: 0
+    t.index ["name"], name: "idx_tag_names"
+    t.index ["product_id"], name: "idx_tag_products"
   end
 
   create_table "people", force: :cascade do |t|
@@ -612,6 +626,7 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.boolean "authorized", default: true, null: false
     t.datetime "last_activity_at"
     t.index ["created_at"], name: "index_people_on_created_at"
+    t.index ["id", "product_id"], name: "index_people_product"
     t.index ["product_id", "auto_follow"], name: "idx_people_product_auto_follow"
     t.index ["product_id", "email"], name: "index_people_on_product_id_and_email"
     t.index ["product_id", "email"], name: "unq_people_product_email", unique: true
@@ -753,7 +768,7 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.integer "poll_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "end_date", default: "2020-01-31 09:32:07"
+    t.datetime "end_date", default: "2019-02-07 01:46:08"
     t.jsonb "description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
@@ -858,6 +873,16 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
   end
 
+  create_table "post_translations", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "body"
+    t.index ["locale"], name: "index_post_translations_on_locale"
+    t.index ["post_id"], name: "index_post_translations_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
     t.text "body_text_old"
@@ -872,7 +897,7 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "body", default: {}, null: false
+    t.jsonb "untranslated_body", default: {}, null: false
     t.integer "priority", default: 0, null: false
     t.boolean "recommended", default: false, null: false
     t.boolean "notify_followers", default: false, null: false
@@ -889,13 +914,14 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
     t.boolean "pinned", default: false
-    t.index ["body"], name: "index_posts_on_body", using: :gin
+    t.integer "post_reports_count", default: 0
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
     t.index ["status"], name: "index_posts_on_status"
+    t.index ["untranslated_body"], name: "index_posts_on_untranslated_body", using: :gin
   end
 
   create_table "product_beacons", force: :cascade do |t|
@@ -933,6 +959,7 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.string "color_accent", default: "FFF537"
     t.string "color_accent_text", default: "FFF537"
     t.string "color_title_text", default: "FFF537"
+    t.string "color_accessory", default: "000000"
     t.integer "navigation_bar_style", default: 1
     t.integer "status_bar_style", default: 1
     t.integer "toolbar_style", default: 1
@@ -1186,8 +1213,8 @@ ActiveRecord::Schema.define(version: 20200304073117) do
   end
 
   create_table "static_contents", force: :cascade do |t|
-    t.jsonb "content", default: "{}", null: false
-    t.jsonb "title", default: "{}", null: false
+    t.jsonb "content", default: {}, null: false
+    t.jsonb "title", default: {}, null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
@@ -1233,15 +1260,31 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.index ["reward_id"], name: "idx_steps_rewards"
   end
 
-  create_table "tags", force: :cascade do |t|
-    t.text "name", null: false
-    t.integer "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "deleted", default: false, null: false
-    t.integer "posts_count", default: 0
-    t.index ["name"], name: "idx_tag_names"
-    t.index ["product_id"], name: "idx_tag_products"
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "trivia_answers", force: :cascade do |t|
@@ -1449,6 +1492,7 @@ ActiveRecord::Schema.define(version: 20200304073117) do
     t.text "whodunnit"
     t.text "object"
     t.datetime "created_at"
+    t.string "locale"
     t.index ["item_type", "item_id"], name: "ind_versions_item_type_item_id"
   end
 
@@ -1566,6 +1610,7 @@ ActiveRecord::Schema.define(version: 20200304073117) do
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
   add_foreign_key "steps", "rewards", name: "fk_steps_rewards"
+  add_foreign_key "taggings", "tags"
   add_foreign_key "trivia_answers", "people", name: "trivia_answers_person_id_fkey"
   add_foreign_key "trivia_answers", "products", name: "fk_trivia_answers_products", on_delete: :cascade
   add_foreign_key "trivia_answers", "trivia_questions", name: "trivia_answers_questions_id_fkey"

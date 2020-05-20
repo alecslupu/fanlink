@@ -331,8 +331,9 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(:post, person: person)
-        tag = create(:tag)
-        post.tags << tag
+        tag = build(:tag)
+        post.tag_list = tag.name
+        post.save
         post_reaction = create(:post_reaction, person: person, post: post)
 
         get :show, params: { id: post.id }
@@ -427,7 +428,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         expect(json['post']['video_url']).to include('short_video')
       end
     end
-
 
     it 'returns all the posts with the attachments' do
       person = create(:admin_user)

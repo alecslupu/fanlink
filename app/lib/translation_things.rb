@@ -16,7 +16,7 @@ module TranslationThings
       #  'it' => 'Italian',
       #  'ko' => 'Korean',
       #  'pt' => 'Portuguese',
-      "ro" => "Romanian"
+      "ro" => "Romanian",
   }.freeze
 
   DEFAULT_LANG = "en"
@@ -46,6 +46,7 @@ module TranslationThings
     # first if it is present.  This ensures the hash is correctly setup.
     #
     def has_manual_translated(*names)
+      ActiveSupport::Deprecation.warn("The TranslationThings is deprecated. Please implement Globalize functionality #{caller_locations(1,1)[0].label}")
       add_translation_things_instance_methods_for(names)
     end
 

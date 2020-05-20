@@ -2,7 +2,7 @@
 class Api::V4::TagsController < Api::V3::TagsController
   def index
     if params[:tag_name].present?
-      @posts = paginate Post.visible.for_tag(params[:tag_name])
+      @posts = paginate Post.visible.tagged_with(params[:tag_name].try(:downcase), match_all: true)
       return_the @posts, handler: tpl_handler
     elsif some_admin? && web_request?
       @tags = paginate Tag.all

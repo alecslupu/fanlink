@@ -43,7 +43,8 @@ class Post < ApplicationRecord
   scope :id_filter, -> (query) { where(id: query.to_i) }
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
   scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+
+  scope :body_filter, -> (query) { joins(:translations).where("post_translations.body ilike ?", "%#{query}%") }
   scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.zone.parse(query)) }
   scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.zone.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
@@ -57,6 +58,7 @@ class Post < ApplicationRecord
     DeletePostJob.perform_later(self.id, version)
   end
 
+
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
@@ -68,7 +70,9 @@ class Post < ApplicationRecord
 
   after_save :adjust_priorities
 
-  has_manual_translated :body
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
+  has_manual_translated :untranslated_body
 
   has_image_called :picture
   has_audio_called :audio
@@ -76,8 +80,10 @@ class Post < ApplicationRecord
 
   has_paper_trail
 
+  acts_as_taggable
+
   has_many :post_tags
-  has_many :tags, through: :post_tags
+  has_many :old_tags, through: :post_tags, source: :tag
 
   has_many :post_comments, dependent: :destroy
   has_many :post_reports, dependent: :destroy
@@ -112,7 +118,7 @@ class Post < ApplicationRecord
           where("posts.created_at >= ? and posts.created_at <= ?",
                 start_date.beginning_of_day, end_date.end_of_day)
         }
-  scope :for_tag, -> (tag) { joins(:tags).where("lower(tags.name) = ?", tag.downcase) }
+  scope :for_tag, -> (tag) { joins(:old_tags).where("lower(old_tags.name) = ?", tag.downcase) }
   scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
@@ -208,7 +214,7 @@ class Post < ApplicationRecord
   # end
 
   def cached_tags
-    Rails.cache.fetch([self, "tags"]) { tags }
+    Rails.cache.fetch([self, "tags"]) { old_tags }
   end
 
   def reactions
