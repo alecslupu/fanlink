@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("Trivia::AvailableQuestion")
   config.model "Trivia::AvailableQuestion" do
@@ -5,7 +6,10 @@ RailsAdmin.config do |config|
 
     label_plural "Available questions"
     edit do
-      fields :title, :cooldown_period, :time_limit, :topic, :complexity, :status
+      fields :title, :cooldown_period, :time_limit, :topic, :complexity
+      field :status, :enum do
+        Trivia::AvailableQuestion.aasm.states_for_select
+      end
       field :type, :enum do
         enum do
           [

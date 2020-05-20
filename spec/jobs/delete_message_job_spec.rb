@@ -1,8 +1,6 @@
-require "spec_helper"
+# frozen_string_literal: true
+require 'rails_helper'
 
-describe DeleteMessageJob, group: :jobs do
-  # TODO: auto-generated
-  describe "#perform" do
-    pending
-  end
+RSpec.describe DeleteMessageJob, type: :job do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

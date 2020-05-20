@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id merchandise.id.to_s
 json.name merchandise.name(@lang)
 json.description merchandise.description(@lang)

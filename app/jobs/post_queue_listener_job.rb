@@ -1,5 +1,8 @@
-class PostQueueListenerJob < Struct.new(:job_id, :attempts)
-  def perform
+# frozen_string_literal: true
+class PostQueueListenerJob < ApplicationJob
+  queue_as :default
+
+  def perform(job_id, attempts = 0)
     @job_id   = job_id
     @attempts = attempts || 0
 
@@ -7,7 +10,7 @@ class PostQueueListenerJob < Struct.new(:job_id, :attempts)
     if (msg = Flaws.extract_from_transcoding_queue(&the_job_we_want))
       Rails.logger.error("\nCalled\n")
       Post.process_et_response(msg)
-    elsif (should_keep_trying?)
+    elsif should_keep_trying?
       Rails.logger.error("\nTrying again\n")
       try_again
     else
@@ -20,9 +23,6 @@ class PostQueueListenerJob < Struct.new(:job_id, :attempts)
     Rails.logger.error(e.inspect)
   end
 
-  def queue_name
-    :default
-  end
   private
 
     def should_keep_trying?
@@ -30,7 +30,7 @@ class PostQueueListenerJob < Struct.new(:job_id, :attempts)
     end
 
     def try_again
-      Delayed::Job.enqueue(self.class.new(@job_id, @attempts + 1), run_at: 30.seconds.from_now)
+      PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(@job_id, @attempts + 1)
     end
 
     def give_up

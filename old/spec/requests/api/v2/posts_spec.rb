@@ -21,8 +21,8 @@ describe "Posts (v2)" do
       @total_index_posts.times do |n|
         @index_posts << create(:post, status: :published, person: [@followee1, @followee2].sample, body:  "This is post #{n + 1}")
       end
-      @expired_index_post = create(:post, person: @followee1, starts_at: Time.now - 10.days, ends_at: Time.now - 1.day)
-      @premature_index_post = create(:post, person: @followee2, starts_at: Time.now + 1.days)
+      @expired_index_post = create(:post, person: @followee1, starts_at: Time.zone.now - 10.days, ends_at: Time.zone.now - 1.day)
+      @premature_index_post = create(:post, person: @followee2, starts_at: Time.zone.now + 1.days)
       @nonfollowed_index_post = create(:post, person: @nonfollowee)
       @rejected_index_post = create(:post, person: @followee1, status: :rejected)
       @per_page = 2
@@ -92,8 +92,8 @@ describe "Posts (v2)" do
         posts << create(:post, person: person, status: :published)
       end
       create(:post, person: person, status: :rejected)
-      create(:post, person: person, starts_at: Time.now + 1.day)
-      create(:post, person: person, ends_at: Time.now - 1.day)
+      create(:post, person: person, starts_at: Time.zone.now + 1.day)
+      create(:post, person: person, ends_at: Time.zone.now - 1.day)
       login_as(@person)
       get "/posts", params: { page: 1, per_page: 2, person_id: person.id }
       expect(response).to be_success

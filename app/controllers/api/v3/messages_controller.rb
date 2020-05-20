@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::MessagesController < Api::V2::MessagesController
   before_action :admin_only, only: %i[ list update ]
 
@@ -98,6 +99,8 @@ class Api::V3::MessagesController < Api::V2::MessagesController
           if room.private?
             room.increment_message_counters(current_user.id)
             @message.private_message_push
+          else
+            @message.public_room_message_push
           end
           return_the @message
         else
@@ -262,7 +265,7 @@ class Api::V3::MessagesController < Api::V2::MessagesController
 
   def update
     if params.has_key?(:message)
-      if @message.update_attributes(message_update_params)
+      if @message.update(message_update_params)
         if @message.hidden
           @message.delete_real_time(@api_version)
         end

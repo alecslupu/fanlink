@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person, version = nil)
@@ -162,7 +163,7 @@ private
   def post_public_message(message, version = nil)
     msg = {
       id: message.id,
-      body: message.parse_content((version.present? ? version : 0)),
+      body: message.parse_content(version.presence || 0),
       # picture_id: message.picture_id,
       create_time: message.create_time,
       picture_url: message.picture_url,

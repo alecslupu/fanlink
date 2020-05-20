@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PeopleController < Api::V3::PeopleController
   def index
     @people = paginate apply_filters
@@ -86,7 +87,7 @@ class Api::V4::PeopleController < Api::V3::PeopleController
     else
       time = 1
     end
-    @people = Person.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    @people = Person.where("created_at >= ?", time.day.ago).order(Arel.sql "DATE(created_at) ASC").group(Are.sql "Date(created_at)").count
     return_the @people, handler: tpl_handler
   end
 

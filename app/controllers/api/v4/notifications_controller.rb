@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 class Api::V4::NotificationsController < ApiController
   def create
-    if current_user.pin_messages_from || current_user.product_account
+    if vitalgroup_normal_user? || current_user.pin_messages_from || current_user.product_account
       @notification = Notification.new(notification_params.merge(person_id: current_user.id))
       if @notification.save
         @notification.notify
@@ -13,6 +14,10 @@ class Api::V4::NotificationsController < ApiController
   end
 
   private
+  
+  def vitalgroup_normal_user? 
+    current_user.normal? && ActsAsTenant.current_tenant.internal_name == 'vitalgroup'  
+  end
 
   def notification_params
     params.require(:notification).permit(:body, :for_followers)

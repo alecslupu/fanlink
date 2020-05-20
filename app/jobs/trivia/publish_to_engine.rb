@@ -1,7 +1,9 @@
+# frozen_string_literal: true
 module Trivia
-  class PublishToEngine < Struct.new(:game_id, :url)
+  class PublishToEngine < ::ApplicationJob
+    queue_as :trivia
 
-    def perform
+    def perform(game_id)
       url = Rails.application.secrets.trivia_engine_url
       HTTParty.post(url,
         body: { game_id: game_id }.to_json,
@@ -14,10 +16,6 @@ module Trivia
       )
 
       Rails.logger.debug("Got here")
-    end
-
-    def queue_name
-      :trivia
     end
   end
 end

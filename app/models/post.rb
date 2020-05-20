@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: posts
@@ -43,8 +44,8 @@ class Post < ApplicationRecord
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
   scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
   scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
-  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.zone.parse(query)) }
+  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.zone.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
@@ -53,13 +54,13 @@ class Post < ApplicationRecord
   #   include Post::RealTime
 
   def delete_real_time(version = 0)
-    Delayed::Job.enqueue(DeletePostJob.new(self.id, version))
+    DeletePostJob.perform_later(self.id, version)
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostPostJob.new(self.id, version))
-    if notify_followers && (person.followers.count > 0)
-      Delayed::Job.enqueue(PostPushNotificationJob.new(self.id))
+    PostPostJob.perform_later(self.id, version)
+    if person.followers.count > 0
+      PostPushNotificationJob.perform_now(self.id)
     end
   end
   #   include Post::RealTime
@@ -102,7 +103,7 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
+          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.zone.now, Time.zone.now)
         }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
@@ -122,7 +123,7 @@ class Post < ApplicationRecord
 
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
 
   def cache_key
     [super, person.cache_key].join("/")
@@ -165,9 +166,9 @@ class Post < ApplicationRecord
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
     post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
-    return unless post.present?
+    return if post.blank?
 
-    if (msg["userMetadata"]["sizer"])
+    if msg["userMetadata"]["sizer"]
       # There should be exactly one entry in `outputs`.
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
       job = Flaws.finish_transcoding(post.video.path,
@@ -226,7 +227,7 @@ class Post < ApplicationRecord
   def start_listener
     return if (!Flaws.transcoding_queue?)
     Rails.logger.error("Listening to #{self.video_job_id}")
-    Delayed::Job.enqueue(PostQueueListenerJob.new(self.video_job_id), run_at: 30.seconds.from_now)
+    PostQueueListenerJob.set(wait_until: 30.seconds.from_now).perform_later(self.video_job_id)
   end
 
   def published?
@@ -238,7 +239,7 @@ class Post < ApplicationRecord
   def start_transcoding
     # return if(self.video_transcoded? || self.video_job_id || Rails.env.test?)
     return if (self.video_job_id || Rails.env.test?)
-    Delayed::Job.enqueue(PostTranscoderJob.new(self.id), run_at: 1.minutes.from_now)
+    PostTranscoderJob.set(wait_until: 1.minutes.from_now).perform_later(self.id)
     true
   end
 

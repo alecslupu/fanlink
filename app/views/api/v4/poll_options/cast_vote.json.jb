@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 
 json[:poll] = @poll.poll_options.map do |poll_option|

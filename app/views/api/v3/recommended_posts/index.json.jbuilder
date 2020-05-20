@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.recommended_posts do
   json.array!(@posts) do |post|
     next if post.deleted? && @req_source != "web"

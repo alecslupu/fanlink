@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::MessagesController < Api::V3::MessagesController
   def index
     room = Room.find(params[:room_id])
@@ -29,7 +30,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
                       .visible
                       .unblocked(current_user.blocked_people)
                       .not_reported_by_user(current_user.id)
-                      .order("messages.created_at #{ordering}, messages.id #{ordering} ")
+                      .order(Arel.sql "messages.created_at #{ordering}, messages.id #{ordering} ")
                   )
 
       clear_count(room) if room.private?
@@ -67,10 +68,12 @@ class Api::V4::MessagesController < Api::V3::MessagesController
           Rails.logger.tagged("Message Controller") { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
           room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
           @message.post(@api_version)
-          broadcast(:message_created, @message.id, room.product_id)
+          broadcast(:room_message_created, @message.id, room.product_id)
           if room.private?
             room.increment_message_counters(current_user.id)
             @message.private_message_push
+          else
+            @message.public_room_message_push
           end
           return_the @message, handler: tpl_handler, using: :show
         else
@@ -84,7 +87,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
 
   def update
     if params.has_key?(:message)
-      if @message.update_attributes(message_update_params)
+      if @message.update(message_update_params)
         if @message.hidden
           @message.delete_real_time(@api_version)
         end
@@ -103,7 +106,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     else
       time = 1
     end
-    @messages = Message.where("created_at >= ?", time.day.ago).order("DATE(created_at) ASC").group("Date(created_at)").count
+    @messages = Message.where("created_at >= ?", time.day.ago).order(Arel.sql "DATE(created_at) ASC").group(Arel.sql "Date(created_at)").count
     return_the @messages, handler: tpl_handler
   end
 

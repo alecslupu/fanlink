@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
   def create
     if @rewards.any?

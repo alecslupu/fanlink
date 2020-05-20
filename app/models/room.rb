@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: rooms
@@ -27,26 +28,27 @@ class Room < ApplicationRecord
 
   # old Room::RealTime
   def clear_message_counter(membership)
-    Delayed::Job.enqueue(ClearMessageCounterJob.new(self.id, membership.id))
+    ClearMessageCounterJob.perform_later(self.id, membership.id)
   end
 
   def delete_me(version = 0)
-    Delayed::Job.enqueue(DeleteRoomJob.new(self.id, version)) if self.private?
+    DeleteRoomJob.perform_later(id, version) if self.private?
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostMessageJob.new(self.id, version))
+    # TODO this does not make any sense
+    PostMessageJob.perform_later(self.id, version)
   end
 
   def increment_message_counters(poster_id, version = 0)
     room_memberships.each do |mem|
       mem.increment!(:message_count) unless mem.person.id == poster_id
     end
-    Delayed::Job.enqueue(UpdateMessageCounterJob.new(self.id, poster_id, version))
+    UpdateMessageCounterJob.perform_later(self.id, poster_id, version)
   end
 
   def new_room(version = 0)
-    Delayed::Job.enqueue(AddRoomJob.new(self.id, version)) if self.private?
+    AddRoomJob.perform_later(self.id, version) if self.private?
   end
   # eof old Room::RealTime
 
@@ -71,10 +73,12 @@ class Room < ApplicationRecord
 
   has_many :pin_messages, dependent: :destroy
   has_many :room_memberships, dependent: :destroy
+  has_many :room_subscribers, dependent: :destroy
 
 
   has_many :members, through: :room_memberships, source: :person
   has_many :pin_from, through: :pin_messages, source: :person
+  has_many :subscribers, through: :room_subscribers, source: :person
 
   has_paper_trail
 

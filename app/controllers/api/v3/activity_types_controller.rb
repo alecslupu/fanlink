@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::ActivityTypesController < Api::V2::ActivityTypesController
   load_up_the QuestActivity, from: :activity_id, only: %i[ create index ]
   load_up_the ActivityType, only: %i[ show update destroy ]
@@ -161,7 +162,7 @@ class Api::V3::ActivityTypesController < Api::V2::ActivityTypesController
 
   def update
     if params.has_key?(:action_type)
-      if @activity_type.update_attributes(type_params)
+      if @activity_type.update(type_params)
         return_the @activity_type
       else
         render_422 @activity_type.errors

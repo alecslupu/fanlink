@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe PostComment, type: :model do
   before(:each) do
     @product = Product.first || create(:product)
@@ -47,12 +48,6 @@ RSpec.describe PostComment, type: :model do
     it "should not let you create a post comment without a post" do
       cmt = PostComment.new(body: "this will not work", person_id: @person.id)
       expect(cmt).not_to be_valid
-    end
-  end
-  # TODO: auto-generated
-  describe "#post_me" do
-    it "responds to " do
-      expect(PostComment.new).to respond_to(:post_me)
     end
   end
   # TODO: auto-generated

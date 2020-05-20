@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 
 json[:relationships] = @relationships.map do |relationship|

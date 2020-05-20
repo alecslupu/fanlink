@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = {}
 json[:poll] = Rails.cache.fetch ["v4", "poll", @req_source, @poll.id, @poll.updated_at.to_i] do
   render(partial: @req_source, locals: { poll: @poll }, handlers: "jb")

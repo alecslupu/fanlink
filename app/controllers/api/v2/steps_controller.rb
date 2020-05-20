@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::StepsController < ApiController
   load_up_the Quest, from: :quest_id, only: %i[ create index ]
   load_up_the Step, from: :id, only: %i[ update delete ]
@@ -165,7 +166,7 @@ class Api::V2::StepsController < ApiController
   # *
 
   def update
-    @step.update_attributes(step_params)
+    @step.update(step_params)
     return_the @step
   end
 

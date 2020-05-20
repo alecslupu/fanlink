@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id post_report.id.to_s
 json.created_at post_report.created_at.to_s
 json.post_id post_report.post.id

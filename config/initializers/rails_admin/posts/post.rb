@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("Post")
 
@@ -20,9 +21,6 @@ RailsAdmin.config do |config|
       end
       field :body do
         column_width 150
-        pretty_value do
-          bindings[:object].body_buffed("en")
-        end
       end
       field :picture do
         column_width 30

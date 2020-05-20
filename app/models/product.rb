@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: products
@@ -59,6 +60,9 @@ class Product < ApplicationRecord
   has_many :trivia_games, class_name: "Trivia::Game", dependent: :restrict_with_error
 
   has_many :config_items, dependent: :destroy
+
+  has_many :marketing_notifications, dependent: :restrict_with_error
+  has_many :automated_notifications, dependent: :restrict_with_error
 
   scope :enabled, -> { where(enabled: true) }
 

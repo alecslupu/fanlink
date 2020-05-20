@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::PostCommentsController < ApiController
   before_action :load_post, except: %i[ list ]
   # **
@@ -55,7 +56,6 @@ class Api::V1::PostCommentsController < ApiController
 
   def create
     @post_comment = @post.post_comments.create(post_comment_params)
-    @post_comment.post_me if @post_comment.valid?
     return_the @post_comment
   end
 

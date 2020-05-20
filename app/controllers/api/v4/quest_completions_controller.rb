@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
   def index
     @completions = apply_filters_for_user
@@ -35,7 +36,7 @@ class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
   def update
     if params.has_key?(:quest_completion)
       @completion = QuestCompletion.find(params[:id])
-      if @completion.update_attributes(completion_params)
+      if @completion.update(completion_params)
         return_the @completion, handler: tpl_handler, using: :show
       else
         render_422 @completion.errors
