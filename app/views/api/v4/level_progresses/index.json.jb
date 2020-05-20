@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   levels: render(partial: "app", collection: @progress, as: :level, handlers: :jb)
 }

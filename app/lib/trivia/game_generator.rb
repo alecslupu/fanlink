@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trivia
   class GameGenerator
     attr_reader :game

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   action: render(partial: "app", locals: { action: @action_type }, handlers: :jb)
 }

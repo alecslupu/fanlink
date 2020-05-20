@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V3::BadgeActionsController, type: :controller do

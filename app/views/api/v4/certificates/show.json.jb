@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   certificate: render(partial: "app", locals: { certificate: @certificate, user: current_user }, handlers: :jb)
 }

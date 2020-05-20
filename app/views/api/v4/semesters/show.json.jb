@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   semester: render(partial: "app", locals: { semester: @semester }, handlers: :jb)
 }

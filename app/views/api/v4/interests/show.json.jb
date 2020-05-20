@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   interest: render(partial: "app", locals: { interest: @interest, lang: @lang }, handlers: "jb")
 }

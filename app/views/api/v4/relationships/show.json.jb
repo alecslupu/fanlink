@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   relationship: render(partial: "app", locals: { relationship: @relationship }, handlers: "jb")
 }

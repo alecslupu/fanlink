@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe Trivia::Game, type: :model do
@@ -61,7 +62,7 @@ RSpec.describe Trivia::Game, type: :model do
             headers: {
               "Accept-Encoding" => "application/javascript",
               "Content-Type" => "application/json",
-              "Trivia-Api-Key" => "testing",
+              "Trivia-Api-Key" => "testing"
             }
           )
           .to_return(status: 200, body: "", headers: {})
@@ -80,7 +81,7 @@ RSpec.describe Trivia::Game, type: :model do
             headers: {
               "Accept-Encoding" => "application/javascript",
               "Content-Type" => "application/json",
-              "Trivia-Api-Key" => "testing",
+              "Trivia-Api-Key" => "testing"
             }
           )
           .to_return(status: 200, body: "", headers: {})
@@ -98,7 +99,7 @@ RSpec.describe Trivia::Game, type: :model do
             headers: {
               "Accept-Encoding" => "application/javascript",
               "Content-Type" => "application/json",
-              "Trivia-Api-Key" => "testing",
+              "Trivia-Api-Key" => "testing"
             }
           )
           .to_return(status: 200, body: "", headers: {})
@@ -116,7 +117,7 @@ RSpec.describe Trivia::Game, type: :model do
             headers: {
               "Accept-Encoding" => "application/javascript",
               "Content-Type" => "application/json",
-              "Trivia-Api-Key" => "testing",
+              "Trivia-Api-Key" => "testing"
             }
           )
           .to_return(status: 200, body: "", headers: {})

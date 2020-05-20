@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 person_certificate = certificate.person_certificates.for_person(user).first_or_initialize
 json = {
   id: certificate.id,

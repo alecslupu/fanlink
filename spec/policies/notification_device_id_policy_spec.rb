@@ -18,7 +18,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
   describe "defined policies" do
@@ -68,7 +68,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     before :each do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(build(:portal_access, portal_notification_read: true))
@@ -101,7 +101,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do
@@ -134,7 +134,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do
@@ -167,7 +167,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do
@@ -200,7 +200,7 @@ RSpec.describe NotificationDeviceIdPolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
 
     before :each do

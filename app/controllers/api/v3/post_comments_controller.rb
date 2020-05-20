@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PostCommentsController < Api::V2::PostCommentsController
   before_action :load_post, except: %i[ list ]
 

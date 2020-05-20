@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id level.id.to_s
 json.name level.name
 json.internal_name level.internal_name

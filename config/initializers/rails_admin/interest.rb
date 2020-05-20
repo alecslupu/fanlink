@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("Interest")
   config.included_models.push("Interest::Translation")
@@ -31,7 +32,7 @@ RailsAdmin.config do |config|
       field :children do
         def render
           bindings[:view].render partial: "rails_admin/main/form_nested_many_orderable", locals: {
-            field: self, form: bindings[:form], field_order: :order_field,
+            field: self, form: bindings[:form], field_order: :order_field
           }
         end
       end

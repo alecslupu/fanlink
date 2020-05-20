@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::AssignedRewardsController < ApiController
   def index
     @assignees = paginate(AssignedReward.where(reward_id: params[:reward_id]).order(created_at: :asc))
@@ -13,7 +14,7 @@ class Api::V3::AssignedRewardsController < ApiController
     if params[:assign][:assigned_type] == "ActionType"
       action_type = ActionType.find(params[:assign][:assigned_id])
       reward = Reward.find(params[:assign][:reward_id])
-      reward.series = action_type.internal_name unless reward.series.present?
+      reward.series = action_type.internal_name if reward.series.blank?
       reward.save
     end
     @assigned = AssignedReward.create(assigned_reward_params)

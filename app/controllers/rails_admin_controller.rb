@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RailsAdminController < ApplicationController
   include Messaging
   include ::Pundit

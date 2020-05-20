@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id following.id.to_s
 json.follower do
   json.cache! ["v3", following.follower] do

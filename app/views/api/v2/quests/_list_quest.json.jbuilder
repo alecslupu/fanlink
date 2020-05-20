@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id quest.id.to_s
 json.product_id quest.product_id.to_s
 json.event_id quest.event_id.to_s

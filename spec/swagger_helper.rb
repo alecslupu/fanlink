@@ -69,8 +69,8 @@ RSpec.configure do |config|
         #  name: "Base",
         # },
         {
-         name: "Blocks",
-         description: "Block a person",
+          name: "Blocks",
+          description: "Block a person"
         },
         {
           name: 'Categories',
@@ -263,7 +263,7 @@ RSpec.configure do |config|
             block: {
               id: { type: :integer },
               blocker_id: { type: :integer },
-              blocked_id: { type: :integer },
+              blocked_id: { type: :integer }
             }
           }
         },
@@ -1140,9 +1140,9 @@ RSpec.configure do |config|
           properties: {
             certcourses: {
               type: :array,
-              items: {"$ref": '#/definitions/CertcourseJson'},
-            },
-          },
+              items: {"$ref": '#/definitions/CertcourseJson'}
+            }
+          }
         },
 
         EventCheckinArray: {
@@ -1150,9 +1150,9 @@ RSpec.configure do |config|
           properties: {
             event_checkins: {
               type: :array,
-              items: {"$ref": '#/definitions/EventCheckinJson'},
-            },
-          },
+              items: {"$ref": '#/definitions/EventCheckinJson'}
+            }
+          }
         },
         EventCheckinJson: {
           type: :object,
@@ -1171,9 +1171,9 @@ RSpec.configure do |config|
             starts_at: {type: :string, format: "date-time"},
             ends_at: {type: :string,  format: "date-time"},
             ticket_url: {type: :string},
-            place_identifier: {type: :string},
+            place_identifier: {type: :string}
           },
-          description: "Event Response",
+          description: "Event Response"
         },
         CertcourseJson: {
           type: :object,
@@ -1190,13 +1190,13 @@ RSpec.configure do |config|
             is_completed: {type: :boolean},
             last_completed_page_id: {type: :integer, 'x-nullable': true},
             copyright_text: {type: :string},
-            is_started: {type: :boolean},
-          },
+            is_started: {type: :boolean}
+          }
         },
         QuestObject: {
           type: :object,
           properties: {
-            quest: {"$ref": "#/definitions/QuestJson"},
+            quest: {"$ref": "#/definitions/QuestJson"}
           }
         },
         QuestsArray: {
@@ -1383,8 +1383,8 @@ RSpec.configure do |config|
             }
           },
           "description": "Activity Type Reponse"
-        },
-      },
+        }
+      }
 
       # definitions: {
       #   certificate_information: {
@@ -1825,7 +1825,7 @@ RSpec.configure do |config|
       #     }
       #   }
       # },
-    },
+    }
   }
 
   v1file = Rails.root.join('doc', 'open_api', 'V1.json')

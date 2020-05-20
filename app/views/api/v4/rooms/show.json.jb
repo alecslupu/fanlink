@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   room: render(partial: "app", locals: { room: @room }, handlers: :jb)
 }

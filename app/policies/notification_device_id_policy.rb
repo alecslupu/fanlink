@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NotificationDeviceIdPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope

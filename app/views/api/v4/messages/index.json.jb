@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   messages: render(partial: "app", collection: @messages, as: :message, handlers: :jb)
 }

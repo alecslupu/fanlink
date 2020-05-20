@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.cache! ["v3", @req_source, message_report.updated_at, message_report] do
   json.id message_report.id.to_s
   json.created_at message_report.created_at.to_s

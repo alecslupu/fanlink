@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Informationr_digits
 #
 # Table name: trivia_round_leaderboards

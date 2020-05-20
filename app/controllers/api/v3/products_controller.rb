@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::ProductsController < Api::V2::ProductsController
   def select
     @products = Product.all

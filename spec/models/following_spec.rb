@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Following, type: :model do
   context "Valid" do
     it { expect(build(:following)).to be_valid }

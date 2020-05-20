@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json = Rails.cache.fetch ["v3.1", post] do
   {
     id: post.id,
