@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Some string wrangling utilities that we don't want to patch into
 # `String`.

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 json = {
   id: semester.id,
   name: semester.name,
   description: semester.description,
   start_date: semester.start_date,
-  end_date: ((semester.end_date.present?) ? semester.end_date : nil)
+  end_date: (semester.end_date.present? ? semester.end_date : nil),
 }
 
 json[:courses] = semester.courses.reject { |course| course.deleted }.map do |course|

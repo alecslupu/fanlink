@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   id: post_reaction.id,
   post_id: post_reaction.post_id,

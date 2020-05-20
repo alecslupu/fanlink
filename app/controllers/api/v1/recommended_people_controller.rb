@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::RecommendedPeopleController < ApiController
   # **
   # @api {get} /people/recommended Get recommended people.

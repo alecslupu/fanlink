@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class VideoPagePolicy < CoursewareModulePolicy
   # class Scope < Scope
   #   def resolve

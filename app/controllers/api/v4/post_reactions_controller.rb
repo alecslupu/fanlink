@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PostReactionsController < Api::V3::PostReactionsController
   def create
     parms = post_reaction_params

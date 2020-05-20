@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if current_user.role == "super_admin"
   json.merchandise do
     json.array(@merchandise) do |merch|

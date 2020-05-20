@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if @progress.present?
   if @series_total < @progress.reward.completion_requirement
     json.pending_badge do

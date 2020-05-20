@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe Api::V3::PasswordResetsController, type: :controller do
@@ -88,7 +89,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         new_password = "super_secret"
         person.set_password_token!
-        post :update, params: {token: person.reset_password_token, password: new_password}
+        post :update, params: { token: person.reset_password_token, password: new_password }
         expect(response).to be_successful
         expect(person.reload.valid_password?(new_password)).to be_truthy
       end
@@ -98,7 +99,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         new_password = "super_secret"
         person.set_password_token!
-        post :update, params: {token: "garbage", password: "super_secret"}
+        post :update, params: { token: "garbage", password: "super_secret" }
         expect(response).to be_unprocessable
         expect(json["errors"][0]).to include("Unknown password resetting token.")
       end
@@ -109,7 +110,7 @@ RSpec.describe Api::V3::PasswordResetsController, type: :controller do
       person = create(:person, password: pw)
       ActsAsTenant.with_tenant(person.product) do
         person.set_password_token!
-        post :update, params: {token: person.reset_password_token, password: "short"}
+        post :update, params: { token: person.reset_password_token, password: "short" }
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("Password must be at least 6 characters in length.")
         expect(person.valid_password?(pw)).to be_truthy

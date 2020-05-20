@@ -17,7 +17,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
     export: false,
     history: false,
     show_in_app: false,
-    select_product: false,
+    select_product: false
   }
 
 
@@ -69,7 +69,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, admin_read: true).person, master_class) }
 
@@ -100,7 +100,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, admin_update: true).person, master_class) }
 
@@ -131,7 +131,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       export: false,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, admin_delete: true).person, master_class) }
 
@@ -162,7 +162,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       export: true,
       history: false,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, admin_export: true).person, master_class) }
 
@@ -199,7 +199,7 @@ RSpec.describe PortalAccessPolicy, type: :policy do
       export: false,
       history: true,
       show_in_app: false,
-      select_product: false,
+      select_product: false
     }
     subject { described_class.new(create(:portal_access, admin_history: true).person, master_class) }
 

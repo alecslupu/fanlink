@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   id: answer.id,
   url: answer.picture_url

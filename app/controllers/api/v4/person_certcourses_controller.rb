@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PersonCertcoursesController < ApiController
 
   def send_email
@@ -65,7 +66,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def save_user_answer
-    quiz_page_id = params[:quiz_page_id].present? ? params[:quiz_page_id] : certcourse_page.quiz_page.id
+    quiz_page_id = params[:quiz_page_id].presence || certcourse_page.quiz_page.id
     PersonQuiz.create(person_id: current_user.id, quiz_page_id: quiz_page_id, answer_id: params[:answer_id])
   end
 

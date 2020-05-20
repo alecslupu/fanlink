@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: polls
@@ -48,7 +49,7 @@ class Poll < ApplicationRecord
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
-          where(poll_type_id: nil).where("end_date > ?", Time.now)
+          where(poll_type_id: nil).where("end_date > ?", Time.zone.now)
         }
 
   def closed?
@@ -56,13 +57,13 @@ class Poll < ApplicationRecord
   end
 
   def start_date_cannot_be_in_the_past
-    if start_date.present? && start_date < Time.now
+    if start_date.present? && start_date < Time.zone.now
       errors.add(:expiration_date, "poll can't start in the past")
     end
   end
 
   def description_cannot_be_empty
-    if !description.present? || description.empty?
+    if description.blank? || description.empty?
       errors.add(:description_error, "description can't be empty")
     end
   end

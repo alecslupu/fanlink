@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::RewardsController < ApiController
   load_up_the Reward, from: :id, only: %i[ show update delete ]
   def index

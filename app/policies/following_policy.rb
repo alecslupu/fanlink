@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FollowingPolicy < UserModulePolicy
   class Scope < Scope
     def resolve

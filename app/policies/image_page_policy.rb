@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ImagePagePolicy < CoursewareModulePolicy
   # class Scope < Scope
   #   def resolve

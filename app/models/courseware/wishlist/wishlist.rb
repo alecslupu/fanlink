@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Courseware::Wishlist::Wishlist < ApplicationRecord
   belongs_to :person
   belongs_to :certificate

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RewardPolicy < RewardModulePolicy
   class Scope < ApplicationPolicy::Scope
     def resolve

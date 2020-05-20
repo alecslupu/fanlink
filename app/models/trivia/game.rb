@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trivia_games
@@ -56,7 +57,7 @@ module Trivia
       published: 1,
       locked: 2,
       running: 3,
-      closed: 4,
+      closed: 4
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
     id: event_checkin.id.to_s,
     checkin_at: event_checkin.created_at.to_s,
