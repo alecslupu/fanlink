@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::PostReactionsController < ApiController
   load_up_the Post, from: :post_id
   load_up_the PostReaction, only: %i[ destroy update ]
@@ -115,7 +116,7 @@ class Api::V1::PostReactionsController < ApiController
 
   def update
     if @post_reaction.person == current_user
-      @post_reaction.update_attributes(post_reaction_params)
+      @post_reaction.update(post_reaction_params)
       return_the @post_reaction
     else
       render_not_found

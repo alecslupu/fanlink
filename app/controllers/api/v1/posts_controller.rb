@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::PostsController < ApiController
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
@@ -82,7 +83,7 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      unless post_params["status"].present?
+      if post_params["status"].blank?
         @post.published!
       end
       @post.post if @post.published?
@@ -383,7 +384,7 @@ class Api::V1::PostsController < ApiController
   # *
 
   def update
-    @post.update_attributes(post_params)
+    @post.update(post_params)
   end
 
 private

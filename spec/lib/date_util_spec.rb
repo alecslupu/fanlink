@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 describe "DateUtil" do
   describe ".valid_date_string" do
     it "should return true for good date" do

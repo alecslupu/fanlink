@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("CertificateCertcourse")
   config.model "CertificateCertcourse" do

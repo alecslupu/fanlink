@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   progresses: render(partial: "app", collection: @progresses, as: :progress, handlers: :jb)
 }

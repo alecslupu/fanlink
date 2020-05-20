@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Date
 Date::DATE_FORMATS[:default] = "%Y-%m-%d"
 

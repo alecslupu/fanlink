@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe ProductBeacon, type: :model do
   context "Validation" do
     it "should validate presence of assigned_type" do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::RecommendedPostsController < Api::V2::RecommendedPostsController
   # **
   # @api {get} /posts/recommended Get recommended posts.

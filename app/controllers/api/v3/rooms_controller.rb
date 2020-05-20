@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::RoomsController < Api::V2::RoomsController
   # **
   # @api {post} /rooms Create a private room.
@@ -162,7 +163,7 @@ class Api::V3::RoomsController < Api::V2::RoomsController
     @room = Room.find(params[:id])
     if params.has_key?(:room)
       if some_admin?
-        if @room.update_attributes(room_params)
+        if @room.update(room_params)
           return_the @room
         else
           render_422(@room.errors)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Trivia
   class CreateRandomGameJob < ApplicationJob
     queue_as :trivia

@@ -300,12 +300,12 @@ describe "Messages (v1)" do
     let!(:room2) { create(:room, product: product, public: false) }
     let!(:membership1) { create(:room_membership, room: room2, person: create(:person, username: "membership1", product: product)) }
     let!(:membership2) { create(:room_membership, room: room2) }
-    let!(:msg1) { create(:message, created_at: Time.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, product: product, username: "message1person")) }
-    let!(:msg2) { create(:message, created_at: Time.now - 9.minutes, room: room1, body: "msg2") }
-    let!(:msg12) { create(:message, created_at: Time.now - 8.minutes, room: room1, body: "msg12") }
-    let!(:msg13) { create(:message, created_at: Time.now - 7.minutes, room: room1, body: "msg13") }
-    let!(:msg14) { create(:message, created_at: Time.now - 6.minutes, room: room1, body: "msg14") }
-    let!(:msg3) { create(:message, created_at: Time.now - 5.minutes, room: room2, person: membership1.person, body: "msg3") }
+    let!(:msg1) { create(:message, created_at: Time.zone.now - 10.minutes, room: room1, body: "this is msg1", person: create(:person, product: product, username: "message1person")) }
+    let!(:msg2) { create(:message, created_at: Time.zone.now - 9.minutes, room: room1, body: "msg2") }
+    let!(:msg12) { create(:message, created_at: Time.zone.now - 8.minutes, room: room1, body: "msg12") }
+    let!(:msg13) { create(:message, created_at: Time.zone.now - 7.minutes, room: room1, body: "msg13") }
+    let!(:msg14) { create(:message, created_at: Time.zone.now - 6.minutes, room: room1, body: "msg14") }
+    let!(:msg3) { create(:message, created_at: Time.zone.now - 5.minutes, room: room2, person: membership1.person, body: "msg3") }
     let!(:admin) { create(:person, product: product, role: :admin) }
     it "should give you all messages from all rooms with no page specified" do
       toget = [msg1, msg2, msg12, msg13, msg14, msg3 ]

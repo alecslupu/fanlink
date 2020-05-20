@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Referral
   class ReferredPerson < ApplicationRecord
     belongs_to :inviter, class_name: "Person", foreign_key: :inviter_id, primary_key: :id
@@ -6,7 +7,7 @@ module Referral
     scope :with_transactions, -> {
       select('"referral_referred_people".*, COUNT(referral_referred_people.id)').
       joins(invited: :certificates).
-      where(certificates: {is_free: false}).
+      where(certificates: { is_free: false }).
       group(Arel.sql("referral_referred_people.id, person_certificates.person_id"))
     }
   end

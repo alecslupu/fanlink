@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::MerchandiseController < Api::V1::MerchandiseController
   load_up_the Merchandise, only: %i[ update show delete ]
 
@@ -14,7 +15,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
 
 
   def update
-    if @merchandise.update_attributes(merchandise_params)
+    if @merchandise.update(merchandise_params)
       broadcast(:merchandise_updated, current_user, @merchandise)
       return_the @merchandise
     else

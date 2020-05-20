@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Lesson, type: :model do
   context "Validation" do
     describe "should create a valid lesson" do

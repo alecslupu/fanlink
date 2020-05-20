@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::CertcoursesController < ApiController
   load_up_the Certificate, from: :certificate_id
 

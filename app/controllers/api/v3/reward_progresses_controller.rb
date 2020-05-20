@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::RewardProgressesController < ApiController
   def create
     if params.has_key?(:reward_complete)

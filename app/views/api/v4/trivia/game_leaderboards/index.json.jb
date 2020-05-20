@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   leaderboard: render(partial: "app", collection: @leaderboard, as: :leaderboard, handler: :jb)
 }

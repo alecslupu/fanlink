@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 {
   course: render(partial: "app", locals: { course: @course }, handlers: :jb)
 }
