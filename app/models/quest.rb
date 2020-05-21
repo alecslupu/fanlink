@@ -78,7 +78,6 @@ class Quest < ApplicationRecord
         start_date.beginning_of_day, end_date.end_of_day)
     }
 
-  scope :for_product, ->(product) { includes(:product).where(product: product) }
   scope :ordered, -> { includes(:quest_activities).order("quest_activities.created_at DESC") }
   scope :in_testing, -> { where(status: [:enabled, :active]) }
   scope :running, -> { where("quests.starts_at >= ? AND quests.ends_at <= ?", Time.zone.now, Time.zone.now) }

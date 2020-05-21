@@ -1253,6 +1253,7 @@ GEM
     paper_trail (10.3.1)
       activerecord (>= 4.2)
       request_store (~> 1.1)
+    paper_trail-association_tracking (2.0.0)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -1660,6 +1661,7 @@ DEPENDENCIES
   oauth2
   oj
   paper_trail
+  paper_trail-association_tracking
   paperclip (~> 6.1.0)
   paperclip-dimension-validator
   paperclip-meta
