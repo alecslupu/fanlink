@@ -19,7 +19,8 @@ class ProductBeacon < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   validates :beacon_pid, presence: { message: _("Beacon PID is required.") }
 

@@ -22,7 +22,7 @@ class ActionType < ApplicationRecord
 
   has_many :hacked_metrics, dependent: :destroy
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   # before_destroy :check_usage
 

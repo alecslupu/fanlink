@@ -16,6 +16,8 @@
 #
 
 class Lesson < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   belongs_to :course
 
   validates :name, presence: { message: _("A name is required.") }

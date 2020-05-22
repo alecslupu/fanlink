@@ -37,7 +37,7 @@ class Merchandise < ApplicationRecord
 
   normalize_attribute :price, with: :currency
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   scope :listable, -> { where(available: true) }
 

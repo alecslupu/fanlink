@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 module Referral
   class UserCode < ApplicationRecord
+    has_paper_trail ignore: [:created_at, :updated_at]
+
     belongs_to :person
 
     before_create do |subscriber|

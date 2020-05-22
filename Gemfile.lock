@@ -1309,6 +1309,7 @@ GEM
     paper_trail (10.3.1)
       activerecord (>= 4.2)
       request_store (~> 1.1)
+    paper_trail-association_tracking (2.0.0)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -1405,6 +1406,10 @@ GEM
       globalize (>= 5.0)
       rails (>= 5.0)
       rails_admin (>= 2.0)
+    rails_admin_history_rollback (1.0.2)
+      paper_trail (>= 3.0.6)
+      rails (>= 4.2.0)
+      rails_admin (>= 0.6.6)
     rails_admin_nested_set (0.5.4)
       rails (>= 4.1.0)
       rails_admin
@@ -1720,6 +1725,7 @@ DEPENDENCIES
   oauth2
   oj
   paper_trail
+  paper_trail-association_tracking
   paperclip (~> 6.1.0)
   paperclip-dimension-validator
   paperclip-meta
@@ -1739,6 +1745,7 @@ DEPENDENCIES
   rails-erd
   rails_admin (~> 2.0.0)
   rails_admin_globalize_field
+  rails_admin_history_rollback
   rails_admin_nested_set
   redis
   redis-namespace

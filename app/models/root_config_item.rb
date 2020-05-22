@@ -21,7 +21,8 @@
 #
 
 class RootConfigItem < ConfigItem
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   def to_s
     if item_value.present?

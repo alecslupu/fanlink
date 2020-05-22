@@ -20,7 +20,7 @@ class Notification < ApplicationRecord
 
   acts_as_tenant(:product)
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   belongs_to :person
   validates :body, presence: true

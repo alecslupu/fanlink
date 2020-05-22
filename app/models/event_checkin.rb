@@ -11,6 +11,8 @@
 #
 
 class EventCheckin < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   belongs_to :event
   belongs_to :person, touch: true
 

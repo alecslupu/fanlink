@@ -13,6 +13,7 @@
 class BadgeAward < ApplicationRecord
   belongs_to :badge
   belongs_to :person, touch: true
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   validate :product_match
 

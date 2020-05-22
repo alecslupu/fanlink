@@ -51,7 +51,8 @@ class Reward < ApplicationRecord
   translates :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   normalize_attributes :series
 

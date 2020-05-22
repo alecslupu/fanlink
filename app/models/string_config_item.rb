@@ -21,7 +21,8 @@
 #
 
 class StringConfigItem < ConfigItem
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   before_validation :downcase
   validate :custom_validation
 

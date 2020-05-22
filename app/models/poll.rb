@@ -16,6 +16,7 @@
 #
 
 class Poll < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month

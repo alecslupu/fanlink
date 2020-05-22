@@ -19,6 +19,8 @@
 #
 
 class Step < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   include ActiveModel::Dirty
 
   belongs_to :quest, inverse_of: :steps, touch: true

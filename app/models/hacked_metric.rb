@@ -13,6 +13,8 @@
 #
 
 class HackedMetric < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   acts_as_tenant(:product)
   belongs_to :product
 

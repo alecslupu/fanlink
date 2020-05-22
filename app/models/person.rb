@@ -54,7 +54,7 @@ class Person < ApplicationRecord
   translates :designation, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   enum old_role: %i[ normal staff admin super_admin root client client_portal]
 

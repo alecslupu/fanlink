@@ -21,7 +21,8 @@ class PostCommentReport < ApplicationRecord
   # include PostCommentReport::PortalFilters
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   # include PostCommentReport::PortalFilters
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
 

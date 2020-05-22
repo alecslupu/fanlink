@@ -16,6 +16,7 @@
 class RewardProgress < ApplicationRecord
   belongs_to :person, touch: true
   belongs_to :reward
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   normalize_attributes :series
 end

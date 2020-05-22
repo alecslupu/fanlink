@@ -15,6 +15,8 @@ class BadgeAction < ApplicationRecord
   belongs_to :action_type, counter_cache: true
   belongs_to :person, touch: true
 
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   normalize_attributes :identifier
 
   validates :identifier, uniqueness: { scope: %i[ person_id action_type_id ],
