@@ -13,7 +13,8 @@
 #
 
 class PersonCertcourse < ApplicationRecord
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   belongs_to :person
   belongs_to :certcourse

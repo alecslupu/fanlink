@@ -23,6 +23,8 @@
 #
 
 class QuestActivity < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   include AttachmentSupport
 
   translates :description, :name, :hint, :title, touch: true, versioning: :paper_trail

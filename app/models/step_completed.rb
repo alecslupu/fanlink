@@ -15,6 +15,7 @@
 
 class StepCompleted < ApplicationRecord
   enum status: %i[ locked unlocked completed ]
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   belongs_to :step, touch: true
   belongs_to :person, touch: true

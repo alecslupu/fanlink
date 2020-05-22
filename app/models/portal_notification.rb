@@ -32,7 +32,8 @@ class PortalNotification < ApplicationRecord
 
   enum sent_status: %i[ pending sent cancelled errored ]
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 

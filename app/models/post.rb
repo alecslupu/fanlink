@@ -79,7 +79,7 @@ class Post < ApplicationRecord
   has_audio_called :audio
   has_video_called :video
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   acts_as_taggable
 

@@ -197,6 +197,8 @@ gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
 gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
+gem 'paper_trail-association_tracking'
+gem 'rails_admin_history_rollback'
 gem "oauth2"
 gem "oj" # json opt recommended with rollbar
 gem "paperclip", "~> 6.1.0"

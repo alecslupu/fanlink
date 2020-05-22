@@ -26,7 +26,8 @@ class Relationship < ApplicationRecord
   end
   # eof Relationship::RealTime
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   belongs_to :requested_by, class_name: "Person", touch: true
   belongs_to :requested_to, class_name: "Person", touch: true

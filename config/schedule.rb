@@ -14,3 +14,7 @@ end
 every 1.hour do
   rake "send_activity_notification:thirty_days_inactive"
 end
+
+every 6.hours do
+  rake "papertrail:clean"
+end

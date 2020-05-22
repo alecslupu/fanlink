@@ -20,6 +20,7 @@ class RoomMembership < ApplicationRecord
   validate :check_private
 
   before_destroy :check_created_by
+  has_paper_trail ignore: [:created_at, :updated_at]
 
 
 private

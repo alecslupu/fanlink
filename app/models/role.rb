@@ -36,7 +36,8 @@ class Role < ApplicationRecord
 
   scope :clients, -> { where(internal_name: 'client') }
   scope :normals, -> { where(internal_name: 'normal') }
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   def to_s
     internal_name

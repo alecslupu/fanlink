@@ -8,7 +8,6 @@
 #  poll_type_id :integer
 #  start_date   :datetime         not null
 #  duration     :integer          default(0), not null
-#  poll_status  :integer          default("inactive"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  end_date     :datetime         default(Thu, 07 Feb 2019 01:46:08 UTC +00:00)
@@ -17,6 +16,7 @@
 #
 
 class Poll < ApplicationRecord
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month

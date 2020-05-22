@@ -33,7 +33,8 @@
 #
 
 class PersonCertificate < ApplicationRecord
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   include AttachmentSupport
 
