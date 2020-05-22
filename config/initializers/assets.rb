@@ -10,6 +10,11 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules")
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w(rails_admin/custom/theming.css rails_admin/custom/ui.js)
-Rails.application.config.assets.precompile += %w(admin/custom.scss admin/google_places.scss admin/events.js admin/message_reports.js admin/post_reports.js admin/translated_fields.js)
-Rails.application.config.assets.precompile += %w( bootstrap-notify.js )
+#
+if Rails::VERSION::MAJOR < 6
+  Rails.application.config.assets.precompile += %w(admin/events.js admin/message_reports.js admin/post_reports.js admin/translated_fields.js)
+  Rails.application.config.assets.precompile += %w( bootstrap-notify.js )
+  Rails.application.config.assets.precompile += %w(rails_admin/custom/theming.css rails_admin/custom/ui.js)
+else
+  ActiveSupport::Deprecation.warn("Rails.application.config.assets.precompile sahould be removed when running rails 6 #{__FILE__}")
+end

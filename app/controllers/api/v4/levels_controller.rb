@@ -19,7 +19,7 @@ class Api::V4::LevelsController < Api::V3::LevelsController
 
   # def update
   #   binding.pry
-  #   @level.update_attributes(level_params)
+  #   @level.update(level_params)
   #   broadcast(:level_updated, current_user, @level)
   #   return_the @level, handler: tpl_handler, using: :show
   # end

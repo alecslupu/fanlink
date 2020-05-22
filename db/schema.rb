@@ -30,6 +30,27 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
     t.index ["name"], name: "unq_action_types_name", unique: true
   end
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "activity_types", force: :cascade do |t|
     t.integer "activity_id", null: false
     t.text "atype_old"
@@ -1337,14 +1358,50 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
     t.index ["product_id"], name: "index_semesters_on_product_id"
   end
 
-  create_table "static_contents", force: :cascade do |t|
+  create_table "static_system_email_translations", force: :cascade do |t|
+    t.bigint "static_system_email_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "html_template"
+    t.text "text_template"
+    t.string "subject"
+    t.index ["locale"], name: "index_static_system_email_translations_on_locale"
+    t.index ["static_system_email_id"], name: "index_7f2a9f08cab1096d33fc287874bf7f54545a0849"
+  end
+
+  create_table "static_system_emails", force: :cascade do |t|
+    t.string "name"
+    t.bigint "product_id"
+    t.boolean "public", default: false
+    t.string "from_name"
+    t.string "from_email"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_static_system_emails_on_product_id"
+    t.index ["slug", "product_id"], name: "index_static_system_emails_on_slug_and_product_id", unique: true
+  end
+
+  create_table "static_web_content_translations", force: :cascade do |t|
+    t.bigint "static_web_content_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "content"
+    t.index ["locale"], name: "index_static_web_content_translations_on_locale"
+    t.index ["static_web_content_id"], name: "index_static_web_content_translations_on_static_web_content_id"
+  end
+
+  create_table "static_web_contents", force: :cascade do |t|
     t.jsonb "content", default: {}, null: false
     t.jsonb "title", default: {}, null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_static_contents_on_slug", unique: true
+    t.index ["slug"], name: "index_static_web_contents_on_slug", unique: true
   end
 
   create_table "step_completed", force: :cascade do |t|
@@ -1646,6 +1703,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
     t.index ["product_id"], name: "idx_video_pages_product"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activity_types", "quest_activities", column: "activity_id", name: "fk_activity_types_quest_activities"
   add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
   add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
@@ -1743,6 +1801,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
   add_foreign_key "room_subscribers", "rooms"
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
+  add_foreign_key "static_system_emails", "products"
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"
