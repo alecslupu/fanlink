@@ -21,7 +21,7 @@
 #
 
 class BooleanConfigItem < ConfigItem
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   def formatted_value
     item_value == "t"

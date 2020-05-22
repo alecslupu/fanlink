@@ -15,6 +15,7 @@
 
 class QuestCompletion < ApplicationRecord
   # include QuestCompletion::PortalFilters
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   scope :id_filter, -> (query) { where(id: query.to_i) }
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }

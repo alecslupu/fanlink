@@ -21,7 +21,7 @@
 #
 
 class IntegerConfigItem < ConfigItem
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   validates :item_value, numericality: true, presence: true
 

@@ -18,6 +18,7 @@
 
 module Trivia
   class AvailableQuestion < ApplicationRecord
+    has_paper_trail ignore: [:created_at, :updated_at]
 
     acts_as_tenant(:product)
     scope :for_product, ->(product) { where(product_id: product.id) }

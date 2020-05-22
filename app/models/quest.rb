@@ -63,7 +63,8 @@ class Quest < ApplicationRecord
 
   normalize_attributes :event_id, :ends_at
 
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
+
 
   validate :date_sanity
   validates_associated :translations

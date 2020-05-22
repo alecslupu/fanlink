@@ -17,7 +17,8 @@ module Trivia
     acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
 
-    has_paper_trail
+    has_paper_trail ignore: [:created_at, :updated_at]
+
     belongs_to :person
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 

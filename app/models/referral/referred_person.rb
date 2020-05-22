@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 module Referral
   class ReferredPerson < ApplicationRecord
+    has_paper_trail ignore: [:created_at, :updated_at]
+
     belongs_to :inviter, class_name: "Person", foreign_key: :inviter_id, primary_key: :id
     belongs_to :invited, class_name: "Person", foreign_key: :invited_id, primary_key: :id
 

@@ -20,6 +20,7 @@ class Category < ApplicationRecord
   has_many :posts, dependent: :nullify
 
   normalize_attributes :color
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   enum role: %i[normal product staff admin super_admin]
 

@@ -12,6 +12,7 @@
 
 class QuestCompleted < ApplicationRecord
   enum status: %i[ completed ]
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   belongs_to :quest
   belongs_to :person, touch: true

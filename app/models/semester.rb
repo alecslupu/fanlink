@@ -16,6 +16,7 @@
 
 class Semester < ApplicationRecord
   acts_as_tenant(:product)
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   belongs_to :product
 

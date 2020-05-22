@@ -134,7 +134,7 @@ class Message < ApplicationRecord
   has_many :message_mentions, dependent: :destroy
   has_many :message_reports, dependent: :destroy
   has_many :room_subscribers, dependent: :nullify
-  has_paper_trail
+  has_paper_trail ignore: [:created_at, :updated_at]
 
   scope :for_date_range, ->(room, from, to, limit = nil) {
           where(room: room).where("created_at >= ?", from.beginning_of_day).
