@@ -11,18 +11,13 @@ end
 
 ruby "2.5.1"
 
-if ENV["RAILS6"]
-  gem "rails", "~> 6"
-  # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 6.0'
-elsif ENV["RAILS_EDGE"]
+if ENV["RAILS_EDGE"]
   # gem "rails", github: "rails/rails"
   # gem 'sass-rails', '~> 6.0'
 else
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-  gem "rails", "~> 5.2"
+  gem "rails", "~> 6"
   # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 5.0'
+  gem 'sass-rails', '~> 6.0'
 end
 # SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
 gem 'sprockets', '~> 3.7.2'
