@@ -1347,7 +1347,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.10)
     psych (3.1.0)
-    public_suffix (4.0.3)
+    public_suffix (4.0.5)
     puma (3.12.4)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
@@ -1483,15 +1483,15 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
-    rswag-api (2.2.0)
-      railties (>= 3.1, < 6.1)
-    rswag-specs (2.2.0)
-      activesupport (>= 3.1, < 6.1)
+    rswag-api (2.3.1)
+      railties (>= 3.1, < 7.0)
+    rswag-specs (2.3.1)
+      activesupport (>= 3.1, < 7.0)
       json-schema (~> 2.2)
-      railties (>= 3.1, < 6.1)
-    rswag-ui (2.2.0)
-      actionpack (>= 3.1, < 6.1)
-      railties (>= 3.1, < 6.1)
+      railties (>= 3.1, < 7.0)
+    rswag-ui (2.3.1)
+      actionpack (>= 3.1, < 7.0)
+      railties (>= 3.1, < 7.0)
     rubocop (0.81.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -1792,4 +1792,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   2.0.2
+   2.1.4

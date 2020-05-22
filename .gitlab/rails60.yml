@@ -25,7 +25,7 @@
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
     - apt-get install  -y ffmpeg
-    - export RAILS6=true
+    - export RAILS_EDGE=true
     - bundle update rails
     - bundle install
     - bundle exec rake db:reset
