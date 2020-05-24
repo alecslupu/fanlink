@@ -19,7 +19,7 @@ class Api::V4::PostsController < Api::V3::PostsController
       @posts = paginate @posts
 
       if params[:tag].present? || params[:categories].present?
-        @posts = @posts.for_tag(params[:tag]) if params[:tag]
+        @posts = @posts.tagged_with(params[:tag]) if params[:tag]
         @posts = @posts.for_category(params[:categories]) if params[:categories]
       elsif params[:person_id].present?
         pid = params[:person_id].to_i
@@ -47,7 +47,7 @@ class Api::V4::PostsController < Api::V3::PostsController
 
   def list
     @posts = paginate apply_filters
-    @posts = @posts.for_tag(params[:tag]) if params[:tag]
+    @posts = @posts.tagged_with(params[:tag]) if params[:tag]
     @posts = @posts.for_categories(params[:categories]) if params[:categories]
     return_the @posts, handler: tpl_handler
   end
