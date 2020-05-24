@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_223139) do
+ActiveRecord::Schema.define(version: 2020_05_23_185832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -637,17 +637,6 @@ ActiveRecord::Schema.define(version: 2020_04_15_223139) do
     t.index ["person_id"], name: "index_notifications_on_person_id"
   end
 
-  create_table "old_tags", force: :cascade do |t|
-    t.text "name", null: false
-    t.integer "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "deleted", default: false, null: false
-    t.integer "posts_count", default: 0
-    t.index ["name"], name: "idx_tag_names"
-    t.index ["product_id"], name: "idx_tag_products"
-  end
-
   create_table "people", force: :cascade do |t|
     t.text "username", null: false
     t.text "username_canonical", null: false
@@ -966,13 +955,6 @@ ActiveRecord::Schema.define(version: 2020_04_15_223139) do
     t.index ["person_id"], name: "index_post_reports_on_person_id"
     t.index ["post_id"], name: "idx_post_reports_post"
     t.index ["status"], name: "index_post_reports_on_status"
-  end
-
-  create_table "post_tags", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
-    t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
   end
 
   create_table "post_translations", force: :cascade do |t|
@@ -1667,6 +1649,15 @@ ActiveRecord::Schema.define(version: 2020_04_15_223139) do
     t.index ["product_id"], name: "index_urls_on_product_id"
   end
 
+  create_table "version_associations", force: :cascade do |t|
+    t.integer "version_id"
+    t.string "foreign_key_name", null: false
+    t.integer "foreign_key_id"
+    t.string "foreign_type"
+    t.index ["foreign_key_name", "foreign_key_id", "foreign_type"], name: "index_version_associations_on_foreign_key"
+    t.index ["version_id"], name: "index_version_associations_on_version_id"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.text "item_type", null: false
     t.integer "item_id", null: false
@@ -1675,7 +1666,10 @@ ActiveRecord::Schema.define(version: 2020_04_15_223139) do
     t.text "object"
     t.datetime "created_at"
     t.string "locale"
+    t.text "object_changes"
+    t.integer "transaction_id"
     t.index ["item_type", "item_id"], name: "ind_versions_item_type_item_id"
+    t.index ["transaction_id"], name: "index_versions_on_transaction_id"
   end
 
   create_table "video_pages", force: :cascade do |t|

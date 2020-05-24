@@ -331,8 +331,8 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(:post, person: person)
-        tag = build(:tag)
-        post.tag_list = tag.name
+        tag = Faker::Lorem.word
+        post.tag_list = tag
         post.save
         post_reaction = create(:post_reaction, person: person, post: post)
 
@@ -340,7 +340,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         expect(response).to be_successful
 
         pr = json["post"]["post_reaction"]
-        expect(json["post"]["tags"]).to include(tag.name)
+        expect(json["post"]["tags"]).to include(tag)
         expect(pr["id"]).to eq(post_reaction.id)
         expect(pr["post_id"]).to eq(post_reaction.post_id)
         expect(pr["person_id"]).to eq(post_reaction.person_id)

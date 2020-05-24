@@ -244,7 +244,7 @@ class Api::V1::PostsController < ApiController
 
   def list
     @posts = paginate apply_filters
-    @posts = @posts.for_tag(params[:tag]) if params[:tag]
+    @posts = @posts.tagged_with(params[:tag]) if params[:tag]
     @posts = @posts.for_category(params[:category]) if params[:category]
     return_the @posts
   end
