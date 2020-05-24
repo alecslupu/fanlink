@@ -2,15 +2,15 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_092215) do
+ActiveRecord::Schema.define(version: 2020_05_23_185832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
+    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -637,17 +638,6 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
     t.index ["person_id"], name: "index_notifications_on_person_id"
   end
 
-  create_table "old_tags", force: :cascade do |t|
-    t.text "name", null: false
-    t.integer "product_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "deleted", default: false, null: false
-    t.integer "posts_count", default: 0
-    t.index ["name"], name: "idx_tag_names"
-    t.index ["product_id"], name: "idx_tag_products"
-  end
-
   create_table "people", force: :cascade do |t|
     t.text "username", null: false
     t.text "username_canonical", null: false
@@ -966,13 +956,6 @@ ActiveRecord::Schema.define(version: 2020_05_21_092215) do
     t.index ["person_id"], name: "index_post_reports_on_person_id"
     t.index ["post_id"], name: "idx_post_reports_post"
     t.index ["status"], name: "index_post_reports_on_status"
-  end
-
-  create_table "post_tags", id: false, force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
-    t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
   end
 
   create_table "post_translations", force: :cascade do |t|

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
-
 require "spec_helper"
 
-RSpec.describe PostTagPolicy, type: :policy do
-  let(:master_class) { PostTag.new }
+RSpec.describe ActsAsTaggableOn::TagPolicy, type: :policy do
+  let(:master_class) { ActsAsTaggableOn::Tag.new }
   subject { described_class.new(build(:person), master_class) }
 
   permission_list = {
@@ -35,7 +34,7 @@ RSpec.describe PostTagPolicy, type: :policy do
       end
     end
     describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("post") }
+      it { expect(subject.send(:module_name)).to eq("root") }
       it { expect(subject.send(:super_admin?)).to eq(false) }
       it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
@@ -69,7 +68,7 @@ RSpec.describe PostTagPolicy, type: :policy do
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_read: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, root_read: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -100,7 +99,7 @@ RSpec.describe PostTagPolicy, type: :policy do
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_update: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, root_update: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -131,7 +130,7 @@ RSpec.describe PostTagPolicy, type: :policy do
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_delete: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, root_delete: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -162,7 +161,7 @@ RSpec.describe PostTagPolicy, type: :policy do
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_export: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, root_export: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
@@ -193,15 +192,11 @@ RSpec.describe PostTagPolicy, type: :policy do
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_history: true).person, master_class) }
+    subject { described_class.new(create(:portal_access, root_history: true).person, master_class) }
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do

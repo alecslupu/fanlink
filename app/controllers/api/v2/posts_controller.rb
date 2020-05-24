@@ -31,6 +31,7 @@ class Api::V2::PostsController < Api::V1::PostsController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 422 Unprocessable, etc.
   # *
+
   #
   # def index
   #   if params[:person_id].present?
@@ -46,7 +47,7 @@ class Api::V2::PostsController < Api::V1::PostsController
   #     @posts = paginate(Post.visible.following_and_own(current_user).order(created_at: :desc))
   #   end
   #   @post_reactions = current_user.post_reactions.where(post_id: @posts).index_by(&:post_id)
-  #   @posts = @posts.for_tag(params[:tag]) if params[:tag]
+  #   @posts = @posts.tagged_with(params[:tag]) if params[:tag]
   #   @posts = @posts.for_category(params[:category]) if params[:category]
   #   return_the @posts
   # end

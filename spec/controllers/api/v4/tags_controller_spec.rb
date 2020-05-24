@@ -9,12 +9,12 @@ RSpec.describe Api::V4::TagsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person2 = create(:person)
-        tag = build(:tag)
         post = create(:published_post, person: person2)
         1.upto 4 do
           create(:post_reaction, post: post)
         end
-        post.tag_list = tag.name
+        tag = Faker::Lorem.word
+        post.tag_list = tag
         post.save
 
         create(:post_reaction, person: person, post: post)
@@ -22,7 +22,7 @@ RSpec.describe Api::V4::TagsController, type: :controller do
         person.follow(person2)
         person2.follow(person)
 
-        get :index, params: { tag_name: tag.name }
+        get :index, params: { tag_name: tag }
 
         expect(response).to be_successful
         post = json["posts"].first
