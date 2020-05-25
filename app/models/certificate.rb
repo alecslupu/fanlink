@@ -29,9 +29,50 @@
 class Certificate < ApplicationRecord
   has_paper_trail
 
-  include AttachmentSupport
+  # include AttachmentSupport
+  # has_attached_file :template_image,
+  #   default_url: nil,
+  #   styles: {
+  #     optimal: "1000x",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 75 -strip"
+  #   }
+  #
+  # validates_attachment :template_image,
+  #   content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+  #   size: { in: 0..5.megabytes }
+  #
+  # def template_image_url
+  #   template_image.file? ? template_image.url : nil
+  # end
+  #
+  # def template_image_optimal_url
+  #   template_image.file? ? template_image.url(:optimal) : nil
+  # end
 
-  has_image_called :template_image
+  has_one_attached :template_image
+
+  # validates_attachment_presence :template_image
+  # validates_attachment :template_image, dimensions: {height: 2967, width: 3840, message: _("Must be 3840x2967")}
+
+  validates :template_image, attached: true, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]},
+            dimension: { width: { min: 2967, max: 2967 },
+                         height: { min: 3840, max: 3840 }, message: "Must be 3840x2967" }
+
+  def template_image_url
+    template_image.attached? ? template_image.service_url : nil
+  end
+
+  def template_image_optimal_url
+    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    template_image.attached? ? template_image.variant(opts).processed.service_url : nil
+  end
+
+  # include AttachmentSupport
+
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -45,18 +86,16 @@ class Certificate < ApplicationRecord
   has_many :people, through: :person_certificates, dependent: :destroy
 
   validates_uniqueness_to_tenant :certificate_order
-  validates_attachment_presence :template_image
-  validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
 
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 
   enum status: %i[entry live]
   validates :long_name, :short_name, :description, :certificate_order, :status, :sku_ios, :sku_android, :validity_duration, :access_duration, presence: true
 
-  validates :validity_duration, numericality: { greater_than: 0 }
-  validates :access_duration, numericality: { greater_than: 0 }
+  validates :validity_duration, numericality: {greater_than: 0}
+  validates :access_duration, numericality: {greater_than: 0}
 
-  validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
+  validates :certificate_order, numericality: {only_integer: true, greater_than: 0}
   # validate :certificate_order_validation, if: :certificate_order_changed?
 
   scope :live_status, -> { where(status: "live") }
@@ -79,7 +118,7 @@ class Certificate < ApplicationRecord
   end
 
   private
-    def certificate_order_validation
-      errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
-    end
+  def certificate_order_validation
+    errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % {size: certificate_order_max_value, value: certificate_order})) unless certificate_order.to_i >= certificate_order_max_value
+  end
 end

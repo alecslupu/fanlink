@@ -23,9 +23,27 @@ class DownloadFilePage < ApplicationRecord
 
   belongs_to :certcourse_page
 
-  include AttachmentSupport
+  # include AttachmentSupport
+  has_one_attached :document
 
-  has_pdf_file_called :document
+  # has_attached_file :document,
+  #   default_url: nil,
+  #   convert_options: {
+  #     optimal: "-quality 90 -strip"
+  #   }
+  # validates_attachment :document,
+  #   content_type: { content_type: [""] },
+  #   size: { in: 0..5.megabytes }
+
+  def document_url
+    document.attached? ? document.service_url : nil
+  end
+
+  validates :document, attached: true,
+            size: {less_than: 5.megabytes},
+            content_type: {in: %w[application/pdf]}
+
+  # include AttachmentSupport
 
   after_save :set_certcourse_page_content_type
   validate :just_me
@@ -34,7 +52,6 @@ class DownloadFilePage < ApplicationRecord
   validates :certcourse_page_id, uniqueness: true
 
   # validates_uniqueness_of :certcourse_page_id
-  validates_attachment_presence :document
 
   def course_name
     certcourse_page.certcourse.to_s

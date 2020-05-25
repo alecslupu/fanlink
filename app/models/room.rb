@@ -22,8 +22,6 @@
 #
 
 class Room < ApplicationRecord
-  include AttachmentSupport
-  # include Room::RealTime
 
   # old Room::RealTime
   def clear_message_counter(membership)
@@ -64,8 +62,45 @@ class Room < ApplicationRecord
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_image_called :picture
+  # AttachmentSupport
+  has_one_attached :picture
 
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? service_url : nil
+  end
+
+  def picture_optimal_url
+    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    picture.attached? ? picture.variant(opts).processed.service_url : nil
+  end
+
+  # has_attached_file :picture,
+  #   default_url: nil,
+  #   styles: {
+  #     optimal: "1000x",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 75 -strip"
+  #   }
+  #
+  # validates_attachment :picture,
+  #   content_type: {content_type: %w[image/jpeg image/gif image/png]},
+  #   size: {in: 0..5.megabytes}
+  #
+  # def picture_url
+  #   picture.file? ? picture.url : nil
+  # end
+  #
+  # def picture_optimal_url
+  #   picture.file? ? picture.url(:optimal) : nil
+  # end
+
+  # AttachmentSupport
+  #
   if Rails.env.staging?
     has_many :messages, dependent: :destroy
   else

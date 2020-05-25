@@ -24,8 +24,6 @@
 #
 
 class Badge < ApplicationRecord
-  include AttachmentSupport
-
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
@@ -33,27 +31,61 @@ class Badge < ApplicationRecord
   has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types["badge"]) }, foreign_key: "reward_type_id", dependent: :destroy
   has_many :assigned_rewards, through: :reward
 
-  scope :for_product, -> (product) { where( badges: { product_id: product.id } ) }
+  scope :for_product, -> (product) { where( badges: {product_id: product.id} ) }
 
   has_paper_trail
   acts_as_tenant(:product)
 
   belongs_to :action_type, counter_cache: true
 
-  has_image_called :picture
+  # AttachmentSupport
+
+
+  # has_attached_file :picture,
+  #   default_url: nil,
+  #   # "https://s3.us-east-1.amazonaws.com/fanlink-development/caned/badges/pictures/000/000/237/original/903c7ea7aa4af94056babb10798d2f928ff808bb.jpg?1570723649"
+  #   # hash = "badges/pictures/:id/original/{updated_at.to_i}"
+  #   path: "/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
+  #   styles: {
+  #     optimal: "1000x",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 75 -strip"
+  #   }
+  #
+  # validates_attachment :picture,
+  #   content_type: {content_type: },
+  #   size: {in: 0..5.megabytes}
+  #
+  has_one_attached :picture
+
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? service_url : nil
+  end
+
+  def picture_optimal_url
+    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    picture.attached? ? picture.variant(opts).processed.service_url : nil
+  end
+
+  # AttachmentSupport
 
   validate :issued_time_sanity
 
   normalize_attributes :issued_from, :issued_to
 
   validates :internal_name,
-            presence: { message: _("Internal name is required.") },
-            format: { with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") } },
-            length: { in: 3..26, message: _("Internal name must be between 3 and 26 characters.") },
-            uniqueness: { scope: :product_id, message: _("There is already a badge with that internal name.") }
+    presence: {message: _("Internal name is required.")},
+    format: {with: /\A[a-z_0-9]+\z/, message: lambda { |*| _("Internal name can only contain lowercase letters, numbers and underscores.") }},
+    length: {in: 3..26, message: _("Internal name must be between 3 and 26 characters.")},
+    uniqueness: {scope: :product_id, message: _("There is already a badge with that internal name.")}
 
-  validates :action_requirement, presence: { message: _("Action requirement is required.") },
-            numericality: { greater_than: 0, message: _("Action requirement must be greater than zero.") }
+  validates :action_requirement, presence: {message: _("Action requirement is required.")},
+            numericality: {greater_than: 0, message: _("Action requirement must be greater than zero.")}
 
   around_create :create_reward
   after_update :update_reward

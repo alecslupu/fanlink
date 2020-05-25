@@ -37,10 +37,46 @@
 #
 
 class Product < ApplicationRecord
-  include AttachmentSupport
   has_paper_trail
 
-  has_image_called :logo
+  #   include AttachmentSupport
+  # has_attached_file :logo,
+  #   default_url: nil,
+  #   styles: {
+  #     optimal: "1000x",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 75 -strip"
+  #   }
+  #
+  # validates_attachment :logo,
+  #   content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
+  #   size: { in: 0..5.megabytes }
+  #
+  # def logo_url
+  #   logo.file? ? logo.url : nil
+  # end
+  #
+  # def logo_optimal_url
+  #   logo.file? ? logo.url(:optimal) : nil
+  # end
+
+  has_one_attached :logo
+  validates :logo, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def logo_url
+    logo.attached? ? logo.service_url : nil
+  end
+
+  def logo_optimal_url
+    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    logo.attached? ? logo.variant(opts).processed.service_url : nil
+  end
+
+  #   include AttachmentSupport
+
 
   validates :name, length: { in: 3..60, message: _("Name must be between 3 and 60 characters.") }, uniqueness: { message: _("Product %{product_name} already exists.") % { product_name: name } }
 

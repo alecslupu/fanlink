@@ -18,14 +18,51 @@ class ImagePage < ApplicationRecord
 
   scope :for_product, -> (product) { where(product_id: product.id) }
 
-  include AttachmentSupport
   acts_as_tenant(:product)
   belongs_to :product
 
   belongs_to :certcourse_page
+  # include AttachmentSupport
+  has_one_attached :image
 
-  has_course_image_called :image
-  validates_attachment_presence :image
+  validates :document, attached: true,
+            size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png application/pdf]}
+
+  def image_url
+    image.attached? ? image.service_url : nil
+  end
+
+  def image_optimal_url
+    opts = {resize_to_limit: [1920, 1080], auto_orient: true, quality: 90}
+    image.attached? ? image.variant(opts).processed.service_url : nil
+  end
+
+  #
+  # has_attached_file :image,
+  #   default_url: nil,
+  #   styles: {
+  #     optimal: "1920x1080",
+  #     large: "3840x2160",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 90 -strip"
+  #   }
+  # validates_attachment :image,
+  #   content_type: {content_type: },
+  #   size: {in: 0..5.megabytes}
+  #
+  # def image_url
+  #   image.file? ? image.url : nil
+  # end
+  # def image_optimal_url
+  #   image.attached? ? image. : nil
+  # end
+  #
+  # validates_attachment_presence :image
+
+  # include AttachmentSupport
 
   validates_uniqueness_of :certcourse_page_id
 

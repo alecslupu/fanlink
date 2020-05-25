@@ -3,6 +3,7 @@ require_relative "boot"
 
 require "rails"
 # Pick the frameworks you want:
+require "active_storage/engine"
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
@@ -10,7 +11,6 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
-require "active_storage/engine"
 require "sprockets/railtie"
 require "./app/middleware/sns_content_type"
 
@@ -38,25 +38,25 @@ module Fanlink
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    config.paperclip_defaults = {
-        storage: :s3,
-        url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
-        s3_region: Rails.application.secrets.aws_region,
-        bucket:    Rails.application.secrets.aws_bucket,
-        hash_secret: Rails.application.secrets.paperclip_secret,
-        s3_host_name: "s3.#{Rails.application.secrets.aws_region}.amazonaws.com",
-        s3_credentials: {
-            access_key_id: Rails.application.secrets.aws_access_key_id,
-            secret_access_key: Rails.application.secrets.aws_secret_access_key
-        },
-        s3_protocol: :https
-    }
+    # config.paperclip_defaults = {
+    #     storage: :s3,
+    #     url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
+    #     s3_region: Rails.application.secrets.aws_region,
+    #     bucket:    Rails.application.secrets.aws_bucket,
+    #     hash_secret: Rails.application.secrets.paperclip_secret,
+    #     s3_host_name: "s3.#{Rails.application.secrets.aws_region}.amazonaws.com",
+    #     s3_credentials: {
+    #         access_key_id: Rails.application.secrets.aws_access_key_id,
+    #         secret_access_key: Rails.application.secrets.aws_secret_access_key
+    #     },
+    #     s3_protocol: :https
+    # }
 
 
-    config.paperclip_defaults = {
-      path: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension",
-      url: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension"
-    } if Rails.env.test?
+    # config.paperclip_defaults = {
+    #   path: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension",
+    #   url: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension"
+    # } if Rails.env.test?
 
     config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
 

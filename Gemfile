@@ -192,9 +192,9 @@ gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
 gem "oj" # json opt recommended with rollbar
-gem "paperclip", "~> 6.1.0"
-gem "paperclip-meta"
-gem "paperclip-dimension-validator"
+# gem "paperclip", "~> 6.1.0"
+# gem "paperclip-meta"
+# gem "paperclip-dimension-validator"
 gem "pg_search"
 gem "postgresql-check"
 gem "pundit"
@@ -209,9 +209,11 @@ gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
+gem 'active_storage_validations'
+
 # To get video's length
 gem "streamio-ffmpeg"
-
+gem "image_processing"
 gem "mini_magick"
 # gem "rmagick"
 

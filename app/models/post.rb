@@ -37,7 +37,6 @@
 #
 
 class Post < ApplicationRecord
-  include AttachmentSupport
   # include Post::PortalFilters
 
   scope :id_filter, -> (query) { where(id: query.to_i) }
@@ -71,9 +70,71 @@ class Post < ApplicationRecord
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_image_called :picture
-  has_audio_called :audio
-  has_video_called :video
+
+  # AttachmentSupport
+  # has_attached_file :picture,
+  #   default_url: nil,
+  #   styles: {
+  #     optimal: "1000x",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 75 -strip"
+  #   }
+  #
+  # validates_attachment :picture,
+  #   content_type: {content_type: %w[image/jpeg image/gif image/png]},
+  #   size: {in: 0..5.megabytes}
+  #
+  # def picture_url
+  #   picture.file? ? picture.url : nil
+  # end
+  #
+  # def picture_optimal_url
+  #   picture.file? ? picture.url(:optimal) : nil
+  # end
+
+  has_one_attached :picture
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? service_url : nil
+  end
+
+  def picture_optimal_url
+    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    picture.attached? ? picture.variant(opts).processed.service_url : nil
+  end
+
+  has_one_attached :audio
+
+  validates :audio, size: {less_than: 10.megabytes},
+            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+
+  def audio_url
+    audio.attached? ? audio.service_url : nil
+  end
+  # has_attached_file :audio, default_url: nil
+  # validates_attachment :audio,
+  #                      content_type: { content_type: },
+  #                      size: { in: 0.. }
+
+  # has_attached_file :video, default_url: nil
+  #
+  # def video_url
+  #   video.file? ? video.url : nil
+  # end
+
+  has_one_attached :video
+
+  validates :video, size: {less_than: 10.megabytes},
+            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+
+  def video_url
+    video.attached? ? video.service_url : nil
+  end
+  # AttachmentSupport
 
   has_paper_trail
 
@@ -113,7 +174,7 @@ class Post < ApplicationRecord
   scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
   scope :in_date_range, -> (start_date, end_date) {
           where("posts.created_at >= ? and posts.created_at <= ?",
-                start_date.beginning_of_day, end_date.end_of_day)
+            start_date.beginning_of_day, end_date.end_of_day)
         }
   scope :for_tag, -> (tag) { joins(:old_tags).where("lower(old_tags.name) = ?", tag.downcase) }
 
@@ -121,7 +182,7 @@ class Post < ApplicationRecord
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
           published.where("(starts_at IS NULL or starts_at < ?) and (ends_at IS NULL or ends_at > ?)",
-                          Time.zone.now, Time.zone.now)
+            Time.zone.now, Time.zone.now)
         }
   scope :not_promoted, -> { left_joins(:poll).where("poll_type_id IS NULL or end_date < NOW()") }
 
@@ -176,8 +237,8 @@ class Post < ApplicationRecord
       # There should be exactly one entry in `outputs`.
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
       job = Flaws.finish_transcoding(post.video.path,
-                                     width, height,
-                                     post_id: post.id.to_s)
+        width, height,
+        post_id: post.id.to_s)
       post.video_job_id = job.id
       post.save!
       post.send(:start_listener)

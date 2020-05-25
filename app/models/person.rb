@@ -44,9 +44,11 @@
 #
 
 class Person < ApplicationRecord
+  include Courseware::Wishlist::PersonRelation
+  include Referral::PersonRelation
+
   attr_accessor :trigger_admin
 
-  include AttachmentSupport
   authenticates_with_sorcery!
 
   attr_accessor :app
@@ -64,7 +66,44 @@ class Person < ApplicationRecord
 
   belongs_to :product
 
-  has_image_called :picture
+  # AttachmentSupport
+  # has_attached_file :picture,
+  #   default_url: nil,
+  #   styles: {
+  #     optimal: "1000x",
+  #     thumbnail: "100x100#"
+  #   },
+  #   convert_options: {
+  #     optimal: "-quality 75 -strip"
+  #   }
+  #
+  # validates_attachment :picture,
+  #   content_type: {content_type: %w[image/jpeg image/gif image/png]},
+  #   size: {in: 0..5.megabytes}
+  #
+  # def picture_url
+  #   picture.file? ? picture.url : nil
+  # end
+  #
+  # def picture_optimal_url
+  #   picture.file? ? picture.url(:optimal) : nil
+  # end
+
+  has_one_attached :picture
+
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? service_url : nil
+  end
+
+  def picture_optimal_url
+    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    picture.attached? ? picture.variant(opts).processed.service_url : nil
+  end
+
+  # AttachmentSupport
   has_many :message_reports, dependent: :destroy
   has_many :notification_device_ids, dependent: :destroy
   has_many :post_reactions, dependent: :destroy
