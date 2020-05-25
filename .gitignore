@@ -114,3 +114,5 @@ rubocop.html
 
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
+/storage/
+/erd.pdf
