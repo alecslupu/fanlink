@@ -58,17 +58,17 @@ class Message < ApplicationRecord
     end
   }
 
-  filterrific(
-    default_filter_params: { sorted_by: "created_at desc" },
-    available_filters: [
-      :sorted_by,
-      :person_username_query,
-      :room_query,
-      :id_query,
-      :body_query,
-      :with_reported_status
-    ]
-  )
+  # filterrific(
+  #   default_filter_params: { sorted_by: "created_at desc" },
+  #   available_filters: [
+  #     :sorted_by,
+  #     :person_username_query,
+  #     :room_query,
+  #     :id_query,
+  #     :body_query,
+  #     :with_reported_status
+  #   ]
+  # )
 
   def self.options_for_reported_status_filter
     %w(Any Yes No)
