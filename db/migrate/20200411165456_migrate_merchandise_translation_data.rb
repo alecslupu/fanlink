@@ -6,7 +6,7 @@ class MigrateMerchandiseTranslationData < ActiveRecord::Migration[5.2]
     if Merchandise.last.respond_to?(:untranslated_name)
       Merchandise::Translation.destroy_all
       Merchandise.where.not(untranslated_name: nil).find_each do |merchandise|
-        Migration::MerchandiseJob.set(wait_until: 30.minutes.from_now).perform_later(merchandise.id)
+        Migration::Translation::MerchandiseJob.set(wait_until: 30.minutes.from_now).perform_later(merchandise.id)
       end
     end
   end
