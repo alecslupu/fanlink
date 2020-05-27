@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "spec_helper"
 
+
 RSpec.describe Api::V2::BadgesController, type: :controller do
   describe "#index" do
     it "should return all badges for a passed in person" do

@@ -24,7 +24,6 @@
 #
 
 class Badge < ApplicationRecord
-  include AttachmentSupport
 
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
@@ -41,7 +40,21 @@ class Badge < ApplicationRecord
 
   belongs_to :action_type, counter_cache: true
 
-  has_image_called :picture
+  # include AttachmentSupport
+
+  has_one_attached :picture
+
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join : nil
+  end
 
   validate :issued_time_sanity
 
