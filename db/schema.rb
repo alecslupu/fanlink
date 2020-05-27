@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2020_05_23_185832) do
-=======
 ActiveRecord::Schema.define(version: 2020_05_26_085623) do
->>>>>>> ale-remove-attachment-support-module
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
