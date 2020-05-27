@@ -42,14 +42,13 @@ class Certificate < ApplicationRecord
                          height: { min: 3840, max: 3840 }, message: "Must be 3840x2967" }
 
   def template_image_url
-    template_image.attached? ? template_image.service_url : nil
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join : nil
   end
 
   def template_image_optimal_url
-    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-    template_image.attached? ? template_image.variant(opts).processed.service_url : nil
+    opts = {resize: "1000", auto_orient: true, quality: 75}
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.variant(opts).processed.key].join : nil
   end
-
 
   acts_as_tenant(:product)
   belongs_to :product

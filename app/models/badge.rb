@@ -47,12 +47,12 @@ class Badge < ApplicationRecord
             content_type: {in: %w[image/jpeg image/gif image/png]}
 
   def picture_url
-    picture.attached? ? picture.service_url : nil
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join : nil
   end
 
   def picture_optimal_url
-    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-    picture.attached? ? picture.variant(opts).processed.service_url : nil
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join : nil
   end
 
   validate :issued_time_sanity
