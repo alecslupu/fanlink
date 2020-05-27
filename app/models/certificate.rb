@@ -29,9 +29,26 @@
 class Certificate < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  include AttachmentSupport
+  # include AttachmentSupport
+  # has_image_called :template_image
+  # validates_attachment_presence :template_image
+  # validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
+  #
+  has_one_attached :template_image
 
-  has_image_called :template_image
+  validates :template_image, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]},
+            dimension: { width: { min: 2967, max: 2967 },
+                         height: { min: 3840, max: 3840 }, message: "Must be 3840x2967" }
+
+  def template_image_url
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join('/') : nil
+  end
+
+  def template_image_optimal_url
+    opts = {resize: "1000", auto_orient: true, quality: 75}
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.variant(opts).processed.key].join('/') : nil
+  end
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -45,8 +62,6 @@ class Certificate < ApplicationRecord
   has_many :people, through: :person_certificates, dependent: :destroy
 
   validates_uniqueness_to_tenant :certificate_order
-  validates_attachment_presence :template_image
-  validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
 
   validates_format_of :color_hex, with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i
 

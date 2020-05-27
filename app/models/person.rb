@@ -56,7 +56,7 @@ class Person < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  enum old_role: %i[ normal staff admin super_admin root client client_portal]
+  enum old_role: %i[ normal staff admin super_admin root client client_portal marketingrole]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 

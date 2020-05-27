@@ -7,7 +7,7 @@ class MigrateInterestTranslationData < ActiveRecord::Migration[5.2]
       Interest::Translation.destroy_all
       PaperTrail.enabled = false
       Interest.where.not(untranslated_title: nil).find_each do |interest|
-        Migration::InterestJob.set(wait_until: 30.minutes.from_now).perform_later(interest.id)
+        Migration::Translation::InterestJob.set(wait_until: 30.minutes.from_now).perform_later(interest.id)
       end
       PaperTrail.enabled = true
     end
