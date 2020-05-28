@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::PasswordResetsController < ApiController
   skip_before_action :require_login, :set_product
 

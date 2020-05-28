@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'swagger_helper'
 
 RSpec.describe "Api::V4::Courseware::Client::CertificatesController", type: :request, swagger_doc: "v4/swagger.json" do
@@ -16,6 +17,7 @@ RSpec.describe "Api::V4::Courseware::Client::CertificatesController", type: :req
       let(:person_id) { hired.id }
       let(:id) { 0 }
       produces "application/vnd.api.v4+json"
+      let!(:static_system_email) { create(:static_system_email, name: "assignee-certificate") }
 
       tags "Courseware"
       response "200", "HTTP/1.1 200 Ok" do

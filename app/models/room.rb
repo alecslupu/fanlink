@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: rooms
@@ -23,30 +24,30 @@
 class Room < ApplicationRecord
   include AttachmentSupport
   # include Room::RealTime
-  include TranslationThings
 
   # old Room::RealTime
   def clear_message_counter(membership)
-    Delayed::Job.enqueue(ClearMessageCounterJob.new(self.id, membership.id))
+    ClearMessageCounterJob.perform_later(self.id, membership.id)
   end
 
   def delete_me(version = 0)
-    Delayed::Job.enqueue(DeleteRoomJob.new(self.id, version)) if self.private?
+    DeleteRoomJob.perform_later(id, version) if self.private?
   end
 
   def post(version = 0)
-    Delayed::Job.enqueue(PostMessageJob.new(self.id, version))
+    # TODO this does not make any sense
+    PostMessageJob.perform_later(self.id, version)
   end
 
   def increment_message_counters(poster_id, version = 0)
     room_memberships.each do |mem|
       mem.increment!(:message_count) unless mem.person.id == poster_id
     end
-    Delayed::Job.enqueue(UpdateMessageCounterJob.new(self.id, poster_id, version))
+    UpdateMessageCounterJob.perform_later(self.id, poster_id, version)
   end
 
   def new_room(version = 0)
-    Delayed::Job.enqueue(AddRoomJob.new(self.id, version)) if self.private?
+    AddRoomJob.perform_later(self.id, version) if self.private?
   end
   # eof old Room::RealTime
 
@@ -55,11 +56,13 @@ class Room < ApplicationRecord
   enum status: %i[ inactive active deleted ]
 
   acts_as_tenant(:product)
+  scope :for_product, -> (product) { where( rooms: { product_id: product.id } ) }
 
   belongs_to :created_by, class_name: "Person", required: false
   belongs_to :product
 
-  has_manual_translated :description, :name
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_image_called :picture
 

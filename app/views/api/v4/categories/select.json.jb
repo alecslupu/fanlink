@@ -1,12 +1,11 @@
+# frozen_string_literal: true
 json = {}
 
 json[:categories] = @categories.map do |category|
-  Rails.cache.fetch ["v4", "category", "select", @req_source, category.id, category.updated_at] do
-    {
-      id: category.id,
-      name: category.name,
-    }
-  end
+  {
+    id: category.id,
+    name: category.name,
+  }
 end
 
 json

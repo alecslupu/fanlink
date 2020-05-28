@@ -1,13 +1,15 @@
+# frozen_string_literal: true
 # require "json"
 
 Rails.application.configure do
+  config.web_console.development_only = false
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", {expires_in: 30.minutes}
+  config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", { expires_in: 30.minutes }
 
   # Disable full error reports.
   config.consider_all_requests_local = true
@@ -49,7 +51,8 @@ Rails.application.configure do
   config.assets.digest = true
   config.assets.js_compressor = :uglifier
 
-  config.redis_url = "#{Rails.application.secrets.redis_url}/stagerank"
+  config.redis_url = "#{Rails.application.secrets.redis_url}/0"
+
   config.eager_load = true
   config.force_ssl = true
 
@@ -59,6 +62,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.web_console.whitelisted_ips = "172.30.0.0/12"
 
   config.after_initialize do
     Bullet.enable = true

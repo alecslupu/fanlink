@@ -12,39 +12,47 @@ end
 ruby "2.5.1"
 
 if ENV["RAILS6"]
-  gem "rails", "~> 5.2"
+  gem "rails", "~> 6"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 6.0'
+elsif ENV["RAILS_EDGE"]
+  # gem "rails", github: "rails/rails"
+  # gem 'sass-rails', '~> 6.0'
 else
-  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
   gem "rails", "~> 5.2"
+  # Use SCSS for stylesheets
+  gem 'sass-rails', '~> 5.0'
 end
 
+gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'puma', '~> 3.12'
+
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem "uglifier", ">= 1.3.0"
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+# Use CoffeeScript for .coffee assets and views
+gem "coffee-rails"
 
-# else
-#   # See https://github.com/rails/execjs#readme for more supported runtimes
-#   gem "therubyracer", platforms: :ruby
-#   # Use CoffeeScript for .coffee assets and views
-#   gem "coffee-rails", "~> 4.2"
+# Reduces boot times through caching; required in config/boot.rb
+# gem 'bootsnap', '>= 1.1.0', require: false
+
+# Use ActiveModel has_secure_password
+gem "bcrypt", "~> 3.1.7"
 # Use Redis adapter to run Action Cable in production
 gem "redis"
-# Use ActiveModel has_secure_password
-# gem "bcrypt", "~> 3.1.7"
 
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 0.18"
+
+
+gem "json", "~> 2.3.0"
 
 gem "jb"
 gem "redis-namespace"
@@ -60,6 +68,11 @@ group :production, :staging do
   gem 'elastic-apm', '~> 3.1.0'
 end
 
+group :staging, :development do
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem "web-console", ">= 3.3.0"
+  gem "listen", ">= 3.0.5", "< 3.2"
+end
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
@@ -80,7 +93,7 @@ group :development, :test do
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem "rubocop", "~> 0.76.0", require: false
+  gem "rubocop", require: false
   # gem "rubocop-rails_config"
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
@@ -94,9 +107,6 @@ group :development do
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
 
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -108,7 +118,7 @@ group :development do
   #   gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
   gem "launchy"
   gem "guard-rspec"
-  gem "guard-rubocop"
+  # gem "guard-rubocop"
   gem "guard-brakeman"
   gem "guard-annotate"
   # gem "guard-rubycritic"
@@ -147,10 +157,9 @@ gem "acts_as_api"
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
-
 gem "awesome_nested_set"
 
-gem "rails_admin", "1.3.0"
+gem "rails_admin", "~> 2.0.0"
 gem "rails_admin_nested_set"
 
 gem "api-pagination"
@@ -161,6 +170,7 @@ gem "countries"
 gem "daemons", "~>1.3.1"
 gem "delayed_job_web"
 gem "delayed_job_active_record"
+gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 gem "filterrific"
@@ -170,7 +180,7 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari"
+gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
@@ -202,7 +212,8 @@ gem "wisper-activerecord"
 # To get video's length
 gem "streamio-ffmpeg"
 
-gem "rmagick"
+gem "mini_magick"
+# gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"
@@ -230,3 +241,9 @@ gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
 gem 'whenever', require: false
+
+gem 'acts-as-taggable-on'
+
+gem 'globalize'
+gem 'globalize-versioning'
+gem 'rails_admin_globalize_field'

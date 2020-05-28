@@ -1,9 +1,8 @@
+# frozen_string_literal: true
 json = {}
 
 json[:levels] = @levels.map do |level|
-  Rails.cache.fetch ["v4", "level", @req_source, level.id, level.updated_at.to_i, @lang] do
-    render partial: @req_source, locals: { level: level, lang: @lang }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { level: level, lang: @lang }, handlers: "jb"
 end
 
 json

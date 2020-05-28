@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 include MessagingHelpers
 
 describe "Messaging" do
@@ -16,7 +17,7 @@ describe "Messaging" do
 
   describe "#clear_message_counter" do
     it "should clear the message count" do
-      payload = {"#{person_path(@person)}/message_counts/#{@room.id}" => 0}
+      payload = { "#{person_path(@person)}/message_counts/#{@room.id}" => 0 }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
       @implementer.clear_message_counter(@room, @person)
     end
@@ -25,7 +26,7 @@ describe "Messaging" do
   describe "#delete_message" do
     it "should set deleted message id" do
       msg = create(:message, hidden: true)
-      payload = {"#{msg.room.product.internal_name}/rooms/#{msg.room.id}/last_deleted_message_id" => msg.id}
+      payload = { "#{msg.room.product.internal_name}/rooms/#{msg.room.id}/last_deleted_message_id" => msg.id }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
       expect(@implementer.delete_message(msg)).to be_truthy
     end
@@ -64,7 +65,7 @@ describe "Messaging" do
 
   describe "#delete_room_for_member" do
     it "should deleted room" do
-      payload = {"#{person_path(@person)}/deleted_room_id" => @room.id}
+      payload = { "#{person_path(@person)}/deleted_room_id" => @room.id }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
 
       expect(@implementer.delete_room_for_member(@room, @person)).to be_truthy
@@ -76,7 +77,7 @@ describe "Messaging" do
       room = create(:room)
       room.members << @person
 
-      payload = {"#{person_path(@person)}/new_room_id" => room.id}
+      payload = { "#{person_path(@person)}/new_room_id" => room.id }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
       expect(@implementer.new_private_room(room)).to be_truthy
     end
@@ -87,14 +88,14 @@ describe "Messaging" do
       room = create(:room, public: true)
       msg = create(:message, room: room)
 
-      payload = {"#{room_path(room)}/last_message" => msg.as_json}
+      payload = { "#{room_path(room)}/last_message" => msg.as_json }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
       expect(@implementer.post_message(msg)).to be_truthy
     end
     it "should post a message to a private room" do
       msg = create(:message, room: @room)
 
-      payload = {"#{room_path(@room)}/last_message_id" => msg.id}
+      payload = { "#{room_path(@room)}/last_message_id" => msg.id }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
       expect(@implementer.post_message(msg)).to be_truthy
     end
@@ -138,7 +139,7 @@ describe "Messaging" do
 
   describe "#update_relationship_count" do
     it "should update the relationship count" do
-      payload = {"#{person_path(@person)}/friend_request_count" => @person.friend_request_count}
+      payload = { "#{person_path(@person)}/friend_request_count" => @person.friend_request_count }
       expect(@fb_stub).to receive(:process).with(:patch, "", payload, {}).and_return(Response.new)
       expect(@implementer.update_relationship_count(@person)).to be_truthy
     end

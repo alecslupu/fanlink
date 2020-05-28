@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # if Rack::Timeout.respond_to?(:timeout)
 #   Rack::Timeout.timeout = 25 # seconds
 # else

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: quests
@@ -25,17 +26,16 @@
 
 class Quest < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
   # include Quest::PortalFilters
   scope :id_filter, ->(query) { where(id: query.to_i) }
   scope :product_id_filter, ->(query) { where(product_id: query.to_i) }
   scope :product_filter, ->(query) { joins(:product).where("product.internal_name ilike ? or product.name ilike ?", "%#{query}%", "%#{query}%") }
   scope :name_filter, ->(query) { where("quests.name->>'en' ilike ? or quests.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
   scope :description_filter, ->(query) { where("quests.description->>'en' ilike ? or quests.descriptions->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :starts_at_filter, ->(query) { where("quests.starts_at >= ?", Time.parse(query)) }
-  scope :ends_at_filter, ->(query) { where("quests.ends_at <= ?", Time.parse(query)) }
-  scope :posted_after_filter, ->(query) { where("quests.created_at >= ?", Time.parse(query)) }
-  scope :posted_before_filter, ->(query) { where("quests.created_at <= ?", Time.parse(query)) }
+  scope :starts_at_filter, ->(query) { where("quests.starts_at >= ?", Time.zone.parse(query)) }
+  scope :ends_at_filter, ->(query) { where("quests.ends_at <= ?", Time.zone.parse(query)) }
+  scope :posted_after_filter, ->(query) { where("quests.created_at >= ?", Time.zone.parse(query)) }
+  scope :posted_before_filter, ->(query) { where("quests.created_at <= ?", Time.zone.parse(query)) }
   scope :status_filter, ->(query) { where(status: query.to_sym) }
   # include Quest::PortalFilters
 
@@ -45,9 +45,12 @@ class Quest < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
+  scope :for_product, -> (product) { where( quests: { product_id: product.id } ) }
+
   has_image_called :picture
-  # TODO Add translation support
-  has_manual_translated :description, :name
+
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_many :assigned_rewards, as: :assigned
 
@@ -63,8 +66,11 @@ class Quest < ApplicationRecord
   has_paper_trail
 
   validate :date_sanity
+  validates_associated :translations
+
   validates :name, presence: { message: _("Name is required.") }
   validates :description, presence: { message: _("A quest description is required.") }
+
   validates :starts_at, presence: { message: _("Starting date and time is required.") }
 
   scope :in_date_range, ->(start_date, end_date) {

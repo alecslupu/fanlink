@@ -1,9 +1,8 @@
+# frozen_string_literal: true
 json = {}
 
 json[:progresses] = @progresses.map do |progress|
-  Rails.cache.fetch ["v4", "reward_progress", @req_source, progress.id, progress.updated_at.to_i] do
-    render partial: @req_source, locals: { progress: progress }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { progress: progress }, handlers: "jb"
 end
 
 json

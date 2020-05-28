@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 
 RSpec.describe Api::V1::PostsController, type: :controller do
-  #
   #
   # before(:each) do
   #   logout
@@ -133,6 +133,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     #     expect(json['post']['audio_url']).to include('small_audio')
     #   end
     # end
+
   end
 
   describe "#destroy" do
@@ -141,7 +142,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(:post, person: person, status: :published)
-        delete :destroy, params: {id: post.id}
+        delete :destroy, params: { id: post.id }
         expect(response).to be_successful
         expect(post.reload.deleted?).to be_truthy
       end
@@ -152,7 +153,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         login_as(person)
         p = create(:person)
         post = create(:post, person: p, status: :published)
-        delete :destroy, params: {id: post.id}
+        delete :destroy, params: { id: post.id }
         expect(response).to be_not_found
         expect(post.reload.published?).to be_truthy
       end
@@ -161,7 +162,7 @@ RSpec.describe Api::V1::PostsController, type: :controller do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         post = create(:post, person: person, status: :published)
-        delete :destroy, params: {id: post.id}
+        delete :destroy, params: { id: post.id }
         expect(response).to be_unauthorized
       end
     end

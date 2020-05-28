@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'swagger_helper'
 
 RSpec.describe "Api::V4::PasswordResetsController", type: :request, swagger_doc: "v4/swagger.json" do
@@ -15,6 +16,7 @@ RSpec.describe "Api::V4::PasswordResetsController", type: :request, swagger_doc:
       let(:product) { user.product.internal_name }
       let(:email_or_username) { user.email }
 
+      let!(:static_system_email) { create(:static_system_email, name: "password-reset")  }
 
       response "200", "HTTP/1.1 200 Ok" do
         run_test!

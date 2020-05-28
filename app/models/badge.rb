@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: badges
@@ -24,13 +25,15 @@
 
 class Badge < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
 
-  has_manual_translated :description, :name
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_many :badge_awards, dependent: :restrict_with_error
   has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types["badge"]) }, foreign_key: "reward_type_id", dependent: :destroy
   has_many :assigned_rewards, through: :reward
+
+  scope :for_product, -> (product) { where( badges: { product_id: product.id } ) }
 
   has_paper_trail
   acts_as_tenant(:product)
@@ -56,8 +59,8 @@ class Badge < ApplicationRecord
   after_update :update_reward
 
   def action_count_earned_by(person)
-    time_frame_start = (issued_from.present?) ? issued_from : Time.now - 10.years
-    time_frame_end = (issued_to.present?) ? issued_to : Time.now + 10.years
+    time_frame_start = (issued_from.present?) ? issued_from : Time.zone.now - 10.years
+    time_frame_end = (issued_to.present?) ? issued_to : Time.zone.now + 10.years
     person.badge_actions.where(action_type: action_type).where("created_at >= ?", time_frame_start).where("created_at <= ?", time_frame_end).count
   end
 
@@ -78,11 +81,11 @@ private
       status: :active,
       reward_type: :badge,
       product: product,
-      name: name,
       internal_name: internal_name,
       points: point_value,
       completion_requirement: action_requirement
     )
+    reward.name = name
 
     if reward.valid? && self.valid?# check if the new reward and badge are valid
       yield # saves the badge
@@ -100,8 +103,9 @@ private
 
     raise ActiveRecord::RecordNotFound if reward.nil?
 
+    reward.name = name
+    reward.save
     reward.update(
-      name: name,
       internal_name: internal_name,
       points: point_value,
       completion_requirement: action_requirement

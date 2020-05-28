@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: person_certificates
@@ -59,8 +60,6 @@ class PersonCertificate < ApplicationRecord
     person.product
   end
 
-  include Magick
-
   before_create do
     self.generate_token!
     self.access_duration   = self.certificate.access_duration
@@ -89,52 +88,52 @@ class PersonCertificate < ApplicationRecord
   end
 
   def write_files
-    require "rmagick"
     require "prawn"
 
-    img = ImageList.new(Paperclip.io_adapters.for(certificate.template_image).path)
+    img = MiniMagick::Image.open(Paperclip.io_adapters.for(certificate.template_image).path)
 
-    txt = Draw.new
+    img.combine_options do |txt|
+      txt.gravity "Center"
+      txt.fill("#000000")
+      txt.draw ''
+      txt.pointsize 100
+      txt.draw "text 0,-250 '#{full_name}'"
+      txt.weight 700
+      txt.stroke "#FFFFFF"
+    end
 
-    img.annotate(txt, 0, 0, 0, -250, full_name) {
-      txt.gravity = Magick::CenterGravity
-      txt.pointsize = 100
-      txt.stroke = "#FFFFFF"
-      txt.fill = "#000000"
-      txt.font_weight = Magick::BoldWeight
-    }
-
-    txt = Draw.new
-    img.annotate(txt, 0,0,150, 150, "https://can-ed.com/certificate-check/#{unique_id}") do
-      txt.gravity = Magick::SouthEastGravity
-      txt.pointsize = 50
-      txt.stroke = "#FFFFFF"
-      txt.fill = "#4d4d4d"
-      txt.font_weight = Magick::BoldWeight
+    img.combine_options do |txt|
+      txt.gravity "SouthEast"
+      txt.fill("#4d4d4d")
+      txt.draw ''
+      txt.pointsize 50
+      txt.draw "text 200, 200 'https://can-ed.com/certificate-check/#{unique_id}'"
+      txt.weight 700
+      txt.stroke "#FFFFFF"
     end
 
     completed_date = (issued_date.to_datetime rescue DateTime.now ).strftime("%B %d, %Y")
-    txt = Draw.new
-    img.annotate(txt, 0,0,225, 250, completed_date) do
-      txt.gravity = Magick::NorthEastGravity
-      txt.pointsize = 60
-      txt.stroke = "#FFFFFF"
-      txt.fill = "#4d4d4d"
-      txt.font_weight = Magick::BoldWeight
-    end
 
-    img.format = "jpeg"
+    img.combine_options do |txt|
+      txt.gravity "NorthEast"
+      txt.fill("#4d4d4d")
+      txt.draw ''
+      txt.pointsize 60
+      txt.draw "text 480, 250 '#{completed_date}'"
+      txt.weight 700
+      txt.stroke  "#FFFFFF"
+    end
+    img.format "jpeg"
 
     jpeg_file = Tempfile.new(%w(certificate_image .jpg))
+
+    img.write(jpeg_file.path)
+
     pdf_file =  Tempfile.new(%w(certificate_image .pdf))
-
-
-    img[0].write(jpeg_file.path)
-
     Prawn::Document.generate(pdf_file.path, page_layout: :landscape) do |pdf|
       pdf.image jpeg_file.path, fit: [pdf.bounds.right, pdf.bounds.top]
     end
 
-    self.update_attributes(issued_date: issued_date , issued_certificate_image: jpeg_file, issued_certificate_pdf: pdf_file)
+    self.update(issued_date: issued_date, issued_certificate_image: jpeg_file, issued_certificate_pdf: pdf_file)
   end
 end

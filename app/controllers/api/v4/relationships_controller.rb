@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::RelationshipsController < Api::V3::RelationshipsController
   def index
     if params[:with_id]

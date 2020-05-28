@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: portal_notifications
@@ -12,11 +13,17 @@
 #
 
 class PortalNotification < ApplicationRecord
-  include TranslationThings
+
+
+  LANGS = {
+    "en" => "English*",
+    "es" => "Spanish",
+    "ro" => "Romanian",
+  }.freeze
 
   attr_accessor :trigger_admin_notification
   after_commit -> { enqueue_push }, on: :create, if: proc { |record| record.trigger_admin_notification }
-  after_commit -> { update_push }, on: :update, if: proc { |record|
+  after_commit -> { enqueue_push }, on: :update, if: proc { |record|
     record.trigger_admin_notification == true && record.previous_changes.keys.include?("send_me_at")
   }
 
@@ -25,9 +32,10 @@ class PortalNotification < ApplicationRecord
 
   enum sent_status: %i[ pending sent cancelled errored ]
 
-  has_manual_translated :body
-
   has_paper_trail
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
+
 
   acts_as_tenant(:product)
   belongs_to :product
@@ -37,7 +45,7 @@ class PortalNotification < ApplicationRecord
 
   validate :sensible_send_time
 
-  scope :for_product, -> (product) { where(product_id: product.id) }
+  scope :for_product, -> (product) { where(portal_notifications: { product_id: product.id } ) }
 
   def ignore_translation_lang?(field, lang)
     IGNORE_TRANSLATION_LANGS.has_key?(field) && IGNORE_TRANSLATION_LANGS[field].include?(lang)
@@ -51,29 +59,20 @@ class PortalNotification < ApplicationRecord
     topics
   end
 
+  def future_send_date?
+    self.send_me_at.present? && self.send_me_at > Time.zone.now
+  end
+
   def enqueue_push
-    if pending? && self.send_me_at > Time.zone.now
-      Delayed::Job.enqueue(PortalNotificationPushJob.new(self.id), run_at: self.send_me_at)
+    if pending? && future_send_date?
+      PortalNotificationPushJob.set(wait_until:  self.send_me_at + 1.second).perform_later(self.id)
     end
   end
 
-  def update_push
-    if pending? && self.send_me_at > Time.zone.now
-      get_job.try(:destroy)
-      enqueue_push
-    end
-  end
 private
-
-  # Yes this is too much coupled with DJ's internals, but that is because DJ makes it too hard to do this. Only
-  # real solution is to switch to a job framework that does not have this limitation.
-  def get_job
-    Delayed::Job.find_by("handler like '%portal_notification_id: #{self.id}%'")
-  end
-
   def sensible_send_time
     unless persisted?
-      if send_me_at.present? && send_me_at < Time.now
+      if send_me_at.present? && send_me_at < Time.zone.now
         errors.add(:send_me_at, :sensible_send_time, message: _("You cannot set the send time to a time before now."))
       end
     end

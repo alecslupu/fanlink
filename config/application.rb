@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative "boot"
 
 require "rails"
@@ -6,9 +7,10 @@ require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
 require "action_controller/railtie"
-# require "action_mailer/railtie"
+require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
+require "active_storage/engine"
 require "sprockets/railtie"
 require "./app/middleware/sns_content_type"
 
@@ -84,15 +86,33 @@ module Fanlink
         s3_bucket:  Rails.application.secrets.aws_bucket,
         transcoder_pipeline_id: Rails.application.secrets.aws_pipeline_id,
         region: Rails.application.secrets.aws_region,
-        transcoder_queue_url: Rails.application.secrets.transcoder_queue_url,
+        transcoder_queue_url: Rails.application.secrets.transcoder_queue_url
       }
     }
 
      #Use a real queuing backend for Active Job (and separate queues per environment)
-     config.active_job.queue_adapter     = :delayed_job
+     config.active_job.queue_adapter     = :sidekiq
      #config.active_job.queue_name_prefix = "fanlink_#{Rails.env}"
      #
 
     config.i18n.fallbacks = [I18n.default_locale]
+
+    config.active_storage.service = :amazon
+
+    config.session_store :redis_store,
+                         servers: ["#{Rails.application.secrets.redis_url}/0/session"],
+                         key: "_fanlink_session",
+                         expire_after: 14.days.to_i
+
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :user_name => Rails.application.secrets.smtp_user_name,
+      :password => Rails.application.secrets.smtp_password,
+      :address => Rails.application.secrets.smtp_host,
+      :domain => Rails.application.secrets.smtp_domain,
+      :port => Rails.application.secrets.smtp_port,
+      :authentication => Rails.application.secrets.smtp_authentication
+    }
   end
 end

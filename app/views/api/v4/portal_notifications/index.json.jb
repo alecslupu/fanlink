@@ -1,9 +1,8 @@
+# frozen_string_literal: true
 json = {}
 
 json[:portal_notifications] = @portal_notifications.map do |portal_notification|
-  Rails.cache.fetch ["v4", "portal_notification", @req_source, portal_notification.id, portal_notification.updated_at.to_i] do
-    render partial: @req_source, locals: { portal_notification: portal_notification }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { portal_notification: portal_notification }, handlers: "jb"
 end
 
 json

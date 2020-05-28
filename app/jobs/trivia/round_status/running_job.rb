@@ -1,19 +1,18 @@
+# frozen_string_literal: true
 module Trivia
   module RoundStatus
-    class RunningJob < Struct.new(:round_id)
+    class RunningJob < ::ApplicationJob
+      queue_as :trivia
 
-      def perform
+      def perform(round_id)
         round = Trivia::Round.find(round_id)
         round.running!
 
         round.reload.questions.each do |question|
-          Delayed::Job.enqueue(::Trivia::QuestionStatus::CloseJob.new(question.id), run_at: Time.at(question.end_date) + 1.second)
+          ::Trivia::QuestionStatus::CloseJob.set(wait_until: Time.at(question.end_date) + 1.second).perform_later(question.id)
         end
       end
 
-      def queue_name
-        :trivia
-      end
     end
   end
 end

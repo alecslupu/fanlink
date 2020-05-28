@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: tags
@@ -12,6 +13,7 @@
 #
 
 class Tag < ApplicationRecord
+  self.table_name = :old_tags
   acts_as_tenant(:product)
   belongs_to :product
 

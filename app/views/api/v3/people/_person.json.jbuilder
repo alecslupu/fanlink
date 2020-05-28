@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 json.cache! ["v3", person] do
   json.id person.id.to_s
   json.(person, :username, :name, :gender, :city, :country_code, :birthdate, :biography, :picture_url, :product_account, :recommended, :chat_banned, :tester, :terminated, :terminated_reason)
-  json.designation person.designation(@lang)
+  json.designation person.designation
 
   json.role person.role.to_s
   json.do_not_message_me person.do_not_message_me

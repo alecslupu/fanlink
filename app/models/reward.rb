@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: rewards
@@ -18,13 +19,14 @@
 #
 
 class Reward < ApplicationRecord
-  include TranslationThings
   include Reward::Badges
   include Reward::Contests
   include Reward::Coupons
   include Reward::Urls
   enum reward_type: %i[ badge url coupon ]
   enum status: %i[ active inactive ]
+
+  scope :for_product, -> (product) { where( rewards: { product_id: product.id } ) }
 
   acts_as_tenant(:product)
 
@@ -44,7 +46,10 @@ class Reward < ApplicationRecord
 
   has_many :people, through: :person_rewards
 
-  has_manual_translated :name
+  # has_manual_translated :name
+
+  translates :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_paper_trail
 

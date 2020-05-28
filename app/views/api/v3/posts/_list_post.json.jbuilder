@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 json.cache! ["v3", "list", post] do
   json.id post.id
   json.person do
     json.partial! "api/v3/people/person", locals: { person: post.person }
   end
-  json.body post.body(@lang)
+  json.body post.body
   json.picture_url post.picture_optimal_url
   json.global post.global
   json.starts_at post.starts_at.to_s

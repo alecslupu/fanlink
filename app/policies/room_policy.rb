@@ -1,10 +1,8 @@
+# frozen_string_literal: true
 class RoomPolicy < ChatModulePolicy
-  def attributes_for(action)
-    case action
-    when :create
-      { public: true, created_by_id: user.id }
-    else
-      {}
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      super.includes(:translations).for_product(ActsAsTenant.current_tenant)
     end
   end
 end

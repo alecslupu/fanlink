@@ -1,30 +1,30 @@
-class DeleteRoomJob < Struct.new(:room_id, :version)
+# frozen_string_literal: true
+class DeleteRoomJob < ApplicationJob
+  queue_as :default
   include RealTimeHelpers
 
-  def perform
+  def perform(room_id, version = 0)
     room = Room.find(room_id)
+
+    return unless room.private?
+
     payload = {}
-    c = client
     room.room_memberships.each do |m|
       payload[message_counter_path(m)] = 0
       payload["#{user_path(m.person)}/deleted_room_id"] = m.room_id
       if version.present?
-        version.downto(1) { |v|
+        version.downto(1) do |v|
           payload[versioned_message_counter_path(m, v)] = 0
           payload["#{versioned_user_path(m.person, v)}/deleted_room_id"] = m.room_id
-        }
+        end
       end
     end
-    c.update("", payload)
-    c.delete(room_path(room))
+    client.update("", payload)
+    client.delete(room_path(room))
     if version.present?
-      version.downto(1) { |v|
-        c.delete(versioned_room_path(room, v))
-      }
+      version.downto(1) do |v|
+        client.delete(versioned_room_path(room, v))
+      end
     end
-  end
-
-  def queue_name
-    :default
   end
 end
