@@ -1,4 +1,4 @@
-class ConvertBadgeToActiveStorage < ActiveRecord::Migration[5.2]
+class ConvertBadgeToActiveStorage < ActiveRecord::Migration[6.0]
   def up
     Badge.where.not(picture_file_name: nil).find_each do |badge|
       Migration::Assets::BadgeJob.perform_later(badge.id)
