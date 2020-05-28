@@ -1,5 +1,4 @@
+# frozen_string_literal: true
 {
-  following: Rails.cache.fetch(["v4", "following", current_user.id, @req_source, @following.id, @following.updated_at.to_i]) {
-    render(partial: @req_source, locals: { following: @following }, handlers: "jb")
-  }
+  following: render(partial: @req_source, locals: { following: @following }, handlers: "jb")
 }

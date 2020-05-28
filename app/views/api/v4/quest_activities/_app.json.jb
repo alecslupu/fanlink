@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 if !activity.deleted
   json =
     {
       id: activity.id,
-      title: activity.title(@lang),
+      title: activity.title,
       quest_id: activity.step.quest_id,
       step_id: activity.step_id,
       description: activity.description,
@@ -17,9 +18,7 @@ if !activity.deleted
   json[:step] = activity.step
   if activity.activity_types.count > 0
     json[:requirements] = activity.activity_types.map do |atype|
-      Rails.cache.fetch ["v4", "activity_type", @req_source, atype.updated_at, atype] do
-        render partial: "api/v4/activity_types/#{@req_source}", locals: { activity: atype }, handlers: "jb"
-      end
+      render partial: "api/v4/activity_types/#{@req_source}", locals: { activity: atype }, handlers: "jb"
     end
   else
     json[:requirements] = nil

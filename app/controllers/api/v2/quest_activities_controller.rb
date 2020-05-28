@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V2::QuestActivitiesController < ApiController
   before_action :admin_only, except: %i[ index show ]
   load_up_the Step, from: :step_id, except: %i[ update show delete ]
@@ -185,7 +186,7 @@ class Api::V2::QuestActivitiesController < ApiController
   # *
 
   def update
-    @quest_activity.update_attributes(activity_params)
+    @quest_activity.update(activity_params)
     return_the @quest_activity
   end
 

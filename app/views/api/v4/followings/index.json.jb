@@ -1,16 +1,13 @@
+# frozen_string_literal: true
 json = {}
 
 if defined?(@followers)
   json[:followers] = @followers.map do |follower|
-    Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, follower) do
-      render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: "jb"
-    end
+    render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: "jb"
   end
 else
   json[:following] = @following.map do |following|
-    Rails.cache.fetch current_user.cache_key_follow_person("v4", @req_source, current_user, following) do
-      render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: "jb"
-    end
+    render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: "jb"
   end
 end
 

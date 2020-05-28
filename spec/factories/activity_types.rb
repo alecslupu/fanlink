@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: activity_types
@@ -15,7 +16,7 @@
 FactoryBot.define do
   factory :activity_type do
     activity_id { create(:quest_activity).id }
-    value { {id: 1, description: "Product Beacon"} }
+    value { { id: 1, description: "Product Beacon" } }
     atype { "beacon" }
 
     factory :beacon_activity_type do

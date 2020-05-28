@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::QuestActivitiesController < Api::V3::QuestActivitiesController
   # def index
   #   @quest_activities = @step.quest_activities.with_completion(current_user).order(created_at: :desc)
@@ -20,7 +21,7 @@ class Api::V4::QuestActivitiesController < Api::V3::QuestActivitiesController
 
   # def update
   #   if params.has_key?(:quest_activity)
-  #     if @quest_activity.update_attributes(activity_params)
+  #     if @quest_activity.update(activity_params)
   #       return_the @quest_activity, handler: 'jb', using: :show
   #     else
   #       render_422 @message.errors

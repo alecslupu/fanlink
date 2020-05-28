@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # https://github.com/thiagopradi/octopus/issues/241
 # if Octopus.enabled?
 #   module Delayed

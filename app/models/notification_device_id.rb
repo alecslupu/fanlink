@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: notification_device_ids
@@ -13,6 +14,8 @@
 
 class NotificationDeviceId < ApplicationRecord
   belongs_to :person
+
+  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
 
   enum device_type: { unknown: 0, android: 1, ios: 2, web: 3 }
 

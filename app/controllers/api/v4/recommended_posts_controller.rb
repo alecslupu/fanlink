@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::RecommendedPostsController < Api::V3::RecommendedPostsController
   def index
     # if %w[ lvconnect nashvilleconnect ].include?(ActsAsTenant.current_tenant.internal_name)

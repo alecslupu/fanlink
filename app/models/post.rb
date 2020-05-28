@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: posts
@@ -42,19 +43,19 @@ class Post < ApplicationRecord
   scope :id_filter, -> (query) { where(id: query.to_i) }
   scope :person_id_filter, -> (query) { where(person_id: query.to_i) }
   scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ? or people.email ilike ?", "%#{query}%", "%#{query}%") }
-  scope :body_filter, -> (query) { where("posts.body->>'en' ilike ? or posts.body->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.parse(query)) }
-  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.parse(query)) }
+  scope :body_filter, -> (query) { joins(:translations).where("post_translations.body ilike ?", "%#{query}%") }
+  scope :posted_after_filter, -> (query) { where("posts.created_at >= ?", Time.zone.parse(query)) }
+  scope :posted_before_filter, -> (query) { where("posts.created_at <= ?", Time.zone.parse(query)) }
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   scope :chronological, ->(sign, created_at, id) { where("posts.created_at #{sign} ? AND posts.id #{sign} ?", created_at, id) }
   # include Post::PortalFilters
-  include TranslationThings
 
   #   include Post::RealTime
 
   def delete_real_time(version = 0)
     DeletePostJob.perform_later(self.id, version)
   end
+
 
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
@@ -67,7 +68,8 @@ class Post < ApplicationRecord
 
   after_save :adjust_priorities
 
-  has_manual_translated :body
+  translates :body, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_image_called :picture
   has_audio_called :audio
@@ -104,16 +106,17 @@ class Post < ApplicationRecord
   scope :following_and_own, -> (follower) { includes(:person).where(person: follower.following + [follower]) }
 
   scope :promoted, -> {
-          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.now, Time.now)
+          left_outer_joins(:poll).where("(polls.poll_type = ? and polls.end_date > ? and polls.start_date < ?) or pinned = true or global = true", Poll.poll_types["post"], Time.zone.now, Time.zone.now)
         }
 
   scope :for_person, -> (person) { includes(:person).where(person: person) }
-  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
+  scope :for_product, -> (product) { joins(:person).where( people: { product_id: product.id } ) }
   scope :in_date_range, -> (start_date, end_date) {
           where("posts.created_at >= ? and posts.created_at <= ?",
                 start_date.beginning_of_day, end_date.end_of_day)
         }
   scope :for_tag, -> (tag) { joins(:old_tags).where("lower(old_tags.name) = ?", tag.downcase) }
+
   scope :for_category, -> (categories) { joins(:category).where("categories.name IN (?)", categories) }
   scope :unblocked, -> (blocked_users) { where.not(person_id: blocked_users) }
   scope :visible, -> {
@@ -124,7 +127,7 @@ class Post < ApplicationRecord
 
 
   scope :reported, -> { joins(:post_reports) }
-  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: {id: nil} ) }
+  scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
 
   def cache_key
     [super, person.cache_key].join("/")
@@ -167,7 +170,7 @@ class Post < ApplicationRecord
     #
     raise msg.inspect if (msg["state"] != "COMPLETED")
     post = self.find_by(:id => msg["userMetadata"]["post_id"].to_i)
-    return unless post.present?
+    return if post.blank?
 
     if msg["userMetadata"]["sizer"]
       # There should be exactly one entry in `outputs`.

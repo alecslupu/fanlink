@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PostCommentMentionPushJob < ApplicationJob
   queue_as :default
   include Push

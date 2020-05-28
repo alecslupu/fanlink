@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module RailsAdmin
   module Config
     module Fields
@@ -29,7 +30,7 @@ module RailsAdmin
 
           def current_locale
             # I18n.locale
-            TranslationThings::DEFAULT_LANG.to_sym
+            TranslationThings::DEFAULT_LANG
           end
 
 

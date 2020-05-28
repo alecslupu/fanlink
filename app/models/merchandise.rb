@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: merchandise
@@ -23,12 +24,13 @@
 
 class Merchandise < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
 
   after_save :adjust_priorities
 
   has_image_called :picture
-  has_manual_translated :description, :name
+
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   acts_as_tenant(:product)
   belongs_to :product

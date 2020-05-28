@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
@@ -13,7 +14,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         person2 = create(:person)
         room = create(:room, public: false, status: :active, created_by: owner)
 
-        post :create, params: {room_id: room.id, room_membership: {person_id: person2.id}}
+        post :create, params: { room_id: room.id, room_membership: { person_id: person2.id } }
         expect(response).to have_http_status(200)
         lm = RoomMembership.last
         expect(lm.room).to eq(room)
@@ -28,7 +29,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         new_member = create(:person)
         room.members << new_member
         precount = RoomMembership.count
-        post :create, params: {room_id: room.id, room_membership: {person_id: new_member.id.to_s}}
+        post :create, params: { room_id: room.id, room_membership: { person_id: new_member.id.to_s } }
         expect(response).to be_unprocessable
         expect(RoomMembership.count - precount).to eq(0)
       end
@@ -40,7 +41,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         room = create(:room, created_by: owner)
         person2 = create(:person)
 
-        post :create, params: {room_id: room.id, room_membership: {person_id: person2.id}}
+        post :create, params: { room_id: room.id, room_membership: { person_id: person2.id } }
         expect(response).to be_not_found
       end
     end
@@ -51,7 +52,7 @@ RSpec.describe Api::V1::RoomMembershipsController, type: :controller do
         room = create(:room, created_by: owner, public: true)
         person2 = create(:person)
 
-        post :create, params: {room_id: room.id, room_membership: {person_id: person2.id}}
+        post :create, params: { room_id: room.id, room_membership: { person_id: person2.id } }
         expect(response).to be_not_found
       end
     end

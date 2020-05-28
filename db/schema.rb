@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_110444) do
+ActiveRecord::Schema.define(version: 2020_04_15_223139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -28,6 +28,27 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.integer "badges_count"
     t.index ["internal_name"], name: "unq_action_types_internal_name", unique: true
     t.index ["name"], name: "unq_action_types_name", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "activity_types", force: :cascade do |t|
@@ -121,6 +142,17 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["person_id", "badge_id"], name: "unq_badge_awards_people_badges", unique: true
   end
 
+  create_table "badge_translations", force: :cascade do |t|
+    t.bigint "badge_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["badge_id"], name: "index_badge_translations_on_badge_id"
+    t.index ["locale"], name: "index_badge_translations_on_locale"
+  end
+
   create_table "badges", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -135,15 +167,14 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "description_text_old"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.datetime "issued_from"
     t.datetime "issued_to"
     t.index ["action_type_id"], name: "index_badges_on_action_type_id"
     t.index ["issued_from"], name: "ind_badges_issued_from"
     t.index ["issued_to"], name: "ind_badges_issued_to"
     t.index ["product_id", "internal_name"], name: "unq_badges_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_badges_product_name", unique: true
     t.index ["product_id"], name: "index_badges_on_product_id"
   end
 
@@ -258,7 +289,6 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type", null: false
-    t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
 
@@ -424,10 +454,20 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["product_id"], name: "idx_image_pages_product"
   end
 
+  create_table "interest_translations", force: :cascade do |t|
+    t.bigint "interest_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "title"
+    t.index ["interest_id"], name: "index_interest_translations_on_interest_id"
+    t.index ["locale"], name: "index_interest_translations_on_locale"
+  end
+
   create_table "interests", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "parent_id"
-    t.jsonb "title", default: {}, null: false
+    t.jsonb "untranslated_title", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order", default: 0, null: false
@@ -455,6 +495,17 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["person_id"], name: "index_level_progresses_on_person_id"
   end
 
+  create_table "level_translations", force: :cascade do |t|
+    t.bigint "level_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["level_id"], name: "index_level_translations_on_level_id"
+    t.index ["locale"], name: "index_level_translations_on_locale"
+  end
+
   create_table "levels", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -466,8 +517,8 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "description", default: {}, null: false
-    t.jsonb "name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
     t.index ["product_id", "internal_name"], name: "unq_levels_product_internal_name"
     t.index ["product_id", "points"], name: "unq_levels_product_points"
   end
@@ -500,12 +551,23 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "available", default: true, null: false
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "priority", default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.index ["product_id", "priority"], name: "idx_merchandise_product_priority"
     t.index ["product_id"], name: "idx_merchandise_product"
+  end
+
+  create_table "merchandise_translations", force: :cascade do |t|
+    t.bigint "merchandise_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["locale"], name: "index_merchandise_translations_on_locale"
+    t.index ["merchandise_id"], name: "index_merchandise_translations_on_merchandise_id"
   end
 
   create_table "message_mentions", force: :cascade do |t|
@@ -611,8 +673,8 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.datetime "reset_password_email_sent_at"
     t.boolean "product_account", default: false, null: false
     t.boolean "chat_banned", default: false, null: false
+    t.jsonb "untranslated_designation", default: {}, null: false
     t.boolean "recommended", default: false, null: false
-    t.jsonb "designation", default: {}, null: false
     t.integer "gender", default: 0, null: false
     t.date "birthdate"
     t.text "city"
@@ -741,6 +803,16 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["person_id", "reward_id"], name: "index_person_rewards_on_person_id_and_reward_id"
   end
 
+  create_table "person_translations", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "designation"
+    t.index ["locale"], name: "index_person_translations_on_locale"
+    t.index ["person_id"], name: "index_person_translations_on_person_id"
+  end
+
   create_table "pin_messages", force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "room_id", null: false
@@ -751,13 +823,33 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["room_id"], name: "index_pin_messages_on_room_id"
   end
 
+  create_table "poll_option_translations", force: :cascade do |t|
+    t.bigint "poll_option_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.index ["locale"], name: "index_poll_option_translations_on_locale"
+    t.index ["poll_option_id"], name: "index_poll_option_translations_on_poll_option_id"
+  end
+
   create_table "poll_options", force: :cascade do |t|
     t.integer "poll_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "person_poll_options_count"
     t.index ["poll_id"], name: "idx_poll_options_poll"
+  end
+
+  create_table "poll_translations", force: :cascade do |t|
+    t.bigint "poll_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.index ["locale"], name: "index_poll_translations_on_locale"
+    t.index ["poll_id"], name: "index_poll_translations_on_poll_id"
   end
 
   create_table "polls", force: :cascade do |t|
@@ -769,7 +861,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "end_date", default: "2019-02-07 01:46:08"
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "product_id", null: false
     t.index ["poll_type", "poll_type_id"], name: "unq_polls_type_poll_type_id", unique: true
     t.index ["product_id"], name: "idx_polls_product"
@@ -798,9 +890,19 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["person_id"], name: "index_portal_accesses_on_person_id"
   end
 
+  create_table "portal_notification_translations", force: :cascade do |t|
+    t.bigint "portal_notification_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "body"
+    t.index ["locale"], name: "index_portal_notification_translations_on_locale"
+    t.index ["portal_notification_id"], name: "index_289252a6de7aa1ebfbc91a7d7cff6dc2f089ee9b"
+  end
+
   create_table "portal_notifications", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.jsonb "body", default: {}, null: false
+    t.jsonb "untranslated_body", default: {}, null: false
     t.datetime "send_me_at", null: false
     t.integer "sent_status", default: 0, null: false
     t.datetime "created_at", null: false
@@ -873,6 +975,16 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id"
   end
 
+  create_table "post_translations", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "body"
+    t.index ["locale"], name: "index_post_translations_on_locale"
+    t.index ["post_id"], name: "index_post_translations_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "person_id", null: false
     t.text "body_text_old"
@@ -887,7 +999,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "body", default: {}, null: false
+    t.jsonb "untranslated_body", default: {}, null: false
     t.integer "priority", default: 0, null: false
     t.boolean "recommended", default: false, null: false
     t.boolean "notify_followers", default: false, null: false
@@ -904,13 +1016,14 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.jsonb "video_transcoded", default: {}, null: false
     t.integer "post_comments_count", default: 0
     t.boolean "pinned", default: false
-    t.index ["body"], name: "index_posts_on_body", using: :gin
+    t.integer "post_reports_count", default: 0
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["person_id", "priority"], name: "idx_posts_person_priority"
     t.index ["person_id"], name: "idx_posts_person"
     t.index ["recommended"], name: "index_posts_on_recommended", where: "(recommended = true)"
     t.index ["status"], name: "index_posts_on_status"
+    t.index ["untranslated_body"], name: "index_posts_on_untranslated_body", using: :gin
   end
 
   create_table "product_beacons", force: :cascade do |t|
@@ -980,15 +1093,28 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "picture_meta"
-    t.jsonb "hint", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_hint", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "step_id", null: false
     t.integer "reward_id"
-    t.jsonb "title", default: {}, null: false
+    t.jsonb "untranslated_title", default: {}, null: false
     t.index ["reward_id"], name: "idx_quest_activities_rewards"
     t.index ["step_id"], name: "index_quest_activities_on_step_id"
+  end
+
+  create_table "quest_activity_translations", force: :cascade do |t|
+    t.bigint "quest_activity_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.text "hint"
+    t.string "title"
+    t.index ["locale"], name: "index_quest_activity_translations_on_locale"
+    t.index ["quest_activity_id"], name: "index_quest_activity_translations_on_quest_activity_id"
   end
 
   create_table "quest_completed", force: :cascade do |t|
@@ -1013,6 +1139,17 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["step_id"], name: "idx_completions_step"
   end
 
+  create_table "quest_translations", force: :cascade do |t|
+    t.bigint "quest_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["locale"], name: "index_quest_translations_on_locale"
+    t.index ["quest_id"], name: "index_quest_translations_on_quest_id"
+  end
+
   create_table "quests", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "event_id"
@@ -1029,20 +1166,20 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
     t.text "picture_meta"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "reward_id"
     t.index ["created_at"], name: "index_quests_on_created_at"
-    t.index ["description"], name: "index_quests_on_description", using: :gin
     t.index ["ends_at"], name: "index_quests_on_ends_at", where: "(ends_at IS NOT NULL)"
     t.index ["event_id"], name: "ind_quests_events", where: "(event_id IS NOT NULL)"
     t.index ["internal_name"], name: "ind_quests_internal_name"
-    t.index ["name"], name: "index_quests_on_name", using: :gin
     t.index ["product_id", "internal_name"], name: "index_quests_on_product_id_and_internal_name"
     t.index ["product_id"], name: "ind_quests_products"
     t.index ["reward_id"], name: "idx_quests_rewards"
     t.index ["starts_at"], name: "index_quests_on_starts_at"
     t.index ["status"], name: "index_quests_on_status"
+    t.index ["untranslated_description"], name: "index_quests_on_untranslated_description", using: :gin
+    t.index ["untranslated_name"], name: "index_quests_on_untranslated_name", using: :gin
   end
 
   create_table "quiz_pages", force: :cascade do |t|
@@ -1101,9 +1238,19 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["reward_id"], name: "index_reward_progresses_on_reward_id"
   end
 
+  create_table "reward_translations", force: :cascade do |t|
+    t.bigint "reward_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["locale"], name: "index_reward_translations_on_locale"
+    t.index ["reward_id"], name: "index_reward_translations_on_reward_id"
+  end
+
   create_table "rewards", force: :cascade do |t|
     t.integer "product_id", null: false
-    t.jsonb "name", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
     t.text "internal_name", null: false
     t.integer "reward_type", default: 0, null: false
     t.integer "reward_type_id", null: false
@@ -1115,7 +1262,6 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id", "internal_name"], name: "unq_rewards_product_internal_name", unique: true
-    t.index ["product_id", "name"], name: "unq_rewards_product_name", unique: true
     t.index ["product_id"], name: "idx_rewards_product"
     t.index ["reward_type", "reward_type_id"], name: "unq_rewards_type_reward_type_id", unique: true
     t.index ["series"], name: "index_rewards_on_series", where: "(series IS NOT NULL)"
@@ -1169,6 +1315,17 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["room_id"], name: "index_room_subscribers_on_room_id"
   end
 
+  create_table "room_translations", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "name"
+    t.index ["locale"], name: "index_room_translations_on_locale"
+    t.index ["room_id"], name: "index_room_translations_on_room_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "product_id", null: false
     t.text "name_text_old"
@@ -1181,8 +1338,8 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
-    t.jsonb "name", default: {}, null: false
-    t.jsonb "description", default: {}, null: false
+    t.jsonb "untranslated_name", default: {}, null: false
+    t.jsonb "untranslated_description", default: {}, null: false
     t.integer "order", default: 0, null: false
     t.bigint "last_message_timestamp", default: 0
     t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
@@ -1201,14 +1358,50 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["product_id"], name: "index_semesters_on_product_id"
   end
 
-  create_table "static_contents", force: :cascade do |t|
+  create_table "static_system_email_translations", force: :cascade do |t|
+    t.bigint "static_system_email_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "html_template"
+    t.text "text_template"
+    t.string "subject"
+    t.index ["locale"], name: "index_static_system_email_translations_on_locale"
+    t.index ["static_system_email_id"], name: "index_7f2a9f08cab1096d33fc287874bf7f54545a0849"
+  end
+
+  create_table "static_system_emails", force: :cascade do |t|
+    t.string "name"
+    t.bigint "product_id"
+    t.boolean "public", default: false
+    t.string "from_name"
+    t.string "from_email"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_static_system_emails_on_product_id"
+    t.index ["slug", "product_id"], name: "index_static_system_emails_on_slug_and_product_id", unique: true
+  end
+
+  create_table "static_web_content_translations", force: :cascade do |t|
+    t.bigint "static_web_content_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "content"
+    t.index ["locale"], name: "index_static_web_content_translations_on_locale"
+    t.index ["static_web_content_id"], name: "index_static_web_content_translations_on_static_web_content_id"
+  end
+
+  create_table "static_web_contents", force: :cascade do |t|
     t.jsonb "content", default: {}, null: false
     t.jsonb "title", default: {}, null: false
     t.string "slug", null: false
     t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_static_contents_on_slug", unique: true
+    t.index ["slug"], name: "index_static_web_contents_on_slug", unique: true
   end
 
   create_table "step_completed", force: :cascade do |t|
@@ -1481,6 +1674,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.text "whodunnit"
     t.text "object"
     t.datetime "created_at"
+    t.string "locale"
     t.index ["item_type", "item_id"], name: "ind_versions_item_type_item_id"
   end
 
@@ -1497,6 +1691,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
     t.index ["product_id"], name: "idx_video_pages_product"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activity_types", "quest_activities", column: "activity_id", name: "fk_activity_types_quest_activities"
   add_foreign_key "answers", "products", name: "fk_answers_products", on_delete: :cascade
   add_foreign_key "answers", "quiz_pages", name: "fk_answers_quiz"
@@ -1594,6 +1789,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_110444) do
   add_foreign_key "room_subscribers", "rooms"
   add_foreign_key "rooms", "people", column: "created_by_id", name: "fk_rooms_created_by", on_delete: :restrict
   add_foreign_key "rooms", "products", name: "fk_rooms_products", on_delete: :cascade
+  add_foreign_key "static_system_emails", "products"
   add_foreign_key "step_completed", "quests", name: "fk_steps_completed_quests"
   add_foreign_key "step_completed", "steps", name: "fk_steps_completed_steps"
   add_foreign_key "steps", "quests", name: "fk_steps_quests"

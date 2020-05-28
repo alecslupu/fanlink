@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 json = {
   id: room.id,
-  name: room.name(@lang),
-  description: room.description(@lang),
+  name: room.name,
+  description: room.description,
   picture_url: room.picture_url,
   public: room.public
 }

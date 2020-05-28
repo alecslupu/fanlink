@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'swagger_helper'
 
 
@@ -99,7 +100,9 @@ RSpec.describe "Api::V4::PeopleController", type: :request, swagger_doc: "v4/swa
 
       response "200", "HTTP/1.1 200 Ok" do
         schema "$ref": "#/definitions/PersonObject"
-        let(:product) { create(:product).internal_name }
+        let!(:product) { create(:product).internal_name }
+        let!(:static_system_email) { create(:static_system_email, name: "onboarding") }
+
         run_test!
       end
 

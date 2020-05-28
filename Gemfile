@@ -15,11 +15,16 @@ if ENV["RAILS6"]
   gem "rails", "~> 6"
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 6.0'
+elsif ENV["RAILS_EDGE"]
+  # gem "rails", github: "rails/rails"
+  # gem 'sass-rails', '~> 6.0'
 else
   gem "rails", "~> 5.2"
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 5.0'
 end
+
+gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
@@ -35,7 +40,7 @@ gem 'jbuilder', '~> 2.5'
 gem "coffee-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+# gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use ActiveModel has_secure_password
 gem "bcrypt", "~> 3.1.7"
@@ -63,6 +68,11 @@ group :production, :staging do
   gem 'elastic-apm', '~> 3.1.0'
 end
 
+group :staging, :development do
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem "web-console", ">= 3.3.0"
+  gem "listen", ">= 3.0.5", "< 3.2"
+end
 group :staging, :development, :test do
   gem "derailed_benchmarks", "~>1.3.6"
   gem "stackprof"
@@ -97,9 +107,6 @@ group :development do
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
 
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -150,7 +157,6 @@ gem "acts_as_api"
 # # 'solution' is to do another PR which fixes the failing checks (such failure having nothing to do with my commit)
 # gem "administrate-field-paperclip", git: "https://github.com/mark100net/administrate-field-paperclip.git", branch: "blank-attachment-text"
 
-
 gem "awesome_nested_set"
 
 gem "rails_admin", "~> 2.0.0"
@@ -174,7 +180,6 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-#gem "jko_api" # api versioning
 gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
@@ -207,7 +212,8 @@ gem "wisper-activerecord"
 # To get video's length
 gem "streamio-ffmpeg"
 
-gem "rmagick"
+gem "mini_magick"
+# gem "rmagick"
 
 # Use Json Web Token (JWT) for token based authentication
 gem "jwt"
@@ -237,3 +243,7 @@ gem "aasm"
 gem 'whenever', require: false
 
 gem 'acts-as-taggable-on'
+
+gem 'globalize'
+gem 'globalize-versioning'
+gem 'rails_admin_globalize_field'

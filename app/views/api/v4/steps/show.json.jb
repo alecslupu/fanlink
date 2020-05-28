@@ -1,5 +1,4 @@
+# frozen_string_literal: true
 {
-  step: Rails.cache.fetch(["v4", "step", @req_source, @step.id, @step.updated_at.to_i]) {
-    render(partial: @req_source, locals: { step: @step }, handlers: "jb")
-  }
+  step: render(partial: @req_source, locals: { step: @step }, handlers: "jb")
 }

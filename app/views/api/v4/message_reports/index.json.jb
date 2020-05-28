@@ -1,9 +1,8 @@
+# frozen_string_literal: true
 json = {}
 
 json[:message_reports] = @message_reports.map do |message_report|
-  Rails.cache.fetch ["v4", "message_report", @req_source, message_report.id, message_report.updated_at.to_i] do
-    render partial: @req_source, locals: { message_report: message_report }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { message_report: message_report }, handlers: "jb"
 end
 
 json
