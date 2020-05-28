@@ -17,8 +17,11 @@ namespace :papertrail do
       ImagePage
       VideoPage
     ]
-    PaperTrail::Version.where("item_type not in (?)", protected_models).where("created_at < ?", 12.months.ago).find_each do |version|
-      version.destroy
+    PaperTrail::Version.where("item_type not in (?)", protected_models).
+      where("created_at < ?", 12.months.ago).find_in_batches(batch_size: 250) do |batch|
+      ActiveRecord::Base.transaction do
+        batch.map(&:destroy)
+      end
     end
   end
 end
