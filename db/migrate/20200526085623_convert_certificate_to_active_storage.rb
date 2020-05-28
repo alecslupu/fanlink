@@ -1,4 +1,4 @@
-class ConvertCertificateToActiveStorage < ActiveRecord::Migration[5.2]
+class ConvertCertificateToActiveStorage < ActiveRecord::Migration[6.0]
   def up
     Certificate.where.not(template_image_file_name: nil).find_each do |badge|
       Migration::Assets::CertificateJob.perform_later(badge.id)
