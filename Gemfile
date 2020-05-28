@@ -11,17 +11,13 @@ end
 
 ruby "2.5.1"
 
-if ENV["RAILS6"]
-  gem "rails", "~> 6"
-  # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 6.0'
-elsif ENV["RAILS_EDGE"]
+if ENV["RAILS_EDGE"]
   # gem "rails", github: "rails/rails"
   # gem 'sass-rails', '~> 6.0'
 else
-  gem "rails", "~> 5.2"
+  gem "rails", "~> 6"
   # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 5.0'
+  gem 'sass-rails', '~> 6.0'
 end
 
 gem 'sprockets', '~> 3.7.2'
@@ -202,7 +198,6 @@ gem "rack-cors", require: "rack/cors"
 # gem "rack-timeout"
 gem "rest-firebase"
 gem "sorcery"
-gem "timber", "~> 2.0"
 gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
