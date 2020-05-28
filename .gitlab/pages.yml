@@ -8,7 +8,6 @@ pages:
     - test:erd
     - test:rubycritic
     - test:rubocop
-    - test:rspec52:merge
     - test:rspec60:merge
   artifacts:
     name: my_app_artifacts

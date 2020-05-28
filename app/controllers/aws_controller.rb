@@ -2,6 +2,7 @@
 class AwsController < ApplicationController
   # require_api_key_for :awsvideo
 
+  skip_before_action :require_login
   #
   # This is the SNS callback for receiving notifications from Elastic
   # Transcoder. We only expect `SubscriptionConfirmation` and `Notification`
@@ -25,5 +26,4 @@ class AwsController < ApplicationController
     Rails.logger.error "SNS confusion, topic=#{topic}, type=#{type}, params=#{params.inspect}, error=#{e.inspect}, body.Message=#{body['Message']}"
     head :unprocessable_entity
   end
-  skip_before_action :require_login
 end
