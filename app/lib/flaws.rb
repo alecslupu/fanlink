@@ -208,6 +208,7 @@ module Flaws
   def self.queue_url
     Rails.configuration.fanlink[:aws][:transcoder_queue_url]
   end
+
   #
   # Return the server we use for serving up HLS files. This will include
   # the trailing slash.
