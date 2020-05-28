@@ -1,6 +1,4 @@
 # frozen_string_literal: true
 {
-  action: Rails.cache.fetch(["v4", "action", @req_source, @action_type.id, @action_type.updated_at.to_i]) {
-    render(partial: @req_source, locals: { action: @action_type }, handlers: "jb")
-  }
+  action: render(partial: @req_source, locals: { action: @action_type }, handlers: "jb")
 }
