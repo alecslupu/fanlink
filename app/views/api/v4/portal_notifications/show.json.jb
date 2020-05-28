@@ -1,8 +1,4 @@
 # frozen_string_literal: true
-json = Rails.cache.fetch ["v4", "portal_notification", @req_source, @portal_notification.id, @portal_notification.updated_at.to_i] do
-  {
-    portal_notification: render(partial: @req_source, locals: { portal_notification: @portal_notification }, handlers: "jb")
-  }
-end
-
-json
+{
+  portal_notification: render(partial: @req_source, locals: { portal_notification: @portal_notification }, handlers: "jb")
+}

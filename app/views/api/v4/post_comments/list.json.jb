@@ -2,9 +2,7 @@
 json = {}
 
 json[:post_comments] = @post_comments.map do |post_comment|
-  Rails.cache.fetch ["v4", "comment", @req_source, post_comment.id, post_comment.updated_at.to_i] do
-    render partial: @req_source, locals: { post_comment: post_comment }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { post_comment: post_comment }, handlers: "jb"
 end
 
 json
