@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 assigned_locals = {
   ActionType: "action",
   Quest: "quest",
@@ -10,7 +11,7 @@ assigned_locals = {
 json = {
   id: reward.id,
   product_id: reward.product_id,
-  name: reward.name(@lang),
+  name: reward.name,
   internal_name: reward.internal_name,
   reward_type: reward.reward_type,
   reward_type_id: reward.reward_type_id,

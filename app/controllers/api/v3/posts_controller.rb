@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::PostsController < Api::V2::PostsController
   before_action :load_post, only: %i[ update ]
   before_action :admin_only, only: %i[ list ]
@@ -88,7 +89,7 @@ class Api::V3::PostsController < Api::V2::PostsController
     else
       @post = Post.create(post_params.merge(person_id: current_user.id))
       if @post.valid?
-        unless post_params["status"].present?
+        if post_params["status"].blank?
           @post.published!
         end
         @post.post if @post.published?
@@ -162,7 +163,7 @@ class Api::V3::PostsController < Api::V2::PostsController
 
   def index
     if params[:tag].present? || params[:categories].present?
-      @posts = Post.for_tag(params[:tag]).visible.unblocked(current_user.blocked_people).order(created_at: :desc) if params[:tag]
+      @posts = Post.tagged_with(params[:tag].try(:downcase), match_all: true).visible.unblocked(current_user.blocked_people).order(created_at: :desc) if params[:tag]
       @posts = Post.for_category(params[:categories]).visible.unblocked(current_user.blocked_people).order(created_at: :desc) if params[:categories]
     elsif params[:person_id].present?
       pid = params[:person_id].to_i
@@ -392,7 +393,7 @@ class Api::V3::PostsController < Api::V2::PostsController
 
   def update
     if params.has_key?(:post)
-      if @post.update_attributes(post_params)
+      if @post.update(post_params)
         return_the @post
       else
         render_422 @post.errors

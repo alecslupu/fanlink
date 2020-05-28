@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::BadgesController < Api::V2::BadgesController
   before_action :admin_only, only: %i[ create update destroy ]
   load_up_the Badge, only: %i[ update show destroy ]
@@ -20,7 +21,7 @@ class Api::V3::BadgesController < Api::V2::BadgesController
 
   def update
     if params.has_key?(:badge)
-      @badge.update_attributes(badge_params)
+      @badge.update(badge_params)
     end
     return_the @badge
   end

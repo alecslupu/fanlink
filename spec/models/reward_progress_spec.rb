@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe RewardProgress, type: :model do
   context "Associations" do
     describe "should belong to" do

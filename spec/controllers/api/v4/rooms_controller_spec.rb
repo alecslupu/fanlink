@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "rails_helper"
 
 RSpec.describe Api::V4::RoomsController, type: :controller do
@@ -32,7 +33,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         private_room = create(:room, public: false, status: :active, created_by: @person)
         private_room.room_memberships.create(person_id: person.id)
         # other_product_room = create(:room, public: true, status: :active, product: create(:product))
-        get :index, params: { product: person.product}
+        get :index, params: { product: person.product }
         expect(response).to be_successful
         room_ids = json['rooms'].map { |r| r['id'] }
         expect(room_ids).to eq([room2.id.to_s, room1.id.to_s])
@@ -96,7 +97,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         room = create(:room, public: true, status: :active, picture: fixture_file_upload("images/better.png", "image/png"))
-        get :show, params: { id: room.id}
+        get :show, params: { id: room.id }
 
         expect(response).to be_successful
         expect(json["room"]["picture_url"].size).to_not eq(nil)
@@ -108,7 +109,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         room = create(:room, public: true, status: :active)
-        get :show, params: { id: room.id}
+        get :show, params: { id: room.id }
 
         expect(response).to be_successful
         expect(json['room']).to include('order')
@@ -121,7 +122,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         room = create(:room, public: false, status: :active)
-        get :show, params: { id: room.id}
+        get :show, params: { id: room.id }
 
         expect(response).to be_successful
         expect(json['room']).to include('order')
@@ -222,7 +223,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
              params: {
                room: {
                  name: 'name',
-                 public: true,
+                 public: true
                }
              }
 

@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 json = Rails.cache.fetch ["v3", quest.updated_at, @lang, quest] do
   {
     id: quest.id,
     product_id: quest.product_id,
     event_id: quest.event_id,
-    name: quest.name(@lang),
+    name: quest.name,
     internal_name: quest.internal_name,
-    description: quest.description(@lang),
+    description: quest.description,
     picture_url: quest.picture_optimal_url,
     picture_width: quest.picture.width,
     picture_height: quest.picture.height,

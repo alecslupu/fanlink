@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V3::QuestsController < Api::V2::QuestsController
   before_action :admin_only, except: %i[ index show ]
   load_up_the Quest, only: %i[ update ]
@@ -205,7 +206,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
 
   def update
     if params.has_key?(:quest)
-      if @quest.update_attributes(quest_params)
+      if @quest.update(quest_params)
         return_the @quest
       else
         render_422 @quest.errors

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: contents
@@ -9,7 +10,7 @@
 #  slug         :string           not null
 
 FactoryBot.define do
-  factory :static_content do
+  factory :web_content do
     product { current_product }
     title { Faker::Lorem.sentence() }
     content { Faker::Lorem.sentence() }

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::PeopleController < ApiController
   # TODO: Lock down GET /people to admin only or something.
   prepend_before_action :logout, only: :create

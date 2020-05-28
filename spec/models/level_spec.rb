@@ -1,4 +1,6 @@
+# frozen_string_literal: true
 RSpec.describe Level, type: :model do
+
   context "Valid" do
     it { expect(build(:level)).to be_valid }
   end
@@ -58,13 +60,13 @@ RSpec.describe Level, type: :model do
     end
   end
   describe "#name" do
-
-    it "returns the untranslated version" do
-      expect(build(:level, name: {"un" => "something untranslated"}).name).to eq("something untranslated")
-    end
-    it "returns the translated version" do
-      expect(build(:level, name: {"un" => "something untranslated", "en" => "something in english"}).name).to eq("something in english")
-    end
+    #
+    # it "returns the untranslated version" do
+    #   expect(build(:level, name: {"un" => "something untranslated"}).name).to eq("something untranslated")
+    # end
+    # it "returns the translated version" do
+    #   expect(build(:level, name: {"un" => "something untranslated", "en" => "something in english"}).name).to eq("something in english")
+    # end
 
     it "should allow a name with spaces" do
       expect(build(:level, name: "Abc d12")).to be_valid

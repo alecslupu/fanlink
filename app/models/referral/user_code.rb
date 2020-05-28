@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Referral
   class UserCode < ApplicationRecord
     belongs_to :person

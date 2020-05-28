@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::MessagesController < Api::V3::MessagesController
   def index
     room = Room.find(params[:room_id])
@@ -86,7 +87,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
 
   def update
     if params.has_key?(:message)
-      if @message.update_attributes(message_update_params)
+      if @message.update(message_update_params)
         if @message.hidden
           @message.delete_real_time(@api_version)
         end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::PostsController < Api::V3::PostsController
   def index
     ordering = 'DESC'
@@ -93,7 +94,7 @@ class Api::V4::PostsController < Api::V3::PostsController
     else
       @post = Post.create(post_params.merge(person_id: current_user.id))
       if @post.valid?
-        unless post_params["status"].present?
+        if post_params["status"].blank?
           @post.published!
         end
         @post.post(@api_version) if @post.published?
@@ -107,7 +108,7 @@ class Api::V4::PostsController < Api::V3::PostsController
 
   def update
     if params.has_key?(:post)
-      if @post.update_attributes(post_params)
+      if @post.update(post_params)
         render :show
       else
         render_422 @post.errors

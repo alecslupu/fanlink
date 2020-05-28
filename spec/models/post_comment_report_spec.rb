@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe PostCommentReport, type: :model do
   before(:each) do
     @product = create(:product)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 
 RSpec.describe Api::V4::TagsController, type: :controller do
@@ -8,12 +9,13 @@ RSpec.describe Api::V4::TagsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         person2 = create(:person)
-        tag = create(:tag)
+        tag = build(:tag)
         post = create(:published_post, person: person2)
         1.upto 4 do
           create(:post_reaction, post: post)
         end
-        post.tags << tag
+        post.tag_list = tag.name
+        post.save
 
         create(:post_reaction, person: person, post: post)
 

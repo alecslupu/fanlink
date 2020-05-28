@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::CategoriesController < Api::V3::CategoriesController
   def index
     @categories = paginate Category.all
@@ -21,7 +22,7 @@ class Api::V4::CategoriesController < Api::V3::CategoriesController
 
   def update
     if params.has_key?(:category)
-      if @category.update_attributes(category_params)
+      if @category.update(category_params)
         broadcast(:category_updated, current_user, @category)
         return_the @category, handler: tpl_handler, using: :show
       else

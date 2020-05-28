@@ -1,10 +1,10 @@
+# frozen_string_literal: true
 class RailsAdminController < ApplicationController
   include Messaging
   include ::Pundit
-
+  before_action :set_language
   set_current_tenant_through_filter
   before_action :require_login, :set_tenant, :set_api_version
-
 
   def not_authenticated
     # Make sure that we reference the route from the main app.
@@ -21,6 +21,11 @@ class RailsAdminController < ApplicationController
   end
 
   protected
+
+
+  def set_language
+    I18n.locale = :en
+  end
 
   def set_api_version
     @api_version = 5
@@ -43,6 +48,7 @@ class RailsAdminController < ApplicationController
   end
 
   private
+
 
   def not_found
     raise ActionController::RoutingError.new("Not Found")

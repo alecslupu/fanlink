@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: trivia_rounds
@@ -34,7 +35,7 @@ module Trivia
       published: 1,
       locked: 2,
       running: 3,
-      closed: 4,
+      closed: 4
     }
 
     aasm(column: :status, enum: true, whiny_transitions: false, whiny_persistence: false, logger: Rails.logger) do
@@ -76,10 +77,6 @@ module Trivia
       self.class.reset_counters(id, :questions, touch: true)
       self.class.reset_counters(new_entry.id, :questions, touch: true)
       new_entry
-    end
-
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
     scope :visible, -> { where(status: [:published, :locked, :running, :closed]) }

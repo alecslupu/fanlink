@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V4::CertificatesController < ApiController
   def create
     @certificate = Certificate.create(certificate_params)

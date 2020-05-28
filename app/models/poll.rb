@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: polls
@@ -7,7 +8,6 @@
 #  poll_type_id :integer
 #  start_date   :datetime         not null
 #  duration     :integer          default(0), not null
-#  poll_status  :integer          default("inactive"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  end_date     :datetime         default(Thu, 07 Feb 2019 01:46:08 UTC +00:00)
@@ -16,7 +16,6 @@
 #
 
 class Poll < ApplicationRecord
-  include TranslationThings
 
   # after_initialize do
   #   self.end_date = Time.zone.now + 1.month
@@ -43,12 +42,13 @@ class Poll < ApplicationRecord
 
   before_validation :add_end_date
 
-  has_manual_translated :description
+  translates :description, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
-          where(poll_type_id: nil).where("end_date > ?", Time.now)
+          where(poll_type_id: nil).where("end_date > ?", Time.zone.now)
         }
 
   def closed?
@@ -56,13 +56,13 @@ class Poll < ApplicationRecord
   end
 
   def start_date_cannot_be_in_the_past
-    if start_date.present? && start_date < Time.now
+    if start_date.present? && start_date < Time.zone.now
       errors.add(:expiration_date, "poll can't start in the past")
     end
   end
 
   def description_cannot_be_empty
-    if !description.present? || description.empty?
+    if description.blank? || description.empty?
       errors.add(:description_error, "description can't be empty")
     end
   end

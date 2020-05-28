@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RailsAdmin.config do |config|
   config.included_models.push("PersonCertificate")
   config.model "PersonCertificate" do
@@ -12,7 +13,7 @@ RailsAdmin.config do |config|
 
       fields :id, :person
       field :certificate do
-        searchable [{Certificate => :short_name}]
+        searchable [{ Certificate => :short_name }]
         queryable true
       end
       fields :full_name, :created_at, :purchased_platform, :amount_paid, :currency
