@@ -1,6 +1,4 @@
 # frozen_string_literal: true
 {
-  tag: Rails.cache.fetch(["v4", "tag", @req_source, @tag.id, @tag.updated_at.to_i]) {
-    render(partial: @req_source, locals: { tag: @tag }, handlers: "jb")
-  }
+  tag: render(partial: @req_source, locals: { tag: @tag }, handlers: "jb")
 }

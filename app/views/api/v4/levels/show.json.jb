@@ -1,6 +1,4 @@
 # frozen_string_literal: true
 {
-  level: Rails.cache.fetch(["v4", "level", @req_source, @level.id, @level.updated_at.to_i, @lang]) {
-    render(partial: @req_source, locals: { level: @level, lang: @lang }, handlers: "jb")
-  }
+  level: render(partial: @req_source, locals: { level: @level, lang: @lang }, handlers: "jb")
 }

@@ -1,6 +1,4 @@
 # frozen_string_literal: true
 {
-  level_progress: Rails.cache.fetch(["v4", "level_progress", @req_source,  @level_progress.id, @level_progress.updated_at.to_i]) {
-    render(partial: @req_source, locals: { level: @level_progress }, handlers: "jb")
-  }
+  level_progress: render(partial: @req_source, locals: { level: @level_progress }, handlers: "jb")
 }

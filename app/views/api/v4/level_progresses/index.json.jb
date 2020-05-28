@@ -2,9 +2,7 @@
 json = {}
 
 json[:levels] = @progress.map do |level_progress|
-  Rails.cache.fetch ["v4", "level_progress", @req_source, level_progress.id, level_progress.updated_at.to_i] do
-    render partial: @req_source, locals: { level: level_progress }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { level: level_progress }, handlers: "jb"
 end
 
 json

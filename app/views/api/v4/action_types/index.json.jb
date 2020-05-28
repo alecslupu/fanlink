@@ -2,9 +2,7 @@
 json = {}
 
 json[:actions] = @action_types.map do |action|
-  Rails.cache.fetch ["v4", "action", @req_source, action.id, action.updated_at.to_i] do
-    render partial: @req_source, locals: { action: action }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { action: action }, handlers: "jb"
 end
 
 json
