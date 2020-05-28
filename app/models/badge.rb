@@ -25,13 +25,15 @@
 
 class Badge < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
 
-  has_manual_translated :description, :name
+  translates :description, :name, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_many :badge_awards, dependent: :restrict_with_error
   has_one :reward, -> { where("rewards.reward_type = ?", Reward.reward_types["badge"]) }, foreign_key: "reward_type_id", dependent: :destroy
   has_many :assigned_rewards, through: :reward
+
+  scope :for_product, -> (product) { where( badges: { product_id: product.id } ) }
 
   has_paper_trail
   acts_as_tenant(:product)
@@ -79,11 +81,11 @@ private
       status: :active,
       reward_type: :badge,
       product: product,
-      name: name,
       internal_name: internal_name,
       points: point_value,
       completion_requirement: action_requirement
     )
+    reward.name = name
 
     if reward.valid? && self.valid?# check if the new reward and badge are valid
       yield # saves the badge
@@ -101,8 +103,9 @@ private
 
     raise ActiveRecord::RecordNotFound if reward.nil?
 
+    reward.name = name
+    reward.save
     reward.update(
-      name: name,
       internal_name: internal_name,
       points: point_value,
       completion_requirement: action_requirement

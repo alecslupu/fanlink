@@ -64,11 +64,13 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should sign up new user with email, username, and password, profile fields and send onboarding email", :run_delayed_jobs do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
         expect_any_instance_of(Person).to receive(:do_auto_follows)
         expect_any_instance_of(Person).to receive(:send_onboarding_email)
 
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"
+
         post :create, params:
           { product: product.internal_name,
            person: { username: username, email: email, password: "secret", gender: "male",
@@ -90,14 +92,15 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       username = "newuser#{Time.now.to_i}"
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
         email = "johnsmith432143343@example.com"
         koala_result = { "id" => "12345", "name" => "John Smith", "email" => email }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect_any_instance_of(Person).to receive(:send_onboarding_email)
-
         expect {
           post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
         }.to change { Person.count }.by(1)
+
         expect(response).to be_successful
         p = Person.last
         expect(p.email).to eq(email)
@@ -109,6 +112,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should sign up new user with FB auth token without email and not send onboarding email" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
         tok = "1234"
         username = "newuser#{Time.now.to_i}"
         product = create(:product)
@@ -132,6 +136,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       username = "newuser#{Time.now.to_i}"
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect(Person).to receive(:create_from_facebook).with(tok, username).and_return(nil)
         expect {
           post :create, params: { product: product.internal_name, facebook_auth_token: tok, person: { username: username } }
@@ -144,6 +150,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       username = "newuser#{Time.now.to_i}"
       person = create(:person, username: username)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: person.product.internal_name, person: { email: "nobodyimportant@example.com",
                                                                                  username: username, password: "anything" } }
@@ -157,6 +165,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       email = "alreadyused@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: person.product.internal_name, person: { email: email,
                                                                                  username: "anything", password: "anything" } }
@@ -168,6 +178,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user without an email" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { username: "anything", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -178,6 +190,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user with an invalid email" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { email: "nogood", username: "anything", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -188,6 +202,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user without a username" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -198,6 +214,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user with a username less than 5 characters" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { username: "abcd", email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -208,6 +226,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user with a username more than 25 characters" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { username: "a" * 26, email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -219,6 +239,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user with a username that contains special characters" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { username: "abcde$", email: "anything#{Time.now.to_i}@example.com", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -230,6 +252,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should not sign up new user with an invalid email" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect {
           post :create, params: { product: product.internal_name, person: { username: "abc", email: "anything", password: "anything" } }
         }.to change { Person.count }.by(0)
@@ -243,6 +267,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       fbid = "12345"
       person = create(:person, facebookid: fbid)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "onboarding")
         koala_result = { "id" => fbid, "name" => "John Smith" }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect {
@@ -257,6 +282,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
       email = "taken#{Time.now.to_i}@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "onboarding")
+
         koala_result = { "id" => "12345", "name" => "John Smith", "email" => email }
         allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return(koala_result)
         expect {
@@ -270,6 +297,8 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
     it "should create a person with a picture attached if added" do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
+        create(:static_system_email, name: "onboarding")
+
         expect_any_instance_of(Person).to receive(:do_auto_follows)
         username = "newuser#{Time.now.to_i}"
         email = "#{username}@example.com"

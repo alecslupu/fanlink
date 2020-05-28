@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 json.id post.id.to_s
 json.create_time post.created_at.to_s
-json.body post.body(@lang)
+json.body post.body
 json.picture_url post.picture_optimal_url
 json.audio_url post.audio_url
 json.audio_size post.audio_file_size

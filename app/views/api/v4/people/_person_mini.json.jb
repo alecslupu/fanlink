@@ -3,7 +3,7 @@ json = {
   id: person.id.to_s,
   username: person.username,
   picture_url: (person.picture_url.presence || person.facebook_picture_url.presence),
-  designation: person.designation(@lang),
+  designation: person.designation,
   facebook_picture_url: person.facebook_picture_url,
   badge_points: person.level_progresses.present? ? person.level_progresses.first.total : 0
 

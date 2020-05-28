@@ -24,9 +24,10 @@
 
 class QuestActivity < ApplicationRecord
   include AttachmentSupport
-  include TranslationThings
 
-  has_manual_translated :description, :name, :hint, :title
+  translates :description, :name, :hint, :title, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
+
   belongs_to :step, inverse_of: :quest_activities, touch: true
 
   has_many :quest_completions, -> { where(person_id: Person.current_user.id) }, dependent: :destroy, foreign_key: "activity_id", inverse_of: :quest_activity

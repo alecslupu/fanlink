@@ -47,12 +47,12 @@ class Person < ApplicationRecord
   attr_accessor :trigger_admin
 
   include AttachmentSupport
-  include TranslationThings
   authenticates_with_sorcery!
 
   attr_accessor :app
 
-  has_manual_translated :designation
+  translates :designation, touch: true, versioning: :paper_trail
+  accepts_nested_attributes_for :translations, allow_destroy: true
 
   has_paper_trail
 
@@ -257,30 +257,31 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
-    # TODO implement the active job delayed mailer
-    OnboardingEmailJob.perform_later(id)
+    # Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
+    PersonMailer.with(id: self.id).onboarding.deliver_later
   end
 
-
   def send_password_reset_email
-    # TODO implement the active job delayed mailer
-    PasswordResetEmailJob.perform_later(self.id)
+    # Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
+    PersonMailer.with(id: self.id).reset_password.deliver_later
   end
 
   def send_certificate_email(certificate_id, email)
-    # TODO implement the active job delayed mailer
-  SendCertificateEmailJob.perform_later(self.id, certificate_id, email)
+    certificate = PersonCertificate.where(person_id: self.id, certificate_id: certificate_id).last
+    PersonMailer.with(id: self.id, person_certificate: certificate.id, email: email).send_certificate.deliver_later
   end
 
   def send_assignee_certificate_email(person_certificate, assignee_id, email)
-    # TODO implement the active job mailer
-    SendAssigneeCertificateEmailJob.perform_later(self.id, assignee_id, person_certificate.id, email)
+    PersonMailer.with({
+      person: self.id,
+      assignee: assignee_id,
+      person_certificate: person_certificate.id,
+      email: email
+    }).send_assignee_certificate.deliver_later
   end
 
   def send_course_attachment_email(certcourse_page)
-    # TODO implement the active job mailer
-
-  SendDownloadFileEmailJob.perform_later(self.id, certcourse_page.id)
+    PersonMailer.with(id: self.id, certcourse_page_id: certcourse_page.id).send_downloaded_file.deliver_later
   end
 
   def self.create_from_facebook(token, username)

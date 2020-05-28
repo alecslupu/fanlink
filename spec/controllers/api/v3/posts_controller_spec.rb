@@ -456,8 +456,10 @@ RSpec.describe Api::V3::PostsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         create_list(:post, 10, created_at: 10.days.ago)
         login_as(person)
-        post = Post.for_product(person.product).sample
-        get :list, params: { body_filter: post.body }
+        post = create(:post, status: Post.statuses.keys.sample, created_at: 10.days.ago)
+        post.save
+
+        get :list, params: {body_filter: post.body}
         expect(response).to be_successful
         expect(json["posts"].count).to eq(1)
         expect(json["posts"].first["id"]).to eq(post.id)
@@ -621,37 +623,48 @@ RSpec.describe Api::V3::PostsController, type: :controller do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         english = "This is English"
-        flinkpost.body = { "en" => english }
+        flinkpost.set_translations( "en" => { body: english } )
         flinkpost.save
         get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
         expect(json["post"]["body"]).to eq(english)
       end
     end
+
     it "should return original language body if no device language provided and no english exists" do
+      previous_locale = I18n.locale
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
+        I18n.locale = "en"
         flinkpost = create(:published_post, person: person)
-        get :show, params: { id: flinkpost.id }
+        flinkpost.body = "Something here"
+        flinkpost.save
+        get :show, params: {id: flinkpost.id}
         expect(response).to be_successful
-        expect(json["post"]["body"]).to eq(flinkpost.body(Post::DEFAULT_LANG))
+        expect(json["post"]["body"]).to eq(flinkpost.body)
       end
+      I18n.locale = previous_locale
     end
+
     it "should return correct language body if device language provided" do
+      previous_locale = I18n.locale
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         flinkpost = create(:published_post, person: person)
         lan = "es"
+        I18n.locale = lan
         translation = "En espagnol"
-        flinkpost.body = { lan => translation }
+        flinkpost.set_translations( lan => { body: translation  } )
         flinkpost.save
+
         request.headers.add "Accept-Language", (lan + "-spa")
         get :show, params: { id: flinkpost.id }
         expect(response).to be_successful
         expect(json["post"]["body"]).to eq(translation)
       end
+      I18n.locale = previous_locale
     end
     it "should get a visible post with reaction counts" do
       person = create(:person)

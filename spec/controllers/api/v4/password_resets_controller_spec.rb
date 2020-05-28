@@ -10,9 +10,13 @@ RSpec.describe Api::V4::PasswordResetsController, type: :controller do
       email = "forgetful@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "password-reset")
+
         expect {
           post :create, params: {product: person.product.internal_name, email_or_username: email}
-        }.to have_enqueued_job
+        }.to have_enqueued_job.on_queue('mailers').with(
+          'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
+        )
         expect(response).to be_successful
         expect(person.reload.reset_password_token).not_to be_nil
       end
@@ -21,9 +25,13 @@ RSpec.describe Api::V4::PasswordResetsController, type: :controller do
       email = "forgetful@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "password-reset")
+
         expect {
           post :create, params: {product: person.product.internal_name, email_or_username: "really_forgetful@example.com"}
-        }.not_to have_enqueued_job
+        }.not_to have_enqueued_job.on_queue('mailers').with(
+          'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
+        )
         expect(response).to be_successful
         expect(person.reload.reset_password_token).to be_nil
       end
@@ -32,9 +40,13 @@ RSpec.describe Api::V4::PasswordResetsController, type: :controller do
       username = "forgetful"
       person = create(:person, username: username)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "password-reset")
+
         expect {
           post :create, params: {product: person.product.internal_name, email_or_username: username}
-        }.to have_enqueued_job
+        }.to have_enqueued_job.on_queue('mailers').with(
+          'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
+        )
         expect(response).to be_successful
         expect(person.reload.reset_password_token).not_to be_nil
       end
@@ -43,9 +55,13 @@ RSpec.describe Api::V4::PasswordResetsController, type: :controller do
       username = "forgetful"
       person = create(:person, username: username)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "password-reset")
+
         expect {
           post :create, params: {product: person.product.internal_name, email_or_username: "really_forgetful"}
-        }.not_to have_enqueued_job
+        }.not_to have_enqueued_job.on_queue('mailers').with(
+          'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
+        )
         expect(response).to be_successful
         expect(person.reload.reset_password_token).to be_nil
       end
@@ -54,9 +70,12 @@ RSpec.describe Api::V4::PasswordResetsController, type: :controller do
       email = "forgetful@example.com"
       person = create(:person, email: email)
       ActsAsTenant.with_tenant(person.product) do
+        create(:static_system_email, name: "password-reset")
         expect {
           post :create, params: {product: "foofarmfizzle", email_or_username: email}
-        }.not_to have_enqueued_job
+        }.not_to have_enqueued_job.on_queue('mailers').with(
+          'PersonMailer', 'reset_password', 'deliver_now', { id: person.id }
+        )
         expect(response).to be_unprocessable
         expect(json["errors"]).to include("Required parameter missing.")
       end

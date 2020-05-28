@@ -3,7 +3,7 @@ if !activity.deleted
   json = Rails.cache.fetch ["v3", activity.updated_at, @lang, activity] do
     {
       id: activity.id,
-      title: activity.title(@lang),
+      title: activity.title,
       quest_id: activity.step.quest_id,
       step_id: activity.step_id,
       description: activity.description,

@@ -58,10 +58,6 @@ module Trivia
       end
     end
 
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
-    end
-
     belongs_to :topic, class_name: "Trivia::Topic"
     has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
     has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question, dependent: :destroy

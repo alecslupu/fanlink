@@ -2,9 +2,9 @@
 json = Rails.cache.fetch ["v3", badge.updated_at, @lang, badge] do
   {
     id: badge.id,
-    name: badge.name(@lang),
+    name: badge.name,
     internal_name: badge.internal_name,
-    description: badge.description(@lang),
+    description: badge.description,
     picture_url: badge.picture_url,
     reward: badge.reward,
     assigned_rewards: badge.assigned_rewards,

@@ -39,4 +39,6 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => "/api-docs"
 
   mount RailsAdmin::Engine => "/admin_portal", as: "rails_admin"
+
+  root to: redirect("https://fan.link")
 end
