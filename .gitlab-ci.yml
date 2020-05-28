@@ -61,8 +61,8 @@ stages:
 include:
   - local: .gitlab/base.yml
   - local: .gitlab/standards.yml
-  - local: .gitlab/rails52.yml
   - local: .gitlab/rails60.yml
   - local: .gitlab/pages.yml
   - local: .gitlab/deployment.yml
+  # - local: .gitlab/rails52.yml
   #  - local: .gitlab/rails61.yml
