@@ -3,120 +3,15 @@
 require "spec_helper"
 
 RSpec.describe PersonPollOptionPolicy, type: :policy do
-  let(:master_class) { PersonPollOption.new }
-  subject { described_class.new(build(:person), master_class) }
+  args = PersonPollOption, "post"
 
-  permission_list = {
-    index: false,
-    show: false,
-    create: false,
-    new: false,
-    update: false,
-    edit: false,
-    destroy: false,
-    export: false,
-    history: false,
-    show_in_app: false,
-    select_product: false
-  }
+  include_examples 'enforces the permissions', args
+  include_examples 'enforces the read permission', args
+  # include_examples 'enforces the update permission', args
+  # include_examples 'enforces the delete permission', args
+  include_examples 'enforces the history permission', args
+  include_examples 'enforces the export permission', args
 
-  describe "defined policies" do
-    subject { described_class.new(build(:person), master_class) }
-    permission_list.each do |policy, value|
-      it { is_expected.to respond_to("#{policy}?".to_sym) }
-    end
-  end
-  context "logged in user with no permission" do
-    subject { described_class.new(create(:person), master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        it { is_expected.to forbid_action(policy) }
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:module_name)).to eq("post") }
-      it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
-    end
-  end
-  context "logged in admin with no permission" do
-    subject { described_class.new(build(:admin_user), master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        it { is_expected.to forbid_action(policy) }
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
-    end
-  end
-  context "logged in admin with read permission" do
-    permission_list = {
-      index: true,
-      show: true,
-      create: false,
-      new: false,
-      update: false,
-      edit: false,
-      destroy: false,
-      export: false,
-      history: false,
-      show_in_app: false,
-      select_product: false
-    }
-    subject { described_class.new(create(:portal_access, post_read: true).person, master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
-    end
-  end
-  context "logged in admin with update permission" do
-    permission_list = {
-      index: false,
-      show: false,
-      create: false,
-      new: false,
-      update: false,
-      edit: false,
-      destroy: false,
-      export: false,
-      history: false,
-      show_in_app: false,
-      select_product: false
-    }
-    subject { described_class.new(create(:portal_access, post_update: true).person, master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
-    end
-  end
   context "logged in admin with delete permission" do
     permission_list = {
       index: false,
@@ -125,21 +20,20 @@ RSpec.describe PersonPollOptionPolicy, type: :policy do
       new: false,
       update: false,
       edit: false,
-      destroy: false,
+      destroy: true,
       export: false,
       history: false,
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_delete: true).person, master_class) }
+
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_delete: true))
+    end
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do
@@ -148,60 +42,29 @@ RSpec.describe PersonPollOptionPolicy, type: :policy do
       it { expect(subject.send(:has_permission?, "index")).to eq(false) }
     end
   end
-  context "logged in admin with export permission" do
+
+  context "logged in admin with update permission" do
     permission_list = {
       index: false,
       show: false,
-      create: false,
-      new: false,
-      update: false,
-      edit: false,
+      create: true,
+      new: true,
+      update: true,
+      edit: true,
       destroy: false,
-      export: true,
+      export: false,
       history: false,
       show_in_app: false,
       select_product: false
     }
-    subject { described_class.new(create(:portal_access, post_export: true).person, master_class) }
+
+    before :each do
+      allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_update: true))
+    end
 
     describe "permissions" do
       permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
-      end
-    end
-    describe "protected methods" do
-      it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
-    end
-  end
-  context "logged in admin with history permission" do
-    permission_list = {
-      index: false,
-      show: false,
-      create: false,
-      new: false,
-      update: false,
-      edit: false,
-      destroy: false,
-      export: false,
-      history: true,
-      show_in_app: false,
-      select_product: false
-    }
-    subject { described_class.new(create(:portal_access, post_history: true).person, master_class) }
-
-    describe "permissions" do
-      permission_list.each do |policy, value|
-        if value
-          it { is_expected.to permit_action(policy) }
-        else
-          it { is_expected.to forbid_action(policy) }
-        end
+        it { is_expected.to forbid_action(policy) }
       end
     end
     describe "protected methods" do

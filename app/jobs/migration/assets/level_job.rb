@@ -16,7 +16,7 @@ class Migration::Assets::LevelJob < ApplicationJob
     ext = File.extname(image)
 
     data = [
-      object.class.name.pluralize.downcase,
+      ActiveSupport::Inflector.underscore(object.class.name).pluralize,
       field_name.pluralize,
       object.id,
       "original",
@@ -27,7 +27,7 @@ class Migration::Assets::LevelJob < ApplicationJob
     id_partition = ("%09d".freeze % object.id).scan(/\d{3}/).join("/".freeze)
 
     url = [ base_url, product.internal_name,
-            object.class.name.pluralize.downcase,
+            ActiveSupport::Inflector.underscore(object.class.name).pluralize,
             field_name.pluralize, id_partition, "original", hash + ext].join("/")
     url += "?#{object.send("#{field_name}_updated_at").to_i}"
 
