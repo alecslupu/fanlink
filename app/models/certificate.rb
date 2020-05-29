@@ -29,29 +29,6 @@
 class Certificate < ApplicationRecord
   has_paper_trail
 
-  # include AttachmentSupport
-  # has_attached_file :template_image,
-  #   default_url: nil,
-  #   styles: {
-  #     optimal: "1000x",
-  #     thumbnail: "100x100#"
-  #   },
-  #   convert_options: {
-  #     optimal: "-quality 75 -strip"
-  #   }
-  #
-  # validates_attachment :template_image,
-  #   content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] },
-  #   size: { in: 0..5.megabytes }
-  #
-  # def template_image_url
-  #   template_image.file? ? template_image.url : nil
-  # end
-  #
-  # def template_image_optimal_url
-  #   template_image.file? ? template_image.url(:optimal) : nil
-  # end
-
   has_one_attached :template_image
 
   # validates_attachment_presence :template_image
@@ -63,16 +40,13 @@ class Certificate < ApplicationRecord
                          height: { min: 3840, max: 3840 }, message: "Must be 3840x2967" }
 
   def template_image_url
-    template_image.attached? ? template_image.service_url : nil
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join('/') : nil
   end
 
   def template_image_optimal_url
-    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-    template_image.attached? ? template_image.variant(opts).processed.service_url : nil
+    opts = {resize: "1000", auto_orient: true, quality: 75}
+    template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.variant(opts).processed.key].join('/') : nil
   end
-
-  # include AttachmentSupport
-
 
   acts_as_tenant(:product)
   belongs_to :product

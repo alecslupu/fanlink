@@ -31,8 +31,6 @@ Rails.application.routes.draw do
   get ":product/share_post/:post_id", to: "posts#share", as: "cache_post"
   get "/:product_id/static_content/:slug" => "static_contents#show"
 
-  match "/delayed_job" => DelayedJobWeb, anchor: false, via: [:get, :post]
-
   mount Sidekiq::Web, at: "/sidekiq"
 
   mount Rswag::Ui::Engine => "/api-docs"

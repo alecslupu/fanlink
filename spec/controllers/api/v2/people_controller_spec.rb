@@ -317,7 +317,7 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
           }
         expect(response).to be_successful
         expect(json["person"]["picture_url"]).to_not eq(nil)
-        expect(Person.last.picture.exists?).to be_truthy
+        expect(Person.last.picture.attached?).to be_truthy
       end
     end
   end
@@ -651,8 +651,9 @@ RSpec.describe Api::V2::PeopleController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(Person.last.picture.exists?).to be_truthy
-        expect(json['person']['picture_url']).to include('better.png')
+        expect(Person.last.picture.attached?).to be_truthy
+        expect(json['person']['picture_url']).to include(Rails.application.secrets.cloudfront_url)
+        expect(json['person']['picture_url']).to eq(Person.last.picture_url)
       end
     end
   end

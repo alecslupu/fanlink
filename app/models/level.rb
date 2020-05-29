@@ -24,28 +24,6 @@ class Level < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
   # AttachmentSupport
-  # has_attached_file :picture,
-  #                   default_url: nil,
-  #                   styles: {
-  #                     optimal: "1000x",
-  #                     thumbnail: "100x100#"
-  #                   },
-  #                   convert_options: {
-  #                     optimal: "-quality 75 -strip"
-  #                   }
-  #
-  # validates_attachment :picture,
-  #                      content_type: {content_type: %w[image/jpeg image/gif image/png]},
-  #                      size: {in: 0..5.megabytes}
-  #
-  # def picture_url
-  #   picture.file? ? picture.url : nil
-  # end
-  #
-  # def picture_optimal_url
-  #   picture.file? ? picture.url(:optimal) : nil
-  # end
-
 
   has_one_attached :picture
 
@@ -53,17 +31,13 @@ class Level < ApplicationRecord
             content_type: {in: %w[image/jpeg image/gif image/png]}
 
   def picture_url
-    picture.attached? ? service_url : nil
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-    picture.attached? ? picture.variant(opts).processed.service_url : nil
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
-
-
-  # AttachmentSupport
-  # has_manual_translated :description, :name
 
   scope :for_product, -> (product) { where( levels: { product_id: product.id } ) }
 

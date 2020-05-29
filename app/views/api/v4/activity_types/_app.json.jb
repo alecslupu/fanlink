@@ -11,9 +11,7 @@ case activity.atype.to_sym
 when :beacon
   beacon = ProductBeacon.find(activity.value["id"])
   unless beacon.deleted?
-    json[:value] = Rails.cache.fetch ["v4", "beacon", @req_source, beacon.id, beacon.updated_at.to_i] do
-      render partial: "api/v4/product_beacons/#{@req_source}", locals: { beacon: beacon }, handlers: "jb"
-    end
+    json[:value] = render partial: "api/v4/product_beacons/#{@req_source}", locals: { beacon: beacon }, handlers: "jb"
   else
     json[:value] = nil
   end

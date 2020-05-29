@@ -11,17 +11,13 @@ end
 
 ruby "2.5.1"
 
-if ENV["RAILS6"]
-  gem "rails", "~> 6"
-  # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 6.0'
-elsif ENV["RAILS_EDGE"]
+if ENV["RAILS_EDGE"]
   # gem "rails", github: "rails/rails"
   # gem 'sass-rails', '~> 6.0'
 else
-  gem "rails", "~> 5.2"
+  gem "rails", "~> 6"
   # Use SCSS for stylesheets
-  gem 'sass-rails', '~> 5.0'
+  gem 'sass-rails', '~> 6.0'
 end
 
 gem 'sprockets', '~> 3.7.2'
@@ -111,7 +107,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "lol_dba"
-  gem "seed_dump"
+  # gem "seed_dump"
   gem "awesome_print", require: "ap"
   #
   gem "memory_profiler"
@@ -168,12 +164,12 @@ gem "attribute_normalizer"
 gem "aws-sdk"
 gem "countries"
 gem "daemons", "~>1.3.1"
-gem "delayed_job_web"
-gem "delayed_job_active_record"
+# gem "delayed_job_web"
+# gem "delayed_job_active_record"
 gem 'sidekiq'
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
-gem "filterrific"
+# gem "filterrific"
 gem "firebase", git: "https://github.com/oscardelben/firebase-ruby.git"
 gem "flag_shih_tzu"
 gem "gettext_i18n_rails"
@@ -184,35 +180,34 @@ gem "kaminari", "~> 1.1.0"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
-gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
+# gem "mandrill-api", fanlink: "dependencies/mandrill-api-ruby", require: "mandrill"
 #
-gem "excon", ">= 0.71"
+# gem "excon", ">= 0.71"
 # I don't necessarily love this thing but then I don't love ActionMailer either
-gem "mandrill_mailer", "~> 1.6"
+# gem "mandrill_mailer", "~> 1.6"
 gem "paper_trail"
 gem "oauth2"
 gem "oj" # json opt recommended with rollbar
-# gem "paperclip", "~> 6.1.0"
-# gem "paperclip-meta"
-# gem "paperclip-dimension-validator"
-gem "pg_search"
+
+gem "paperclip", "~> 6.1.0"
+gem "paperclip-meta"
+gem "paperclip-dimension-validator"
+# gem "pg_search"
 gem "postgresql-check"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 # gem "rack-timeout"
 gem "rest-firebase"
 gem "sorcery"
-gem "timber", "~> 2.0"
 gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
 gem "wisper-activerecord"
 
-gem 'active_storage_validations'
-
 # To get video's length
 gem "streamio-ffmpeg"
+gem 'active_storage_validations'
 gem "image_processing"
 gem "mini_magick"
 # gem "rmagick"

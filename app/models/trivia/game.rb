@@ -30,44 +30,19 @@ module Trivia
 
     has_paper_trail
 
-    # AttachmentSupport
-    # has_attached_file :picture,
-    #   default_url: nil,
-    #   styles: {
-    #     optimal: "1000x",
-    #     thumbnail: "100x100#"
-    #   },
-    #   convert_options: {
-    #     optimal: "-quality 75 -strip"
-    #   }
-    #
-    # validates_attachment :picture,
-    #   content_type: {content_type: %w[image/jpeg image/gif image/png]},
-    #   size: {in: 0..5.megabytes}
-    #
-    # def picture_url
-    #   picture.file? ? picture.url : nil
-    # end
-    #
-    # def picture_optimal_url
-    #   picture.file? ? picture.url(:optimal) : nil
-    # end
-
     has_one_attached :picture
 
     validates :picture, size: {less_than: 5.megabytes},
               content_type: {in: %w[image/jpeg image/gif image/png]}
 
     def picture_url
-      picture.attached? ? service_url : nil
+      picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
     end
 
     def picture_optimal_url
-      opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-      picture.attached? ? picture.variant(opts).processed.service_url : nil
+      opts = { resize: "1000", auto_orient: true, quality: 75}
+      picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
     end
-
-    # AttachmentSupport
 
     belongs_to :room, class_name: "Room", optional: true
     has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
@@ -80,17 +55,6 @@ module Trivia
 
     validates :long_name, presence: true
     validates :short_name, presence: true
-
-=begin
-validates the startd_date > now when draft and published FLAPI-936
-
-    validate :start_time_constraints
-    def start_time_constraints
-      if published?
-        errors.add(:start_date) if start_date < DateTime.now.to_i
-      end
-    end
-=end
 
     def compute_leaderboard
       self.class.connection.execute("select compute_trivia_game_leaderboard(#{id})") if closed?
@@ -136,10 +100,6 @@ validates the startd_date > now when draft and published FLAPI-936
       event :closed do
         transitions from: :running, to: :closed
       end
-    end
-
-    def status_enum
-      new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }

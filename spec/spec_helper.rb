@@ -6,7 +6,6 @@ require "paper_trail/frameworks/rspec"
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
-require "mandrill_mailer/offline"
 require "json_schemer"
 require 'aasm/rspec'
 require "simplecov_env"
@@ -141,7 +140,6 @@ RSpec.configure do |config|
   config.include RSpec::Rails::RequestExampleGroup, type: :request
   config.include RSpec::Rails::RequestExampleGroup, type: :feature, file_path: /spec\/(step|feature)/
 
-  config.include MandrillMailerHelper
   config.include ProductHelpers
   config.include SessionHelpers
   config.include RequestHelpers

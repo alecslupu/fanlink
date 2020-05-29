@@ -2,9 +2,7 @@
 json = {}
 
 json[:lessons] = @lessons.map do |lesson|
-  Rails.cache.fetch ["v4", "lesson", @req_source, lesson.id, lesson.updated_at.to_i] do
-    render partial: @req_source, locals: { lesson: lesson }, handlers: "jb"
-  end
+  render partial: @req_source, locals: { lesson: lesson }, handlers: "jb"
 end
 
 json
