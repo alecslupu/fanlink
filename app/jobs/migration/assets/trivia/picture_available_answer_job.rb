@@ -7,7 +7,7 @@ module Migration
 
         def perform(game_id)
           require 'open-uri'
-          game = Trivia::PictureAvailableAnswer.find(game_id)
+          game = ::Trivia::PictureAvailableAnswer.find(game_id)
           url = paperclip_asset_url(game, "picture", game.product)
           game.picture.attach(io: open(url), filename: game.picture_file_name, content_type: game.picture_content_type)
         end
@@ -21,7 +21,7 @@ module Migration
           ext = File.extname(image)
 
           data = [
-            object.class.name.pluralize.downcase,
+            ActiveSupport::Inflector.underscore(object.class.name).pluralize,
             field_name.pluralize,
             object.id,
             "original",
@@ -32,8 +32,8 @@ module Migration
           id_partition = ("%09d".freeze % object.id).scan(/\d{3}/).join("/".freeze)
 
           url = [base_url, product.internal_name,
-                 object.class.name.pluralize.downcase,
-                 field_name.pluralize, id_partition, "original", hash + ext].join("/")
+                 ActiveSupport::Inflector.underscore(object.class.name).pluralize,
+                field_name.pluralize, id_partition, "original", hash + ext].join("/")
           url += "?#{object.send("#{field_name}_updated_at").to_i}"
 
           url
