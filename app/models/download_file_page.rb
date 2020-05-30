@@ -20,38 +20,24 @@ class DownloadFilePage < ApplicationRecord
   scope :for_product, -> (product) { where(product_id: product.id) }
   acts_as_tenant(:product)
   belongs_to :product
-
   belongs_to :certcourse_page
 
   # include AttachmentSupport
   has_one_attached :document
 
-  # has_attached_file :document,
-  #   default_url: nil,
-  #   convert_options: {
-  #     optimal: "-quality 90 -strip"
-  #   }
-  # validates_attachment :document,
-  #   content_type: { content_type: [""] },
-  #   size: { in: 0..5.megabytes }
-
-  def document_url
-    document.attached? ? document.service_url : nil
-  end
-
   validates :document, attached: true,
             size: {less_than: 5.megabytes},
             content_type: {in: %w[application/pdf]}
 
-  # include AttachmentSupport
+  def document_url
+    document.attached? ? [Rails.application.secrets.cloudfront_url, document.key].join('/') : nil
+  end
 
   after_save :set_certcourse_page_content_type
   validate :just_me
 
   validates :caption, presence: true
   validates :certcourse_page_id, uniqueness: true
-
-  # validates_uniqueness_of :certcourse_page_id
 
   def course_name
     certcourse_page.certcourse.to_s

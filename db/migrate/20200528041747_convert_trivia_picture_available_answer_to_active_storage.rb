@@ -1,6 +1,6 @@
 class ConvertTriviaPictureAvailableAnswerToActiveStorage < ActiveRecord::Migration[5.2]
   def up
-    Trivia::PictureAvailableAnswerJob.where.not(picture_file_name: nil).find_each do |level|
+    Trivia::PictureAvailableAnswer.where.not(picture_file_name: nil).find_each do |level|
       Migration::Assets::Trivia::PictureAvailableAnswerJob.perform_later(level.id)
     end
   end

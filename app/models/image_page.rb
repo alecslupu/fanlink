@@ -30,39 +30,13 @@ class ImagePage < ApplicationRecord
             content_type: {in: %w[image/jpeg image/gif image/png application/pdf]}
 
   def image_url
-    image.attached? ? image.service_url : nil
+    image.attached? ? [Rails.application.secrets.cloudfront_url, image.key].join('/') : nil
   end
 
   def image_optimal_url
-    opts = {resize_to_limit: [1920, 1080], auto_orient: true, quality: 90}
-    image.attached? ? image.variant(opts).processed.service_url : nil
+    opts = {resize: [1920, 1080], auto_orient: true, quality: 90}
+    image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
   end
-
-  #
-  # has_attached_file :image,
-  #   default_url: nil,
-  #   styles: {
-  #     optimal: "1920x1080",
-  #     large: "3840x2160",
-  #     thumbnail: "100x100#"
-  #   },
-  #   convert_options: {
-  #     optimal: "-quality 90 -strip"
-  #   }
-  # validates_attachment :image,
-  #   content_type: {content_type: },
-  #   size: {in: 0..5.megabytes}
-  #
-  # def image_url
-  #   image.file? ? image.url : nil
-  # end
-  # def image_optimal_url
-  #   image.attached? ? image. : nil
-  # end
-  #
-  # validates_attachment_presence :image
-
-  # include AttachmentSupport
 
   validates_uniqueness_of :certcourse_page_id
 
