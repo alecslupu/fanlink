@@ -37,7 +37,6 @@
 #
 
 class Post < ApplicationRecord
-  include AttachmentSupport
   # include Post::PortalFilters
 
   scope :id_filter, -> (query) { where(id: query.to_i) }
@@ -71,9 +70,36 @@ class Post < ApplicationRecord
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_image_called :picture
-  has_audio_called :audio
-  has_video_called :video
+  has_one_attached :picture
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
+
+  has_one_attached :audio
+
+  validates :audio, size: {less_than: 10.megabytes},
+            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+
+  def audio_url
+    audio.attached? ? [Rails.application.secrets.cloudfront_url, audio.key].join('/')  : nil
+  end
+
+  has_one_attached :video
+
+  validates :video, size: {less_than: 10.megabytes},
+            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+
+  def video_url
+    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
+  end
 
   has_paper_trail
 
