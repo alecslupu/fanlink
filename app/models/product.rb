@@ -48,7 +48,7 @@ class Product < ApplicationRecord
   end
 
   def logo_optimal_url
-    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
+    opts = {resize: [1000, 5000], auto_orient: true, quality: 75}
     logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.variant(opts).processed.key].join('/') : nil
   end
 
