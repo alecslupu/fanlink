@@ -19,16 +19,13 @@ class ImagePage < ApplicationRecord
 
   scope :for_product, -> (product) { where(product_id: product.id) }
 
-  # include AttachmentSupport
   acts_as_tenant(:product)
   belongs_to :product
 
   belongs_to :certcourse_page
-
+  # include AttachmentSupport
   has_one_attached :image
 
-  # has_course_image_called :image
-  # validates_attachment_presence :image
   validates :image, attached: true,
             size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png application/pdf]}

@@ -210,7 +210,7 @@ gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
 gem "wisper-activejob"
-gem "wisper-activerecord"
+gem "wisper-activerecord", github: "alecslupu/wisper-activerecord"
 
 # To get video's length
 gem "streamio-ffmpeg"

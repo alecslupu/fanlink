@@ -37,11 +37,20 @@
 #
 
 class Product < ApplicationRecord
-  include AttachmentSupport
   has_paper_trail ignore: [:created_at, :updated_at]
 
+  has_one_attached :logo
+  validates :logo, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
 
-  has_image_called :logo
+  def logo_url
+    logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.key].join('/') : nil
+  end
+
+  def logo_optimal_url
+    opts = {resize: [1000, 5000], auto_orient: true, quality: 75}
+    logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.variant(opts).processed.key].join('/') : nil
+  end
 
   validates :name, length: { in: 3..60, message: _("Name must be between 3 and 60 characters.") }, uniqueness: { message: _("Product %{product_name} already exists.") % { product_name: name } }
 
