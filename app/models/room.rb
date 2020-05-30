@@ -22,7 +22,6 @@
 #
 
 class Room < ApplicationRecord
-  include AttachmentSupport
   # include Room::RealTime
 
   # old Room::RealTime
@@ -64,8 +63,19 @@ class Room < ApplicationRecord
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 
-  has_image_called :picture
+  has_one_attached :picture
 
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
   if Rails.env.staging?
     has_many :messages, dependent: :destroy
   else

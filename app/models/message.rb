@@ -22,7 +22,6 @@
 #
 
 class Message < ApplicationRecord
-  include AttachmentSupport
   # include Message::FilterrificImpl
 
   scope :person_name_query, ->(query)  { joins(:person).where("people.name ilike ?", "%#{query}%") }
