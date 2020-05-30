@@ -18,14 +18,28 @@ class ImagePage < ApplicationRecord
 
   scope :for_product, -> (product) { where(product_id: product.id) }
 
-  include AttachmentSupport
+  # include AttachmentSupport
   acts_as_tenant(:product)
   belongs_to :product
 
   belongs_to :certcourse_page
 
-  has_course_image_called :image
-  validates_attachment_presence :image
+  has_one_attached :image
+
+  # has_course_image_called :image
+  # validates_attachment_presence :image
+  validates :document, attached: true,
+            size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png application/pdf]}
+
+  def image_url
+    image.attached? ? [Rails.application.secrets.cloudfront_url, image.key].join('/') : nil
+  end
+
+  def image_optimal_url
+    opts = {resize: [1920, 1080], auto_orient: true, quality: 90}
+    image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
+  end
 
   validates_uniqueness_of :certcourse_page_id
 
