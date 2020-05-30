@@ -20,7 +20,6 @@ class DownloadFilePage < ApplicationRecord
   scope :for_product, -> (product) { where(product_id: product.id) }
   acts_as_tenant(:product)
   belongs_to :product
-
   belongs_to :certcourse_page
 
   # include AttachmentSupport
@@ -39,8 +38,6 @@ class DownloadFilePage < ApplicationRecord
 
   validates :caption, presence: true
   validates :certcourse_page_id, uniqueness: true
-
-  # validates_uniqueness_of :certcourse_page_id
 
   def course_name
     certcourse_page.certcourse.to_s

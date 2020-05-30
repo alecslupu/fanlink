@@ -23,6 +23,7 @@ class Level < ApplicationRecord
 
   acts_as_tenant(:product)
   belongs_to :product
+  # AttachmentSupport
 
   has_one_attached :picture
 
