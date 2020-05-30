@@ -35,51 +35,21 @@ class QuestActivity < ApplicationRecord
 
   has_many :rewards, through: :assigned_rewards, source: :assigned, source_type: "QuestActivity"
 
-
-  # AttachmentSupport
-  # has_attached_file :picture,
-  #   default_url: nil,
-  #   styles: {
-  #     optimal: "1000x",
-  #     thumbnail: "100x100#"
-  #   },
-  #   convert_options: {
-  #     optimal: "-quality 75 -strip"
-  #   }
-  #
-  # validates_attachment :picture,
-  #   content_type: {content_type: %w[image/jpeg image/gif image/png]},
-  #   size: {in: 0..5.megabytes}
-
-  # def picture_url
-  #   picture.file? ? picture.url : nil
-  # end
-  #
-  # def picture_optimal_url
-  #   picture.file? ? picture.url(:optimal) : nil
-  # end
-
   has_one_attached :picture
 
   validates :picture, size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png]}
 
   def picture_url
-    picture.attached? ? service_url : nil
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
 
   def picture_optimal_url
-    opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-    picture.attached? ? picture.variant(opts).processed.service_url : nil
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
-  # AttachmentSupport
-  #
   accepts_nested_attributes_for :activity_types
-
-
-  # default_scope { order(created_at: :desc) }
-
 
   scope :with_completion, -> (person) { where("quest_completions.person_id = ?", person.id) }
 
