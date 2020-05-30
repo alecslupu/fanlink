@@ -22,7 +22,7 @@ deploy:staging:
     - chmod 400 ~/.ssh/id_rsa
     - echo "Host *" >> ~/.ssh/config
     - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - which ssh-agent || ( apt-get update -qq -y && apt-get install openssh-client -yqq )
     - eval $(ssh-agent -s)
     - ssh-add
     - ssh-add -l
@@ -54,7 +54,7 @@ deploy:production:
     - chmod 400 ~/.ssh/id_rsa
     - echo "Host *" >> ~/.ssh/config
     - echo "StrictHostKeyChecking no" >> ~/.ssh/config
-    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - which ssh-agent || ( apt-get update -qq  -y && apt-get install openssh-client -yqq )
     - eval $(ssh-agent -s)
     - ssh-add
     - ssh-add -l
