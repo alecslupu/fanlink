@@ -29,11 +29,6 @@
 class Certificate < ApplicationRecord
   has_paper_trail
 
-  # include AttachmentSupport
-  # has_image_called :template_image
-  # validates_attachment_presence :template_image
-  # validates_attachment :template_image, dimensions: { height: 2967, width: 3840, message: _("Must be 3840x2967") }
-  #
   has_one_attached :template_image
 
   validates :template_image, size: {less_than: 5.megabytes},
