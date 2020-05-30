@@ -27,46 +27,19 @@ module Trivia
     has_paper_trail
     belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
 
-    # has_attached_file :photo,
-    #   default_url: nil,
-    #   styles: {
-    #     optimal: "1000x",
-    #     thumbnail: "100x100#"
-    #   },
-    #   convert_options: {
-    #     optimal: "-quality 75 -strip"
-    #   }
-    #
-    # validates_attachment :photo,
-    #   content_type: {content_type: %w[image/jpeg image/gif image/png]},
-    #   size: {in: 0..5.megabytes}
-    #
-    # def photo_url
-    #   photo.file? ? photo.url : nil
-    # end
-    #
-    # def photo_optimal_url
-    #   photo.file? ? photo.url(:optimal) : nil
-    # end
-
-
     has_one_attached :photo
 
     validates :photo, size: {less_than: 5.megabytes},
               content_type: {in: %w[image/jpeg image/gif image/png]}
 
     def photo_url
-      photo.attached? ? service_url : nil
+      photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.key].join('/') : nil
     end
 
     def photo_optimal_url
-      opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-      photo.attached? ? photo.variant(opts).processed.service_url : nil
+      opts = { resize: "1000", auto_orient: true, quality: 75}
+      photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.variant(opts).processed.key].join('/') : nil
     end
-
-    # AttachmentSupport
-
-
 
     include AASM
     enum status: {
