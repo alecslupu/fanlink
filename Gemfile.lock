@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/alecslupu/wisper-activerecord.git
+  revision: 02de378dd388813e2ed230b841963351253f18aa
+  specs:
+    wisper-activerecord (1.0.1)
+      activerecord (>= 3.0.0)
+      wisper (~> 2.0)
+
+GIT
   remote: https://github.com/oscardelben/firebase-ruby.git
   revision: f700437b4a3e3ed8b073c48aacedf8808cf884b6
   specs:
@@ -1623,9 +1631,6 @@ GEM
     wisper-activejob (1.0.0)
       activejob (>= 4.0.0)
       wisper
-    wisper-activerecord (1.0.0)
-      activerecord (>= 3.0.0)
-      wisper (~> 2.0)
     wisper-rspec (1.1.0)
     zeitwerk (2.3.0)
 
@@ -1753,7 +1758,7 @@ DEPENDENCIES
   whenever
   wisper (> 2.0.0)
   wisper-activejob
-  wisper-activerecord
+  wisper-activerecord!
   wisper-rspec
 
 RUBY VERSION

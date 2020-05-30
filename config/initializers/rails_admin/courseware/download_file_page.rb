@@ -9,7 +9,7 @@ RailsAdmin.config do |config|
 
     edit do
       fields :certcourse_page, :caption
-      field :document, :paperclip
+      field :document
     end
     list do
       fields :id, :course_name, :caption, :document, :created_at, :updated_at

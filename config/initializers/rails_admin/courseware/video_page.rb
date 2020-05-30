@@ -9,7 +9,7 @@ RailsAdmin.config do |config|
 
     edit do
       field :certcourse_page
-      field :video, :paperclip
+      field :video
     end
     list do
       field :id

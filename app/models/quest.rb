@@ -25,7 +25,6 @@
 #
 
 class Quest < ApplicationRecord
-  include AttachmentSupport
   # include Quest::PortalFilters
   scope :id_filter, ->(query) { where(id: query.to_i) }
   scope :product_id_filter, ->(query) { where(product_id: query.to_i) }
@@ -47,7 +46,19 @@ class Quest < ApplicationRecord
 
   scope :for_product, -> (product) { where( quests: { product_id: product.id } ) }
 
-  has_image_called :picture
+  has_one_attached :picture
+
+  validates :picture, size: {less_than: 5.megabytes},
+            content_type: {in: %w[image/jpeg image/gif image/png]}
+
+  def picture_url
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
+  end
+
+  def picture_optimal_url
+    opts = { resize: "1000", auto_orient: true, quality: 75}
+    picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
+  end
 
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
