@@ -35,48 +35,13 @@
 class PersonCertificate < ApplicationRecord
   has_paper_trail
 
-  # include AttachmentSupport
-  # has_attached_file :issued_certificate_image,
-  #   default_url: nil,
-  #   styles: {
-  #     optimal: "1920x1080",
-  #     large: "3840x2160",
-  #     thumbnail: "100x100#"
-  #   },
-  #   convert_options: {
-  #     optimal: "-quality 90 -strip"
-  #   }
-  # validates_attachment :issued_certificate_image,
-  #   content_type: {content_type: %w[image/jpeg image/gif image/png application/pdf]},
-  #   size: {in: 0..5.megabytes}
-  #
-  # def issued_certificate_image_url
-  #   issued_certificate_image.file? ? issued_certificate_image.url : nil
-  # end
-  #
-  # def issued_certificate_image_optimal_url
-  #   issued_certificate_image.file? ? issued_certificate_image.url(:optimal) : nil
-  # end
-  # has_one_attached :issued_certificate_image
-
   has_one_attached :issued_certificate_image
-
 
   validates :issued_certificate_image,  size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg ]}
 
   def issued_certificate_image_url
-    issued_certificate_image.attached? ? issued_certificate_image.service_url : nil
-  end
-
-  # def issued_certificate_image_optimal_url
-  #   opts = {resize_to_limit: [1000, 5000], auto_orient: true, quality: 75}
-  #   issued_certificate_image.attached? ? issued_certificate_image.variant(opts).processed.service_url : nil
-  # end
-
-
-  def issued_certificate_pdf_url
-    issued_certificate_pdf.attached? ? issued_certificate_pdf.service_url : nil
+    issued_certificate_image.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_image.key].join('/')  : nil
   end
 
   has_one_attached :issued_certificate_pdf
@@ -84,9 +49,9 @@ class PersonCertificate < ApplicationRecord
             size: {less_than: 5.megabytes},
             content_type: {in: %w[application/pdf]}
 
-
-  # include AttachmentSupport
-
+  def issued_certificate_pdf_url
+    issued_certificate_pdf.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_pdf.key].join('/')  : nil
+  end
 
   belongs_to :person, touch: true
   belongs_to :certificate, touch: true
@@ -138,7 +103,7 @@ class PersonCertificate < ApplicationRecord
   def write_files
     require "prawn"
 
-    img = MiniMagick::Image.open(Paperclip.io_adapters.for(certificate.template_image).path)
+    img = MiniMagick::Image.open(certificate.template_image_url)
 
     img.combine_options do |txt|
       txt.gravity "Center"
@@ -182,7 +147,6 @@ class PersonCertificate < ApplicationRecord
       pdf.image jpeg_file.path, fit: [pdf.bounds.right, pdf.bounds.top]
     end
 
-
     self.update(issued_date: issued_date)
 
     issued_certificate_image.attach(io: open(jpeg_file),
@@ -190,8 +154,6 @@ class PersonCertificate < ApplicationRecord
                                     content_type: "image/jpeg")
     issued_certificate_pdf.attach(io: open(pdf_file),
                                   filename: "certificate_image.pdf",
-                                  content_type: "application/pdf"
-    )
-
+                                  content_type: "application/pdf")
   end
 end

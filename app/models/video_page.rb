@@ -21,26 +21,14 @@ class VideoPage < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-# AttachmentSupport
-#   has_attached_file :video, default_url: nil
-#   def video_url
-#     video.file? ? video.url : nil
-#   end
-#
-#   validates_attachment_presence :video
-#   do_not_validate_attachment_file_type :video
-
-
   has_one_attached :video
 
-  validates :video, attached: true,
+  validates :video, size: {less_than: 10.megabytes},
             content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
 
   def video_url
-    video.attached? ? video.service_url : nil
+    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
   end
-
-# AttachmentSupport
 
   validates_uniqueness_of :certcourse_page_id
 
@@ -76,8 +64,9 @@ class VideoPage < ApplicationRecord
   end
 
   def video_duration
-    FFMPEG::Movie.new(Paperclip.io_adapters.for(video).path).duration.to_i + 1
+    FFMPEG::Movie.new(video_url).duration.to_i + 1
   end
+
   def set_certcourse_page_duration
     certcourse_page.update(duration: video_duration)
   end
