@@ -28,7 +28,7 @@ class ImagePage < ApplicationRecord
 
   # has_course_image_called :image
   # validates_attachment_presence :image
-  validates :document, attached: true,
+  validates :image, attached: true,
             size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png application/pdf]}
 
