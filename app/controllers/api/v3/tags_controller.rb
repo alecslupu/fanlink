@@ -27,7 +27,7 @@ class Api::V3::TagsController < Api::V2::TagsController
   # *
   def index
     if params[:tag_name].present?
-      @posts = Post.visible.tagged_with(params[:tag_name].try(:downcase), match_all: true)
+      @posts = paginate Post.for_product(ActsAsTenant.current_tenant).visible.tagged_with(params[:tag_name].try(:downcase), match_all: true)
       return_the @posts
     else
       render_422 _("Parameter tag_name is required.")
