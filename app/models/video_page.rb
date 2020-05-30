@@ -16,15 +16,19 @@
 
 class VideoPage < ApplicationRecord
   scope :for_product, -> (product) { where(product_id: product.id) }
-  include AttachmentSupport
   require 'streamio-ffmpeg'
 
   acts_as_tenant(:product)
   belongs_to :product
 
-  has_video_called :video
-  validates_attachment_presence :video
-  do_not_validate_attachment_file_type :video
+  has_one_attached :video
+
+  validates :video, size: {less_than: 10.megabytes},
+            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+
+  def video_url
+    video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
+  end
 
   validates_uniqueness_of :certcourse_page_id
 
@@ -60,8 +64,9 @@ class VideoPage < ApplicationRecord
     end
 
     def video_duration
-      FFMPEG::Movie.new(Paperclip.io_adapters.for(video).path).duration.to_i + 1
+      FFMPEG::Movie.new(video_url).duration.to_i + 1
     end
+
     def set_certcourse_page_duration
       certcourse_page.update(duration: video_duration)
     end
