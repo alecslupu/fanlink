@@ -4,7 +4,7 @@ module Migration
 
       def perform(certificate_id)
         require 'open-uri'
-        certificate = Certificate.find(certificate_id)
+        certificate = ::Certificate.find(certificate_id)
         url = paperclip_asset_url(certificate, "template_image", certificate.product)
         certificate.template_image.attach(
           io: open(url),
