@@ -8,8 +8,8 @@ json.cache! ["v3", quest.updated_at, @lang, quest] do
   json.internal_name quest.internal_name
   json.description quest.description
   json.picture_url quest.picture_optimal_url
-  json.picture_width quest.picture.width
-  json.picture_height quest.picture.height
+  json.picture_width quest.picture_width
+  json.picture_height quest.picture_height
   json.status quest.status.to_s
   json.starts_at quest.starts_at
   json.ends_at quest.ends_at

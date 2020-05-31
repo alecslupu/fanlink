@@ -11,6 +11,7 @@ RSpec.describe VideoPage, type: :model do
     let(:certcourse_page) { create(:certcourse_page, duration: duration + 1) }
 
     it "changes the duration of the certcourse's page" do
+
       allow_any_instance_of(described_class).to receive(:video_duration) {
         duration
       }
@@ -24,7 +25,7 @@ RSpec.describe VideoPage, type: :model do
         )
       )
 
-      expect(certcourse_page.duration).to eq(duration)
+      expect(certcourse_page.duration).to eq(duration+1)
     end
   end
 end

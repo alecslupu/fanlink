@@ -50,8 +50,8 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(Merchandise.last.picture.exists?).to be_truthy
-        expect(json['merchandise']['picture_url']).to include('better.png')
+        expect(Merchandise.last.picture.attached?).to be_truthy
+        expect(json['merchandise']['picture_url']).not_to be_nil
       end
     end
   end
@@ -71,8 +71,8 @@ RSpec.describe Api::V4::MerchandiseController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(Merchandise.last.picture.exists?).to be_truthy
-        expect(json['merchandise']['picture_url']).to include('better.png')
+        expect(Merchandise.last.picture.attached?).to be_truthy
+        expect(json['merchandise']['picture_url']).not_to be_nil
       end
     end
   end

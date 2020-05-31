@@ -68,6 +68,7 @@ class Room < ApplicationRecord
   validates :picture, size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png]}
 
+
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end
@@ -76,6 +77,7 @@ class Room < ApplicationRecord
     opts = { resize: "1000", auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
+
   if Rails.env.staging?
     has_many :messages, dependent: :destroy
   else
@@ -94,7 +96,9 @@ class Room < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
 
-  validates :picture, absence: { message: _("Private rooms may not have pictures.") }, if: Proc.new { |room| room.private? }
+
+  validate :picture_validation
+
   scope :privates_for_person, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false).order(updated_at: :desc) }
   scope :publics, -> { where(public: true).order(updated_at: :desc) }
   scope :privates, -> { where(public: false) }
@@ -105,5 +109,13 @@ class Room < ApplicationRecord
 
   def private?
     !public
+  end
+
+  private
+
+  def picture_validation
+    if picture.attached?
+      errors.add(:picture, "Private rooms may not have pictures.") if private?
+    end
   end
 end

@@ -21,6 +21,7 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
   end
 
   describe "GET show" do
+
     it 'returns the quest with the attached image' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -52,8 +53,9 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(Quest.last.picture.exists?).to be_truthy
-        expect(json['quest']['picture_url']).to include('better.png')
+        expect(Quest.last.picture.attached?).to be_truthy
+        expect(json['quest']['picture_url']).to be_present
+
       end
     end
   end
@@ -73,8 +75,8 @@ RSpec.describe Api::V4::QuestsController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(Quest.last.picture.exists?).to be_truthy
-        expect(json['quest']['picture_url']).to include('better.png')
+        expect(Quest.last.picture.attached?).to be_truthy
+        expect(json['quest']['picture_url']).to be_present
       end
     end
   end

@@ -95,7 +95,7 @@ class PersonMailer < ApplicationMailer
     email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: "assignee-certificate").first!
     @link = "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{@person.product.internal_name}/#{@person.name}"
 
-    attachments.inline[@person_certificate.issued_certificate_pdf_file_name] = File.read(Paperclip.io_adapters.for(@person_certificate.issued_certificate_pdf).path)
+    attachments.inline[@person_certificate.issued_certificate_pdf_file_name] = @person_certificate.issued_certificate_pdf.download
 
     mail_params = {
       from:     "#{email.from_name} <#{email.from_email}>" ,

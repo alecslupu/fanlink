@@ -66,7 +66,7 @@ test:erd:
     paths:
       - erd.pdf
   script:
-    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -y -qq graphviz
+    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq graphviz
     - gem install 'rails-erd'
     - bundle exec rails g erd:install
     - bundle exec rake erd

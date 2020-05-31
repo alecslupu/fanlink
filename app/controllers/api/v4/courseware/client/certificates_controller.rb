@@ -9,8 +9,8 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
   end
 
   def download
-    if @person_certificate.issued_certificate_image.present?
-      @url = @person_certificate.issued_certificate_image.url
+    if @person_certificate.issued_certificate_image.attached?
+      @url = @person_certificate.issued_certificate_image_url
       return_the @url, handler: :jb
     else
       render_422 _("This user does not have a image attached to this certificate.")
@@ -18,7 +18,7 @@ class Api::V4::Courseware::Client::CertificatesController < Api::V4::Courseware:
   end
 
   def send_email
-    if @person_certificate.issued_certificate_pdf.present?
+    if @person_certificate.issued_certificate_pdf.attached?
       current_user.send_assignee_certificate_email(@person_certificate, params[:person_id], params[:email])
       render json: { message: _("Email sent") }
     else
