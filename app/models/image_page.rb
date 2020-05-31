@@ -34,8 +34,12 @@ class ImagePage < ApplicationRecord
   end
 
   def image_optimal_url
-    opts = {resize: [1920, 1080], auto_orient: true, quality: 90}
+    opts = {resize: "1920x1080", auto_orient: true, quality: 90}
     image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
+  end
+
+  def image_content_type
+    image.attached? ? image.blob.content_type : nil
   end
 
   validates_uniqueness_of :certcourse_page_id

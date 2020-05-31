@@ -30,6 +30,10 @@ class VideoPage < ApplicationRecord
     video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
   end
 
+  def video_content_type
+    video.attached? ? video.blob.content_type : nil
+  end
+
   validates_uniqueness_of :certcourse_page_id
 
   belongs_to :certcourse_page

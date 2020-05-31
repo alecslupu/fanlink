@@ -49,6 +49,14 @@ class QuestActivity < ApplicationRecord
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
+  def picture_width
+    picture.attached? ? picture.blob.metadata[:width] : nil
+  end
+
+  def picture_height
+    picture.attached? ? picture.blob.metadata[:height] : nil
+  end
+
   accepts_nested_attributes_for :activity_types
 
   scope :with_completion, -> (person) { where("quest_completions.person_id = ?", person.id) }

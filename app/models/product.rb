@@ -52,6 +52,10 @@ class Product < ApplicationRecord
     logo.attached? ? [Rails.application.secrets.cloudfront_url, logo.variant(opts).processed.key].join('/') : nil
   end
 
+  def logo_file_size
+    logo.attached? ? logo.blob.byte_size : nil
+  end
+
   validates :name, length: { in: 3..60, message: _("Name must be between 3 and 60 characters.") }, uniqueness: { message: _("Product %{product_name} already exists.") % { product_name: name } }
 
   validates :internal_name, format: { with: /\A[a-zA-Z0-9_]+\z/, allow_blank: true, message: _("Internal name can only contain letters, numbers and underscores.") },
