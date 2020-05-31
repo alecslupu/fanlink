@@ -3,7 +3,7 @@ module Migration
     class MessageJob < ::Migration::Assets::ApplicationJob
       def perform(product_id, what)
         require 'open-uri'
-        message = Message.find(product_id)
+        message = ::Message.find(product_id)
         if what == "picture"
           url = paperclip_asset_url(message, "picture", message.room.product)
           message.picture.attach(io: open(url), filename: message.picture_file_name, content_type: message.picture_content_type)

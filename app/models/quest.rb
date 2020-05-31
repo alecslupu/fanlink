@@ -60,6 +60,14 @@ class Quest < ApplicationRecord
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
+  def picture_width
+    picture.attached? ? picture.blob.metadata[:width] : nil
+  end
+
+  def picture_height
+    picture.attached? ? picture.blob.metadata[:height] : nil
+  end
+
   translates :description, :name, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
 

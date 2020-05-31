@@ -7,8 +7,8 @@ if !activity.deleted
     json.description activity.description
     json.hint activity.hint
     json.picture_url activity.picture_optimal_url
-    json.picture_width activity.picture.width
-    json.picture_height activity.picture.height
+    json.picture_width activity.picture_width
+    json.picture_height activity.picture_height
     if activity.activity_types.count > 0
       json.requirements do
         json.array!(activity.activity_types) do |atype|

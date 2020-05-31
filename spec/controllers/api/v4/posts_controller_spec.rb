@@ -361,12 +361,12 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         }
 
         expect(response).to be_successful
-        expect(Post.last.picture.exists?).to be_truthy
-        expect(Post.last.audio.exists?).to be_truthy
-        expect(Post.last.video.exists?).to be_truthy
-        expect(json['post']['picture_url']).to include('better.png')
-        expect(json['post']['audio_url']).to include('small_audio')
-        expect(json['post']['video_url']).to include('short_video')
+        expect(Post.last.picture.attached?).to be_truthy
+        expect(Post.last.audio.attached?).to be_truthy
+        expect(Post.last.video.attached?).to be_truthy
+        expect(json['post']['picture_url']).not_to be_nil
+        expect(json['post']['audio_url']).not_to be_nil
+        expect(json['post']['video_url']).not_to be_nil
       end
     end
   end
@@ -390,12 +390,12 @@ RSpec.describe Api::V4::PostsController, type: :controller do
             }
 
         expect(response).to be_successful
-        expect(Post.last.picture.exists?).to be_truthy
-        expect(Post.last.audio.exists?).to be_truthy
-        expect(Post.last.video.exists?).to be_truthy
-        expect(json['post']['picture_url']).to include('better.png')
-        expect(json['post']['audio_url']).to include('small_audio')
-        expect(json['post']['video_url']).to include('short_video')
+        expect(Post.last.picture.attached?).to be_truthy
+        expect(Post.last.audio.attached?).to be_truthy
+        expect(Post.last.video.attached?).to be_truthy
+        expect(json['post']['picture_url']).to be_present
+        expect(json['post']['audio_url']).to be_present
+        expect(json['post']['video_url']).to be_present
       end
     end
 

@@ -30,7 +30,7 @@ stages:
     - update-locale LANG=en_US.UTF-8
     - locale
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
   tags:
     - anything
 

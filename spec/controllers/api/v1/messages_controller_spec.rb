@@ -198,7 +198,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         }
         expect(response).to be_successful
         expect(json['message']['picture_url']).not_to eq(nil)
-        expect(Message.last.picture.exists?).to be_truthy
+        expect(Message.last.picture.attached?).to be_truthy
       end
     end
 
@@ -218,7 +218,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
         }
         expect(response).to be_successful
         expect(json['message']['audio_url']).not_to eq(nil)
-        expect(Message.last.audio.exists?).to be_truthy
+        expect(Message.last.audio.attached?).to be_truthy
       end
     end
   end

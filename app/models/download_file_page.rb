@@ -34,6 +34,10 @@ class DownloadFilePage < ApplicationRecord
     document.attached? ? [Rails.application.secrets.cloudfront_url, document.key].join('/') : nil
   end
 
+  def document_content_type
+    document.attached? ? document.blob.content_type : nil
+  end
+
   after_save :set_certcourse_page_content_type
   validate :just_me
 
