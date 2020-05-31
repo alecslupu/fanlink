@@ -36,7 +36,7 @@ class VideoPage < ApplicationRecord
 
   validate :just_me
   after_save :set_certcourse_page_content_type
-  after_save :set_certcourse_page_duration
+  before_save :set_certcourse_page_duration
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -68,6 +68,6 @@ class VideoPage < ApplicationRecord
     end
 
     def set_certcourse_page_duration
-      certcourse_page.update(duration: video_duration)
+      duration = video_duration
     end
 end

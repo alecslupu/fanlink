@@ -128,10 +128,10 @@ RSpec.describe Api::V1::PostsController, type: :controller do
         }
 
         expect(response).to have_http_status(200)
-        expect(Post.last.picture.exists?).to be_truthy
-        expect(Post.last.audio.exists?).to be_truthy
-        expect(json['post']['picture_url']).to include('better.png')
-        expect(json['post']['audio_url']).to include('small_audio')
+        expect(Post.last.picture.attached?).to be_truthy
+        expect(Post.last.audio.attached?).to be_truthy
+        expect(json['post']['picture_url']).not_to be_nil
+        expect(json['post']['audio_url']).not_to be_nil
       end
     end
   end
