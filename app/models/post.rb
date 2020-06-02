@@ -197,7 +197,7 @@ class Post < ApplicationRecord
     if msg["userMetadata"]["sizer"]
       # There should be exactly one entry in `outputs`.
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
-      job = Flaws.finish_transcoding(post.video.path,
+      job = Flaws.finish_transcoding(post.video.key,
                                      width, height,
                                      post_id: post.id.to_s)
       post.video_job_id = job.id
@@ -211,8 +211,7 @@ class Post < ApplicationRecord
 
   def video_thumbnail
     return if video_transcoded.empty?
-    id = File.basename(self.video.path, File.extname(self.video.path))
-    url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.jpg"
+    url = "#{self.video.s3_bucket.url}/thumbnails/#{video.key}-00001.jpg"
   end
 
   def flush_cache
