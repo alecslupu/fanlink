@@ -11,6 +11,18 @@ class CreateLevels < ActiveRecord::Migration[5.1]
     end
     add_attachment :levels, :picture
     add_foreign_key :levels, :products, name: "fk_levels_products"
+    add_column :levels, :description, :jsonb, default: {}, null: false
+
+    rename_column :levels, :name, :name_text_old
+    change_column_null :levels, :name_text_old, true
+    add_column :levels, :name, :jsonb, default: {}, null: false
+
+    Level.all.each do |l|
+      unless l.name_text_old.nil?
+        l.name = l.name_text_old
+        l.save
+      end
+    end
   end
   def down
     drop_table :levels

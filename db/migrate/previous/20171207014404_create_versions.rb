@@ -7,7 +7,7 @@ class CreateVersions < ActiveRecord::Migration[5.1]
   # when serializing very large objects, `text` might not be big enough.
   TEXT_BYTES = 1_073_741_823
 
-  def change
+  def up
     create_table :versions do |t|
       t.text    :item_type, null: false
       t.integer :item_id,   null: false
@@ -18,5 +18,9 @@ class CreateVersions < ActiveRecord::Migration[5.1]
       t.datetime :created_at
     end
     add_index :versions, %i(item_type item_id), name: "ind_versions_item_type_item_id"
+  end
+
+  def down
+    drop_table :versions
   end
 end
