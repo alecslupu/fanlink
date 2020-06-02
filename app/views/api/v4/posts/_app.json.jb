@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+Rails.logger.debug(post.id)
 json = {
   id: post.id,
   person: render(partial: "api/v4/people/#{@req_source}", locals: { person: post.person }),

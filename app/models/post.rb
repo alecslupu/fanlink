@@ -201,7 +201,7 @@ class Post < ApplicationRecord
     if msg["userMetadata"]["sizer"]
       # There should be exactly one entry in `outputs`.
       width, height = msg["outputs"][0].values_at("width", "height").map(&:to_i)
-      job = Flaws.finish_transcoding(post.video.path,
+      job = Flaws.finish_transcoding(post.video.key,
                                      width, height,
                                      post_id: post.id.to_s)
       post.video_job_id = job.id
@@ -215,8 +215,7 @@ class Post < ApplicationRecord
 
   def video_thumbnail
     return if video_transcoded.empty?
-    id = File.basename(self.video.path, File.extname(self.video.path))
-    url = "#{self.video.s3_bucket.url}/thumbnails/#{id}-00001.jpg"
+    url = "#{self.video.s3_bucket.url}/thumbnails/#{video.key}-00001.jpg"
   end
 
   def flush_cache
@@ -226,16 +225,6 @@ class Post < ApplicationRecord
   def reaction_breakdown
     (post_reactions.count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
   end
-
-  # def reaction_breakdown
-  #   Rails.cache.fetch([cache_key, __method__]) {
-  #     (cached_reaction_count > 0) ? PostReaction.group_reactions(self).sort_by { |reaction, index| reaction.to_i(16) }.to_h : nil
-  #   }
-  # end
-
-  # def cached_reaction_count
-  #   Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
-  # end
 
   def cached_tags
     Rails.cache.fetch([self, "tags"]) { old_tags }
