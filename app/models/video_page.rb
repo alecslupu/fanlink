@@ -70,7 +70,7 @@ class VideoPage < ApplicationRecord
     end
 
     def video_duration
-      FFMPEG::Movie.new(video_url).duration.to_i + 1
+      FFMPEG::Movie.new(video.attachment.record.attachment_changes["video"].attachable[:io].path).duration.to_i + 1
     end
 
     def set_certcourse_page_duration
