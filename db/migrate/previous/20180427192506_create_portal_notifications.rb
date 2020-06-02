@@ -1,5 +1,5 @@
 class CreatePortalNotifications < ActiveRecord::Migration[5.1]
-  def change
+  def up
     create_table :portal_notifications do |t|
       t.integer :person_id, null: false
       t.integer :product_id, null: false
@@ -13,5 +13,11 @@ class CreatePortalNotifications < ActiveRecord::Migration[5.1]
     add_index :portal_notifications, [:sent_status], name: "idx_portal_notifications_sent_status"
     add_foreign_key :portal_notifications, :people, name: "fk_portal_notifications_people", on_delete: :restrict
     add_foreign_key :portal_notifications, :products, name: "fk_portal_notifications_products", on_delete: :cascade
+    remove_column :portal_notifications, :person_id
+
+  end
+
+  def down
+    drop_table :portal_notifications
   end
 end
