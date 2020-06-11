@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.text "atype_old"
     t.jsonb "value", default: {}, null: false
     t.boolean "deleted", default: false, null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.integer "atype", default: 0, null: false
     t.index ["activity_id"], name: "ind_activity_id"
   end
@@ -288,7 +288,7 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.integer "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type", null: false
+    t.string "type", default: "Courseware::Client::Designated", null: false
     t.index ["client_id", "person_id"], name: "unq_client_person_pair", unique: true
     t.index ["client_id"], name: "index_client_to_people_on_client_id"
   end
@@ -534,7 +534,7 @@ ActiveRecord::Schema.define(version: 2020_05_30_202223) do
     t.integer "ttl_hours", default: 672, null: false
     t.integer "person_filter", null: false
     t.string "deep_link", default: "", null: false
-    t.datetime "date", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "date", default: -> { "now()" }, null: false
     t.integer "timezone", default: 0, null: false
     t.index ["person_id"], name: "index_marketing_notifications_on_person_id"
   end
