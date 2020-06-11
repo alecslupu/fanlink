@@ -55,7 +55,6 @@ class Post < ApplicationRecord
     DeletePostJob.perform_later(self.id, version)
   end
 
-
   def post(version = 0)
     PostPostJob.perform_later(self.id, version)
     if person.followers.count > 0
