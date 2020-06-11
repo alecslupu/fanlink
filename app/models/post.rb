@@ -215,7 +215,7 @@ class Post < ApplicationRecord
 
   def video_thumbnail
     return if video_transcoded.empty?
-    url = "#{self.video.s3_bucket.url}/thumbnails/#{video.key}-00001.jpg"
+    video.attached? ? "#{Rails.application.secrets.cloudfront_url}/thumbnails/#{video.key}-00001.jpg" : nil
   end
 
   def flush_cache

@@ -11,6 +11,10 @@ module Migration
           post.picture.attach(io: open(url), filename: post.picture_file_name, content_type: post.picture_content_type)
         when "video"
           post.video.attach(io: open(url), filename: post.video_file_name, content_type: post.video_content_type)
+          job = Flaws.start_transcoding(post.video.key, post_id: post.id.to_s)
+          post.video_job_id = job.id
+          post.save!
+          post.start_listener
         when "audio"
           post.audio.attach(io: open(url), filename: post.audio_file_name, content_type: post.audio_content_type)
         end
