@@ -86,15 +86,15 @@ end
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "pry", "~>0.12.2"
-  gem "byebug", "~>11.0.1", platforms: [:mri, :mingw]
+  gem "byebug", "~> 11.1.3", platforms: [:mri, :mingw]
   gem "pry-byebug", "~>3.7.0"
   gem "dotenv-rails", "~>2.7.5"
   gem "faker", "~>2.1.2"
   gem "rspec-mocks", "~> 3.9.0"
-  gem "rspec-rails", "~> 3.9.0"
+  gem "rspec-rails", "~> 4.0.1"
   gem "rails-controller-testing"
-  gem "factory_bot_rails", "~>5.0.2"
-  gem "fuubar", "~>2.4.1"
+  gem "factory_bot_rails", ">=5.2.0"
+  gem "fuubar", ">= 2.5.0"
   gem "httplog"
 
   gem "rubocop", ">= 0.85.0", require: false
@@ -122,7 +122,7 @@ group :development do
   gem "launchy"
   gem "guard-rspec"
   # gem "guard-rubocop"
-  gem "guard-brakeman"
+  gem "guard-brakeman", ">= 0.8.6"
   gem "guard-annotate"
   # gem "guard-rubycritic"
   gem "rubycritic"
@@ -139,7 +139,7 @@ group :test do
   gem "simplecov", "~>0.18", require: false
   gem "simplecov-console", require: false
   gem "timecop"
-  gem "webmock", "~>3.6.2"
+  gem "webmock", ">=3.8.3"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
   gem "wisper-rspec", require: false
   gem "json_schemer", "~>0.2.5"
@@ -167,12 +167,18 @@ gem "rails_admin_nested_set"
 gem "api-pagination"
 # gem 'ar-octopus', git: "https://github.com/thiagopradi/octopus", branch: "master"
 gem "attribute_normalizer"
-gem "aws-sdk"
+
+gem 'aws-sdk-s3', '>= 1.68.0'
+gem 'aws-sdk-sns', '>= 1.25.1'
+gem 'aws-sdk-sqs', '>= 1.27.1'
+gem 'aws-sdk-elastictranscoder', '>= 1.22.1'
+
 gem "countries"
 gem "daemons", "~>1.3.1"
-# gem "delayed_job_web"
-# gem "delayed_job_active_record"
-gem 'sidekiq'
+
+gem "delayed_job_web"
+gem "delayed_job_active_record"
+gem 'sidekiq', ">= 6.0.7"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging
 # gem "filterrific"
@@ -241,7 +247,7 @@ gem "rswag-ui"
 
 gem "psych"
 #for page caching
-gem "actionpack-page_caching"
+gem "actionpack-page_caching", ">= 1.2.3"
 gem "aasm"
 # for cron jobs
 # https://github.com/javan/whenever
