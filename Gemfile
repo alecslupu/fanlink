@@ -122,9 +122,9 @@ group :development do
 
   gem "capistrano", "> 3.14", require: false
   gem "capistrano-bundler", require: false
-  gem "capistrano-rails", require: false
+  gem "capistrano-rails", ">= 1.5.0", require: false
   gem "slackistrano", require: false
-  gem "capistrano3-puma", "> 4.0.0", require: false
+  gem "capistrano3-puma", ">= 4.0.0", require: false
 end
 
 group :test do
@@ -197,7 +197,7 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 # gem "rack-timeout"
 gem "rest-firebase"
-gem "sorcery"
+gem "sorcery", ">= 0.15.0"
 gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"
