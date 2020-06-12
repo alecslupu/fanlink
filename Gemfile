@@ -89,11 +89,11 @@ group :development, :test do
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem "rubocop", require: false
+  gem "rubocop", ">= 0.85.0", require: false
   # gem "rubocop-rails_config"
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
-  gem "rubocop-performance", require: false
+  gem "rubocop-rails", ">= 2.6.0", require: false
+  gem "rubocop-rspec", ">= 1.40.0", require: false
+  gem "rubocop-performance", ">= 1.6.1", require: false
 
   gem "rails-erd"
 end
@@ -176,7 +176,7 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari", "~> 1.1.0"
+gem "kaminari", ">= 1.2.1"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
