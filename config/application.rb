@@ -57,9 +57,7 @@ module Fanlink
       path: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension",
       url: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension"
     } if Rails.env.test?
-
-    config.mandrill_mailer.default_url_options = { host: ENV["MAILER_APP_URL"] || "www.fan.link" }
-
+    
 
     config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> {Rails.logger}) do
       allow do
