@@ -20,7 +20,9 @@ else
   gem 'sass-rails', '~> 6.0'
 end
 
-gem 'sprockets', '>= 4.0.2'
+# gem 'sprockets', '>= 4.0.2'
+# SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
+gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
