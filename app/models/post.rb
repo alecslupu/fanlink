@@ -97,8 +97,8 @@ class Post < ApplicationRecord
 
   has_one_attached :video
 
-  validates :video, size: {less_than: 10.megabytes},
-            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts]}
+  validates :video,
+            content_type: {in: %w[audio/mpeg audio/mp4 audio/mpeg audio/x-mpeg audio/aac audio/x-aac video/mp4 audio/x-hx-aac-adts video/quicktime]}
 
   def video_url
     video.attached? ? [Rails.application.secrets.cloudfront_url, video.key].join('/')  : nil
