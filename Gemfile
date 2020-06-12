@@ -24,7 +24,7 @@ gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '>= 4.3.4'
 
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
@@ -120,11 +120,11 @@ group :development do
   # gem "guard-rubycritic"
   gem "rubycritic"
 
-  gem "capistrano", require: false
+  gem "capistrano", "> 3.14", require: false
   gem "capistrano-bundler", require: false
   gem "capistrano-rails", require: false
   gem "slackistrano", require: false
-  gem "capistrano3-puma" , require: false
+  gem "capistrano3-puma", "> 4.0.0", require: false
 end
 
 group :test do
