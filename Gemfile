@@ -19,8 +19,8 @@ else
   # Use SCSS for stylesheets
   gem 'sass-rails', '~> 6.0'
 end
-# SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
-gem 'sprockets', '~> 3.7.2'
+
+gem 'sprockets', '>= 4.0.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
@@ -30,7 +30,7 @@ gem 'puma', '>= 4.3.4'
 gem "uglifier", ">= 1.3.0"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '>= 2.10.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem "coffee-rails"
@@ -63,14 +63,14 @@ gem "jb"
 gem "redis-namespace"
 gem "redis-rails"
 
-gem "httparty", "0.16.4"
+gem "httparty", ">= 0.18.1"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
 #
 
 group :production, :staging do
-  gem 'elastic-apm', '~> 3.1.0'
+  gem 'elastic-apm', '>= 3.7.0'
 end
 group :staging, :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
@@ -78,18 +78,18 @@ group :staging, :development do
   gem "listen", ">= 3.0.5", "< 3.2"
 end
 group :staging, :development, :test do
-  gem "derailed_benchmarks", "~>1.3.6"
+  gem "derailed_benchmarks", ">= 1.7.0"
   gem "stackprof"
-  gem "bullet", "~>6.0.2"
+  gem "bullet", ">= 6.1.0"
 end
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "pry", "~>0.12.2"
+  gem "pry", ">= 0.13.0"
   gem "byebug", "~> 11.1.3", platforms: [:mri, :mingw]
-  gem "pry-byebug", "~>3.7.0"
+  gem "pry-byebug", ">= 3.9.0"
   gem "dotenv-rails", "~>2.7.5"
-  gem "faker", "~>2.1.2"
+  gem "faker", ">= 2.12.0"
   gem "rspec-mocks", "~> 3.9.0"
   gem "rspec-rails", "~> 4.0.1"
   gem "rails-controller-testing"
@@ -106,7 +106,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "better_errors", "~>2.5.1"
+  gem "better_errors", ">= 2.7.1"
   gem "binding_of_caller"
   gem "gettext", ">=3.0.2", require: false
 
@@ -142,7 +142,7 @@ group :test do
   gem "webmock", ">=3.8.3"
   gem "shoulda-matchers", git: "https://github.com/thoughtbot/shoulda-matchers.git", branch: "rails-5"
   gem "wisper-rspec", require: false
-  gem "json_schemer", "~>0.2.5"
+  gem "json_schemer", ">= 0.2.11"
   gem "turnip", require: false
 end
 
@@ -175,9 +175,6 @@ gem 'aws-sdk-elastictranscoder', '>= 1.22.1'
 
 gem "countries"
 gem "daemons", "~>1.3.1"
-
-gem "delayed_job_web"
-gem "delayed_job_active_record"
 gem 'sidekiq', ">= 6.0.7"
 gem "email_validator"
 gem "fcm" # Firebase Cloud Messaging

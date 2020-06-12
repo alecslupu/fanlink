@@ -20,7 +20,6 @@ class PostComment < ApplicationRecord
 
   scope :reported, -> { joins(:post_comment_reports) }
 
-
   belongs_to :person, touch: true
   belongs_to :post, touch: true, counter_cache: true
 
