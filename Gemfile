@@ -74,7 +74,7 @@ group :production, :staging do
 end
 group :staging, :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
+  gem "web-console", ">= 4.0.2"
   gem "listen", ">= 3.0.5", "< 3.2"
 end
 group :staging, :development, :test do
