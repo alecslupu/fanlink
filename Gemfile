@@ -24,7 +24,7 @@ gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '>= 4.3.4'
 
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
@@ -97,11 +97,11 @@ group :development, :test do
   gem "fuubar", "~>2.4.1"
   gem "httplog"
 
-  gem "rubocop", require: false
+  gem "rubocop", ">= 0.85.0", require: false
   # gem "rubocop-rails_config"
-  gem "rubocop-rails", require: false
-  gem "rubocop-rspec", require: false
-  gem "rubocop-performance", require: false
+  gem "rubocop-rails", ">= 2.6.0", require: false
+  gem "rubocop-rspec", ">= 1.40.0", require: false
+  gem "rubocop-performance", ">= 1.6.1", require: false
   gem "rails-erd"
 end
 
@@ -126,11 +126,11 @@ group :development do
   gem "guard-annotate"
   # gem "guard-rubycritic"
   gem "rubycritic"
-  gem "capistrano", require: false
+  gem "capistrano", "> 3.14", require: false
   gem "capistrano-bundler", require: false
-  gem "capistrano-rails", require: false
+  gem "capistrano-rails", ">= 1.5.0", require: false
   gem "slackistrano", require: false
-  gem "capistrano3-puma" , require: false
+  gem "capistrano3-puma", ">= 4.0.0", require: false
 end
 
 group :test do
@@ -182,7 +182,7 @@ gem "gettext_i18n_rails"
 gem "goldiloader"
 gem "google_places"
 gem "has_scope"
-gem "kaminari", "~> 1.1.0"
+gem "kaminari", ">= 1.2.1"
 gem "koala" # Facebook Graph API
 # we can forgo this if they ever merge in
 # https://bitbucket.org/mailchimp/mandrill-api-ruby/pull-requests/8/fix-json-version
@@ -205,7 +205,7 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 # gem "rack-timeout"
 gem "rest-firebase"
-gem "sorcery"
+gem "sorcery", ">= 0.15.0"
 gem "unicode_utils"
 gem "uuidtools"
 gem "wisper", "> 2.0.0"

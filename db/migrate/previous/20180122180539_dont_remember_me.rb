@@ -1,7 +1,5 @@
 class DontRememberMe < ActiveRecord::Migration[5.1]
   def up
-    remove_column :people, :remember_me_token
-    remove_column :people, :remember_me_token_expires_at
   end
 
   def down
