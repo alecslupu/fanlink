@@ -28,7 +28,6 @@ stages:
     - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
     - dpkg-reconfigure --frontend=noninteractive locales
     - update-locale LANG=en_US.UTF-8
-    - locale
     - gem install bundler -v $BUNDLER_VERSION
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
   tags:
@@ -56,8 +55,12 @@ stages:
     POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     POSTGRES_DB: $POSTGRES_DB
   before_script:
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+    - sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+    - dpkg-reconfigure --frontend=noninteractive locales
+    - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle install --jobs $(nproc) "${FLAGS[@]}" --path=vendor
+    - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
     - bundle exec rake db:reset
