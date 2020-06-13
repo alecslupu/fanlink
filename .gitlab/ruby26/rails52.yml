@@ -1,14 +1,5 @@
-
-.test:rspec52:
-  image: ruby:2.5.1
-  cache:
-    key: gems_and_packages
-    paths:
-      - apt-cache/
-      - vendor/ruby
-      - vendor/bundle
-  tags:
-    - anything
+.test26:rspec52:
+  extends: .base26
   services:
     - postgres:latest
   variables:
@@ -36,8 +27,8 @@
   stage: rspec
   allow_failure: false
 
-test:rspec52:channels:
-  extends: .test:rspec52
+test26:rspec52:channels:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/channels bundle exec rspec spec/channels --fail-fast
   artifacts:
@@ -45,8 +36,8 @@ test:rspec52:channels:
     paths:
       - coverage/rails/52/channels
 
-test:rspec52:controllers:
-  extends: .test:rspec52
+test26:rspec52:controllers:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/controllers  bundle exec rspec spec/controllers --fail-fast
   artifacts:
@@ -54,8 +45,8 @@ test:rspec52:controllers:
     paths:
       - coverage/rails/52/controllers
 
-test:rspec52:helpers:
-  extends: .test:rspec52
+test26:rspec52:helpers:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/helpers  bundle exec rspec spec/helpers --fail-fast
   artifacts:
@@ -63,8 +54,8 @@ test:rspec52:helpers:
     paths:
       - coverage/rails/52/helpers
 
-test:rspec52:jobs:
-  extends: .test:rspec52
+test26:rspec52:jobs:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/jobs  bundle exec rspec spec/jobs --fail-fast
   artifacts:
@@ -72,8 +63,8 @@ test:rspec52:jobs:
     paths:
       - coverage/rails/52/jobs
 
-test:rspec52:lib:
-  extends: .test:rspec52
+test26:rspec52:lib:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/lib  bundle exec rspec spec/lib --fail-fast
   artifacts:
@@ -81,8 +72,8 @@ test:rspec52:lib:
     paths:
       - coverage/rails/52/lib
 
-test:rspec52:listeners:
-  extends: .test:rspec52
+test26:rspec52:listeners:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/listeners  bundle exec rspec spec/listeners --fail-fast
   artifacts:
@@ -90,8 +81,8 @@ test:rspec52:listeners:
     paths:
       - coverage/rails/52/listeners
 
-test:rspec52:mailers:
-  extends: .test:rspec52
+test26:rspec52:mailers:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/mailers  bundle exec rspec spec/mailers --fail-fast
   artifacts:
@@ -99,8 +90,8 @@ test:rspec52:mailers:
     paths:
       - coverage/rails/52/mailers
 
-test:rspec52:middleware:
-  extends: .test:rspec52
+test26:rspec52:middleware:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/middleware  bundle exec rspec spec/middleware --fail-fast
   artifacts:
@@ -108,8 +99,8 @@ test:rspec52:middleware:
     paths:
       - coverage/rails/52/middleware
 
-test:rspec52:models:
-  extends: .test:rspec52
+test26:rspec52:models:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/models  bundle exec rspec spec/models --fail-fast
   artifacts:
@@ -117,8 +108,8 @@ test:rspec52:models:
     paths:
       - coverage/rails/52/models
 
-test:rspec52:requests:
-  extends: .test:rspec52
+test26:rspec52:requests:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/requests  bundle exec rspec spec/requests --fail-fast
   artifacts:
@@ -126,8 +117,8 @@ test:rspec52:requests:
     paths:
       - coverage/rails/52/requests
 
-test:rspec52:policies:
-  extends: .test:rspec52
+test26:rspec52:policies:
+  extends: .test26:rspec52
   script:
     - COVERAGE_DIR=coverage/rails/52/policies  bundle exec rspec spec/policies --fail-fast
   artifacts:
@@ -135,25 +126,25 @@ test:rspec52:policies:
     paths:
       - coverage/rails/52/policies
 
-test:rspec52:merge:
-  extends: .test:rspec52
+test26:rspec52:merge:
+  extends: .test26:rspec52
   stage: format
   artifacts:
     name: my_app_artifacts
     paths:
       - coverage/rails/52
   dependencies:
-    - test:rspec52:channels
-    - test:rspec52:controllers
-    - test:rspec52:helpers
-    - test:rspec52:jobs
-    - test:rspec52:lib
-    - test:rspec52:listeners
-    - test:rspec52:mailers
-    - test:rspec52:middleware
-    - test:rspec52:models
-    - test:rspec52:requests
-    - test:rspec52:policies
+    - test26:rspec52:channels
+    - test26:rspec52:controllers
+    - test26:rspec52:helpers
+    - test26:rspec52:jobs
+    - test26:rspec52:lib
+    - test26:rspec52:listeners
+    - test26:rspec52:mailers
+    - test26:rspec52:middleware
+    - test26:rspec52:models
+    - test26:rspec52:requests
+    - test26:rspec52:policies
   script:
     - chmod +x ./bin/merge-simplecov
     - COVERAGE_DIR=coverage/rails/52/ bundle exec ./bin/merge-simplecov

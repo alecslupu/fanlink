@@ -34,6 +34,12 @@ stages:
   tags:
     - anything
 
+.base26:
+  image: ruby:2.6
+
+.base27:
+  image: ruby:2.7
+
 .base_db:
   extends: .base
   tags:
@@ -58,11 +64,27 @@ stages:
     - bundle exec rake db:setup
     - bundle exec rake db:test:prepare
 
+.base26_db:
+  extends: .base26
+
+.base27_db:
+  extends: .base27
+
 include:
-  - local: .gitlab/base.yml
-  - local: .gitlab/standards.yml
-  - local: .gitlab/rails60.yml
-  - local: .gitlab/pages.yml
-  - local: .gitlab/deployment.yml
-  # - local: .gitlab/rails52.yml
-  #  - local: .gitlab/rails61.yml
+  - local: .gitlab/ruby25/base.yml
+  - local: .gitlab/ruby25/standards.yml
+  - local: .gitlab/ruby25/rails60.yml
+  - local: .gitlab/ruby25/pages.yml
+  - local: .gitlab/ruby25/deployment.yml
+  - local: .gitlab/ruby26/base.yml
+  - local: .gitlab/ruby26/standards.yml
+  - local: .gitlab/ruby26/rails60.yml
+  - local: .gitlab/ruby27/base.yml
+  - local: .gitlab/ruby27/standards.yml
+  - local: .gitlab/ruby27/rails60.yml
+  # - local: .gitlab/ruby26/pages.yml
+  # - local: .gitlab/ruby26/deployment.yml
+  # - local: .gitlab/ruby27/pages.yml
+  # - local: .gitlab/ruby27/deployment.yml
+  # - local: .gitlab/ruby25/rails52.yml
+  # - local: .gitlab/ruby25/rails61.yml

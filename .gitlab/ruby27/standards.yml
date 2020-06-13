@@ -1,0 +1,72 @@
+
+test27:rubocop:
+  extends: .base27
+  stage: test
+  allow_failure: true
+  artifacts:
+    name: rubocop
+    when: always
+    paths:
+      - rubocop/
+  script:
+    - bundle exec rubocop --format html --out rubocop/index.html app config spec lib
+
+test27:bundle_audit:
+  extends: .base27
+  stage: test
+  allow_failure: true
+  script:
+    - gem install bundler-audit
+    - bundle-audit check --update
+
+test27:rubycritic:
+  stage: test
+  extends: .base27
+  allow_failure: true
+  script:
+    - bundle exec rubycritic app config
+  artifacts:
+    name: rubycritic
+    when: always
+    paths:
+      - tmp/rubycritic/
+
+test27:brakeman:
+  extends: .base27
+  stage: test
+  allow_failure: true
+  artifacts:
+    name: brakeman_report
+    when: always
+    paths:
+      - brakeman/
+  script:
+    - bundle exec brakeman --format html -o brakeman/index.html
+
+test27:dawnscanner:
+  extends: .base27
+  stage: test
+  allow_failure: true
+  artifacts:
+    name: dawnscanner_report
+    when: always
+    paths:
+      - dawnscanner
+  script:
+    - gem install dawnscanner
+    - mkdir dawnscanner
+    - dawn --html -zF dawnscanner/index.html .
+
+test27:erd:
+  extends: .base27_db
+  stage: test
+  allow_failure: true
+  artifacts:
+    name: erd
+    paths:
+      - erd.pdf
+  script:
+    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq graphviz
+    - gem install 'rails-erd'
+    - bundle exec rails g erd:install
+    - bundle exec rake erd
