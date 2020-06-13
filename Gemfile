@@ -20,6 +20,8 @@ else
   gem 'sass-rails', '~> 6.0'
 end
 
+gem 'bigdecimal', '~> 1.4', platforms: [:ruby_27, :mri_27]
+
 gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"

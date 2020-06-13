@@ -174,9 +174,9 @@ include:
   - local: .gitlab/ruby26/base.yml
   - local: .gitlab/ruby26/standards.yml
   - local: .gitlab/ruby26/rails60.yml
-  # - local: .gitlab/ruby27/base.yml
-  # - local: .gitlab/ruby27/standards.yml
-  # - local: .gitlab/ruby27/rails60.yml
+  - local: .gitlab/ruby27/base.yml
+  - local: .gitlab/ruby27/standards.yml
+  - local: .gitlab/ruby27/rails60.yml
   # - local: .gitlab/ruby26/pages.yml
   # - local: .gitlab/ruby26/deployment.yml
   # - local: .gitlab/ruby27/pages.yml
