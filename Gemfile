@@ -20,7 +20,9 @@ else
   gem 'sass-rails', '~> 6.0'
 end
 
-gem 'sprockets', '>= 4.0.2'
+# gem 'sprockets', '>= 4.0.2'
+# SegFault Bug ... needs investigationbug https://github.com/rails/sprockets/issues/633
+gem 'sprockets', '~> 3.7.2'
 
 # gem "rack-cache"
 # Use Puma as the app server
@@ -54,7 +56,7 @@ gem "redis"
 
 # gem "rails", "~> 5.2.2"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 0.18"
+gem "pg", ">= 1.2.3"
 
 
 gem "json", "~> 2.3.0"
@@ -203,7 +205,7 @@ gem "paperclip", "~> 6.1.0"
 gem "paperclip-meta"
 gem "paperclip-dimension-validator"
 # gem "pg_search"
-gem "postgresql-check"
+gem "postgresql-check", ">= 0.1.4"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 # gem "rack-timeout"
