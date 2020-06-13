@@ -33,8 +33,8 @@ class Certificate < ApplicationRecord
 
   validates :template_image, size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png]},
-            dimension: { width: { min: 2967, max: 2967 },
-                         height: { min: 3840, max: 3840 }, message: "Must be 3840x2967" }
+            dimension: { width: { min: 3840, max: 3840 },
+                         height: { min: 2967, max: 2967 }, message: "Must be 3840x2967" }
 
   def template_image_url
     template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join('/') : nil
