@@ -29,7 +29,7 @@ stages:
     - dpkg-reconfigure --frontend=noninteractive locales
     - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
-    - bundle update --ruby
+    - bundle update --ruby --quiet
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
   tags:
     - anything
