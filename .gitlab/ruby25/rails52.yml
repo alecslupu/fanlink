@@ -3,6 +3,13 @@
   extends: .base
   services:
     - postgres:latest
+  dependencies:
+    - test:erd
+    - test:dawnscanner
+    - test:brakeman
+    - test:rubycritic
+    - test:bundle_audit
+    - test:rubocop
   variables:
     RAILS_ENV: test
     FANLINK_PG_USER: $POSTGRES_USER

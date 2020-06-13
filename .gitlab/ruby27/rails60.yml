@@ -2,6 +2,13 @@
   extends: .base27
   services:
     - postgres:latest
+  dependencies:
+    - test27:erd
+    - test27:dawnscanner
+    - test27:brakeman
+    - test27:rubycritic
+    - test27:bundle_audit
+    - test27:rubocop
   variables:
     RAILS_ENV: test
     FANLINK_PG_USER: $POSTGRES_USER

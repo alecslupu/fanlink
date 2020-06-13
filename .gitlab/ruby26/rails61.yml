@@ -1,6 +1,13 @@
 
 .test26:rspec-edge:
   extends: .base26
+  dependencies:
+    - test26:erd
+    - test26:dawnscanner
+    - test26:brakeman
+    - test26:rubycritic
+    - test26:bundle_audit
+    - test26:rubocop
   services:
     - postgres:latest
   variables:

@@ -2,6 +2,13 @@
   extends: .base26
   services:
     - postgres:latest
+  dependencies:
+    - test26:erd
+    - test26:dawnscanner
+    - test26:brakeman
+    - test26:rubycritic
+    - test26:bundle_audit
+    - test26:rubocop
   variables:
     RAILS_ENV: test
     FANLINK_PG_USER: $POSTGRES_USER

@@ -3,6 +3,9 @@ test26:rubocop:
   extends: .base26
   stage: test
   allow_failure: true
+  dependencies:
+    - build26:initial
+    - build26:assets_precompile
   artifacts:
     name: rubocop
     when: always
@@ -15,6 +18,9 @@ test26:bundle_audit:
   extends: .base26
   stage: test
   allow_failure: true
+  dependencies:
+    - build26:initial
+    - build26:assets_precompile
   script:
     - gem install bundler-audit
     - bundle-audit check --update
@@ -23,6 +29,9 @@ test26:rubycritic:
   stage: test
   extends: .base26
   allow_failure: true
+  dependencies:
+    - build26:initial
+    - build26:assets_precompile
   script:
     - bundle exec rubycritic app config
   artifacts:
@@ -34,6 +43,9 @@ test26:rubycritic:
 test26:brakeman:
   extends: .base26
   stage: test
+  dependencies:
+    - build26:initial
+    - build26:assets_precompile
   allow_failure: true
   artifacts:
     name: brakeman_report
@@ -46,6 +58,9 @@ test26:brakeman:
 test26:dawnscanner:
   extends: .base26
   stage: test
+  dependencies:
+    - build26:initial
+    - build26:assets_precompile
   allow_failure: true
   artifacts:
     name: dawnscanner_report
@@ -60,6 +75,9 @@ test26:dawnscanner:
 test26:erd:
   extends: .base26_db
   stage: test
+  dependencies:
+    - build26:initial
+    - build26:assets_precompile
   allow_failure: true
   artifacts:
     name: erd

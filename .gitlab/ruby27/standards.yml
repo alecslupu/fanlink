@@ -3,6 +3,10 @@ test27:rubocop:
   extends: .base27
   stage: test
   allow_failure: true
+
+  dependencies:
+    - build27:initial
+    - build27:assets_precompile
   artifacts:
     name: rubocop
     when: always
@@ -15,6 +19,9 @@ test27:bundle_audit:
   extends: .base27
   stage: test
   allow_failure: true
+  dependencies:
+    - build27:initial
+    - build27:assets_precompile
   script:
     - gem install bundler-audit
     - bundle-audit check --update
@@ -23,6 +30,9 @@ test27:rubycritic:
   stage: test
   extends: .base27
   allow_failure: true
+  dependencies:
+    - build27:initial
+    - build27:assets_precompile
   script:
     - bundle exec rubycritic app config
   artifacts:
@@ -35,6 +45,9 @@ test27:brakeman:
   extends: .base27
   stage: test
   allow_failure: true
+  dependencies:
+    - build27:initial
+    - build27:assets_precompile
   artifacts:
     name: brakeman_report
     when: always
@@ -47,6 +60,9 @@ test27:dawnscanner:
   extends: .base27
   stage: test
   allow_failure: true
+  dependencies:
+    - build27:initial
+    - build27:assets_precompile
   artifacts:
     name: dawnscanner_report
     when: always
@@ -61,6 +77,9 @@ test27:erd:
   extends: .base27_db
   stage: test
   allow_failure: true
+  dependencies:
+    - build27:initial
+    - build27:assets_precompile
   artifacts:
     name: erd
     paths:
