@@ -9,4 +9,5 @@ build:assets_precompile:
   extends: .base_db
   stage: build
   script:
+    - rm -r tmp/cache/ || true
     - bundle exec rake assets:precompile
