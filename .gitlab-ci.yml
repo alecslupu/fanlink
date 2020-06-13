@@ -29,15 +29,20 @@ stages:
     - dpkg-reconfigure --frontend=noninteractive locales
     - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
+    - bundle update --ruby
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
   tags:
     - anything
 
 .base26:
   image: ruby:2.6
+  variables:
+    CUSTOM_RUBY_VERSION: "~> 2.6"
 
 .base27:
   image: ruby:2.7
+  variables:
+    CUSTOM_RUBY_VERSION: "~> 2.7"
 
 .base_db:
   extends: .base
@@ -60,6 +65,7 @@ stages:
     - dpkg-reconfigure --frontend=noninteractive locales
     - update-locale LANG=en_US.UTF-8
     - gem install bundler -v $BUNDLER_VERSION
+    - bundle update --ruby
     - bundle --version && bundle install --jobs $(nproc) "${FLAGS[@]}" --quiet --path=vendor
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -qq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
