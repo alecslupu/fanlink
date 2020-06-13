@@ -9,7 +9,7 @@ git_source(:fanlink) do |repo_name|
   "https://gitlab.fan.link/#{repo_name}"
 end
 
-ruby "2.5.1"
+ruby ENV['CUSTOM_RUBY_VERSION'] || "2.5.1"
 
 if ENV["RAILS_EDGE"]
   # gem "rails", github: "rails/rails"
