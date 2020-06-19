@@ -6,7 +6,7 @@ class PostTranscoderJob < ApplicationJob
     post = Post.find(post_id)
     job = Flaws.start_transcoding(post.video.key, post_id: post.id.to_s)
     post.video_job_id = job.id
-    post.save
+    post.save!
     post.start_listener
   end
 end

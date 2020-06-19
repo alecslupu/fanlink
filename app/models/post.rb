@@ -127,7 +127,7 @@ class Post < ApplicationRecord
 
   validate :sensible_dates
 
-  after_create :start_transcoding, if: :video_file_name
+  after_create :start_transcoding, if: proc { |record| record.video.attached? }
 
   after_save :expire_cache
   before_destroy :expire_cache, prepend: true
@@ -266,7 +266,7 @@ class Post < ApplicationRecord
   # listener use this to tell the Post that it is all finished.
   #
   def youve_been_transcoded!(preset_ids)
-    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.path, preset_ids))
+    self.video_transcoded = merge_new_videos(Flaws.transcoded_summary_for(self.video.key, preset_ids))
     self.video_job_id = nil
     self.save!
   end
