@@ -170,7 +170,7 @@ class Api::V1::RoomsController < ApiController
     end
   end
 
-private
+  private
 
   def room_params
     params.require(:room).permit(:name, :picture, member_ids: [])

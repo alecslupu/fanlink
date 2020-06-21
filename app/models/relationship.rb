@@ -44,7 +44,7 @@ class Relationship < ApplicationRecord
     requested_to == person || requested_by == person
   end
 
-private
+  private
 
   def check_non_self
     if requested_by_id == requested_to_id

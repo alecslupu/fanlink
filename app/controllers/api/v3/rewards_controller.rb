@@ -45,7 +45,7 @@ class Api::V3::RewardsController < ApiController
     end
   end
 
-private
+  private
   def reward_params
     params.require(:reward).permit(:name, :internal_name, :reward_type, :reward_type_id, :series, :completion_requirement, :points, :status)
   end

@@ -16,5 +16,5 @@ class Api::V4::PersonRewardsController < ApiController
   def destroy
   end
 
-private
+  private
 end

@@ -19,5 +19,5 @@ class QuestCompleted < ApplicationRecord
 
 
 # default_scope { order(created_at: :desc) }
-private
+  private
 end

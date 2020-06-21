@@ -45,7 +45,7 @@ class Api::V2::ProductsController < ApiController
   def destroy
   end
 
-private
+  private
   def product_params
     params.require(:product).permit(:name, :internal_name, :enabled)
   end
