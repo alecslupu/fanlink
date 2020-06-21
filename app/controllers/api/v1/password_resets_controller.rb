@@ -88,7 +88,7 @@ class Api::V1::PasswordResetsController < ApiController
     token    = params[:token   ].to_s.strip.presence
     password = params[:password].to_s.strip.presence
     person   = Person.find_by(reset_password_token: token) if token
-    errors   = [ ]
+    errors   = []
     errors.push((_('Missing password resetting token.'))) if !token
     errors.push((_('Missing password.'))) if !password
     errors.push((_('Unknown password resetting token.'))) if token && !person

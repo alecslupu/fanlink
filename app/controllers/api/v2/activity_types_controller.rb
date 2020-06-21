@@ -230,6 +230,6 @@ class Api::V2::ActivityTypesController < ApiController
   end
   private
   def type_params
-    params.require(:activity_type).permit(:atype, value: [ :id, :description ])
+    params.require(:activity_type).permit(:atype, value: [:id, :description])
   end
 end

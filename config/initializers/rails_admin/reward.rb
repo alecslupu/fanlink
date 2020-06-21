@@ -29,7 +29,7 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{reward_translations: :name } ]
+        searchable [{reward_translations: :name }]
         queryable true
         filterable true
       end

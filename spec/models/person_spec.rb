@@ -513,8 +513,8 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq('whereispancakehouse')
     end
     it 'should ignore accents, case, and punctuation when using for_username' do
-      examples = [ 'Whére.Ïs.Pañçâkè.HOUSE', 'where.is.pancake.house',
-                   'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse' ]
+      examples = ['Whére.Ïs.Pañçâkè.HOUSE', 'where.is.pancake.house',
+                   'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse']
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end

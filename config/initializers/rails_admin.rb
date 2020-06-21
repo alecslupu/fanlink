@@ -12,7 +12,7 @@ RailsAdmin.config do |config|
 
   config.main_app_name = ['Fan link', 'BackOffice']
   # or something more dynamic
-  config.main_app_name = proc { |controller| [ 'Cool app', "BackOffice - #{controller.params[:action].try(:titleize)}" ] }
+  config.main_app_name = proc { |controller| ['Cool app', "BackOffice - #{controller.params[:action].try(:titleize)}"] }
 
   config.parent_controller = 'RailsAdminController'
 

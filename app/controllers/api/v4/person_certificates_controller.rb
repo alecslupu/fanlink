@@ -3,7 +3,7 @@
 class Api::V4::PersonCertificatesController < ApiController
 
   load_up_the Certificate, from: :certificate_id
-  skip_before_action :require_login, :check_banned, only: [ :show ]
+  skip_before_action :require_login, :check_banned, only: [:show]
 
   def create
     @person_certificate = PersonCertificate.find_by(certificate_id: params[:certificate_id], person_id: @current_user.id)

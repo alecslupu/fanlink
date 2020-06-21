@@ -15,6 +15,14 @@ rubocop:Layout_SpaceInsidePercentLiteralDelimiters:
     - test:rubocop
   script:
     - bundle exec rubocop --only Layout/SpaceInsidePercentLiteralDelimiters app config spec lib
+rubocop:Layout_SpaceInsideArrayLiteralBrackets:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Layout/SpaceInsideArrayLiteralBrackets app config spec lib
 
 rubocop:Layout_AccessModifierIndentation:
   extends: .base
