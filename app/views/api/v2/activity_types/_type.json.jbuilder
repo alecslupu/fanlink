@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 unless atype.deleted
   json.id atype.id
   json.activity_id atype.activity_id

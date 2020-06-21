@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::PollOptionsController < ApiController
   load_up_the Poll, from: :poll_id
   load_up_the PollOption, from: :id

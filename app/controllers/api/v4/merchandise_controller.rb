@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::MerchandiseController < Api::V3::MerchandiseController
   def index
     @merchandise = paginate(Merchandise.listable.order(:priority))

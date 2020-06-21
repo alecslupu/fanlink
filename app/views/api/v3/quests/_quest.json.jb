@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = Rails.cache.fetch ["v3", quest.updated_at, @lang, quest] do
   {
     id: quest.id,

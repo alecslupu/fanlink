@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "spec_helper"
 
 RSpec.describe Trivia::PictureAvailableQuestionPolicy, type: :policy do

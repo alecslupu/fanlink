@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module DateUtil
   # check if date is valid in format YYYY-MM-DD
   def self.valid_date_string?(s)

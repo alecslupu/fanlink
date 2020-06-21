@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
   config.included_models.push("DownloadFilePage")
   config.model "DownloadFilePage" do

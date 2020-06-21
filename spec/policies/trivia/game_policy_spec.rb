@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Trivia::GamePolicy, type: :policy do
   args = [ Trivia::Game, "trivia" ]
   include_examples 'enforces the permissions', args

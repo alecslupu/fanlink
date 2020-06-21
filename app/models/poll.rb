@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: polls
@@ -21,8 +22,8 @@ class Poll < ApplicationRecord
   #   self.end_date = Time.zone.now + 1.month
   # end
 
-  enum poll_type: %i[ post ]
-  enum poll_status: %i[ inactive active disabled ]
+  enum poll_type: %i[post]
+  enum poll_status: %i[inactive active disabled]
 
   acts_as_tenant(:product)
   belongs_to :product

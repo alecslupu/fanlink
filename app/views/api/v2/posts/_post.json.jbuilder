@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id post.id.to_s
 json.create_time post.created_at.to_s
 json.body post.body

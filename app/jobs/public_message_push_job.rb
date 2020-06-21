@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PublicMessagePushJob < ApplicationJob
   queue_as :default
   include Push

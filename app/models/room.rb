@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: rooms
@@ -52,7 +53,7 @@ class Room < ApplicationRecord
 
   # replicated_model
 
-  enum status: %i[ inactive active deleted ]
+  enum status: %i[inactive active deleted]
 
   acts_as_tenant(:product)
   scope :for_product, -> (product) { where( rooms: { product_id: product.id } ) }

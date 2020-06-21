@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Adapted from https://gist.github.com/mamantoha/9c0aec7958c7636cebef
 module Orderable
   extend ActiveSupport::Concern

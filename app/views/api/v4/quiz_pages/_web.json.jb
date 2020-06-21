@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: quiz_page.id,
   is_optional: quiz_page.is_optional,

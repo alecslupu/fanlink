@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   progress: render(partial: @req_source, locals: { progress: @progress }, handlers: "jb")
 }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: tag.id,
   name: tag.name,

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Admin
   class SessionsController < ::ApplicationController
     set_current_tenant_through_filter

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V2::NotificationDeviceIdsController < Api::V1::NotificationDeviceIdsController
   # **
   # @api {post} /notification_device_ids Add a new device id for a person.

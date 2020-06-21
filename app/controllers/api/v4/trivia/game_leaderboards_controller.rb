@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::Trivia::GameLeaderboardsController < ApiController
   def index
     @leaderboard = paginate(::Trivia::Game.find(params[:game_id]).leaderboards)

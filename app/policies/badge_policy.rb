@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BadgePolicy < BadgeModulePolicy
   class Scope < ApplicationPolicy::Scope
     def resolve

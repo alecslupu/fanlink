@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::Courseware::WishlistsController < ApiController
 
   def index

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Merchandise, type: :model do
   before(:each) do
     @merchandise = create(:merchandise, name: "abc")

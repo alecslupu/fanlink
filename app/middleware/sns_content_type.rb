@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SnsContentType
   def initialize(app)
     @app = app

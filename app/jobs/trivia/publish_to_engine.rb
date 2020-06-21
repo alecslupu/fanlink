@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Trivia
   class PublishToEngine < ::ApplicationJob
     queue_as :trivia

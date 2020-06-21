@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 describe "StringUtil" do
   it "should leave ASCII alphanumerics alone when search-ifying" do
     expect(StringUtil.search_ify("muis2short")).to eq("muis2short")

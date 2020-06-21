@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:post_reports] = @post_reports.map do |post_report|

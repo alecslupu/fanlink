@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class String
   #
   # Ruby's standard `String#scan` has a somewhat crappy interface: it

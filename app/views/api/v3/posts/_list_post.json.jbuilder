@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.cache! ["v3", "list", post] do
   json.id post.id
   json.person do

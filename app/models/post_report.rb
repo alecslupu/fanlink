@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: post_reports
@@ -17,7 +18,7 @@ class PostReport < ApplicationRecord
   scope :status_filter, -> (query) { where(status: query.to_sym) }
   # include PostReport::PortalFilters
 
-  enum status: %i[ pending no_action_needed post_hidden ]
+  enum status: %i[pending no_action_needed post_hidden]
 
   belongs_to :post, counter_cache: true
   belongs_to :person
