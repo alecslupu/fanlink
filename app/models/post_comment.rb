@@ -22,15 +22,6 @@ class PostComment < ApplicationRecord
   scope :reported, -> { joins(:post_comment_reports) }
   scope :not_reported, -> { left_joins(:post_comment_reports).where(post_comment_reports: { id: nil } ) }
 
-
-  # def post_me
-    # post_comment_mentions.each do |mention|
-    #   Rails.logger.debug("mention: #{mention.inspect}")
-    #   Delayed::Job.enqueue(PostCommentMentionPushJob.new(mention.id))
-    # end
-  # end
-  # include PostComment::RealTime
-
   belongs_to :person, touch: true
   belongs_to :post, touch: true, counter_cache: true
 

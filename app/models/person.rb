@@ -272,12 +272,10 @@ class Person < ApplicationRecord
   end
 
   def send_onboarding_email
-    # Delayed::Job.enqueue(OnboardingEmailJob.new(self.id))
     PersonMailer.with(id: self.id).onboarding.deliver_later
   end
 
   def send_password_reset_email
-    # Delayed::Job.enqueue(PasswordResetEmailJob.new(self.id))
     PersonMailer.with(id: self.id).reset_password.deliver_later
   end
 

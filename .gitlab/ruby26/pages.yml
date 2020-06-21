@@ -1,0 +1,28 @@
+
+pages26:
+  extends: .base_minimal
+  stage: report
+  dependencies:
+    - test26:brakeman
+    - test26:dawnscanner
+    - test26:erd
+    - test26:rubycritic
+    - test26:rubocop
+    - test26:rspec60:merge
+  artifacts:
+    name: my_app_artifacts
+    paths:
+      - public/
+  only:
+    - master
+  script:
+    - mkdir master
+    - mv brakeman master/
+    - mv dawnscanner master/
+    - mv erd.pdf master/
+    - mv tmp/rubycritic master/
+    - mv rubocop master/
+    - mv coverage master/
+    - cp $PAGES_INDEX_FILE master/index.html
+    - rm -r public
+    - mv master public

@@ -7,4 +7,8 @@ class CreateBadgeAwards < ActiveRecord::Migration[5.1]
     end
     add_index :badge_awards, %i[ person_id badge_id], unique: true, name: "unq_badge_awards_people_badges"
   end
+
+  def down
+    drop_table :badge_awards
+  end
 end

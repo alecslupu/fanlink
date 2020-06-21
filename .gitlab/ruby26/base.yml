@@ -1,0 +1,12 @@
+
+build26:initial:
+  extends: .base26
+  stage: build
+  script:
+    - echo "main"
+
+build26:assets_precompile:
+  extends: .base26_db
+  stage: build
+  script:
+    - bundle exec rake assets:precompile
