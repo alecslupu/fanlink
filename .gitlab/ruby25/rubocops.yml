@@ -41,3 +41,13 @@ rubocop:Style_StringLiterals:
     - test:rubocop
   script:
     - bundle exec rubocop --only Style/StringLiterals app config spec lib
+
+
+rubocop:Style_ClassAndModuleChildren:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Style/ClassAndModuleChildren app config spec lib

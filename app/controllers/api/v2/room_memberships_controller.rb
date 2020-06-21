@@ -1,4 +1,9 @@
 # frozen_string_literal: true
 
-class Api::V2::RoomMembershipsController < Api::V1::RoomMembershipsController
+
+module Api
+  module V2
+    class RoomMembershipsController < Api::V1::RoomMembershipsController
+    end
+  end
 end

@@ -1,4 +1,9 @@
 # frozen_string_literal: true
 
-class Api::V2::SessionController < Api::V1::SessionController
+
+module Api
+  module V2
+    class SessionController < Api::V1::SessionController
+    end
+  end
 end

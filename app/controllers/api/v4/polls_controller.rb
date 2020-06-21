@@ -1,4 +1,9 @@
 # frozen_string_literal: true
 
-class Api::V4::PollsController < Api::V3::PollsController
+
+module Api
+  module V4
+    class PollsController < Api::V3::PollsController
+    end
+  end
 end

@@ -1,4 +1,9 @@
 # frozen_string_literal: true
 
-class Api::V2::PostReportsController < Api::V1::PostReportsController
+
+module Api
+  module V2
+    class PostReportsController < Api::V1::PostReportsController
+    end
+  end
 end

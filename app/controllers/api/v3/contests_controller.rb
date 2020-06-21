@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
-class Api::V3::ContestsController < ApiController
-  private
+
+module Api
+  module V3
+    class ContestsController < ApiController
+      private
+    end
+  end
 end
