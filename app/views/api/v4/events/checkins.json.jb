@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
     event_checkins: render(partial: "api/v4/event_checkins/event_checkin", collection: @event_checkins, as: :event_checkin, handlers: :jb)
 }

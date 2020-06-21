@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RoomSubscriber < ApplicationRecord
   has_paper_trail
 

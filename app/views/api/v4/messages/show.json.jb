@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   message: render(partial: "app", locals: { message: @message }, handlers: :jb)
 }

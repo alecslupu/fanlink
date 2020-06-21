@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
   scope(constraints: Routing::Constraints::V3, module: "api/v3", defaults: { format: :json }) do
     resources :action_types do

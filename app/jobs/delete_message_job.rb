@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DeleteMessageJob < ApplicationJob
   queue_as :default
   include RealTimeHelpers

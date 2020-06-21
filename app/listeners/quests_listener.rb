@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class QuestsListener
   include Wisper::Publisher
   include RealTimeHelpers

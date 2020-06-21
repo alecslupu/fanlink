@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 last_person_certcourse = certcourse.person_certcourses.for_person(person).last
 json = {
   id: certcourse.id,

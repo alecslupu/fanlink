@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: people
@@ -58,7 +59,7 @@ class Person < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  enum old_role: %i[ normal staff admin super_admin root client client_portal marketingrole]
+  enum old_role: %i[normal staff admin super_admin root client client_portal marketingrole]
 
   normalize_attributes :name, :birthdate, :city, :country_code, :biography, :terminated_reason
 
@@ -232,7 +233,7 @@ class Person < ApplicationRecord
   validate :valid_username
   validate :read_only_username
 
-  enum gender: %i[ unspecified male female ]
+  enum gender: %i[unspecified male female]
 
   validate :valid_country_code
   validates :country_code, length: { is: 2 }, allow_blank: true
@@ -361,7 +362,7 @@ class Person < ApplicationRecord
   end
 
   def level
-    level_earned.as_json(only: %i[ id name internal_name points ], methods: %i[ picture_url ])
+    level_earned.as_json(only: %i[id name internal_name points], methods: %i[picture_url])
   end
 
   def level_earned

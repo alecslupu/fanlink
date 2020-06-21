@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V1::PostReactionsController < ApiController
   load_up_the Post, from: :post_id
-  load_up_the PostReaction, only: %i[ destroy update ]
+  load_up_the PostReaction, only: %i[destroy update]
 
 
   # **

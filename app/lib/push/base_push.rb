@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Push
   class BasePush
     BATCH_SIZE = 500.freeze

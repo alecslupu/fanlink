@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: quest_completed
@@ -11,7 +12,7 @@
 #
 
 class QuestCompleted < ApplicationRecord
-  enum status: %i[ completed ]
+  enum status: %i[completed]
   has_paper_trail ignore: [:created_at, :updated_at]
 
   belongs_to :quest

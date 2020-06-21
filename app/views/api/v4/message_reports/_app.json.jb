@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: message_report.id,
   poster: render(partial: "api/v4/people/app", locals: { person: message_report.poster, relationships: Relationship.for_people(current_user, message_report.poster) }, handlers: "jb"),

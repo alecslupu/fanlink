@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-class Api::V3::MessagesController < Api::V2::MessagesController
-  before_action :admin_only, only: %i[ list update ]
 
-  load_up_the Message, only: %i[ update ]
-  load_up_the Room, from: :room_id, except: %i[ update ]
+class Api::V3::MessagesController < Api::V2::MessagesController
+  before_action :admin_only, only: %i[list update]
+
+  load_up_the Message, only: %i[update]
+  load_up_the Room, from: :room_id, except: %i[update]
 
 
   # **
@@ -308,7 +309,7 @@ private
   end
 
   def message_params
-    params.require(:message).permit(:body, :picture, :audio, mentions: %i[ person_id location length ])
+    params.require(:message).permit(:body, :picture, :audio, mentions: %i[person_id location length])
   end
 
   def message_update_params

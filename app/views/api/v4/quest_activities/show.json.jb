@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   activity: render(partial: "app", locals: { activity: @quest_activity }, handlers: :jb)
 }

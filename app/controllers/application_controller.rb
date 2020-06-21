@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   before_action :require_login
@@ -12,7 +13,7 @@ class ApplicationController < ActionController::Base
   def status
     head :ok
   end
-  skip_before_action :require_login, only: %i[ status ]
+  skip_before_action :require_login, only: %i[status]
 
   #
   # Respond to an API request with an object. If the object is invalid

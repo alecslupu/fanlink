@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::RewardsController < ApiController
-  load_up_the Reward, from: :id, only: %i[ show update delete ]
+  load_up_the Reward, from: :id, only: %i[show update delete]
   def index
     @rewards = paginate(Reward.all.order(created_at: :asc))
     return_the @rewards

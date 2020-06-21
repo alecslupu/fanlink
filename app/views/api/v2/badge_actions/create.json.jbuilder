@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if @badge_awards.is_a?(Hash)
   if @badge_awards.empty?
     json.pending_badge nil

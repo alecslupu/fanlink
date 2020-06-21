@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id completion.id.to_s
 json.person_id completion.person_id.to_s
 json.step_id completion.step_id.to_s

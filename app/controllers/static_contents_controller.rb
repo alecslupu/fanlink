@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class StaticContentsController < ApplicationController
   before_action :set_static_content, only: %i[show]
 

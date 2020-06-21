@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: activity_types
@@ -21,7 +22,7 @@ class ActivityType < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  enum atype: %i[ beacon image audio post activity_code ]
+  enum atype: %i[beacon image audio post activity_code]
   belongs_to :quest_activity, foreign_key: :activity_id, inverse_of: :activity_types, touch: true
 
   validates :activity_id, presence: { message: _("Activity ID is required.") }

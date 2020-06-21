@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 action_types = false
 quests = false
 steps = false

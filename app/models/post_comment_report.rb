@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: post_comment_reports
@@ -13,7 +14,7 @@
 #
 
 class PostCommentReport < ApplicationRecord
-  enum status: %i[ pending no_action_needed comment_hidden ]
+  enum status: %i[pending no_action_needed comment_hidden]
 
   belongs_to :person
   belongs_to :post_comment

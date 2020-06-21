@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if current_user.some_admin? && @req_source == "web"
   json.quests do
     json.array!(@quests) do |quest|

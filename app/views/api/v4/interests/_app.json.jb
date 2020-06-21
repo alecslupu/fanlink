@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: interest.id.to_s,
   title: interest.title,

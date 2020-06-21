@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe PostReport, type: :model do
 
   before(:each) do

@@ -1,4 +1,4 @@
-# frozen_string_literal: true      @posts = Post.visible.tagged_with(params[:tag_name].try(:downcase), match_all: true)
+# frozen_string_literal: true
 
 class Api::V2::TagsController < ApiController
   # **

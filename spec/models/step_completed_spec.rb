@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe StepCompleted, type: :model do
   context "Associations" do
     describe "should belong to" do

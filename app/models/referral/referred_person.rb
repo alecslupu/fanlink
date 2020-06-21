@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Referral
   class ReferredPerson < ApplicationRecord
     has_paper_trail ignore: [:created_at, :updated_at]

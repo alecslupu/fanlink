@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::PostsController < Api::V3::PostsController
   def index
     ordering = 'DESC'

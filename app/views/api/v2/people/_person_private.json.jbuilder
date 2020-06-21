@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.partial! "api/v2/people/person", locals: { person: person }
 json.email person.email
 json.set! :product do

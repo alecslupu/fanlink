@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if current_user.role == "super_admin"
   json.events @events, partial: "event", as: :event
 else

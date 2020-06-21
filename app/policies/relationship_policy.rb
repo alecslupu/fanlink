@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RelationshipPolicy < UserModulePolicy
   class Scope < Scope
     def resolve

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Interest, type: :model do
   context "Validation" do
     describe "should create a valid Interest" do

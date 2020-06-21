@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::PostsController < ApiController
   before_action :load_post, only: %i[update]
   before_action :admin_only, only: %i[list]

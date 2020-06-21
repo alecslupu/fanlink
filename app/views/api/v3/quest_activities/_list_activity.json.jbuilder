@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.cache! ["v3", "list", activity] do
   json.id activity.id.to_s
   json.quest_id activity.quest_id.to_s

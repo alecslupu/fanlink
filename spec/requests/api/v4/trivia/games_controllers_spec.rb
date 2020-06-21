@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "swagger_helper"
 
 RSpec.describe "Api::V4::Trivia::GamesControllers", type: :request, swagger_doc: "v4/swagger.json" do

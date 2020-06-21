@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V2::PostsController < Api::V1::PostsController
   # **
   # @api {get} /posts Get paginated posts.

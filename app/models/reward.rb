@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: rewards
@@ -23,8 +24,8 @@ class Reward < ApplicationRecord
   include Reward::Contests
   include Reward::Coupons
   include Reward::Urls
-  enum reward_type: %i[ badge url coupon ]
-  enum status: %i[ active inactive ]
+  enum reward_type: %i[badge url coupon]
+  enum status: %i[active inactive]
 
   scope :for_product, -> (product) { where( rewards: { product_id: product.id } ) }
 

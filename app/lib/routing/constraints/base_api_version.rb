@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Routing
   module Constraints
     class BaseApiVersion

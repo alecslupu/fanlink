@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 describe "StringPatches" do
   it "should remove accents" do
     expect("åéİÕüçûx".de_accent).to eq("aeIOucux")

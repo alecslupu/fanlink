@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if !activity.deleted
   json = Rails.cache.fetch ["v3", activity.updated_at, @lang, activity] do
     {

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V2::EventsController < Api::V1::EventsController
-  load_up_the Event, only: %i[ update delete ]
+  load_up_the Event, only: %i[update delete]
 
   # **
   # @api {get} /events Get available events.

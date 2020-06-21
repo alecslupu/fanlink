@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 json[:poll] = render(partial: "app", locals: { poll: @poll }, handlers: :jb)
 

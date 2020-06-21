@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::NotificationsController < ApiController
   def create
     if vitalgroup_normal_user? || current_user.pin_messages_from || current_user.product_account

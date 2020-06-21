@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id relationship.id.to_s
 json.status relationship.status
 json.create_time relationship.created_at.to_s

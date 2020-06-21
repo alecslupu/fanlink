@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   events: @events.map do |e|
     render partial: "event", locals: { event: e, lang: @lang }, handlers: "jb"

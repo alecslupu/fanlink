@@ -1,2 +1,3 @@
 # frozen_string_literal: true
+
 render partial: "api/v4/event_checkins/event_checkin", locals: { event_checkin: @event_checkin, lang: @lang }, handlers: "jb"
