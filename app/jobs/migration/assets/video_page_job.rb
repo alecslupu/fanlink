@@ -7,6 +7,7 @@ module Migration
 
         url = paperclip_asset_url(video, "video", video.product)
         video.video.attach(io: open(url), filename: video.video_file_name, content_type: video.video_content_type)
+        video.save!
       end
     end
 

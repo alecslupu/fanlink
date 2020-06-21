@@ -20,7 +20,7 @@ class DownloadFilePage < ApplicationRecord
   scope :for_product, -> (product) { where(product_id: product.id) }
   acts_as_tenant(:product)
   belongs_to :product
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, autosave: true
 
   # include AttachmentSupport
   has_one_attached :document
@@ -37,7 +37,6 @@ class DownloadFilePage < ApplicationRecord
     document.attached? ? document.blob.content_type : nil
   end
 
-  after_save :set_certcourse_page_content_type
   validate :just_me
 
   validates :caption, presence: true
@@ -60,11 +59,5 @@ class DownloadFilePage < ApplicationRecord
     if child && child != self
       errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
     end
-  end
-
-  def set_certcourse_page_content_type
-    page = CertcoursePage.find(self.certcourse_page_id)
-    page.content_type = content_type
-    page.save
   end
 end

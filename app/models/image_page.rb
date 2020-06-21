@@ -21,7 +21,7 @@ class ImagePage < ApplicationRecord
   acts_as_tenant(:product)
   belongs_to :product
 
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, autosave: true
   # include AttachmentSupport
   has_one_attached :image
 
@@ -44,7 +44,6 @@ class ImagePage < ApplicationRecord
 
   validates_uniqueness_of :certcourse_page_id
 
-  after_save :set_certcourse_page_content_type
   validate :just_me
 
   def course_name
@@ -64,11 +63,5 @@ class ImagePage < ApplicationRecord
       if child && child != self
         errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
       end
-    end
-
-    def set_certcourse_page_content_type
-      page = CertcoursePage.find(self.certcourse_page_id)
-      page.content_type = content_type
-      page.save
     end
 end

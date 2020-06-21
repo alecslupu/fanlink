@@ -36,11 +36,9 @@ class VideoPage < ApplicationRecord
 
   validates_uniqueness_of :certcourse_page_id
 
-  belongs_to :certcourse_page
+  belongs_to :certcourse_page, autosave: true
 
   validate :just_me
-  after_save :set_certcourse_page_content_type
-  before_save :set_certcourse_page_duration
 
   def course_name
     certcourse_page.certcourse.to_s
@@ -50,28 +48,25 @@ class VideoPage < ApplicationRecord
     :video
   end
 
+  def duration
+    attachable = video.attachment.record.attachment_changes["video"].attachable
+    file = case attachable
+           when ActionDispatch::Http::UploadedFile, Rack::Test::UploadedFile
+             attachable.path
+           when Hash
+             attachable[:io].path
+           end
+
+    FFMPEG::Movie.new(file).duration.to_i + 1
+  end
   private
 
-    def just_me
-      return if certcourse_page.new_record?
-      target_course_page = CertcoursePage.find(certcourse_page.id)
-      child = target_course_page.child
-      if child && child != self
-        errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
-      end
+  def just_me
+    return if certcourse_page.new_record?
+    target_course_page = CertcoursePage.find(certcourse_page.id)
+    child = target_course_page.child
+    if child && child != self
+      errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
     end
-
-    def set_certcourse_page_content_type
-      page = CertcoursePage.find(certcourse_page_id)
-      page.content_type = content_type
-      page.save
-    end
-
-    def video_duration
-      FFMPEG::Movie.new(video.attachment.record.attachment_changes["video"].attachable[:io].path).duration.to_i + 1
-    end
-
-    def set_certcourse_page_duration
-      duration = video_duration
-    end
+  end
 end
