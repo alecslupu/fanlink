@@ -1,0 +1,91 @@
+
+test:rubocop:
+  extends: .base
+  stage: test
+  allow_failure: true
+  dependencies:
+    - build:initial
+    - build:assets_precompile
+  artifacts:
+    name: rubocop
+    when: always
+    paths:
+      - rubocop/
+  script:
+    - bundle exec rubocop --format html --out rubocop/index.html app config spec lib
+
+test:bundle_audit:
+  extends: .base
+  stage: test
+  allow_failure: true
+  dependencies:
+    - build:initial
+    - build:assets_precompile
+  script:
+    - gem install bundler-audit
+    - bundle-audit check --update
+
+test:rubycritic:
+  stage: test
+  extends: .base
+  allow_failure: true
+
+  dependencies:
+    - build:initial
+    - build:assets_precompile
+  script:
+    - bundle exec rubycritic app config
+  artifacts:
+    name: rubycritic
+    when: always
+    paths:
+      - tmp/rubycritic/
+
+test:brakeman:
+  extends: .base
+  stage: test
+  allow_failure: true
+  dependencies:
+    - build:initial
+    - build:assets_precompile
+  artifacts:
+    name: brakeman_report
+    when: always
+    paths:
+      - brakeman/
+  script:
+    - bundle exec brakeman --format html -o brakeman/index.html
+
+test:dawnscanner:
+  extends: .base
+  stage: test
+  dependencies:
+    - build:initial
+    - build:assets_precompile
+  allow_failure: true
+  artifacts:
+    name: dawnscanner_report
+    when: always
+    paths:
+      - dawnscanner
+  script:
+    - gem install dawnscanner
+    - mkdir dawnscanner
+    - dawn --html -zF dawnscanner/index.html .
+
+test:erd:
+  extends: .base_db
+  stage: test
+  dependencies:
+    - build:initial
+    - build:assets_precompile
+  allow_failure: true
+  artifacts:
+    name: erd
+    paths:
+      - erd.pdf
+  script:
+    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq graphviz
+    - gem install 'rails-erd'
+    - bundle exec rails g erd:install
+    - bundle exec rake erd

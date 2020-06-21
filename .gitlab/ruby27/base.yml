@@ -1,0 +1,12 @@
+
+build27:initial:
+  extends: .base27
+  stage: build
+  script:
+    - echo "main"
+
+build27:assets_precompile:
+  extends: .base27_db
+  stage: build
+  script:
+    - bundle exec rake assets:precompile
