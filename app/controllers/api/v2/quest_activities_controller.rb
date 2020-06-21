@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V2::QuestActivitiesController < ApiController
   before_action :admin_only, except: %i[ index show ]
   load_up_the Step, from: :step_id, except: %i[ update show delete ]

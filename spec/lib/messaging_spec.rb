@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 include MessagingHelpers
 
 describe "Messaging" do

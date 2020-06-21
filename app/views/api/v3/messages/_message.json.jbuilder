@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.cache! ["v3", message] do
   json.id message.id
   json.room_id message.room_id

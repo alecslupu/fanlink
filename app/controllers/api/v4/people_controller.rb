@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::PeopleController < Api::V3::PeopleController
   def index
     @people = paginate apply_filters

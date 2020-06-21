@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: post_comment_report.id,
   post_comment: render(partial: "api/v4/post_comments/web", locals: { post_comment: post_comment_report.post_comment }),

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::PostReportsController < Api::V2::PostReportsController
   before_action :admin_only, only: %i[ index update ]
   load_up_the PostReport, only: :update

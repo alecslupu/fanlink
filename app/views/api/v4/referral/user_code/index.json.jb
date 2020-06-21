@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
     person_id:  @referral_code.person_id,
     unique_code: @referral_code.unique_code

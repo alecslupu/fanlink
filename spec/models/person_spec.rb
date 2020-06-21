@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Person, type: :model do
   before(:each) do
     @username = "WhereisPancakeHouse"

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:portal_notifications] = @portal_notifications.map do |portal_notification|

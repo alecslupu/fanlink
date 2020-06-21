@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Referral
   class ReferredPerson < ApplicationRecord
     belongs_to :inviter, class_name: "Person", foreign_key: :inviter_id, primary_key: :id

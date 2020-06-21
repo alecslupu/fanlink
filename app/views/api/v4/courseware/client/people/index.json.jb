@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:people] = @assignees.map do |assignee|

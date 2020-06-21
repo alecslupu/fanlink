@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::BadgeActionsController < ApiController
   before_action :load_action_type
 

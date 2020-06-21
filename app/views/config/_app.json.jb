@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = parse_node(@root)
 
 app_settings = {

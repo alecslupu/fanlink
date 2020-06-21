@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::EventsController < ApiController
   # **
   # @api {get} /events Get available events.

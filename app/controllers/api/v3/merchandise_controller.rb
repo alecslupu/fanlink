@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::MerchandiseController < Api::V2::MerchandiseController
   before_action :admin_only, only: %i[ create update destroy ]
   load_up_the Merchandise, only: %i[ update show delete ]

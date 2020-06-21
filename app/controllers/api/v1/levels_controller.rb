@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::LevelsController < ApiController
   # **
   # @api {get} /levels Get all available levels.

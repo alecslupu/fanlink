@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id interest.id
 json.title interest.title
 json.order interest.order

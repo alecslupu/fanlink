@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::AssignedRewardsController < Api::V3::AssignedRewardsController
   def index
     @assignees = paginate(AssignedReward.where(reward_id: params[:reward_id]).order(created_at: :asc))

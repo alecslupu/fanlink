@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::PersonCertcoursesController < ApiController
 
   def send_email

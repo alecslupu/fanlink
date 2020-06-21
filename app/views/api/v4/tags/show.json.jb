@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   tag: render(partial: @req_source, locals: { tag: @tag }, handlers: "jb")
 }

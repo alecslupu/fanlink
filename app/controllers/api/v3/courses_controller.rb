@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::CoursesController < ApiController
   before_action :admin_only, only: %i[ create update delete ]
   load_up_the Course, only: %i[ update destroy ]

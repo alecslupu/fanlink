@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:post_comments] = @post_comments.map do |post_comment|

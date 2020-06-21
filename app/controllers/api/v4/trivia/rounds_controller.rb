@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::Trivia::RoundsController < ApiController
   skip_before_action :require_login, only: %i[ change_status ]
 

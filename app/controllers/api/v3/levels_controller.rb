@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::LevelsController < Api::V2::LevelsController
   before_action :super_admin_only, only: %i[ create update destroy ]
   # **

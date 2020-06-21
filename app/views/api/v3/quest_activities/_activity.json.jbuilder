@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if !activity.deleted
   json.cache! ["v3", activity.updated_at, activity] do
     json.id activity.id

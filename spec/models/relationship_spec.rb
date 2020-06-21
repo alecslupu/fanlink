@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Relationship, type: :model do
 
   context "Associations" do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe QuestActivity, type: :model do
   context "Validation" do
     it "should create a valid quest activity" do

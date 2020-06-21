@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe PostReaction, type: :model do
   context "Valid" do
     it "should create a valid post reaction" do

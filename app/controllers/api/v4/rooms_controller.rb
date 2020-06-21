@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::RoomsController < Api::V3::RoomsController
   def index
     @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics

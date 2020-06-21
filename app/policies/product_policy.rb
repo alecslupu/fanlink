@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ProductPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope

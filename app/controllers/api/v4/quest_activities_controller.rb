@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::QuestActivitiesController < Api::V3::QuestActivitiesController
   # def index
   #   @quest_activities = @step.quest_activities.with_completion(current_user).order(created_at: :desc)

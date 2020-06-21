@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::RelationshipsController < Api::V2::RelationshipsController
   include Messaging
   load_up_the Relationship, except: %i[ create index ]

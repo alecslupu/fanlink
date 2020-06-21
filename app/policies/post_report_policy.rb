@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PostReportPolicy < PostModulePolicy
   # a message report should not be edited by an admin
   def update?

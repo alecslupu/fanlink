@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UpdateTagPostsCount
   def self.create_post_tag_successful(pt)
     self.update_post_count(pt)

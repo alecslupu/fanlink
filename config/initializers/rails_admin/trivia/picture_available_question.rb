@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
   config.included_models.push("Trivia::PictureAvailableQuestion")
   config.model "Trivia::PictureAvailableQuestion" do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RoomSubscriber < ApplicationRecord
   belongs_to :room
   belongs_to :person
