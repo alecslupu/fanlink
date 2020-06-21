@@ -17,6 +17,6 @@ class PostPostJob < ApplicationJob
         }
       end
     end
-    client.update("", payload)
+    client.update('', payload)
   end
 end

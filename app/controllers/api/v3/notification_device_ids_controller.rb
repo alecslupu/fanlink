@@ -32,7 +32,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V2::NotificationDeviceIdsC
         render_422(ndi.errors)
       end
     else
-      render_422(_("Missing device_id."))
+      render_422(_('Missing device_id.'))
     end
   end
 

@@ -10,7 +10,7 @@ json =
   }
 
 if step.quest_activities.count > 0
-  json[:activities] = render partial: "api/v4/quest_activities/activity", collection: step.quest_activities.where(deleted: false), as: :activity, handlers: "jb"
+  json[:activities] = render partial: 'api/v4/quest_activities/activity', collection: step.quest_activities.where(deleted: false), as: :activity, handlers: 'jb'
 else
   json[:activities] = nil
 end

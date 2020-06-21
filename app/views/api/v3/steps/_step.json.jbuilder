@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.cache! ["v3", step.updated_at, step] do
+json.cache! ['v3', step.updated_at, step] do
   json.id step.id
   json.quest_id step.quest_id
   json.uuid step.uuid
@@ -17,7 +17,7 @@ json.cache! ["v3", step.updated_at, step] do
 end
 
 if step.quest_activities.count > 0
-  json.activities step.quest_activities.where(deleted: false),  partial: "api/v3/quest_activities/activity", as: :activity
+  json.activities step.quest_activities.where(deleted: false),  partial: 'api/v3/quest_activities/activity', as: :activity
 else
   json.activities nil
 end
@@ -32,7 +32,7 @@ else
   json.status step.initial_status
 end
 unlocks_at ||= Time.zone.now.to_s
-if @req_source == "web"
+if @req_source == 'web'
   json.delay_unlock step.delay_unlock || 0
 end
 json.unlocks_at unlocks_at.to_datetime().utc.iso8601

@@ -3,7 +3,7 @@
 json = {}
 
 json[:progresses] = @progresses.map do |progress|
-  render partial: @req_source, locals: { progress: progress }, handlers: "jb"
+  render partial: @req_source, locals: { progress: progress }, handlers: 'jb'
 end
 
 json

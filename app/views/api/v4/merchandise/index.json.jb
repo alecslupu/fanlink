@@ -3,7 +3,7 @@
 json = {}
 
 json[:merchandise] = @merchandise.map do |merchandise|
-  render partial: @req_source, locals: { merchandise: merchandise, lang: @lang }, handlers: "jb"
+  render partial: @req_source, locals: { merchandise: merchandise, lang: @lang }, handlers: 'jb'
 end
 
 json

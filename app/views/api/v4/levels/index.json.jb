@@ -3,7 +3,7 @@
 json = {}
 
 json[:levels] = @levels.map do |level|
-  render partial: @req_source, locals: { level: level, lang: @lang }, handlers: "jb"
+  render partial: @req_source, locals: { level: level, lang: @lang }, handlers: 'jb'
 end
 
 json

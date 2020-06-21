@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe BooleanConfigItemPolicy, type: :policy do
-  args = BooleanConfigItem, "root"
+  args = BooleanConfigItem, 'root'
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

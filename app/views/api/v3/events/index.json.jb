@@ -2,6 +2,6 @@
 
 {
   events: @events.map do |e|
-    render partial: "event", locals: { event: e, lang: @lang }, handlers: "jb"
+    render partial: 'event', locals: { event: e, lang: @lang }, handlers: 'jb'
   end
 }

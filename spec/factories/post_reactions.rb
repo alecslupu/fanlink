@@ -10,7 +10,7 @@
 #  reaction  :text             not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :post_reaction do

@@ -33,7 +33,7 @@ class Api::V1::PostCommentReportsController < ApiController
 
   def create
     parms = post_comment_report_params
-    post_comment = PostComment.for_product(ActsAsTenant.current_tenant).find(parms["post_comment_id"])
+    post_comment = PostComment.for_product(ActsAsTenant.current_tenant).find(parms['post_comment_id'])
     if post_comment.product == current_user.product
       post_comment_report = PostCommentReport.create(parms)
       if post_comment_report.valid?
@@ -122,7 +122,7 @@ class Api::V1::PostCommentReportsController < ApiController
       @post_comment_report.update(parms)
       head :ok
     else
-      render_error(_("Invalid or missing status."))
+      render_error(_('Invalid or missing status.'))
     end
   end
 
@@ -131,7 +131,7 @@ private
   def apply_filters
     post_comment_reports = PostCommentReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && PostCommentReport.respond_to?(p)
+      if p.end_with?('_filter') && PostCommentReport.respond_to?(p)
         post_comment_reports = post_comment_reports.send(p, v)
       end
     end

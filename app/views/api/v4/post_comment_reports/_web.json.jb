@@ -2,7 +2,7 @@
 
 {
   id: post_comment_report.id,
-  post_comment: render(partial: "api/v4/post_comments/web", locals: { post_comment: post_comment_report.post_comment }),
+  post_comment: render(partial: 'api/v4/post_comments/web', locals: { post_comment: post_comment_report.post_comment }),
   commenter: post_comment_report.post_comment.person.username,
   reporter: post_comment_report.person.username,
   reason: post_comment_report.reason,

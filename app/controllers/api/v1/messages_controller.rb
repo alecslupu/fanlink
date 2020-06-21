@@ -46,7 +46,7 @@ class Api::V1::MessagesController < ApiController
     room = Room.find(params[:room_id])
     if room.active?
       if room.public && current_user.chat_banned?
-        render_error(_("You are banned from chat."))
+        render_error(_('You are banned from chat.'))
       else
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
@@ -60,7 +60,7 @@ class Api::V1::MessagesController < ApiController
         return_the @message
       end
     else
-      render_error(_("This room is no longer active."))
+      render_error(_('This room is no longer active.'))
     end
   end
 
@@ -133,7 +133,7 @@ class Api::V1::MessagesController < ApiController
       render_not_found
     else
       if !check_dates
-        render_error("Missing or invalid date(s)")
+        render_error('Missing or invalid date(s)')
       else
         l = params[:limit].to_i
         l = nil if l == 0
@@ -276,9 +276,9 @@ class Api::V1::MessagesController < ApiController
 private
 
   def apply_filters
-    messages = Message.joins(:room).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).order(created_at: :desc)
+    messages = Message.joins(:room).where('rooms.product_id = ?', ActsAsTenant.current_tenant.id).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && Message.respond_to?(p)
+      if p.end_with?('_filter') && Message.respond_to?(p)
         messages = messages.send(p, v)
       end
     end

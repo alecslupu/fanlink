@@ -3,7 +3,7 @@
 json = {}
 
 json[:steps] = @steps.map do |step|
-  render partial: @req_source, locals: { step: step }, handlers: "jb"
+  render partial: @req_source, locals: { step: step }, handlers: 'jb'
 end
 
 json

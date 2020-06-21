@@ -16,8 +16,8 @@
 #  upper       :integer          not null
 #
 
-require "securerandom"
-require "faker"
+require 'securerandom'
+require 'faker'
 
 FactoryBot.define do
   factory :product_beacon do

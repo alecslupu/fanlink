@@ -2,7 +2,7 @@
 
 class EmojiValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    record.errors[attribute] << (options[:message] || "may not contain emojis.") if emoji?(value)
+    record.errors[attribute] << (options[:message] || 'may not contain emojis.') if emoji?(value)
   end
 
   private

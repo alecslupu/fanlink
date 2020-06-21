@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe CoursePageProgressPolicy, type: :policy do
-  args = CoursePageProgress, "courseware"
+  args = CoursePageProgress, 'courseware'
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

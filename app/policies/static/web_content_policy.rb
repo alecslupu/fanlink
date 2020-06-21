@@ -1,7 +1,7 @@
 class Static::WebContentPolicy < ApplicationPolicy
   protected
   def module_name
-    "root"
+    'root'
   end
 
   class Scope < Scope

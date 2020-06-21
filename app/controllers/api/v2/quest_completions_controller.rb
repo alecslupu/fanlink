@@ -265,7 +265,7 @@ private
   def apply_filters
     completions = QuestCompletion.order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && QuestCompletion.respond_to?(p)
+      if p.end_with?('_filter') && QuestCompletion.respond_to?(p)
         completions = completions.send(p, v)
       end
     end
@@ -275,7 +275,7 @@ private
   def apply_filters_for_user
     completions = QuestCompletion.where(person_id: current_user.id).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && QuestCompletion.respond_to?(p)
+      if p.end_with?('_filter') && QuestCompletion.respond_to?(p)
         completions = completions.send(p, v)
       end
     end

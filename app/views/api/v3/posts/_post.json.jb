@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json = Rails.cache.fetch ["v3.1", post] do
+json = Rails.cache.fetch ['v3.1', post] do
   {
     id: post.id,
     create_time: post.created_at.to_s,

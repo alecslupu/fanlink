@@ -3,7 +3,7 @@
 json = {}
 
 json[:person_rewards] = @person_rewards.map do |reward|
-  render partial: @req_source, locals: { reward: reward }, handlers: "jb"
+  render partial: @req_source, locals: { reward: reward }, handlers: 'jb'
 end
 
 json

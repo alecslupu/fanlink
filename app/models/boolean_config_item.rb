@@ -25,6 +25,6 @@ class BooleanConfigItem < ConfigItem
   has_paper_trail
 
   def formatted_value
-    item_value == "t"
+    item_value == 't'
   end
 end

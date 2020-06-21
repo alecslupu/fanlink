@@ -3,7 +3,7 @@
 json = {}
 post_reactions = current_user.post_reactions.where(post_id: posts).index_by(&:post_id)
 json[:posts] = posts.map do |post|
-  p = render(partial: "api/v4/posts/#{@req_source}", locals: { post: post }, handlers: "jb")
+  p = render(partial: "api/v4/posts/#{@req_source}", locals: { post: post }, handlers: 'jb')
 
   if defined?(post_reactions[post.id]) && post_reactions[post.id].present?
     p[:post_reaction] = render partial: "api/v4/post_reactions/#{@req_source}", locals: { post_reaction: post_reactions[post.id] }
@@ -14,11 +14,11 @@ json[:posts] = posts.map do |post|
   p[:post_reaction_counts] = post.reaction_breakdown
 
   if post.poll.present?
-    p[:poll] = render(partial: "api/v4/polls/#{@req_source}", locals: { poll: post.poll }, handlers: "jb")
+    p[:poll] = render(partial: "api/v4/polls/#{@req_source}", locals: { poll: post.poll }, handlers: 'jb')
     p[:poll][:closed] = post.poll.closed?
     if post.poll.poll_options.present?
       p[:poll][:poll_options] = post.poll.poll_options.map do |option|
-        po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
+        po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: 'jb')
         po[:numberOfVotes] = option.votes
         po[:voted] = option.voted?(current_user)
         po

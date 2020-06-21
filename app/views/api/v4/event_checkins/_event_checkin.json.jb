@@ -4,5 +4,5 @@ json = {
     id: event_checkin.id.to_s,
     checkin_at: event_checkin.created_at.to_s
 }
-json[:person] = render partial: "api/v4/people/person_mini", locals: { person: event_checkin.person, lang: @lang }, handlers: "jb"
+json[:person] = render partial: 'api/v4/people/person_mini', locals: { person: event_checkin.person, lang: @lang }, handlers: 'jb'
 json

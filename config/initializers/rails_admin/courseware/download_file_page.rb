@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("DownloadFilePage")
-  config.model "DownloadFilePage" do
-    parent "Certificate"
+  config.included_models.push('DownloadFilePage')
+  config.model 'DownloadFilePage' do
+    parent 'Certificate'
 
     configure :course_name do
     end

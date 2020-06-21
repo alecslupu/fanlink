@@ -13,8 +13,8 @@ json.badges do
     end
     json.badge_action_count badge_action_count
     json.badge do
-      json.cache! ["v3", b] do
-        json.partial! "api/v3/badges/badge", locals: { badge: b, lang: nil }
+      json.cache! ['v3', b] do
+        json.partial! 'api/v3/badges/badge', locals: { badge: b, lang: nil }
       end
       if @badges_awarded.present? && b.reward.present?
         json.badge_awarded @badges_awarded.any? { |ba| ba.reward_id == b.reward.id }

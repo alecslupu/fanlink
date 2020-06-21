@@ -31,7 +31,7 @@ class Api::V3::TagsController < Api::V2::TagsController
       @posts = Post.visible.tagged_with(params[:tag_name].try(:downcase), match_all: true)
       return_the @posts
     else
-      render_422 _("Parameter tag_name is required.")
+      render_422 _('Parameter tag_name is required.')
     end
   end
 end

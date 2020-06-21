@@ -13,7 +13,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_topic, class: "Trivia::Topic" do
+  factory :trivia_topic, class: 'Trivia::Topic' do
     product { current_product }
 
     name { Faker::Lorem.question(word_count: 2) }

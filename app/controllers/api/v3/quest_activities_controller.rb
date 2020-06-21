@@ -194,7 +194,7 @@ class Api::V3::QuestActivitiesController < Api::V2::QuestActivitiesController
         render_422 @message.errors
       end
     else
-      render_422(_("Updated failed. Missing quest_activity object."))
+      render_422(_('Updated failed. Missing quest_activity object.'))
     end
   end
 
@@ -282,7 +282,7 @@ class Api::V3::QuestActivitiesController < Api::V2::QuestActivitiesController
       if @quest_activity.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the quest activity."))
+        render_422(_('Failed to delete the quest activity.'))
       end
     else
       render_not_found

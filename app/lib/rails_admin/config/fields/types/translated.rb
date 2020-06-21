@@ -17,7 +17,7 @@ module RailsAdmin
           end
 
           def generic_help
-            "" # false is ignored by I18n.translate
+            '' # false is ignored by I18n.translate
           end
 
           # Reader for validation errors of the bound object

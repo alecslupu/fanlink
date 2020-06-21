@@ -22,18 +22,18 @@
 #
 
 FactoryBot.define do
-  factory :config_item, class: "ConfigItem" do
+  factory :config_item, class: 'ConfigItem' do
     product { current_product }
-    item_key { "MyString" }
+    item_key { 'MyString' }
     enabled { false }
 
-    factory :string_config_item, class: "StringConfigItem" do
+    factory :string_config_item, class: 'StringConfigItem' do
     end
-    factory :array_config_item, class: "ArrayConfigItem" do
+    factory :array_config_item, class: 'ArrayConfigItem' do
     end
-    factory :boolean_config_item, class: "BooleanConfigItem" do
+    factory :boolean_config_item, class: 'BooleanConfigItem' do
     end
-    factory :root_config_item, class: "RootConfigItem" do
+    factory :root_config_item, class: 'RootConfigItem' do
     end
   end
 end

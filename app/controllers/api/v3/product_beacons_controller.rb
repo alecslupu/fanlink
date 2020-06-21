@@ -98,7 +98,7 @@ class Api::V3::ProductBeaconsController < Api::V2::ProductBeaconsController
   # *
 
   def list
-    @product_beacons = paginate(ProductBeacon.where("product_id =?", ActsAsTenant.current_tenant.id))
+    @product_beacons = paginate(ProductBeacon.where('product_id =?', ActsAsTenant.current_tenant.id))
     return_the @product_beacons
   end
 
@@ -263,7 +263,7 @@ class Api::V3::ProductBeaconsController < Api::V2::ProductBeaconsController
         render_422 @product_beacon.errors
       end
     else
-      render_422(_("Update failed. Missing product_beacon object."))
+      render_422(_('Update failed. Missing product_beacon object.'))
     end
   end
 
@@ -297,7 +297,7 @@ class Api::V3::ProductBeaconsController < Api::V2::ProductBeaconsController
       if beacon.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the beacon."))
+        render_422(_('Failed to delete the beacon.'))
       end
     else
       render_not_found

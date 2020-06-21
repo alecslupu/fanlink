@@ -10,9 +10,9 @@ json =
 }
 case activity.atype.to_sym
 when :beacon
-  beacon = ProductBeacon.find(activity.value["id"])
+  beacon = ProductBeacon.find(activity.value['id'])
   unless beacon.deleted?
-    json[:value] = render partial: "api/v4/product_beacons/#{@req_source}", locals: { beacon: beacon }, handlers: "jb"
+    json[:value] = render partial: "api/v4/product_beacons/#{@req_source}", locals: { beacon: beacon }, handlers: 'jb'
   else
     json[:value] = nil
   end

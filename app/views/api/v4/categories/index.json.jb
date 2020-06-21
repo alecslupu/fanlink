@@ -3,7 +3,7 @@
 json = {}
 
 json[:categories] = @categories.map do |category|
-  render partial: @req_source, locals: { category: category }, handlers: "jb"
+  render partial: @req_source, locals: { category: category }, handlers: 'jb'
 end
 
 json

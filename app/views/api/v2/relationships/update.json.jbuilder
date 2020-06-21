@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.relationship @relationship, partial: "relationship", as: :relationship
+json.relationship @relationship, partial: 'relationship', as: :relationship
