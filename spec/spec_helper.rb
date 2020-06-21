@@ -6,7 +6,6 @@ require "paper_trail/frameworks/rspec"
 require "rspec/rails"
 require "webmock/rspec"
 require "database_cleaner"
-require "mandrill_mailer/offline"
 require "json_schemer"
 require 'aasm/rspec'
 require "simplecov_env"
