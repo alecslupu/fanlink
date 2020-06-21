@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class BlocksController < Api::V2::BlocksController

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V4
     class PollOptionsController < Api::V3::PollOptionsController

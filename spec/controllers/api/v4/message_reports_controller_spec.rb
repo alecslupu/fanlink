@@ -21,7 +21,6 @@ RSpec.describe Api::V4::MessageReportsController, type: :controller do
       end
     end
 
-
     it 'hides a the message if status is changed to message_hidden' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do

@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-
 module Api
   module V1
     class PostReactionsController < ApiController
       load_up_the Post, from: :post_id
       load_up_the PostReaction, only: %i[destroy update]
-
 
       # **
       # @api {post} /posts/:post_id/reactions React to a post.

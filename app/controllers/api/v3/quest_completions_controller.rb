@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class QuestCompletionsController < Api::V2::QuestCompletionsController
       before_action :admin_only, only: %i[list update delete]
       before_action :load_person, only: %i[for_person for_activity for_quest index]
       load_up_the Step, from: :step_id, only: %i[create list]
-
 
       # **
       #
@@ -29,7 +27,6 @@ module Api
       # -H 'Cache-Control: no-cache'
       #
       # *
-
 
       def create
         if !params.has_key?(:step_id)

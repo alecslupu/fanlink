@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V1
     class PeopleController < ApiController
@@ -9,7 +8,6 @@ module Api
 
       load_up_the Person, except: %i[index]
       skip_before_action :require_login, only: %i[create]
-
 
       # **
       # @api {patch} /people/:id/change_password Change your password.

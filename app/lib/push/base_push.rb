@@ -56,7 +56,6 @@ module Push
       NotificationDeviceId.where(device_identifier: device_ids).update_all(not_registered: true)
     end
 
-
     def clean_notification_device_ids(resp, phone_os)
       delete_not_registered_device_ids(resp)
       mark_not_registered_device_ids(resp)

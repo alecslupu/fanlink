@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class MessagesController < Api::V2::MessagesController
@@ -8,7 +7,6 @@ module Api
 
       load_up_the Message, only: %i[update]
       load_up_the Room, from: :room_id, except: %i[update]
-
 
       # **
       # @api {get} /rooms/:room_id/messages Get messages.
@@ -54,7 +52,6 @@ module Api
           return_the @messages
         end
       end
-
 
       # **
       # @api {post} /rooms/:room_id/messages Create a message in a room.

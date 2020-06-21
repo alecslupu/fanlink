@@ -2,7 +2,6 @@
 
 require 'swagger_helper'
 
-
 RSpec.describe 'Api::V4::CertcoursesController', type: :request, swagger_doc: 'v4/swagger.json' do
 
   path '/certificates/{certificate_id}/certcourses' do

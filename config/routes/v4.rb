@@ -14,7 +14,6 @@ Rails.application.routes.draw do
       end
     end
 
-
     resources :session, only: %i[create index] do
       post :token, on: :collection
     end

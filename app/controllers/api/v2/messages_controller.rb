@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V2
     class MessagesController < Api::V1::MessagesController

@@ -51,3 +51,12 @@ rubocop:Style_ClassAndModuleChildren:
     - test:rubocop
   script:
     - bundle exec rubocop --only Style/ClassAndModuleChildren app config spec lib
+
+rubocop:Layout_EmptyLines:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Layout/EmptyLines app config spec lib

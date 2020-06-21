@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class QuestsController < Api::V2::QuestsController
@@ -219,7 +218,6 @@ module Api
           render_422(_('Update failed. Missing quest object.'))
         end
       end
-
 
       protected
 

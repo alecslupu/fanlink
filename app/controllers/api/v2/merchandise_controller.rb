@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V2
     class MerchandiseController < Api::V1::MerchandiseController
@@ -16,7 +15,6 @@ module Api
         end
       end
 
-
       def update
         if @merchandise.update(merchandise_params)
           broadcast(:merchandise_updated, current_user, @merchandise)
@@ -25,7 +23,6 @@ module Api
           render json: {errors: @merchandise.errors.messages}, status: :unprocessable_entity
         end
       end
-
 
       def destroy
         if some_admin?

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class StepsController < Api::V2::StepsController
@@ -74,7 +73,6 @@ module Api
       #     ]
       # }
       # *
-
 
       # **
       #

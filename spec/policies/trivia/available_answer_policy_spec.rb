@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Trivia::AvailableAnswerPolicy, type: :policy do
 
   args = [Trivia::AvailableAnswer, 'trivia']

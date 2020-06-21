@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Trivia::MultipleChoiceAvailableQuestionPolicy, type: :policy do
   args = [Trivia::MultipleChoiceAvailableQuestion, 'trivia']
   include_examples 'enforces the permissions', args
@@ -11,7 +10,6 @@ RSpec.describe Trivia::MultipleChoiceAvailableQuestionPolicy, type: :policy do
   include_examples 'enforces the delete permission', args
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
-
 
   context 'Scope' do
     it 'should only return the person quiz in current product' do

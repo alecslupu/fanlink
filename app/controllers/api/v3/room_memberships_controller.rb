@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class RoomMembershipsController < Api::V2::RoomMembershipsController

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V4
     class QuestsController < Api::V3::QuestsController
@@ -28,7 +27,6 @@ module Api
 
       #   return_the @quest, handler: "jb"
       # end
-
 
       # def create
       #   @quest = Quest.create(quest_params)

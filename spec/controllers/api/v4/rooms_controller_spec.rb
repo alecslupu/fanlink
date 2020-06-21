@@ -234,7 +234,6 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       end
    end
 
-
    it 'should set private room timestamp' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class RewardProgressesController < ApiController
@@ -34,7 +33,6 @@ module Api
           render_422 _('Missing reward_id parameter.')
         end
       end
-
 
       private
 

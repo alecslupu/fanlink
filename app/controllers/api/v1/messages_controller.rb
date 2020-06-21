@@ -8,7 +8,6 @@ module Api
       load_up_the Message, only: %i[update]
       load_up_the Room, from: :room_id, except: %i[update]
 
-
       # **
       # @api {post} /rooms/:room_id/messages Create a message in a room.
       # @apiName CreateMessage

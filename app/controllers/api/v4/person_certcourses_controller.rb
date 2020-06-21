@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V4
     class PersonCertcoursesController < ApiController
@@ -26,7 +25,6 @@ module Api
         else
           register_progress
         end
-
 
         if @person_certcourse.save
           PersonCertificate.update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)

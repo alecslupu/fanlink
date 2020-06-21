@@ -73,7 +73,6 @@ RSpec.describe Trivia::GameLeaderboardPolicy, type: :policy do
     end
   end
 
-
   context 'Scope' do
     it 'should only return the person quiz in current product' do
       person = build(:person)

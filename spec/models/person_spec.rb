@@ -154,7 +154,6 @@ RSpec.describe Person, type: :model do
       it { should have_many(:blocks_on) }
       it { should have_many(:blocked_by_people).through(:blocks_on) }
 
-
       it { should have_many(:active_followings) }
       it { should have_many(:following).through(:active_followings) }
       it { should have_many(:passive_followings) }
@@ -720,7 +719,6 @@ RSpec.describe Person, type: :model do
     end
   end
 
-
   describe '#send_certificate_email' do
     it 'enqueues an onboarding email' do
       pc = create(:person_certificate)
@@ -811,7 +809,6 @@ RSpec.describe Person, type: :model do
       expect(to_test).to eq(Role.last)
     end
   end
-
 
   describe '#send_assignee_certificate_email' do
     it 'enqueues a certificate email' do

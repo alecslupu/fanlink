@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Api
   module V3
     class BadgeActionsController < Api::V2::BadgeActionsController
@@ -42,7 +41,6 @@ module Api
       #     HTTP/1.1 429 - Not enough time since last submission of this action type
       #           or duplicate action type, person, identifier combination
       # *
-
 
       def create
         if @rewards.any?

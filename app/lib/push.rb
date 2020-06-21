@@ -128,7 +128,6 @@ module Push
     )
   end
 
-
   private
 
   # WHAAA ?
