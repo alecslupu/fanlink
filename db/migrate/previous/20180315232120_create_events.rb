@@ -14,5 +14,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
     add_index :events, [:starts_at], name: "ind_events_starts_at"
     add_index :events, [:ends_at], name: "ind_events_ends_at"
     add_foreign_key :events, :products, name: "fk_events_products"
+    add_column :events, :deleted, :boolean, default: false, null: false
+
   end
 end

@@ -4,5 +4,7 @@ class CreateJoinTablePostTag < ActiveRecord::Migration[5.1]
       t.index [:post_id, :tag_id]
       t.index [:tag_id, :post_id]
     end
+    rename_table :posts_tags, :post_tags
+
   end
 end
