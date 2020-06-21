@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   post_comments: render(partial: "app", collection: @post_comments, as: :post_comment, handlers: :jb)
 }

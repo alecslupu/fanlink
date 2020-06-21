@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   rewards: render(partial: "app", collection: @rewards, as: :reward, handlers: :jb)
 }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   rooms: render(partial: "app", collection: @rooms, as: :room, handlers: :jb)
 }

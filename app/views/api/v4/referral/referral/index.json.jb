@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   people: render(partial: "api/v4/people/person_mini", collection: @people, as: :person, handlers: :jb)
 }

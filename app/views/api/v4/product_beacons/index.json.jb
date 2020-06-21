@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   beacons: render(partial: "app", collection: @product_beacons, as: :beacon, handlers: :jb)
 }

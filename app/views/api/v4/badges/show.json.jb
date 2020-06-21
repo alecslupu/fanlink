@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   badge: render(partial: "app", locals: { badge: @badge })
 }

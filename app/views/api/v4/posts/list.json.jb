@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   posts: render(partial: "app", collection: @posts, as: :post, handlers: :jb),
   total: @posts.size

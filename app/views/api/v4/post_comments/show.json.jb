@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   post_comment: render(partial: "app", locals: { post_comment: @post_comment }, handlers: "jb")
 }
