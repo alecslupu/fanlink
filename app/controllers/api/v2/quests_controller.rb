@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V2::QuestsController < ApiController
-  before_action :admin_only, except: %i[ index show ]
-  load_up_the Quest, only: %i[ update ]
+  before_action :admin_only, except: %i[index show]
+  load_up_the Quest, only: %i[update]
   # **
   #
   # @api {GET} /quests Get quests for a product

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V3::PollsController < ApiController
-  load_up_the Poll, except: %i[ index create ]
+  load_up_the Poll, except: %i[index create]
   # **
   # @api {post} /posts/:post_id/reactions React to a post.
   # @apiName CreatePostReaction

@@ -120,7 +120,7 @@ class Message < ApplicationRecord
 
   # replicated_model
 
-  enum status: %i[ pending posted ]
+  enum status: %i[pending posted]
 
   normalize_attributes :body
 
@@ -164,10 +164,10 @@ class Message < ApplicationRecord
   scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
 
   def as_json
-    super(only: %i[ id body picture_id ], methods: %i[ create_time picture_url pinned ],
-          include: { message_mentions: { except: %i[ message_id ] },
+    super(only: %i[id body picture_id], methods: %i[create_time picture_url pinned],
+          include: { message_mentions: { except: %i[message_id] },
                     person: { only: %i[ id username name designation product_account chat_banned badge_points
-                                       level do_not_message_me pin_messages_from ], methods: %i[ level picture_url ] } })
+                                       level do_not_message_me pin_messages_from ], methods: %i[level picture_url] } })
   end
 
   def create_time

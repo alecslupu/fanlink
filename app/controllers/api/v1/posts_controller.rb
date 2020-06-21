@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::PostsController < ApiController
-  before_action :load_post, only: %i[ update ]
-  before_action :admin_only, only: %i[ list ]
-  skip_before_action :require_login, :set_product, only: %i[ share ]
+  before_action :load_post, only: %i[update]
+  before_action :admin_only, only: %i[list]
+  skip_before_action :require_login, :set_product, only: %i[share]
   # **
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -412,7 +412,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+    params.require(:post).permit(%i[body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id] +
                                      ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
   end
 end

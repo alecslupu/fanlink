@@ -4,8 +4,8 @@ class Api::V1::PeopleController < ApiController
   # TODO: Lock down GET /people to admin only or something.
   prepend_before_action :logout, only: :create
 
-  load_up_the Person, except: %i[ index ]
-  skip_before_action :require_login, only: %i[ create ]
+  load_up_the Person, except: %i[index]
+  skip_before_action :require_login, only: %i[create]
 
 
   # **
@@ -294,6 +294,6 @@ private
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password ] +
-                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []))
+                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[recommended] : []))
   end
 end

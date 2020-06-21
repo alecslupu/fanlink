@@ -30,6 +30,6 @@ class Api::V4::CertificatesController < ApiController
   private
 
     def certificate_params
-      params.require(:certificate).permit(%i[ long_name short_name description certificate_order template_image ])
+      params.require(:certificate).permit(%i[long_name short_name description certificate_order template_image])
     end
 end

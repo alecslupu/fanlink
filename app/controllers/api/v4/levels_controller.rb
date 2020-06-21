@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V4::LevelsController < Api::V3::LevelsController
-  before_action :admin_only, only: %i[ create update destroy ]
-  load_up_the Level, only: %i[ update show delete ]
+  before_action :admin_only, only: %i[create update destroy]
+  load_up_the Level, only: %i[update show delete]
   def index
     @levels = paginate(Level.order(:points))
     return_the @levels, handler: tpl_handler

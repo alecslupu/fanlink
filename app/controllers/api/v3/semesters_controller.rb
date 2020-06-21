@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V3::SemestersController < ApiController
-  before_action :admin_only, only: %i[ create update delete ]
-  load_up_the Semester, only: %i[ update destroy ]
+  before_action :admin_only, only: %i[create update delete]
+  load_up_the Semester, only: %i[update destroy]
 
   def index
     if web_request?

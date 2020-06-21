@@ -2,7 +2,7 @@
 
 class Api::V3::RelationshipsController < Api::V2::RelationshipsController
   include Messaging
-  load_up_the Relationship, except: %i[ create index ]
+  load_up_the Relationship, except: %i[create index]
 
   # **
   # @api {post} /relationships Send a friend request to a person.

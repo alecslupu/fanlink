@@ -65,7 +65,7 @@ class Post < ApplicationRecord
     end
   end
   #   include Post::RealTime
-  enum status: %i[ pending published deleted rejected errored ]
+  enum status: %i[pending published deleted rejected errored]
 
   after_save :adjust_priorities
 

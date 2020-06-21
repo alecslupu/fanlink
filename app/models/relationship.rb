@@ -14,7 +14,7 @@
 
 class Relationship < ApplicationRecord
   # include Relationship::RealTime
-  enum status: %i[ requested friended ]
+  enum status: %i[requested friended]
 
   #  Relationship::RealTime
 

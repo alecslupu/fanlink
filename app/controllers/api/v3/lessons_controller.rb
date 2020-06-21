@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V3::LessonsController < ApiController
-  before_action :admin_only, only: %i[ create update delete ]
-  load_up_the Lesson, only: %i[ update show destroy ]
-  load_up_the Course, from: :course_id, only: %i[ index create ]
+  before_action :admin_only, only: %i[create update delete]
+  load_up_the Lesson, only: %i[update show destroy]
+  load_up_the Course, from: :course_id, only: %i[index create]
 
   def index
     if web_request?

@@ -31,7 +31,7 @@ class PortalNotification < ApplicationRecord
   # specify languages not used for respective fields
   IGNORE_TRANSLATION_LANGS = { body: ["un"] }
 
-  enum sent_status: %i[ pending sent cancelled errored ]
+  enum sent_status: %i[pending sent cancelled errored]
 
   has_paper_trail
   translates :body, touch: true, versioning: :paper_trail

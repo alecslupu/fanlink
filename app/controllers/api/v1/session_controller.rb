@@ -3,7 +3,7 @@
 class Api::V1::SessionController < ApiController
   prepend_before_action :logout, only: :create
   skip_before_action :require_login, :check_banned
-  skip_before_action :set_product, except: %i[ create ]
+  skip_before_action :set_product, except: %i[create]
 
   # **
   # @api {get} /session Check a session.

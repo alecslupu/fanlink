@@ -104,6 +104,6 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def person_certcourses_params
-    params.require(:person_certcourse).permit(%i[ certcourse_id ])
+    params.require(:person_certcourse).permit(%i[certcourse_id])
   end
 end

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V3::EventsController < Api::V2::EventsController
-  before_action :admin_only, only: %i[ create update destroy ]
-  skip_before_action :require_login, only: %i[ index ]
-  load_up_the Event, only: %i[ update delete ]
+  before_action :admin_only, only: %i[create update destroy]
+  skip_before_action :require_login, only: %i[index]
+  load_up_the Event, only: %i[update delete]
 
   # **
   # @apiDefine EventSuccess

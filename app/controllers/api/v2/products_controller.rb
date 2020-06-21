@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V2::ProductsController < ApiController
-  before_action :super_admin_only, only: %i[ create update]
-  skip_before_action :require_login, except: %i[ create update ]
+  before_action :super_admin_only, only: %i[create update]
+  skip_before_action :require_login, except: %i[create update]
   skip_before_action :set_product
 
   def select

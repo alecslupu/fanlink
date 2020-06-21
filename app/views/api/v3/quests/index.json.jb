@@ -6,11 +6,11 @@ if current_user.some_admin? && @req_source == "web"
     render partial: "quest", locals: { quest: quest, lang: @lang }, handlers: "jb"
   end
 elsif current_user.tester
-  json[:quests] = @quests.reject { |quest| %w[ deleted disabled].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now }.map do |quest|
+  json[:quests] = @quests.reject { |quest| %w[deleted disabled].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now }.map do |quest|
     render partial: "quest", locals: { quest: quest, lang: @lang }, handlers: "jb"
   end
 else
-  json[:quests] = @quests.reject { |quest| %w[ deleted disabled enabled ].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now }.map do |quest|
+  json[:quests] = @quests.reject { |quest| %w[deleted disabled enabled].include?(quest.status.to_s) || quest.starts_at > DateTime.now || quest.ends_at && quest.ends_at < DateTime.now }.map do |quest|
     render partial: "quest", locals: { quest: quest, lang: @lang }
   end
 end

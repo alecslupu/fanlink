@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V3::PostCommentsController < Api::V2::PostCommentsController
-  before_action :load_post, except: %i[ list ]
+  before_action :load_post, except: %i[list]
 
   # **
   # @api {post} /posts/:id/comments Create a comment on a post.
@@ -207,6 +207,6 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
     end
 
     def post_comment_params
-      params.require(:post_comment).permit(:body, mentions: %i[ person_id location length ]).merge(person_id: current_user.id)
+      params.require(:post_comment).permit(:body, mentions: %i[person_id location length]).merge(person_id: current_user.id)
     end
 end

@@ -41,7 +41,7 @@ class Quest < ApplicationRecord
   # include Quest::PortalFilters
 
   # enum status: %i[ in_development in_testing published deleted ]
-  enum status: %i[ disabled enabled active deleted ]
+  enum status: %i[disabled enabled active deleted]
 
   acts_as_tenant(:product)
   belongs_to :product

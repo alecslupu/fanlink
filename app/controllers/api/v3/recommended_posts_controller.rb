@@ -25,7 +25,7 @@ class Api::V3::RecommendedPostsController < Api::V2::RecommendedPostsController
   # *
 
   def index
-    if %w[ lvconnect nashvilleconnect ].include?(ActsAsTenant.current_tenant.internal_name)
+    if %w[lvconnect nashvilleconnect].include?(ActsAsTenant.current_tenant.internal_name)
       @posts = paginate Post.for_product(ActsAsTenant.current_tenant).visible.order(created_at: :desc)
     else
       @posts = paginate Post.for_product(ActsAsTenant.current_tenant).visible.where(recommended: true).order(created_at: :desc)

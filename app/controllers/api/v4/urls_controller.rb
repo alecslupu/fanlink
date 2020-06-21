@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V4::UrlsController < Api::V3::UrlsController
-  load_up_the Url, only: %i[ show update delete]
+  load_up_the Url, only: %i[show update delete]
   def index
     @urls = Url.all
     return_the paginate(@urls), handler: tpl_handler

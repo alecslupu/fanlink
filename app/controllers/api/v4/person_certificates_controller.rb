@@ -42,6 +42,6 @@ class Api::V4::PersonCertificatesController < ApiController
   end
 
   def person_certificate_params
-    params.require(:person_certificate).permit(%i[ certificate_id purchased_order_id amount_paid currency purchased_sku purchased_platform receipt_id full_name ])
+    params.require(:person_certificate).permit(%i[certificate_id purchased_order_id amount_paid currency purchased_sku purchased_platform receipt_id full_name])
   end
 end
