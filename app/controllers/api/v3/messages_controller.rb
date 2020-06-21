@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-class Api::V3::MessagesController < Api::V2::MessagesController
-  before_action :admin_only, only: %i[ list update ]
 
-  load_up_the Message, only: %i[ update ]
-  load_up_the Room, from: :room_id, except: %i[ update ]
+class Api::V3::MessagesController < Api::V2::MessagesController
+  before_action :admin_only, only: %i[list update]
+
+  load_up_the Message, only: %i[update]
+  load_up_the Room, from: :room_id, except: %i[update]
 
 
   # **
@@ -44,7 +45,7 @@ class Api::V3::MessagesController < Api::V2::MessagesController
     if !check_access(room)
       render_not_found
     else
-      msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
+      msgs = (params[:pinned].blank? || (params[:pinned].downcase == 'all')) ? room.messages : room.messages.pinned(params[:pinned])
       @messages = paginate(msgs.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
       clear_count(room) if room.private?
       return_the @messages
@@ -91,7 +92,7 @@ class Api::V3::MessagesController < Api::V2::MessagesController
     room = Room.find(params[:room_id])
     if room.active?
       if room.public && current_user.chat_banned?
-        render json: { errors: "You are banned from chat." }, status: :unprocessable_entity
+        render json: { errors: 'You are banned from chat.' }, status: :unprocessable_entity
       else
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
@@ -108,7 +109,7 @@ class Api::V3::MessagesController < Api::V2::MessagesController
         end
       end
     else
-      render_422 _("This room is no longer active.")
+      render_422 _('This room is no longer active.')
     end
   end
 
@@ -281,9 +282,9 @@ class Api::V3::MessagesController < Api::V2::MessagesController
 private
 
   def apply_filters
-    messages = Message.joins(:room).where("rooms.product_id = ? AND rooms.status != ?", ActsAsTenant.current_tenant.id, Room.statuses[:deleted]).order(created_at: :desc)
+    messages = Message.joins(:room).where('rooms.product_id = ? AND rooms.status != ?', ActsAsTenant.current_tenant.id, Room.statuses[:deleted]).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && Message.respond_to?(p)
+      if p.end_with?('_filter') && Message.respond_to?(p)
         messages = messages.send(p, v)
       end
     end
@@ -291,7 +292,7 @@ private
   end
 
   def check_access(room)
-    (room.active? && (room.public || room.members.include?(current_user))) || current_user.role == "super_admin"
+    (room.active? && (room.public || room.members.include?(current_user))) || current_user.role == 'super_admin'
   end
 
   def check_dates
@@ -308,7 +309,7 @@ private
   end
 
   def message_params
-    params.require(:message).permit(:body, :picture, :audio, mentions: %i[ person_id location length ])
+    params.require(:message).permit(:body, :picture, :audio, mentions: %i[person_id location length])
   end
 
   def message_update_params

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-json.cache! ["v3", polls] do
+
+json.cache! ['v3', polls] do
   json.id polls.id.to_s
   json.post_id polls.post.id
   json.description polls.description

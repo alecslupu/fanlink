@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Merchandise")
 
-  config.included_models.push("Merchandise::Translation")
+RailsAdmin.config do |config|
+  config.included_models.push('Merchandise')
+
+  config.included_models.push('Merchandise::Translation')
 
   config.model 'Merchandise::Translation' do
     visible false
@@ -18,7 +19,7 @@ RailsAdmin.config do |config|
       fields :locale, :name, :description
     end
   end
-  config.model "Merchandise" do
+  config.model 'Merchandise' do
     configure :translations, :globalize_tabs
 
     list do

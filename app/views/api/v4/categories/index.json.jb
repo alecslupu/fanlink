@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  categories: render(partial: "app", collection: @categories, as: :category, handlers: :jb)
+  categories: render(partial: 'app', collection: @categories, as: :category, handlers: :jb)
 }

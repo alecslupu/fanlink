@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: coupons
@@ -11,7 +12,7 @@
 #  deleted     :boolean          default(FALSE)
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :coupon do

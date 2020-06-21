@@ -1,9 +1,10 @@
 # frozen_string_literal: true
-require "spec_helper"
+
+require 'spec_helper'
 
 RSpec.describe Api::V1::BlocksController, type: :controller do
-  describe "#create" do
-    it "should block person" do
+  describe '#create' do
+    it 'should block person' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         to_be_blocked = create(:person)
@@ -11,10 +12,10 @@ RSpec.describe Api::V1::BlocksController, type: :controller do
         post :create, params: { block: { blocked_id: to_be_blocked.id } }
         expect(blocker.blocked?(to_be_blocked)).to be_truthy
         expect(response).to have_http_status(200)
-        expect(block_json(json["block"])).to be_truthy
+        expect(block_json(json['block'])).to be_truthy
       end
     end
-    it "should kill relationships with person" do
+    it 'should kill relationships with person' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         to_be_blocked = create(:person)
@@ -25,7 +26,7 @@ RSpec.describe Api::V1::BlocksController, type: :controller do
         expect(rel1).not_to exist_in_database
       end
     end
-    it "should unfollow person" do
+    it 'should unfollow person' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         to_be_blocked = create(:person)
@@ -36,7 +37,7 @@ RSpec.describe Api::V1::BlocksController, type: :controller do
         expect(blocker.following?(to_be_blocked)).to be_falsey
       end
     end
-    it "should be unfollowed blocked person" do
+    it 'should be unfollowed blocked person' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         to_be_blocked = create(:person)
@@ -47,7 +48,7 @@ RSpec.describe Api::V1::BlocksController, type: :controller do
         expect(to_be_blocked.following?(blocker)).to be_falsey
       end
     end
-    it "should not block person already blocked" do
+    it 'should not block person already blocked' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         to_be_blocked = create(:person)
@@ -55,12 +56,12 @@ RSpec.describe Api::V1::BlocksController, type: :controller do
         login_as(blocker)
         post :create, params: { block: { blocked_id: to_be_blocked.id } }
         expect(response).to have_http_status(422)
-        expect(json["errors"].first).to include(_("That user is already blocked."))
+        expect(json['errors'].first).to include(_('That user is already blocked.'))
       end
     end
   end
-  describe "#destroy" do
-    it "should unblock person" do
+  describe '#destroy' do
+    it 'should unblock person' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         to_be_unblocked = create(:person)
@@ -71,7 +72,7 @@ RSpec.describe Api::V1::BlocksController, type: :controller do
         expect(block).not_to exist_in_database
       end
     end
-    it "should not unblock if blocker not current user" do
+    it 'should not unblock if blocker not current user' do
       blocker = create(:person)
       ActsAsTenant.with_tenant(blocker.product) do
         not_to_be_unblocked = create(:person)

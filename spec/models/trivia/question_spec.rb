@@ -1,17 +1,18 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe Trivia::Question, type: :model do
-  context "Valid factory" do
+  context 'Valid factory' do
     it { expect(build(:trivia_single_choice_question)).to be_valid }
     it { expect(build(:trivia_multiple_choice_question)).to be_valid }
     it { expect(build(:trivia_picture_question)).to be_valid }
     it { expect(build(:trivia_boolean_choice_question)).to be_valid }
     it { expect(build(:trivia_hangman_question)).to be_valid }
   end
-  context "Associations" do
+  context 'Associations' do
     describe "should verify associations haven't changed for" do
-      it "#has_many" do
+      it '#has_many' do
         should belong_to(:round)
         should belong_to(:available_question)
         should have_many(:trivia_answers)
@@ -20,26 +21,26 @@ RSpec.describe Trivia::Question, type: :model do
     end
   end
 
-  describe ".round_id" do
-    it "matches the trivia round id" do
+  describe '.round_id' do
+    it 'matches the trivia round id' do
       round = create :trivia_single_choice_question
       expect(round.round_id).to eq(round.trivia_round_id)
     end
   end
 
-  context "complete round" do
-    it "" do
+  context 'complete round' do
+    it '' do
       round = create :trivia_single_choice_question
       expect(round.available_answers.size).to eq(4)
     end
   end
 
-  context "scheduled round" do
-    describe ".compute_gameplay_parameters" do
-      it "has the method" do
+  context 'scheduled round' do
+    describe '.compute_gameplay_parameters' do
+      it 'has the method' do
         expect(Trivia::Question.new.respond_to?(:compute_gameplay_parameters)).to eq(true)
       end
-      it "sets the end date" do
+      it 'sets the end date' do
         time = DateTime.now.to_i
         question = create(:trivia_single_choice_question, start_date: time, time_limit: 10)
         question.compute_gameplay_parameters
@@ -47,11 +48,11 @@ RSpec.describe Trivia::Question, type: :model do
       end
     end
 
-    describe ".end_date_with_cooldown" do
-      it "has the method" do
+    describe '.end_date_with_cooldown' do
+      it 'has the method' do
         expect(Trivia::Question.new.respond_to?(:end_date_with_cooldown)).to eq(true)
       end
-      it "sets the end date" do
+      it 'sets the end date' do
         time = DateTime.now.to_i
         question = create(:trivia_single_choice_question, start_date: time, time_limit: 10, cooldown_period: 15)
         question.compute_gameplay_parameters
@@ -59,8 +60,8 @@ RSpec.describe Trivia::Question, type: :model do
       end
     end
 
-    describe ".set_order" do
-      it "has the method" do
+    describe '.set_order' do
+      it 'has the method' do
         expect(Trivia::Question.new.respond_to?(:set_order)).to eq(true)
       end
     end

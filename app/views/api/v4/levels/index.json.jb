@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  levels: render(partial: "app", collection: @levels, as: :level, handlers: :jb)
+  levels: render(partial: 'app', collection: @levels, as: :level, handlers: :jb)
 }

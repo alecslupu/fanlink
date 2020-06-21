@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("PortalAccess")
 
-  config.model "PortalAccess" do
+RailsAdmin.config do |config|
+  config.included_models.push('PortalAccess')
+
+  config.model 'PortalAccess' do
     list do
       fields :id, :person, :post, :chat
     end

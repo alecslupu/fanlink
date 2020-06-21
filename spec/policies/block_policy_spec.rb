@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe BlockPolicy, type: :policy do
-  args = Block, "chat"
+  args = Block, 'chat'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

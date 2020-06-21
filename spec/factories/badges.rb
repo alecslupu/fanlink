@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: badges
@@ -32,6 +33,6 @@ FactoryBot.define do
     sequence(:internal_name) { |n| "action_#{n}" }
     action_type { create(:action_type) }
     point_value { 10 }
-    picture { fixture_file_upload("spec/fixtures/images/better.png", "image/png") }
+    picture { fixture_file_upload('spec/fixtures/images/better.png', 'image/png') }
   end
 end

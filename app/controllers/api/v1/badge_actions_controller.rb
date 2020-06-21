@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::BadgeActionsController < ApiController
   before_action :load_action_type
 
@@ -40,7 +41,7 @@ class Api::V1::BadgeActionsController < ApiController
   # *
   def create
     if @action_type.seconds_lag > 0 && current_user.badge_actions.where(action_type: @action_type).
-        where("created_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?
+        where('created_at > ?', Time.zone.now - @action_type.seconds_lag.seconds).exists?
       head :too_many_requests
     else
       badge_action = current_user.badge_actions.create(action_type: @action_type, identifier: params[:badge_action][:identifier])
@@ -58,10 +59,10 @@ private
 
   def load_action_type
     if params[:badge_action].blank? || params[:badge_action][:action_type].blank?
-      render_error(_("You must supply a badge action type."))
+      render_error(_('You must supply a badge action type.'))
     else
       @action_type = ActionType.find_by(internal_name: params[:badge_action][:action_type])
-      render_error("Action type is invalid.") if @action_type.blank?
+      render_error('Action type is invalid.') if @action_type.blank?
     end
   end
 end

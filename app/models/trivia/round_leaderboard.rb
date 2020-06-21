@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_round_leaderboards
@@ -20,7 +21,7 @@ module Trivia
     scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail
-    belongs_to :round, class_name: "Trivia::Round", foreign_key: :trivia_round_id
-    belongs_to :person, class_name: "Person"
+    belongs_to :round, class_name: 'Trivia::Round', foreign_key: :trivia_round_id
+    belongs_to :person, class_name: 'Person'
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::PostCommentsController < Api::V2::PostCommentsController
-  before_action :load_post, except: %i[ list ]
+  before_action :load_post, except: %i[list]
 
   # **
   # @api {post} /posts/:id/comments Create a comment on a post.
@@ -57,7 +58,7 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
 
   def create
     if current_user.chat_banned?
-      render json: { errors: "You are banned." }, status: :unprocessable_entity
+      render json: { errors: 'You are banned.' }, status: :unprocessable_entity
     else
       @post_comment = @post.post_comments.create(post_comment_params)
       if @post_comment.valid?
@@ -190,7 +191,7 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
     def apply_filters
       post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
       params.each do |p, v|
-        if p.end_with?("_filter") && PostComment.respond_to?(p)
+        if p.end_with?('_filter') && PostComment.respond_to?(p)
           post_comments = post_comments.send(p, v)
         end
       end
@@ -206,6 +207,6 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
     end
 
     def post_comment_params
-      params.require(:post_comment).permit(:body, mentions: %i[ person_id location length ]).merge(person_id: current_user.id)
+      params.require(:post_comment).permit(:body, mentions: %i[person_id location length]).merge(person_id: current_user.id)
     end
 end

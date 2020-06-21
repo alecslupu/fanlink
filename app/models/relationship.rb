@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: relationships
@@ -13,7 +14,7 @@
 
 class Relationship < ApplicationRecord
   # include Relationship::RealTime
-  enum status: %i[ requested friended ]
+  enum status: %i[requested friended]
 
   #  Relationship::RealTime
 
@@ -28,8 +29,8 @@ class Relationship < ApplicationRecord
 
   has_paper_trail
 
-  belongs_to :requested_by, class_name: "Person", touch: true
-  belongs_to :requested_to, class_name: "Person", touch: true
+  belongs_to :requested_by, class_name: 'Person', touch: true
+  belongs_to :requested_to, class_name: 'Person', touch: true
 
   validate :check_outstanding
   validate :check_non_self
@@ -47,20 +48,20 @@ private
 
   def check_non_self
     if requested_by_id == requested_to_id
-      errors.add(:base, :self_friended, message: _("You cannot have a relationship with yourself."))
+      errors.add(:base, :self_friended, message: _('You cannot have a relationship with yourself.'))
     end
   end
 
   def check_outstanding
     if requested? && Relationship.where.not(id: id).for_people(requested_by, requested_to).exists?
-      errors.add(:base, :existing_friendship, message: _("You already have an existing friendship or friend request to or from that person."))
+      errors.add(:base, :existing_friendship, message: _('You already have an existing friendship or friend request to or from that person.'))
     end
   end
 
   def valid_status_transition
     if status_changed?
       if status_was.to_sym == :friended && self.requested?
-        errors.add(:status, :valid_status_transition, message: _("You cannot change from friended to requested."))
+        errors.add(:status, :valid_status_transition, message: _('You cannot change from friended to requested.'))
       end
     end
   end

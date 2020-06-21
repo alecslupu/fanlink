@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V3::StepsController < Api::V2::StepsController
-  load_up_the Quest, from: :quest_id, only: %i[ create index ]
-  load_up_the Step, from: :id, only: %i[ update delete ]
+  load_up_the Quest, from: :quest_id, only: %i[create index]
+  load_up_the Step, from: :id, only: %i[update delete]
 
   # **
   # @apiDefine Success
@@ -229,7 +230,7 @@ class Api::V3::StepsController < Api::V2::StepsController
       if @step.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the step."))
+        render_422(_('Failed to delete the step.'))
       end
     else
       render_not_found

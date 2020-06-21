@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe FollowingPolicy, type: :policy do
-  args = Following, "user"
+  args = Following, 'user'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

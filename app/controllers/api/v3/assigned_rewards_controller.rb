@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::AssignedRewardsController < ApiController
   def index
     @assignees = paginate(AssignedReward.where(reward_id: params[:reward_id]).order(created_at: :asc))
@@ -11,7 +12,7 @@ class Api::V3::AssignedRewardsController < ApiController
   end
 
   def create
-    if params[:assign][:assigned_type] == "ActionType"
+    if params[:assign][:assigned_type] == 'ActionType'
       action_type = ActionType.find(params[:assign][:assigned_id])
       reward = Reward.find(params[:assign][:reward_id])
       reward.series = action_type.internal_name if reward.series.blank?
@@ -36,7 +37,7 @@ class Api::V3::AssignedRewardsController < ApiController
         render_422 @assigned.errors
       end
     else
-      render_422(_("Updated failed. Missing assign object."))
+      render_422(_('Updated failed. Missing assign object.'))
     end
   end
 
@@ -46,7 +47,7 @@ class Api::V3::AssignedRewardsController < ApiController
       if @assigned.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the assigned reward."))
+        render_422(_('Failed to delete the assigned reward.'))
       end
     else
       render_not_found
@@ -63,7 +64,7 @@ private
   end
 
   def load_assigned
-    resource, id = request.path.split("/")[1, 2]
+    resource, id = request.path.split('/')[1, 2]
     @assigned = resource.singularize.classify.constantize.find(id)
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  certificates: render(partial: "api/v4/certificates/app", collection: @certificates, locals: { user: @person }, as: :certificate, handlers: :jb)
+  certificates: render(partial: 'api/v4/certificates/app', collection: @certificates, locals: { user: @person }, as: :certificate, handlers: :jb)
 }

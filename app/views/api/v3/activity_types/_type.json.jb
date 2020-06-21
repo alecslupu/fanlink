@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-json = Rails.cache.fetch ["v3", atype.updated_at, atype] do
+
+json = Rails.cache.fetch ['v3', atype.updated_at, atype] do
   {
     id: atype.id,
     activity_id: atype.activity_id,
@@ -9,10 +10,10 @@ json = Rails.cache.fetch ["v3", atype.updated_at, atype] do
 end
 case atype.atype.to_sym
 when :beacon
-  beacon = ProductBeacon.find(atype.value["id"])
+  beacon = ProductBeacon.find(atype.value['id'])
   unless beacon.deleted?
-    json[:value] = Rails.cache.fetch ["v3", beacon.updated_at, beacon] do
-      render partial: "api/v3/product_beacons/beacon", locals: { beacon: beacon }, handlers: "jb"
+    json[:value] = Rails.cache.fetch ['v3', beacon.updated_at, beacon] do
+      render partial: 'api/v3/product_beacons/beacon', locals: { beacon: beacon }, handlers: 'jb'
     end
   else
     json[:value] = nil

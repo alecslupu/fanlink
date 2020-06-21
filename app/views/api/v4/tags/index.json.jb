@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 json = {}
 if @posts
- json = render(partial: "api/v4/posts/rendered_posts", locals: { posts: @posts })
+ json = render(partial: 'api/v4/posts/rendered_posts', locals: { posts: @posts })
 else
-  json[:tags] = render(partial: "app", collection: @tags, as: :tag, handlers: :jb)
+  json[:tags] = render(partial: 'app', collection: @tags, as: :tag, handlers: :jb)
 end
 json

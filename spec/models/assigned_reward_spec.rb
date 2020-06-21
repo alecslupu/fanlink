@@ -1,22 +1,23 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe AssignedReward, type: :model do
-  context "Validation" do
-    it "should validate presence of assigned_type" do
-      should validate_presence_of(:assigned_type).with_message(_(" is not an assignable type."))
+  context 'Validation' do
+    it 'should validate presence of assigned_type' do
+      should validate_presence_of(:assigned_type).with_message(_(' is not an assignable type.'))
       should validate_inclusion_of(:assigned_type).in_array(%w[ActionType Quest Step QuestActivity])
     end
-    it "should create a valid assigned_reward" do
+    it 'should create a valid assigned_reward' do
       expect(build(:assigned_as_quest)).to be_valid
     end
   end
-  context "Associations" do
+  context 'Associations' do
     it { should belong_to(:assigned) }
     it { should belong_to(:reward).touch(true) }
   end
 
-  context "Valid factory" do
+  context 'Valid factory' do
     it { expect(build(:assigned_reward)).not_to be_valid }
     it { expect(build(:assigned_as_quest)).to be_valid }
     it { expect(build(:assigned_as_step)).to be_valid }

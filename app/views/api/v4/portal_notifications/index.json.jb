@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  portal_notifications: render(partial: "app", collection: @portal_notifications, as: :portal_notification, handlers: :jb)
+  portal_notifications: render(partial: 'app', collection: @portal_notifications, as: :portal_notification, handlers: :jb)
 }

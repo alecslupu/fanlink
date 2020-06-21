@@ -1,12 +1,13 @@
 # frozen_string_literal: true
-require "spec_helper"
+
+require 'spec_helper'
 
 RSpec.describe Api::V2::PostsController, type: :controller do
-  describe "#index" do
+  describe '#index' do
     pending
   end
 
-  describe "#create" do
+  describe '#create' do
     it "creates a post with attachments when it's valid" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -14,7 +15,7 @@ RSpec.describe Api::V2::PostsController, type: :controller do
 
         post :create, params: {
           post: {
-            body: "Body",
+            body: 'Body',
             picture: fixture_file_upload('images/better.png', 'image/png'),
             audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
           }

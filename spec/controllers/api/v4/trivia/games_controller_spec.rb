@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe Api::V4::Trivia::GamesController, type: :controller do
   # TODO: auto-generated
-  describe "GET index" do
-    it "returns all the upcomming games with their attached images" do
+  describe 'GET index' do
+    it 'returns all the upcomming games with their attached images' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -26,8 +27,8 @@ RSpec.describe Api::V4::Trivia::GamesController, type: :controller do
     end
   end
   # TODO: auto-generated
-  describe "GET completed" do
-    it "returns all the completed games with their attached images" do
+  describe 'GET completed' do
+    it 'returns all the completed games with their attached images' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)

@@ -1,12 +1,13 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe Api::V4::PostsController, type: :controller do
   # TODO: auto-generated
-  describe "GET index" do
-    let(:created_in_range) { Date.parse("2018-01-02").end_of_day }
-    let(:from) { "2018-01-01" }
-    let(:to) { "2018-01-03" }
+  describe 'GET index' do
+    let(:created_in_range) { Date.parse('2018-01-02').end_of_day }
+    let(:from) { '2018-01-01' }
+    let(:to) { '2018-01-03' }
     it 'returns all the posts with the attachments' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -20,7 +21,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
             :published_post,
             3,
             person: person2,
-            body: "this is my body",
+            body: 'this is my body',
             picture: fixture_file_upload('images/better.png', 'image/png'),
             audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
             video: fixture_file_upload('videos/short_video.mp4', 'video/mp4'),
@@ -41,7 +42,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       end
     end
 
-    it "should get a list of posts for a date range without limit" do
+    it 'should get a list of posts for a date range without limit' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         people = create_list(:person, 2)
@@ -56,12 +57,12 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         login_as(person)
         get :index, params: { from_date: from, to_date: to }
         expect(response).to be_successful
-        expect(json["posts"].map { |p| p["id"].to_i }).to eq([postloggedin.id, post22.id, post21.id, post12.id, post11.id])
+        expect(json['posts'].map { |p| p['id'].to_i }).to eq([postloggedin.id, post22.id, post21.id, post12.id, post11.id])
       end
     end
 
 
-    it "returns a list of posts after the given one in the correct order" do
+    it 'returns a list of posts after the given one in the correct order' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -237,7 +238,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   end
 
   # TODO: auto-generated
-  describe "GET list" do
+  describe 'GET list' do
     it 'returns all the posts with the attachments' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -251,7 +252,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
             :published_post,
             3,
             person: person2,
-            body: "this is my body",
+            body: 'this is my body',
             picture: fixture_file_upload('images/better.png', 'image/png'),
             audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
             video: fixture_file_upload('videos/short_video.mp4', 'video/mp4'),
@@ -283,15 +284,15 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         get :show, params: { id: post.id }
 
         expect(response).to be_successful
-        expect(json["post"]["poll"]["id"]).not_to eq(nil)
-        expect(json["post"]["poll"]["type"]).not_to eq(nil)
-        expect(json["post"]["poll"]["type_id"]).not_to eq(nil)
-        expect(json["post"]["poll"]["description"]).not_to eq(nil)
-        expect(json["post"]["poll"]["start_date"]).not_to eq(nil)
-        expect(json["post"]["poll"]["duration"]).not_to eq(nil)
-        expect(json["post"]["poll"]["end_date"]).not_to eq(nil)
-        expect(json["post"]["poll"]["create_time"]).not_to eq(nil)
-        expect(json["post"]["poll"]["closed"]).not_to eq(nil)
+        expect(json['post']['poll']['id']).not_to eq(nil)
+        expect(json['post']['poll']['type']).not_to eq(nil)
+        expect(json['post']['poll']['type_id']).not_to eq(nil)
+        expect(json['post']['poll']['description']).not_to eq(nil)
+        expect(json['post']['poll']['start_date']).not_to eq(nil)
+        expect(json['post']['poll']['duration']).not_to eq(nil)
+        expect(json['post']['poll']['end_date']).not_to eq(nil)
+        expect(json['post']['poll']['create_time']).not_to eq(nil)
+        expect(json['post']['poll']['closed']).not_to eq(nil)
 
       end
     end
@@ -301,18 +302,18 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   end
 
   # TODO: auto-generated
-  describe "GET promoted" do
+  describe 'GET promoted' do
   end
 
   # TODO: auto-generated
-  describe "GET show" do
+  describe 'GET show' do
     it 'returns the message with the attachments' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
         post = create(
             :published_post,
-            body: "this is my body",
+            body: 'this is my body',
             picture: fixture_file_upload('images/better.png', 'image/png'),
             audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
             video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
@@ -339,18 +340,18 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         get :show, params: { id: post.id }
         expect(response).to be_successful
 
-        pr = json["post"]["post_reaction"]
-        expect(json["post"]["tags"]).to include(tag.name)
-        expect(pr["id"]).to eq(post_reaction.id)
-        expect(pr["post_id"]).to eq(post_reaction.post_id)
-        expect(pr["person_id"]).to eq(post_reaction.person_id)
-        expect(pr["reaction"]).to eq(post_reaction.reaction)
+        pr = json['post']['post_reaction']
+        expect(json['post']['tags']).to include(tag.name)
+        expect(pr['id']).to eq(post_reaction.id)
+        expect(pr['post_id']).to eq(post_reaction.post_id)
+        expect(pr['person_id']).to eq(post_reaction.person_id)
+        expect(pr['reaction']).to eq(post_reaction.reaction)
       end
     end
   end
 
   # TODO: auto-generated
-  describe "GET share" do
+  describe 'GET share' do
     it 'returns all the posts with the attachments' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -362,7 +363,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
         person2.follow(person)
         post = create(
             :published_post,
-            body: "this is my body",
+            body: 'this is my body',
             picture: fixture_file_upload('images/better.png', 'image/png'),
             )
 
@@ -375,7 +376,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   end
 
   # TODO: auto-generated
-  describe "POST create" do
+  describe 'POST create' do
     it "creates a post with attachments when it's valid" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -383,7 +384,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
 
         post :create, params: {
             post: {
-                body: "Body",
+                body: 'Body',
                 picture: fixture_file_upload('images/better.png', 'image/png'),
                 audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4'),
                 video: fixture_file_upload('videos/short_video.mp4', 'video/mp4')
@@ -402,7 +403,7 @@ RSpec.describe Api::V4::PostsController, type: :controller do
   end
 
   # TODO: auto-generated
-  describe "PUT update" do
+  describe 'PUT update' do
     it "updates a posts with attachments when it's valid" do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -444,24 +445,24 @@ RSpec.describe Api::V4::PostsController, type: :controller do
 
         expect(response).to be_successful
 
-        poll = json["post"]["poll"]
+        poll = json['post']['poll']
 
-        expect(poll["id"]).not_to eq(nil)
-        expect(poll["type"]).not_to eq(nil)
-        expect(poll["type_id"]).not_to eq(nil)
-        expect(poll["description"]).not_to eq(nil)
-        expect(poll["start_date"]).not_to eq(nil)
-        expect(poll["duration"]).not_to eq(nil)
-        expect(poll["end_date"]).not_to eq(nil)
-        expect(poll["create_time"]).not_to eq(nil)
-        expect(poll["closed"]).not_to eq(nil)
+        expect(poll['id']).not_to eq(nil)
+        expect(poll['type']).not_to eq(nil)
+        expect(poll['type_id']).not_to eq(nil)
+        expect(poll['description']).not_to eq(nil)
+        expect(poll['start_date']).not_to eq(nil)
+        expect(poll['duration']).not_to eq(nil)
+        expect(poll['end_date']).not_to eq(nil)
+        expect(poll['create_time']).not_to eq(nil)
+        expect(poll['closed']).not_to eq(nil)
 
       end
     end
   end
 
   # TODO: auto-generated
-  describe "GET stats" do
+  describe 'GET stats' do
     pending
   end
 end

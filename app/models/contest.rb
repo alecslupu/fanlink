@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: contests
@@ -25,5 +26,5 @@ class Contest < ApplicationRecord
   end
 
   validates :name,
-            presence: { message: "Name is required" }
+            presence: { message: 'Name is required' }
 end

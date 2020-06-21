@@ -1,14 +1,15 @@
 # frozen_string_literal: true
+
 class PersonMailer < ApplicationMailer
 
   def onboarding
     @person = Person.find(params[:id])
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: "onboarding").first!
+    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'onboarding').first!
 
     mail_params = {
       from:     "#{email.from_name} <#{email.from_email}>" ,
-      reply_to: "support@flink.top" ,
+      reply_to: 'support@flink.top' ,
       to: "#{@person.name} <#{@person.email}>",
       subject: email.subject
     }
@@ -21,11 +22,11 @@ class PersonMailer < ApplicationMailer
   def reset_password
     @person = Person.find(params[:id])
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: "password-reset").first!
+    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'password-reset').first!
 
     mail_params = {
       from:     "#{email.from_name} <#{email.from_email}>" ,
-      reply_to: "support@flink.top" ,
+      reply_to: 'support@flink.top' ,
       to: "#{@person.name} <#{@person.email}>",
       subject: email.subject
     }
@@ -43,11 +44,11 @@ class PersonMailer < ApplicationMailer
     @person = Person.find(params[:id])
     @certcourse_page = CertcoursePage.find(params[:certcourse_page_id])
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: "document-download").first!
+    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'document-download').first!
 
     mail_params = {
       from:     "#{email.from_name} <#{email.from_email}>" ,
-      reply_to: "support@flink.top" ,
+      reply_to: 'support@flink.top' ,
       to: "#{@person.name} <#{@person.email}>",
       subject: email.subject
     }
@@ -68,14 +69,14 @@ class PersonMailer < ApplicationMailer
     @person_certificate = PersonCertificate.find(params[:person_certificate])
     @email = params[:email]
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: "download-certificate").first!
+    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'download-certificate').first!
     @link = "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{@person.product.internal_name}/#{@person.name}"
 
     attachments.inline[@person_certificate.issued_certificate_pdf_file_name] = File.read(Paperclip.io_adapters.for(@person_certificate.issued_certificate_pdf).path)
 
     mail_params = {
       from:     "#{email.from_name} <#{email.from_email}>" ,
-      reply_to: "support@flink.top" ,
+      reply_to: 'support@flink.top' ,
       to: @email.presence || "#{@person.name} <#{@person.email}>",
       subject: email.subject
     }
@@ -92,14 +93,14 @@ class PersonMailer < ApplicationMailer
     @person_certificate = PersonCertificate.find(params[:person_certificate])
     @email = params[:email]
 
-    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: "assignee-certificate").first!
+    email = Static::SystemEmail.where(public: true, product_id: @person.product_id, slug: 'assignee-certificate').first!
     @link = "https://#{ENV['PASSWORD_RESET_HOST'] || 'www.fan.link'}/#{@person.product.internal_name}/#{@person.name}"
 
     attachments.inline[@person_certificate.issued_certificate_pdf_file_name] = File.read(Paperclip.io_adapters.for(@person_certificate.issued_certificate_pdf).path)
 
     mail_params = {
       from:     "#{email.from_name} <#{email.from_email}>" ,
-      reply_to: "support@flink.top" ,
+      reply_to: 'support@flink.top' ,
       to: @email.presence || "#{@person.name} <#{@person.email}>",
       subject:  email.subject % { name: @person.name.presence || @person.product.name }
     }

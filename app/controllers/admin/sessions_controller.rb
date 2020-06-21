@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Admin
   class SessionsController < ::ApplicationController
     set_current_tenant_through_filter
@@ -13,14 +14,14 @@ module Admin
       end
       if product.present?
         email  = params[:email_or_username].to_s
-        query  = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: Person.canonicalize(email) }
+        query  = email.include?('@') ? { email: email.strip.downcase } : { username_canonical: Person.canonicalize(email) }
         person = Person.find_by(query)
         person = login(person.email, params[:password]) if person
         if person
           check_admin
           redirect_to rails_admin_path unless performed?
         else
-          flash[:alert] = "Login failed"
+          flash[:alert] = 'Login failed'
           redirect_to admin_login_screen_path(product_internal_name: product.internal_name)
         end
       else
@@ -32,7 +33,7 @@ module Admin
       if current_user
         product = current_user.product
         logout
-        redirect_to(admin_login_screen_path(product_internal_name: product.internal_name), notice: "Logged out!")
+        redirect_to(admin_login_screen_path(product_internal_name: product.internal_name), notice: 'Logged out!')
       end
     end
 
@@ -62,16 +63,16 @@ module Admin
     def not_authenticated
       logout
       if params[:product_internal_name].present?
-        redirect_to admin_path(product_internal_name: params[:product_internal_name]), notice: "Login required."
+        redirect_to admin_path(product_internal_name: params[:product_internal_name]), notice: 'Login required.'
       elsif cookies[:product_internal_name].present?
-        redirect_to admin_path(product_internal_name: cookies[:product_internal_name]), notice: "Login required."
+        redirect_to admin_path(product_internal_name: cookies[:product_internal_name]), notice: 'Login required.'
       else
         render_not_found
       end
     end
 
     def render_not_found
-      render file: "public/404.html", status: :not_found, layout: false
+      render file: 'public/404.html', status: :not_found, layout: false
     end
 
     def check_admin

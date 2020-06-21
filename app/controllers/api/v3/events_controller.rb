@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class Api::V3::EventsController < Api::V2::EventsController
-  before_action :admin_only, only: %i[ create update destroy ]
-  skip_before_action :require_login, only: %i[ index ]
-  load_up_the Event, only: %i[ update delete ]
+  before_action :admin_only, only: %i[create update destroy]
+  skip_before_action :require_login, only: %i[index]
+  load_up_the Event, only: %i[update delete]
 
   # **
   # @apiDefine EventSuccess
@@ -97,11 +98,11 @@ class Api::V3::EventsController < Api::V2::EventsController
 
   def index
     if !check_dates
-      render json: { errors: _("Invalid date(s)") }, status: :unprocessable_entity
+      render json: { errors: _('Invalid date(s)') }, status: :unprocessable_entity
     else
       start_boundary = (params[:from_date].present?) ? Date.parse(params[:from_date]) : (Time.zone.now - 3.years).beginning_of_day
       end_boundary = (params[:to_date].present?) ? Date.parse(params[:to_date]) : (Time.zone.now + 3.years).end_of_day
-      query = (current_user&.role == "super_admin") ? Event : Event.where(deleted: false)
+      query = (current_user&.role == 'super_admin') ? Event : Event.where(deleted: false)
       @events = paginate(query.in_date_range(start_boundary, end_boundary).order(starts_at: :asc))
       return_the @events, handler: tpl_handler
     end
@@ -112,7 +113,7 @@ class Api::V3::EventsController < Api::V2::EventsController
     if interests.empty?
       @event_checkins = paginate(@event.event_checkins.includes(:person).order(created_at: :desc), per_page: 2)
     else
-      @event_checkins = paginate(@event.event_checkins.includes(:person).joins(person: :person_interests).where("person_interests.interest_id IN (?)", interests).order(created_at: :desc))
+      @event_checkins = paginate(@event.event_checkins.includes(:person).joins(person: :person_interests).where('person_interests.interest_id IN (?)', interests).order(created_at: :desc))
     end
 
     return_the @event_checkins, handler: tpl_handler
@@ -271,7 +272,7 @@ class Api::V3::EventsController < Api::V2::EventsController
       if @event.update(deleted: true)
         head :ok
       else
-        render_error(_("Failed to delete the event."))
+        render_error(_('Failed to delete the event.'))
       end
     else
       render_not_found
@@ -281,7 +282,7 @@ class Api::V3::EventsController < Api::V2::EventsController
   protected
 
     def tpl_handler
-      "jb"
+      'jb'
     end
 
   private

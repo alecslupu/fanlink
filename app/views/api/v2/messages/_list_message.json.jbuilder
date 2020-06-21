@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id message.id.to_s
 json.person_id message.person_id
 json.room_id message.room_id

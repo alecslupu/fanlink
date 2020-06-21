@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  relationships: render(partial: "app", collection: @relationships, as: :relationship, handlers: :jb)
+  relationships: render(partial: 'app', collection: @relationships, as: :relationship, handlers: :jb)
 }

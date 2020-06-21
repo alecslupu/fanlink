@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Trivia::BooleanChoiceAvailableQuestion")
-  config.model "Trivia::BooleanChoiceAvailableQuestion" do
-    parent "Trivia::AvailableQuestion"
-    label_plural "True or False"
+  config.included_models.push('Trivia::BooleanChoiceAvailableQuestion')
+  config.model 'Trivia::BooleanChoiceAvailableQuestion' do
+    parent 'Trivia::AvailableQuestion'
+    label_plural 'True or False'
 
     configure :status, :enum do
       queryable false

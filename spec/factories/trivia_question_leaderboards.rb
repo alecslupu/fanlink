@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_question_leaderboards
@@ -13,7 +14,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_question_leaderboard, class: "Trivia::QuestionLeaderboard" do
+  factory :trivia_question_leaderboard, class: 'Trivia::QuestionLeaderboard' do
     question { create(:trivia_single_choice_question) }
     product { current_product }
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ConfigItemPolicy < ApplicationPolicy
 
   def nested_set?
@@ -13,7 +14,7 @@ class ConfigItemPolicy < ApplicationPolicy
 
   protected
   def module_name
-    "root"
+    'root'
   end
 
   def has_systen_permission?(permission)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_available_answers
@@ -17,7 +18,7 @@
 module Trivia
   class AvailableAnswer < ApplicationRecord
     has_paper_trail
-    belongs_to :question, class_name: "Trivia::AvailableQuestion", foreign_key: :trivia_question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::AvailableQuestion', foreign_key: :trivia_question_id, optional: true
 
     include AASM
     enum status: {

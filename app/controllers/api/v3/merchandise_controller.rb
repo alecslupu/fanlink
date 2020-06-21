@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V3::MerchandiseController < Api::V2::MerchandiseController
-  before_action :admin_only, only: %i[ create update destroy ]
-  load_up_the Merchandise, only: %i[ update show delete ]
+  before_action :admin_only, only: %i[create update destroy]
+  load_up_the Merchandise, only: %i[update show delete]
   # **
   # @apiDefine MerchandiseSuccess
   #    Success object
@@ -192,7 +193,7 @@ class Api::V3::MerchandiseController < Api::V2::MerchandiseController
       if @merchandise.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the merchandise."))
+        render_422(_('Failed to delete the merchandise.'))
       end
     else
       render_not_found

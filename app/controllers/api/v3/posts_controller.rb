@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class Api::V3::PostsController < Api::V2::PostsController
-  before_action :load_post, only: %i[ update ]
-  before_action :admin_only, only: %i[ list ]
-  skip_before_action :require_login, :set_product, only: %i[ share ]
+  before_action :load_post, only: %i[update]
+  before_action :admin_only, only: %i[list]
+  skip_before_action :require_login, :set_product, only: %i[share]
   # **
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -85,11 +86,11 @@ class Api::V3::PostsController < Api::V2::PostsController
 
   def create
     if current_user.chat_banned?
-      render json: { errors: "You are banned." }, status: :unprocessable_entity
+      render json: { errors: 'You are banned.' }, status: :unprocessable_entity
     else
       @post = Post.create(post_params.merge(person_id: current_user.id))
       if @post.valid?
-        if post_params["status"].blank?
+        if post_params['status'].blank?
           @post.published!
         end
         @post.post if @post.published?
@@ -171,7 +172,7 @@ class Api::V3::PostsController < Api::V2::PostsController
       if person
         @posts = paginate(Post.visible.for_person(person).unblocked(current_user.blocked_people).order(created_at: :desc))
       else
-        render_422(_("Cannot find that person."))
+        render_422(_('Cannot find that person.'))
       end
     else
       @posts = paginate(Post.visible.following_and_own(current_user).unblocked(current_user.blocked_people).order(created_at: :desc))
@@ -333,7 +334,7 @@ class Api::V3::PostsController < Api::V2::PostsController
   def share
     product = get_product
     if product.nil?
-      render_422(_("Missing or invalid product."))
+      render_422(_('Missing or invalid product.'))
     else
       @post = Post.for_product(product).visible.find(params[:post_id])
       return_the @post
@@ -428,7 +429,7 @@ class Api::V3::PostsController < Api::V2::PostsController
     def apply_filters
       posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
       params.each do |p, v|
-        if p.end_with?("_filter") && Post.respond_to?(p)
+        if p.end_with?('_filter') && Post.respond_to?(p)
           posts = posts.send(p, v)
         end
       end
@@ -440,7 +441,7 @@ class Api::V3::PostsController < Api::V2::PostsController
     end
 
     def post_params
-      params.require(:post).permit(%i[ body audio picture video global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+      params.require(:post).permit(%i[body audio picture video global starts_at ends_at repost_interval status priority notify_followers category_id] +
                                    ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended, :pinned, body: {}] : []))
     end
 end

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 class Api::V3::PeopleController < Api::V2::PeopleController
   prepend_before_action :logout, only: :create
-  before_action :super_admin_only, only: %i[ destroy ]
-  load_up_the Person, except: %i[ index create ]
-  skip_before_action :require_login, only: %i[ create ]
-  skip_before_action :require_login, :set_product, only: %i[ public ]
+  before_action :super_admin_only, only: %i[destroy]
+  load_up_the Person, except: %i[index create]
+  skip_before_action :require_login, only: %i[create]
+  skip_before_action :require_login, :set_product, only: %i[public]
 
   # **
   # @api {post} /people Create person.
@@ -70,7 +71,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       if params[:facebook_auth_token].present?
         @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
         if @person.nil?
-          (render json: { errors: _("There was a problem contacting Facebook.") }, status: :service_unavailable) && return
+          (render json: { errors: _('There was a problem contacting Facebook.') }, status: :service_unavailable) && return
         end
       else
         @person = Person.create(person_params)
@@ -177,7 +178,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
 
   def public
     @person = Person.find(params[:id])
-    return_the @person, handler: "jb"
+    return_the @person, handler: 'jb'
   end
 
   # **
@@ -235,14 +236,14 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       else
         if @person == current_user || some_admin? || current_user.product_account
           if person_params.has_key?(:terminated) && @person.some_admin?
-            return render_422 _("You cannot ban administative accounts.")
+            return render_422 _('You cannot ban administative accounts.')
           end
           @person.trigger_admin = true
           @person.update(person_params)
           if @person.terminated && @person == current_user
             logout
             cookies.delete :_fanlink_session
-            return render_401 _("Your account has been banned.")
+            return render_401 _('Your account has been banned.')
           else
             return_the @person
           end
@@ -277,7 +278,7 @@ private
   def person_params
     params.require(:person).permit(%i[email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password do_not_message_me ] +
-                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended pin_messages_from auto_follow ] : []) +
-                                   ((current_user.present? && some_admin?) ? %i[ chat_banned role tester product_account designation terminated terminated_reason ] : []))
+                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[recommended pin_messages_from auto_follow] : []) +
+                                   ((current_user.present? && some_admin?) ? %i[chat_banned role tester product_account designation terminated terminated_reason] : []))
   end
 end

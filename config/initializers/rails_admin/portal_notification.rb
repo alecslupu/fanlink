@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("PortalNotification")
-  config.included_models.push("PortalNotification::Translation")
+  config.included_models.push('PortalNotification')
+  config.included_models.push('PortalNotification::Translation')
 
   config.model 'PortalNotification::Translation' do
     visible false
@@ -17,7 +18,7 @@ RailsAdmin.config do |config|
       fields :locale, :body
     end
   end
-  config.model "PortalNotification" do
+  config.model 'PortalNotification' do
     configure :translations, :globalize_tabs
 
     list do

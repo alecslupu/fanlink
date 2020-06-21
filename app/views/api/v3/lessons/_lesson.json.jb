@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-json = Rails.cache.fetch ["v3", lesson.updated_at, lesson] do
+
+json = Rails.cache.fetch ['v3', lesson.updated_at, lesson] do
   {
     id: lesson.id,
     course_id: lesson.course_id,

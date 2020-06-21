@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApiController < ApplicationController
   include FloadUp
   include Rails::Pagination
@@ -31,12 +32,12 @@ protected
   end
 
   def super_admin_only
-    head :unauthorized unless current_user.role == "super_admin"
+    head :unauthorized unless current_user.role == 'super_admin'
   end
 
   def api_template(controller = nil, version = :v2, using)
     if controller.nil?
-      render_404(_("Not found."))
+      render_404(_('Not found.'))
     else
       Rails.logger.debug("#{controller.to_s.downcase.singularize}_#{version}_#{using}")
       "#{controller.to_s.downcase.singularize}_#{version}_#{using}".to_sym
@@ -89,12 +90,12 @@ protected
   end
 
   def render_not_found
-    render_404("Not found.")
+    render_404('Not found.')
   end
 
   def set_language
     @lang = nil
-    lang_header = request.headers["Accept-Language"]
+    lang_header = request.headers['Accept-Language']
     if lang_header.present?
       if lang_header.length > 2
         lang_header = lang_header[0..1]
@@ -109,8 +110,8 @@ protected
     product = nil
     if current_user.present?
       if current_user.super_admin?
-        if request.headers["X-Current-Product"].present?
-          product = Product.find_by(internal_name: request.headers["X-Current-Product"])
+        if request.headers['X-Current-Product'].present?
+          product = Product.find_by(internal_name: request.headers['X-Current-Product'])
         else
           product = Product.find_by(internal_name: params[:product]) if params[:product]
           product = current_user.try(:product) if product.nil?
@@ -119,7 +120,7 @@ protected
     end
     product = (current_user.present? && current_user.try(:product)) || Product.find_by(internal_name: params[:product]) if product.nil?
     if product.nil?
-      render json: { errors: "You must supply a valid product" }, status: :unprocessable_entity
+      render json: { errors: 'You must supply a valid product' }, status: :unprocessable_entity
     else
       set_current_tenant(product)
       cookies[:product_internal_name] = ((current_user.present?) ? current_user.product.internal_name : product.internal_name)
@@ -142,8 +143,8 @@ protected
 
   def set_app
     @device = find_device_type
-    @req_source = "app"
-    @req_source = @device.to_s if @device.to_s == "web"
+    @req_source = 'app'
+    @req_source = @device.to_s if @device.to_s == 'web'
   end
 
   def unset_app

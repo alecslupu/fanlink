@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe MessagePolicy, type: :policy do
-  args = Message, "chat"
+  args = Message, 'chat'
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   # include_examples 'enforces the update permission', args
@@ -12,7 +12,7 @@ RSpec.describe MessagePolicy, type: :policy do
   include_examples 'enforces the export permission', args
 
 
-  context "logged in admin with update permission" do
+  context 'logged in admin with update permission' do
     permission_list = {
       index: false,
       show: false,
@@ -31,20 +31,20 @@ RSpec.describe MessagePolicy, type: :policy do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(chat_update: true))
     end
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 
-  context "Logged in admin with chat_hide permission" do
-    describe "hidden message" do
+  context 'Logged in admin with chat_hide permission' do
+    describe 'hidden message' do
       let(:portal_access) { create(:portal_access, chat_hide: true) }
       subject { described_class.new(Person.find(portal_access.person_id), Message.new(hidden: true)) }
 
@@ -52,7 +52,7 @@ RSpec.describe MessagePolicy, type: :policy do
       it { is_expected.to forbid_action(:hide_action) }
     end
 
-    describe "visible message" do
+    describe 'visible message' do
       let(:portal_access) { create(:portal_access, chat_hide: true) }
       subject { described_class.new(Person.find(portal_access.person_id), Message.new(hidden: false)) }
 
@@ -61,8 +61,8 @@ RSpec.describe MessagePolicy, type: :policy do
     end
   end
 
-  context "Scope" do
-    it "should only return the messages from public rooms" do
+  context 'Scope' do
+    it 'should only return the messages from public rooms' do
       person = build(:person)
 
       ActsAsTenant.with_tenant(person.product) do

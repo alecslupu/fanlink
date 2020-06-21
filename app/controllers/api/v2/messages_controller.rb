@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V2::MessagesController < Api::V1::MessagesController
   # **
   # @api {get} /rooms/:room_id/messages Get messages.
@@ -38,7 +39,7 @@ class Api::V2::MessagesController < Api::V1::MessagesController
     if !check_access(room)
       render_not_found
     else
-      msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
+      msgs = (params[:pinned].blank? || (params[:pinned].downcase == 'all')) ? room.messages : room.messages.pinned(params[:pinned])
       @messages = paginate(msgs.visible.unblocked(current_user.blocked_people).order(created_at: :desc))
       clear_count(room) if room.private?
       return_the @messages

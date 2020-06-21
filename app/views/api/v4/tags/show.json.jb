@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  tag: render(partial: "app", locals: { tag: @tag }, handlers: :jb)
+  tag: render(partial: 'app', locals: { tag: @tag }, handlers: :jb)
 }

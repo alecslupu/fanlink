@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::CategoriesController < Api::V2::CategoriesController
-  load_up_the Category, only: %i[ update destroy ]
+  load_up_the Category, only: %i[update destroy]
   # **
   # @apiDefine V2CategoryObject
   #    description
@@ -146,7 +147,7 @@ class Api::V3::CategoriesController < Api::V2::CategoriesController
 
   def destroy
     if some_admin?
-      if current_user.super_admin? && params[:force] == "1"
+      if current_user.super_admin? && params[:force] == '1'
         @category.destroy
         head :ok
       else

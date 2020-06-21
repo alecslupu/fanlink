@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_games
@@ -32,11 +33,11 @@ module Trivia
     include AttachmentSupport
     has_image_called :picture
 
-    belongs_to :room, class_name: "Room", optional: true
-    has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id, dependent: :destroy
+    belongs_to :room, class_name: 'Room', optional: true
+    has_many :prizes, class_name: 'Trivia::Prize', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :rounds, -> { order(:start_date) }, class_name: 'Round', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :leaderboards, class_name: 'Trivia::GameLeaderboard', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :subscribers, class_name: 'Trivia::Subscriber', foreign_key: :trivia_game_id, dependent: :destroy
 
     accepts_nested_attributes_for :prizes, allow_destroy: true
     accepts_nested_attributes_for :rounds, allow_destroy: true
@@ -91,8 +92,8 @@ module Trivia
     end
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
-    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
-    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
+    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where('end_date < ?', DateTime.now.to_i) }
+    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where('end_date > ?', DateTime.now.to_i) }
 
     after_save :handle_status_changes
 

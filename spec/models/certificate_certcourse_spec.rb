@@ -1,13 +1,14 @@
 # frozen_string_literal: true
-require "rails_helper"
+
+require 'rails_helper'
 
 RSpec.describe CertificateCertcourse, type: :model do
-  context "Valid factory" do
+  context 'Valid factory' do
     it { expect(build(:certificate_certcourse)).to be_valid }
   end
 
-  context "Validation" do
-    it "uniqueness to tenant" do
+  context 'Validation' do
+    it 'uniqueness to tenant' do
       cc = create(:certificate_certcourse)
       cc2 = build(:certificate_certcourse,
                    product: cc.product,
@@ -21,7 +22,7 @@ RSpec.describe CertificateCertcourse, type: :model do
     end
   end
 
-  context "Associations" do
+  context 'Associations' do
     subject { create(:certificate_certcourse) }
 
     it { should belong_to(:product) }
@@ -29,8 +30,8 @@ RSpec.describe CertificateCertcourse, type: :model do
     it { should belong_to(:certificate) }
   end
 
-  describe "scopes" do
-    describe "for_certificate has value" do
+  describe 'scopes' do
+    describe 'for_certificate has value' do
       it do
         cc = create(:certificate_certcourse)
         test = CertificateCertcourse.for_certificate(cc.certificate)
@@ -38,7 +39,7 @@ RSpec.describe CertificateCertcourse, type: :model do
         expect(test.first).to eq(cc)
       end
     end
-    describe "for_certificate does not have value" do
+    describe 'for_certificate does not have value' do
       it do
         cc = create(:certificate_certcourse)
         cc2 = create(:certificate_certcourse)
@@ -48,15 +49,15 @@ RSpec.describe CertificateCertcourse, type: :model do
         true
       end
     end
-    describe "for_certcourse" do
-      it "has" do
+    describe 'for_certcourse' do
+      it 'has' do
         cc = create(:certificate_certcourse)
         test = CertificateCertcourse.for_certcourse(cc.certcourse)
         expect(test.count).to eq(1)
         expect(test.first).to eq(cc)
       end
 
-      it "does not" do
+      it 'does not' do
         cc = create(:certificate_certcourse)
         cc2 = create(:certificate_certcourse)
         test = CertificateCertcourse.for_certcourse(cc.certcourse)

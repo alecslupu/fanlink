@@ -1,13 +1,14 @@
 # frozen_string_literal: true
+
 class Api::V4::RewardProgressesController < Api::V3::RewardProgressesController
   def create
     if params.has_key?(:reward_complete)
-      controller = request.fullpath.remove("/").remove("complete").singularize
+      controller = request.fullpath.remove('/').remove('complete').singularize
       @progress = RewardProgress.find_or_initialize_by(reward_id: params[:reward_complete][:reward_id], person_id: current_user.id)
       if PersonReward.exists?(person_id: current_user.id, reward_id: params[:reward_complete][:reward_id])
         return_the @progress, handler: tpl_handler
       else
-        if controller == "action_type"
+        if controller == 'action_type'
           action_type = @progress.reward.action_types.first
           @progress.series = action_type.internal_name
           @series_total = RewardProgress.where(person_id: current_user.id, series: action_type.internal_name).sum(:total) || nil
@@ -27,7 +28,7 @@ class Api::V4::RewardProgressesController < Api::V3::RewardProgressesController
         end
       end
     else
-      render_422 _("Missing reward_id parameter.")
+      render_422 _('Missing reward_id parameter.')
     end
   end
 

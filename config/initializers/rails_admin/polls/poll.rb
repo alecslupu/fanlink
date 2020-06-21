@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Poll")
 
-  config.included_models.push("Poll::Translation")
+RailsAdmin.config do |config|
+  config.included_models.push('Poll')
+
+  config.included_models.push('Poll::Translation')
 
   config.model 'Poll::Translation' do
     visible false
@@ -19,8 +20,8 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "Poll" do
-    parent "Post"
+  config.model 'Poll' do
+    parent 'Post'
     configure :translations, :globalize_tabs
 
     show do
@@ -38,7 +39,7 @@ RailsAdmin.config do |config|
     edit do
       field :poll_type
       field :poll_type_id, :integer do
-        label "Post id"
+        label 'Post id'
       end
       fields :start_date,
              :end_date,

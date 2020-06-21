@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class Api::V3::QuestCompletionsController < Api::V2::QuestCompletionsController
-  before_action :admin_only, only: %i[ list update delete ]
-  before_action :load_person, only: %i[ for_person for_activity for_quest index ]
-  load_up_the Step, from: :step_id, only: %i[ create list ]
+  before_action :admin_only, only: %i[list update delete]
+  before_action :load_person, only: %i[for_person for_activity for_quest index]
+  load_up_the Step, from: :step_id, only: %i[create list]
 
 
   # **
@@ -115,7 +116,7 @@ class Api::V3::QuestCompletionsController < Api::V2::QuestCompletionsController
       if quest_completion.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the quest completion."))
+        render_422(_('Failed to delete the quest completion.'))
       end
     else
       render_not_found
@@ -134,7 +135,7 @@ private
   def apply_filters
     completions = QuestCompletion.order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && QuestCompletion.respond_to?(p)
+      if p.end_with?('_filter') && QuestCompletion.respond_to?(p)
         completions = completions.send(p, v)
       end
     end
@@ -144,7 +145,7 @@ private
   def apply_filters_for_user
     completions = QuestCompletion.where(person_id: current_user.id).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && QuestCompletion.respond_to?(p)
+      if p.end_with?('_filter') && QuestCompletion.respond_to?(p)
         completions = completions.send(p, v)
       end
     end
