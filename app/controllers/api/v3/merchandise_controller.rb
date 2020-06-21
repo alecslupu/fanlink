@@ -193,7 +193,7 @@ class Api::V3::MerchandiseController < Api::V2::MerchandiseController
       if @merchandise.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the merchandise."))
+        render_422(_('Failed to delete the merchandise.'))
       end
     else
       render_not_found

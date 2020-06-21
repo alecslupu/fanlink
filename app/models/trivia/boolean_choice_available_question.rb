@@ -19,7 +19,7 @@
 
 module Trivia
   class BooleanChoiceAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::BooleanChoiceQuestion", inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :active_questions, class_name: 'Trivia::BooleanChoiceQuestion', inverse_of: :available_question, foreign_key: :available_question_id
 
     include AASM
     enum status: {

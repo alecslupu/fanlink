@@ -3,7 +3,7 @@
 {
   id: post_comment.id,
   body: post_comment.body,
-  person: render(partial: "api/v4/people/person_mini", locals: { person: post_comment.person, relationships: Relationship.for_people(current_user, post_comment.person) }),
+  person: render(partial: 'api/v4/people/person_mini', locals: { person: post_comment.person, relationships: Relationship.for_people(current_user, post_comment.person) }),
   created_at: post_comment.created_at.to_s,
   updated_at: post_comment.updated_at.to_s
 }

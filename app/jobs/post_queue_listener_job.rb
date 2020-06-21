@@ -7,7 +7,7 @@ class PostQueueListenerJob < ApplicationJob
     @job_id   = job_id
     @attempts = attempts || 0
 
-    the_job_we_want = ->(m) { m["jobId"] == @job_id }
+    the_job_we_want = ->(m) { m['jobId'] == @job_id }
     if (msg = Flaws.extract_from_transcoding_queue(&the_job_we_want))
       Rails.logger.error("\nCalled\n")
       Post.process_et_response(msg)

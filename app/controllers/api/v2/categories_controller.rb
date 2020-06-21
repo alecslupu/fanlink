@@ -141,7 +141,7 @@ class Api::V2::CategoriesController < ApiController
 
   def destroy
     if some_admin?
-      if current_user.super_admin? && param[:force] == "1"
+      if current_user.super_admin? && param[:force] == '1'
         @category.destroy
         head :ok
       else

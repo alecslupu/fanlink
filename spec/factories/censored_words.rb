@@ -12,6 +12,6 @@
 
 FactoryBot.define do
   factory :censored_word do
-    word { "MyString" }
+    word { 'MyString' }
   end
 end

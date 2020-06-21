@@ -98,7 +98,7 @@ class Api::V2::ProductBeaconsController < ApiController
   # *
 
   def list
-    @product_beacons = paginate(ProductBeacon.where("product_id =?", ActsAsTenant.current_tenant.id))
+    @product_beacons = paginate(ProductBeacon.where('product_id =?', ActsAsTenant.current_tenant.id))
     return_the @product_beacons
   end
 

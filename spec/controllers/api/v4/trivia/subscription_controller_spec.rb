@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
-  describe "GET destroy" do
-    it "destroys the subscription" do
+  describe 'GET destroy' do
+    it 'destroys the subscription' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         subscriber = create(:trivia_subscriber, person: person)
@@ -17,8 +17,8 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     end
   end
 
-  describe "GET show" do
-    it "displays the resource" do
+  describe 'GET show' do
+    it 'displays the resource' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         subscriber = create(:trivia_subscriber, person: person)
@@ -31,8 +31,8 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     end
   end
 
-  describe "#create" do
-    it "enroll an user in a trivia Game" do
+  describe '#create' do
+    it 'enroll an user in a trivia Game' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         game = create(:trivia_game)
@@ -47,8 +47,8 @@ RSpec.describe Api::V4::Trivia::SubscriptionsController, type: :controller do
     end
   end
 
-  describe "PUT update" do
-    it "displays the resource" do
+  describe 'PUT update' do
+    it 'displays the resource' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         subscriber = create(:trivia_subscriber, person: person, subscribed: false)

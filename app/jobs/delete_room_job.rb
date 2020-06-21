@@ -20,7 +20,7 @@ class DeleteRoomJob < ApplicationJob
         end
       end
     end
-    client.update("", payload)
+    client.update('', payload)
     client.delete(room_path(room))
     if version.present?
       version.downto(1) do |v|

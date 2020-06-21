@@ -28,7 +28,7 @@ class Api::V3::RewardsController < ApiController
         render_422 @reward.errors
       end
     else
-      render_422(_("Update failed. Missing the reward object."))
+      render_422(_('Update failed. Missing the reward object.'))
     end
   end
 
@@ -38,7 +38,7 @@ class Api::V3::RewardsController < ApiController
       if reward.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the reward."))
+        render_422(_('Failed to delete the reward.'))
       end
     else
       render_not_found

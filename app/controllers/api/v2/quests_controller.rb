@@ -403,7 +403,7 @@ protected
   def apply_filters
     quests = Quest.where.not(status: :deleted).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && Quest.respond_to?(p)
+      if p.end_with?('_filter') && Quest.respond_to?(p)
         quests = quests.send(p, v)
       end
     end

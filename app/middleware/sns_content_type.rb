@@ -6,7 +6,7 @@ class SnsContentType
   end
 
   def call(env)
-    env["CONTENT_TYPE"] = "application/json" if env["HTTP_X_AMZ_SNS_MESSAGE_TYPE"].present?
+    env['CONTENT_TYPE'] = 'application/json' if env['HTTP_X_AMZ_SNS_MESSAGE_TYPE'].present?
     @app.call(env)
   end
 end

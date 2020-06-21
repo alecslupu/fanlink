@@ -71,7 +71,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       if params[:facebook_auth_token].present?
         @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
         if @person.nil?
-          (render json: { errors: _("There was a problem contacting Facebook.") }, status: :service_unavailable) && return
+          (render json: { errors: _('There was a problem contacting Facebook.') }, status: :service_unavailable) && return
         end
       else
         @person = Person.create(person_params)
@@ -178,7 +178,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
 
   def public
     @person = Person.find(params[:id])
-    return_the @person, handler: "jb"
+    return_the @person, handler: 'jb'
   end
 
   # **
@@ -236,14 +236,14 @@ class Api::V3::PeopleController < Api::V2::PeopleController
       else
         if @person == current_user || some_admin? || current_user.product_account
           if person_params.has_key?(:terminated) && @person.some_admin?
-            return render_422 _("You cannot ban administative accounts.")
+            return render_422 _('You cannot ban administative accounts.')
           end
           @person.trigger_admin = true
           @person.update(person_params)
           if @person.terminated && @person == current_user
             logout
             cookies.delete :_fanlink_session
-            return render_401 _("Your account has been banned.")
+            return render_401 _('Your account has been banned.')
           else
             return_the @person
           end

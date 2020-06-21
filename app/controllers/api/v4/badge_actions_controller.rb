@@ -4,7 +4,7 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
   def create
     if @rewards.any?
       @rewards.each do |reward|
-        if @action_type.seconds_lag > 0 && current_user.reward_progresses.where(reward_id: reward.id).where("updated_at > ?", Time.zone.now - @action_type.seconds_lag.seconds).exists?
+        if @action_type.seconds_lag > 0 && current_user.reward_progresses.where(reward_id: reward.id).where('updated_at > ?', Time.zone.now - @action_type.seconds_lag.seconds).exists?
           head :too_many_requests
           break
         else
@@ -13,8 +13,8 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
           if badge_action.save
             @progress = RewardProgress.find_or_initialize_by(reward_id: reward.id, person_id: current_user.id)
             @progress.series = @action_type.internal_name || nil
-            @progress.actions["badge_action"] ||= 0
-            @progress.actions["badge_action"] += 1
+            @progress.actions['badge_action'] ||= 0
+            @progress.actions['badge_action'] += 1
             @progress.total ||= 0
             @progress.total += 1
             if @progress.present? && @progress.save
@@ -23,7 +23,7 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
               return_the @progress, handler: tpl_handler
             else
               if @progress.blank?
-                render json: { errors: { base: _("Reward does not exist for that action type.") } }, status: :not_found
+                render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
               else
                 render_422(@progress.errors)
               end
@@ -36,7 +36,7 @@ class Api::V4::BadgeActionsController < Api::V3::BadgeActionsController
         end
       end
     else
-      render json: { errors: { base: _("Reward does not exist for that action type.") } }, status: :not_found
+      render json: { errors: { base: _('Reward does not exist for that action type.') } }, status: :not_found
     end
   end
 

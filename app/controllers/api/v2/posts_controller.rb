@@ -40,7 +40,7 @@ class Api::V2::PostsController < Api::V1::PostsController
       if person
         @posts = paginate(Post.visible.for_person(person).order(created_at: :desc))
       else
-        render_error("Cannot find that person.")
+        render_error('Cannot find that person.')
         return
       end
     else

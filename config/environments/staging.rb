@@ -20,7 +20,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
   # For nginx:
-  config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect'
 
   # If you have no front-end server that supports something like X-Sendfile,
   # just comment this out and Rails will serve the files
@@ -64,7 +64,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.web_console.whitelisted_ips = "172.30.0.0/12"
+  config.web_console.whitelisted_ips = '172.30.0.0/12'
 
   config.after_initialize do
     Bullet.enable = true

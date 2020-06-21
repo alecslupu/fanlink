@@ -20,21 +20,21 @@ module JSONErrors
     rescue_from AccessDeniedException, with: :render_401
   end
 
-  def render_400(errors = "required parameters invalid")
+  def render_400(errors = 'required parameters invalid')
     render_errors(errors, 400)
   end
 
-  def render_401(errors = "unauthorized access")
+  def render_401(errors = 'unauthorized access')
     errors = errors.message if errors.is_a?(AccessDeniedException)
 
     render_errors(errors, 401)
   end
 
-  def render_404(errors = "not found")
-    render json: { errors: "Not found." }, status: :not_found
+  def render_404(errors = 'not found')
+    render json: { errors: 'Not found.' }, status: :not_found
   end
 
-  def render_422(errors = "could not save data")
+  def render_422(errors = 'could not save data')
     errors = errors.messages.values.flatten if errors.instance_of? ActiveModel::Errors
     render_errors(errors, 422)
   end
@@ -46,7 +46,7 @@ module JSONErrors
   end
 
   def render_500(errors)
-    unless (Rails.env.test? && ENV["ROLLBAR_ENABLED"])
+    unless (Rails.env.test? && ENV['ROLLBAR_ENABLED'])
       logger.error ActiveSupport::LogSubscriber.new.send(:color, errors, :yellow)
       errors.backtrace.each { |line| logger.error ActiveSupport::LogSubscriber.new.send(:color, line, :red) }  unless errors.is_a?(String)
     end
@@ -54,7 +54,7 @@ module JSONErrors
     nil
   end
 
-  def render_503(errors = "service unavailable")
+  def render_503(errors = 'service unavailable')
     render_errors(errors, 503)
   end
 

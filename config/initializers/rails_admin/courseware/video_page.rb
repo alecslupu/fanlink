@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("VideoPage")
-  config.model "VideoPage" do
-    parent "Certificate"
+  config.included_models.push('VideoPage')
+  config.model 'VideoPage' do
+    parent 'Certificate'
 
     configure :course_name do
     end

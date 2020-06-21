@@ -3,7 +3,7 @@
 json = {}
 
 json[:completions] = @completions.map do |completion|
-  render partial: @req_source, locals: { completion: completion }, handlers: "jb"
+  render partial: @req_source, locals: { completion: completion }, handlers: 'jb'
 end
 
 json

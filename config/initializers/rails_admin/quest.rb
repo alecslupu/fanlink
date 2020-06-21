@@ -1,7 +1,7 @@
 RailsAdmin.config do |config|
-  config.included_models.push("Quest")
+  config.included_models.push('Quest')
 
-  config.included_models.push("Quest::Translation")
+  config.included_models.push('Quest::Translation')
 
   config.model 'Quest::Translation' do
     visible false
@@ -27,7 +27,7 @@ RailsAdmin.config do |config|
       fields :locale, :name, :description
     end
   end
-  config.model "Quest" do
+  config.model 'Quest' do
     configure :translations, :globalize_tabs
 
     list do

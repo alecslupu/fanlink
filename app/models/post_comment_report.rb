@@ -24,9 +24,9 @@ class PostCommentReport < ApplicationRecord
   # include PostCommentReport::PortalFilters
   has_paper_trail
 
-  scope :for_product, -> (product) { joins(:person).where("people.product_id = ?", product.id) }
+  scope :for_product, -> (product) { joins(:person).where('people.product_id = ?', product.id) }
 
-  validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
+  validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
 
   normalize_attributes :reason
 

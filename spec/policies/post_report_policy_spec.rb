@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe PostReportPolicy, type: :policy do
-  args = PostReport, "post"
+  args = PostReport, 'post'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
@@ -12,7 +12,7 @@ RSpec.describe PostReportPolicy, type: :policy do
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
 
-  context "logged in admin with delete permission" do
+  context 'logged in admin with delete permission' do
     permission_list = {
       index: false,
       show: false,
@@ -31,19 +31,19 @@ RSpec.describe PostReportPolicy, type: :policy do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_delete: true))
     end
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 
-  context "logged in admin with update permission" do
+  context 'logged in admin with update permission' do
     permission_list = {
       index: false,
       show: false,
@@ -62,21 +62,21 @@ RSpec.describe PostReportPolicy, type: :policy do
       allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_update: true))
     end
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         it { is_expected.to forbid_action(policy) }
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 
   let(:master_class) { PostReport.new }
 
-  context "logged in admin with hide permission" do
+  context 'logged in admin with hide permission' do
     permission_list = {
         index: false,
         show: false,
@@ -95,7 +95,7 @@ RSpec.describe PostReportPolicy, type: :policy do
     end
     subject { described_class.new(Person.new, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -104,13 +104,13 @@ RSpec.describe PostReportPolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
-  context "logged in admin with ignore permission" do
+  context 'logged in admin with ignore permission' do
     permission_list = {
         index: false,
         show: false,
@@ -129,7 +129,7 @@ RSpec.describe PostReportPolicy, type: :policy do
     end
     subject { described_class.new(Person.new, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -138,15 +138,15 @@ RSpec.describe PostReportPolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 
-  context "Logged in admin with chat_hide permission" do
-    describe "message report with no action needed status" do
+  context 'Logged in admin with chat_hide permission' do
+    describe 'message report with no action needed status' do
       before :each do
         allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_hide: true))
       end
@@ -158,8 +158,8 @@ RSpec.describe PostReportPolicy, type: :policy do
     end
   end
 
-  context "Logged in admin with chat ignore permission" do
-    describe "message report with pending status" do
+  context 'Logged in admin with chat ignore permission' do
+    describe 'message report with pending status' do
       before :each do
         allow_any_instance_of(Person).to receive(:individual_access).and_return(PortalAccess.new(post_ignore: true))
       end
@@ -171,8 +171,8 @@ RSpec.describe PostReportPolicy, type: :policy do
     end
   end
 
-  context "Scope" do
-    it "should only return the person quiz in current product" do
+  context 'Scope' do
+    it 'should only return the person quiz in current product' do
       person = build(:person)
 
       post2 = ActsAsTenant.with_tenant(create(:product)) { create(:post_report) }

@@ -14,7 +14,7 @@ json.starts_at quest.starts_at
 json.ends_at quest.ends_at
 json.create_time quest.created_at.to_s
 if quest.steps.count > 0
-  json.steps quest.steps, partial: "api/v2/steps/step", as: :step
+  json.steps quest.steps, partial: 'api/v2/steps/step', as: :step
 else
   json.steps nil
 end

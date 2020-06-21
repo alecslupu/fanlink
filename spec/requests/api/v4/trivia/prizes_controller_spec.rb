@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "swagger_helper"
+require 'swagger_helper'
 
-RSpec.describe "Api::V4::Trivia::PrizesController", type: :request, swagger_doc: "v4/swagger.json" do
+RSpec.describe 'Api::V4::Trivia::PrizesController', type: :request, swagger_doc: 'v4/swagger.json' do
   #path "/trivia/games/{game_id}/prizes" do
   #  get "displays complete leaderboard" do
   #    tags "Trivia"

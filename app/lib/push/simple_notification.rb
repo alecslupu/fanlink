@@ -7,12 +7,12 @@ module Push
 
       android_token_notification_push(
         2419200,
-        context: "marketing",
+        context: 'marketing',
         title: "#{current_user.username}",
         message_short: notification.body,
         message_long: notification.body,
         message_placeholder: current_user.username,
-        type: "user"
+        type: 'user'
       )
 
       ios_token_notification_push(
@@ -20,7 +20,7 @@ module Push
         notification.body,
         nil,
         2419200,
-        context: "marketing"
+        context: 'marketing'
       )
     end
   end

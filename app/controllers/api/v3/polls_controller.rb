@@ -38,7 +38,7 @@ class Api::V3::PollsController < ApiController
   def create
     parms = poll_params
     @poll = Poll.create(parms)
-    @poll.poll_type_id = params[params[:poll][:poll_type] + "_id"]
+    @poll.poll_type_id = params[params[:poll][:poll_type] + '_id']
     if @poll.valid?
       @poll.save
       return_the @poll, handler: tpl_handler, using: :show

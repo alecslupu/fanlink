@@ -4,11 +4,11 @@ json = {}
 
 if defined?(@followers)
   json[:followers] = @followers.map do |follower|
-    render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: "jb"
+    render partial: "api/v4/people/#{@req_source}", locals: { person: follower }, handlers: 'jb'
   end
 else
   json[:following] = @following.map do |following|
-    render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: "jb"
+    render partial: "api/v4/people/#{@req_source}", locals: { person: following }, handlers: 'jb'
   end
 end
 

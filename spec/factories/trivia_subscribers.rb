@@ -14,7 +14,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_subscriber, class: "Trivia::Subscriber" do
+  factory :trivia_subscriber, class: 'Trivia::Subscriber' do
     product { current_product }
 
     person { create(:person) }

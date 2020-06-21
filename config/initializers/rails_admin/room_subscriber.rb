@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("RoomSubscriber")
+  config.included_models.push('RoomSubscriber')
 
-  config.model "RoomSubscriber" do
-    label_plural "Room Owners"
+  config.model 'RoomSubscriber' do
+    label_plural 'Room Owners'
     list do
       fields :id,
              :person,

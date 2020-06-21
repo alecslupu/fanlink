@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  scope(constraints: Routing::Constraints::V3, module: "api/v3", defaults: { format: :json }) do
+  scope(constraints: Routing::Constraints::V3, module: 'api/v3', defaults: { format: :json }) do
     resources :action_types do
       collection do
-        get "select" => "action_types#index"
-        post "complete" => "reward_progresses#create"
+        get 'select' => 'action_types#index'
+        post 'complete' => 'reward_progresses#create'
       end
     end
 
-    resources :activities, controller: "quest_activities", except: %i[create index show update] do
+    resources :activities, controller: 'quest_activities', except: %i[create index show update] do
       collection do
-        post "complete" => "reward_progresses#create"
+        post 'complete' => 'reward_progresses#create'
       end
     end
 
@@ -21,20 +21,20 @@ Rails.application.routes.draw do
 
     resources :events do
       member do
-        post "checkins" => "events#checkin"
-        delete "checkins" => "events#checkout"
-        get "checkins" => "events#checkins"
+        post 'checkins' => 'events#checkin'
+        delete 'checkins' => 'events#checkout'
+        get 'checkins' => 'events#checkins'
       end
     end
     resources :courses, except: %i[index create] do
-      get "lessons" => "lessons#index"
-      post "lessons" => "lessons#create"
+      get 'lessons' => 'lessons#index'
+      post 'lessons' => 'lessons#create'
     end
 
     resources :interests do
       member do
-        post "add" => "interests#add_interest"
-        post "remove" => "interests#remove_interest"
+        post 'add' => 'interests#add_interest'
+        post 'remove' => 'interests#remove_interest'
       end
     end
 
@@ -42,16 +42,16 @@ Rails.application.routes.draw do
 
     resources :people, only: %i[create index show update destroy] do
       member do
-        get "interests" => "people#interests"
-        get "public" => "people#public"
-        patch "change_password"
+        get 'interests' => 'people#interests'
+        get 'public' => 'people#public'
+        patch 'change_password'
       end
       collection do
-        post "password_forgot" => "password_resets#create"
-        post "password_reset" => "password_resets#update"
-        get "recommended" => "recommended_people#index"
+        post 'password_forgot' => 'password_resets#create'
+        post 'password_reset' => 'password_resets#update'
+        get 'recommended' => 'recommended_people#index'
       end
-      post "pin" => "pin_messages#pin_to"
+      post 'pin' => 'pin_messages#pin_to'
     end
 
     resources :pin_messages, only: %i[destroy], path: :pinned
@@ -59,50 +59,50 @@ Rails.application.routes.draw do
     resources :portal_notifications
 
     resources :posts, except: %i[new edit] do
-      resources :polls, controller: "polls", only: %i[create update destroy] do
-        resources :poll_options, controller: "poll_options", only: %i[create update list destroy] do
-          post "/cast_vote" => "poll_options#cast_vote"
-          delete "/delete_votes" => "poll_options#delete_votes"
+      resources :polls, controller: 'polls', only: %i[create update destroy] do
+        resources :poll_options, controller: 'poll_options', only: %i[create update list destroy] do
+          post '/cast_vote' => 'poll_options#cast_vote'
+          delete '/delete_votes' => 'poll_options#delete_votes'
         end
       end
       collection do
-        get "list" => "posts#list"
-        get "recommended" => "recommended_posts#index"
-        get "tags" => "tags#index"
-        get "category/:category_name" => "categories#posts"
+        get 'list' => 'posts#list'
+        get 'recommended' => 'recommended_posts#index'
+        get 'tags' => 'tags#index'
+        get 'category/:category_name' => 'categories#posts'
       end
-      get "share" => "posts#share"
+      get 'share' => 'posts#share'
     end
 
     resources :polls, only: %i[index] do
-      resources :poll_options, controller: "poll_options", only: %i[show index cast_vote]
+      resources :poll_options, controller: 'poll_options', only: %i[show index cast_vote]
     end
 
     resources :quests, except: %i[create index show update] do
       collection do
-        post "complete" => "reward_progresses#create"
+        post 'complete' => 'reward_progresses#create'
       end
     end
 
     resources :rewards do
       collection do
-        get "select" => "rewards#index"
+        get 'select' => 'rewards#index'
       end
-      get "assigned" => "assigned_rewards#index"
+      get 'assigned' => 'assigned_rewards#index'
     end
 
     resources :rooms do
-      post "pin" => "pin_messages#pin_from"
+      post 'pin' => 'pin_messages#pin_from'
     end
 
     resources :semesters do
-      get "courses" => "courses#index"
-      post "courses" => "courses#create"
+      get 'courses' => 'courses#index'
+      post 'courses' => 'courses#create'
     end
 
     resources :steps, except: %i[create index show update] do
       collection do
-        post "complete" => "reward_progresses#create"
+        post 'complete' => 'reward_progresses#create'
       end
     end
 
@@ -110,56 +110,56 @@ Rails.application.routes.draw do
 
     resources :merchandise, only: %i[create update destroy]
 
-    resources :activities, controller: "quest_activities", only: %i[update show destroy] do
-      resources :types, controller: "activity_types", only: %i[create index]
+    resources :activities, controller: 'quest_activities', only: %i[update show destroy] do
+      resources :types, controller: 'activity_types', only: %i[create index]
     end
 
     resources :activity_types, only: %i[show update destroy] do
       collection do
-        get "select" => "activity_types#index"
+        get 'select' => 'activity_types#index'
       end
     end
 
     resources :people, except: %i[create index show update] do
-      get "badges" => "badges#index"
+      get 'badges' => 'badges#index'
     end
 
-    resources :beacons, controller: "product_beacons" do
+    resources :beacons, controller: 'product_beacons' do
       collection do
-        get "list" => "product_beacons#list"
-        get "select" => "product_beacons#index"
+        get 'list' => 'product_beacons#list'
+        get 'select' => 'product_beacons#index'
       end
     end
 
     resources :products do
       collection do
-        get "select" => "products#index"
+        get 'select' => 'products#index'
       end
     end
 
     resources :categories do
       collection do
-        get "select" => "category#index"
+        get 'select' => 'category#index'
       end
     end
 
     resources :quests do
       resources :steps, only: %i[create index]
-      resources :completions, controller: "quest_completions", only: %i[create index]
+      resources :completions, controller: 'quest_completions', only: %i[create index]
       collection do
-        get "list" => "quests#list"
-        get "select" => "quests#index"
+        get 'list' => 'quests#list'
+        get 'select' => 'quests#index'
       end
     end
 
-    resources :completions, controller: "quest_completions", only: %i[index update show] do
+    resources :completions, controller: 'quest_completions', only: %i[index update show] do
       collection do
-        get "list" => "quest_completions#list"
+        get 'list' => 'quest_completions#list'
       end
     end
     resources :steps, only: %i[show update destroy] do
-      resources :activities, controller: "quest_activities", only: %i[create index]
-      resources :completions, controller: "quest_completions", only: %i[create index]
+      resources :activities, controller: 'quest_activities', only: %i[create index]
+      resources :completions, controller: 'quest_completions', only: %i[create index]
     end
     resources :tags, only: %i[index]
 
@@ -170,37 +170,37 @@ Rails.application.routes.draw do
     resources :followings, only: %i[create destroy index]
     resources :levels, only: %i[index]
     resources :merchandise, only: %i[index show]
-    get "messages" => "messages#list"
+    get 'messages' => 'messages#list'
     resources :messages, only: %i[update]
     resources :message_reports, only: %i[index update]
     resources :notification_device_ids, only: %i[create] do
       collection do
-        delete "" => "notification_device_ids#destroy"
+        delete '' => 'notification_device_ids#destroy'
       end
     end
     resources :people, only: %i[create index show update] do
       member do
-        patch "change_password"
+        patch 'change_password'
       end
       collection do
-        post "password_forgot" => "password_resets#create"
-        post "password_reset" => "password_resets#update"
-        get "recommended" => "recommended_people#index"
-        post "send_certificate"
+        post 'password_forgot' => 'password_resets#create'
+        post 'password_reset' => 'password_resets#update'
+        get 'recommended' => 'recommended_people#index'
+        post 'send_certificate'
       end
     end
-    get "post_comments/list" => "post_comments#list"
+    get 'post_comments/list' => 'post_comments#list'
     resources :post_reports, only: %i[create index update]
     resources :post_comment_reports, only: %i[create index update]
     resources :posts, except: %i[new edit] do
       collection do
-        get "list" => "posts#list"
-        get "recommended" => "recommended_posts#index"
+        get 'list' => 'posts#list'
+        get 'recommended' => 'recommended_posts#index'
       end
 
       resources :post_comments, only: %i[create destroy index], path: :comments
       resources :post_reactions, only: %i[create destroy index update], path: :reactions
-      get "share", on: :member
+      get 'share', on: :member
     end
     resources :relationships, except: %i[new edit]
     resources :rooms do
@@ -210,7 +210,7 @@ Rails.application.routes.draw do
     end
     resources :session, only: %i[create index] do
       collection do
-        delete "" => "session#destroy"
+        delete '' => 'session#destroy'
       end
     end
   end
