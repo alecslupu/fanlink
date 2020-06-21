@@ -16,7 +16,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_game_leaderboard, class: "Trivia::GameLeaderboard" do
+  factory :trivia_game_leaderboard, class: 'Trivia::GameLeaderboard' do
     product { current_product }
 
     game { create(:trivia_game) }

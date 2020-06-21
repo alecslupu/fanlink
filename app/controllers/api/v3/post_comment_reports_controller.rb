@@ -33,7 +33,7 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
 
   def create
     parms = post_comment_report_params
-    post_comment = PostComment.find(parms["post_comment_id"])
+    post_comment = PostComment.find(parms['post_comment_id'])
     if post_comment.try(:product) == current_user.product
       post_comment_report = PostCommentReport.create(parms)
       if post_comment_report.valid?
@@ -121,7 +121,7 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
       if PostCommentReport.valid_status?(parms[:status])
         @comment = @post_comment_report.post_comment
         @post_comment_report.update(parms)
-        if parms[:status] == "comment_hidden"
+        if parms[:status] == 'comment_hidden'
           @comment.hidden = true
           if @comment.save
             head :ok
@@ -132,10 +132,10 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
           head :ok
         end
       else
-        render_422(_("Invalid or missing status."))
+        render_422(_('Invalid or missing status.'))
       end
     else
-      render_422(_("Update failed. Missing post_comment_report object."))
+      render_422(_('Update failed. Missing post_comment_report object.'))
     end
   end
 
@@ -144,7 +144,7 @@ protected
   def apply_filters
     post_comment_reports = PostCommentReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && PostCommentReport.respond_to?(p)
+      if p.end_with?('_filter') && PostCommentReport.respond_to?(p)
         post_comment_reports = post_comment_reports.send(p, v)
       end
     end

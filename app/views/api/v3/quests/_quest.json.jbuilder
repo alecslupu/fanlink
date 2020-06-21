@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.cache! ["v3", quest.updated_at, @lang, quest] do
+json.cache! ['v3', quest.updated_at, @lang, quest] do
   json.id quest.id.to_s
   json.product_id quest.product_id.to_s
   json.event_id quest.event_id.to_s
@@ -22,7 +22,7 @@ json.completed_at ((quest_completed) ? quest_completed.created_at : nil)
 if quest.steps.count > 0
   json.steps do
     json.array!(quest.steps) do |step|
-      json.partial! "api/v3/steps/step", locals: { step: step }
+      json.partial! 'api/v3/steps/step', locals: { step: step }
     end
   end
 else
@@ -33,7 +33,7 @@ quest.rewards.each do |assigned|
   if assigned.badge
     json.assigned_badge assigned.badge
     json.badge do
-      json.partial! "api/v3/badges/badge", locals: { badge: assigned.badge }
+      json.partial! 'api/v3/badges/badge', locals: { badge: assigned.badge }
     end
   else
     json.badge nil

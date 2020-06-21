@@ -21,6 +21,6 @@ class Api::V4::RecommendedPostsController < Api::V3::RecommendedPostsController
   protected
 
     def tpl_handler
-      "jb"
+      'jb'
     end
 end

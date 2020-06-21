@@ -3,7 +3,7 @@
 json = {}
 
 json[:portal_notifications] = @portal_notifications.map do |portal_notification|
-  render partial: @req_source, locals: { portal_notification: portal_notification }, handlers: "jb"
+  render partial: @req_source, locals: { portal_notification: portal_notification }, handlers: 'jb'
 end
 
 json

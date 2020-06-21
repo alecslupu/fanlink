@@ -6,12 +6,12 @@ module Push
     def push(message)
       room = message.room
       person = message.person
-      message_body = message.picture_url.present? ? "You’ve got a 📸" : message.body
+      message_body = message.picture_url.present? ? 'You’ve got a 📸' : message.body
       @target_people_ids = get_unblocked_members(room.members, person)
 
       android_token_notification_push(
         2419200,
-        context: "private_chat",
+        context: 'private_chat',
         title: person.username,
         message_short: message_body,
         message_placeholder: person.username,
@@ -19,16 +19,16 @@ module Push
         image_url: message.picture_url,
         room_id: room.id.to_s,
         deep_link: "#{message.product.internal_name}://rooms/#{room.id}",
-        type: "user"
+        type: 'user'
       )
 
 
       ios_token_notification_push(
         person.username,
         message_body,
-        "ReplyToMessage",
+        'ReplyToMessage',
         2419200,
-        context: "private_chat",
+        context: 'private_chat',
         room_id: room.id.to_s,
         image_url: message.picture_url,
         deep_link: "#{message.product.internal_name}://rooms/#{room.id}"

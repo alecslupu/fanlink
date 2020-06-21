@@ -31,12 +31,12 @@ class QuizPage < ApplicationRecord
   validate :mandatory_checks,  unless: Proc.new { |page| page.is_optional }
   validate :answer_checks, unless: Proc.new { |page| page.is_survey }
 
-  validates :is_optional, presence: { message: "You have set the quiz survey, you must choose to be optional as well" }, if: :is_survey?
+  validates :is_optional, presence: { message: 'You have set the quiz survey, you must choose to be optional as well' }, if: :is_survey?
   validates :answers, presence: true, length: {
     minimum: 2,
     tokenizer: lambda { |assoc| assoc.size },
-    too_short: "must have at least %{count} entries",
-    too_long: "must have at most %{count} entries"
+    too_short: 'must have at least %{count} entries',
+    too_long: 'must have at most %{count} entries'
   }
 
   def course_name
@@ -63,25 +63,25 @@ class QuizPage < ApplicationRecord
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self
-      errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+      errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
   end
 
   def answer_checks
     correct_answers = answers.reject{|answer| !answer.is_correct}.size
-    errors.add(:base, _("You need at least one correct answer. The changes have not been saved. Please refresh and try again")) if correct_answers.zero?
+    errors.add(:base, _('You need at least one correct answer. The changes have not been saved. Please refresh and try again')) if correct_answers.zero?
     # FLAPI-875 [RailsAdmin] o add validation for mandatory quizzes to not be able to have more than one correct answer
-    errors.add(:base, _("Mandatory quizzes should have ONLY ONE correct answer")) if correct_answers > 1 && is_mandatory?
+    errors.add(:base, _('Mandatory quizzes should have ONLY ONE correct answer')) if correct_answers > 1 && is_mandatory?
   end
 
   def mandatory_checks
     if wrong_answer_page_id.nil?
-      errors.add(:base, :mandatory_checks, message: _("Mandatory quizes require a wrong answer page."))
+      errors.add(:base, :mandatory_checks, message: _('Mandatory quizes require a wrong answer page.'))
     else
       wrong_page = CertcoursePage.where(id: wrong_answer_page_id).first
-      errors.add(:wrong_answer_page_id, _("Could not find the specified Wrong page id")) if wrong_page.blank?
+      errors.add(:wrong_answer_page_id, _('Could not find the specified Wrong page id')) if wrong_page.blank?
       if wrong_page.present? && wrong_page.certcourse_page_order >= certcourse_page.certcourse_page_order
-        errors.add(:wrong_answer_page_id,  _("Wrong page needs to come before this page."))
+        errors.add(:wrong_answer_page_id,  _('Wrong page needs to come before this page.'))
       end
     end
   end

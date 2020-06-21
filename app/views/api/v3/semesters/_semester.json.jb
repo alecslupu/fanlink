@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json = Rails.cache.fetch ["v3", semester.updated_at, semester] do
+json = Rails.cache.fetch ['v3', semester.updated_at, semester] do
   {
     id: semester.id,
     name: semester.name,
@@ -11,7 +11,7 @@ json = Rails.cache.fetch ["v3", semester.updated_at, semester] do
 end
 
 json[:courses] = semester.courses.reject { |course| course.deleted }.map do |course|
-  render partial: "api/v3/courses/course", locals: { course: course }, handlers: "jb"
+  render partial: 'api/v3/courses/course', locals: { course: course }, handlers: 'jb'
 end
 
 json

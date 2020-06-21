@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("PollOption")
+  config.included_models.push('PollOption')
 
-  config.included_models.push("PollOption::Translation")
+  config.included_models.push('PollOption::Translation')
 
   config.model 'PollOption::Translation' do
     visible false
@@ -20,10 +20,10 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "PollOption" do
+  config.model 'PollOption' do
     configure :translations, :globalize_tabs
 
-    parent "Poll"
+    parent 'Poll'
 
     edit do
       fields :poll,

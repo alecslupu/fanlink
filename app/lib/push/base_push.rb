@@ -5,14 +5,14 @@ module Push
     BATCH_SIZE = 500.freeze
 
     def subscribe_user_to_topic(person_id, resource_id)
-      ["ios", "android"].each do |device_type|
+      ['ios', 'android'].each do |device_type|
         device_identifiers = get_device_identifiers(person_id, device_type)
         response = push_client.batch_topic_subscription("trivia_game_#{resource_id}_#{device_type}", device_identifiers) if device_identifiers.present?
       end
     end
 
     def unsubscribe_user_from_topic(person_id, resource_id)
-      ["ios", "android"].each do |device_type|
+      ['ios', 'android'].each do |device_type|
         device_identifiers = get_device_identifiers(person_id, device_type)
         response = push_client.batch_topic_unsubscription("trivia_game_#{resource_id}_#{device_type}", device_identifiers) if device_identifiers.present?
       end
@@ -76,10 +76,10 @@ module Push
       notification_body = build_ios_notification(title, body, click_action, ttl, data)
 
       if tokens.size <= BATCH_SIZE
-        push_with_retry(notification_body, tokens, "ios")
+        push_with_retry(notification_body, tokens, 'ios')
       else
         tokens.each_slice(BATCH_SIZE) do |firebase_tokens|
-          push_with_retry(notification_body, firebase_tokens, "ios")
+          push_with_retry(notification_body, firebase_tokens, 'ios')
         end
       end
     end
@@ -91,11 +91,11 @@ module Push
       options[:notification][:title] = title
       options[:notification][:body] = body
       options[:notification][:click_action] = click_action
-      options[:notification][:mutable_content] = "true"
-      options[:notification][:sound] = "default"
+      options[:notification][:mutable_content] = 'true'
+      options[:notification][:sound] = 'default'
 
       options[:data] = data
-      options[:data][:priority] = "high"
+      options[:data][:priority] = 'high'
       options[:data][:time_to_live] = ttl
 
       return options
@@ -115,10 +115,10 @@ module Push
 
       notification_body = build_android_notification(ttl, data)
       if tokens.size <= BATCH_SIZE
-        push_with_retry(notification_body, tokens, "android")
+        push_with_retry(notification_body, tokens, 'android')
       else
         tokens.each_slice(BATCH_SIZE) do |firebase_tokens|
-          push_with_retry(notification_body, firebase_tokens, "android")
+          push_with_retry(notification_body, firebase_tokens, 'android')
         end
       end
     end
@@ -126,7 +126,7 @@ module Push
     def build_android_notification(ttl, data = {})
       options = {}
       options[:data] = data
-      options[:priority] = "high"
+      options[:priority] = 'high'
       options[:content_available] = true
       options[:mutable_content] = true
       options[:time_to_live] = ttl
@@ -160,10 +160,10 @@ module Push
 
       options[:notification][:title] = title
       options[:notification][:body] = body
-      options[:notification][:sound] = "default"
+      options[:notification][:sound] = 'default'
 
       options[:data] = data
-      options[:data][:priority] = "high"
+      options[:data][:priority] = 'high'
       options[:data][:time_to_live] = ttl
 
       return options

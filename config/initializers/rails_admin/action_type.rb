@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("ActionType")
+  config.included_models.push('ActionType')
 
-  config.model "ActionType" do
+  config.model 'ActionType' do
     list do
       items_per_page 100
       sort_by :name

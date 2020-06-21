@@ -19,7 +19,7 @@
 
 module Trivia
   class SingleChoiceAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::SingleChoiceQuestion", inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :active_questions, class_name: 'Trivia::SingleChoiceQuestion', inverse_of: :available_question, foreign_key: :available_question_id
 
     include AASM
     enum status: {

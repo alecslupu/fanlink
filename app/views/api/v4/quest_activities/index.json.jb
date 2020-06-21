@@ -3,7 +3,7 @@
 json = {}
 
 json[:activities] = @quest_activities.map do |activity|
-  render partial: @req_source, locals: { activity: activity }, handlers: "jb"
+  render partial: @req_source, locals: { activity: activity }, handlers: 'jb'
 end
 
 json

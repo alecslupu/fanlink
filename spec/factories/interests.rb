@@ -13,7 +13,7 @@
 #  order      :integer          default(0), not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :interest do

@@ -17,6 +17,6 @@ class UpdateMessageCounterJob < ApplicationJob
         payload[versioned_message_counter_path(mem, version)] = mem.message_count unless mem.person_id == poster_id
       end
     end
-    client.update("", payload)
+    client.update('', payload)
   end
 end

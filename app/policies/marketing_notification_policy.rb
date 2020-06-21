@@ -4,6 +4,6 @@ class MarketingNotificationPolicy < ApplicationPolicy
 
   protected
     def module_name
-      "marketing_notification"
+      'marketing_notification'
     end
 end

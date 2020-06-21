@@ -9,22 +9,22 @@ module Push
 
       android_token_notification_push(
         2419200,
-        context: "friend_requested",
-        title: "Friend request",
+        context: 'friend_requested',
+        title: 'Friend request',
         message_short: "New friend request from #{requested_by_person.username}",
         message_placeholder: requested_by_person.username,
         image_url: profile_picture_url,
         relationship_id: relationship.id,
         deep_link: "#{requested_by_person.product.internal_name}://users/#{requested_by_person.id}/profile",
-        type: "user"
+        type: 'user'
       )
 
       ios_token_notification_push(
-        "Friend request",
+        'Friend request',
         "New friend request from #{requested_by_person.username}",
-        "AcceptOrIgnore",
+        'AcceptOrIgnore',
         2419200,
-        context: "friend_requested",
+        context: 'friend_requested',
         relationship_id: relationship.id,
         image_url: profile_picture_url,
         deep_link: "#{requested_by_person.product.internal_name}://users/#{requested_by_person.id}/profile"
@@ -39,20 +39,20 @@ module Push
 
       android_token_notification_push(
         2419200,
-        context: "friend_accepted",
+        context: 'friend_accepted',
         title: "Friend request accepted by #{requested_to_person.username}",
         message_short: "Friend request accepted by #{requested_to_person.username}",
         message_placeholder: requested_to_person.username,
         deep_link: "#{requested_to_person.product.internal_name}://users/#{requested_to_person.id}/profile",
-        type: "user"
+        type: 'user'
       )
 
       ios_token_notification_push(
-        "Friend request accepted",
+        'Friend request accepted',
         "Friend request accepted by #{requested_to_person.username}",
         nil,
         2419200,
-        context: "friend_accepted",
+        context: 'friend_accepted',
         deep_link: "#{requested_to_person.product.internal_name}://users/#{requested_to_person.id}/profile"
       )
     end

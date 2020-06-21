@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("Answer")
+  config.included_models.push('Answer')
 
-  config.model "Answer" do
-    parent "Certificate"
+  config.model 'Answer' do
+    parent 'Certificate'
 
     configure :question do
     end

@@ -100,7 +100,7 @@ class MarketingNotification < ApplicationRecord
   after_save :enqueue_delayed_job
 
   def run_at
-    date = self.date.asctime.in_time_zone("UTC")
+    date = self.date.asctime.in_time_zone('UTC')
     get_utc_datetime(date, self.timezone)
   end
   
@@ -124,9 +124,9 @@ class MarketingNotification < ApplicationRecord
 
     def get_utc_datetime(date, timezone)
       case timezone[4]
-      when "-"
+      when '-'
         datetime = date + timezone[5..6].to_i.hour + timezone[8..9].to_i.minute
-      when "+"
+      when '+'
         datetime = date - timezone[5..6].to_i.hour - timezone[8..9].to_i.minute
       else
         datetime = date

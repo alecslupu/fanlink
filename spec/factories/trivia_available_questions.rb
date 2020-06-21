@@ -18,7 +18,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_available_question, class: "Trivia::SingleChoiceAvailableQuestion" do
+  factory :trivia_available_question, class: 'Trivia::SingleChoiceAvailableQuestion' do
     product { current_product }
 
     title { Faker::Lorem.question(word_count: 10) }
@@ -36,16 +36,16 @@ FactoryBot.define do
       create_list :wrong_trivia_available_answer, 3, question: question
     end
 
-    factory :trivia_multiple_choice_available_question, class: "Trivia::MultipleChoiceAvailableQuestion" do
+    factory :trivia_multiple_choice_available_question, class: 'Trivia::MultipleChoiceAvailableQuestion' do
     end
 
-    factory :trivia_single_choice_available_question, class: "Trivia::SingleChoiceAvailableQuestion" do
+    factory :trivia_single_choice_available_question, class: 'Trivia::SingleChoiceAvailableQuestion' do
     end
-    factory :trivia_picture_available_question, class: "Trivia::PictureAvailableQuestion" do
+    factory :trivia_picture_available_question, class: 'Trivia::PictureAvailableQuestion' do
     end
-    factory :trivia_boolean_choice_available_question, class: "Trivia::BooleanChoiceAvailableQuestion" do
+    factory :trivia_boolean_choice_available_question, class: 'Trivia::BooleanChoiceAvailableQuestion' do
     end
-    factory :trivia_hangman_available_question, class: "Trivia::HangmanAvailableQuestion" do
+    factory :trivia_hangman_available_question, class: 'Trivia::HangmanAvailableQuestion' do
     end
   end
 end

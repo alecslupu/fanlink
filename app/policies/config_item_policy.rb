@@ -14,7 +14,7 @@ class ConfigItemPolicy < ApplicationPolicy
 
   protected
   def module_name
-    "root"
+    'root'
   end
 
   def has_systen_permission?(permission)

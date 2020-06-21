@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Trivia::GamePolicy, type: :policy do
-  args = [ Trivia::Game, "trivia" ]
+  args = [ Trivia::Game, 'trivia' ]
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args
@@ -11,7 +11,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
 
   let(:master_class) { Trivia::Game.new }
 
-  context "logged in admin with generate game permission" do
+  context 'logged in admin with generate game permission' do
     permission_list = {
       index: false,
       show: false,
@@ -33,7 +33,7 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
 
     subject { described_class.new(Person.new, master_class) }
 
-    describe "permissions" do
+    describe 'permissions' do
       permission_list.each do |policy, value|
         if value
           it { is_expected.to permit_action(policy) }
@@ -42,15 +42,15 @@ RSpec.describe Trivia::GamePolicy, type: :policy do
         end
       end
     end
-    describe "protected methods" do
+    describe 'protected methods' do
       it { expect(subject.send(:super_admin?)).to eq(false) }
-      it { expect(subject.send(:has_permission?, "bogous")).to eq(false) }
-      it { expect(subject.send(:has_permission?, "index")).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'bogous')).to eq(false) }
+      it { expect(subject.send(:has_permission?, 'index')).to eq(false) }
     end
   end
 
-  context "Scope" do
-    it "should only return the person quiz in current product" do
+  context 'Scope' do
+    it 'should only return the person quiz in current product' do
       person = create(:person)
 
       post2 = ActsAsTenant.with_tenant(create(:product)) { create(:trivia_game) }

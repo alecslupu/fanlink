@@ -57,7 +57,6 @@ class VideoPage < ApplicationRecord
            when Hash
              attachable[:io].path
            end
-
     Integer(FFMPEG::Movie.new(file).duration) + 1
   end
   private
@@ -67,7 +66,7 @@ class VideoPage < ApplicationRecord
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self
-      errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+      errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
   end
 end

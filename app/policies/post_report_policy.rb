@@ -17,15 +17,15 @@ class PostReportPolicy < PostModulePolicy
   end
 
   def hide_post_report_action?
-    !["message_hidden"].include?(record.status) && has_permission?(:hide?)
+    !['message_hidden'].include?(record.status) && has_permission?(:hide?)
   end
 
   def ignore_post_report_action?
-    !["no_action_needed"].include?(record.status) && has_permission?(:ignore?)
+    !['no_action_needed'].include?(record.status) && has_permission?(:ignore?)
   end
 
   def reanalyze_post_report_action?
-    !["pending"].include?(record.status) && has_permission?(:hide?)
+    !['pending'].include?(record.status) && has_permission?(:hide?)
   end
 
 

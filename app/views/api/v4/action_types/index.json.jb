@@ -3,7 +3,7 @@
 json = {}
 
 json[:actions] = @action_types.map do |action|
-  render partial: @req_source, locals: { action: action }, handlers: "jb"
+  render partial: @req_source, locals: { action: action }, handlers: 'jb'
 end
 
 json

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 describe SnsContentType do
   # TODO: auto-generated
-  describe "#new" do
+  describe '#new' do
     pending
   end
 
   # TODO: auto-generated
-  describe "#call" do
+  describe '#call' do
     pending
   end
 end

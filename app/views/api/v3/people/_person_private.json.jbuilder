@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-json.partial! "api/v3/people/person", locals: { person: person }
-json.cache! ["v3", "private", person] do
+json.partial! 'api/v3/people/person', locals: { person: person }
+json.cache! ['v3', 'private', person] do
   json.email person.email
   json.set! :product do
     json.internal_name person.product.internal_name
@@ -12,13 +12,13 @@ end
 if person.level_progresses.empty?
   json.level_progress nil
 else
-  json.level_progress person.level_progresses, partial: "api/v3/level_progresses/level_progress", as: :level
+  json.level_progress person.level_progresses, partial: 'api/v3/level_progresses/level_progress', as: :level
 end
 
 if person.person_rewards.empty?
   json.rewards nil
 else
-  json.rewards person.person_rewards, partial: "api/v3/person_rewards/person_reward", as: :reward
+  json.rewards person.person_rewards, partial: 'api/v3/person_rewards/person_reward', as: :reward
 end
 if person.blocked_people.empty?
   json.blocked_people nil

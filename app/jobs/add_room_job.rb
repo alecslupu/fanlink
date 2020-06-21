@@ -17,6 +17,6 @@ class AddRoomJob < ApplicationJob
         end
       end
     end
-    client.update("", payload)
+    client.update('', payload)
   end
 end
