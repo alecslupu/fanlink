@@ -57,7 +57,7 @@ class VideoPage < ApplicationRecord
              attachable[:io].path
            end
 
-    FFMPEG::Movie.new(file).duration.to_i + 1
+    Integer(FFMPEG::Movie.new(file).duration) + 1
   end
   private
 

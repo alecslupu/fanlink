@@ -46,6 +46,7 @@ class CertcoursePage < ApplicationRecord
   before_save :set_properties_from_child
 
   def set_properties_from_child
+    return if child.blank?
     self.content_type = child.content_type
 
     self.duration = child.duration if video?
