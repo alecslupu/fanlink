@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if defined?(Slackistrano::Messaging)
   module Slackistrano
     class CustomMessaging < Messaging::Base
