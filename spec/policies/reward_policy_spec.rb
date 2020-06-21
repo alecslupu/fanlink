@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe RewardPolicy, type: :policy do
-  args = Reward, "reward"
+  args = Reward, 'reward'
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

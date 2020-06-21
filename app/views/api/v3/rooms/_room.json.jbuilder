@@ -9,7 +9,7 @@ json.public room.public
 json.order room.order
 json.last_message_timestamp room.last_message_timestamp
 if room.private?
-  json.members room.members, partial: "api/v3/people/person", as: :person
+  json.members room.members, partial: 'api/v3/people/person', as: :person
 end
 if room.pin_from.present?
   json.pin_messages_from do

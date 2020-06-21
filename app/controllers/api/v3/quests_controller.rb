@@ -213,7 +213,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
         render_422 @quest.errors
       end
     else
-      render_422(_("Update failed. Missing quest object."))
+      render_422(_('Update failed. Missing quest object.'))
     end
   end
 

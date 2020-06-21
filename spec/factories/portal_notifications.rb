@@ -16,7 +16,7 @@
 FactoryBot.define do
   factory :portal_notification do
     product { current_product }
-    body { "My Notification" }
+    body { 'My Notification' }
     send_me_at { Time.zone.now.end_of_hour }
   end
 end

@@ -28,7 +28,7 @@ module RailsAdmin
                 @object.message_reports.each(&:pending!)
                 flash[:notice] = t('admin.flash.successful', name: @model_config.label, action: t('admin.actions.update.done'))
               else
-                flash[:error] = @object.errors.full_messages.join("<br/>")
+                flash[:error] = @object.errors.full_messages.join('<br/>')
               end
               redirect_to action: :index
             end

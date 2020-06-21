@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Api::V4::MessageReportsController, type: :controller do
-  describe "#create" do
+  describe '#create' do
     let(:reason) { "I don't like you" }
 
-    it "creates a new report in a public room" do
+    it 'creates a new report in a public room' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -22,17 +22,17 @@ RSpec.describe Api::V4::MessageReportsController, type: :controller do
     end
 
 
-    it "hides a the message if status is changed to message_hidden" do
+    it 'hides a the message if status is changed to message_hidden' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         message = create(:message, room: create(:public_active_room))
         report = create(:message_report, message: message, status: :pending)
         login_as(person)
-        patch :update, params: { id: report.id, message_report: { status: "message_hidden" } }
+        patch :update, params: { id: report.id, message_report: { status: 'message_hidden' } }
 
-        expect(response.body).to eq("")
+        expect(response.body).to eq('')
         expect(response).to be_successful
-        expect(report.reload.status).to eq("message_hidden")
+        expect(report.reload.status).to eq('message_hidden')
         expect(message.reload.hidden).to eq(true)
       end
     end

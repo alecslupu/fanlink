@@ -8,6 +8,6 @@ class PortalNotificationPolicy < ApplicationPolicy
   end
   protected
   def module_name
-    "portal_notification"
+    'portal_notification'
   end
 end

@@ -22,8 +22,8 @@ module JsonHelpers
 
   def following_json(following, currnt_user = nil)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/following_response.json"))
-    following["follower"] = following["follower"].compact
-    following["followed"] = following["followed"].compact
+    following['follower'] = following['follower'].compact
+    following['followed'] = following['followed'].compact
 
     schema.valid?(following.compact)
   end
@@ -40,15 +40,15 @@ module JsonHelpers
 
   def message_json(msg)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/message_response.json"))
-    msg["person"] = msg["person"].compact unless msg["person"].nil?
-    msg["mentions"] = msg["mentions"].compact unless msg["mentions"].nil?
+    msg['person'] = msg['person'].compact unless msg['person'].nil?
+    msg['mentions'] = msg['mentions'].compact unless msg['mentions'].nil?
 
     schema.valid?(msg.compact)
   end
 
   def message_list_json(msg)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/message_list_response.json"))
-    msg["mentions"] = msg["mentions"].compact unless msg["mentions"].nil?
+    msg['mentions'] = msg['mentions'].compact unless msg['mentions'].nil?
 
     schema.valid?(msg.compact)
   end
@@ -56,7 +56,7 @@ module JsonHelpers
   def message_mentions_json(msg)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/mention_response.json"))
 
-    msg["mentions"] = msg["mentions"].compact unless msg["mentions"].nil?
+    msg['mentions'] = msg['mentions'].compact unless msg['mentions'].nil?
 
     schema.valid?(msg.compact)
   end
@@ -69,7 +69,7 @@ module JsonHelpers
 
   def pending_badge_json(earned, badge)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/pending_badge_response.json"))
-    earned["badge"] = earned["badge"].compact
+    earned['badge'] = earned['badge'].compact
     # puts earned.compact
     # puts "\n Validation: \n"
     # puts schema.validate(earned.compact).to_a
@@ -86,7 +86,7 @@ module JsonHelpers
   def person_json(person, potential_follower = nil, lang = nil)
     following = potential_follower ? potential_follower.following_for_person(person) : nil
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/person_response.json"))
-    person["following_id"] = following.id if following
+    person['following_id'] = following.id if following
 
     schema.valid?(person.compact)
   end
@@ -98,15 +98,15 @@ module JsonHelpers
 
   def post_comment_json(post_comment)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_comment_response.json"))
-    post_comment["mentions"] = post_comment["mentions"].compact unless post_comment["mentions"].nil?
-    post_comment["person"] = post_comment["person"].compact
+    post_comment['mentions'] = post_comment['mentions'].compact unless post_comment['mentions'].nil?
+    post_comment['person'] = post_comment['person'].compact
 
     schema.valid?(post_comment.compact)
   end
 
   def post_comment_list_json(post_comment, lang = nil)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_comment_list_response.json"))
-    post_comment["mentions"] = post_comment["mentions"].compact unless post_comment["mentions"].nil?
+    post_comment['mentions'] = post_comment['mentions'].compact unless post_comment['mentions'].nil?
 
     schema.valid?(post_comment.compact)
   end
@@ -126,30 +126,30 @@ module JsonHelpers
   def post_json(post, lang = nil, reaction = nil)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_response.json"))
 
-    post["person"] = post["person"].compact
-    post["category"] = post["category"].compact unless post["category"].nil?
-    post["tags"]&.each do |idx, tag|
-      post["tags"][idx] = tag.compact
+    post['person'] = post['person'].compact
+    post['category'] = post['category'].compact unless post['category'].nil?
+    post['tags']&.each do |idx, tag|
+      post['tags'][idx] = tag.compact
     end
-    post["post_reaction_counts"] = nil # Not easily testable via json schema validation
-    post["post_reaction"] = post["post_reaction"].compact unless post["post_reaction"].nil?
+    post['post_reaction_counts'] = nil # Not easily testable via json schema validation
+    post['post_reaction'] = post['post_reaction'].compact unless post['post_reaction'].nil?
 
     schema.valid?(post.compact)
   end
 
   def post_share_json(post, lang = nil, reaction = nil)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_share_response.json"))
-    post["person"] = post["person"].compact
+    post['person'] = post['person'].compact
 
     schema.valid?(post.compact)
   end
 
   def post_list_json(post, lang = nil)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/post_list_response.json"))
-    post["person"] = post["person"].compact
-    post["category"] = post["category"].compact unless post["category"].nil?
-    post["tags"]&.each do |idx, tag|
-      post["tags"][idx] = tag.compact
+    post['person'] = post['person'].compact
+    post['category'] = post['category'].compact unless post['category'].nil?
+    post['tags']&.each do |idx, tag|
+      post['tags'][idx] = tag.compact
     end
 
     schema.valid?(post.compact)
@@ -173,8 +173,8 @@ module JsonHelpers
 
   def relationship_json(relationship, currnt_user)
     schema = JSONSchemer.schema(Pathname.new("#{Rails.root}/spec/schema/#{@api_version}/relationship_response.json"))
-    relationship["requested_by"] = relationship["requested_by"].compact
-    relationship["requested_to"] = relationship["requested_to"].compact
+    relationship['requested_by'] = relationship['requested_by'].compact
+    relationship['requested_to'] = relationship['requested_to'].compact
     schema.valid?(relationship.compact)
   end
 

@@ -10,7 +10,7 @@ json = {
 }
 
 json[:lessons] = course.lessons.reject { |lesson| lesson.deleted }.map do |lesson|
-  render partial: "api/v4/lessons/#{@req_source}", locals: { lesson: lesson }, handler: "jb"
+  render partial: "api/v4/lessons/#{@req_source}", locals: { lesson: lesson }, handler: 'jb'
 end
 
 json

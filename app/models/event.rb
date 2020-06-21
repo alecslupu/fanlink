@@ -30,11 +30,11 @@ class Event < ApplicationRecord
   normalize_attributes :place_identifier
 
   validate :date_sanity
-  validates :name, presence: { message: _("Name is required.") }
-  validates :starts_at, presence: { message: _("Starts at is required.") }
+  validates :name, presence: { message: _('Name is required.') }
+  validates :starts_at, presence: { message: _('Starts at is required.') }
 
   scope :in_date_range, -> (from, to) {
-    where("events.starts_at >= ? and events.starts_at <= ?",
+    where('events.starts_at >= ? and events.starts_at <= ?',
           from.beginning_of_day, to.end_of_day)
   }
 
@@ -53,7 +53,7 @@ private
 
   def date_sanity
     if ends_at.present? && ends_at < starts_at
-      errors.add(:ends_at, :date_sanity, message: _("Ending time cannot be before starting time."))
+      errors.add(:ends_at, :date_sanity, message: _('Ending time cannot be before starting time.'))
     end
   end
 end

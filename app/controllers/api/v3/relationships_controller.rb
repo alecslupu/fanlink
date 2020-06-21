@@ -58,7 +58,7 @@ class Api::V3::RelationshipsController < Api::V2::RelationshipsController
         end
       end
     else
-      render_422(_("You have blocked this person or this person has blocked you.")) && return
+      render_422(_('You have blocked this person or this person has blocked you.')) && return
     end
   end
 
@@ -83,7 +83,7 @@ class Api::V3::RelationshipsController < Api::V2::RelationshipsController
       if @relationship.destroy
         head :ok
       else
-        render_422(_("Sorry, you cannot unfriend that person right now."))
+        render_422(_('Sorry, you cannot unfriend that person right now.'))
       end
     else
       render_not_found
@@ -198,23 +198,23 @@ class Api::V3::RelationshipsController < Api::V2::RelationshipsController
           new_status = relationship_params[:status]
           can_status = true
           # TODO: simplify this mess
-          if new_status == "friended"
-            if old_status == "requested" && @relationship.requested_to == current_user
+          if new_status == 'friended'
+            if old_status == 'requested' && @relationship.requested_to == current_user
               @relationship.friended!
               update_relationship_count(current_user)
               @relationship.friend_request_accepted_push
             else
               can_status = false
             end
-          elsif new_status == "denied"
-            if old_status == "requested" && @relationship.requested_to == current_user
+          elsif new_status == 'denied'
+            if old_status == 'requested' && @relationship.requested_to == current_user
               @relationship.destroy
               update_relationship_count(current_user)
             else
               can_status = false
             end
           else # withdrawn
-            if old_status == "requested" && @relationship.requested_by == current_user
+            if old_status == 'requested' && @relationship.requested_by == current_user
               @relationship.destroy
               update_relationship_count(@relationship.requested_to)
             else
@@ -228,13 +228,13 @@ class Api::V3::RelationshipsController < Api::V2::RelationshipsController
               return_the @relationship
             end
           else
-            render_422("You cannot change to the relationship to that status.")
+            render_422('You cannot change to the relationship to that status.')
           end
         else
           render_not_found
         end
       else
-        render_error("That status is invalid")
+        render_error('That status is invalid')
       end
     else
       return_the @relationship
@@ -248,7 +248,7 @@ private
   end
 
   def check_status
-    ["friended", "denied", "withdrawn"].include?(relationship_params[:status])
+    ['friended', 'denied', 'withdrawn'].include?(relationship_params[:status])
   end
 
   def relationship_params

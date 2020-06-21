@@ -15,7 +15,7 @@
 #  deleted     :boolean          default(FALSE)
 #
 
-require "faker"
+require 'faker'
 I18n.reload!
 
 FactoryBot.define do

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("MarketingNotification")
+  config.included_models.push('MarketingNotification')
 
-  config.model "MarketingNotification" do
+  config.model 'MarketingNotification' do
     list do
       fields :id,
              :person,

@@ -231,7 +231,7 @@ class Api::V3::ActivityTypesController < Api::V2::ActivityTypesController
       if @activity_type.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the activity type."))
+        render_422(_('Failed to delete the activity type.'))
       end
     else
       render_not_found

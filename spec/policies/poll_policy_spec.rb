@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe PollPolicy, type: :policy do
-  args = Poll, "post"
+  args = Poll, 'post'
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

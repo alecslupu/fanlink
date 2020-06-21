@@ -37,13 +37,13 @@ class Api::V4::InterestsController < Api::V3::InterestsController
 
   def match
     if params.has_key?(:interest_ids)
-      interest_ids = params[:interest_ids].split(",").map(&:to_i)
+      interest_ids = params[:interest_ids].split(',').map(&:to_i)
       if interest_ids.length.between? 3, 5
         # @people = paginate PersonInterest.match(interest_ids.map(&:to_i), current_user.id)
         @people = paginate Person.with_matched_interests(interest_ids, current_user.id)
         return_the @people, handler: tpl_handler
       else
-        render_422 _("Please select between 3 and 5 interests.")
+        render_422 _('Please select between 3 and 5 interests.')
       end
     else
       render_404
@@ -53,6 +53,6 @@ class Api::V4::InterestsController < Api::V3::InterestsController
   protected
 
   def tpl_handler
-    "jb"
+    'jb'
   end
 end

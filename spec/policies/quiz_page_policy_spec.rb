@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe QuizPagePolicy, type: :policy do
-  args = QuizPage, "courseware"
+  args = QuizPage, 'courseware'
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe CouponPolicy, type: :policy do
-  args = Coupon, "admin"
+  args = Coupon, 'admin'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

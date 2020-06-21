@@ -21,7 +21,7 @@ Rails.application.configure do
 
 
   # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.enable_fragment_cache_logging = true
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
@@ -29,7 +29,7 @@ Rails.application.configure do
     # config.cache_store = :memory_store
     config.cache_store = :redis_store, "#{Rails.application.secrets.redis_url}/0/cache", { expires_in: 90.minutes.to_i }
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.seconds.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -64,7 +64,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  config.web_console.whitelisted_ips = "172.16.0.0/12"
+  config.web_console.whitelisted_ips = '172.16.0.0/12'
 
   #     #load openapi files
   # Dir['app/controllers/api/v*/docs/*'].each {

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe EventCheckin, type: :model do
-  context "Validation" do
-    describe "should create a valid event checkin" do
+  context 'Validation' do
+    describe 'should create a valid event checkin' do
       it { expect(build(:event_checkin)).to be_valid }
     end
-    describe "#product_match" do
-      it "adds error message" do
+    describe '#product_match' do
+      it 'adds error message' do
         person = create(:person)
         old_tenant = ActsAsTenant.current_tenant
         ActsAsTenant.current_tenant = create(:product)
@@ -15,7 +15,7 @@ RSpec.describe EventCheckin, type: :model do
         expect(event_checkin).not_to be_valid
         ActsAsTenant.current_tenant = old_tenant
       end
-      it "passes" do
+      it 'passes' do
         product = create(:product)
         person = create(:person, product: product)
         event = create(:event, product: product)
@@ -23,9 +23,9 @@ RSpec.describe EventCheckin, type: :model do
       end
     end
   end
-  context "Associations" do
+  context 'Associations' do
     describe "should verify associations haven't changed for" do
-      it "#belongs_to" do
+      it '#belongs_to' do
         should belong_to(:event)
         should belong_to(:person)
       end
@@ -33,7 +33,7 @@ RSpec.describe EventCheckin, type: :model do
   end
 
   # TODO: auto-generated
-  describe "#product_match" do
+  describe '#product_match' do
     pending
   end
 end

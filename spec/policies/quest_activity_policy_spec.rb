@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe QuestActivityPolicy, type: :policy do
-  args = QuestActivity, "quest"
+  args = QuestActivity, 'quest'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-json.cache! ["v3", "list", post] do
+json.cache! ['v3', 'list', post] do
   json.id post.id
   json.person do
-    json.partial! "api/v3/people/person", locals: { person: post.person }
+    json.partial! 'api/v3/people/person', locals: { person: post.person }
   end
   json.body post.body
   json.picture_url post.picture_optimal_url
@@ -17,13 +17,13 @@ json.cache! ["v3", "list", post] do
   json.created_at post.created_at.to_s
   json.updated_at post.updated_at.to_s
   if post.category.present?
-    json.category post.category, partial: "api/v3/categories/category", as: :category
+    json.category post.category, partial: 'api/v3/categories/category', as: :category
   else
     json.category nil
   end
 
   if post.tags.count > 0
-    json.tags post.tags, partial: "api/v3/tags/tag", as: :tag
+    json.tags post.tags, partial: 'api/v3/tags/tag', as: :tag
   else
     json.tag nil
   end

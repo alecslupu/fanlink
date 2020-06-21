@@ -2,8 +2,8 @@
 
 json.steps do
     json.array!(@steps) do |step|
-      next if step.deleted && current_user.role != "super_admin"
-      json.partial! "step", locals: { step: step, lang: @lang }
+      next if step.deleted && current_user.role != 'super_admin'
+      json.partial! 'step', locals: { step: step, lang: @lang }
       # unlocks_at = step.unlocks_at || nil
       # # Updates based on current user.
       # if step.step_completed.present?

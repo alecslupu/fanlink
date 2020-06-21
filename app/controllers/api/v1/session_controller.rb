@@ -73,24 +73,24 @@ class Api::V1::SessionController < ApiController
 
   def create
     @person = nil
-    if params["facebook_auth_token"].present?
-      @person = Person.for_facebook_auth_token(params["facebook_auth_token"])
+    if params['facebook_auth_token'].present?
+      @person = Person.for_facebook_auth_token(params['facebook_auth_token'])
       if @person.nil?
-        render_503(_("Unable to find user from token. Likely a problem contacting Facebook."))
+        render_503(_('Unable to find user from token. Likely a problem contacting Facebook.'))
         return
       end
       @person = auto_login(@person)
     else
       @person = Person.can_login?(params[:email_or_username])
       if @person
-        if Rails.env.staging? && ENV["FAVORITE_CHARACTER"].present? && (params[:password] == ENV["FAVORITE_CHARACTER"])
+        if Rails.env.staging? && ENV['FAVORITE_CHARACTER'].present? && (params[:password] == ENV['FAVORITE_CHARACTER'])
           @person = auto_login(@person)
         else
           @person = login(@person.email, params[:password]) if @person
         end
       end
       if @person.nil?
-        render_error(_("Invalid login."))
+        render_error(_('Invalid login.'))
         return
       end
     end

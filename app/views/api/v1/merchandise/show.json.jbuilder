@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.merchandise @merchandise, partial: "merchandise", as: :merchandise
+json.merchandise @merchandise, partial: 'merchandise', as: :merchandise

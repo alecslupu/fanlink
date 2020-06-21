@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :post_poll do
-    description { "MyText" }
+    description { 'MyText' }
   end
 end

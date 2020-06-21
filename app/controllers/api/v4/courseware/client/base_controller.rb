@@ -16,7 +16,7 @@ class Api::V4::Courseware::Client::BaseController < ApiController
     end
 
     def check_if_clients_assignee
-      raise AccessDeniedException.new _("You need to supply a person_id.") if params[:person_id].blank?
+      raise AccessDeniedException.new _('You need to supply a person_id.') if params[:person_id].blank?
       raise AccessDeniedException.new _("You can only see your assignee's info.") unless assignee_ids.include?(params[:person_id].to_i)
     end
 end

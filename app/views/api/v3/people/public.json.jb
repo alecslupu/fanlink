@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 json = {}
-json[:person] = render partial: "api/v3/people/person_mini", locals: { person: @person, lang: @lang }
+json[:person] = render partial: 'api/v3/people/person_mini', locals: { person: @person, lang: @lang }
 json

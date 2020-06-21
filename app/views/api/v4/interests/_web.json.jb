@@ -8,7 +8,7 @@ json = {
 
 if interest.children.present?
   json[:sub_interests] = interest.children.map do |child|
-    render partial: @req_source, locals: { interest: child }, handler: "jb"
+    render partial: @req_source, locals: { interest: child }, handler: 'jb'
   end
 else
   json[:sub_interests] = nil

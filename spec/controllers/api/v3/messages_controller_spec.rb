@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 
 RSpec.describe Api::V3::MessagesController, type: :controller do
-  describe "create" do
+  describe 'create' do
     before :each do
       allow_any_instance_of(Message).to receive(:post).and_return(true)
     end
-    it "should create a new message with an attached image" do
+    it 'should create a new message with an attached image' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        body = "Do you like my body?"
+        body = 'Do you like my body?'
         room = create(:public_active_room, )
         post :create,
         params: {
@@ -28,11 +28,11 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
       end
     end
 
-    it "should create a new message with an attached audio" do
+    it 'should create a new message with an attached audio' do
       person = create(:person)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        body = "Do you like my body?"
+        body = 'Do you like my body?'
         room = create(:public_active_room, )
         post :create,
         params: {
@@ -67,7 +67,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
           3,
           created_at: to,
           room: private_room,
-          body: "this is my body",
+          body: 'this is my body',
           picture: fixture_file_upload('images/better.png', 'image/png')
         )
         get :index,
@@ -95,7 +95,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
           :message,
           3,
           room: private_room,
-          body: "this is my body",
+          body: 'this is my body',
           audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
         )
         get :index,
@@ -113,7 +113,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
     end
   end
 
-  describe "show" do
+  describe 'show' do
     it 'returns the message with the attached picture' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -123,7 +123,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
         msg = create(
           :message,
           room: private_room,
-          body: "this is my body",
+          body: 'this is my body',
           picture: fixture_file_upload('images/better.png', 'image/png')
         )
         get :show, params: { room_id: private_room.id, id: msg.id }
@@ -142,7 +142,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
         msg = create(
           :message,
           room: private_room,
-          body: "this is my body",
+          body: 'this is my body',
           audio: fixture_file_upload('audio/small_audio.mp4', 'audio/mp4')
         )
         get :show, params: { room_id: private_room.id, id: msg.id }
@@ -153,7 +153,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
     end
   end
 
-  describe "list" do
+  describe 'list' do
     it 'returns all the messages with the attached image' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -168,7 +168,7 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
                                                                3,
                                                                created_at: to,
                                                                room: private_room,
-                                                               body: "this is my body",
+                                                               body: 'this is my body',
                                                                picture: fixture_file_upload('images/better.png', 'image/png')
                                                              )
 
@@ -184,12 +184,12 @@ RSpec.describe Api::V3::MessagesController, type: :controller do
   end
 
   # TODO: auto-generated
-  describe "DELETE destroy" do
+  describe 'DELETE destroy' do
     pending
   end
 
   # TODO: auto-generated
-  describe "PUT update" do
+  describe 'PUT update' do
     pending
   end
 end

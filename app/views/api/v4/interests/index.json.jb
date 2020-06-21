@@ -3,7 +3,7 @@
 json = {}
 
 json[:interests] = @interests.map do |interest|
-  render partial: @req_source, locals: { interest: interest }, handlers: "jb"
+  render partial: @req_source, locals: { interest: interest }, handlers: 'jb'
 end
 
 json

@@ -4,6 +4,6 @@ class CoursewareModulePolicy < ApplicationPolicy
 
   protected
     def module_name
-      "courseware"
+      'courseware'
     end
 end

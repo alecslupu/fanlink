@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Trivia::Topic, type: :model do
-  context "status" do
+  context 'status' do
     subject { Trivia::Topic.new }
     it { expect(subject).to respond_to(:draft?) }
     it { expect(subject).to respond_to(:published?) }
@@ -11,7 +11,7 @@ RSpec.describe Trivia::Topic, type: :model do
     it { expect(subject).to respond_to(:closed?) }
   end
 
-  context "State Machine" do
+  context 'State Machine' do
     subject { Trivia::Topic.new }
 
     it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }

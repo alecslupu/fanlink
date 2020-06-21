@@ -3,6 +3,6 @@
 class BadgeModulePolicy < ApplicationPolicy
   protected
   def module_name
-    "badge"
+    'badge'
   end
 end

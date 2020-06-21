@@ -9,7 +9,7 @@ class Api::V3::MessageReportsController < Api::V2::MessageReportsController
       @message = @message_report.message
       if MessageReport.valid_status?(parms[:status])
         @message_report.update(parms)
-        if parms[:status] == "message_hidden"
+        if parms[:status] == 'message_hidden'
           @message.hidden = true
           if @message.save && delete_message(@message, @api_version)
             head :ok
@@ -21,10 +21,10 @@ class Api::V3::MessageReportsController < Api::V2::MessageReportsController
           head :ok
         end
       else
-        render_error(_("Invalid or missing status."))
+        render_error(_('Invalid or missing status.'))
       end
     else
-      render_error(_("Update failed. Missing message_report object."))
+      render_error(_('Update failed. Missing message_report object.'))
     end
   end
 end

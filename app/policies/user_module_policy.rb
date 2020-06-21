@@ -3,6 +3,6 @@
 class UserModulePolicy < ApplicationPolicy
   protected
   def module_name
-    "user"
+    'user'
   end
 end

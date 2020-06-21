@@ -58,7 +58,7 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
 
   def create
     if current_user.chat_banned?
-      render json: { errors: "You are banned." }, status: :unprocessable_entity
+      render json: { errors: 'You are banned.' }, status: :unprocessable_entity
     else
       @post_comment = @post.post_comments.create(post_comment_params)
       if @post_comment.valid?
@@ -191,7 +191,7 @@ class Api::V3::PostCommentsController < Api::V2::PostCommentsController
     def apply_filters
       post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
       params.each do |p, v|
-        if p.end_with?("_filter") && PostComment.respond_to?(p)
+        if p.end_with?('_filter') && PostComment.respond_to?(p)
           post_comments = post_comments.send(p, v)
         end
       end

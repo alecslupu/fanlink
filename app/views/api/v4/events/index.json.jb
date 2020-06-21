@@ -3,7 +3,7 @@
 json = {}
 
 json[:events] = @events.map do |event|
-  ev = render partial: @req_source, locals: { event: event, lang: @lang }, handlers: "jb"
+  ev = render partial: @req_source, locals: { event: event, lang: @lang }, handlers: 'jb'
   ci = current_user.present? ? current_user.event_checkins.where(event_id: event.id).first : nil
   if ci.present?
     ev[:checkin_id] = ci.id

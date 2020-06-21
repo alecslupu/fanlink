@@ -3,7 +3,7 @@
 json = {}
 
 json[:post_comments] = @post_comments.map do |post_comment|
-  render partial: @req_source, locals: { post_comment: post_comment }, handlers: "jb"
+  render partial: @req_source, locals: { post_comment: post_comment }, handlers: 'jb'
 end
 
 json

@@ -26,7 +26,7 @@ FactoryBot.define do
     starts_at { rand(3.days).seconds.from_now }
     description { Faker::Lorem.sentence }
     ticket_url { Faker::Internet.url }
-    place_identifier { "fdA3434Bdfad34" + Faker::Number.number(digits: 2).to_s }
+    place_identifier { 'fdA3434Bdfad34' + Faker::Number.number(digits: 2).to_s }
 
     factory :event_with_product do
       # product { create(:product) }
