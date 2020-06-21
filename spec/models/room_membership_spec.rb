@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe RoomMembership, type: :model do
   before(:each) do
     ActsAsTenant.current_tenant = create(:product)

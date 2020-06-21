@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if !beacon.deleted
   json.id beacon.id.to_s
   json.product_id beacon.product_id.to_s

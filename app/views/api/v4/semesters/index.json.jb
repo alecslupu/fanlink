@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:semesters] = @semesters.map do |semester|

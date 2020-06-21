@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe QuestCompletion, type: :model do
 
   context "Associations" do

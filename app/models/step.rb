@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: steps
@@ -35,7 +36,7 @@ class Step < ApplicationRecord
 
   has_many :step_unlocks, primary_key: :uuid, foreign_key: :step_id
 
-  enum initial_status: %i[ locked unlocked ]
+  enum initial_status: %i[locked unlocked]
 
   accepts_nested_attributes_for :quest_activities
 

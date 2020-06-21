@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.action_types do
   json.array!(@action_types) do |action|
     if action.active?

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::PostCommentsController < Api::V3::PostCommentsController
   def index
     @post_comments = paginate @post.comments.visible.not_reported.order(created_at: :desc)

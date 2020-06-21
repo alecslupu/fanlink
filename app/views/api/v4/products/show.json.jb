@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   product: render(partial: @req_source, locals: { pd: @product }, handlers: "jb")
 }

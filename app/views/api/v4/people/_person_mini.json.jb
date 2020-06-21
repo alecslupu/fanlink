@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: person.id.to_s,
   username: person.username,

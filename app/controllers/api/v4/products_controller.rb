@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::ProductsController < Api::V3::ProductsController
   def index
     @products = paginate(Product.all)

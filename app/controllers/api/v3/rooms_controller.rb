@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::RoomsController < Api::V2::RoomsController
   # **
   # @api {post} /rooms Create a private room.

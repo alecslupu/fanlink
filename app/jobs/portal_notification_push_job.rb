@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PortalNotificationPushJob < ApplicationJob
   queue_as :default
   include Push

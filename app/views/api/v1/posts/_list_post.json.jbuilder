@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id post.id.to_s
 json.person do
   json.partial! "api/v1/people/person", locals: { person: post.person }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Room, type: :model do
   before(:each) do
     @name = "abc"

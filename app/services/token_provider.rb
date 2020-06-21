@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module TokenProvider
   class << self
     def issue_token(payload)

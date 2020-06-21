@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   step: render(partial: @req_source, locals: { step: @step }, handlers: "jb")
 }

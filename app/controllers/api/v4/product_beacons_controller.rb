@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::ProductBeaconsController < Api::V3::ProductBeaconsController
   def index
     @product_beacons = paginate(ProductBeacon.where.not(deleted: true).order(created_at: :desc))

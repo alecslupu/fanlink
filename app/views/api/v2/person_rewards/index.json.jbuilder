@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.rewards do
     json.array!(@person_rewards) do |reward|
       json.reward do

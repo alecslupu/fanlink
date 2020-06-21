@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: badge.id.to_s,
   name: badge.name,

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::InterestsController < Api::V3::InterestsController
   def index
     @interests = Interest.interests(ActsAsTenant.current_tenant).order(order: :desc)

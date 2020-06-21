@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::Referral::UserCodeController < ApiController
 
   def index

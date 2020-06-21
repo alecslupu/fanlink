@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id person.id.to_s
 json.(person, :username, :name, :gender, :city, :biography, :country_code, :birthdate, :picture_url, :product_account, :recommended, :chat_banned)
 json.designation person.designation

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AwsController < ApplicationController
   # require_api_key_for :awsvideo
 

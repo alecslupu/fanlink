@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.actions do
   json.array!(@action_types) do |action|
     json.cache! ["v3", action], expires_in: 10.minutes do

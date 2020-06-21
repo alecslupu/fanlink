@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::ActionTypesController < ApiController
-  before_action :super_admin_only, only: %i[ create update destroy ]
+  before_action :super_admin_only, only: %i[create update destroy]
   def index
     @action_types = paginate(ActionType.all)
     return_the @action_types
