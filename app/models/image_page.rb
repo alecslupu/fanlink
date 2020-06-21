@@ -35,7 +35,7 @@ class ImagePage < ApplicationRecord
   end
 
   def image_optimal_url
-    opts = {resize: "1920x1080", auto_orient: true, quality: 90}
+    opts = {resize: '1920x1080', auto_orient: true, quality: 90}
     image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
   end
 

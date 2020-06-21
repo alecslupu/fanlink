@@ -50,7 +50,7 @@ class VideoPage < ApplicationRecord
   end
 
   def duration
-    attachable = video.attachment.record.attachment_changes["video"].attachable
+    attachable = video.attachment.record.attachment_changes['video'].attachable
     file = case attachable
            when ActionDispatch::Http::UploadedFile, Rack::Test::UploadedFile
              attachable.path

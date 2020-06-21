@@ -38,7 +38,7 @@ module Trivia
     end
 
     def photo_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75}
       photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.variant(opts).processed.key].join('/') : nil
     end
 

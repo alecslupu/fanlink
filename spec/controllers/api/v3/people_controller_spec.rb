@@ -32,7 +32,7 @@ RSpec.describe Api::V3::PeopleController, type: :controller do
       person = create(:person, password: current)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
-        patch :change_password, params: {id: person.id, person: {current_password: "wrongpassword", new_password: new_password}}
+        patch :change_password, params: {id: person.id, person: {current_password: 'wrongpassword', new_password: new_password}}
         expect(response).to be_unprocessable
         expect(json['errors']).to include('The password is incorrect')
       end

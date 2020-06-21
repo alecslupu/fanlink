@@ -39,7 +39,7 @@ class PersonCertificate < ApplicationRecord
   has_one_attached :issued_certificate_image
 
   validates :issued_certificate_image,  size: {less_than: 5.megabytes},
-            content_type: {in: %w[image/jpeg ]}
+            content_type: {in: %w[image/jpeg]}
 
   def issued_certificate_image_url
     issued_certificate_image.attached? ? [Rails.application.secrets.cloudfront_url, issued_certificate_image.key].join('/')  : nil
@@ -151,10 +151,10 @@ class PersonCertificate < ApplicationRecord
     self.update(issued_date: issued_date)
 
     issued_certificate_image.attach(io: open(jpeg_file),
-                                    filename: "certificate_image.jpg",
-                                    content_type: "image/jpeg")
+                                    filename: 'certificate_image.jpg',
+                                    content_type: 'image/jpeg')
     issued_certificate_pdf.attach(io: open(pdf_file),
-                                  filename: "certificate_image.pdf",
-                                  content_type: "application/pdf")
+                                  filename: 'certificate_image.pdf',
+                                  content_type: 'application/pdf')
   end
 end

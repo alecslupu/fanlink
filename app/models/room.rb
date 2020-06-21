@@ -75,7 +75,7 @@ class Room < ApplicationRecord
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -114,7 +114,7 @@ class Room < ApplicationRecord
 
   def picture_validation
     if picture.attached?
-      errors.add(:picture, "Private rooms may not have pictures.") if private?
+      errors.add(:picture, 'Private rooms may not have pictures.') if private?
     end
   end
 end

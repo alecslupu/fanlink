@@ -36,7 +36,7 @@ class Level < ApplicationRecord
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
