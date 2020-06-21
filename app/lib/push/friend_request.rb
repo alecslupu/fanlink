@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Push
   class FriendRequest < BasePush
     def received_push(relationship)

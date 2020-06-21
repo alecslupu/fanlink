@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::MessagesController < Api::V3::MessagesController
   def index
     room = Room.find(params[:room_id])

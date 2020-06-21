@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::RewardsController < Api::V3::RewardsController
   def index
     @rewards = paginate(Reward.all.order(created_at: :asc))

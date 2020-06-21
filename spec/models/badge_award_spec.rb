@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe BadgeAward, type: :model do
   context "Valid factory" do
     it { expect(create(:badge_award)).to be_valid }

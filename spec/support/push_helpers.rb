@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module PushHelpers
   class FBCMStub
     def send(tokens, options)

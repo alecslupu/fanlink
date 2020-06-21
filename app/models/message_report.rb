@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: message_reports
@@ -18,7 +19,7 @@ class MessageReport < ApplicationRecord
 
   # include MessageReport::PortalFilters
 
-  enum status: %i[ pending no_action_needed message_hidden ]
+  enum status: %i[pending no_action_needed message_hidden]
 
   belongs_to :message
   belongs_to :person

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::MessageReportsController < Api::V2::MessageReportsController
   include Messaging
 

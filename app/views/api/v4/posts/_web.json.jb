@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: post.id,
   person: render(partial: "api/v4/people/person_mini", locals: { person: post.person }),

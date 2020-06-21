@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: beacon.id,
   product_id: beacon.product_id,

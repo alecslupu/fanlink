@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 json[:post] = render(partial: @req_source, locals: { post: @post }, handlers: "jb")
 

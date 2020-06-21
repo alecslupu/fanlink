@@ -1,2 +1,3 @@
 # frozen_string_literal: true
+
 render(partial: "api/v4/people/person_mini", locals: { person: assignee })

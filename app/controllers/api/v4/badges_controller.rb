@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::BadgesController < Api::V3::BadgesController
   def index
     @badges = paginate(Badge.includes(reward: :assigned_rewards))

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::SessionController < Api::V2::SessionController
   # prepend_before_action :logout, only: :create
   # skip_before_action :require_login #, :set_app

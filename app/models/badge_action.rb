@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: badge_actions
@@ -17,6 +18,6 @@ class BadgeAction < ApplicationRecord
 
   normalize_attributes :identifier
 
-  validates :identifier, uniqueness: { scope: %i[ person_id action_type_id ],
+  validates :identifier, uniqueness: { scope: %i[person_id action_type_id],
                                        message: _("Sorry, you cannot get credit for that action again.") }, allow_nil: true
 end

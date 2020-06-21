@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   room: render(partial: @req_source, locals: { room: @room }, handlers: "jb")
 }

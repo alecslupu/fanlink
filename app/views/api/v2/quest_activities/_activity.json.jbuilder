@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if !activity.deleted
   json.id activity.id.to_s
   json.quest_id activity.step.quest_id

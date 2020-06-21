@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: post_report.id,
   post: render(partial: "api/v4/posts/web", locals: { post: post_report.post }),

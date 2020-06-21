@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 if @posts
  json = render(partial: "api/v4/posts/rendered_posts", locals: { posts: @posts })

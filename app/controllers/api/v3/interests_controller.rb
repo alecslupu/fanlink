@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::InterestsController < ApiController
-  load_up_the Interest, from: :id, only: %i[ update delete add_interest ]
+  load_up_the Interest, from: :id, only: %i[update delete add_interest]
 
   # **
   #

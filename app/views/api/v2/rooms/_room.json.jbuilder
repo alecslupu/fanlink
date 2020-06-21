@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id room.id
 json.name room.name
 json.description room.description

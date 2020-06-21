@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # TODO this is getting messy...divide out into Chat, Post, Relationship subclasses or something
 module Messaging
   def clear_message_counter(room, person, version = nil)

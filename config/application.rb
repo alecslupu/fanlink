@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails"
@@ -68,7 +69,7 @@ module Fanlink
             true
           end
         end
-        resource "*", headers: :any, methods: :any, credentials: true, expose: %i[ Per-Page Link Total ]
+        resource "*", headers: :any, methods: :any, credentials: true, expose: %i[Per-Page Link Total]
       end
     end
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType

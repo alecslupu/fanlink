@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: category.id.to_s,
   name: category.name,

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::SessionController < Api::V3::SessionController
   prepend_before_action :logout, only: [ :create, :token ]
   before_action :set_product, only: [ :create, :token ]

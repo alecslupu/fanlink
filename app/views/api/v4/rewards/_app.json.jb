@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 assigned_locals = {
   ActionType: "action",
   Quest: "quest",

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Referral
   module PersonRelation
     extend ActiveSupport::Concern
