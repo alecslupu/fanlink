@@ -129,7 +129,7 @@ class Api::V1::MessageReportsController < ApiController
     end
   end
 
-private
+  private
 
   def apply_filters
     message_reports = MessageReport.includes([{ message: :room }, :person]).where('rooms.product_id = ?', ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)

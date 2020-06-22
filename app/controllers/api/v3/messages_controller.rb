@@ -279,7 +279,7 @@ class Api::V3::MessagesController < Api::V2::MessagesController
     end
   end
 
-private
+  private
 
   def apply_filters
     messages = Message.joins(:room).where('rooms.product_id = ? AND rooms.status != ?', ActsAsTenant.current_tenant.id, Room.statuses[:deleted]).order(created_at: :desc)

@@ -36,7 +36,7 @@ class Api::V3::RoomMembershipsController < Api::V2::RoomMembershipsController
     end
   end
 
-private
+  private
 
   def room_membership_params
     params.require(:room_membership).permit(:person_id)

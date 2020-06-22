@@ -126,7 +126,7 @@ class Api::V1::PostCommentReportsController < ApiController
     end
   end
 
-private
+  private
 
   def apply_filters
     post_comment_reports = PostCommentReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)

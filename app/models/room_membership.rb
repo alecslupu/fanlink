@@ -23,7 +23,7 @@ class RoomMembership < ApplicationRecord
   before_destroy :check_created_by
 
 
-private
+  private
 
   def check_created_by
     if person_id == room.created_by_id

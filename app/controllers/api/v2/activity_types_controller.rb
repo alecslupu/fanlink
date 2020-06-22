@@ -228,7 +228,7 @@ class Api::V2::ActivityTypesController < ApiController
       render_not_found
     end
   end
-private
+  private
   def type_params
     params.require(:activity_type).permit(:atype, value: [ :id, :description ])
   end

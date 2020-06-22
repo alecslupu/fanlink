@@ -38,7 +38,7 @@ class Semester < ApplicationRecord
                     Time.zone.now, Time.zone.now)
   }
 
-private
+  private
 
   def sensible_dates
     if end_date.present? && end_date < start_date

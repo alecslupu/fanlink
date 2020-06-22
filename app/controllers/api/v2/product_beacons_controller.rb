@@ -294,7 +294,7 @@ class Api::V2::ProductBeaconsController < ApiController
     end
   end
 
-private
+  private
 
   def beacon_params
     params.require(:product_beacon).permit(:beacon_pid, :attached_to, :uuid, :lower, :upper)
