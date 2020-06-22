@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Api::V1::BadgeActionsController, type: :controller do
   describe '#create' do
     it 'should create a new action and return partially earned badge with highest percent earned' do

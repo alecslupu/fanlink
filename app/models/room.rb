@@ -69,7 +69,6 @@ class Room < ApplicationRecord
   validates :picture, size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png]}
 
-
   def picture_url
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.key].join('/') : nil
   end

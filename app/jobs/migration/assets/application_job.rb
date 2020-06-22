@@ -22,7 +22,7 @@ module Migration
 
         id_partition = ('%09d'.freeze % object.id).scan(/\d{3}/).join('/'.freeze)
 
-        url = [ base_url, product.internal_name,
+        url = [base_url, product.internal_name,
                 ActiveSupport::Inflector.underscore(object.class.name).pluralize,
                 field_name.pluralize, id_partition, 'original', hash + ext].join('/')
         url += "?#{object.send("#{field_name}_updated_at").to_i}"

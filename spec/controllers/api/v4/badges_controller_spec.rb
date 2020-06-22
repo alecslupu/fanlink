@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-
 RSpec.describe Api::V4::BadgesController, type: :controller do
   describe 'GET index' do
     it 'returns all badges with their attached image' do
