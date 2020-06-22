@@ -134,7 +134,7 @@ class Api::V3::PostReactionsController < Api::V2::PostReactionsController
     end
   end
 
-private
+  private
 
   def post_reaction_params
     params.require(:post_reaction).permit(:reaction).merge(person_id: current_user.id)

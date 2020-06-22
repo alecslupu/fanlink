@@ -38,7 +38,7 @@ class Api::V3::PortalNotificationsController < ApiController
   def destroy
   end
 
-private
+  private
   def portal_params
     params.require(:portal_notifications).permit(:body, :send_me_at, :sent_status)
   end

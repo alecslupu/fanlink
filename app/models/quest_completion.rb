@@ -39,5 +39,5 @@ class QuestCompletion < ApplicationRecord
   # default_scope { order(created_at: :desc) }
   scope :count_activity, -> (step_id) { where(step_id: step_id).count }
 
-private
+  private
 end

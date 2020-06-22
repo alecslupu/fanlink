@@ -42,7 +42,7 @@ class Api::V3::ProductsController < Api::V2::ProductsController
 
 # end
 
-private
+  private
   def product_params
     params.require(:product).permit(:name, :internal_name, :enabled)
   end

@@ -129,7 +129,7 @@ module Push
   end
 
 
-private
+  private
 
   # WHAAA ?
   def get_topic(device_type)

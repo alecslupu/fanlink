@@ -21,5 +21,5 @@ class StepCompleted < ApplicationRecord
   belongs_to :person, touch: true
 
 
-private
+  private
 end

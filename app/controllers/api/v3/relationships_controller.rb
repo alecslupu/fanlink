@@ -241,7 +241,7 @@ class Api::V3::RelationshipsController < Api::V2::RelationshipsController
     end
   end
 
-private
+  private
 
   def check_blocked(person)
     !current_user.block_with?(person)

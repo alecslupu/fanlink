@@ -177,7 +177,7 @@ class Api::V1::PostCommentsController < ApiController
     return_the @post_comments
   end
 
-private
+  private
 
   def apply_filters
     post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)

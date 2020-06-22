@@ -55,7 +55,7 @@ class Api::V1::BadgeActionsController < ApiController
     end
   end
 
-private
+  private
 
   def load_action_type
     if params[:badge_action].blank? || params[:badge_action][:action_type].blank?

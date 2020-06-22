@@ -280,7 +280,7 @@ class Api::V2::QuestActivitiesController < ApiController
     end
   end
 
-private
+  private
   def activity_params
     params.require(:quest_activity).permit(:description, :hint, :picture,
       activity_types_attributes: [ :id, :atype, { value: [ :id, :description ] } ]

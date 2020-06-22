@@ -14,7 +14,7 @@ class ApiController < ApplicationController
   after_action :unset_person, :unset_app
 
 
-protected
+  protected
   def set_default_format
     request.format = :json
   end
