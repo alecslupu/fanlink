@@ -24,7 +24,6 @@
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -yqq && apt-get -o dir::cache::archives="$APT_CACHE_DIR" install -yqq nodejs
     - apt-get install -yqq ffmpeg
-    - export RAILS_EDGE=true
     - bundle update --quiet rails
     - bundle install --quiet
     - bundle exec rake db:reset
@@ -133,7 +132,7 @@ test26:rspec60:policies:
       - coverage/rails/60/policies
 
 test26:rspec60:merge:
-  extends: .test26:rspec60
+  extends: .base26
   stage: format
   artifacts:
     name: my_app_artifacts
