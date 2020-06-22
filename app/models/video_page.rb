@@ -59,7 +59,6 @@ class VideoPage < ApplicationRecord
            when Hash
              attachable[:io].path
            end
-
     Integer(FFMPEG::Movie.new(file).duration) + 1
   end
   private

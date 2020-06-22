@@ -76,8 +76,8 @@ RSpec.describe Api::V4::PeopleController, type: :controller do
             }
           }
         expect(response).to be_successful
-        expect(Person.last.picture.attached?).to eq(true)
         expect(json['person']).to_not eq(nil)
+        expect(Person.last.picture.attached?).to eq(true)
       end
     end
   end

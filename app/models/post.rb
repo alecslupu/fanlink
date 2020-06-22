@@ -196,6 +196,7 @@ class Post < ApplicationRecord
 
     if msg['userMetadata']['sizer']
       # There should be exactly one entry in `outputs`.
+      #
       width, height = msg['outputs'][0].values_at('width', 'height').map(&:to_i)
       job = Flaws.finish_transcoding(post.video.key,
                                      width, height,
