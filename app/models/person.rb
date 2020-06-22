@@ -142,7 +142,6 @@ class Person < ApplicationRecord
   has_many :clients_assigned, through: :assigned_clients, source: :client
   has_many :clients_designated, through: :designated_clients, source: :client
 
-
   has_one :client_info, foreign_key: 'client_id', dependent: :destroy
 
   has_many :notifications, dependent: :destroy
@@ -458,7 +457,6 @@ class Person < ApplicationRecord
   #   (product.can_have_supers?) ? Person.old_roles : Person.old_roles.except(:super_admin)
   # end
 
-
   def to_s
     name || username
   end
@@ -470,7 +468,6 @@ class Person < ApplicationRecord
   def flush_cache
     Rails.cache.delete([self.class.name, id])
   end
-
 
   def summarize_permissions
     permission_list = assigned_role.summarize.dup

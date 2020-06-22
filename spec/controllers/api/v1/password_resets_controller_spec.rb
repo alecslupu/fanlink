@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Api::V1::PasswordResetsController, type: :controller do
   before :all do
     ActiveJob::Base.queue_adapter = :test

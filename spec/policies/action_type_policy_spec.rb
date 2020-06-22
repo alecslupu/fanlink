@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe ActionTypePolicy, type: :policy do
-  args = [ ActionType, 'reward' ]
+  args = [ActionType, 'reward']
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

@@ -41,9 +41,7 @@ class QuestActivity < ApplicationRecord
 
   accepts_nested_attributes_for :activity_types
 
-
   # default_scope { order(created_at: :desc) }
-
 
   scope :with_completion, -> (person) { where('quest_completions.person_id = ?', person.id) }
 

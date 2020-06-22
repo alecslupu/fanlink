@@ -15,7 +15,6 @@
 
 class PortalNotification < ApplicationRecord
 
-
   LANGS = {
     'en' => 'English*',
     'es' => 'Spanish',
@@ -36,7 +35,6 @@ class PortalNotification < ApplicationRecord
   has_paper_trail
   translates :body, touch: true, versioning: :paper_trail
   accepts_nested_attributes_for :translations, allow_destroy: true
-
 
   acts_as_tenant(:product)
   belongs_to :product

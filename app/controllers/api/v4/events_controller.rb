@@ -1,4 +1,8 @@
 # frozen_string_literal: true
 
-class Api::V4::EventsController < Api::V3::EventsController
+module Api
+  module V4
+    class EventsController < Api::V3::EventsController
+    end
+  end
 end

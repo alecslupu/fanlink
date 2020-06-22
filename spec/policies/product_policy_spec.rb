@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 require 'spec_helper'
 
 RSpec.describe ProductPolicy, type: :policy do
@@ -11,7 +10,6 @@ RSpec.describe ProductPolicy, type: :policy do
   include_examples 'enforces the delete permission', args
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
-
 
   context 'scope' do
     describe 'when the product is admin' do

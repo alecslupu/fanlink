@@ -6,7 +6,6 @@ RailsAdmin.config do |config|
     parent 'Trivia::Game'
     label_plural 'Subscribers'
 
-
     edit do
       exclude_fields :product
     end

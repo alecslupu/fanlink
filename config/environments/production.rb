@@ -57,7 +57,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -88,6 +88,5 @@ Rails.application.configure do
   # logger = Timber::Logger.new(STDOUT)
   # logger.level = config.log_level
   # config.logger = ActiveSupport::TaggedLogging.new(logger)
-
 
 end

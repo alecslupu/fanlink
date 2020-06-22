@@ -37,7 +37,6 @@ module RailsAdmin
                 flash[:error] = 'Could not save associated message'
               end
 
-
               redirect_to action: :index
             end
           end

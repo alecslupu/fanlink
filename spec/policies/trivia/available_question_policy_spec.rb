@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Trivia::AvailableQuestionPolicy, type: :policy do
-  args = [ Trivia::AvailableQuestion, 'trivia' ]
+  args = [Trivia::AvailableQuestion, 'trivia']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

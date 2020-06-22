@@ -13,8 +13,6 @@
 #  type       :string           not null
 #
 
-
-
 module Courseware
   module Client
     class Assigned < ClientToPerson

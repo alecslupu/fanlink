@@ -64,7 +64,6 @@ module RailsAdmin
                 @objects = @objects.send(Kaminari.config.page_method_name, params[:page]).per(params[:per])
               # end
 
-
               # @objects = paginate @objects
             end
           end
