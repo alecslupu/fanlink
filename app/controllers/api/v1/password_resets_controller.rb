@@ -82,7 +82,7 @@ class Api::V1::PasswordResetsController < ApiController
     end
   end
 
-private
+  private
 
   def grab_password_reset_stuff_and
     token    = params[:token   ].to_s.strip.presence

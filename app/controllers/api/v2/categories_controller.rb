@@ -162,7 +162,7 @@ class Api::V2::CategoriesController < ApiController
   def search
   end
 
-private
+  private
   def category_params
     params.require(:category).permit(:name, :color, :role)
   end

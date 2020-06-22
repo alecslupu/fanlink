@@ -388,7 +388,7 @@ class Api::V1::PostsController < ApiController
     @post.update(post_params)
   end
 
-private
+  private
   def apply_filters
     posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|

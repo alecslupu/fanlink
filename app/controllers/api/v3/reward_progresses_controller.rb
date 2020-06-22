@@ -33,7 +33,7 @@ class Api::V3::RewardProgressesController < ApiController
   end
 
 
-private
+  private
 
   def reward_progress_params
     params.require(:reward_complete).permit(:reward_id)

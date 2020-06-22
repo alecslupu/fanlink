@@ -43,7 +43,7 @@ class Api::V3::ActionTypesController < ApiController
     end
   end
 
-private
+  private
   def action_params
     params.require(:action_type).permit(:name, :internal_name, :seconds_lag, :active)
   end

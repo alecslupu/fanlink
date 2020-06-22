@@ -54,7 +54,7 @@ module Messaging
     client_update_call(generic_payload_user('friend_request_count', member, member.friend_request_count, version))
   end
 
-private
+  private
 
   def client_update_call(payload)
     client.update('', payload).response.status == 200

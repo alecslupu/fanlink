@@ -134,7 +134,7 @@ test26:rspec52:policies:
       - coverage/rails/52/policies
 
 test26:rspec52:merge:
-  extends: .test26:rspec52
+  extends: .base26
   stage: format
   artifacts:
     name: my_app_artifacts

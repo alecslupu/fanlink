@@ -139,7 +139,7 @@ class Api::V3::PostCommentReportsController < Api::V2::PostCommentReportsControl
     end
   end
 
-protected
+  protected
 
   def apply_filters
     post_comment_reports = PostCommentReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
