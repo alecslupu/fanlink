@@ -9,5 +9,5 @@ class Api::V2::QuestCompletedController < ApiController
   def show
     @quest_complete = QuestCompleted.find(params[:id])
   end
-private
+  private
 end

@@ -125,7 +125,7 @@ class Api::V1::PostReportsController < ApiController
     end
   end
 
-private
+  private
 
   def apply_filters
     post_reports = PostReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)

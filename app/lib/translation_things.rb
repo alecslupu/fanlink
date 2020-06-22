@@ -51,7 +51,7 @@ module TranslationThings
       add_translation_things_instance_methods_for(names)
     end
 
-  private
+    private
 
     def translation_things_module
       @translation_things_module ||= Module.new

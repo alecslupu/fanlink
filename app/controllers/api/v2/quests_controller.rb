@@ -398,7 +398,7 @@ class Api::V2::QuestsController < ApiController
       render_not_found
     end
   end
-protected
+  protected
 
   def apply_filters
     quests = Quest.where.not(status: :deleted).order(created_at: :desc)

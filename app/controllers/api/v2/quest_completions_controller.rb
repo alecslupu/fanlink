@@ -253,7 +253,7 @@ class Api::V2::QuestCompletionsController < ApiController
 #     end
 # end
 
-private
+  private
   def completion_params
     params.require(:quest_completion).permit(:activity_id, :status)
   end
