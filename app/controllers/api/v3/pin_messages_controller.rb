@@ -16,7 +16,7 @@ class Api::V3::PinMessagesController < ApiController
         render_errors(pm.errors)
       end
     else
-      render_errors(_("Pinning users to private rooms is not allowed."))
+      render_errors(_('Pinning users to private rooms is not allowed.'))
     end
   end
 
@@ -29,7 +29,7 @@ class Api::V3::PinMessagesController < ApiController
         render_errors(pm.errors)
       end
     else
-      render_errors(_("Pinning users to private rooms is not allowed."))
+      render_errors(_('Pinning users to private rooms is not allowed.'))
     end
   end
 

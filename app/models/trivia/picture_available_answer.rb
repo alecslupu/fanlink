@@ -25,7 +25,7 @@ module Trivia
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :question, class_name: "Trivia::PictureAvailableQuestion", foreign_key: :question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::PictureAvailableQuestion', foreign_key: :question_id, optional: true
 
     include AASM
     enum status: {
@@ -78,7 +78,7 @@ module Trivia
     end
 
     def picture_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75}
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
     end
 

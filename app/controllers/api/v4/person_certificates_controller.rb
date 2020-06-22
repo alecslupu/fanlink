@@ -15,7 +15,7 @@ class Api::V4::PersonCertificatesController < ApiController
         @certificate = @person_certificate.reload.certificate
         return_the @certificate, handler: tpl_handler
       else
-        render_422(_("User already completed the full name"))
+        render_422(_('User already completed the full name'))
       end
     else
       @person_certificate = PersonCertificate.new(person_certificate_params)
@@ -25,7 +25,7 @@ class Api::V4::PersonCertificatesController < ApiController
         @certificate = Certificate.find(person_certificate_params[:certificate_id])
         return_the @certificate, handler: tpl_handler
       else
-        render_422(_("Something went wrong."))
+        render_422(_('Something went wrong.'))
       end
     end
   end

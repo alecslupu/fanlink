@@ -24,14 +24,16 @@
 #
 
 FactoryBot.define do
-  factory :trivia_game, class: "Trivia::Game" do
+  factory :trivia_game, class: 'Trivia::Game' do
+    start_date { Faker::Time.backward(days: 5) }
+    end_date { Faker::Time.forward(days: 5) }
     long_name { Faker::Lorem.words(number: 10) }
     short_name { Faker::Lorem.words(number: 3) }
     description { Faker::Lorem.paragraph  }
     product { current_product }
     room { create(:room) }
     leaderboard_size { 5 }
-    status { "draft" }
+    status { 'draft' }
     start_date { Time.zone.now + 1.day }
 
     transient do

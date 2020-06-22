@@ -8,13 +8,14 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
       @certcourses = @certificate.certcourses.live_status
       return_the @certcourses, handler: :jb
     else
-      render_422 _("This user does not have the requested certificate.")
+      render_422 _('This user does not have the requested certificate.')
     end
   end
 
   def show
     #  fill in response on person quizz is not taken into consideration YET
-    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: "quiz").order(:certcourse_page_order)
+    certcourse_pages = CertcoursePage.where(certcourse_id: params[:id], content_type: 'quiz').order(:certcourse_page_order)
+
     if certcourse_pages.present?
       @quizzes = []
       certcourse_pages.each do |certcourse_page|
@@ -45,7 +46,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
         end
 
         if answer_text.nil? && quiz_page.is_optional
-          answer_text = "User has not responded to this quiz"
+          answer_text = 'User has not responded to this quiz'
           no_of_failed_attempts = 1
         end
 
@@ -66,7 +67,7 @@ class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::
 
       return_the @quizzes, handler: :jb
     else
-      render_404("This course has no quiz page.")
+      render_404(_('This certificates has no quiz page.'))
     end
   end
 end

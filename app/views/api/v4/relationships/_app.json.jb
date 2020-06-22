@@ -3,8 +3,8 @@
 {
   id: relationship.id.to_s,
   status: relationship.status,
-  requested_by: render(partial: "api/v4/people/app", locals: { person: relationship.requested_by }),
-  requested_to: render(partial: "api/v4/people/app", locals: { person: relationship.requested_to }),
+  requested_by: render(partial: 'api/v4/people/app', locals: { person: relationship.requested_by }),
+  requested_to: render(partial: 'api/v4/people/app', locals: { person: relationship.requested_to }),
   create_time: relationship.created_at.to_s,
   update_time: relationship.updated_at.to_s
 }

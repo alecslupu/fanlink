@@ -60,9 +60,9 @@ module Trivia
       end
     end
 
-    belongs_to :topic, class_name: "Trivia::Topic"
-    has_many :available_answers, class_name: "Trivia::AvailableAnswer", foreign_key: :trivia_question_id
-    has_many :active_questions, class_name: "Trivia::Question", inverse_of: :available_question, dependent: :destroy
+    belongs_to :topic, class_name: 'Trivia::Topic'
+    has_many :available_answers, class_name: 'Trivia::AvailableAnswer', foreign_key: :trivia_question_id
+    has_many :active_questions, class_name: 'Trivia::Question', inverse_of: :available_question, dependent: :destroy
 
     accepts_nested_attributes_for :available_answers, allow_destroy: true
 
@@ -80,7 +80,7 @@ module Trivia
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceAvailableQuestion
                 Trivia::MultipleChoiceAvailableQuestion Trivia::PictureAvailableQuestion
                 Trivia::BooleanChoiceAvailableQuestion Trivia::HangmanAvailableQuestion
-              ),  message: "%{value} is not a valid type" }
+              ),  message: '%{value} is not a valid type' }
 
     validate :avalaible_answers_status_check, on: :update, if: -> { published? }
 
@@ -88,20 +88,20 @@ module Trivia
 
     private
 
-      def avalaible_answers_status_check
-        available_answers.each do |answer|
-          if !answer.published?
-            errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
-            break
-          end
+    def avalaible_answers_status_check
+      available_answers.each do |answer|
+        if !answer.published?
+          errors.add(:available_answers, "used in the questions must have 'published' status before publishing")
+          break
         end
       end
+    end
 
-      def update_questions_type
-        if saved_change_to_type?
-          question_type = type.sub("Available", "")
-          active_questions.update_all(type: question_type)
-        end
+    def update_questions_type
+      if saved_change_to_type?
+        question_type = type.sub('Available', '')
+        active_questions.update_all(type: question_type)
       end
+    end
   end
 end

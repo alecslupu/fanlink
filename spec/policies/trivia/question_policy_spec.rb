@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Trivia::QuestionPolicy, type: :policy do
-  args = [ Trivia::Question, "trivia" ]
+  args = [ Trivia::Question, 'trivia' ]
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

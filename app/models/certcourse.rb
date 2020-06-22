@@ -43,7 +43,7 @@ class Certcourse < ApplicationRecord
   validates_format_of :color_hex, with: /\A#(?:[A-F0-9]{3}){1,2}\z/i
   validates :duration, numericality: { greater_than: 0 }
 
-  scope :live_status, -> { where(status: "live") }
+  scope :live_status, -> { where(status: 'live') }
   scope :for_product, -> (product) { where(product_id: product.id) }
 
   validate :children_not_empty, if: :status_changed? && :live?

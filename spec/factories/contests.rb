@@ -17,7 +17,7 @@
 #  updated_at    :datetime         not null
 #
 
-require "faker"
+require 'faker'
 I18n.reload!
 
 FactoryBot.define do

@@ -22,7 +22,7 @@
 #  audio_updated_at     :datetime
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :message do

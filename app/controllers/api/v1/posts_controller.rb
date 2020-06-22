@@ -112,17 +112,17 @@ class Api::V1::PostsController < ApiController
   # @apiErrorExample {json} Error-Response:
   #     HTTP/1.1 404 Not Found, 401 Unauthorized, etc.
   # *
-
-  def destroy
-    post = Post.visible.find(params[:id])
-    if post.person == current_user
-      post.deleted!
-      post.delete_real_time
-      head :ok
-    else
-      render_not_found
-    end
-  end
+  #
+  # def destroy
+  #   post = Post.visible.find(params[:id])
+  #   if post.person == current_user
+  #     post.deleted!
+  #     post.delete_real_time
+  #     head :ok
+  #   else
+  #     render_not_found
+  #   end
+  # end
 
   # **
   # @api {get} /posts Get posts for a date range.
@@ -398,7 +398,6 @@ private
   #   end
   #   posts
   # end
-
   def get_product
     product = nil
     if params[:product].present?

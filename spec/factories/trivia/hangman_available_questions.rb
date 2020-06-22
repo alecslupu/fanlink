@@ -1,6 +1,6 @@
 
 FactoryBot.define do
-  factory :trivia_hangman_available_question, class: "Trivia::HangmanAvailableQuestion" do
+  factory :trivia_hangman_available_question, class: 'Trivia::HangmanAvailableQuestion' do
     product { current_product }
 
     title { Faker::Lorem.question(word_count: 10) }

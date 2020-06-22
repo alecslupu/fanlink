@@ -24,7 +24,7 @@ class Api::V4::CertificatesController < ApiController
   protected
 
     def tpl_handler
-      "jb"
+      'jb'
     end
 
   private

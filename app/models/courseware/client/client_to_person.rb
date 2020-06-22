@@ -16,10 +16,10 @@
 module Courseware
   module Client
     class ClientToPerson < ApplicationRecord
+
       has_paper_trail ignore: [:created_at, :updated_at]
-      belongs_to :person, class_name: "Person", foreign_key: :person_id  #, touch: true
-      belongs_to :client, class_name: "Person", foreign_key: :client_id #, touch: true
-      # validates_uniqueness_of :person_id, scope: [:client_id], message: "A user can have only one type of relation to the same client"
+      belongs_to :person, class_name: 'Person', foreign_key: :person_id  #, touch: true
+      belongs_to :client, class_name: 'Person', foreign_key: :client_id #, touch: true
       enum status: %i[active terminated]
 
       validate :check_uniqueness
@@ -38,7 +38,7 @@ module Courseware
           record = ClientToPerson.find_by(client_id: client_id, person_id: person_id)
           if record.present?
             record.destroy
-            errors.add(:person, _("A user can have only one type of relation to the same client"))
+            errors.add(:person, _('A user can have only one type of relation to the same client'))
           end
         end
     end

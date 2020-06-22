@@ -5,9 +5,9 @@ class Api::V4::PostsController < Api::V3::PostsController
     ordering = 'DESC'
     if chronological?
       post = Post.find(params[:post_id])
-      ordering = 'ASC' if params[:chronologically] == "after"
+      ordering = 'ASC' if params[:chronologically] == 'after'
     end
-    if params[:promoted].present? && params[:promoted] == "true"
+    if params[:promoted].present? && params[:promoted] == 'true'
       @posts = Post.visible.promoted.for_product(ActsAsTenant.current_tenant).includes([:poll])
       @posts = @posts.chronological(sign, post.created_at, post.id) if chronological?
     else
@@ -28,7 +28,7 @@ class Api::V4::PostsController < Api::V3::PostsController
         if person
           @posts = @posts.for_person(person)
         else
-          render_422(_("Cannot find that person.")) && return
+          render_422(_('Cannot find that person.')) && return
         end
       else
         unless web_request?
@@ -73,7 +73,7 @@ class Api::V4::PostsController < Api::V3::PostsController
   def share
     product = get_product
     if product.nil?
-      render_422(_("Missing or invalid product."))
+      render_422(_('Missing or invalid product.'))
     else
       @post = Post.for_product(product).visible.find(params[:post_id])
       return_the @post, handler: tpl_handler
@@ -82,11 +82,11 @@ class Api::V4::PostsController < Api::V3::PostsController
 
   def create
     if current_user.chat_banned?
-      render json: { errors: "You are banned." }, status: :unprocessable_entity
+      render json: { errors: 'You are banned.' }, status: :unprocessable_entity
     else
       @post = Post.create(post_params.merge(person_id: current_user.id))
       if @post.valid?
-        if post_params["status"].blank?
+        if post_params['status'].blank?
           @post.published!
         end
         @post.post(@api_version) if @post.published?
@@ -116,14 +116,14 @@ class Api::V4::PostsController < Api::V3::PostsController
     else
       time = 1
     end
-    @posts = Post.where("created_at >= ?", time.day.ago).order(Arel.sql("DATE(created_at) ASC")).group(Arel.sql("Date(created_at)")).count
+    @posts = Post.where('created_at >= ?', time.day.ago).order(Arel.sql('DATE(created_at) ASC')).group(Arel.sql('Date(created_at)')).count
     return_the @posts, handler: tpl_handler
   end
 
   protected
 
   def sign
-    chronological? && params[:chronologically] == "after" ? ">" : "<"
+    chronological? && params[:chronologically] == 'after' ? '>' : '<'
   end
 
   def apply_filters
@@ -135,7 +135,7 @@ class Api::V4::PostsController < Api::V3::PostsController
               posts.order(created_at: :desc)
             end
     params.each do |p, v|
-      if p.end_with?("_filter") && Post.respond_to?(p)
+      if p.end_with?('_filter') && Post.respond_to?(p)
         posts = posts.send(p, v)
       end
     end

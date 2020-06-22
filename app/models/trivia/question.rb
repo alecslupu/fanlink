@@ -22,13 +22,14 @@ module Trivia
   class Question < ApplicationRecord
     acts_as_tenant(:product)
     scope :for_product, -> (product) { where(product_id: product.id) }
-
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :round, class_name: "Trivia::Round", counter_cache: :question_count, foreign_key: :trivia_round_id
-    belongs_to :available_question, class_name: "Trivia::AvailableQuestion",  dependent: :destroy
-    has_many :leaderboards, class_name: "Trivia::QuestionLeaderboard", foreign_key: :trivia_question_id, dependent: :destroy
-    has_many :trivia_answers, class_name: "Trivia::Answer", foreign_key: :trivia_question_id, dependent: :destroy
+
+    belongs_to :round, class_name: 'Trivia::Round', counter_cache: :question_count, foreign_key: :trivia_round_id
+    belongs_to :available_question, class_name: 'Trivia::AvailableQuestion',  dependent: :destroy
+    has_many :leaderboards, class_name: 'Trivia::QuestionLeaderboard', foreign_key: :trivia_question_id, dependent: :destroy
+    has_many :trivia_answers, class_name: 'Trivia::Answer', foreign_key: :trivia_question_id, dependent: :destroy
+
     has_many :available_answers, through: :available_question, source: :available_answers
 
 
@@ -41,9 +42,9 @@ module Trivia
     validates :type, inclusion: { in: %w(Trivia::SingleChoiceQuestion
                 Trivia::MultipleChoiceQuestion Trivia::PictureQuestion
                 Trivia::BooleanChoiceQuestion Trivia::HangmanQuestion
-              ),  message: "%{value} is not a valid type" }
+              ),  message: '%{value} is not a valid type' }
 
-    validates :available_question, presence: { message: "Please make sure selected question type is the compatible with available question type" }
+    validates :available_question, presence: { message: 'Please make sure selected question type is the compatible with available question type' }
 
     before_validation :add_question_type, on: :create
 
@@ -80,7 +81,7 @@ module Trivia
     private
 
       def add_question_type
-        question_type = available_question.type.sub("Available", "")
+        question_type = available_question.type.sub('Available', '')
         self.type = question_type
       end
   end

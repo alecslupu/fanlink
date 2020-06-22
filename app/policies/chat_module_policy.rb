@@ -3,6 +3,6 @@
 class ChatModulePolicy < ApplicationPolicy
   protected
     def module_name
-      "chat"
+      'chat'
     end
 end

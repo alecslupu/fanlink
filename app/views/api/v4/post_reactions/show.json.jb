@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-    post_reaction: render(partial: "app", locals: { post_reaction: @post_reaction }, handlers: :jb)
+    post_reaction: render(partial: 'app', locals: { post_reaction: @post_reaction }, handlers: :jb)
 }

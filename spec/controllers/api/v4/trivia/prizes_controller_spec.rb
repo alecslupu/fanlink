@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Api::V4::Trivia::PrizesController, type: :controller do
   # TODO: auto-generated
-  describe "GET index" do
+  describe 'GET index' do
     it 'returns all merchandises with their attached image' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do

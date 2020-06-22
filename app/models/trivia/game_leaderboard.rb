@@ -22,7 +22,7 @@ module Trivia
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
-    belongs_to :person, class_name: "Person"
+    belongs_to :game, class_name: 'Trivia::Game', foreign_key: :trivia_game_id
+    belongs_to :person, class_name: 'Person'
   end
 end

@@ -41,15 +41,15 @@ module Trivia
     end
 
     def picture_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75}
       picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
     end
 
-    belongs_to :room, class_name: "Room", optional: true
-    has_many :prizes, class_name: "Trivia::Prize", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :rounds, -> { order(:start_date) }, class_name: "Round", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :leaderboards, class_name: "Trivia::GameLeaderboard", foreign_key: :trivia_game_id, dependent: :destroy
-    has_many :subscribers, class_name: "Trivia::Subscriber", foreign_key: :trivia_game_id, dependent: :destroy
+    belongs_to :room, class_name: 'Room', optional: true
+    has_many :prizes, class_name: 'Trivia::Prize', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :rounds, -> { order(:start_date) }, class_name: 'Round', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :leaderboards, class_name: 'Trivia::GameLeaderboard', foreign_key: :trivia_game_id, dependent: :destroy
+    has_many :subscribers, class_name: 'Trivia::Subscriber', foreign_key: :trivia_game_id, dependent: :destroy
 
     accepts_nested_attributes_for :prizes, allow_destroy: true
     accepts_nested_attributes_for :rounds, allow_destroy: true
@@ -104,8 +104,8 @@ module Trivia
     end
 
     scope :enabled, -> { where(status: [ :published, :locked, :running, :closed ]) }
-    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where("end_date < ?", DateTime.now.to_i) }
-    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where("end_date > ?", DateTime.now.to_i) }
+    scope :completed, -> { where(status: [ :closed ]).order(end_date: :desc).where('end_date < ?', DateTime.now.to_i) }
+    scope :upcomming, -> { where(status: [ :published, :locked, :running ]).order(:start_date).where('end_date > ?', DateTime.now.to_i) }
 
     after_save :handle_status_changes, if: -> { status_changed_to_publish? }
     before_validation :compute_gameplay_parameters, if: -> { published? }
@@ -152,7 +152,7 @@ module Trivia
       end
 
       def check_start_date_when_publishing
-         errors.add(:start_date, "must be higher than current date.") if is_valid_start_date?
+         errors.add(:start_date, 'must be higher than current date.') if is_valid_start_date?
       end
 
       def is_valid_start_date?
@@ -161,7 +161,7 @@ module Trivia
 
       def start_date_in_future?
         if is_valid_start_date?
-          errors.add(:start_date, "must be higher than current date")
+          errors.add(:start_date, 'must be higher than current date')
           return false
         else
           return true
@@ -170,7 +170,7 @@ module Trivia
 
       def check_rounds_start_time
         if rounds.where('start_date < ? ', (Time.zone.now).to_i).present?
-          errors.add(:start_date, "of the rounds must be higher than current date" )
+          errors.add(:start_date, 'of the rounds must be higher than current date' )
         end
       end
   end

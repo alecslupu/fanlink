@@ -21,6 +21,6 @@ class EventCheckin < ApplicationRecord
 
   validate :product_match
   def product_match
-    errors.add(:base, "Event not available for you to check in") unless event.product_id == person.product_id
+    errors.add(:base, 'Event not available for you to check in') unless event.product_id == person.product_id
   end
 end

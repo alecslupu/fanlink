@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 json =
-Rails.cache.fetch ["v3", event.updated_at, event] do
+Rails.cache.fetch ['v3', event.updated_at, event] do
   {
     id: event.id.to_s,
     name: event.name,

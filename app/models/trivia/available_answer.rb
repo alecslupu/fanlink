@@ -19,7 +19,7 @@ module Trivia
   class AvailableAnswer < ApplicationRecord
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :question, class_name: "Trivia::AvailableQuestion", foreign_key: :trivia_question_id, optional: true
+    belongs_to :question, class_name: 'Trivia::AvailableQuestion', foreign_key: :trivia_question_id, optional: true
 
     validates :name, presence: true
     validates :hint, presence: true
@@ -71,7 +71,7 @@ module Trivia
       # cannot be unpublished
       def available_question_status?
         if question.published?
-          errors.add(:status, "unable to unpublish answer if assigned available question is still published")
+          errors.add(:status, 'unable to unpublish answer if assigned available question is still published')
           false
         else
           true

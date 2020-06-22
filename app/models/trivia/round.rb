@@ -24,10 +24,10 @@ module Trivia
 
     has_paper_trail ignore: [:created_at, :updated_at]
 
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id, counter_cache: :round_count
+    belongs_to :game, class_name: 'Trivia::Game', foreign_key: :trivia_game_id, counter_cache: :round_count
 
-    has_many :questions, -> { order("question_order") }, class_name: "Trivia::Question", foreign_key: :trivia_round_id, dependent: :destroy
-    has_many :leaderboards, class_name: "RoundLeaderboard", foreign_key: :trivia_round_id, dependent: :destroy
+    has_many :questions, -> { order('question_order') }, class_name: 'Trivia::Question', foreign_key: :trivia_round_id, dependent: :destroy
+    has_many :leaderboards, class_name: 'RoundLeaderboard', foreign_key: :trivia_round_id, dependent: :destroy
     accepts_nested_attributes_for :questions, allow_destroy: true
 
     validates :start_date, presence: true, if: -> { locked? || published? || running? }
@@ -120,7 +120,7 @@ module Trivia
 
       def start_date_type
         if start_date.present?
-          errors.add(:start_date, "must be an integer") unless start_date.integer?
+          errors.add(:start_date, 'must be an integer') unless start_date.integer?
         end
       end
   end

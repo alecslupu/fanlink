@@ -35,14 +35,14 @@ class Certificate < ApplicationRecord
   validates :template_image, size: {less_than: 5.megabytes},
             content_type: {in: %w[image/jpeg image/gif image/png]},
             dimension: { width: { min: 3840, max: 3840 },
-                         height: { min: 2967, max: 2967 }, message: "Must be 3840x2967" }
+                         height: { min: 2967, max: 2967 }, message: 'Must be 3840x2967' }
 
   def template_image_url
     template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.key].join('/') : nil
   end
 
   def template_image_optimal_url
-    opts = {resize: "1000", auto_orient: true, quality: 75}
+    opts = {resize: '1000', auto_orient: true, quality: 75}
     template_image.attached? ? [Rails.application.secrets.cloudfront_url, template_image.variant(opts).processed.key].join('/') : nil
   end
 
@@ -70,7 +70,7 @@ class Certificate < ApplicationRecord
   validates :certificate_order, numericality: { only_integer: true, greater_than: 0 }
   # validate :certificate_order_validation, if: :certificate_order_changed?
 
-  scope :live_status, -> { where(status: "live") }
+  scope :live_status, -> { where(status: 'live') }
   scope :for_product, -> (product) { where(product_id: product.id) }
 
   def title
@@ -91,6 +91,6 @@ class Certificate < ApplicationRecord
 
   private
     def certificate_order_validation
-      errors.add(:certificate_order, _("The certificate order must be greater than %{size}. Got %{value}" % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
+      errors.add(:certificate_order, _('The certificate order must be greater than %{size}. Got %{value}' % { size: certificate_order_max_value, value: certificate_order })) unless certificate_order.to_i >= certificate_order_max_value
     end
 end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  level_progress: render(partial: "app", locals: { level: @level_progress }, handlers: :jb)
+  level_progress: render(partial: 'app', locals: { level: @level_progress }, handlers: :jb)
 }

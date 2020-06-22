@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  course: render(partial: "app", collection: @courses, as: :course, handlers: :jb)
+  course: render(partial: 'app', collection: @courses, as: :course, handlers: :jb)
 }

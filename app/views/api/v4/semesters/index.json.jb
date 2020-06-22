@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  semesters: render(partial: "app", collection: @semesters, as: :semester, handlers: :jb)
+  semesters: render(partial: 'app', collection: @semesters, as: :semester, handlers: :jb)
 }

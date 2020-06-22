@@ -19,7 +19,7 @@
 
 module Trivia
   class MultipleChoiceAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::MultipleChoiceQuestion", inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :active_questions, class_name: 'Trivia::MultipleChoiceQuestion', inverse_of: :available_question, foreign_key: :available_question_id
 
     include AASM
     enum status: {
@@ -62,7 +62,7 @@ module Trivia
     private
 
       def number_of_correct_answers
-        errors.add(:available_answers, "Multiple choice questions must have at least 2 correct answers") if available_answers.where(is_correct: true).count < 2
+        errors.add(:available_answers, 'Multiple choice questions must have at least 2 correct answers') if available_answers.where(is_correct: true).count < 2
       end
 
 =begin

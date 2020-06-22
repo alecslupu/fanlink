@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  recommended_people: render(partial: "api/v4/people/app", collection: @people, as: :person, handlers: :jb)
+  recommended_people: render(partial: 'api/v4/people/app', collection: @people, as: :person, handlers: :jb)
 }

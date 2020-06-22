@@ -8,7 +8,7 @@ json.hidden post_comment.hidden
 json.created_at post_comment.created_at.to_s
 json.updated_at post_comment.updated_at.to_s
 if post_comment.mentions.count > 0
-  json.mentions post_comment.mentions, partial: "api/v1/post_comments/mention", as: :mention
+  json.mentions post_comment.mentions, partial: 'api/v1/post_comments/mention', as: :mention
 else
   json.mentions nil
 end

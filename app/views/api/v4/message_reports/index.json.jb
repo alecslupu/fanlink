@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  messages: render(partial: "app", collection: @message_reports, as: :message_report, handlers: :jb)
+  messages: render(partial: 'app', collection: @message_reports, as: :message_report, handlers: :jb)
 }

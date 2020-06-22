@@ -64,8 +64,8 @@ class PersonCertificate < ApplicationRecord
   enum purchased_platform: %i[ios android]
 
   scope :for_person, -> (person) { where(person_id: person.id) }
-  scope :for_android, -> (person) { where(person_id: person.id, purchased_platform: "android") }
-  scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: "ios") }
+  scope :for_android, -> (person) { where(person_id: person.id, purchased_platform: 'android') }
+  scope :for_ios, -> (person) { where(person_id: person.id, purchased_platform: 'ios') }
   scope :for_product, -> (product) { joins(:person).where(people: { product_id: product.id } ) }
 
   scope :free, -> { joins(:certificate).where(certificates: { is_free: true } ) }
@@ -95,50 +95,50 @@ class PersonCertificate < ApplicationRecord
   end
 
   def generate_token!(attempts = 0)
-    raise "Could not acquire a unique id after 10 attempts" if attempts == 10
-    charlist = "A".upto("Z").to_a + 0.upto(9).to_a.map(&:to_s) - %w(L O 0 1 Z 2)
+    raise 'Could not acquire a unique id after 10 attempts' if attempts == 10
+    charlist = 'A'.upto('Z').to_a + 0.upto(9).to_a.map(&:to_s) - %w(L O 0 1 Z 2)
     self.unique_id = 10.times.collect { charlist.sample }.join
     token_exists = self.class.where(unique_id: unique_id).exists?
     generate_token! 1+attempts if token_exists
   end
 
   def write_files
-    require "prawn"
+    require 'prawn'
 
     img = MiniMagick::Image.open(certificate.template_image_url)
 
     img.combine_options do |txt|
-      txt.gravity "Center"
-      txt.fill("#000000")
+      txt.gravity 'Center'
+      txt.fill('#000000')
       txt.draw ''
       txt.pointsize 100
       txt.draw "text 0,-250 '#{full_name}'"
       txt.weight 700
-      txt.stroke "#FFFFFF"
+      txt.stroke '#FFFFFF'
     end
 
     img.combine_options do |txt|
-      txt.gravity "SouthEast"
-      txt.fill("#4d4d4d")
+      txt.gravity 'SouthEast'
+      txt.fill('#4d4d4d')
       txt.draw ''
       txt.pointsize 50
       txt.draw "text 200, 200 'https://can-ed.com/certificate-check/#{unique_id}'"
       txt.weight 700
-      txt.stroke "#FFFFFF"
+      txt.stroke '#FFFFFF'
     end
 
-    completed_date = (issued_date.to_datetime rescue DateTime.now ).strftime("%B %d, %Y")
+    completed_date = (issued_date.to_datetime rescue DateTime.now ).strftime('%B %d, %Y')
 
     img.combine_options do |txt|
-      txt.gravity "NorthEast"
-      txt.fill("#4d4d4d")
+      txt.gravity 'NorthEast'
+      txt.fill('#4d4d4d')
       txt.draw ''
       txt.pointsize 60
       txt.draw "text 480, 250 '#{completed_date}'"
       txt.weight 700
-      txt.stroke  "#FFFFFF"
+      txt.stroke  '#FFFFFF'
     end
-    img.format "jpeg"
+    img.format 'jpeg'
 
     jpeg_file = Tempfile.new(%w(certificate_image .jpg))
 
@@ -152,10 +152,10 @@ class PersonCertificate < ApplicationRecord
     self.update(issued_date: issued_date)
 
     issued_certificate_image.attach(io: open(jpeg_file),
-                                    filename: "certificate_image.jpg",
-                                    content_type: "image/jpeg")
+                                    filename: 'certificate_image.jpg',
+                                    content_type: 'image/jpeg')
     issued_certificate_pdf.attach(io: open(pdf_file),
-                                  filename: "certificate_image.pdf",
-                                  content_type: "application/pdf")
+                                  filename: 'certificate_image.pdf',
+                                  content_type: 'application/pdf')
   end
 end

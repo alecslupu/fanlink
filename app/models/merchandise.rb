@@ -37,7 +37,7 @@ class Merchandise < ApplicationRecord
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -63,7 +63,7 @@ private
     if priority > 0 && saved_change_to_attribute?(:priority)
       same_priority = Merchandise.where.not(id: self.id).where(priority: self.priority)
       if same_priority.count > 0
-        Merchandise.where.not(id: self.id).where("priority >= ?", self.priority).each do |merchandise|
+        Merchandise.where.not(id: self.id).where('priority >= ?', self.priority).each do |merchandise|
           merchandise.increment!(:priority)
         end
       end

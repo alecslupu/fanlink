@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  interests: render(partial: "app", collection: @interests, as: :interest, handlers: :jb)
+  interests: render(partial: 'app', collection: @interests, as: :interest, handlers: :jb)
 }

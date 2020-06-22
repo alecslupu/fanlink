@@ -19,8 +19,8 @@
 
 module Trivia
   class PictureAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::PictureQuestion", inverse_of: :available_question, foreign_key: :available_question_id
-    has_many :available_answers, class_name: "Trivia::PictureAvailableAnswer", foreign_key: :question_id
+    has_many :active_questions, class_name: 'Trivia::PictureQuestion', inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :available_answers, class_name: 'Trivia::PictureAvailableAnswer', foreign_key: :question_id
 
     include AASM
     enum status: {
@@ -66,7 +66,7 @@ module Trivia
     # cannot be used as it's not an SQL query
       def number_of_correct_answers
         is_correct_answers = available_answers.map(&:is_correct)
-        errors.add(:base, "Picture choice questions can have only one correct answer") if is_correct_answers.count(true) != 1
+        errors.add(:base, 'Picture choice questions can have only one correct answer') if is_correct_answers.count(true) != 1
       end
 
 =begin

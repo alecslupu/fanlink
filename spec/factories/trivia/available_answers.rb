@@ -16,7 +16,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_available_answer, class: "Trivia::AvailableAnswer" do
+  factory :trivia_available_answer, class: 'Trivia::AvailableAnswer' do
     product { current_product }
 
     question { create(:trivia_available_question) }

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  people: render(partial: "app", collection: @people, as: :person, handlers: :jb)
+  people: render(partial: 'app', collection: @people, as: :person, handlers: :jb)
 }

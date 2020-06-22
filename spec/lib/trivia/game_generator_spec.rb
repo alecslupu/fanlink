@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 describe Trivia::GameGenerator do
-  describe "#generate" do
-    it "creates a draft game" do
+  describe '#generate' do
+    it 'creates a draft game' do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         generator = Trivia::GameGenerator.new
@@ -15,25 +15,24 @@ describe Trivia::GameGenerator do
       end
     end
   end
-
-  describe "promote" do
-    it "creates a draft game" do
+  describe 'promote' do
+    it 'creates a draft game' do
       product = create(:product)
       ActsAsTenant.with_tenant(product) do
         generator = Trivia::GameGenerator.new
         create_list(:trivia_multiple_choice_available_question, 150, status: :published)
 
         generator.generate
-        stub_request(:post, "https://stg-fl-trivia.herokuapp.com/api/publish_game")
+        stub_request(:post, 'https://stg-fl-trivia.herokuapp.com/api/publish_game')
           .with(
             body: "{\"game_id\":#{generator.game.id}}",
             headers: {
-              "Accept-Encoding" => "application/javascript",
-              "Content-Type" => "application/json",
-              "Trivia-Api-Key" => "testing"
+              'Accept-Encoding' => 'application/javascript',
+              'Content-Type' => 'application/json',
+              'Trivia-Api-Key' => 'testing'
             }
           )
-          .to_return(status: 200, body: "", headers: {})
+          .to_return(status: 200, body: '', headers: {})
 
         expect(generator.game).to receive(:handle_status_changes).exactly(1).times
         generator.promote!

@@ -26,8 +26,8 @@ class MessageReport < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
-  validates_inclusion_of :status, in: MessageReport.statuses.keys, message: _("%{value} is not a valid status type.")
+  validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
+  validates_inclusion_of :status, in: MessageReport.statuses.keys, message: _('%{value} is not a valid status type.')
 
 
   normalize_attributes :reason

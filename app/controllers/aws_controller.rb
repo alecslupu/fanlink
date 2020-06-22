@@ -12,15 +12,15 @@ class AwsController < ApplicationController
   # Authentication is done through basic auth with an `ApiKey`
   #
   def video_transcoded
-    type = request.headers["x-amz-sns-message-type"].to_s.downcase
-    topic = request.headers["x-amz-sns-topic-arn"]
+    type = request.headers['x-amz-sns-message-type'].to_s.downcase
+    topic = request.headers['x-amz-sns-topic-arn']
     body = JSON.parse(request.raw_post)
-    if type == "subscriptionconfirmation"
-      Flaws.sns_confirm(topic, body["Token"])
-    elsif type == "notification"
-      Post.process_et_response(JSON.parse(body["Message"]))
+    if type == 'subscriptionconfirmation'
+      Flaws.sns_confirm(topic, body['Token'])
+    elsif type == 'notification'
+      Post.process_et_response(JSON.parse(body['Message']))
     else
-      raise "Unknown message type"
+      raise 'Unknown message type'
     end
     head :ok
   rescue Aws::SNS::Errors::ServiceError, ArgumentError, RuntimeError => e

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  progress: render(partial: "app", locals: { progress: @progress }, handlers: :jb)
+  progress: render(partial: 'app', locals: { progress: @progress }, handlers: :jb)
 }

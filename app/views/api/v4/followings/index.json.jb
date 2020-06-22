@@ -3,9 +3,9 @@
 json = {}
 
 if defined?(@followers)
-  json[:followers] = render(partial: "api/v4/people/app", collection: @followers, as: :person, handlers: :jb)
+  json[:followers] = render(partial: 'api/v4/people/app', collection: @followers, as: :person, handlers: :jb)
 else
-  json[:following] = render(partial: "api/v4/people/app", collection: @following, as: :person, handlers: :jb)
+  json[:following] = render(partial: 'api/v4/people/app', collection: @following, as: :person, handlers: :jb)
 end
 
 json

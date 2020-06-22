@@ -24,5 +24,5 @@ class AssignedReward < ApplicationRecord
   # scope :step_badges, -> (badge) { by_type('Step').badge(badge) }
   # scope :quest_activity_badges, -> (badge) { by_type('QuestActivity').badge(badge)}
 
-  validates_inclusion_of :assigned_type, in: %w(ActionType Quest Step QuestActivity), message: _("%{value} is not an assignable type.")
+  validates_inclusion_of :assigned_type, in: %w(ActionType Quest Step QuestActivity), message: _('%{value} is not an assignable type.')
 end

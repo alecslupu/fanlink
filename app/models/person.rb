@@ -77,7 +77,7 @@ class Person < ApplicationRecord
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -120,37 +120,37 @@ class Person < ApplicationRecord
 
   has_many :badges, through: :badge_awards
 
-  has_many :trivia_game_leaderboards, class_name: "Trivia::GameLeaderboard"
-  has_many :trivia_package_leaderboards, class_name: "Trivia::RoundLeaderboard"
-  has_many :trivia_question_leaderboards, class_name: "Trivia::QuestionLeaderboard"
-  has_many :trivia_answers, class_name: "Trivia::Answer"
-  has_many :trivia_subscribers, class_name: "Trivia::Subscriber"
+  has_many :trivia_game_leaderboards, class_name: 'Trivia::GameLeaderboard'
+  has_many :trivia_package_leaderboards, class_name: 'Trivia::RoundLeaderboard'
+  has_many :trivia_question_leaderboards, class_name: 'Trivia::QuestionLeaderboard'
+  has_many :trivia_answers, class_name: 'Trivia::Answer'
+  has_many :trivia_subscribers, class_name: 'Trivia::Subscriber'
 
-  has_many :relationships, ->(person) { unscope(:where).where("requested_by_id = :id OR requested_to_id = :id", id: person.id) }
+  has_many :relationships, ->(person) { unscope(:where).where('requested_by_id = :id OR requested_to_id = :id', id: person.id) }
 
-  has_many :blocks_by,  class_name: "Block", foreign_key: "blocker_id", dependent: :destroy
-  has_many :blocks_on, class_name: "Block", foreign_key: "blocked_id", dependent: :destroy
+  has_many :blocks_by,  class_name: 'Block', foreign_key: 'blocker_id', dependent: :destroy
+  has_many :blocks_on, class_name: 'Block', foreign_key: 'blocked_id', dependent: :destroy
 
   has_many :blocked_people, through: :blocks_by, source: :blocked
   has_many :blocked_by_people, through: :blocks_on, source: :blocker
 
-  has_many :active_followings, class_name:  "Following", foreign_key: "follower_id", dependent: :destroy
+  has_many :active_followings, class_name:  'Following', foreign_key: 'follower_id', dependent: :destroy
 
-  has_many :passive_followings, class_name:  "Following", foreign_key: "followed_id", dependent: :destroy
+  has_many :passive_followings, class_name:  'Following', foreign_key: 'followed_id', dependent: :destroy
 
   has_many :following, through: :active_followings, source: :followed
   has_many :followers, through: :passive_followings, source: :follower
 
-  has_many :hired_people, class_name: "Courseware::Client::ClientToPerson", foreign_key: :client_id, dependent: :destroy
-  has_many :clients, class_name: "Courseware::Client::ClientToPerson", foreign_key: :person_id, dependent: :destroy
+  has_many :hired_people, class_name: 'Courseware::Client::ClientToPerson', foreign_key: :client_id, dependent: :destroy
+  has_many :clients, class_name: 'Courseware::Client::ClientToPerson', foreign_key: :person_id, dependent: :destroy
 
   has_many :room_subscribers, dependent: :destroy
   has_many :subscribed_rooms, through: :room_subscribers, source: :room
 
-  has_many :assigned_assignees, class_name: "Courseware::Client::Assigned", foreign_key: :client_id, dependent: :destroy
-  has_many :designated_assignees, class_name: "Courseware::Client::Designated", foreign_key: :client_id, dependent: :destroy
-  has_many :assigned_clients, class_name: "Courseware::Client::Assigned", foreign_key: :person_id, dependent: :destroy
-  has_many :designated_clients, class_name: "Courseware::Client::Designated", foreign_key: :person_id, dependent: :destroy
+  has_many :assigned_assignees, class_name: 'Courseware::Client::Assigned', foreign_key: :client_id, dependent: :destroy
+  has_many :designated_assignees, class_name: 'Courseware::Client::Designated', foreign_key: :client_id, dependent: :destroy
+  has_many :assigned_clients, class_name: 'Courseware::Client::Assigned', foreign_key: :person_id, dependent: :destroy
+  has_many :designated_clients, class_name: 'Courseware::Client::Designated', foreign_key: :person_id, dependent: :destroy
 
   has_many :assigned_people, through: :assigned_assignees, source: :person
   has_many :designated_people, through: :designated_assignees, source: :person
@@ -158,7 +158,7 @@ class Person < ApplicationRecord
   has_many :clients_designated, through: :designated_clients, source: :client
 
 
-  has_one :client_info, foreign_key: "client_id", dependent: :destroy
+  has_one :client_info, foreign_key: 'client_id', dependent: :destroy
 
   has_many :notifications, dependent: :destroy
 
@@ -171,15 +171,15 @@ class Person < ApplicationRecord
   before_validation :assign_role
 
   after_save :generate_unique_client_code, if: -> { self.role.internal_name == 'client' && ClientInfo.where(client_id: self.id).blank? }
-  before_save :check_facebookid, if: -> { self.facebookid == "" }
+  before_save :check_facebookid, if: -> { self.facebookid == '' }
 
   after_commit :flush_cache
 
-  scope :username_filter_courseware, -> (query) { where("people.username_canonical ilike ?", "%#{query}%") }
-  scope :username_filter, -> (query, current_user) { where("people.username_canonical ilike ? AND people.username_canonical != ?", "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
+  scope :username_filter_courseware, -> (query) { where('people.username_canonical ilike ?', "%#{query}%") }
+  scope :username_filter, -> (query, current_user) { where('people.username_canonical ilike ? AND people.username_canonical != ?', "%#{canonicalize(query.to_s)}%", "#{canonicalize(current_user.username.to_s)}") }
   # scope :email_filter,    -> (query) { where("people.email ilike ?", "%#{query}%") }
-  scope :email_filter, -> (query, current_user) { where("people.email ilike ? AND people.email != ?", "%#{query}%", "#{current_user.email}") }
-  scope :product_account_filter, -> (query, current_user) { where("people.product_account = ?", "#{query}") }
+  scope :email_filter, -> (query, current_user) { where('people.email ilike ? AND people.email != ?', "%#{query}%", "#{current_user.email}") }
+  scope :product_account_filter, -> (query, current_user) { where('people.product_account = ?', "#{query}") }
 
   scope :requested_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_by_id)) }
   scope :received_friendships, -> { where(id: Relationship.where(status: :friended).select(:requested_to_id)) }
@@ -187,41 +187,41 @@ class Person < ApplicationRecord
   scope :without_friendships, -> { where.not(id: with_friendships.select(:id)) }
 
   scope :has_interests, -> { joins(:person_interests).group(:id) }
-  scope :has_no_interests, -> { joins("LEFT JOIN person_interests ON person_interests.person_id = people.id").where("person_interests.id is NULL") }
-  scope :has_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").having("COUNT(followings.id) > 1").group(:id) }
-  scope :has_no_followings, -> { joins("JOIN followings ON followings.follower_id = people.id").having("COUNT(followings.id) = 1").group(:id) }
+  scope :has_no_interests, -> { joins('LEFT JOIN person_interests ON person_interests.person_id = people.id').where('person_interests.id is NULL') }
+  scope :has_followings, -> { joins('JOIN followings ON followings.follower_id = people.id').having('COUNT(followings.id) > 1').group(:id) }
+  scope :has_no_followings, -> { joins('JOIN followings ON followings.follower_id = people.id').having('COUNT(followings.id) = 1').group(:id) }
   scope :has_posts, -> { joins(:posts).group(:id) }
-  scope :has_no_posts, -> {joins("LEFT JOIN posts ON posts.person_id = people.id").where("posts.id is NULL") }
+  scope :has_no_posts, -> {joins('LEFT JOIN posts ON posts.person_id = people.id').where('posts.id is NULL') }
   scope :has_facebook_id, -> { where.not(facebookid: nil) }
-  scope :has_created_acc_past_24h, -> { where("created_at >= ?",Time.zone.now - 1.day) }
-  scope :has_created_acc_past_7days, -> { where("created_at >= ?",Time.zone.now - 7.day) }
-  scope :has_free_certificates_enrolled, -> { joins(:certificates).where("certificates.is_free = ?", true).group(:id) }
+  scope :has_created_acc_past_24h, -> { where('created_at >= ?',Time.zone.now - 1.day) }
+  scope :has_created_acc_past_7days, -> { where('created_at >= ?',Time.zone.now - 7.day) }
+  scope :has_free_certificates_enrolled, -> { joins(:certificates).where('certificates.is_free = ?', true).group(:id) }
   scope :has_no_free_certificates_enrolled, -> { where.not(id: has_free_certificates_enrolled.select(:id)) }
-  scope :has_paid_certificates, -> { joins(:person_certificates).where("person_certificates.amount_paid > 0").group(:id) }
+  scope :has_paid_certificates, -> { joins(:person_certificates).where('person_certificates.amount_paid > 0').group(:id) }
   scope :has_no_paid_certificates, -> { where.not(id: has_paid_certificates.select(:id)) }
-  scope :has_certificates_generated, -> { joins(:person_certificates).where("person_certificates.issued_certificate_pdf_file_size > 0") }
-  scope :has_no_sent_messages, -> { joins("LEFT JOIN messages ON messages.person_id = people.id").where("messages.id is NULL") }
-  scope :active_48h, -> { where("last_activity_at > ?", Time.zone.now - 48.hour) }
-  scope :active_7days, -> { where("last_activity_at > ?", Time.zone.now - 7.day) }
-  scope :active_30days, -> { where("last_activity_at > ?", Time.zone.now - 30.day) }
-  scope :inactive_48h, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 50.hour, Time.zone.now - 48.hour) }
-  scope :inactive_7days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 8.day, Time.zone.now - 7.day) }
-  scope :inactive_30days, -> { where("last_activity_at > ? AND last_activity_at < ?", Time.zone.now - 31.day, Time.zone.now - 30.day) }
+  scope :has_certificates_generated, -> { joins(:person_certificates).where('person_certificates.issued_certificate_pdf_file_size > 0') }
+  scope :has_no_sent_messages, -> { joins('LEFT JOIN messages ON messages.person_id = people.id').where('messages.id is NULL') }
+  scope :active_48h, -> { where('last_activity_at > ?', Time.zone.now - 48.hour) }
+  scope :active_7days, -> { where('last_activity_at > ?', Time.zone.now - 7.day) }
+  scope :active_30days, -> { where('last_activity_at > ?', Time.zone.now - 30.day) }
+  scope :inactive_48h, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 50.hour, Time.zone.now - 48.hour) }
+  scope :inactive_7days, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 8.day, Time.zone.now - 7.day) }
+  scope :inactive_30days, -> { where('last_activity_at > ? AND last_activity_at < ?', Time.zone.now - 31.day, Time.zone.now - 30.day) }
 
-  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that Facebook account.") }
-  validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _("A user has already signed up with that email address.") }
-  validates :username, uniqueness: { scope: :product_id, message: _("The username has already been taken.") }
+  validates :facebookid, uniqueness: { scope: :product_id, allow_nil: true, message: _('A user has already signed up with that Facebook account.') }
+  validates :email, uniqueness: { scope: :product_id, allow_nil: true, message: _('A user has already signed up with that email address.') }
+  validates :username, uniqueness: { scope: :product_id, message: _('The username has already been taken.') }
 
-  validates :email, presence: { message: _("Email is required.") }, if: Proc.new { |person| person.facebookid.blank? }
-  validates :email, email: { message: _("Email is invalid."), allow_nil: true }
+  validates :email, presence: { message: _('Email is required.') }, if: Proc.new { |person| person.facebookid.blank? }
+  validates :email, email: { message: _('Email is invalid.'), allow_nil: true }
 
-  validates :username, presence: { message: _("Username is required.") }
+  validates :username, presence: { message: _('Username is required.') }
 
-  validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
-  validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, presence: { message: _('Password is required.') }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, length: { minimum: 6, allow_blank: true, message: _('Password must be at least 6 characters in length.') }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
-  validates :password, presence: { message: _("Password is required.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
-  validates :password, length: { minimum: 6, allow_blank: true, message: _("Password must be at least 6 characters in length.") }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, presence: { message: _('Password is required.') }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
+  validates :password, length: { minimum: 6, allow_blank: true, message: _('Password must be at least 6 characters in length.') }, if: -> { facebookid.blank? && (new_record? || changes[:crypted_password]) }
 
   validates :username, emoji: true, on: :create
   # validates :name, emoji: true, on: :create
@@ -302,18 +302,18 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: %w(id email picture.width(320).height(320)))
+      results = graph.get_object('me', fields: %w(id email picture.width(320).height(320)))
     rescue Koala::Facebook::APIError, Koala::Facebook::AuthenticationError => error
       Rails.logger.warn("Error contacting facebook for #{username} with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
       return nil
     end
     Rails.logger.error(results.inspect)
-    if results && results["id"].present?
-      person = Person.create(facebookid: results["id"],
+    if results && results['id'].present?
+      person = Person.create(facebookid: results['id'],
                              username: username,
-                             email: results["email"],
-                             facebook_picture_url: results.dig("picture", "data", "url"))
+                             email: results['email'],
+                             facebook_picture_url: results.dig('picture', 'data', 'url'))
     end
     person
   end
@@ -322,14 +322,14 @@ class Person < ApplicationRecord
     person = nil
     begin
       graph = Koala::Facebook::API.new(token)
-      results = graph.get_object("me", fields: [:id])
+      results = graph.get_object('me', fields: [:id])
     rescue Koala::Facebook::APIError => error
       Rails.logger.warn("Error contacting facebook for login with token #{token}")
       Rails.logger.warn("Message: #{error.fb_error_message}")
       return nil
     end
-    if results && results["id"].present?
-      person = Person.find_by(facebookid: results["id"])
+    if results && results['id'].present?
+      person = Person.find_by(facebookid: results['id'])
     end
     person
   end
@@ -371,7 +371,7 @@ class Person < ApplicationRecord
   end
 
   def determine_level(points)
-    Level.where(product_id: product.id).where("points <= ?", points).order(points: :desc).first
+    Level.where(product_id: product.id).where('points <= ?', points).order(points: :desc).first
   end
 
   def block_with?(person)
@@ -418,7 +418,7 @@ class Person < ApplicationRecord
   #
   def self.can_login?(email)
     email = email.to_s
-    query = email.include?("@") ? { email: email.strip.downcase } : { username_canonical: canonicalize(email) }
+    query = email.include?('@') ? { email: email.strip.downcase } : { username_canonical: canonicalize(email) }
     Person.find_by(query)
   end
 
@@ -443,7 +443,7 @@ class Person < ApplicationRecord
   #   The scoped query.
   #
   def self.named_like(term)
-    where("people.username_canonical ilike ?", "%#{StringUtil.search_ify(term)}%").first
+    where('people.username_canonical ilike ?', "%#{StringUtil.search_ify(term)}%").first
   end
 
   def self.current_user
@@ -504,12 +504,12 @@ class Person < ApplicationRecord
   end
 
   def assigned_role
-    role || build_role(internal_name: "normal", name: "Normal")
+    role || build_role(internal_name: 'normal', name: 'Normal')
   end
   before_validation :assign_role
 
   def assign_role
-    self.role = Role.where(internal_name: "normal").first if role_id.nil?
+    self.role = Role.where(internal_name: 'normal').first if role_id.nil?
   end
 
   def normal?
@@ -541,18 +541,18 @@ class Person < ApplicationRecord
   end
 
   def self.with_matched_interests(interest_ids, person_id)
-    self.select("people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids")
-      .joins(:person_interests).where("person_interests.interest_id in (?)", interest_ids)
-      .where("person_interests.person_id != (?)", person_id)
-      .where("people.product_account = false")
-      .group("people.id")
-      .order(Arel.sql("count(person_interests.*) DESC"))
+    self.select('people.*, array_agg(DISTINCT person_interests.interest_id) as matched_ids')
+      .joins(:person_interests).where('person_interests.interest_id in (?)', interest_ids)
+      .where('person_interests.person_id != (?)', person_id)
+      .where('people.product_account = false')
+      .group('people.id')
+      .order(Arel.sql('count(person_interests.*) DESC'))
   end
 
   private
 
   def check_facebookid
-    self.facebookid = nil if self.facebookid == ""
+    self.facebookid = nil if self.facebookid == ''
   end
 
   def canonicalize(name)
@@ -561,7 +561,7 @@ class Person < ApplicationRecord
 
   def canonicalize_username
     if Person.where(username_canonical: canonicalize(self.username), product_id: product.id).where.not(id: self.id).exists?
-      errors.add(:username, :username_in_use, message: _("The username has already been taken."))
+      errors.add(:username, :username_in_use, message: _('The username has already been taken.'))
       false
     else
       self.username_canonical = canonicalize(self.username)
@@ -571,13 +571,13 @@ class Person < ApplicationRecord
 
   def check_role
     if super_admin? && !product.can_have_supers?
-      errors.add(:role, :role_unallowed, message: _("This product cannot have super admins."))
+      errors.add(:role, :role_unallowed, message: _('This product cannot have super admins.'))
     end
   end
 
   def validate_age
     if self.birthdate.present? && ((Date.today.to_s(:number).to_i - self.birthdate.to_date.to_s(:number).to_i) / 10000) < product.age_requirement
-      errors.add(:age_requirement, :age_not_met, message: _("Age requirement is not met. You must be %{age_requirement} years or older to use this app.") % { age_requirement: product.age_requirement })
+      errors.add(:age_requirement, :age_not_met, message: _('Age requirement is not met. You must be %{age_requirement} years or older to use this app.') % { age_requirement: product.age_requirement })
     end
   end
 
@@ -594,20 +594,20 @@ class Person < ApplicationRecord
 
   def valid_username
     if !(/^\w*$/.match(username)) || username.length < 5 || username.length > 25
-      errors.add(:username_error, "Username must be 5 to 25 characters with no special characters or spaces")
+      errors.add(:username_error, 'Username must be 5 to 25 characters with no special characters or spaces')
     end
   end
 
   def read_only_username
     return if new_record?
     return if self.trigger_admin.present?
-    errors.add(:username_error, "The username cannot be changed after creation") if username_changed?
+    errors.add(:username_error, 'The username cannot be changed after creation') if username_changed?
   end
 
   def client_role_changing
     if self.role_id_changed?
       previous_role = Role.where(id: self.role_id_was).first
-      errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == "client"
+      errors.add(:base, "You cannot change the 'client' role") if previous_role.internal_name == 'client'
     end
   end
 

@@ -19,7 +19,7 @@
 
 module Trivia
   class SingleChoiceAvailableQuestion < AvailableQuestion
-    has_many :active_questions, class_name: "Trivia::SingleChoiceQuestion", inverse_of: :available_question, foreign_key: :available_question_id
+    has_many :active_questions, class_name: 'Trivia::SingleChoiceQuestion', inverse_of: :available_question, foreign_key: :available_question_id
 
     include AASM
     enum status: {
@@ -62,7 +62,7 @@ module Trivia
     private
 
       def number_of_correct_answers
-        errors.add(:available_answers, "Single choice questions must have one correct answer") unless available_answers.where(is_correct: true).count == 1
+        errors.add(:available_answers, 'Single choice questions must have one correct answer') unless available_answers.where(is_correct: true).count == 1
       end
 
 

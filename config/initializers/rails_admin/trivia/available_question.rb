@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 RailsAdmin.config do |config|
-  config.included_models.push("Trivia::AvailableQuestion")
-  config.model "Trivia::AvailableQuestion" do
-    parent "Trivia::Game"
+  config.included_models.push('Trivia::AvailableQuestion')
+  config.model 'Trivia::AvailableQuestion' do
+    parent 'Trivia::Game'
 
-    label_plural "Available questions"
+    label_plural 'Available questions'
 
     configure :status, :enum do
       queryable false
@@ -31,11 +31,11 @@ RailsAdmin.config do |config|
       field :type, :enum do
         enum do
           [
-            ["Single Choice", "Trivia::SingleChoiceAvailableQuestion"],
-            ["Multiple Choice", "Trivia::MultipleChoiceAvailableQuestion"],
-            ["Picture Choice", "Trivia::PictureAvailableQuestion"],
-            ["True or False", "Trivia::BooleanChoiceAvailableQuestion"],
-            ["Fill in the blanks", "Trivia::HangmanAvailableQuestion"],
+            ['Single Choice', 'Trivia::SingleChoiceAvailableQuestion'],
+            ['Multiple Choice', 'Trivia::MultipleChoiceAvailableQuestion'],
+            ['Picture Choice', 'Trivia::PictureAvailableQuestion'],
+            ['True or False', 'Trivia::BooleanChoiceAvailableQuestion'],
+            ['Fill in the blanks', 'Trivia::HangmanAvailableQuestion'],
           ]
         end
         read_only { bindings[:object].persisted? }

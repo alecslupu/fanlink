@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  lesson: render(partial: "app", locals: { lesson: @lesson, lang: @lang }, handlers: "jb")
+  lesson: render(partial: 'app', locals: { lesson: @lesson, lang: @lang }, handlers: :jb)
 }

@@ -2,7 +2,7 @@
 
 json = {
   id: post.id,
-  person: render(partial: "api/v4/people/app", locals: { person: post.person }),
+  person: render(partial: 'api/v4/people/app', locals: { person: post.person }),
   body: post.body,
   picture_url: post.picture_optimal_url,
   audio_url: post.audio_url,

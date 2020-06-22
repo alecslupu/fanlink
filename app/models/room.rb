@@ -58,7 +58,7 @@ class Room < ApplicationRecord
   acts_as_tenant(:product)
   scope :for_product, -> (product) { where( rooms: { product_id: product.id } ) }
 
-  belongs_to :created_by, class_name: "Person", required: false
+  belongs_to :created_by, class_name: 'Person', required: false
   belongs_to :product
 
   translates :description, :name, touch: true, versioning: :paper_trail
@@ -75,7 +75,7 @@ class Room < ApplicationRecord
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -97,10 +97,9 @@ class Room < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
 
-
   validate :picture_validation
+  scope :privates_for_person, -> (member) { joins(:room_memberships).where('room_memberships.person_id = ? and rooms.public = ?', member.id, false).order(updated_at: :desc) }
 
-  scope :privates_for_person, -> (member) { joins(:room_memberships).where("room_memberships.person_id = ? and rooms.public = ?", member.id, false).order(updated_at: :desc) }
   scope :publics, -> { where(public: true).order(updated_at: :desc) }
   scope :privates, -> { where(public: false) }
 
@@ -116,7 +115,7 @@ class Room < ApplicationRecord
 
   def picture_validation
     if picture.attached?
-      errors.add(:picture, "Private rooms may not have pictures.") if private?
+      errors.add(:picture, 'Private rooms may not have pictures.') if private?
     end
   end
 end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  types: render(partial: "app", collection: @activity_types, as: :activity, handlers: :jb)
+  types: render(partial: 'app', collection: @activity_types, as: :activity, handlers: :jb)
 }

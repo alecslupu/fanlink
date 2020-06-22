@@ -50,9 +50,9 @@ class VideoPage < ApplicationRecord
   def content_type
     :video
   end
-
+  app/models/post_comment.rb
   def duration
-    attachable = video.attachment.record.attachment_changes["video"].attachable
+    attachable = video.attachment.record.attachment_changes['video'].attachable
     file = case attachable
            when ActionDispatch::Http::UploadedFile, Rack::Test::UploadedFile
              attachable.path
@@ -69,7 +69,7 @@ class VideoPage < ApplicationRecord
     target_course_page = CertcoursePage.find(certcourse_page.id)
     child = target_course_page.child
     if child && child != self
-      errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+      errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
     end
   end
 end

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 {
-  rounds: render(partial: "app", collection: @packages, as: :round, handler: :jb)
+  rounds: render(partial: 'app', collection: @packages, as: :round, handler: :jb)
 }

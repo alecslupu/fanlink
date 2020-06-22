@@ -7,7 +7,7 @@ unless atype.deleted
   case atype.atype.to_sym
   when :beacon
     json.value do
-      json.partial! "api/v2/product_beacons/beacon", locals: { beacon: ProductBeacon.find(atype.value["id"]) }
+      json.partial! 'api/v2/product_beacons/beacon', locals: { beacon: ProductBeacon.find(atype.value['id']) }
     end
   else
     json.value atype.value

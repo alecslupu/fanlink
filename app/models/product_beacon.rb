@@ -23,7 +23,7 @@ class ProductBeacon < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
 
-  validates :beacon_pid, presence: { message: _("Beacon PID is required.") }
+  validates :beacon_pid, presence: { message: _('Beacon PID is required.') }
 
   normalize_attributes :attached_to, :uuid
 

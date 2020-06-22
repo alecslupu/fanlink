@@ -25,13 +25,13 @@
 class Message < ApplicationRecord
   # include Message::FilterrificImpl
 
-  scope :person_name_query, -> (query)  { joins(:person).where("people.name ilike ?", "%#{query}%") }
-  scope :person_username_query, -> (query)  { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
-  scope :room_query,   -> (query)  { joins(:room).where("rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
-  scope :id_query,     -> (query)  { where(id: query.to_i) }
-  scope :body_query,   -> (query)  { where("messages.body ilike ?", "%#{query}%") }
+  scope :person_name_query, ->(query)  { joins(:person).where('people.name ilike ?', "%#{query}%") }
+  scope :person_username_query, ->(query)  { joins(:person).where('people.username_canonical ilike ?', "%#{query}%") }
+  scope :room_query,   ->(query)  { joins(:room).where("rooms.name->>'en' ilike ? or rooms.name->>'un' ilike ?", "%#{query}%", "%#{query}%") }
+  scope :id_query,     ->(query)  { where(id: query.to_i) }
+  scope :body_query,   ->(query)  { where('messages.body ilike ?', "%#{query}%") }
   scope :sorted_by, lambda { |sort_option|
-    direction = (sort_option =~ /desc$/) ? "desc" : "asc"
+    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
     case sort_option.to_s
     when /^created/
       order("created_at #{direction}")
@@ -49,26 +49,14 @@ class Message < ApplicationRecord
   }
 
   scope :with_reported_status, lambda { |reported|
-    if reported == "Yes"
+    if reported == 'Yes'
       joins(:message_reports).where.not(message_reports: { message_id: nil })
-    elsif reported == "No"
+    elsif reported == 'No'
       left_outer_joins(:message_reports).where(message_reports: { message_id: nil })
     else
       nil
     end
   }
-
-  # filterrific(
-  #   default_filter_params: { sorted_by: "created_at desc" },
-  #   available_filters: [
-  #     :sorted_by,
-  #     :person_username_query,
-  #     :room_query,
-  #     :id_query,
-  #     :body_query,
-  #     :with_reported_status
-  #   ]
-  # )
 
   def self.options_for_reported_status_filter
     %w(Any Yes No)
@@ -76,17 +64,17 @@ class Message < ApplicationRecord
   # include Message::FilterrificImpl
   # include Message::PortalFilters
 
-  scope :id_filter, -> (query) { where(id: query.to_i) }
-  scope :person_filter, -> (query) { joins(:person).where("people.username_canonical ilike ?", "%#{query}%") }
-  scope :room_id_filter, -> (query) { joins(:room).where("rooms.id = ?", query.to_i) }
-  scope :body_filter, -> (query) { where("body ilike ?", "%#{query}%") }
-  scope :created_after_filter, -> (query) { where("messages.created_at > ?", query) }
-  scope :created_before_filter, -> (query) { where("messages.created_at < ?", query) }
+  scope :id_filter, ->(query) { where(id: query.to_i) }
+  scope :person_filter, ->(query) { joins(:person).where('people.username_canonical ilike ?', "%#{query}%") }
+  scope :room_id_filter, ->(query) { joins(:room).where('rooms.id = ?', query.to_i) }
+  scope :body_filter, ->(query) { where('body ilike ?', "%#{query}%") }
+  scope :created_after_filter, ->(query) { where('messages.created_at > ?', query) }
+  scope :created_before_filter, ->(query) { where('messages.created_at < ?', query) }
 
   scope :reported_filter, lambda { |reported|
-    if reported == "Yes"
+    if reported == 'Yes'
       joins(:message_reports).where.not(message_reports: { message_id: nil })
-    elsif reported == "No"
+    elsif reported == 'No'
       joins(:message_reports).where(message_reports: { message_id: nil })
     else
       nil
@@ -111,7 +99,7 @@ class Message < ApplicationRecord
   end
 
   def public_room_message_push
-    if RoomSubscriber.where(room_id: room.id).where("last_notification_time < ?", DateTime.current - 2.minute).where.not(person_id: person_id).exists?
+    if RoomSubscriber.where(room_id: room.id).where('last_notification_time < ?', DateTime.current - 2.minute).where.not(person_id: person_id).exists?
       PublicMessagePushJob.perform_later(id)
     end
   end
@@ -139,7 +127,7 @@ class Message < ApplicationRecord
   end
 
   def picture_optimal_url
-    opts = { resize: "1000", auto_orient: true, quality: 75}
+    opts = { resize: '1000', auto_orient: true, quality: 75}
     picture.attached? ? [Rails.application.secrets.cloudfront_url, picture.variant(opts).processed.key].join('/') : nil
   end
 
@@ -158,12 +146,12 @@ class Message < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_date_range, -> (room, from, to, limit = nil) {
-          where(room: room).where("created_at >= ?", from.beginning_of_day).
-            where("created_at <= ?", to.end_of_day).order(created_at: :desc).limit(limit)
+  scope :for_date_range, ->(room, from, to, limit = nil) {
+          where(room: room).where('created_at >= ?', from.beginning_of_day).
+            where('created_at <= ?', to.end_of_day).order(created_at: :desc).limit(limit)
         }
   scope :for_product, ->(product) { joins(:room).where( rooms: { product_id: product.id }) }
-  scope :pinned, ->(param) { joins(:person).where( people: { pin_messages_from: (param.downcase == "yes") } ) }
+  scope :pinned, ->(param) { joins(:person).where( people: { pin_messages_from: (param.downcase == 'yes') } ) }
   scope :publics, -> { joins(:room).where( rooms: { public: true } ) }
   scope :reported_action_needed, -> { joins(:message_reports).where( message_reports: { status: MessageReport.statuses[:pending] } ) }
   scope :unblocked, ->(blocked_users) { where.not(person_id: blocked_users) }
@@ -177,10 +165,10 @@ class Message < ApplicationRecord
   }
 
   scope :visible, -> { where(hidden: false) }
-  scope :room_date_range, -> (from, to) { where("messages.created_at BETWEEN ? AND ?", from, to) }
+  scope :room_date_range, -> (from, to) { where('messages.created_at BETWEEN ? AND ?', from, to) }
   scope :chronological, ->(sign, created_at, id) { sign == '>' ? after_message(created_at, id) : before_message(created_at, id) }
-  scope :after_message, ->(created_at, id) { where("messages.created_at > ? AND messages.id > ?", created_at, id) }
-  scope :before_message, ->(created_at, id) { where("messages.created_at < ? AND messages.id < ?", created_at, id) }
+  scope :after_message, ->(created_at, id) { where('messages.created_at > ? AND messages.id > ?', created_at, id) }
+  scope :before_message, ->(created_at, id) { where('messages.created_at < ? AND messages.id < ?', created_at, id) }
 
   scope :reported, -> { joins(:message_reports) }
   scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
@@ -215,7 +203,7 @@ class Message < ApplicationRecord
   end
 
   def reported?
-    (message_reports.size > 0) ? "Yes" : "No"
+    (message_reports.size > 0) ? 'Yes' : 'No'
   end
 
   def username
@@ -237,11 +225,11 @@ class Message < ApplicationRecord
         if body.match?(/[^\u201C]*@\w{3,26}[^\u201D]*/i)
           mod_body = body
           body.scanm(/[^\u201C]*(@\w{3,26})[^\u201D]*/i).each { |m|
-            person = Person.where(username: m[1].sub("@", "")).first
+            person = Person.where(username: m[1].sub('@', '')).first
             if person.present?
               # self.mention_meta.push({ person_id: person.id, location: mod_body.index(m[1]), length: m[1].size })
               mmeta << { id: MessageMention.maximum(:id) + rand(200 - 1000), person_id: person.id, location: mod_body.index(m[1]), length: m[1].size }
-              mod_body = mod_body.sub(m[1], "a" * m[1].size)
+              mod_body = mod_body.sub(m[1], 'a' * m[1].size)
             end
           }
         end

@@ -26,8 +26,7 @@ module Trivia
     scope :for_product, -> (product) { where(product_id: product.id) }
 
     has_paper_trail ignore: [:created_at, :updated_at]
-
-    belongs_to :game, class_name: "Trivia::Game", foreign_key: :trivia_game_id
+    belongs_to :game, class_name: 'Trivia::Game', foreign_key: :trivia_game_id
 
     has_one_attached :photo
 
@@ -39,7 +38,7 @@ module Trivia
     end
 
     def photo_optimal_url
-      opts = { resize: "1000", auto_orient: true, quality: 75}
+      opts = { resize: '1000', auto_orient: true, quality: 75}
       photo.attached? ? [Rails.application.secrets.cloudfront_url, photo.variant(opts).processed.key].join('/') : nil
     end
 

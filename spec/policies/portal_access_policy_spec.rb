@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe PortalAccessPolicy, type: :policy do
-  args = PortalAccess, "admin"
+  args = PortalAccess, 'admin'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
@@ -12,8 +12,8 @@ RSpec.describe PortalAccessPolicy, type: :policy do
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
 
-  context "Scope" do
-    it "should only return the messages from public rooms" do
+  context 'Scope' do
+    it 'should only return the messages from public rooms' do
       person = build(:person)
       current_product = person.product
       another_product = create(:product)

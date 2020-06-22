@@ -25,9 +25,9 @@ class PostReport < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-  scope :for_product, -> (product) { joins([post: :person]).where("people.product_id = ?", product.id) }
+  scope :for_product, -> (product) { joins([post: :person]).where('people.product_id = ?', product.id) }
 
-  validates :reason, length: { maximum: 500, message: _("Reason cannot be longer than 500 characters.") }
+  validates :reason, length: { maximum: 500, message: _('Reason cannot be longer than 500 characters.') }
 
   normalize_attributes :reason
   def create_time

@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require_relative "boot"
+require_relative 'boot'
 
-require "rails"
+require 'rails'
 # Pick the frameworks you want:
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_view/railtie"
-require "action_cable/engine"
-require "active_storage/engine"
-require "sprockets/railtie"
-require "./app/middleware/sns_content_type"
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'action_cable/engine'
+require 'active_storage/engine'
+require 'sprockets/railtie'
+require './app/middleware/sns_content_type'
 
 # require "rails/test_unit/railtie"
 
@@ -23,7 +23,7 @@ Bundler.require(*Rails.groups)
 
 module Fanlink
   class Application < Rails::Application
-    log_dest = ENV["HEROKU"].present? ? STDOUT : "log/#{Rails.env}.log"
+    log_dest = ENV['HEROKU'].present? ? STDOUT : "log/#{Rails.env}.log"
 
     logger = ActiveSupport::Logger.new(log_dest)
     logger.formatter = config.log_formatter
@@ -41,7 +41,7 @@ module Fanlink
     config.generators.system_tests = nil
     config.paperclip_defaults = {
         storage: :s3,
-        url: "/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension",
+        url: '/system/:product/:class/:attachment/:id_partition/:style/:hash.:extension',
         s3_region: Rails.application.secrets.aws_region,
         bucket:    Rails.application.secrets.aws_bucket,
         hash_secret: Rails.application.secrets.paperclip_secret,
@@ -55,20 +55,20 @@ module Fanlink
 
 
     config.paperclip_defaults = {
-      path: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension",
-      url: ":rails_root/test_uploads/:class/:id/:attachment/:filename.:extension"
+      path: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension',
+      url: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension'
     } if Rails.env.test?
 
     config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> {Rails.logger}) do
       allow do
         origins do |source, env|
-          if ENV["RAILS_ENV"] != "development"
+          if ENV['RAILS_ENV'] != 'development'
             CorsGuard.allow_from?(source)
           else
             true
           end
         end
-        resource "*", headers: :any, methods: :any, credentials: true, expose: %i[Per-Page Link Total]
+        resource '*', headers: :any, methods: :any, credentials: true, expose: %i[Per-Page Link Total]
       end
     end
     # config.middleware.insert_before ActionDispatch::Static, SnsContentType
@@ -99,7 +99,7 @@ module Fanlink
 
     config.session_store :redis_store,
                          servers: ["#{Rails.application.secrets.redis_url}/0/session"],
-                         key: "_fanlink_session",
+                         key: '_fanlink_session',
                          expire_after: 14.days.to_i
 
 

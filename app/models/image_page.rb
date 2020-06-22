@@ -36,7 +36,7 @@ class ImagePage < ApplicationRecord
   end
 
   def image_optimal_url
-    opts = {resize: "1920x1080", auto_orient: true, quality: 90}
+    opts = {resize: '1920x1080', auto_orient: true, quality: 90}
     image.attached? ? [Rails.application.secrets.cloudfront_url, image.variant(opts).processed.key].join('/') : nil
   end
 
@@ -63,7 +63,7 @@ class ImagePage < ApplicationRecord
       target_course_page = CertcoursePage.find(certcourse_page.id)
       child = target_course_page.child
       if child && child != self
-        errors.add(:base, :just_me, message: _("A page can only have one of video, image, or quiz"))
+        errors.add(:base, :just_me, message: _('A page can only have one of video, image, or quiz'))
       end
     end
 end

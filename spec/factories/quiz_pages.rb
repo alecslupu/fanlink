@@ -22,7 +22,7 @@ FactoryBot.define do
     end
 
     product { current_product }
-    quiz_text { "MyString" }
+    quiz_text { 'MyString' }
     wrong_answer_page_id {}
 
     before :create do |qp, evalutator|

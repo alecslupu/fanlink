@@ -2,6 +2,6 @@
 
 {
   id: following.id.to_s,
-  follower: render(partial: "api/v4/people/app", locals: { person: following.follower }, handler: "jb"),
-  followed: render(partial: "api/v4/people/app", locals: { person: following.followed }, handler: "jb")
+  follower: render(partial: 'api/v4/people/app', locals: { person: following.follower }, handler: :jb),
+  followed: render(partial: 'api/v4/people/app', locals: { person: following.followed }, handler: :jb)
 }
