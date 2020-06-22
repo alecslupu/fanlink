@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::BlocksController < ApiController
   # **
   # @api {post} /blocks Block a person.
@@ -67,7 +68,7 @@ class Api::V1::BlocksController < ApiController
     head :ok
   end
 
-private
+  private
 
   def block_params
     params.require(:block).permit(:blocked_id)

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V2::QuestsController < ApiController
-  before_action :admin_only, except: %i[ index show ]
-  load_up_the Quest, only: %i[ update ]
+  before_action :admin_only, except: %i[index show]
+  load_up_the Quest, only: %i[update]
   # **
   #
   # @api {GET} /quests Get quests for a product
@@ -397,12 +398,12 @@ class Api::V2::QuestsController < ApiController
       render_not_found
     end
   end
-protected
+  protected
 
   def apply_filters
     quests = Quest.where.not(status: :deleted).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && Quest.respond_to?(p)
+      if p.end_with?('_filter') && Quest.respond_to?(p)
         quests = quests.send(p, v)
       end
     end

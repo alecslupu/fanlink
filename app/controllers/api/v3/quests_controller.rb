@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V3::QuestsController < Api::V2::QuestsController
-  before_action :admin_only, except: %i[ index show ]
-  load_up_the Quest, only: %i[ update ]
+  before_action :admin_only, except: %i[index show]
+  load_up_the Quest, only: %i[update]
   # **
   #
   # @api {GET} /quests Get quests for a product
@@ -212,7 +213,7 @@ class Api::V3::QuestsController < Api::V2::QuestsController
         render_422 @quest.errors
       end
     else
-      render_422(_("Update failed. Missing quest object."))
+      render_422(_('Update failed. Missing quest object.'))
     end
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::QuestsController < Api::V3::QuestsController
   # load_up_the Quest, only: %i[ update ]
 

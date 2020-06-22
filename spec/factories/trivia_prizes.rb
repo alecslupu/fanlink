@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: trivia_prizes
@@ -20,7 +21,7 @@
 #
 
 FactoryBot.define do
-  factory :trivia_prize, class: "Trivia::Prize" do
+  factory :trivia_prize, class: 'Trivia::Prize' do
     game { create(:trivia_game) }
     product { current_product }
 

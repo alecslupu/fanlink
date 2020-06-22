@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 {
     event_checkins: @event_checkins.map do |e|
-      render partial: "api/v4/event_checkins/event_checkin", locals: { event_checkin: e, lang: @lang }, handlers: "jb"
+      render partial: 'api/v4/event_checkins/event_checkin', locals: { event_checkin: e, lang: @lang }, handlers: 'jb'
     end
 }

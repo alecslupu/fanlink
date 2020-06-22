@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V1::PostCommentsController < ApiController
-  before_action :load_post, except: %i[ list ]
+  before_action :load_post, except: %i[list]
   # **
   # @api {post} /posts/:id/comments Create a comment on a post.
   # @apiName CreatePostComment
@@ -176,12 +177,12 @@ class Api::V1::PostCommentsController < ApiController
     return_the @post_comments
   end
 
-private
+  private
 
   def apply_filters
     post_comments = PostComment.where(post_id: Post.for_product(ActsAsTenant.current_tenant)).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && PostComment.respond_to?(p)
+      if p.end_with?('_filter') && PostComment.respond_to?(p)
         post_comments = post_comments.send(p, v)
       end
     end
@@ -197,6 +198,6 @@ private
   end
 
   def post_comment_params
-    params.require(:post_comment).permit(:body, mentions: %i[ person_id location length ]).merge(person_id: current_user.id)
+    params.require(:post_comment).permit(:body, mentions: %i[person_id location length]).merge(person_id: current_user.id)
   end
 end

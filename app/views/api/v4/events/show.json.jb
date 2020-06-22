@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
-  event: render(partial: @req_source, locals: { event: @event, lang: @lang }, handlers: "jb")
+  event: render(partial: @req_source, locals: { event: @event, lang: @lang }, handlers: 'jb')
 }

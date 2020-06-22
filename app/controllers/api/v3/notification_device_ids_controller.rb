@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::NotificationDeviceIdsController < Api::V2::NotificationDeviceIdsController
   # **
   # @api {post} /notification_device_ids Add a new device id for a person.
@@ -31,7 +32,7 @@ class Api::V3::NotificationDeviceIdsController < Api::V2::NotificationDeviceIdsC
         render_422(ndi.errors)
       end
     else
-      render_422(_("Missing device_id."))
+      render_422(_('Missing device_id.'))
     end
   end
 

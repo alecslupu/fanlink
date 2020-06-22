@@ -1,14 +1,15 @@
 # frozen_string_literal: true
+
 json = {}
 if @progress.present?
   if @series_total < @progress.reward.completion_requirement
     json[:pending_badge] = {
       badge_action_count: @series_total
     }
-    json[:pending_badge][:badge] = render partial: "api/v4/badges/#{@req_source}", locals: { badge: @progress.reward.badge }, renders: "jb"
+    json[:pending_badge][:badge] = render partial: "api/v4/badges/#{@req_source}", locals: { badge: @progress.reward.badge }, renders: 'jb'
   elsif @series_total >= @progress.reward.completion_requirement
     json[:badges_awarded] = Array.wrap(@progress.reward.badge).map do |badge|
-      render partial: "api/v4/badges/#{@req_source}", locals: { badge: badge }, renders: "jb"
+      render partial: "api/v4/badges/#{@req_source}", locals: { badge: badge }, renders: 'jb'
     end
   end
 else

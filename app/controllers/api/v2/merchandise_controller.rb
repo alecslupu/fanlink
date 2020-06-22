@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V2::MerchandiseController < Api::V1::MerchandiseController
-  load_up_the Merchandise, only: %i[ update show delete ]
+  load_up_the Merchandise, only: %i[update show delete]
 
   def create
     @merchandise = Merchandise.create(merchandise_params)
@@ -34,7 +35,7 @@ class Api::V2::MerchandiseController < Api::V1::MerchandiseController
     end
   end
 
-private
+  private
   def merchandise_params
     params.require(:merchandise).permit(:price, :picture, :available, :priority, :name, :description, :purchase_url)
   end

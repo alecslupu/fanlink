@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class Api::V2::QuestActivitiesController < ApiController
-  before_action :admin_only, except: %i[ index show ]
-  load_up_the Step, from: :step_id, except: %i[ update show delete ]
-  load_up_the QuestActivity, only: %i[ update show delete ]
+  before_action :admin_only, except: %i[index show]
+  load_up_the Step, from: :step_id, except: %i[update show delete]
+  load_up_the QuestActivity, only: %i[update show delete]
 
   # **
   # @apiDefine Success
@@ -279,7 +280,7 @@ class Api::V2::QuestActivitiesController < ApiController
     end
   end
 
-private
+  private
   def activity_params
     params.require(:quest_activity).permit(:description, :hint, :picture,
       activity_types_attributes: [ :id, :atype, { value: [ :id, :description ] } ]

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ArrayConfigItemPolicy, type: :policy do
-  args = [ArrayConfigItem, "root"]
+  args = [ArrayConfigItem, 'root']
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args
   include_examples 'enforces the update permission', args

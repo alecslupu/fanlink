@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("PersonCertificate")
-  config.model "PersonCertificate" do
-    parent "Certificate"
+  config.included_models.push('PersonCertificate')
+  config.model 'PersonCertificate' do
+    parent 'Certificate'
     # THis is not the purchased Date
     configure :created_at do
-      label "Purchased date"
+      label 'Purchased date'
     end
 
     list do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::QuestCompletionsController < Api::V3::QuestCompletionsController
   def index
     @completions = apply_filters_for_user

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::PostReportsController < Api::V2::PostReportsController
-  before_action :admin_only, only: %i[ index update ]
+  before_action :admin_only, only: %i[index update]
   load_up_the PostReport, only: :update
 
   include Messaging
@@ -34,7 +35,7 @@ class Api::V3::PostReportsController < Api::V2::PostReportsController
 
   def create
     parms = post_report_params
-    post = Post.find(parms["post_id"])
+    post = Post.find(parms['post_id'])
     if post.person.try(:product) == current_user.product
       post_report = PostReport.create(parms)
       if post_report.valid?
@@ -122,35 +123,35 @@ class Api::V3::PostReportsController < Api::V2::PostReportsController
       if PostReport.valid_status?(parms[:status])
         @post_report.update(parms)
         post = @post_report.post
-        if parms[:status] == "post_hidden"
+        if parms[:status] == 'post_hidden'
           post.status = :deleted
           if post.save && delete_post(post, post.person.followers, @api_version)
             head :ok
           else
-            render_422(_("Invalid or missing status."))
+            render_422(_('Invalid or missing status.'))
           end
         else
           post.status = :published
           if post.save
             head :ok
           else
-            render_422(_("Invalid or missing status."))
+            render_422(_('Invalid or missing status.'))
           end
         end
       else
-        render_422(_("Invalid or missing status."))
+        render_422(_('Invalid or missing status.'))
       end
     else
-      render_422(_("Updated failed. Missing post_report object."))
+      render_422(_('Updated failed. Missing post_report object.'))
     end
   end
 
-private
+  private
 
   def apply_filters
     post_reports = PostReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && PostReport.respond_to?(p)
+      if p.end_with?('_filter') && PostReport.respond_to?(p)
         post_reports = post_reports.send(p, v)
       end
     end

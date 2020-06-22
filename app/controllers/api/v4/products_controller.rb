@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::ProductsController < Api::V3::ProductsController
   def index
     @products = paginate(Product.all)
@@ -28,7 +29,7 @@ class Api::V4::ProductsController < Api::V3::ProductsController
         render_422 @product.errors
       end
     else
-      render_422(_("Update failed. Missing product object."))
+      render_422(_('Update failed. Missing product object.'))
     end
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AutomatedNotificationPushJob  < ApplicationJob
 
   def perform(notification_id, person_ids)

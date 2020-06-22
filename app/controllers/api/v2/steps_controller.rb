@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V2::StepsController < ApiController
-  load_up_the Quest, from: :quest_id, only: %i[ create index ]
-  load_up_the Step, from: :id, only: %i[ update delete ]
+  load_up_the Quest, from: :quest_id, only: %i[create index]
+  load_up_the Step, from: :id, only: %i[update delete]
 
   # **
   # @apiDefine Success
@@ -223,7 +224,7 @@ class Api::V2::StepsController < ApiController
     end
   end
 
-private
+  private
   def step_params
     params.require(:step).permit(:unlocks, :display, :initial_status, :delay_unlock,
       quest_activities_attributes: [ :id, :description, :hint, :picture,

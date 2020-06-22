@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: client_infos
@@ -11,7 +12,7 @@
 #
 
 class ClientInfo < ApplicationRecord
-  belongs_to :person, foreign_key: "client_id"
+  belongs_to :person, foreign_key: 'client_id'
 
   validates :client_id, presence: true
   validates :code, presence: true

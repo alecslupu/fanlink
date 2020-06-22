@@ -69,8 +69,8 @@ RSpec.configure do |config|
         #  name: "Base",
         # },
         {
-          name: "Blocks",
-          description: "Block a person"
+          name: 'Blocks',
+          description: 'Block a person'
         },
         {
           name: 'Categories',
@@ -1158,7 +1158,7 @@ RSpec.configure do |config|
           type: :object,
           properties: {
             id: {type: :string},
-            checkin_at: {type: :string, format: "date-time"},
+            checkin_at: {type: :string, format: 'date-time'},
             person: { "$ref": '#/definitions/personMini' }
           }
         },
@@ -1168,12 +1168,12 @@ RSpec.configure do |config|
             id: {type: :string},
             name: {type: :string},
             description: {type: :string},
-            starts_at: {type: :string, format: "date-time"},
-            ends_at: {type: :string,  format: "date-time"},
+            starts_at: {type: :string, format: 'date-time'},
+            ends_at: {type: :string,  format: 'date-time'},
             ticket_url: {type: :string},
             place_identifier: {type: :string}
           },
-          description: "Event Response"
+          description: 'Event Response'
         },
         CertcourseJson: {
           type: :object,
@@ -1196,19 +1196,19 @@ RSpec.configure do |config|
         QuestObject: {
           type: :object,
           properties: {
-            quest: {"$ref": "#/definitions/QuestJson"}
+            quest: {"$ref": '#/definitions/QuestJson'}
           }
         },
         QuestsArray: {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "quests": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "type": "object",
+                "type": 'object',
                 "properties": {
                   "quest": {
-                    "$ref": "#/definitions/QuestJson"
+                    "$ref": '#/definitions/QuestJson'
                   }
                 }
               }
@@ -1220,169 +1220,169 @@ RSpec.configure do |config|
           "type": :object,
           "properties": {
             "id": {
-              "type": "string"
+              "type": 'string'
             },
             "product_id": {
-              "type": "string"
+              "type": 'string'
             },
             "event_id": {
-              "type": "string"
+              "type": 'string'
             },
             "name": {
-              "type": "string"
+              "type": 'string'
             },
             "internal_name": {
-              "type": "string"
+              "type": 'string'
             },
             "description": {
-              "type": "string"
+              "type": 'string'
             },
             "picture_url": {
-              "type": "string", 'x-nullable': true
+              "type": 'string', 'x-nullable': true
             },
             "picture_width": {
-              "type": "integer", 'x-nullable': true
+              "type": 'integer', 'x-nullable': true
             },
             "picture_height": {
-              "type": "integer", 'x-nullable': true
+              "type": 'integer', 'x-nullable': true
             },
             "status": {
-              "type": "string"
+              "type": 'string'
             },
             "starts_at": {
-              "type": "string",
-              "format": "date-time"
+              "type": 'string',
+              "format": 'date-time'
             },
             "ends_at": {
-              "type": "string",
-              "format": "date-time", 'x-nullable': true
+              "type": 'string',
+              "format": 'date-time', 'x-nullable': true
             },
             "create_time": {
-              "type": "string",
-              "format": "date-time", 'x-nullable': true
+              "type": 'string',
+              "format": 'date-time', 'x-nullable': true
             },
             "steps": {
-              "type": "array",
+              "type": 'array',
               'x-nullable': true,
               "items": {
-                "$ref": "#/definitions/StepJson"
+                "$ref": '#/definitions/StepJson'
               }
             }
           },
-          "description": "Quest Response"
+          "description": 'Quest Response'
         },
         "StepJson": {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "quest_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "unlocks": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "type": "integer"
+                "type": 'integer'
               }
             },
             "display": {
-              "type": "string"
+              "type": 'string'
             },
             "status": {
-              "type": "string"
+              "type": 'string'
             },
             "quest_activities": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "$ref": "#/definitions/QuestActivityJson"
+                "$ref": '#/definitions/QuestActivityJson'
               }
             },
             "delay_unlock": {
-              "type": "integer"
+              "type": 'integer'
             },
             "unlocks_at": {
-              "type": "string",
-              "format": "date-time"
+              "type": 'string',
+              "format": 'date-time'
             }
           },
-          "description": "Step Response"
+          "description": 'Step Response'
         },
 
         "QuestActivityJson": {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "quest_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "step_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "description": {
-              "type": "string"
+              "type": 'string'
             },
             "hint": {
-              "type": "string"
+              "type": 'string'
             },
             "picture_url": {
-              "type": "string"
+              "type": 'string'
             },
             "picture_width": {
-              "type": "integer"
+              "type": 'integer'
             },
             "picture_height": {
-              "type": "integer"
+              "type": 'integer'
             },
             "completed": {
-              "type": "boolean"
+              "type": 'boolean'
             },
             "requirements": {
-              "type": "array",
+              "type": 'array',
               "items": {
-                "$ref": "#/definitions/ActivityTypeJson"
+                "$ref": '#/definitions/ActivityTypeJson'
               }
             },
             "deleted": {
-              "type": "boolean"
+              "type": 'boolean'
             },
             "step": {
-              "$ref": "#/definitions/StepJson"
+              "$ref": '#/definitions/StepJson'
             },
             "created_at": {
-              "type": "string",
-              "format": "date-time"
+              "type": 'string',
+              "format": 'date-time'
             }
           },
-          "description": "Quest Activity Response"
+          "description": 'Quest Activity Response'
         },
         "ActivityTypeJson": {
-          "type": "object",
+          "type": 'object',
           "properties": {
             "id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "atype": {
-              "type": "string"
+              "type": 'string'
             },
             "activity_id": {
-              "type": "integer"
+              "type": 'integer'
             },
             "value": {
-              "type": "object",
+              "type": 'object',
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": 'string'
                 },
                 "description": {
-                  "type": "string"
+                  "type": 'string'
                 }
               }
             }
           },
-          "description": "Activity Type Reponse"
+          "description": 'Activity Type Reponse'
         }
       }
 

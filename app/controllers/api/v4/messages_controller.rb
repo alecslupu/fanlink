@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::MessagesController < Api::V3::MessagesController
   def index
     room = Room.find(params[:room_id])
@@ -16,13 +17,13 @@ class Api::V4::MessagesController < Api::V3::MessagesController
 
         message = Message.find(params[:message_id])
 
-        if params[:pinned].blank? || params[:pinned].downcase == "all"
+        if params[:pinned].blank? || params[:pinned].downcase == 'all'
           msgs = room.messages.chronological(sign, message.created_at, message.id)
         else
           msgs = room.messages.pinned(params[:pinned]).chronological(sign, message.created_at, message.id)
         end
       else
-        msgs = (params[:pinned].blank? || (params[:pinned].downcase == "all")) ? room.messages : room.messages.pinned(params[:pinned])
+        msgs = (params[:pinned].blank? || (params[:pinned].downcase == 'all')) ? room.messages : room.messages.pinned(params[:pinned])
       end
 
       @messages = paginate(
@@ -61,11 +62,11 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     room = Room.find(params[:room_id])
     if room.active?
       if room.public && current_user.chat_banned?
-        render json: { errors: "You are banned from chat." }, status: :unprocessable_entity
+        render json: { errors: 'You are banned from chat.' }, status: :unprocessable_entity
       else
         @message = room.messages.create(message_params.merge(person_id: current_user.id))
         if @message.valid?
-          Rails.logger.tagged("Message Controller") { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
+          Rails.logger.tagged('Message Controller') { Rails.logger.debug "Message #{@message.id} created. Pushing message to version: #{@api_version}" } unless Rails.env.production?
           room.update(last_message_timestamp: DateTime.now.to_i) # update the timestamp of the last message received on room
           @message.post(@api_version)
           broadcast(:room_message_created, @message.id, room.product_id)
@@ -81,7 +82,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
         end
       end
     else
-      render_422 _("This room is no longer active.")
+      render_422 _('This room is no longer active.')
     end
   end
 
@@ -106,7 +107,7 @@ class Api::V4::MessagesController < Api::V3::MessagesController
     else
       time = 1
     end
-    @messages = Message.where("created_at >= ?", time.day.ago).order(Arel.sql "DATE(created_at) ASC").group(Arel.sql "Date(created_at)").count
+    @messages = Message.where('created_at >= ?', time.day.ago).order(Arel.sql 'DATE(created_at) ASC').group(Arel.sql 'Date(created_at)').count
     return_the @messages, handler: tpl_handler
   end
 

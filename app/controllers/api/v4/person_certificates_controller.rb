@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::PersonCertificatesController < ApiController
 
   load_up_the Certificate, from: :certificate_id
@@ -14,7 +15,7 @@ class Api::V4::PersonCertificatesController < ApiController
         @certificate = @person_certificate.reload.certificate
         return_the @certificate, handler: tpl_handler
       else
-        render_422(_("User already completed the full name"))
+        render_422(_('User already completed the full name'))
       end
     else
       @person_certificate = PersonCertificate.new(person_certificate_params)
@@ -24,7 +25,7 @@ class Api::V4::PersonCertificatesController < ApiController
         @certificate = Certificate.find(person_certificate_params[:certificate_id])
         return_the @certificate, handler: tpl_handler
       else
-        render_422(_("Something went wrong."))
+        render_422(_('Something went wrong.'))
       end
     end
   end
@@ -41,6 +42,6 @@ class Api::V4::PersonCertificatesController < ApiController
   end
 
   def person_certificate_params
-    params.require(:person_certificate).permit(%i[ certificate_id purchased_order_id amount_paid currency purchased_sku purchased_platform receipt_id full_name ])
+    params.require(:person_certificate).permit(%i[certificate_id purchased_order_id amount_paid currency purchased_sku purchased_platform receipt_id full_name])
   end
 end

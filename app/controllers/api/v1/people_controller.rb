@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 class Api::V1::PeopleController < ApiController
   # TODO: Lock down GET /people to admin only or something.
   prepend_before_action :logout, only: :create
 
-  load_up_the Person, except: %i[ index ]
-  skip_before_action :require_login, only: %i[ create ]
+  load_up_the Person, except: %i[index]
+  skip_before_action :require_login, only: %i[create]
 
 
   # **
@@ -43,7 +44,7 @@ class Api::V1::PeopleController < ApiController
           end
         end
       else
-        render_error(_("The password is incorrect"))
+        render_error(_('The password is incorrect'))
       end
     else
       render_not_found
@@ -114,7 +115,7 @@ class Api::V1::PeopleController < ApiController
       if params[:facebook_auth_token].present?
         @person = Person.create_from_facebook(params[:facebook_auth_token], parms[:username])
         if @person.nil?
-          (render json: { errors: "There was a problem contacting Facebook" }, status: :service_unavailable) && return
+          (render json: { errors: 'There was a problem contacting Facebook' }, status: :service_unavailable) && return
         end
       else
         @person = Person.create(person_params)
@@ -273,12 +274,12 @@ class Api::V1::PeopleController < ApiController
     end
   end
 
-protected
+  protected
 
   def apply_filters
     people = Person.order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && Person.respond_to?(p)
+      if p.end_with?('_filter') && Person.respond_to?(p)
         people = people.send(p, v, current_user)
       end
     end
@@ -288,11 +289,11 @@ protected
   def check_gender
     params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
   end
-private
+  private
 
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code
                                       username password picture product current_password new_password ] +
-                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[ recommended ] : []))
+                                   ((current_user.present? && (current_user.admin? || current_user.product_account)) ? %i[recommended] : []))
   end
 end

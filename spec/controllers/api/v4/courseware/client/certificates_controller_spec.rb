@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 
 RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :controller do
   describe 'GET index' do
-    it "return error code 401 for a non client user" do
+    it 'return error code 401 for a non client user' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
         login_as(person)
@@ -51,7 +52,7 @@ RSpec.describe Api::V4::Courseware::Client::CertificatesController, type: :contr
   end
 
   describe 'GET download' do
-    it "returns unprocessable (422) if the person certificate does not have the certificate image" do
+    it 'returns unprocessable (422) if the person certificate does not have the certificate image' do
       person = create(:client_user)
       person1 = create(:person, username: 'pers1', email: 'pers1@example.com')
       Courseware::Client::Assigned.create(person_id: person1.id, client_id: person.id)

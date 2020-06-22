@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Trivia
   module QuestionStatus
     class CloseJob < ::ApplicationJob

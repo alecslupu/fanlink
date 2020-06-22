@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Referral::ReferredPerson")
 
-  config.model "Referral::ReferredPerson" do
+RailsAdmin.config do |config|
+  config.included_models.push('Referral::ReferredPerson')
+
+  config.model 'Referral::ReferredPerson' do
     list do
       scopes [ nil, :with_transactions ]
       fields :inviter do

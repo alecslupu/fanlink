@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 module SessionHelpers
   def login_as(person)
-    raise "You need to provide a Person object" unless person.is_a?(Person)
+    raise 'You need to provide a Person object' unless person.is_a?(Person)
     @controller.auto_login(person) if defined?(@controller)
   end
 

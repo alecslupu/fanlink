@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: post_report.id,
   post_id: post_report.post.id,

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: post_comments
@@ -12,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-require "faker"
+require 'faker'
 
 FactoryBot.define do
   factory :post_comment do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Trivia
   class TriviaModulePolicy < ApplicationPolicy
 
@@ -9,7 +10,7 @@ module Trivia
     end
     protected
     def module_name
-      "trivia"
+      'trivia'
     end
   end
 end

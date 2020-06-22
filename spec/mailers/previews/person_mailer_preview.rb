@@ -43,7 +43,7 @@ class PersonMailerPreview < ActionMailer::Preview
       person: product.people.last.id,
       assignee: person_certificate.person.id,
       person_certificate: person_certificate.id,
-      email: "random@flink.to"
+      email: 'random@flink.to'
     ).send_assignee_certificate
   end
 end

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class Api::V1::PostsController < ApiController
-  before_action :load_post, only: %i[ update ]
-  before_action :admin_only, only: %i[ list ]
-  skip_before_action :require_login, :set_product, only: %i[ share ]
+  before_action :load_post, only: %i[update]
+  before_action :admin_only, only: %i[list]
+  skip_before_action :require_login, :set_product, only: %i[share]
   # **
   # @api {post} /posts Create a post.
   # @apiName CreatePost
@@ -83,7 +84,7 @@ class Api::V1::PostsController < ApiController
   def create
     @post = Post.create(post_params.merge(person_id: current_user.id))
     if @post.valid?
-      if post_params["status"].blank?
+      if post_params['status'].blank?
         @post.published!
       end
       @post.post if @post.published?
@@ -161,7 +162,7 @@ class Api::V1::PostsController < ApiController
 
   def index
     if !check_dates(true)
-      render json: { errors: "Missing or invalid date(s)" }, status: :unprocessable_entity
+      render json: { errors: 'Missing or invalid date(s)' }, status: :unprocessable_entity
     else
       l = params[:limit].to_i
       l = nil if l == 0
@@ -171,7 +172,7 @@ class Api::V1::PostsController < ApiController
         if person
           @posts = Post.visible.for_person(person).in_date_range(Date.parse(params[:from_date]), Date.parse(params[:to_date])).order(created_at: :desc).limit(l)
         else
-          render_error("Cannot find that person.")
+          render_error('Cannot find that person.')
           return
         end
       else
@@ -325,7 +326,7 @@ class Api::V1::PostsController < ApiController
   def share
     product = get_product
     if product.nil?
-      render_error("Missing or invalid product.")
+      render_error('Missing or invalid product.')
     else
       @post = Post.for_product(product).visible.find(params[:id])
       return_the @post
@@ -387,11 +388,11 @@ class Api::V1::PostsController < ApiController
     @post.update(post_params)
   end
 
-private
+  private
   def apply_filters
     posts = Post.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && Post.respond_to?(p)
+      if p.end_with?('_filter') && Post.respond_to?(p)
         posts = posts.send(p, v)
       end
     end
@@ -411,7 +412,7 @@ private
   end
 
   def post_params
-    params.require(:post).permit(%i[ body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id ] +
+    params.require(:post).permit(%i[body audio picture global starts_at ends_at repost_interval status priority notify_followers category_id] +
                                      ((current_user.admin? || current_user.product_account? || current_user.super_admin?) ? [:recommended] : []))
   end
 end

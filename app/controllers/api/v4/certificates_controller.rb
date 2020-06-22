@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::CertificatesController < ApiController
   def create
     @certificate = Certificate.create(certificate_params)
@@ -23,12 +24,12 @@ class Api::V4::CertificatesController < ApiController
   protected
 
     def tpl_handler
-      "jb"
+      'jb'
     end
 
   private
 
     def certificate_params
-      params.require(:certificate).permit(%i[ long_name short_name description certificate_order template_image ])
+      params.require(:certificate).permit(%i[long_name short_name description certificate_order template_image])
     end
 end

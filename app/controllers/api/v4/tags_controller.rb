@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::TagsController < Api::V3::TagsController
   def index
     if params[:tag_name].present?
@@ -9,7 +10,7 @@ class Api::V4::TagsController < Api::V3::TagsController
       @tags = paginate ActsAsTaggableOn::Tag.all
       return_the @tags, handler: tpl_handler
     else
-      render_422 _("Parameter tag_name is required.")
+      render_422 _('Parameter tag_name is required.')
     end
   end
 

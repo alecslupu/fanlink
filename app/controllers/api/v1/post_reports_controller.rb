@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V1::PostReportsController < ApiController
-  before_action :admin_only, only: %i[ index update ]
+  before_action :admin_only, only: %i[index update]
   load_up_the PostReport, only: :update
 
   # **
@@ -32,7 +33,7 @@ class Api::V1::PostReportsController < ApiController
 
   def create
     parms = post_report_params
-    post = Post.find(parms["post_id"])
+    post = Post.find(parms['post_id'])
     if post.person.try(:product) == current_user.product
       post_report = PostReport.create(parms)
       if post_report.valid?
@@ -120,16 +121,16 @@ class Api::V1::PostReportsController < ApiController
       @post_report.update(parms)
       head :ok
     else
-      render_error(_("Invalid or missing status."))
+      render_error(_('Invalid or missing status.'))
     end
   end
 
-private
+  private
 
   def apply_filters
     post_reports = PostReport.for_product(ActsAsTenant.current_tenant).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && PostReport.respond_to?(p)
+      if p.end_with?('_filter') && PostReport.respond_to?(p)
         post_reports = post_reports.send(p, v)
       end
     end

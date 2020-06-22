@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V3::PortalNotificationsController < ApiController
   before_action :super_admin_only
-  load_up_the PortalNotification, only: %i[ show update ]
+  load_up_the PortalNotification, only: %i[show update]
   def index
     @portal_notifications = paginate(PortalNotification.all)
     return_the @portal_notifications
@@ -37,7 +38,7 @@ class Api::V3::PortalNotificationsController < ApiController
   def destroy
   end
 
-private
+  private
   def portal_params
     params.require(:portal_notifications).permit(:body, :send_me_at, :sent_status)
   end

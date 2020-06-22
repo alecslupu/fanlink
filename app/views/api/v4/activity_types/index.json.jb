@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:types] = @activity_types.map do |activity|
-  render partial: "activity", locals: { activity: activity }, handlers: "jb"
+  render partial: 'activity', locals: { activity: activity }, handlers: 'jb'
 end
 
 json

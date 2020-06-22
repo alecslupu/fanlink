@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V3::ProductsController < Api::V2::ProductsController
   def select
     @products = Product.all
@@ -33,7 +34,7 @@ class Api::V3::ProductsController < Api::V2::ProductsController
         render_422 @product.errors
       end
     else
-      render_422(_("Update failed. Missing product object."))
+      render_422(_('Update failed. Missing product object.'))
     end
   end
 
@@ -41,7 +42,7 @@ class Api::V3::ProductsController < Api::V2::ProductsController
 
 # end
 
-private
+  private
   def product_params
     params.require(:product).permit(:name, :internal_name, :enabled)
   end

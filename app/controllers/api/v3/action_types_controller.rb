@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V3::ActionTypesController < ApiController
-  before_action :super_admin_only, only: %i[ create update destroy ]
+  before_action :super_admin_only, only: %i[create update destroy]
   def index
     @action_types = paginate(ActionType.all)
     return_the @action_types
@@ -32,7 +33,7 @@ class Api::V3::ActionTypesController < ApiController
     if current_user.super_admin?
       @action_type = ActionType.find(params[:id])
       if @action_type.in_use?
-        render_422 _("Action is in use and cannot be deleted.")
+        render_422 _('Action is in use and cannot be deleted.')
       else
         @action_type.destroy
         head :ok
@@ -42,7 +43,7 @@ class Api::V3::ActionTypesController < ApiController
     end
   end
 
-private
+  private
   def action_params
     params.require(:action_type).permit(:name, :internal_name, :seconds_lag, :active)
   end

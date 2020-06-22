@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 progress = person.level_progresses
 level = person.level_earned_from_progresses(progress)
 json = {
@@ -28,7 +29,7 @@ json = {
   facebookid: person.facebookid,
   facebook_picture_url: person.facebook_picture_url,
   badge_points: (progress.present? ? progress.first.total : 0),
-  level: (level.nil? ? nil : render(partial: "api/v4/levels/#{@req_source}", locals: { level: level }, handlers: "jb")),
+  level: (level.nil? ? nil : render(partial: "api/v4/levels/#{@req_source}", locals: { level: level }, handlers: 'jb')),
   created_at: person.created_at.to_s,
   updated_at: person.updated_at.to_s
 }

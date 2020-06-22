@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {
   id: leaderboard.id,
   game_id: leaderboard.trivia_game_id,
@@ -6,5 +7,5 @@ json = {
   position: leaderboard.position,
   average_time: leaderboard.average_time
 }
-json[:person] = render partial: "api/v4/people/person_mini", locals: { person: leaderboard.person }, handler: "jb"
+json[:person] = render partial: 'api/v4/people/person_mini', locals: { person: leaderboard.person }, handler: 'jb'
 json

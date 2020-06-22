@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::RoomsController < ApiController
   # **
   # @api {post} /rooms Create a private room.
@@ -123,7 +124,7 @@ class Api::V1::RoomsController < ApiController
   #     HTTP/1.1 404 Not Found
   # *
   def index
-    @rooms = (params["private"].present? && params["private"] == "true") ? Room.active.privates_for_person(current_user) : Room.active.publics
+    @rooms = (params['private'].present? && params['private'] == 'true') ? Room.active.privates_for_person(current_user) : Room.active.publics
     return_the @rooms
   end
 
@@ -169,7 +170,7 @@ class Api::V1::RoomsController < ApiController
     end
   end
 
-private
+  private
 
   def room_params
     params.require(:room).permit(:name, :picture, member_ids: [])

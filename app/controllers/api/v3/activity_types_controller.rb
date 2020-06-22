@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V3::ActivityTypesController < Api::V2::ActivityTypesController
-  load_up_the QuestActivity, from: :activity_id, only: %i[ create index ]
-  load_up_the ActivityType, only: %i[ show update destroy ]
+  load_up_the QuestActivity, from: :activity_id, only: %i[create index]
+  load_up_the ActivityType, only: %i[show update destroy]
   # **
   # @apiDefine Success
   #    Single record success response
@@ -230,13 +231,13 @@ class Api::V3::ActivityTypesController < Api::V2::ActivityTypesController
       if @activity_type.update(deleted: true)
         head :ok
       else
-        render_422(_("Failed to delete the activity type."))
+        render_422(_('Failed to delete the activity type.'))
       end
     else
       render_not_found
     end
   end
-private
+  private
   def type_params
     params.require(:activity_type).permit(:atype, value: [ :id, :description ])
   end

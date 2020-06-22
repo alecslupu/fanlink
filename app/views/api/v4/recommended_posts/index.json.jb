@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json = {}
 
 json[:recommended_posts] = @posts.map do |post|
@@ -17,11 +18,11 @@ json[:recommended_posts] = @posts.map do |post|
   p[:post_reaction_counts] = post.reaction_breakdown
 
   if post.poll.present?
-    p[:poll] = render(partial: "api/v4/polls/#{@req_source}", locals: { poll: post.poll }, handlers: "jb")
+    p[:poll] = render(partial: "api/v4/polls/#{@req_source}", locals: { poll: post.poll }, handlers: 'jb')
     p[:poll][:closed] = post.poll.closed?
     if post.poll.poll_options.present?
       p[:poll][:poll_options] = post.poll.poll_options.map do |option|
-        po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: "jb")
+        po = render(partial: "api/v4/poll_options/#{@req_source}", locals: { option: option }, handlers: 'jb')
         po[:numberOfVotes] = option.votes
         po[:voted] = option.voted?(current_user)
         po

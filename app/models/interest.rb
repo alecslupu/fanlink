@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: interests
@@ -21,8 +22,8 @@ class Interest < ApplicationRecord
   acts_as_tenant(:product)
 
   belongs_to :product
-  belongs_to :parent, class_name: "Interest", primary_key: :id, optional: true
-  has_many :children, class_name: "Interest", foreign_key: :parent_id, dependent: :destroy
+  belongs_to :parent, class_name: 'Interest', primary_key: :id, optional: true
+  has_many :children, class_name: 'Interest', foreign_key: :parent_id, dependent: :destroy
   has_many :person_interests, dependent: :destroy
 
   accepts_nested_attributes_for :children, allow_destroy: true

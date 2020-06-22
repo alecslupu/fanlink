@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   body: portal_notification.body,
   send_me_at: portal_notification.send_me_at,

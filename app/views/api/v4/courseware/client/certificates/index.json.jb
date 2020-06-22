@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 json = {}
 json[:certificates] = @certificates.map do |certificate|
-  render partial: "api/v4/certificates/app", locals: { certificate: certificate, user: @person, pc: certificate.person_certificates.where(person_id: @person.id) }, handlers: "jb"
+  render partial: 'api/v4/certificates/app', locals: { certificate: certificate, user: @person, pc: certificate.person_certificates.where(person_id: @person.id) }, handlers: 'jb'
 end
 
 json

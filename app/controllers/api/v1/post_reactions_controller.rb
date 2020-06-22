@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class Api::V1::PostReactionsController < ApiController
   load_up_the Post, from: :post_id
-  load_up_the PostReaction, only: %i[ destroy update ]
+  load_up_the PostReaction, only: %i[destroy update]
 
 
   # **
@@ -123,7 +124,7 @@ class Api::V1::PostReactionsController < ApiController
     end
   end
 
-private
+  private
 
   def post_reaction_params
     params.require(:post_reaction).permit(:reaction).merge(person_id: current_user.id)

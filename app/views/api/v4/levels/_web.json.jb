@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 {
   id: level.id,
   name: level.name,

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V2::QuestCompletedController < ApiController
   def index
     @quests_complete = QuestCompleted.where(person_id: current_user.id)
@@ -8,5 +9,5 @@ class Api::V2::QuestCompletedController < ApiController
   def show
     @quest_complete = QuestCompleted.find(params[:id])
   end
-private
+  private
 end

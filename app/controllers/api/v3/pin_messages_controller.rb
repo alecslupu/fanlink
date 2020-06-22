@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 class Api::V3::PinMessagesController < ApiController
   before_action :admin_only
 
-  load_up_the Person, from: :person_id, only: %i[ pin_to ]
-  load_up_the Room, from: :room_id, only: %i[ pin_from ]
-  load_up_the PinMessage, only: %i[ destroy ]
+  load_up_the Person, from: :person_id, only: %i[pin_to]
+  load_up_the Room, from: :room_id, only: %i[pin_from]
+  load_up_the PinMessage, only: %i[destroy]
 
   def pin_to
     if Room.find(params[:room_id]).public?
@@ -15,7 +16,7 @@ class Api::V3::PinMessagesController < ApiController
         render_errors(pm.errors)
       end
     else
-      render_errors(_("Pinning users to private rooms is not allowed."))
+      render_errors(_('Pinning users to private rooms is not allowed.'))
     end
   end
 
@@ -28,7 +29,7 @@ class Api::V3::PinMessagesController < ApiController
         render_errors(pm.errors)
       end
     else
-      render_errors(_("Pinning users to private rooms is not allowed."))
+      render_errors(_('Pinning users to private rooms is not allowed.'))
     end
   end
 
@@ -37,7 +38,7 @@ class Api::V3::PinMessagesController < ApiController
     head :ok
   end
 
-private
+  private
   def pin_from_params
     params.permit(:person_id)
   end

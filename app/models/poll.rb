@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: polls
@@ -21,13 +22,13 @@ class Poll < ApplicationRecord
   #   self.end_date = Time.zone.now + 1.month
   # end
 
-  enum poll_type: %i[ post ]
-  enum poll_status: %i[ inactive active disabled ]
+  enum poll_type: %i[post]
+  enum poll_status: %i[inactive active disabled]
 
   acts_as_tenant(:product)
   belongs_to :product
 
-  belongs_to :post, foreign_key: "poll_type_id", foreign_type: "poll_type", optional: true
+  belongs_to :post, foreign_key: 'poll_type_id', foreign_type: 'poll_type', optional: true
   has_many :poll_options, dependent: :destroy
 
   validate :start_date_cannot_be_in_the_past
@@ -35,10 +36,10 @@ class Poll < ApplicationRecord
 
   validates :duration, numericality: {
     greater_than: 0,
-    message: "Duration cannot be 0, please specify duration or end date of the poll"
+    message: 'Duration cannot be 0, please specify duration or end date of the poll'
   }
 
-  validates_uniqueness_of :poll_type_id, scope: :poll_type, message: "has already been used on that Post. Check Post id"
+  validates_uniqueness_of :poll_type_id, scope: :poll_type, message: 'has already been used on that Post. Check Post id'
 
   before_validation :add_end_date
 
@@ -48,7 +49,7 @@ class Poll < ApplicationRecord
   accepts_nested_attributes_for :poll_options, allow_destroy: true
 
   scope :assignable, -> {
-          where(poll_type_id: nil).where("end_date > ?", Time.zone.now)
+          where(poll_type_id: nil).where('end_date > ?', Time.zone.now)
         }
 
   def closed?

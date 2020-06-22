@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class Api::V1::MessageReportsController < ApiController
-  before_action :admin_only, only: %i[ index update ]
+  before_action :admin_only, only: %i[index update]
 
   load_up_the Room, from: :room_id
   load_up_the MessageReport, only: :update
@@ -40,7 +41,7 @@ class Api::V1::MessageReportsController < ApiController
     parms = message_report_params
     message = Message.find(parms[:message_id])
     if message.room.private?
-      render_error(_("You cannot report a private message."))
+      render_error(_('You cannot report a private message.'))
     else
       message_report = MessageReport.create(message_report_params)
       if message_report.valid?
@@ -124,16 +125,16 @@ class Api::V1::MessageReportsController < ApiController
       @message_report.update(parms)
       head :ok
     else
-      render_error("Invalid or missing status.")
+      render_error('Invalid or missing status.')
     end
   end
 
-private
+  private
 
   def apply_filters
-    message_reports = MessageReport.includes([{ message: :room }, :person]).where("rooms.product_id = ?", ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)
+    message_reports = MessageReport.includes([{ message: :room }, :person]).where('rooms.product_id = ?', ActsAsTenant.current_tenant.id).references(:rooms).order(created_at: :desc)
     params.each do |p, v|
-      if p.end_with?("_filter") && MessageReport.respond_to?(p)
+      if p.end_with?('_filter') && MessageReport.respond_to?(p)
         message_reports = message_reports.send(p, v)
       end
     end

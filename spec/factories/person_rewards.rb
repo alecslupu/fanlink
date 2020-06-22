@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: person_rewards
@@ -16,6 +17,6 @@ FactoryBot.define do
   factory :person_reward do
     reward { create(:badge_reward) }
     person { create(:person) }
-    source { "Test" }
+    source { 'Test' }
   end
 end

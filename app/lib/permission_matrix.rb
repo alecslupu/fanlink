@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 module PermissionMatrix
   extend ActiveSupport::Concern
 
   included do
 
     include FlagShihTzu
-    %w[ event merchandise user badge reward quest beacon reporting interest root portal_notification marketing_notification automated_notification].each do |field|
+    %w[event merchandise user badge reward quest beacon reporting interest root portal_notification marketing_notification automated_notification].each do |field|
       has_flags 1 => "#{field}_read".to_sym,
                 2 => "#{field}_update".to_sym,
                 3 => "#{field}_delete".to_sym,

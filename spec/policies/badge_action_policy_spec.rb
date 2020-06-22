@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe BadgeActionPolicy, type: :policy do
-  args = BadgeAction, "badge"
+  args = BadgeAction, 'badge'
 
   include_examples 'enforces the permissions', args
   include_examples 'enforces the read permission', args

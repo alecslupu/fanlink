@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V4::AssignedRewardsController < Api::V3::AssignedRewardsController
   def index
     @assignees = paginate(AssignedReward.where(reward_id: params[:reward_id]).order(created_at: :asc))
@@ -11,7 +12,7 @@ class Api::V4::AssignedRewardsController < Api::V3::AssignedRewardsController
   end
 
   def create
-    if params[:assign][:assigned_type] == "ActionType"
+    if params[:assign][:assigned_type] == 'ActionType'
       action_type = ActionType.find(params[:assign][:assigned_id])
       reward = Reward.find(params[:assign][:reward_id])
       reward.series = action_type.internal_name if reward.series.blank?
@@ -36,7 +37,7 @@ class Api::V4::AssignedRewardsController < Api::V3::AssignedRewardsController
         render_422 @assigned.errors
       end
     else
-      render_422(_("Updated failed. Missing assign object."))
+      render_422(_('Updated failed. Missing assign object.'))
     end
   end
 

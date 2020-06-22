@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("Post")
-  config.included_models.push("Post::Translation")
+  config.included_models.push('Post')
+  config.included_models.push('Post::Translation')
 
   config.model 'Post::Translation' do
     visible false
@@ -18,13 +19,13 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "Post" do
-    navigation_label "Posts"
+  config.model 'Post' do
+    navigation_label 'Posts'
     configure :translations, :globalize_tabs
     configure :reported do
     end
     configure :id do
-      label "Post ID"
+      label 'Post ID'
     end
     list do
       scopes [nil, :reported, :not_reported]

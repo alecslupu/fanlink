@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Api::V1::MerchandiseController < ApiController
   def index
     @merchandise = Merchandise.listable.order(:priority)

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 class Api::V4::PersonCertcoursesController < ApiController
 
   def send_email
     current_user.send_course_attachment_email(certcourse_page)
-    render json: { message: _("Email sent") }
+    render json: { message: _('Email sent') }
   end
 
   def create
@@ -26,9 +27,9 @@ class Api::V4::PersonCertcoursesController < ApiController
 
     if @person_certcourse.save
       PersonCertificate.update_certification_status(@person_certcourse.certcourse.certificate_ids, current_user.id)
-      return_the @person_certcourse, handler: "jb"
+      return_the @person_certcourse, handler: 'jb'
     else
-      render_422(_("Something went wrong."))
+      render_422(_('Something went wrong.'))
     end
   end
 
@@ -49,7 +50,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def register_regress
-    certcourse_pages.where("certcourse_page_order > ?", last_certcourse_page.try(:certcourse_page_order).to_i).each do |cp|
+    certcourse_pages.where('certcourse_page_order > ?', last_certcourse_page.try(:certcourse_page_order).to_i).each do |cp|
       next if cp.quiz?
       update_progress(cp, false)
     end
@@ -75,7 +76,7 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def last_certcourse_page
-    @last_certcourse_page ||= certcourse_pages.where("certcourse_page_order < ?", wrong_page_position).last
+    @last_certcourse_page ||= certcourse_pages.where('certcourse_page_order < ?', wrong_page_position).last
   end
 
   def wrong_page_position
@@ -103,6 +104,6 @@ class Api::V4::PersonCertcoursesController < ApiController
   end
 
   def person_certcourses_params
-    params.require(:person_certcourse).permit(%i[ certcourse_id ])
+    params.require(:person_certcourse).permit(%i[certcourse_id])
   end
 end

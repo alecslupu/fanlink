@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-RailsAdmin.config do |config|
-  config.included_models.push("Level")
 
-  config.included_models.push("Level::Translation")
+RailsAdmin.config do |config|
+  config.included_models.push('Level')
+
+  config.included_models.push('Level::Translation')
 
   config.model 'Level::Translation' do
     visible false
@@ -19,7 +20,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model "Level" do
+  config.model 'Level' do
     configure :translations, :globalize_tabs
 
     list do

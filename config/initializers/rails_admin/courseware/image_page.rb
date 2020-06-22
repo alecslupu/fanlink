@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 RailsAdmin.config do |config|
-  config.included_models.push("ImagePage")
-  config.model "ImagePage" do
-    parent "Certificate"
+  config.included_models.push('ImagePage')
+  config.model 'ImagePage' do
+    parent 'Certificate'
 
     configure :course_name do
     end
