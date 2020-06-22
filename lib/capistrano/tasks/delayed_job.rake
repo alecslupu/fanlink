@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :delayed_job do
 
   def args

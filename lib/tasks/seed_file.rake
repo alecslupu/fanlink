@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # lib/tasks/custom_seed.rake
 # from https://stackoverflow.com/a/19872375
 namespace :db do

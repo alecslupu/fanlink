@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Migration
   class RoomJob < ApplicationJob
     queue_as :migration
