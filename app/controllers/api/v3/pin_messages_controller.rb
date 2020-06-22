@@ -38,7 +38,7 @@ class Api::V3::PinMessagesController < ApiController
     head :ok
   end
 
-private
+  private
   def pin_from_params
     params.permit(:person_id)
   end

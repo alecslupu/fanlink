@@ -273,7 +273,7 @@ class Api::V3::PeopleController < Api::V2::PeopleController
     return_the @person
   end
 
-private
+  private
 
   def person_params
     params.require(:person).permit(%i[email facebook_auth_token name gender birthdate biography city country_code

@@ -171,7 +171,7 @@ class Api::V3::CategoriesController < Api::V2::CategoriesController
 
 # end
 
-private
+  private
   def category_params
     params.require(:category).permit(:name, :color, :role)
   end

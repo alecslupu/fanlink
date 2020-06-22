@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - rubocop
   - rspec
   - format
   - report
@@ -168,6 +169,7 @@ stages:
 include:
   - local: .gitlab/ruby25/base.yml
   - local: .gitlab/ruby25/standards.yml
+  - local: .gitlab/ruby25/rubocops.yml
   - local: .gitlab/ruby25/rails60.yml
   - local: .gitlab/ruby25/pages.yml
   - local: .gitlab/ruby25/deployment.yml

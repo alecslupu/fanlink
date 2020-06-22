@@ -1,0 +1,35 @@
+rubocop:Layout_EmptyLineAfterMagicComment:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Layout/EmptyLineAfterMagicComment app config spec lib
+
+rubocop:Layout_SpaceInsidePercentLiteralDelimiters:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Layout/SpaceInsidePercentLiteralDelimiters app config spec lib
+
+rubocop:Layout_AccessModifierIndentation:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Layout/AccessModifierIndentation app config spec lib
+
+rubocop:Style_StringLiterals:
+  extends: .base
+  stage: rubocop
+  allow_failure: false
+  dependencies:
+    - test:rubocop
+  script:
+    - bundle exec rubocop --only Style/StringLiterals app config spec lib

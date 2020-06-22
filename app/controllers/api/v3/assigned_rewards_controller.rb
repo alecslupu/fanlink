@@ -54,7 +54,7 @@ class Api::V3::AssignedRewardsController < ApiController
     end
   end
 
-private
+  private
   def assigned_reward_params
     params.require(:assign).permit(:reward_id, :assigned_type, :assigned_id, :max_times)
   end

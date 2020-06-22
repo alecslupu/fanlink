@@ -24,7 +24,7 @@ class RoomMembership < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
 
-private
+  private
 
   def check_created_by
     if person_id == room.created_by_id

@@ -50,7 +50,7 @@ class Event < ApplicationRecord
     info
   end
 
-private
+  private
 
   def date_sanity
     if ends_at.present? && ends_at < starts_at

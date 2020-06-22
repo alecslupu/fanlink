@@ -237,7 +237,7 @@ class Api::V3::StepsController < Api::V2::StepsController
     end
   end
 
-private
+  private
   def step_params
     params.require(:step).permit(:unlocks, :display, :initial_status, :delay_unlock, :reward_id, :uuid,
       quest_activities_attributes: [ :id, :description, :hint, :picture,

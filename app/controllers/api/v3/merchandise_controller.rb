@@ -200,7 +200,7 @@ class Api::V3::MerchandiseController < Api::V2::MerchandiseController
     end
   end
 
-private
+  private
   def merchandise_params
     params.require(:merchandise).permit(:price, :picture, :available, :priority, :name, :description, :purchase_url)
   end

@@ -151,7 +151,7 @@ RSpec.describe Relationship, type: :model do
     pending
   end
 
-private
+  private
 
   def invalid_status(rel)
     expect(rel).not_to be_valid

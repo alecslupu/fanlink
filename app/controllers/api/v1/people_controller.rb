@@ -274,7 +274,7 @@ class Api::V1::PeopleController < ApiController
     end
   end
 
-protected
+  protected
 
   def apply_filters
     people = Person.order(created_at: :desc)
@@ -289,7 +289,7 @@ protected
   def check_gender
     params[:person][:gender].nil? || Person.genders.keys.include?(params[:person][:gender])
   end
-private
+  private
 
   def person_params
     params.require(:person).permit(%i[ email facebook_auth_token name gender birthdate biography city country_code

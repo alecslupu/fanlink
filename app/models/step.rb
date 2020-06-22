@@ -51,5 +51,5 @@ class Step < ApplicationRecord
   scope :get_children, -> (step) { where('unlocks = ?', step.id) }
   scope :with_completions, -> (user) { includes(:quest_completions).where('quest_completions.person_id =?', user.id) }
 
-private
+  private
 end

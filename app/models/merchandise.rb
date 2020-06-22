@@ -57,7 +57,7 @@ class Merchandise < ApplicationRecord
   # validates :name, presence: { message: _("Name is required.") }
   # validates :description, presence: { message: _("Description is required.") }
 
-private
+  private
 
   def adjust_priorities
     if priority > 0 && saved_change_to_attribute?(:priority)

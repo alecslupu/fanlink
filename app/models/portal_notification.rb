@@ -71,7 +71,7 @@ class PortalNotification < ApplicationRecord
     end
   end
 
-private
+  private
   def sensible_send_time
     unless persisted?
       if send_me_at.present? && send_me_at < Time.zone.now

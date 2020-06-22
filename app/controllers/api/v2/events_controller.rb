@@ -171,7 +171,7 @@ class Api::V2::EventsController < Api::V1::EventsController
     end
   end
 
-private
+  private
   def event_params
     params.require(:event).permit(:name, :description, :starts_at, :ends_at, :ticket_url, :place_identifier)
   end

@@ -83,7 +83,7 @@ class Badge < ApplicationRecord
     (issued_from.nil? || (Time.zone.now > issued_from)) && (issued_to.nil? || (Time.zone.now < issued_to))
   end
 
-private
+  private
 
   def issued_time_sanity
     if issued_from.present? && issued_to.present? && issued_from > issued_to
