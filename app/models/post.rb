@@ -233,7 +233,6 @@ class Post < ApplicationRecord
   #   Rails.cache.fetch([cache_key, __method__]) { post_reactions.count }
   # end
 
-
   def reactions
     Rails.cache.fetch([self, 'post_reactions']) { post_reactions }
   end
@@ -244,7 +243,7 @@ class Post < ApplicationRecord
   alias :reported :reported?
 
   def visible?
-    (status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now))) ? self : nil
+    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) ? self : nil
   end
 
   def start_listener
@@ -254,7 +253,7 @@ class Post < ApplicationRecord
   end
 
   def published?
-    status == 'published' && ((starts_at == nil || starts_at < Time.zone.now) && (ends_at == nil || ends_at > Time.zone.now)) && poll == nil
+    status == 'published' && ((starts_at.nil? || starts_at < Time.zone.now) && (ends_at.nil? || ends_at > Time.zone.now)) && poll.nil?
   end
 
   private
