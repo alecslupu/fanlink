@@ -32,13 +32,13 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{level_translations: :name } ]
+        searchable [{level_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{level_translations: :description } ]
+        searchable [{level_translations: :description }]
         queryable true
         filterable true
       end

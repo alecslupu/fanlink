@@ -13,7 +13,6 @@ class ApiController < ApplicationController
   before_action :set_language, :set_product, :set_api_version, :set_paper_trail_whodunnit, :set_person, :set_app, :check_banned, :set_default_format
   after_action :unset_person, :unset_app
 
-
   protected
   def set_default_format
     request.format = :json

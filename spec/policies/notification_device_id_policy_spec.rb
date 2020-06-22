@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe NotificationDeviceIdPolicy, type: :policy do
   args = NotificationDeviceId, 'portal_notification'
   include_examples 'enforces the permissions', args

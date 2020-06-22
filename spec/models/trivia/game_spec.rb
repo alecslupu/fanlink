@@ -141,7 +141,6 @@ RSpec.describe Trivia::Game, type: :model do
         @old_game = Trivia::Game.includes(:prizes, :rounds).last
         @game_object = @old_game.copy_to_new
 
-
         expect(Trivia::Game.count).to eq(2)
       end
 

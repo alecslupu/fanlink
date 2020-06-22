@@ -36,7 +36,6 @@ port ENV.fetch('PORT') { 3000 }
 #
 environment ENV.fetch('RAILS_ENV') { 'development' }
 
-
 # If you are preloading your application and using Active Record, it's
 # recommended that you close any connections to the database before workers
 # are forked to prevent connection leakage.

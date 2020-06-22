@@ -18,7 +18,6 @@ module Static
     attr_accessor :remove_attachments
     attr_accessor :remove_images
 
-
     after_save do
       Array(remove_attachments).each { |id| attachments.find_by_id(id).try(:purge) }
       Array(remove_images).each { |id| images.find_by_id(id).try(:purge) }

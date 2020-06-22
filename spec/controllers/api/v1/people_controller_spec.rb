@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Api::V1::PeopleController, type: :controller do
   describe '#change_password' do
     it 'should change the current users password' do

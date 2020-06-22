@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-
 RSpec.describe Api::V1::PostsController, type: :controller do
   describe '#create' do
     # it 'should create a new post and publish it' do

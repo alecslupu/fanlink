@@ -159,7 +159,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
       ActsAsTenant.with_tenant(person.product) do
         member = create(:person)
         n = 'Some Room'
-        post :create, params: { room: { name: n, member_ids: [ member.id.to_s ] } }
+        post :create, params: { room: { name: n, member_ids: [member.id.to_s] } }
         expect(response).to be_unauthorized
       end
     end
@@ -170,7 +170,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         expect_any_instance_of(Room).to receive(:new_room)
         member = create(:person)
         n = 'Some Room'
-        post :create, params: { room: { name: n, member_ids: [ member.id.to_s ] } }
+        post :create, params: { room: { name: n, member_ids: [member.id.to_s] } }
         expect(response).to be_successful
         room = Room.last
         expect(room.name).to eq(n)
@@ -189,7 +189,7 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         member_blocked = create(:person)
         person.block(member_blocked)
         expect(person.reload.blocked?(member_blocked)).to be_truthy
-        post :create, params: { room: { name: 'some roome', member_ids: [ member.id.to_s, member_blocked.id.to_s ] } }
+        post :create, params: { room: { name: 'some roome', member_ids: [member.id.to_s, member_blocked.id.to_s] } }
         expect(response).to be_successful
         room = Room.last
         members = room.members
@@ -233,7 +233,6 @@ RSpec.describe Api::V4::RoomsController, type: :controller do
         expect(Room.last.picture).not_to eq(nil)
       end
    end
-
 
    it 'should set private room timestamp' do
       person = create(:admin_user)

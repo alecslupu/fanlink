@@ -34,7 +34,6 @@ module RailsAdmin
             TranslationThings::DEFAULT_LANG
           end
 
-
           # Returns array of Translation objects.
           # It gets existing or creates new empty translation for every locale.
           # Call the first time with reset_cache == true to update memoized translations.

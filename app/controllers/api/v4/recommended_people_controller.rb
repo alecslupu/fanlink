@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
-class Api::V4::RecommendedPeopleController < Api::V3::RecommendedPeopleController
-  def index
-    @people = Person.where(recommended: true).where.not(id: current_user)
-    return_the @people, handler: tpl_handler
-  end
+module Api
+  module V4
+    class RecommendedPeopleController < Api::V3::RecommendedPeopleController
+      def index
+        @people = Person.where(recommended: true).where.not(id: current_user)
+        return_the @people, handler: tpl_handler
+      end
 
-  protected
+      protected
 
-    def tpl_handler
-      :jb
+      def tpl_handler
+        :jb
+      end
     end
+  end
 end

@@ -23,7 +23,6 @@ class RailsAdminController < ApplicationController
 
   protected
 
-
   def set_language
     I18n.locale = :en
   end
@@ -49,7 +48,6 @@ class RailsAdminController < ApplicationController
   end
 
   private
-
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')

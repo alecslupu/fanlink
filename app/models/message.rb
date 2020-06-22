@@ -170,6 +170,7 @@ class Message < ApplicationRecord
   scope :after_message, ->(created_at, id) { where('messages.created_at > ? AND messages.id > ?', created_at, id) }
   scope :before_message, ->(created_at, id) { where('messages.created_at < ? AND messages.id < ?', created_at, id) }
 
+
   scope :reported, -> { joins(:message_reports) }
   scope :not_reported, -> { left_joins(:message_reports).where(message_reports: { id: nil } ) }
 
@@ -203,7 +204,7 @@ class Message < ApplicationRecord
   end
 
   def reported?
-    (message_reports.size > 0) ? 'Yes' : 'No'
+    message_reports.size > 0 ? 'Yes' : 'No'
   end
 
   def username

@@ -44,7 +44,6 @@ RSpec.describe Trivia::Prize, type: :model do
     it { expect(subject).to transition_from(:locked).to(:closed).on_event(:closed) }
   end
 
-
   describe 'copy_to_new' do
     it { expect(Trivia::Prize.new.respond_to?(:copy_to_new)).to eq(true) }
     context 'creates new record' do

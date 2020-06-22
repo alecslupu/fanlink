@@ -61,7 +61,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
       end
     end
 
-
     it 'returns a list of posts after the given one in the correct order' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do
@@ -175,7 +174,6 @@ RSpec.describe Api::V4::PostsController, type: :controller do
     #     expect(json['messages'].size).to eq(2)
     #   end
     # end
-
 
     # it "returns all the messages from the room if only the message_id is given" do
     #   person = create(:admin_user)

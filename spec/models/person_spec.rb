@@ -154,7 +154,6 @@ RSpec.describe Person, type: :model do
       it { should have_many(:blocks_on) }
       it { should have_many(:blocked_by_people).through(:blocks_on) }
 
-
       it { should have_many(:active_followings) }
       it { should have_many(:following).through(:active_followings) }
       it { should have_many(:passive_followings) }
@@ -513,8 +512,8 @@ RSpec.describe Person, type: :model do
       expect(@person.username_canonical).to eq('whereispancakehouse')
     end
     it 'should ignore accents, case, and punctuation when using for_username' do
-      examples = [ 'Whére.Ïs.Pañçâkè.HOUSE', 'where.is.pancake.house',
-                   'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse' ]
+      examples = ['Whére.Ïs.Pañçâkè.HOUSE', 'where.is.pancake.house',
+                   'whereispancakehouse', 'where-is_pancake.house', 'where@is_pancakehouse']
       examples.each do |e|
         expect(Person.named_like(e)).to eq(@person)
       end
@@ -718,7 +717,6 @@ RSpec.describe Person, type: :model do
       )
     end
   end
-
 
   describe '#send_certificate_email' do
     it 'enqueues an onboarding email' do

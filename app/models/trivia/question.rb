@@ -32,7 +32,6 @@ module Trivia
 
     has_many :available_answers, through: :available_question, source: :available_answers
 
-
     validates :time_limit, numericality: { greater_than: 0 },
               presence: true
 

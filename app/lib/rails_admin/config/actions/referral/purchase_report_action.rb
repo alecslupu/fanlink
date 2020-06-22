@@ -7,7 +7,6 @@ module RailsAdmin
         class PurchaseReportAction < RailsAdmin::Config::Actions::Base
           RailsAdmin::Config::Actions.register(:referral_purchase_report_action, self)
 
-
           register_instance_option :collection do
             true
           end

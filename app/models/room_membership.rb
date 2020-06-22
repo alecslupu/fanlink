@@ -23,7 +23,6 @@ class RoomMembership < ApplicationRecord
   before_destroy :check_created_by
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   private
 
   def check_created_by
