@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Api::V4::Courseware::Client::CertcoursesController < Api::V4::Courseware::Client::BaseController
-  # frozen_string_literal: true
 
   def index
     if PersonCertificate.where(person_id: params[:person_id], certificate_id: params[:certificate_id]).present?

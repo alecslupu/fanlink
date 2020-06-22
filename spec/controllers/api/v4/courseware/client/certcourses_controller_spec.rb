@@ -156,7 +156,7 @@ RSpec.describe Api::V4::Courseware::Client::CertcoursesController, type: :contro
         expect(certcourse.certcourse_pages.count).to eq(1)
         get :show, params: { person_id: person1.id, certificate_id: certificate.id, id: certcourse.id }
         expect(response).to be_not_found
-        expect(response.body).to include('This course has no quiz page.')
+        expect(response.body).to include('This certificates has no quiz page.')
       end
     end
   end

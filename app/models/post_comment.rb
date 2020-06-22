@@ -16,6 +16,8 @@
 class PostComment < ApplicationRecord
   # include PostComment::PortalFilters
   has_paper_trail ignore: [:created_at, :updated_at]
+  scope :person_filter, -> (query) { joins(:person).where('people.username_canonical ilike ? or people.email ilike ?', "%#{query}%", "%#{query}%") }
+  scope :body_filter, -> (query) { where('post_comments.body ilike ?', "%#{query}%") }
 
   scope :reported, -> { joins(:post_comment_reports) }
 

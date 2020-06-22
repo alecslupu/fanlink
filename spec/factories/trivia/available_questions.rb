@@ -50,11 +50,11 @@ FactoryBot.define do
         with_two_correct_answers { true }
       end
     end
+    factory :trivia_single_choice_available_question do
+    end
     factory :trivia_picture_available_question, class: 'Trivia::PictureAvailableQuestion' do
     end
     factory :trivia_boolean_choice_available_question, class: 'Trivia::BooleanChoiceAvailableQuestion' do
-    end
-    factory :trivia_hangman_available_question, class: 'Trivia::HangmanAvailableQuestion' do
     end
   end
 end

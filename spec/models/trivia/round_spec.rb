@@ -97,7 +97,7 @@ RSpec.describe Trivia::Round, type: :model do
       end
 
       it 'sets the end date correctly on round' do
-        time = DateTime.now
+        time = 2.hours.from_now
         round = create(:future_trivia_round, start_date: time)
         round.compute_gameplay_parameters
         round.save

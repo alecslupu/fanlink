@@ -35,7 +35,7 @@ RSpec.describe 'Api::V4::QuestsController', type: :request, swagger_doc: 'v4/swa
       #    tags ["quests", 'android-old']
     end
   end
-  
+
   path '/quests/{id}' do
     get '' do
       tags :quests

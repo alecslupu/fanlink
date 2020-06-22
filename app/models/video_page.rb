@@ -50,7 +50,7 @@ class VideoPage < ApplicationRecord
   def content_type
     :video
   end
-  app/models/post_comment.rb
+
   def duration
     attachable = video.attachment.record.attachment_changes['video'].attachable
     file = case attachable
