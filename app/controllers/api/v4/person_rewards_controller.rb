@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
-class Api::V4::PersonRewardsController < ApiController
-  def index
-  end
+module Api
+  module V4
+    class PersonRewardsController < ApiController
+      def index
+      end
 
-  def show
-  end
+      def show
+      end
 
-  def create
-  end
+      def create
+      end
 
-  def update
-  end
+      def update
+      end
 
-  def destroy
-  end
+      def destroy
+      end
 
-  private
+      private
+    end
+  end
 end

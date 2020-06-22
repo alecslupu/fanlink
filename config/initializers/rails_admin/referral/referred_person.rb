@@ -5,9 +5,9 @@ RailsAdmin.config do |config|
 
   config.model 'Referral::ReferredPerson' do
     list do
-      scopes [ nil, :with_transactions ]
+      scopes [nil, :with_transactions]
       fields :inviter do
-        searchable [ :username, referral_user_codes: :unique_code ]
+        searchable [:username, referral_user_codes: :unique_code]
       end
       fields :invited, :created_at
 

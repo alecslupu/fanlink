@@ -2,7 +2,6 @@
 
 require 'swagger_helper'
 
-
 RSpec.describe 'Api::V4::Courseware::WishlistController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/courseware/wishlists' do
     get '' do
@@ -81,7 +80,6 @@ RSpec.describe 'Api::V4::Courseware::WishlistController', type: :request, swagge
 
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
-
 
       response '200', '' do
         let(:Authorization) { "Bearer #{::TokenProvider.issue_token(user_id: wishlist.person.id)}" }

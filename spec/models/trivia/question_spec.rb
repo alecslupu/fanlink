@@ -66,6 +66,5 @@ RSpec.describe Trivia::Question, type: :model do
       end
     end
 
-
   end
 end

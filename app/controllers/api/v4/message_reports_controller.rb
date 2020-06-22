@@ -1,4 +1,8 @@
 # frozen_string_literal: true
 
-class Api::V4::MessageReportsController < Api::V3::MessageReportsController
+module Api
+  module V4
+    class MessageReportsController < Api::V3::MessageReportsController
+    end
+  end
 end

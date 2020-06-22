@@ -11,7 +11,6 @@ RSpec.describe MessagePolicy, type: :policy do
   include_examples 'enforces the history permission', args
   include_examples 'enforces the export permission', args
 
-
   context 'logged in admin with update permission' do
     permission_list = {
       index: false,
