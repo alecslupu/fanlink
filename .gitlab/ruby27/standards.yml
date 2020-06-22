@@ -18,7 +18,7 @@ test27:rubocop:
 test27:bundle_audit:
   extends: .base27
   stage: test
-  allow_failure: true
+  allow_failure: false
   dependencies:
     - build27:initial
     - build27:assets_precompile
