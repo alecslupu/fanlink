@@ -29,7 +29,6 @@ module Fanlink
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
 
-
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
@@ -52,7 +51,6 @@ module Fanlink
         },
         s3_protocol: :https
     }
-
 
     config.paperclip_defaults = {
       path: ':rails_root/test_uploads/:class/:id/:attachment/:filename.:extension',
@@ -101,7 +99,6 @@ module Fanlink
                          servers: ["#{Rails.application.secrets.redis_url}/0/session"],
                          key: '_fanlink_session',
                          expire_after: 14.days.to_i
-
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {

@@ -75,7 +75,6 @@ module JSONErrors
     nil
   end
 
-
   def render_object_errors(obj, status = 400)
     if obj.is_a?(ActiveRecord::Base) # ActiveModel::Model for Mongoid
       render_object_errors(obj.errors, status)

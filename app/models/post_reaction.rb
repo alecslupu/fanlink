@@ -20,7 +20,6 @@ class PostReaction < ApplicationRecord
   validates :person, uniqueness: { scope: :post, message: _('You have already reacted to this post.') }
   validates :reaction, presence: { message: _('Reaction is required.') }
 
-
   def self.group_reactions(post)
     Rails.cache.fetch([post, 'reactions']) {
       PostReaction.where(post_id: post.id).group(:reaction).size

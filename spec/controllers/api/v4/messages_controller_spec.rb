@@ -203,7 +203,6 @@ RSpec.describe Api::V4::MessagesController, type: :controller do
       end
     end
 
-
     it 'returns all the messages from the room if only the message_id is given' do
       person = create(:admin_user)
       ActsAsTenant.with_tenant(person.product) do

@@ -28,7 +28,6 @@ class PostReportPolicy < PostModulePolicy
     !['pending'].include?(record.status) && has_permission?(:hide?)
   end
 
-
   class Scope < ApplicationPolicy::Scope
     def resolve
       super.for_product(ActsAsTenant.current_tenant)

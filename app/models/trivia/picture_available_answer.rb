@@ -66,7 +66,6 @@ module Trivia
       new_record? ? [:draft] : aasm.states(permitted: true).map(&:name).push(status)
     end
 
-
     has_one_attached :picture
 
     validates :picture, size: {less_than: 5.megabytes},

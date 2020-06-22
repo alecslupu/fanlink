@@ -2,7 +2,6 @@
 
 require 'swagger_helper'
 
-
 RSpec.describe 'Api::V4::BadgeActionsController', type: :request, swagger_doc: 'v4/swagger.json' do
   path '/badge_actions' do
     post 'POST create a badge action' do

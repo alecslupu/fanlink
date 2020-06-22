@@ -10,7 +10,6 @@ Rails.application.configure do
 
   config.action_controller.action_on_unpermitted_parameters = :log
 
-
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -18,7 +17,6 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?

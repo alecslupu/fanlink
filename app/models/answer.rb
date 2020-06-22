@@ -26,7 +26,6 @@ class Answer < ApplicationRecord
 
   scope :for_product, -> (product) { where(product_id: product.id) }
 
-
   def is_selected(person)
     (is_correct || quiz_page.is_optional?) && user_answers.where(quiz_page_id: self.quiz_page_id, person_id: person.id).present?
   end

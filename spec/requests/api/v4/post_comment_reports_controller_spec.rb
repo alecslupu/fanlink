@@ -17,7 +17,6 @@ RSpec.describe 'Api::V4::PostReportsController', type: :request, swagger_doc: 'v
       let('post_comment_report[reason]') { 'Lorem Ipsum' }
       let('post_comment_report[post_comment_id]') { create(:post_comment_report).post_comment.id }
 
-
       produces 'application/vnd.api.v4+json'
       consumes 'multipart/form-data'
 

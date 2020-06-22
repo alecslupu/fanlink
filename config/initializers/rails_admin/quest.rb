@@ -35,13 +35,13 @@ RailsAdmin.config do |config|
 
       field :name do
         visible false
-        searchable [{quest_translations: :name } ]
+        searchable [{quest_translations: :name }]
         queryable true
         filterable true
       end
       field :description do
         visible false
-        searchable [{quest_translations: :description } ]
+        searchable [{quest_translations: :description }]
         queryable true
         filterable true
       end

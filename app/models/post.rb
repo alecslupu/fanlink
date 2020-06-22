@@ -151,7 +151,6 @@ class Post < ApplicationRecord
         }
   scope :not_promoted, -> { left_joins(:poll).where('poll_type_id IS NULL or end_date < NOW()') }
 
-
   scope :reported, -> { joins(:post_reports) }
   scope :not_reported, -> { left_joins(:post_reports).where(post_reports: { id: nil } ) }
 

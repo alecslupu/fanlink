@@ -30,7 +30,6 @@ module Trivia
     has_many :trivia_answers, class_name: 'Trivia::Answer', foreign_key: :trivia_question_id, dependent: :destroy
     has_many :available_answers, through: :available_question, source: :available_answers
 
-
     validates :time_limit, numericality: { greater_than: 0 },
               presence: true
 
@@ -43,7 +42,6 @@ module Trivia
               ),  message: '%{value} is not a valid type' }
 
     validates :available_question, presence: { message: 'Please make sure selected question type is the compatible with available question type' }
-
 
     def compute_leaderboard
       # raise "retry" if Time.zone.now < end_date

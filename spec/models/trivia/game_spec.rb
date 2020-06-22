@@ -50,7 +50,6 @@ RSpec.describe Trivia::Game, type: :model do
     it { expect(subject).to transition_from(:running).to(:closed).on_event(:closed) }
   end
 
-
   context 'scheduled round' do
     describe '.compute_gameplay_parameters' do
       it 'has the method' do
@@ -144,7 +143,6 @@ RSpec.describe Trivia::Game, type: :model do
         expect(Trivia::Game.count).to eq(1)
         @old_game = Trivia::Game.includes(:prizes, :rounds).last
         @game_object = @old_game.copy_to_new
-
 
         expect(Trivia::Game.count).to eq(2)
       end
