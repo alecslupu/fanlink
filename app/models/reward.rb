@@ -54,7 +54,6 @@ class Reward < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   normalize_attributes :series
 
   validates :internal_name,

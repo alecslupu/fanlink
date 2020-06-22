@@ -16,7 +16,6 @@
 class PersonCertcourse < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   belongs_to :person
   belongs_to :certcourse
   validates_uniqueness_of :certcourse_id, scope: :person_id

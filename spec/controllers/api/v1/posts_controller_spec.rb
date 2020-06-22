@@ -163,7 +163,6 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     # end
   end
 
-
   # with messages we stubbed the scope and tested that separately, here we are essentially testing the scopes
   # and controller action together for no particular reason
 

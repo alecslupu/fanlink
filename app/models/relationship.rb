@@ -29,7 +29,6 @@ class Relationship < ApplicationRecord
 
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   belongs_to :requested_by, class_name: 'Person', touch: true
   belongs_to :requested_to, class_name: 'Person', touch: true
 
@@ -42,7 +41,6 @@ class Relationship < ApplicationRecord
   scope :for_people, -> (source_person, target_person) { where(requested_to: [source_person, target_person]).where(requested_by: [source_person, target_person]) }
   scope :for_person, -> (person) { where(requested_to: person).or(where(requested_by: person)) }
   scope :for_product, -> (product) { joins('JOIN people ON people.id = relationships.requested_by_id').where('people.product_id = ?', product.id) }
-
 
   def person_involved?(person)
     requested_to == person || requested_by == person

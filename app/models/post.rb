@@ -51,7 +51,6 @@ class Post < ApplicationRecord
   scope :after_post, ->(created_at, id) { where('posts.created_at > ? AND posts.id > ?', created_at, id) }
   scope :before_post, ->(created_at, id) { where('posts.created_at < ? AND posts.id < ?', created_at, id) }
 
-
   # include Post::PortalFilters
 
   #   include Post::RealTime

@@ -36,7 +36,6 @@
 class PersonCertificate < ApplicationRecord
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   has_one_attached :issued_certificate_image
 
   validates :issued_certificate_image,  size: {less_than: 5.megabytes},

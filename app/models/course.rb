@@ -19,7 +19,6 @@ class Course < ApplicationRecord
   belongs_to :semester
   has_paper_trail ignore: [:created_at, :updated_at]
 
-
   has_many :lessons, -> { order(created_at: :asc) }
 
   validates :name, presence: { message: _('A name is required.') }
